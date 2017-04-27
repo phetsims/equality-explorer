@@ -1,0 +1,17 @@
+{
+  "equality-explorer.title": {
+    "value": "Equality Explorer"
+  },
+  "screen.basics": {
+    "value": "Basics"
+  },
+  "screen.numbers": {
+    "value": "Numbers"
+  },
+  "screen.variables": {
+    "value": "Variables"
+  },
+  "screen.solving": {
+    "value": "Solving"
+  }
+}
