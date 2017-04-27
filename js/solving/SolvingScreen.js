@@ -1,6 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
+ * The 'Solving' screen.
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {

@@ -21,7 +21,7 @@ define( function( require ) {
 
   var options = {
     credits: {
-      //TODO fill in proper credits, all of these fields are optional, see joist.AboutDialog
+      //TODO fill in credits
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
       team: '',

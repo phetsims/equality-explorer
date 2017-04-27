@@ -1,6 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
+ * The 'Numbers' screen.
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
