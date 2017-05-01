@@ -34,7 +34,7 @@ define( function( require ) {
       width: 200,
       height: 10,
       depth: 20,
-      perspectiveXOffset: 20,
+      perspectiveXOffset: 20, //TODO replace with vanishingPointDistance
       stroke: 'black',
       topFill: 'rgb( 153, 153, 153 )',
       frontFill: 'rgb( 72, 72, 72 )'
@@ -54,14 +54,14 @@ define( function( require ) {
       stroke: 'black',
       fill: 'rgb( 204, 204, 204 )',
       centerX: baseNode.centerX,
-      bottom: baseNode.top + 10
+      bottom: baseNode.top + 10 //TODO 0.5 * baseNode depth
     });
 
     var beamNode = new BoxNode( {
       width: 450,
       height: 10,
       depth: 10,
-      perspectiveXOffset: 20,
+      perspectiveXOffset: 20, //TODO replace with vanishingPointDistance
       stroke: 'black',
       topFill: 'rgb( 153, 153, 153 )',
       frontFill: 'rgb( 72, 72, 72 )',
@@ -73,26 +73,26 @@ define( function( require ) {
       fill: 'rgb( 0, 187, 100 )',
       headHeight: 20,
       headWidth: 15,
-      bottom: beamNode.top + 5,
+      bottom: beamNode.top + 5, //TODO 0.5 * beamNode depth
       centerX: beamNode.centerX
     } );
 
     var PLATE_HINGE_X_OFFSET = 45;
-    var platPivotShape = new Shape().circle( 0, 0, 8 );
+    var platPivotShape = new Shape().circle( 0, 0, 8 ); //TODO factor out radius
     var leftPlatePivotNode = new Path( platPivotShape, {
       fill: 'rgb( 204, 204, 204 )',
       stroke: 'black',
-      bottom: beamNode.top + 5,
+      bottom: beamNode.top + 5, //TODO 0.5 * beamNode depth
       centerX: beamNode.left + PLATE_HINGE_X_OFFSET
     } );
     var rightPlatePivotNode = new Path( platPivotShape, {
       fill: 'rgb( 204, 204, 204 )',
       stroke: 'black',
-      bottom: beamNode.top + 5,
+      bottom: beamNode.top + 5, //TODO 0.5 * beamNode depth
       centerX: beamNode.right - PLATE_HINGE_X_OFFSET
     } );
 
-    var plateHingeShape = new Shape().rect( 0, 0, 10, 30 );
+    var plateHingeShape = new Shape().rect( 0, 0, 10, 30 ); //TODO magic numbers, width related to platPivotShape radius
     var leftPlateHingeNode = new Path( plateHingeShape, {
       fill: 'rgb( 204, 204, 204 )',
       stroke: 'black',
@@ -100,8 +100,8 @@ define( function( require ) {
       bottom: leftPlatePivotNode.centerY
     } );
     var rightPlateHingeNode = new Path( plateHingeShape, {
-      fill: 'rgb( 204, 204, 204 )',
-      stroke: 'black',
+      fill: 'rgb( 204, 204, 204 )', //TODO same as leftPlateHingeNode
+      stroke: 'black', //TODO same as leftPlateHingeNode
       centerX: rightPlatePivotNode.centerX,
       bottom: rightPlatePivotNode.centerY
     } );
