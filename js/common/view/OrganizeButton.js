@@ -27,16 +27,13 @@ define( function( require ) {
     }, options );
 
     //TODO temporary icon from design doc. If we keep this, clean it up.
-    //TODO close() should not be needed in here, see https://github.com/phetsims/kite/issues/70
     var diameter = 12;
     var spacing = 3;
     var iconShape = new Shape()
       .rect( 0, 0, diameter, diameter )
       .rect( 0, diameter + spacing, diameter, diameter )
       .rect( diameter + spacing, diameter + spacing, diameter, diameter  )
-      .close()
       .circle( 3 * ( diameter + spacing ), 0.5 * diameter, diameter / 2 )
-      .close()
       .circle( 3 * ( diameter + spacing ), 1.5 * diameter + spacing, diameter / 2 );
 
     var iconNode = new Path( iconShape, {
