@@ -35,7 +35,6 @@ define( function( require ) {
       width: 200,
       height: 10,
       depth: 20,
-      perspectiveXOffset: 20, //TODO replace with vanishingPointDistance
       stroke: 'black',
       topFill: 'rgb( 153, 153, 153 )',
       frontFill: 'rgb( 72, 72, 72 )'
@@ -62,7 +61,6 @@ define( function( require ) {
       width: 450,
       height: 10,
       depth: 10,
-      perspectiveXOffset: 20, //TODO replace with vanishingPointDistance
       stroke: 'black',
       topFill: 'rgb( 153, 153, 153 )',
       frontFill: 'rgb( 72, 72, 72 )',

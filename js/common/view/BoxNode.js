@@ -2,7 +2,7 @@
 
 //TODO migrate to common code?
 /**
- * A pseudo-3D box with perspective
+ * A pseudo-3D box with perspective.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -22,24 +22,27 @@ define( function( require ) {
   function BoxNode( options ) {
 
     options = _.extend( {
-      width: 200,
-      height: 10,
-      depth: 20,
-      perspectiveXOffset: 20, //TODO replace this with vanishingPointDistance
+      width: 200, // {number} width of the top face at it's center
+      height: 10, // {number} height of the front face
+      depth: 20,  // {number} depth of the top face after flattening to 2D
+      vanishingPointDistance: 100, // distance of the vanishing point from the center of the top face
       stroke: 'black',
       topFill: 'white',
       frontFill: 'white'
     }, options );
 
+    var hypotenuse = Math.sqrt( options.vanishingPointDistance * options.vanishingPointDistance + ( options.width / 2 ) * ( options.width/ 2 ) );
+    var perspectiveXOffset = hypotenuse * ( options.depth / options.vanishingPointDistance );
+
     // options.width is the width at the midpoint of the box's top face, compute the foreground and background widths
-    var foregroundWidth = options.width + options.perspectiveXOffset;
-    var backgroundWidth = options.width - options.perspectiveXOffset;
+    var foregroundWidth = options.width + perspectiveXOffset;
+    var backgroundWidth = options.width - perspectiveXOffset;
 
     // top face: describe clockwise, starting at front-left corner, in pseudo-3D using parallel perspective
     var topShape = new Shape()
       .moveTo( 0, 0 )
-      .lineTo( options.perspectiveXOffset, -options.depth )
-      .lineTo( options.perspectiveXOffset + backgroundWidth, -options.depth )
+      .lineTo( perspectiveXOffset, -options.depth )
+      .lineTo( perspectiveXOffset + backgroundWidth, -options.depth )
       .lineTo( foregroundWidth, 0 );
     var topNode = new Path( topShape, {
       fill: options.topFill,
@@ -47,7 +50,7 @@ define( function( require ) {
     } );
 
     // front face
-    var frontShape = new Shape().rect( 0, 0, options.width + options.perspectiveXOffset, options.height );
+    var frontShape = new Shape().rect( 0, 0, options.width + perspectiveXOffset, options.height );
     var frontNode = new Path( frontShape, {
       fill: options.frontFill,
       stroke: options.stroke
