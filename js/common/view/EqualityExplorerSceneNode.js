@@ -15,6 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
+  var ScaleNode = require( 'EQUALITY_EXPLORER/common/view/ScaleNode' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
 
@@ -48,8 +49,16 @@ define( function( require ) {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
+    var scaleNode = new ScaleNode( {
+      centerX: equationAccordionBox.centerX,
+      centerY: layoutBounds.centerY
+    } );
+
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ snapshotsAccordionBox, variableAccordionBox, organizeButton, equationAccordionBox ];
+    options.children = [
+      snapshotsAccordionBox, variableAccordionBox, organizeButton,
+      equationAccordionBox, scaleNode
+    ];
 
     Node.call( this, options );
   }
