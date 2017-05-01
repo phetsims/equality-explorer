@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO make the scale pivot
 /**
  * The scale used throughout Equality Explorer.
  *
