@@ -32,7 +32,7 @@ define( function( require ) {
   var BEAM_DEPTH = 10;
   
   // beam pivot
-  var BEAM_PIVOT_HEIGHT = 50;
+  var BEAM_PIVOT_HEIGHT = 60;
   var BEAM_PIVOT_TOP_WIDTH = 15;
   var BEAM_PIVOT_BOTTOM_WIDTH = 25;
   
