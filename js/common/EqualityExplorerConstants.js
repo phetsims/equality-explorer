@@ -12,7 +12,9 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
 
   var EqualityExplorerConstants = {
-    //TODO
+
+    SCREEN_VIEW_X_MARGIN: 20,
+    SCREEN_VIEW_Y_MARGIN: 20
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -21,6 +22,9 @@ define( function( require ) {
   function BasicsScreenView( model ) {
 
     ScreenView.call( this );
+
+    var sceneNode = new EqualityExplorerSceneNode( this.layoutBounds );
+    this.addChild( sceneNode );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
