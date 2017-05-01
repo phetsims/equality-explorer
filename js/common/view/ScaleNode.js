@@ -14,6 +14,7 @@ define( function( require ) {
   var BoxNode = require( 'EQUALITY_EXPLORER/common/view/BoxNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PlateNode = require( 'EQUALITY_EXPLORER/common/view/PlateNode' );
@@ -99,7 +100,16 @@ define( function( require ) {
       y: beamPivotNode.top
     } );
 
-    // arrow at the center on the beam, point perpendicular to the beam
+    // dashed line that is perpendicular to the base
+    var dashedLine = new Line( 0, 0, 0, 75, {
+      lineDash: [ 4, 4 ],
+      stroke: 'black',
+      bottom: beamNode.top + ( 0.65 * BEAM_DEPTH ),
+      centerX: beamNode.centerX
+    } );
+
+    //TODO arrow color changes to 'rgb(247,112,62)' when not balanced
+    // arrow at the center on the beam, points perpendicular to the beam
     var arrowNode = new ArrowNode( 0, 0, 0, -75, {
       fill: 'rgb( 0, 187, 100 )',
       headHeight: 20,
@@ -144,7 +154,8 @@ define( function( require ) {
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [
-      baseNode, beamPivotNode, beamNode, arrowNode,
+      baseNode, beamPivotNode, beamNode,
+      dashedLine, arrowNode,
       leftFlangeNode, rightFlangeNode,
       leftPlatePivotNode, rightPlatePivotNode,
       leftPlateNode, rightPlateNode
