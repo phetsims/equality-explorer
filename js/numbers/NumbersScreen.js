@@ -27,7 +27,7 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenNumbersString,
-      backgroundColorProperty: new Property( 'white' )
+      backgroundColorProperty: new Property( 'rgb( 239, 253, 218 )' )
     }, options );
 
     Screen.call( this,

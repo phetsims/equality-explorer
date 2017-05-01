@@ -13,5 +13,8 @@
   },
   "screen.solving": {
     "value": "Solving"
+  },
+  "mySnapshots": {
+    "value": "My Snapshots"
   }
 }

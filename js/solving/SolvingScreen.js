@@ -27,7 +27,7 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenSolvingString,
-      backgroundColorProperty: new Property( 'white' )
+      backgroundColorProperty: new Property( 'rgb( 237, 225, 253 )' )
     }, options );
 
     Screen.call( this,
