@@ -53,6 +53,9 @@ define( function( require ) {
     stroke: 'black'
   };
 
+  // arrow
+  var ARROW_LENGTH = 75;
+
   /**
    * @param {Object} [options]
    * @constructor
@@ -102,7 +105,7 @@ define( function( require ) {
     } );
 
     // dashed line that is perpendicular to the base
-    var dashedLine = new Line( 0, 0, 0, 75, {
+    var dashedLine = new Line( 0, 0, 0, ARROW_LENGTH, {
       lineDash: [ 4, 4 ],
       stroke: 'black',
       bottom: beamNode.top + ( 0.65 * BEAM_DEPTH ),
@@ -111,7 +114,7 @@ define( function( require ) {
 
     //TODO arrow color changes to 'rgb(247,112,62)' when not balanced
     // arrow at the center on the beam, points perpendicular to the beam
-    var arrowNode = new ArrowNode( 0, 0, 0, -75, {
+    var arrowNode = new ArrowNode( 0, 0, 0, -ARROW_LENGTH, {
       fill: 'rgb( 0, 187, 100 )',
       headHeight: 20,
       headWidth: 15,
