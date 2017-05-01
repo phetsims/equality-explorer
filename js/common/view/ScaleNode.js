@@ -107,13 +107,13 @@ define( function( require ) {
     } );
 
     var leftPlateNode = new PlateNode( {
-      fill: options.leftPlateFill,
+      color: options.leftPlateFill,
       centerX: leftPlatePivotNode.centerX,
       centerY: leftPlateHingeNode.top
     } );
 
     var rightPlateNode = new PlateNode( {
-      fill: options.rightPlateFill,
+      color: options.rightPlateFill,
       centerX: rightPlatePivotNode.centerX,
       centerY: rightPlateHingeNode.top
     } );

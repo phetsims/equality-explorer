@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO make plate look like design doc
 /**
  * A plate on the scale.
  *
@@ -24,18 +25,19 @@ define( function( require ) {
     options = _.extend( {
       radiusX: 150,
       radiusY: 15,
-      fill: 'black',
-      stroke: 'black'
+      color: 'black'
     }, options );
 
-    var outerShape = new Shape().ellipse( 0, 0, options.radiusX, options.radiusY, 0 );
-    var outerNode = new Path( outerShape, {
-      fill: options.fill,
-      stroke: options.stroke
+    var plateShape = new Shape().ellipse( 0, 0, options.radiusX, options.radiusY, 0 );
+
+    var plateNode = new Path( plateShape, {
+      fill: 'rgb( 230, 230, 230 )',
+      stroke: options.color,
+      lineWidth: 3
     } );
-    
+
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ outerNode ];
+    options.children = [ plateNode ];
 
     Node.call( this, options );
   }
