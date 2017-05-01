@@ -57,7 +57,7 @@ define( function( require ) {
       dt = Math.min( dt, 0.1 );
 
       // step the selected scene
-      for ( var i = 0; i < this.categories.length; i++ ) {
+      for ( var i = 0; i < this.scenes.length; i++ ) {
         if ( this.scenes[ i ] === this.sceneProperty.value ) {
           this.scenes[ i ].step( dt );
           break;
