@@ -42,11 +42,11 @@ define( function( require ) {
     stroke: 'black'
   };
   
-  // plate hinges
-  var PLATE_HINGE_WIDTH = 0.6 * PLATE_PIVOT_DIAMETER;
-  var PLATE_HINGE_HEIGHT = 35;
-  var PLATE_HINGE_X_OFFSET = 45;
-  var PLATE_HINGE_OPTIONS = {
+  // flanges connected to the bottom of each plate
+  var FLANGE_WIDTH = 0.6 * PLATE_PIVOT_DIAMETER;
+  var FLANGE_HEIGHT = 35; // from center of plate to center to pivot
+  var FLANGE_X_OFFSET = 45; // from the ends of the beam
+  var FLANGE_OPTIONS = {
     fill: 'rgb( 204, 204, 204 )',
     stroke: 'black'
   };
@@ -62,6 +62,7 @@ define( function( require ) {
       rightPlateFill: 'rgb( 62, 72, 158 )'
     }, options );
 
+    // the base the supports the entire scale
     var baseNode = new BoxNode( {
       width: BASE_WIDTH,
       height: BASE_HEIGHT,
@@ -71,6 +72,7 @@ define( function( require ) {
       frontFill: 'rgb( 72, 72, 72 )'
     } );
 
+    // the pivot that connects the beam to the base
     var beamPivotTaper = BEAM_PIVOT_BOTTOM_WIDTH - BEAM_PIVOT_TOP_WIDTH;
     var beamPivotShape = new Shape().polygon( [
       new Vector2( 0, 0 ),
@@ -85,6 +87,7 @@ define( function( require ) {
       bottom: baseNode.top + ( BASE_DEPTH / 2 )
     } );
 
+    // the beam that supports a plate on either end
     var beamNode = new BoxNode( {
       width: BEAM_WIDTH,
       height: BEAM_HEIGHT,
@@ -96,6 +99,7 @@ define( function( require ) {
       y: beamPivotNode.top
     } );
 
+    // arrow at the center on the beam, point perpendicular to the beam
     var arrowNode = new ArrowNode( 0, 0, 0, -75, {
       fill: 'rgb( 0, 187, 100 )',
       headHeight: 20,
@@ -104,42 +108,44 @@ define( function( require ) {
       centerX: beamNode.centerX
     } );
 
+    // pivot points the connect the plates to the beam
     var platePivotShape = new Shape().circle( 0, 0, PLATE_PIVOT_DIAMETER / 2 );
     var leftPlatePivotNode = new Path( platePivotShape, _.extend( {}, PLATE_PIVOT_OPTIONS,  {
       bottom: beamNode.top + ( 0.65 * BEAM_DEPTH ),
-      centerX: beamNode.left + PLATE_HINGE_X_OFFSET
+      centerX: beamNode.left + FLANGE_X_OFFSET
     } ) );
     var rightPlatePivotNode = new Path( platePivotShape, _.extend( {}, PLATE_PIVOT_OPTIONS, {
       bottom: leftPlatePivotNode.bottom,
-      centerX: beamNode.right - PLATE_HINGE_X_OFFSET
+      centerX: beamNode.right - FLANGE_X_OFFSET
     } ) );
 
-    var plateHingeShape = new Shape().rect( 0, 0, PLATE_HINGE_WIDTH, PLATE_HINGE_HEIGHT );
-    var leftPlateHingeNode = new Path( plateHingeShape, _.extend( {}, PLATE_HINGE_OPTIONS, {
+    // flange on the bottom of each plate that connects it to a pivot point
+    var flangeShape = new Shape().rect( 0, 0, FLANGE_WIDTH, FLANGE_HEIGHT );
+    var leftFlangeNode = new Path( flangeShape, _.extend( {}, FLANGE_OPTIONS, {
       centerX: leftPlatePivotNode.centerX,
       bottom: leftPlatePivotNode.centerY
     } ) );
-    var rightPlateHingeNode = new Path( plateHingeShape, _.extend( {}, PLATE_HINGE_OPTIONS, {
+    var rightFlangeNode = new Path( flangeShape, _.extend( {}, FLANGE_OPTIONS, {
       centerX: rightPlatePivotNode.centerX,
       bottom: rightPlatePivotNode.centerY
     } ) );
 
+    // plates
     var leftPlateNode = new PlateNode( {
       color: options.leftPlateFill,
       centerX: leftPlatePivotNode.centerX,
-      centerY: leftPlateHingeNode.top
+      centerY: leftFlangeNode.top
     } );
-
     var rightPlateNode = new PlateNode( {
       color: options.rightPlateFill,
       centerX: rightPlatePivotNode.centerX,
-      centerY: rightPlateHingeNode.top
+      centerY: rightFlangeNode.top
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [
       baseNode, beamPivotNode, beamNode, arrowNode,
-      leftPlateHingeNode, rightPlateHingeNode,
+      leftFlangeNode, rightFlangeNode,
       leftPlatePivotNode, rightPlatePivotNode,
       leftPlateNode, rightPlateNode
     ];
