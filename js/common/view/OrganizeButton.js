@@ -27,7 +27,7 @@ define( function( require ) {
     }, options );
 
     //TODO temporary icon from design doc. If we keep this, clean it up.
-    //TODO close should not be needed in here, kite bug in circle et. al.
+    //TODO close() should not be needed in here, see https://github.com/phetsims/kite/issues/70
     var diameter = 12;
     var spacing = 3;
     var iconShape = new Shape()
