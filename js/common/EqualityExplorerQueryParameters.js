@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var functionBuilder = require( 'FUNCTION_BUILDER/functionBuilder' );
+  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
@@ -23,7 +23,7 @@ define( function( require ) {
     slow: { type: 'flag' }
   } );
 
-  functionBuilder.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
+  equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
 
   return EqualityExplorerQueryParameters;
 } );
