@@ -47,10 +47,12 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 8,
       buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5
+      buttonTouchAreaYDilation: 5,
+      contentXMargin: 0,
+      contentYMargin: 0
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, 180, 75 );
+    var backgroundNode = new Rectangle( 0, 0, 185, 75 );
 
     var xEqualsText = new Text( xString + ' =', {
       font: EQUATION_FONT

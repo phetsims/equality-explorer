@@ -33,7 +33,7 @@ define( function( require ) {
     } );
 
     var equationAccordionBox = new EquationAccordionBox( {
-      centerX: ( snapshotsAccordionBox.right - layoutBounds.left ) / 2,
+      centerX: layoutBounds.left + ( snapshotsAccordionBox.left - layoutBounds.left ) / 2,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 

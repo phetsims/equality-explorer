@@ -37,10 +37,12 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 8,
       buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5
+      buttonTouchAreaYDilation: 5,
+      contentXMargin: 0,
+      contentYMargin: 0
     }, options );
 
-    var contentNode = new Rectangle( 0, 0, 200, 325 );
+    var contentNode = new Rectangle( 0, 0, 220, 325 );
 
     AccordionBox.call( this, contentNode, options );
   }

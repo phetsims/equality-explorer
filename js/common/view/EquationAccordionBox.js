@@ -40,15 +40,17 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 8,
       buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5
+      buttonTouchAreaYDilation: 5,
+      contentXMargin: 0,
+      contentYMargin: 0
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, 300, 50 );
+    var backgroundNode = new Rectangle( 0, 0, 300, 60 );
 
     var equationNode = new EquationNode( {
       center: backgroundNode.center,
       maxWidth: backgroundNode.width - 20,
-      maxHeight: backgroundNode.height - 10
+      maxHeight: backgroundNode.height - 20
     } );
     
     var contentNode = new Node( {
