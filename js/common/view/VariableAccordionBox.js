@@ -58,6 +58,7 @@ define( function( require ) {
       font: EQUATION_FONT
     } );
 
+    // NumberPicker.dispose not needed, VariableAccordionBox exists for lifetime of the sim
     var valuePicker = new NumberPicker( valueProperty, new Property( valueRange ), {
       color: 'black',
       font: EQUATION_FONT,

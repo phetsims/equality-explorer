@@ -65,6 +65,7 @@ define( function( require ) {
 
     Node.call( this, options );
 
+    // unlink not needed, EqualityExplorerSceneNode exists for lifetime of the sim
     sceneProperty.link( function( newScene ) {
       self.visible = ( newScene === scene );
     } );
