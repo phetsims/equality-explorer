@@ -12,7 +12,8 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
 
   var EqualityExplorerColors = {
-    //TODO
+    LEFT_PLATE_COLOR: 'rgb( 207, 60, 63 )',
+    RIGHT_PLATE_COLOR: 'rgb( 62, 72, 158 )'
   };
 
   equalityExplorer.register( 'EqualityExplorerColors', EqualityExplorerColors );

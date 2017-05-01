@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -54,11 +55,13 @@ define( function( require ) {
     } );
 
     var leftItemPanel = new ItemPanel( {
+      stroke: EqualityExplorerColors.LEFT_PLATE_COLOR,
       right: equationAccordionBox.centerX - 40,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     var rightItemPanel = new ItemPanel( {
+      stroke: EqualityExplorerColors.RIGHT_PLATE_COLOR,
       left: equationAccordionBox.centerX + 40,
       bottom: leftItemPanel.bottom
     } );

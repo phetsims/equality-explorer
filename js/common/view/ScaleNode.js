@@ -13,6 +13,7 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var BoxNode = require( 'EQUALITY_EXPLORER/common/view/BoxNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -59,8 +60,8 @@ define( function( require ) {
   function ScaleNode( options ) {
 
     options = _.extend( {
-      leftPlateFill: 'rgb( 207, 60, 63 )',
-      rightPlateFill: 'rgb( 62, 72, 158 )'
+      leftPlateFill: EqualityExplorerColors.LEFT_PLATE_COLOR,
+      rightPlateFill: EqualityExplorerColors.RIGHT_PLATE_COLOR
     }, options );
 
     // the base the supports the entire scale

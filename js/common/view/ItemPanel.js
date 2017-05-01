@@ -20,6 +20,11 @@ define( function( require ) {
    */
   function ItemPanel( options ) {
 
+    options = _.extend( {
+      lineWidth: 2,
+      cornerRadius: 6
+    }, options );
+
     var content = new Rectangle( 0, 0, 275, 50 ); //TODO placeholder
 
     Panel.call( this, content, options );
