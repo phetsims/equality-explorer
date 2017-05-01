@@ -15,6 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var PlateNode = require( 'EQUALITY_EXPLORER/common/view/PlateNode' );
   var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -24,7 +25,10 @@ define( function( require ) {
    */
   function ScaleNode( options ) {
 
-    options = options || {};
+    options = _.extend( {
+      leftPlateFill: 'rgb( 207, 60, 63 )',
+      rightPlateFill: 'rgb( 62, 72, 158 )'
+    }, options );
 
     var baseNode = new BoxNode( {
       width: 200,
@@ -74,22 +78,53 @@ define( function( require ) {
     } );
 
     var PLATE_HINGE_X_OFFSET = 45;
-    var plateHingeShape = new Shape().circle( 0, 0, 8 );
-    var leftPlateHingeNode = new Path( plateHingeShape, {
+    var platPivotShape = new Shape().circle( 0, 0, 8 );
+    var leftPlatePivotNode = new Path( platPivotShape, {
       fill: 'rgb( 204, 204, 204 )',
       stroke: 'black',
       bottom: beamNode.top + 5,
       centerX: beamNode.left + PLATE_HINGE_X_OFFSET
     } );
-    var rightPlateHingeNode = new Path( plateHingeShape, {
+    var rightPlatePivotNode = new Path( platPivotShape, {
       fill: 'rgb( 204, 204, 204 )',
       stroke: 'black',
       bottom: beamNode.top + 5,
       centerX: beamNode.right - PLATE_HINGE_X_OFFSET
     } );
 
+    var plateHingeShape = new Shape().rect( 0, 0, 10, 30 );
+    var leftPlateHingeNode = new Path( plateHingeShape, {
+      fill: 'rgb( 204, 204, 204 )',
+      stroke: 'black',
+      centerX: leftPlatePivotNode.centerX,
+      bottom: leftPlatePivotNode.centerY
+    } );
+    var rightPlateHingeNode = new Path( plateHingeShape, {
+      fill: 'rgb( 204, 204, 204 )',
+      stroke: 'black',
+      centerX: rightPlatePivotNode.centerX,
+      bottom: rightPlatePivotNode.centerY
+    } );
+
+    var leftPlateNode = new PlateNode( {
+      fill: options.leftPlateFill,
+      centerX: leftPlatePivotNode.centerX,
+      centerY: leftPlateHingeNode.top
+    } );
+
+    var rightPlateNode = new PlateNode( {
+      fill: options.rightPlateFill,
+      centerX: rightPlatePivotNode.centerX,
+      centerY: rightPlateHingeNode.top
+    } );
+
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ baseNode, pivotNode, beamNode, arrowNode, leftPlateHingeNode, rightPlateHingeNode ];
+    options.children = [
+      baseNode, pivotNode, beamNode, arrowNode,
+      leftPlateHingeNode, rightPlateHingeNode,
+      leftPlatePivotNode, rightPlatePivotNode,
+      leftPlateNode, rightPlateNode
+    ];
 
     Node.call( this, options );
   }
