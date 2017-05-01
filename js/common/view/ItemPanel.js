@@ -51,7 +51,6 @@ define( function( require ) {
     var oneNode = new Node( {
       children: [ circle, oneText ]
     } );
-    console.log( 'oneNode.diameter=' + oneNode.height );
 
     // triangle
     var polygonNode = new Path( Shape.regularPolygon( 6, ITEM_RADIUS ), {
