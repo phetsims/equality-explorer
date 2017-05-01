@@ -1,5 +1,10 @@
 // Copyright 2017, University of Colorado Boulder
 
+/**
+ * Displays a scene in Equality Explorer.
+ *
+ * @author Chris Malley (PixelZoom, Inc.)
+ */
 define( function( require ) {
   'use strict';
 
@@ -9,6 +14,7 @@ define( function( require ) {
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
 
@@ -32,13 +38,18 @@ define( function( require ) {
       right: snapshotsAccordionBox.right
     } );
 
+    var organizeButton = new OrganizeButton( {
+      left: variableAccordionBox.left,
+      top: variableAccordionBox.bottom + 10
+    } );
+
     var equationAccordionBox = new EquationAccordionBox( {
       centerX: layoutBounds.left + ( snapshotsAccordionBox.left - layoutBounds.left ) / 2,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ snapshotsAccordionBox, variableAccordionBox, equationAccordionBox ];
+    options.children = [ snapshotsAccordionBox, variableAccordionBox, organizeButton, equationAccordionBox ];
 
     Node.call( this, options );
   }
