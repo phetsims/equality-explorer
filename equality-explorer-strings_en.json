@@ -20,6 +20,9 @@
   "equationOrInequality": {
     "value": "Equation or Inequality"
   },
+  "variable": {
+    "value": "Variable"
+  },
   "x": {
     "value": "x"
   }

@@ -23,7 +23,7 @@ define( function( require ) {
 
     ScreenView.call( this );
 
-    var sceneNode = new EqualityExplorerSceneNode( this.layoutBounds );
+    var sceneNode = new EqualityExplorerSceneNode( model.scene, this.layoutBounds );
     this.addChild( sceneNode );
 
     // Reset All button

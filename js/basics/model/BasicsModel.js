@@ -10,13 +10,16 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
    * @constructor
    */
   function BasicsModel() {
-    //TODO
+
+    // @public
+    this.scene = new EqualityExplorerScene();
   }
 
   equalityExplorer.register( 'BasicsModel', BasicsModel );
@@ -25,7 +28,7 @@ define( function( require ) {
 
     // @public resets the model
     reset: function() {
-      //TODO reset things here
+      this.scene.reset();
     },
 
     //TODO Called by the animation loop. Optional, so if your model has no animation, please delete this.
