@@ -16,5 +16,11 @@
   },
   "mySnapshots": {
     "value": "My Snapshots"
+  },
+  "equationOrInequality": {
+    "value": "Equation or Inequality"
+  },
+  "x": {
+    "value": "x"
   }
 }

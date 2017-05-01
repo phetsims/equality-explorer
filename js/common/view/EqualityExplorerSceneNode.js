@@ -6,6 +6,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
@@ -24,8 +25,13 @@ define( function( require ) {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
+    var equationAccordionBox = new EquationAccordionBox( {
+      centerX: ( snapshotsAccordionBox.right - layoutBounds.left ) / 2,
+      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
+    } );
+
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ snapshotsAccordionBox ];
+    options.children = [ snapshotsAccordionBox, equationAccordionBox ];
 
     Node.call( this, options );
   }
