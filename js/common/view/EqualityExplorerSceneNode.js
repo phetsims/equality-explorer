@@ -21,13 +21,16 @@ define( function( require ) {
 
   /**
    * @param {EqualityExplorerScene} scene
+   * @param {Property.<EqualityExplorerScene>} sceneProperty
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor
    */
-  function EqualityExplorerSceneNode( scene, layoutBounds, options ) {
+  function EqualityExplorerSceneNode( scene, sceneProperty, layoutBounds, options ) {
 
     options = options || {};
+
+    var self = this;
 
     var snapshotsAccordionBox = new SnapshotsAccordionBox( {
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
@@ -61,6 +64,10 @@ define( function( require ) {
     ];
 
     Node.call( this, options );
+
+    sceneProperty.link( function( newScene ) {
+      self.visible = ( newScene === scene );
+    } );
   }
 
   equalityExplorer.register( 'EqualityExplorerSceneNode', EqualityExplorerSceneNode );

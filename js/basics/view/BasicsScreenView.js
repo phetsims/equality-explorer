@@ -25,9 +25,6 @@ define( function( require ) {
 
     ScreenView.call( this );
 
-    var sceneNode = new EqualityExplorerSceneNode( model.scenes[ 0 ], this.layoutBounds );
-    this.addChild( sceneNode );
-
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
@@ -39,11 +36,16 @@ define( function( require ) {
     this.addChild( resetAllButton );
 
     var sceneControl = new BasicsSceneControl( model.scenes, model.sceneProperty, {
-      //TODO not correct
       right: resetAllButton.left - 30,
       bottom: this.layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
     this.addChild( sceneControl );
+
+    // create the view for each scene
+    for ( var i = 0; i < model.scenes.length; i++ ) {
+      var categoryNode = new EqualityExplorerSceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds );
+      this.addChild( categoryNode );
+    }
   }
 
   equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );

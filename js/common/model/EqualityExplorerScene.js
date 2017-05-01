@@ -40,6 +40,11 @@ define( function( require ) {
     // @public
     reset: function() {
       this.variableValueProperty.reset();
+    },
+
+    // @public
+    step: function() {
+      //TODO animate model elements
     }
   } );
 } );

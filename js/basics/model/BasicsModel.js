@@ -23,12 +23,14 @@ define( function( require ) {
 
     // @public
     this.scenes = [
+
+      //TODO temporary icons
       new EqualityExplorerScene( new Text( '1', { font: new PhetFont( 30 ) } ) ),
       new EqualityExplorerScene( new Text( '2', { font: new PhetFont( 30 ) } ) ),
       new EqualityExplorerScene( new Text( '3', { font: new PhetFont( 30 ) } ) )
     ];
 
-    // @public
+    // @public the selected scene
     this.sceneProperty = new Property( this.scenes[ 0 ] );
   }
 
@@ -38,13 +40,29 @@ define( function( require ) {
 
     // @public resets the model
     reset: function() {
-      this.scene.reset();
+      for ( var i = 0; i < this.scenes.length; i++ ) {
+        this.scenes[ i ].reset();
+      }
+      this.sceneProperty.reset();
     },
 
-    //TODO Called by the animation loop. Optional, so if your model has no animation, please delete this.
-    // @public
+    /**
+     * Updates time-dependent parts of the model.
+     * @param {number} dt - time since the previous step, in seconds
+     * @public
+     */
     step: function( dt ) {
-      //TODO Handle model animation here.
+
+      //TODO is this an appropriate value?
+      dt = Math.min( dt, 0.1 );
+
+      // step the selected scene
+      for ( var i = 0; i < this.categories.length; i++ ) {
+        if ( this.scenes[ i ] === this.sceneProperty.value ) {
+          this.scenes[ i ].step( dt );
+          break;
+        }
+      }
     }
   } );
 } );
