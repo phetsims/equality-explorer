@@ -12,6 +12,9 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Property = require( 'AXON/Property' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   /**
    * @constructor
@@ -19,7 +22,14 @@ define( function( require ) {
   function BasicsModel() {
 
     // @public
-    this.scene = new EqualityExplorerScene();
+    this.scenes = [
+      new EqualityExplorerScene( new Text( '1', { font: new PhetFont( 30 ) } ) ),
+      new EqualityExplorerScene( new Text( '2', { font: new PhetFont( 30 ) } ) ),
+      new EqualityExplorerScene( new Text( '3', { font: new PhetFont( 30 ) } ) )
+    ];
+
+    // @public
+    this.sceneProperty = new Property( this.scenes[ 0 ] );
   }
 
   equalityExplorer.register( 'BasicsModel', BasicsModel );

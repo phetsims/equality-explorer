@@ -9,7 +9,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BasicsSceneControl = require( 'EQUALITY_EXPLORER/basics/view/BasicsSceneControl' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
@@ -23,7 +25,7 @@ define( function( require ) {
 
     ScreenView.call( this );
 
-    var sceneNode = new EqualityExplorerSceneNode( model.scene, this.layoutBounds );
+    var sceneNode = new EqualityExplorerSceneNode( model.scenes[ 0 ], this.layoutBounds );
     this.addChild( sceneNode );
 
     // Reset All button
@@ -31,10 +33,17 @@ define( function( require ) {
       listener: function() {
         model.reset();
       },
-      right:  this.layoutBounds.maxX - 10,
-      bottom: this.layoutBounds.maxY - 10
+      right: this.layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
     this.addChild( resetAllButton );
+
+    var sceneControl = new BasicsSceneControl( model.scenes, model.sceneProperty, {
+      //TODO not correct
+      right: resetAllButton.left - 30,
+      bottom: this.layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
+    } );
+    this.addChild( sceneControl );
   }
 
   equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );

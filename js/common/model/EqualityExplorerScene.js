@@ -15,12 +15,16 @@ define( function( require ) {
   var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   /**
+   * @param {Node} icon
    * @param {Object} [options]
    * @constructor
    */
-  function EqualityExplorerScene( options ) {
+  function EqualityExplorerScene( icon, options ) {
 
     options = options || {};
+
+    // @public (read-only) Node used to represent the scene
+    this.icon = icon;
 
     // @public (read-only)
     this.variableRange = new RangeWithValue( 1, 10, 1 );
