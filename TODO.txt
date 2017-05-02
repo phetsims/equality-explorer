@@ -12,11 +12,14 @@ Number the mockups in the design document, so that they can be referred to in co
 The title is "Equality Explorer" but we are exploring equalities and inequalities. I'm mentioning this because
   we decided that using "Equation" for the accordion box title was incorrect, and we needed "Equation or Inequality".
 
-Do we need a control for clearing the scales, as we have in Unit Rates?
+Do we need a control for clearing the scale, as we have in Unit Rates?
 
-Icon for "organize" button
+Organize button:
+  icon?
+  disabled when the scale is empty or already organized?
+  position it closer to the scale?
 
-When there is nothing on the scales, is the equation '0 = 0' ?
+When there is nothing on the scale, is the equation '0 = 0' ?
 
 Basics: What are the 3 scenes, their item types, and the relative "weight" of each item type?
 
