@@ -103,7 +103,7 @@ define( function( require ) {
         children: [ trashButton, snapshotButton ]
       } );
 
-      //TODO show snapshot '1', for demonstration purposes
+      //TODO placeholder
       if ( i === 0 ) {
         numberButton.visible = true;
         snapshotButton.visible = false;
