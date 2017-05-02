@@ -21,6 +21,10 @@ Organize button:
 
 When there is nothing on the scale, is the equation '0 = 0' ?
 
+Is the state of accordion boxes saved with each snapshot?
+
+Is the state of accordion boxes specific to each scene, or applied to all scenes?
+
 Basics: What are the 3 scenes, their item types, and the relative "weight" of each item type?
 
 Numbers: Put '1' on the left plate, lock the couplers, then return '1' to the left panel. This results
