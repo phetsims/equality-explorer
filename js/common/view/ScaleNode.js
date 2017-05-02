@@ -106,10 +106,8 @@ define( function( require ) {
       bottom: beamNode.top + ( 0.65 * BEAM_DEPTH )
     } );
 
-    //TODO arrow color changes to 'rgb(247,112,62)' when not balanced
     // arrow at the center on the beam, points perpendicular to the beam
     var arrowNode = new ArrowNode( 0, 0, 0, -ARROW_LENGTH, {
-      fill: 'rgb( 0, 187, 100 )',
       headHeight: 20,
       headWidth: 15,
       centerX: beamNode.width / 2,
