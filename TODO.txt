@@ -16,6 +16,8 @@ Do we need a control for clearing the scales, as we have in Unit Rates?
 
 Icon for "organize" button
 
+When there is nothing on the scales, is the equation '0 = 0' ?
+
 Basics: What are the 3 scenes, their item types, and the relative "weight" of each item type?
 
 Numbers: Put '1' on the left plate, lock the couplers, then return '1' to the left panel. This results
