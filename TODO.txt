@@ -21,7 +21,10 @@ Organize button:
 
 When there is nothing on the scale, is the equation '0 = 0' ?
 
-Is the state of accordion boxes saved with each snapshot?
+Snapshots, what is saved?
+  value of x?
+  state of accordion boxes?
+  state of couplers?
 
 Is the state of accordion boxes specific to each scene, or applied to all scenes?
 
