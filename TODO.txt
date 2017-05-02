@@ -24,6 +24,8 @@ Snapshots, what is saved?
   state of accordion boxes?
   state of couplers?
 
+If we have a maximum of 4 items per panel, does that require wider Snapshots panel? Or are some of those items inverses?
+
 Is the state of accordion boxes specific to each scene, or applied to all scenes?
 
 Basics: What are the 3 scenes, their item types, and the relative "weight" of each item type?
