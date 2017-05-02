@@ -1,5 +1,6 @@
 TODO items for equality-explorer
 
+========================================================================================================================
 DESIGN
 
 Create "Equation Explorer" folder in Google docs (currently "Balancing Equations")
@@ -35,4 +36,7 @@ Solving: In previous screens, we had a specific number of each item available.
   E.g., put '10x' on the scale, then apply universal operator 'x 5', which gives us '50x', then
   return that to the panel below the scale.
 
+========================================================================================================================
+IMPLEMENTATION
 
+Add tilting to scale
