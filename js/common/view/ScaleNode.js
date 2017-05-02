@@ -110,16 +110,14 @@ define( function( require ) {
     var arrowNode = new ArrowNode( 0, 0, 0, -ARROW_LENGTH, {
       headHeight: 20,
       headWidth: 15,
-      centerX: beamNode.width / 2,
-      bottom: -0.65 * BEAM_DEPTH
+      centerX: beamNode.centerX,
+      bottom: beamNode.top + ( 0.65 * BEAM_DEPTH )
     } );
-    beamNode.addChild( arrowNode );
-    arrowNode.moveToBack();
 
     // pivot points that connect the plates to the beam
     var platePivotShape = new Shape().circle( 0, 0, PLATE_PIVOT_DIAMETER / 2 );
     var leftPlatePivotNode = new Path( platePivotShape, _.extend( {}, PLATE_PIVOT_OPTIONS,  {
-      bottom: -0.65 * BEAM_DEPTH,
+      bottom: -0.35 * BEAM_DEPTH,
       centerX: PLATE_PIVOT_X_OFFSET
     } ) );
     beamNode.addChild( leftPlatePivotNode );
@@ -142,7 +140,7 @@ define( function( require ) {
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [
       leftPlateNode, rightPlateNode,
-      baseNode, beamPivotNode, dashedLine, beamNode
+      baseNode, beamPivotNode, dashedLine, arrowNode, beamNode
     ];
 
     Node.call( this, options );
@@ -150,11 +148,13 @@ define( function( require ) {
     // unlink unnecessary, ScaleNode exists for lifetime of sim
     angleProperty.link( function( angle, oldAngle ) {
 
-      // rotate the beam about its pivot point
       var deltaAngle = angle - oldAngle;
-      beamNode.rotateAround( new Vector2( beamNode.centerX, beamNode.bottom ), deltaAngle );
 
-      // fill the arrow
+      // rotate the beam about its pivot point
+      beamNode.rotateAround( new Vector2( beamNode.centerX, beamNode.centerY ), deltaAngle );
+
+      // rotate and fill the arrow
+      arrowNode.rotateAround( new Vector2( arrowNode.centerX, arrowNode.bottom ), deltaAngle );
       arrowNode.fill = ( angle === 0 ) ? 'green' : 'orange';
 
       // left plate

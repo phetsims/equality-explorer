@@ -51,9 +51,14 @@ define( function( require ) {
 
     // @public
     step: function( dt ) {
+      this.rotateScale();
+    },
 
-      var maxAngle = Math.PI / 18; // maximum rotation
-      var deltaAngle = maxAngle / 100; // rotation per step
+    // @private for demo purposes only
+    rotateScale: function() {
+
+      var maxAngle = Math.PI / 15; // maximum rotation
+      var deltaAngle = maxAngle / 80; // rotation per step
 
       var newAngle = this.scaleAngleProperty.value + ( this.rotationMultiplier * deltaAngle );
 
