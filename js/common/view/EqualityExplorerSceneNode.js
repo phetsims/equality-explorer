@@ -66,7 +66,7 @@ define( function( require ) {
       bottom: leftItemPanel.bottom
     } );
 
-    var scaleNode = new ScaleNode( {
+    var scaleNode = new ScaleNode( scene.scaleAngleProperty, {
       centerX: equationAccordionBox.centerX,
       bottom: leftItemPanel.top - 30
     } );

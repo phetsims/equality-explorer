@@ -13,6 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   /**
    * @param {Object} [options]
@@ -57,8 +58,16 @@ define( function( require ) {
       center: wallNode.center
     } );
 
+    // Flange on the bottom of that plate that attaches to pivot on scale
+    var flangeNode = new Rectangle( 0, 0, 10, 35, {
+      fill: 'rgb( 204, 204, 204 )',
+      stroke: 'black',
+      centerX: plateNode.centerX,
+      top: plateNode.centerY
+    } );
+
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ plateNode, wallNode, insideNode, rimNode ];
+    options.children = [ flangeNode, plateNode, wallNode, insideNode, rimNode ];
 
     Node.call( this, options );
 

@@ -1,6 +1,5 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO make the scale pivot
 /**
  * The scale used throughout Equality Explorer.
  *
@@ -38,29 +37,24 @@ define( function( require ) {
   var BEAM_PIVOT_BOTTOM_WIDTH = 25;
   
   // plate pivots
+  var PLATE_PIVOT_X_OFFSET = 45; // from the ends of the beam
   var PLATE_PIVOT_DIAMETER = 16;
   var PLATE_PIVOT_OPTIONS = {
     fill: 'rgb( 204, 204, 204 )',
     stroke: 'black'
   };
   
-  // flanges connected to the bottom of each plate
-  var FLANGE_WIDTH = 0.6 * PLATE_PIVOT_DIAMETER;
-  var FLANGE_HEIGHT = 35; // from center of plate to center to pivot
-  var FLANGE_X_OFFSET = 45; // from the ends of the beam
-  var FLANGE_OPTIONS = {
-    fill: 'rgb( 204, 204, 204 )',
-    stroke: 'black'
-  };
-
   // arrow
   var ARROW_LENGTH = 75;
 
   /**
+   * @param {Property.<number>} angleProperty
    * @param {Object} [options]
    * @constructor
    */
-  function ScaleNode( options ) {
+  function ScaleNode( angleProperty, options ) {
+
+    var self = this;
 
     options = _.extend( {
       leftPlateFill: EqualityExplorerColors.LEFT_PLATE_COLOR,
@@ -108,8 +102,8 @@ define( function( require ) {
     var dashedLine = new Line( 0, 0, 0, ARROW_LENGTH, {
       lineDash: [ 4, 4 ],
       stroke: 'black',
-      bottom: beamNode.top + ( 0.65 * BEAM_DEPTH ),
-      centerX: beamNode.centerX
+      centerX: beamNode.centerX,
+      bottom: beamNode.top + ( 0.65 * BEAM_DEPTH )
     } );
 
     //TODO arrow color changes to 'rgb(247,112,62)' when not balanced
@@ -118,54 +112,62 @@ define( function( require ) {
       fill: 'rgb( 0, 187, 100 )',
       headHeight: 20,
       headWidth: 15,
-      bottom: beamNode.top + ( 0.65 * BEAM_DEPTH ),
-      centerX: beamNode.centerX
+      centerX: beamNode.width / 2,
+      bottom: -0.65 * BEAM_DEPTH
     } );
+    beamNode.addChild( arrowNode );
 
     // pivot points the connect the plates to the beam
     var platePivotShape = new Shape().circle( 0, 0, PLATE_PIVOT_DIAMETER / 2 );
     var leftPlatePivotNode = new Path( platePivotShape, _.extend( {}, PLATE_PIVOT_OPTIONS,  {
-      bottom: beamNode.top + ( 0.65 * BEAM_DEPTH ),
-      centerX: beamNode.left + FLANGE_X_OFFSET
+      bottom: -0.65 * BEAM_DEPTH,
+      centerX: PLATE_PIVOT_X_OFFSET
     } ) );
+    beamNode.addChild( leftPlatePivotNode );
     var rightPlatePivotNode = new Path( platePivotShape, _.extend( {}, PLATE_PIVOT_OPTIONS, {
       bottom: leftPlatePivotNode.bottom,
-      centerX: beamNode.right - FLANGE_X_OFFSET
+      centerX: beamNode.width - PLATE_PIVOT_X_OFFSET
     } ) );
-
-    // flange on the bottom of each plate that connects it to a pivot point
-    var flangeShape = new Shape().rect( 0, 0, FLANGE_WIDTH, FLANGE_HEIGHT );
-    var leftFlangeNode = new Path( flangeShape, _.extend( {}, FLANGE_OPTIONS, {
-      centerX: leftPlatePivotNode.centerX,
-      bottom: leftPlatePivotNode.centerY
-    } ) );
-    var rightFlangeNode = new Path( flangeShape, _.extend( {}, FLANGE_OPTIONS, {
-      centerX: rightPlatePivotNode.centerX,
-      bottom: rightPlatePivotNode.centerY
-    } ) );
+    beamNode.addChild( rightPlatePivotNode );
 
     // plates
     var leftPlateNode = new PlateNode( {
       color: options.leftPlateFill,
-      centerX: leftPlatePivotNode.centerX,
-      centerY: leftFlangeNode.top
+      center: beamNode.center // correct location handled by angleProperty observer
     } );
     var rightPlateNode = new PlateNode( {
       color: options.rightPlateFill,
-      centerX: rightPlatePivotNode.centerX,
-      centerY: rightFlangeNode.top
+      center: beamNode.center // correct location handled by angleProperty observer
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [
-      baseNode, beamPivotNode, beamNode,
-      dashedLine, arrowNode,
-      leftFlangeNode, rightFlangeNode,
-      leftPlatePivotNode, rightPlatePivotNode,
-      leftPlateNode, rightPlateNode
+      leftPlateNode, rightPlateNode,
+      baseNode, beamPivotNode, dashedLine, beamNode
     ];
 
     Node.call( this, options );
+
+    // unlink unnecessary, ScaleNode exists for lifetime of sim
+    angleProperty.link( function( angle, oldAngle ) {
+
+      // rotate the beam about its pivot point
+      var deltaAngle = angle - oldAngle;
+      beamNode.rotateAround( new Vector2( beamNode.centerX, beamNode.bottom ), deltaAngle );
+
+      // fill the arrow
+      arrowNode.fill = ( angle === 0 ) ? 'green' : 'orange';
+
+      // left plate
+      var leftPlatePivotCenter = self.globalToLocalPoint( beamNode.localToGlobalPoint( leftPlatePivotNode.center ) );
+      leftPlateNode.centerX = leftPlatePivotCenter.x;
+      leftPlateNode.bottom = leftPlatePivotCenter.y;
+
+      // right plate
+      var rightPlatePivotCenter = self.globalToLocalPoint( beamNode.localToGlobalPoint( rightPlatePivotNode.center ) );
+      rightPlateNode.centerX = rightPlatePivotCenter.x;
+      rightPlateNode.bottom = rightPlatePivotCenter.y;
+    } );
   }
 
   equalityExplorer.register( 'ScaleNode', ScaleNode );

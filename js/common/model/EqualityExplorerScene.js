@@ -31,6 +31,12 @@ define( function( require ) {
 
     // @public
     this.variableValueProperty = new Property( this.variableRange.defaultValue );
+
+    // @public (read-only)
+    this.scaleAngleProperty = new Property( 0 );
+
+    // @private
+    this.rotationMultiplier = 1;
   }
 
   equalityExplorer.register( 'EqualityExplorerScene', EqualityExplorerScene );
@@ -40,11 +46,28 @@ define( function( require ) {
     // @public
     reset: function() {
       this.variableValueProperty.reset();
+      this.scaleAngleProperty.reset();
     },
 
     // @public
-    step: function() {
-      //TODO implement step
+    step: function( dt ) {
+
+      var maxAngle = Math.PI / 18; // maximum rotation
+      var deltaAngle = maxAngle / 100; // rotation per step
+
+      var newAngle = this.scaleAngleProperty.value + ( this.rotationMultiplier * deltaAngle );
+
+      if ( newAngle >= maxAngle ) {
+        newAngle = maxAngle;
+        this.rotationMultiplier = -1;
+      }
+      else if ( newAngle <= -maxAngle ) {
+        newAngle = -maxAngle;
+        this.rotationMultiplier = 1;
+      }
+
+      assert && assert( Math.abs( newAngle ) <= maxAngle );
+      this.scaleAngleProperty.value = newAngle;
     }
   } );
 } );
