@@ -27,6 +27,8 @@ define( function( require ) {
 
   // constants
   var NUMBER_FONT = new PhetFont( 16 );
+  var BUTTON_X_MARGIN = 8;
+  var BUTTON_Y_MARGIN = 5;
 
   /**
    * @param {Object} [options]
@@ -54,6 +56,11 @@ define( function( require ) {
 
     var vBoxChildren = [];
 
+    var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.35 } );
+    var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.35 } );
+    var maxIconWidth = Math.max( snapshotIcon.width, trashIcon.width );
+    var maxIconHeight = Math.max( snapshotIcon.height, trashIcon.height );
+
     // Create a row for each snapshot
     for ( var i = 0; i < options.numberOfSnapshots; i++ ) {
 
@@ -77,14 +84,19 @@ define( function( require ) {
       var equationNode = new Rectangle( 0, 0, 130, 35 ); //TODO use EquationNode
 
       var snapshotButton = new RectangularPushButton( {
-        content: new FontAwesomeNode( 'camera', { scale: 0.4 } ),
-        baseColor: PhetColorScheme.PHET_LOGO_YELLOW
+        content: snapshotIcon,
+        baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+        xMargin: BUTTON_X_MARGIN + ( maxIconWidth - snapshotIcon.width ),
+        yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - snapshotIcon.height )
       } );
 
       var trashButton = new RectangularPushButton( {
-        content: new FontAwesomeNode( 'trash', { scale: 0.4 } ),
+        content: trashIcon,
         center: snapshotButton.center,
-        baseColor: 'white'
+        baseColor: 'white',
+        xMargin: BUTTON_X_MARGIN + ( maxIconWidth - trashIcon.width ),
+        yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - trashIcon.height ),
+        visible: false
       } );
 
       var buttonsParent = new Node( {
@@ -95,6 +107,7 @@ define( function( require ) {
       if ( i === 0 ) {
         numberButton.visible = true;
         snapshotButton.visible = false;
+        trashButton.visible = true;
         var equationText = new Text( '2 > 1', {
           font: new PhetFont( 20 ),
           center: equationNode.center
