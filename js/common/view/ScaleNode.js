@@ -114,6 +114,7 @@ define( function( require ) {
       bottom: -0.65 * BEAM_DEPTH
     } );
     beamNode.addChild( arrowNode );
+    arrowNode.moveToBack();
 
     // pivot points that connect the plates to the beam
     var platePivotShape = new Shape().circle( 0, 0, PLATE_PIVOT_DIAMETER / 2 );
