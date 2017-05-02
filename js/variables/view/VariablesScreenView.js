@@ -36,12 +36,5 @@ define( function( require ) {
 
   equalityExplorer.register( 'VariablesScreenView', VariablesScreenView );
 
-  return inherit( ScreenView, VariablesScreenView, {
-
-    //TODO Called by the animation loop. Optional, so if your view has no animation, please delete this.
-    // @public
-    step: function( dt ) {
-      //TODO Handle view animation here.
-    }
-  } );
+  return inherit( ScreenView, VariablesScreenView );
 } );

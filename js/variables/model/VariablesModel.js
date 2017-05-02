@@ -16,7 +16,7 @@ define( function( require ) {
    * @constructor
    */
   function VariablesModel() {
-    //TODO
+    //TODO implement constructor
   }
 
   equalityExplorer.register( 'VariablesModel', VariablesModel );
@@ -25,13 +25,12 @@ define( function( require ) {
 
     // @public resets the model
     reset: function() {
-      //TODO reset things here
+      //TODO implement reset
     },
 
-    //TODO Called by the animation loop. Optional, so if your model has no animation, please delete this.
     // @public
     step: function( dt ) {
-      //TODO Handle model animation here.
+      //TODO implement step
     }
   } );
 } );

@@ -44,7 +44,7 @@ define( function( require ) {
 
     // @public
     step: function() {
-      //TODO animate model elements
+      //TODO implement step
     }
   } );
 } );

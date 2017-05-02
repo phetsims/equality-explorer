@@ -50,12 +50,5 @@ define( function( require ) {
 
   equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );
 
-  return inherit( ScreenView, BasicsScreenView, {
-
-    //TODO Called by the animation loop. Optional, so if your view has no animation, please delete this.
-    // @public
-    step: function( dt ) {
-      //TODO Handle view animation here.
-    }
-  } );
+  return inherit( ScreenView, BasicsScreenView );
 } );
