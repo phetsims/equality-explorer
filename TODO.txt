@@ -19,8 +19,6 @@ Organize button:
   disabled when the scale is empty or already organized?
   position it closer to the scale?
 
-When there is nothing on the scale, is the equation '0 = 0' ?
-
 Snapshots, what is saved?
   value of x?
   state of accordion boxes?
