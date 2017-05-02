@@ -3,6 +3,8 @@ TODO items for equality-explorer
 ========================================================================================================================
 DESIGN
 
+August 2017 milestone: which features to include?
+
 Create "Equation Explorer" folder in Google docs (currently "Balancing Equations")
 
 Number the mockups in the design document, so that they can be referred to in comments, emails, etc.
