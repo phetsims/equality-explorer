@@ -24,7 +24,7 @@ define( function( require ) {
     options = options || {};
 
     //TODO placeholder
-    var textNode = new Text( '2x + 2 = 6', {
+    var textNode = new Text( '0 = 0', {
       font: new PhetFont( 35 )
     } );
 
