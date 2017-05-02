@@ -1,0 +1,38 @@
+TODO items for equality-explorer
+
+DESIGN
+
+Create "Equation Explorer" folder in Google docs (currently "Balancing Equations")
+
+Number the mockups in the design document, so that they can be referred to in comments, emails, etc.
+
+The title is "Equality Explorer" but we are exploring equalities and inequalities. I'm mentioning this because
+  we decided that using "Equation" for the accordion box title was incorrect, and we needed "Equation or Inequality".
+
+Basics: What are the 3 scenes, their item types, and the relative "weight" of each item type?
+
+Numbers: Put '1' on the left plate, lock the couplers, then return '1' to the left panel. This results
+  in '-1' being added to the right plate.  Does that -1 come from the right panel's supply of '-1'?
+
+Variables: What is the range for the 'x' value spinner? Does it include zero?
+
+Variables: How are we handling 'x' with respect to snapshots?
+
+Solving: design the control for the "universal operation"
+  What UI controls does it use?
+  What are the operators?
+  What is the range of the numeric value?
+  Does the range vary based on operator?
+
+Solving: Can the "universal operation" be used to add things to an empty scale? (e.g. "+ 2")
+
+Solving: Is there a limit after which the "universal operator" can't be used? For example, what prevents
+  me from pressing "x 5" over and over? How do we determine the size of the items on the scale if
+  there is no "maximum"?
+
+Solving: In previous screens, we had a specific number of each item available.
+  With the "universal operation", it seems like we need an infinite number of each item.
+  E.g., put '10x' on the scale, then apply universal operator 'x 5', which gives us '50x', then
+  return that to the panel below the scale.
+
+
