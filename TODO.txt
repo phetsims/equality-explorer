@@ -58,4 +58,3 @@ Solving: In previous screens, we had a specific number of each item available.
 ========================================================================================================================
 IMPLEMENTATION
 
-Add tilting to scale
