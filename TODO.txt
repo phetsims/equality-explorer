@@ -3,8 +3,6 @@ TODO items for equality-explorer
 ========================================================================================================================
 DESIGN
 
-Who is on the design team?
-
 August 2017 milestone: which features to include?
 
 Do we need a control for clearing the scale, as we have in Unit Rates?
