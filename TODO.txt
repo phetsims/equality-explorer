@@ -9,9 +9,6 @@ Create "Equation Explorer" folder in Google docs (currently "Balancing Equations
 
 Number the mockups in the design document, so that they can be referred to in comments, emails, etc.
 
-The title is "Equality Explorer" but we are exploring equalities and inequalities. I'm mentioning this because
-  we decided that using "Equation" for the accordion box title was incorrect, and should be "Equation or Inequality".
-
 Do we need a control for clearing the scale, as we have in Unit Rates?
 
 Organize button:
