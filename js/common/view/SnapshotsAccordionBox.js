@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO SnapshotsAccordionBox needs to be wide enough to support 3 terms on each side of the equation
 /***
  * Accordion box that allows the student to save and restore snapshots, specific configurations of a scene.
  *
