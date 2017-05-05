@@ -37,6 +37,11 @@ define( function( require ) {
 
     // @private
     this.rotationMultiplier = 1;
+
+    // @public
+    this.equationAccordionBoxExpandedProperty = new Property( true );
+    this.snapshotsAccordionBoxExpandedProperty = new Property( true );
+    this.variableAccordionBoxExpandedProperty = new Property( true );
   }
 
   equalityExplorer.register( 'EqualityExplorerScene', EqualityExplorerScene );
@@ -47,6 +52,9 @@ define( function( require ) {
     reset: function() {
       this.variableValueProperty.reset();
       this.scaleAngleProperty.reset();
+      this.equationAccordionBoxExpandedProperty.reset();
+      this.snapshotsAccordionBoxExpandedProperty.reset();
+      this.variableAccordionBoxExpandedProperty.reset();
     },
 
     // @public

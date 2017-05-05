@@ -36,11 +36,13 @@ define( function( require ) {
     var self = this;
 
     var snapshotsAccordionBox = new SnapshotsAccordionBox( {
+      expandedProperty: scene.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
     var variableAccordionBox = new VariableAccordionBox( scene.variableValueProperty, scene.variableRange, {
+      expandedProperty: scene.variableAccordionBoxExpandedProperty,
       top: snapshotsAccordionBox.bottom + 10,
       right: snapshotsAccordionBox.right
     } );
@@ -52,6 +54,7 @@ define( function( require ) {
     } );
 
     var equationAccordionBox = new EquationAccordionBox( {
+      expandedProperty: scene.equationAccordionBoxExpandedProperty,
       centerX: layoutBounds.left + ( snapshotsAccordionBox.left - layoutBounds.left ) / 2,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
