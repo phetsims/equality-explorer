@@ -10,25 +10,11 @@ Snapshots, what is saved?
 
 Basics: What are the 3 scenes, their item types, and the relative "weight" of each item type?
 
-Variables: How are we handling 'x' with respect to snapshots?
-
 Solving: design the control for the "universal operation"
   What UI controls does it use?
   What are the operators?
   What is the range of the numeric value?
   Does the range vary based on operator?
-
-Solving: Can the "universal operation" be used to add things to an empty scale? (e.g. "+ 2")
-
-Solving: Is there a limit after which the "universal operator" can't be used? For example, what prevents
-  me from pressing "x 5" over and over? How do we determine the size of the items on the scale if
-  there is no "maximum"?
-
-Solving: In previous screens, we had a specific number of each item available.
-  With the "universal operation", it seems like potentially have an infinite number of each item.
-  Example scenario: put '10x' on the scale, then apply universal operator 'x 5', which gives us '50x', then
-  return that to the panel below the scale. I now have way more items in the panel than I did in the first
-  3 screens.
 
 ========================================================================================================================
 IMPLEMENTATION
