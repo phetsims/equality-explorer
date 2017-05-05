@@ -17,6 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemPanel = require( 'EQUALITY_EXPLORER/common/view/ItemPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var OperationNode = require( 'EQUALITY_EXPLORER/common/view/OperationNode' );
   var OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
   var ScaleNode = require( 'EQUALITY_EXPLORER/common/view/ScaleNode' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
@@ -34,6 +35,8 @@ define( function( require ) {
     options = options || {};
 
     var self = this;
+
+    var glassPane = new Node();
 
     var snapshotsAccordionBox = new SnapshotsAccordionBox( {
       expandedProperty: scene.snapshotsAccordionBoxExpandedProperty,
@@ -57,6 +60,11 @@ define( function( require ) {
       expandedProperty: scene.equationAccordionBoxExpandedProperty,
       centerX: layoutBounds.left + ( snapshotsAccordionBox.left - layoutBounds.left ) / 2,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
+    } );
+
+    var operationNode = new OperationNode( scene.operatorProperty, scene.operandProperty, glassPane, {
+      centerX: equationAccordionBox.centerX,
+      top: equationAccordionBox.bottom + 20
     } );
 
     var leftItemPanel = new ItemPanel( {
@@ -86,8 +94,10 @@ define( function( require ) {
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [
       snapshotsAccordionBox, variableAccordionBox, organizeButton,
-      equationAccordionBox, leftItemPanel, rightItemPanel,
-      scaleNode, clearScaleButton
+      equationAccordionBox, operationNode,
+      leftItemPanel, rightItemPanel,
+      scaleNode, clearScaleButton,
+      glassPane
     ];
 
     Node.call( this, options );

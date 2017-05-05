@@ -14,7 +14,9 @@ define( function( require ) {
   var EqualityExplorerConstants = {
 
     SCREEN_VIEW_X_MARGIN: 20,
-    SCREEN_VIEW_Y_MARGIN: 20
+    SCREEN_VIEW_Y_MARGIN: 20,
+
+    OPERATORS: [ '\u002b', '\u2212', '\u00d7', '\u00f7' ] // {string} plus, minus, subtract, divide
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

@@ -10,9 +10,11 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var StringProperty = require( 'AXON/StringProperty' );
 
   /**
    * @param {Node} icon
@@ -45,6 +47,14 @@ define( function( require ) {
 
     // @public whether the couplers that connects the 2 sides of the scale are coupled
     this.coupledProperty = new Property( false );
+
+    // @public
+    this.operatorProperty = new StringProperty( EqualityExplorerConstants.OPERATORS[ 0 ], {
+      isValidValue: function( value ) {
+        return _.includes( EqualityExplorerConstants.OPERATORS, value );
+      }
+    } );
+    this.operandProperty = new Property( 1 );
   }
 
   equalityExplorer.register( 'EqualityExplorerScene', EqualityExplorerScene );
@@ -58,6 +68,8 @@ define( function( require ) {
       this.equationAccordionBoxExpandedProperty.reset();
       this.snapshotsAccordionBoxExpandedProperty.reset();
       this.variableAccordionBoxExpandedProperty.reset();
+      this.operatorProperty.reset();
+      this.operandProperty.reset();
     },
 
     // @public
