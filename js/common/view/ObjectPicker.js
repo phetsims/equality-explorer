@@ -1,6 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO this was copied from NumberPicker and heavily modified.
+//TODO This was copied from NumberPicker and heavily modified. Move to scenery-phet, factor out commonality.
 /**
  * User-interface component for picking one of several values
  * This is essentially a value with integrated up/down spinners.
@@ -111,13 +111,14 @@ define( function( require ) {
     // compute size of arrows
     var arrowButtonSize = new Dimension2( 0.5 * backgroundWidth, options.arrowHeight );
 
+    // options shared by both arrows
     var arrowOptions = {
       stroke: options.arrowStroke,
       lineWidth: options.arrowLineWidth,
       pickable: false
     };
 
-    // 'up' arrow
+    // up arrow
     var upArrowShape = new Shape()
       .moveTo( arrowButtonSize.width / 2, 0 )
       .lineTo( arrowButtonSize.width, arrowButtonSize.height )
@@ -128,7 +129,7 @@ define( function( require ) {
       bottom: upBackground.top - options.arrowYSpacing
     } ) );
 
-    // 'down' arrow
+    // down arrow
     var downArrowShape = new Shape()
       .moveTo( arrowButtonSize.width / 2, arrowButtonSize.height )
       .lineTo( 0, 0 )
@@ -196,25 +197,20 @@ define( function( require ) {
     //------------------------------------------------------------
     // Properties
 
-    //TODO duplicated code from valueObserver
-    var index = -1;
-    for ( var i = 0; i < items.length; i++ ) {
-      if ( items[ i ].value === valueProperty.value ) {
-        index = i;
-        break;
-      }
-    }
-    assert && assert( index !== -1, 'valueProperty value is invalid' );
-    var indexProperty = new Property( index );
+    // {Property.<number>} index of the item that's currently selected
+    var indexProperty = new Property( indexOfItemWithValue( items, valueProperty.value ) );
 
-    var upStateProperty = new Property( 'up' ); // up|down|over|out
-    var downStateProperty = new Property( 'up' ); // up|down|over|out
+    // {Property.<string>} state of the up and down button, see BUTTON_STATES
+    var upStateProperty = new Property( 'up' );
+    var downStateProperty = new Property( 'up' );
 
+    // {Property.<boolean>} whether the up button is enabled
     var upEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
         return index < items.length - 1;
       } );
 
+    // {Property.<boolean>} whether the down button is enabled
     var downEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
         return index > 0;
@@ -236,7 +232,6 @@ define( function( require ) {
 
     // down
     downParent.addInputListener( new ButtonStateListener( downStateProperty ) );
-    // @private
     var downListener = new FireOnHoldInputListener( {
       listener: function() {
         indexProperty.value = Math.max( indexProperty.value - 1, 0 );
@@ -246,24 +241,17 @@ define( function( require ) {
     } );
     downParent.addInputListener( downListener );
 
-    // enable/disable listeners: unlink unnecessary, properties are owned by this instance
+    // enable/disable
     upEnabledProperty.link( function( enabled ) { upListener.enabled = enabled; } );
     downEnabledProperty.link( function( enabled ) { downListener.enabled = enabled; } );
 
-    // @private Update text to match the value
+    // Update displayed Node and index to match the curret value
     var valueObserver = function( value ) {
 
-      // find the index of the item that corresponds to the value
-      for ( var i = 0; i < items.length; i++ ) {
-        if ( items[ i ].value === value ) {
-          index = i;
-          break;
-        }
-      }
-      assert && assert( index !== -1, 'invalid value' );
-
-      // show the node associated with the item
       valueParentNode.removeAllChildren();
+
+      // show the node associated with the value
+      var index = indexOfItemWithValue( items, value );
       var valueNode = items[ index ].node;
       valueParentNode.addChild( valueNode );
       valueNode.centerX = backgroundWidth / 2;
@@ -328,6 +316,24 @@ define( function( require ) {
   equalityExplorer.register( 'ObjectPicker.ButtonStateListener', ButtonStateListener );
 
   inherit( ButtonListener, ButtonStateListener );
+
+  /**
+   * Gets the index of the item that has a specified value.
+   * @param {{value:Object, node:Node}} items
+   * @param {Object} value
+   * @return {number}
+   */
+  var indexOfItemWithValue = function( items, value ) {
+    var index = -1;
+    for ( var i = 0; i < items.length; i++ ) {
+      if ( items[ i ].value === value ) {
+        index = i;
+        break;
+      }
+    }
+    assert && assert( index !== -1, 'invalid value' );
+    return index;
+  };
 
   // creates a vertical gradient
   var createVerticalGradient = function( topColor, centerColor, bottomColor, height ) {
