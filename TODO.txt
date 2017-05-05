@@ -3,11 +3,6 @@ TODO items for equality-explorer
 ========================================================================================================================
 DESIGN
 
-Organize button:
-  icon?
-  disabled when the scale is empty or already organized?
-  position it closer to the scale?
-
 Snapshots, what is saved?
   value of x?
   state of accordion boxes?

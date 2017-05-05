@@ -46,6 +46,7 @@ define( function( require ) {
     } );
 
     var organizeButton = new OrganizeButton( {
+      //TODO disable OrganizeButton when scale is empty or organized
       left: variableAccordionBox.left,
       top: variableAccordionBox.bottom + 10
     } );
@@ -74,6 +75,7 @@ define( function( require ) {
 
     var clearScaleButton = new ClearScaleButton( {
       //TODO add ClearScaleButton listener
+      //TODO disable ClearScaleButton when scale is empty
       right: scaleNode.centerX - 140,
       bottom: scaleNode.bottom
     } );

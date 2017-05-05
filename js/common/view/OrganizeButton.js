@@ -26,7 +26,7 @@ define( function( require ) {
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW
     }, options );
 
-    //TODO temporary icon from design doc. If we keep this, clean it up.
+    //TODO finalize icon for OrganizeButton
     var diameter = 12;
     var spacing = 3;
     var iconShape = new Shape()
