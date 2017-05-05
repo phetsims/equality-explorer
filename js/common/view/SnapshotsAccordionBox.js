@@ -82,7 +82,7 @@ define( function( require ) {
         children: [ numberLabel, numberButton ]
       } );
 
-      var equationNode = new Rectangle( 0, 0, 130, 35 ); //TODO use EquationNode
+      var equationNode = new Rectangle( 0, 0, 180, 35 ); //TODO use EquationNode
 
       var snapshotButton = new RectangularPushButton( {
         content: snapshotIcon,
@@ -104,14 +104,15 @@ define( function( require ) {
         children: [ trashButton, snapshotButton ]
       } );
 
-      //TODO placeholder
+      //TODO placeholder that shows worst case snapshot, 3 terms on each side
       if ( i === 0 ) {
         numberButton.visible = true;
         snapshotButton.visible = false;
         trashButton.visible = true;
-        var equationText = new Text( '2 > 1', {
+        var equationText = new Text( '-40x + 40\u25b2 + 40\u25a9 = -40x + 40\u25b2 + 40\u25a9', {
           font: new PhetFont( 20 ),
-          center: equationNode.center
+          center: equationNode.center,
+          maxWidth: equationNode.width
         } );
         equationNode.addChild( equationText );
       }
