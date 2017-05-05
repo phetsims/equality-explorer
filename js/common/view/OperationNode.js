@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ComboBox = require( 'SUN/ComboBox' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
@@ -20,40 +19,54 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+  var RectangularToggleButton = require( 'SUN/buttons/RectangularToggleButton' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @param {Property.<string>} operatorProperty
    * @param {Property.<number>} operandProperty
-   * @param {Node} comboBoxListParent
    * @param {Object} [options]
    * @constructor
    */
-  function OperationNode( operatorProperty, operandProperty, comboBoxListParent, options ) {
+  function OperationNode( operatorProperty, operandProperty, options ) {
 
     options = _.extend( {
+      operatorFont: new PhetFont( 16 ),
+      operandFont: new PhetFont( 24 ),
       operandRange: new Range( -10, 10 ),
-      font: new PhetFont( 24 ),
       spacing: 15
     }, options );
 
-    //TODO replace ComboBox with a picker that supports sets of values
-    // combo box for choosing operator
-    var operatorItems = [ ];
-    for ( var i = 0; i < EqualityExplorerConstants.OPERATORS.length; i++ ) {
-      var operator = EqualityExplorerConstants.OPERATORS[ i ];
-      var operatorNode = new Text( operator, {
-        font: options.font
-      } );
-      operatorItems.push( ComboBox.createItem( operatorNode, operator ) );
-    }
-    var operatorComboBox = new ComboBox( operatorItems, operatorProperty, comboBoxListParent );
+    //TODO mockup for operator control
+    var plusToggleButton = new RectangularToggleButton( true, false, new Property( true ), {
+      content: new Text( EqualityExplorerConstants.PLUS, { font: options.operatorFont } ),
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
+    } );
+    var minusToggleButton = new RectangularToggleButton( true, false, new Property( false ), {
+      content: new Text( EqualityExplorerConstants.MINUS, { font: options.operatorFont } ),
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
+    } );
+    var timesToggleButton = new RectangularToggleButton( true, false, new Property( false ), {
+      content: new Text( EqualityExplorerConstants.TIMES, { font: options.operatorFont } ),
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
+    } );
+    var divideToggleButton = new RectangularToggleButton( true, false, new Property( false ), {
+      content: new Text( EqualityExplorerConstants.DIVIDE, { font: options.operatorFont } ),
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
+    } );
+    var operatorButtons = new VBox( {
+      children: [
+        new HBox( { children: [ plusToggleButton, minusToggleButton ] } ),
+        new HBox( { children: [ timesToggleButton, divideToggleButton ] } )
+      ]
+    } );
 
     // picker for choosing operand
     var operandPicker = new NumberPicker( operandProperty, new Property( options.operandRange ), {
       color: 'black',
-      font: options.font,
+      font: options.operandFont,
       xMargin: 6,
       upFunction: function( value ) {
         if ( value === -1 && operatorProperty.value === EqualityExplorerConstants.DIVIDE ) {
@@ -86,15 +99,15 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ operatorComboBox, operandPicker, goButton ];
+    options.children = [ operatorButtons, operandPicker, goButton ];
 
     HBox.call( this, options );
 
     // prevent divide by zero
     operatorProperty.link( function( operator ) {
-     if ( operator === EqualityExplorerConstants.DIVIDE && operandProperty.value === 0 ) {
-       operandProperty.value = 1;
-     }
+      if ( operator === EqualityExplorerConstants.DIVIDE && operandProperty.value === 0 ) {
+        operandProperty.value = 1;
+      }
     } );
   }
 

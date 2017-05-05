@@ -11,16 +11,15 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
 
-  // constants
-  var DIVIDE = '\u00f7';
-
   var EqualityExplorerConstants = {
 
     SCREEN_VIEW_X_MARGIN: 20,
     SCREEN_VIEW_Y_MARGIN: 20,
 
-    DIVIDE: DIVIDE,
-    OPERATORS: [ '\u002b', '\u2212', '\u00d7', DIVIDE ] // {string} plus, minus, subtract, divide
+    PLUS: '\u002b',
+    MINUS: '\u2212',
+    TIMES: '\u00d7',
+    DIVIDE: '\u00f7'
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

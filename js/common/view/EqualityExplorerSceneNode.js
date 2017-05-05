@@ -36,8 +36,6 @@ define( function( require ) {
 
     var self = this;
 
-    var glassPane = new Node();
-
     var snapshotsAccordionBox = new SnapshotsAccordionBox( {
       expandedProperty: scene.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
@@ -62,7 +60,7 @@ define( function( require ) {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
-    var operationNode = new OperationNode( scene.operatorProperty, scene.operandProperty, glassPane, {
+    var operationNode = new OperationNode( scene.operatorProperty, scene.operandProperty, {
       centerX: equationAccordionBox.centerX,
       top: equationAccordionBox.bottom + 20
     } );
@@ -96,8 +94,7 @@ define( function( require ) {
       snapshotsAccordionBox, variableAccordionBox, organizeButton,
       equationAccordionBox, operationNode,
       leftItemPanel, rightItemPanel,
-      scaleNode, clearScaleButton,
-      glassPane
+      scaleNode, clearScaleButton
     ];
 
     Node.call( this, options );

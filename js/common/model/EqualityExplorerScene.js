@@ -14,7 +14,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
-  var StringProperty = require( 'AXON/StringProperty' );
 
   /**
    * @param {Node} icon
@@ -49,11 +48,7 @@ define( function( require ) {
     this.coupledProperty = new Property( false );
 
     // @public
-    this.operatorProperty = new StringProperty( EqualityExplorerConstants.OPERATORS[ 0 ], {
-      isValidValue: function( value ) {
-        return _.includes( EqualityExplorerConstants.OPERATORS, value );
-      }
-    } );
+    this.operatorProperty = new Property( EqualityExplorerConstants.PLUS );
     this.operandProperty = new Property( 1 );
   }
 
