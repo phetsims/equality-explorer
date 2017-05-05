@@ -3,8 +3,6 @@ TODO items for equality-explorer
 ========================================================================================================================
 DESIGN
 
-Do we need a control for clearing the scale, as we have in Unit Rates?
-
 Organize button:
   icon?
   disabled when the scale is empty or already organized?

@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ClearScaleButton = require( 'EQUALITY_EXPLORER/common/view/ClearScaleButton' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -71,10 +72,17 @@ define( function( require ) {
       bottom: leftItemPanel.top - 30
     } );
 
+    var clearScaleButton = new ClearScaleButton( {
+      //TODO add ClearScaleButton listener
+      right: scaleNode.centerX - 140,
+      bottom: scaleNode.bottom
+    } );
+
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [
       snapshotsAccordionBox, variableAccordionBox, organizeButton,
-      equationAccordionBox, leftItemPanel, rightItemPanel, scaleNode
+      equationAccordionBox, leftItemPanel, rightItemPanel,
+      scaleNode, clearScaleButton
     ];
 
     Node.call( this, options );
