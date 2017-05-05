@@ -42,6 +42,9 @@ define( function( require ) {
     this.equationAccordionBoxExpandedProperty = new Property( true );
     this.snapshotsAccordionBoxExpandedProperty = new Property( true );
     this.variableAccordionBoxExpandedProperty = new Property( true );
+
+    // @public whether the couplers that connects the 2 sides of the scale are coupled
+    this.coupledProperty = new Property( false );
   }
 
   equalityExplorer.register( 'EqualityExplorerScene', EqualityExplorerScene );
