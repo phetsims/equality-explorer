@@ -30,8 +30,8 @@ define( function( require ) {
   var BUTTON_STATES = [ 'up', 'down', 'over', 'out' ];
 
   /**
-   * @param {Property.<Object>} valueProperty
-   * @param {{value:Object, node:Node}[]} items
+   * @param {Property.<Object>} valueProperty - value of the current item that is displayed
+   * @param {{value:Object, node:Node}[]} items - the set of items that you can select from
    * @param {Object} [options]
    * @constructor
    */
