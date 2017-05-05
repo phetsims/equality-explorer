@@ -56,7 +56,7 @@ define( function( require ) {
       font: options.font,
       xMargin: 6,
       upFunction: function( value ) {
-        if ( value === -1 && operatorProperty.value === '\u00f7' ) {
+        if ( value === -1 && operatorProperty.value === EqualityExplorerConstants.DIVIDE ) {
           return 1; // prevent divide by zero
         }
         else {
@@ -64,7 +64,7 @@ define( function( require ) {
         }
       },
       downFunction: function( value ) {
-        if ( value === 1 && operatorProperty.value === '\u00f7' ) {
+        if ( value === 1 && operatorProperty.value === EqualityExplorerConstants.DIVIDE ) {
           return -1; // prevent divide by zero
         }
         else {
@@ -92,7 +92,7 @@ define( function( require ) {
 
     // prevent divide by zero
     operatorProperty.link( function( operator ) {
-     if ( operator === '\u00f7' && operandProperty.value === 0 ) {
+     if ( operator === EqualityExplorerConstants.DIVIDE && operandProperty.value === 0 ) {
        operandProperty.value = 1;
      }
     } );
