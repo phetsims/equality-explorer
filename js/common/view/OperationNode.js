@@ -15,14 +15,13 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
+  var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
-  var RectangularToggleButton = require( 'SUN/buttons/RectangularToggleButton' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @param {Property.<string>} operatorProperty
@@ -33,34 +32,29 @@ define( function( require ) {
   function OperationNode( operatorProperty, operandProperty, options ) {
 
     options = _.extend( {
-      operatorFont: new PhetFont( 16 ),
+      operatorFont: new PhetFont( 24 ),
       operandFont: new PhetFont( 24 ),
       operandRange: new Range( -10, 10 ),
       spacing: 15
     }, options );
 
-    //TODO mockup for operator control
-    var plusToggleButton = new RectangularToggleButton( true, false, new Property( true ), {
-      content: new Text( EqualityExplorerConstants.PLUS, { font: options.operatorFont } ),
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
-    } );
-    var minusToggleButton = new RectangularToggleButton( true, false, new Property( false ), {
-      content: new Text( EqualityExplorerConstants.MINUS, { font: options.operatorFont } ),
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
-    } );
-    var timesToggleButton = new RectangularToggleButton( true, false, new Property( false ), {
-      content: new Text( EqualityExplorerConstants.TIMES, { font: options.operatorFont } ),
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
-    } );
-    var divideToggleButton = new RectangularToggleButton( true, false, new Property( false ), {
-      content: new Text( EqualityExplorerConstants.DIVIDE, { font: options.operatorFont } ),
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
-    } );
-    var operatorButtons = new VBox( {
-      children: [
-        new HBox( { children: [ plusToggleButton, minusToggleButton ] } ),
-        new HBox( { children: [ timesToggleButton, divideToggleButton ] } )
-      ]
+    // picker for choosing operator
+    var operators = [
+      EqualityExplorerConstants.PLUS,
+      EqualityExplorerConstants.MINUS,
+      EqualityExplorerConstants.TIMES,
+      EqualityExplorerConstants.DIVIDE
+    ];
+    var operatorItems = [];
+    for ( var i = 0; i < operators.length; i++ ) {
+      operatorItems.push( {
+        value: operators[ i ],
+        node: new Text( operators[ i ], { font: options.operatorFont } )
+      } );
+    }
+    var operatorPicker = new ObjectPicker( operatorProperty, operatorItems, {
+      color: 'black',
+      xMargin: 12
     } );
 
     // picker for choosing operand
@@ -99,7 +93,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ operatorButtons, operandPicker, goButton ];
+    options.children = [ operatorPicker, operandPicker, goButton ];
 
     HBox.call( this, options );
 
