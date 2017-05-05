@@ -27,7 +27,7 @@ define( function( require ) {
     this.icon = icon;
 
     // @public (read-only)
-    this.variableRange = new RangeWithValue( -10, 10, 1 );
+    this.variableRange = new RangeWithValue( -40, 40, 1 );
 
     // @public
     this.variableValueProperty = new Property( this.variableRange.defaultValue );

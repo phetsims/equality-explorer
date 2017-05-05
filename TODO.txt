@@ -10,8 +10,6 @@ Snapshots, what is saved?
 
 Basics: What are the 3 scenes, their item types, and the relative "weight" of each item type?
 
-Variables: What is the range for the 'x' value spinner? Does it include zero?
-
 Variables: How are we handling 'x' with respect to snapshots?
 
 Solving: design the control for the "universal operation"
