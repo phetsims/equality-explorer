@@ -3,18 +3,9 @@ TODO items for equality-explorer
 ========================================================================================================================
 DESIGN
 
-Snapshots, what is saved?
-  value of x?
-  state of accordion boxes?
-  state of couplers?
+My Snapshots: in worst case (3 terms on each side), snapshot labels are too wide
 
 Basics: What are the 3 scenes, their item types, and the relative "weight" of each item type?
-
-Solving: design the control for the "universal operation"
-  What UI controls does it use?
-  What are the operators?
-  What is the range of the numeric value?
-  Does the range vary based on operator?
 
 ========================================================================================================================
 IMPLEMENTATION
