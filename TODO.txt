@@ -7,8 +7,6 @@ My Snapshots: in worst case (3 terms on each side), snapshot labels are too wide
 
 Basics: What are the 3 scenes, their item types, and the relative "weight" of each item type?
 
-Universal operation: UI design
-
 ========================================================================================================================
 IMPLEMENTATION
 
