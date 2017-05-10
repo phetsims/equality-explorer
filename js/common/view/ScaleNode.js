@@ -11,11 +11,14 @@ define( function( require ) {
   // modules
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var BoxNode = require( 'EQUALITY_EXPLORER/common/view/BoxNode' );
+  var ClearScaleButton = require( 'EQUALITY_EXPLORER/common/view/ClearScaleButton' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PlateNode = require( 'EQUALITY_EXPLORER/common/view/PlateNode' );
   var Shape = require( 'KITE/Shape' );
@@ -23,7 +26,7 @@ define( function( require ) {
 
   // base
   var BASE_WIDTH = 200;
-  var BASE_HEIGHT = 10;
+  var BASE_HEIGHT = 40;
   var BASE_DEPTH = 20;
   
   // beam
@@ -137,10 +140,28 @@ define( function( require ) {
       center: beamNode.center // correct location handled by angleProperty observer
     } );
 
+    var clearScaleButton = new ClearScaleButton( {
+      //TODO add ClearScaleButton listener
+      //TODO disable ClearScaleButton when scale is empty
+    } );
+
+    var organizeButton = new OrganizeButton( {
+      //TODO disable OrganizeButton when scale is empty or organized
+    } );
+
+    // buttons in the front face of the base
+    var buttonsParent = new HBox( {
+      children: [ clearScaleButton, organizeButton ],
+      spacing: 25,
+      centerX: baseNode.centerX,
+      centerY: baseNode.bottom - ( BASE_HEIGHT / 2 )
+    } );
+
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [
       leftPlateNode, rightPlateNode,
-      baseNode, beamPivotNode, dashedLine, arrowNode, beamNode
+      baseNode, buttonsParent,
+      beamPivotNode, dashedLine, arrowNode, beamNode
     ];
 
     Node.call( this, options );

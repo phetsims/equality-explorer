@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ClearScaleButton = require( 'EQUALITY_EXPLORER/common/view/ClearScaleButton' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -17,7 +16,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemPanel = require( 'EQUALITY_EXPLORER/common/view/ItemPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
   var ScaleNode = require( 'EQUALITY_EXPLORER/common/view/ScaleNode' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
 
@@ -38,12 +36,6 @@ define( function( require ) {
       expandedProperty: scene.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
-    } );
-
-    var organizeButton = new OrganizeButton( {
-      //TODO disable OrganizeButton when scale is empty or organized
-      left: snapshotsAccordionBox.left,
-      top: snapshotsAccordionBox.bottom + 10
     } );
 
     var equationAccordionBox = new EquationAccordionBox( {
@@ -69,20 +61,8 @@ define( function( require ) {
       bottom: leftItemPanel.top - 30
     } );
 
-    var clearScaleButton = new ClearScaleButton( {
-      //TODO add ClearScaleButton listener
-      //TODO disable ClearScaleButton when scale is empty
-      right: scaleNode.centerX - 140,
-      bottom: scaleNode.bottom
-    } );
-
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [
-      snapshotsAccordionBox, organizeButton,
-      equationAccordionBox,
-      leftItemPanel, rightItemPanel,
-      scaleNode, clearScaleButton
-    ];
+    options.children = [ snapshotsAccordionBox, equationAccordionBox, leftItemPanel, rightItemPanel, scaleNode ];
 
     Node.call( this, options );
 
