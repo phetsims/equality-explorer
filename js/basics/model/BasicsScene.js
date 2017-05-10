@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Model for a scene in the 'Basics' screen.
+ * Base type for a scene in the 'Basics' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -11,19 +11,21 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
 
   /**
    * @param {Node} icon
-   * @param {Object} [options]
+   * @param {ItemCreator[]} itemCreators
    * @constructor
    */
-  function BasicsScene( icon, options ) {
-
-    options = options || {};
+  function BasicsScene( icon, itemCreators ) {
 
     // @public (read-only) Node used to represent the scene
-    this.icon = icon;
+    this.icon = new Node( { children: [ icon ] } );
+
+    // @public (read-only)
+    this.itemCreators = itemCreators;
 
     // @public (read-only)
     this.scaleAngleProperty = new Property( 0 );
@@ -48,7 +50,6 @@ define( function( require ) {
       this.scaleAngleProperty.reset();
       this.equationAccordionBoxExpandedProperty.reset();
       this.snapshotsAccordionBoxExpandedProperty.reset();
-      this.variableAccordionBoxExpandedProperty.reset();
       this.coupledProperty.reset();
     },
 

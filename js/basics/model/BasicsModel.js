@@ -9,12 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
+  var SpheresScene = require( 'EQUALITY_EXPLORER/basics/model/SpheresScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var FruitScene = require( 'EQUALITY_EXPLORER/basics/model/FruitScene' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var PolygonsScene = require( 'EQUALITY_EXPLORER/basics/model/PolygonsScene' );
   var Property = require( 'AXON/Property' );
-  var Text = require( 'SCENERY/nodes/Text' );
 
   /**
    * @constructor
@@ -23,11 +23,9 @@ define( function( require ) {
 
     // @public
     this.scenes = [
-
-      //TODO temporary icons
-      new BasicsScene( new Text( '1', { font: new PhetFont( 30 ) } ) ),
-      new BasicsScene( new Text( '2', { font: new PhetFont( 30 ) } ) ),
-      new BasicsScene( new Text( '3', { font: new PhetFont( 30 ) } ) )
+      new FruitScene(),
+      new PolygonsScene(),
+      new SpheresScene()
     ];
 
     // @public the selected scene
