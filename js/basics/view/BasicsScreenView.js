@@ -36,8 +36,8 @@ define( function( require ) {
     this.addChild( resetAllButton );
 
     var sceneControl = new BasicsSceneControl( model.scenes, model.sceneProperty, {
-      right: resetAllButton.left - 30,
-      bottom: this.layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
+      right: resetAllButton.right,
+      bottom: resetAllButton.top - 50
     } );
     this.addChild( sceneControl );
 
