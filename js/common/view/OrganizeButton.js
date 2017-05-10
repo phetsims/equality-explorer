@@ -27,7 +27,7 @@ define( function( require ) {
     }, options );
 
     //TODO finalize icon for OrganizeButton
-    var diameter = 9;
+    var diameter = 7;
     var spacing = 3;
     var iconShape = new Shape()
       .rect( 0, 0, diameter, diameter )
