@@ -37,8 +37,8 @@ define( function( require ) {
   
   // beam
   var BEAM_WIDTH = 450;
-  var BEAM_HEIGHT = 10;
-  var BEAM_DEPTH = 10;
+  var BEAM_HEIGHT = 5;
+  var BEAM_DEPTH = 8;
   
   // beam pivot
   var BEAM_PIVOT_HEIGHT = 40;
