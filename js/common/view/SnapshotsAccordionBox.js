@@ -82,7 +82,7 @@ define( function( require ) {
         children: [ numberLabel, numberButton ]
       } );
 
-      var equationNode = new Rectangle( 0, 0, 180, 35 ); //TODO use EquationNode
+      var equationNode = new Rectangle( 0, 0, 135, 35 ); //TODO use EquationNode
 
       var snapshotButton = new RectangularPushButton( {
         content: snapshotIcon,
@@ -104,12 +104,12 @@ define( function( require ) {
         children: [ trashButton, snapshotButton ]
       } );
 
-      //TODO placeholder that shows worst case snapshot, 3 terms on each side
+      //TODO placeholder that shows a snapshot label
       if ( i === 0 ) {
         numberButton.visible = true;
         snapshotButton.visible = false;
         trashButton.visible = true;
-        var equationText = new Text( '-40x + 40\u25b2 + 40\u25a9 = -40x + 40\u25b2 + 40\u25a9', {
+        var equationText = new Text( '-40x + 5 = -40x + 5', {
           font: new PhetFont( 20 ),
           center: equationNode.center,
           maxWidth: equationNode.width
@@ -118,7 +118,7 @@ define( function( require ) {
       }
 
       var hBox = new HBox( {
-        spacing: 5,
+        spacing: 15,
         children: [ numbersParent, equationNode, buttonsParent ]
       } );
 
