@@ -33,7 +33,7 @@ define( function( require ) {
   // base
   var BASE_WIDTH = 200;
   var BASE_HEIGHT = 40;
-  var BASE_DEPTH = 20;
+  var BASE_DEPTH = 10;
   
   // beam
   var BEAM_WIDTH = 450;
@@ -41,7 +41,7 @@ define( function( require ) {
   var BEAM_DEPTH = 10;
   
   // beam pivot
-  var BEAM_PIVOT_HEIGHT = 60;
+  var BEAM_PIVOT_HEIGHT = 40;
   var BEAM_PIVOT_TOP_WIDTH = 15;
   var BEAM_PIVOT_BOTTOM_WIDTH = 25;
 

@@ -58,7 +58,7 @@ define( function( require ) {
 
     var scaleNode = new ScaleNode( scene.scaleAngleProperty, {
       centerX: equationAccordionBox.centerX,
-      bottom: leftItemsPanel.top - 30
+      bottom: leftItemsPanel.top - 20
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
