@@ -24,6 +24,12 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  // colors
+  var TOP_FACE_FILL = 'rgb( 177, 177, 177 )';
+  var FRONT_FACE_FILL = 'rgb( 100, 100, 100 )';
+  var BEAM_PIVOT_FILL = 'rgb( 204, 204, 204 )';
+  var PLATE_PIVOT_FILL = 'rgb( 204, 204, 204 )';
+
   // base
   var BASE_WIDTH = 200;
   var BASE_HEIGHT = 40;
@@ -38,15 +44,15 @@ define( function( require ) {
   var BEAM_PIVOT_HEIGHT = 60;
   var BEAM_PIVOT_TOP_WIDTH = 15;
   var BEAM_PIVOT_BOTTOM_WIDTH = 25;
-  
+
   // plate pivots
   var PLATE_PIVOT_X_OFFSET = 45; // from the ends of the beam
   var PLATE_PIVOT_DIAMETER = 16;
   var PLATE_PIVOT_OPTIONS = {
-    fill: 'rgb( 204, 204, 204 )',
+    fill: PLATE_PIVOT_FILL,
     stroke: 'black'
   };
-  
+
   // arrow
   var ARROW_LENGTH = 75;
 
@@ -70,8 +76,8 @@ define( function( require ) {
       height: BASE_HEIGHT,
       depth: BASE_DEPTH,
       stroke: 'black',
-      topFill: 'rgb( 153, 153, 153 )',
-      frontFill: 'rgb( 72, 72, 72 )'
+      topFill: TOP_FACE_FILL,
+      frontFill: FRONT_FACE_FILL
     } );
 
     // the pivot that connects the beam to the base
@@ -84,7 +90,7 @@ define( function( require ) {
     ] );
     var beamPivotNode = new Path( beamPivotShape, {
       stroke: 'black',
-      fill: 'rgb( 204, 204, 204 )',
+      fill: BEAM_PIVOT_FILL,
       centerX: baseNode.centerX,
       bottom: baseNode.top + ( BASE_DEPTH / 2 )
     } );
@@ -95,8 +101,8 @@ define( function( require ) {
       height: BEAM_HEIGHT,
       depth: BEAM_DEPTH,
       stroke: 'black',
-      topFill: 'rgb( 153, 153, 153 )',
-      frontFill: 'rgb( 72, 72, 72 )',
+      topFill: TOP_FACE_FILL,
+      frontFill: FRONT_FACE_FILL,
       centerX: baseNode.centerX,
       y: beamPivotNode.top
     } );
