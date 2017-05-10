@@ -10,13 +10,18 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
    */
   function SolvingModel() {
-    //TODO implement constructor
+
+    // @public
+    this.operatorProperty = new Property( EqualityExplorerConstants.PLUS );
+    this.operandProperty = new Property( 1 );
   }
 
   equalityExplorer.register( 'SolvingModel', SolvingModel );
@@ -25,7 +30,8 @@ define( function( require ) {
 
     // @public resets the model
     reset: function() {
-      //TODO implement reset
+      this.operatorProperty.reset();
+      this.operandProperty.reset();
     },
 
     // @public

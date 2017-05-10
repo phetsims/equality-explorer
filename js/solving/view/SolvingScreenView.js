@@ -12,6 +12,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var OperationNode = require( 'EQUALITY_EXPLORER/common/view/OperationNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
 
@@ -32,6 +33,12 @@ define( function( require ) {
       bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
     this.addChild( resetAllButton );
+
+    // Universal Operation
+    var operationNode = new OperationNode( model.operatorProperty, model.operandProperty, {
+      center: this.layoutBounds.center
+    } );
+    this.addChild( operationNode );
   }
 
   equalityExplorer.register( 'SolvingScreenView', SolvingScreenView );

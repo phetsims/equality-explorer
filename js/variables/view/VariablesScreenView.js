@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
 
   /**
    * @param {VariablesModel} model
@@ -32,6 +33,12 @@ define( function( require ) {
       bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
     this.addChild( resetAllButton );
+
+    var variableAccordionBox = new VariableAccordionBox( model.variableValueProperty, model.variableRange, {
+      expandedProperty: model.variableAccordionBoxExpandedProperty,
+      center: this.layoutBounds.center
+    } );
+    this.addChild( variableAccordionBox );
   }
 
   equalityExplorer.register( 'VariablesScreenView', VariablesScreenView );

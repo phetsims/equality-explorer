@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Model for a scene in Equality Explorer.
+ * Model for a scene in the 'Basics' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -10,28 +10,20 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   /**
    * @param {Node} icon
    * @param {Object} [options]
    * @constructor
    */
-  function EqualityExplorerScene( icon, options ) {
+  function BasicsScene( icon, options ) {
 
     options = options || {};
 
     // @public (read-only) Node used to represent the scene
     this.icon = icon;
-
-    // @public (read-only)
-    this.variableRange = new RangeWithValue( -40, 40, 1 );
-
-    // @public
-    this.variableValueProperty = new Property( this.variableRange.defaultValue );
 
     // @public (read-only)
     this.scaleAngleProperty = new Property( 0 );
@@ -40,31 +32,24 @@ define( function( require ) {
     this.rotationMultiplier = 1;
 
     // @public
-    this.equationAccordionBoxExpandedProperty = new Property( true );
-    this.snapshotsAccordionBoxExpandedProperty = new Property( true );
-    this.variableAccordionBoxExpandedProperty = new Property( true );
+    this.equationAccordionBoxExpandedProperty = new Property( true ); //TODO move to view
+    this.snapshotsAccordionBoxExpandedProperty = new Property( true ); //TODO move to view
 
     // @public whether the couplers that connects the 2 sides of the scale are coupled
     this.coupledProperty = new Property( false );
-
-    // @public
-    this.operatorProperty = new Property( EqualityExplorerConstants.PLUS );
-    this.operandProperty = new Property( 1 );
   }
 
-  equalityExplorer.register( 'EqualityExplorerScene', EqualityExplorerScene );
+  equalityExplorer.register( 'BasicsScene', BasicsScene );
 
-  return inherit( Object, EqualityExplorerScene, {
+  return inherit( Object, BasicsScene, {
 
     // @public
     reset: function() {
-      this.variableValueProperty.reset();
       this.scaleAngleProperty.reset();
       this.equationAccordionBoxExpandedProperty.reset();
       this.snapshotsAccordionBoxExpandedProperty.reset();
       this.variableAccordionBoxExpandedProperty.reset();
-      this.operatorProperty.reset();
-      this.operandProperty.reset();
+      this.coupledProperty.reset();
     },
 
     // @public

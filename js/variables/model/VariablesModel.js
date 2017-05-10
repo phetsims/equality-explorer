@@ -11,12 +11,22 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   /**
    * @constructor
    */
   function VariablesModel() {
-    //TODO implement constructor
+
+    // @public
+    this.variableAccordionBoxExpandedProperty = new Property( true ); //TODO move to view
+
+    // @public (read-only)
+    this.variableRange = new RangeWithValue( -40, 40, 1 );
+
+    // @public
+    this.variableValueProperty = new Property( this.variableRange.defaultValue );
   }
 
   equalityExplorer.register( 'VariablesModel', VariablesModel );
@@ -25,7 +35,8 @@ define( function( require ) {
 
     // @public resets the model
     reset: function() {
-      //TODO implement reset
+      this.variableAccordionBoxExpandedProperty.reset();
+      this.variableValueProperty.reset();
     },
 
     // @public

@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
@@ -25,9 +25,9 @@ define( function( require ) {
     this.scenes = [
 
       //TODO temporary icons
-      new EqualityExplorerScene( new Text( '1', { font: new PhetFont( 30 ) } ) ),
-      new EqualityExplorerScene( new Text( '2', { font: new PhetFont( 30 ) } ) ),
-      new EqualityExplorerScene( new Text( '3', { font: new PhetFont( 30 ) } ) )
+      new BasicsScene( new Text( '1', { font: new PhetFont( 30 ) } ) ),
+      new BasicsScene( new Text( '2', { font: new PhetFont( 30 ) } ) ),
+      new BasicsScene( new Text( '3', { font: new PhetFont( 30 ) } ) )
     ];
 
     // @public the selected scene
