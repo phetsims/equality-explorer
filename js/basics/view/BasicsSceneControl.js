@@ -27,8 +27,8 @@ define( function( require ) {
       orientation: 'horizontal',
       baseColor: 'white',
       spacing: 12,
-      buttonContentXMargin: 10,
-      buttonContentYMargin: 5
+      buttonContentXMargin: 15,
+      buttonContentYMargin: 12
     }, options );
 
     // describe a radio button for each scene

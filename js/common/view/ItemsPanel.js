@@ -37,7 +37,7 @@ define( function( require ) {
     }
 
     var hBox = new HBox( {
-      spacing: 40,
+      spacing: 50,
       align: 'center',
       children: hBoxChildren,
       center: backgroundNode.center

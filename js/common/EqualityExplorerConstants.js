@@ -19,7 +19,9 @@ define( function( require ) {
     PLUS: '\u002b',
     MINUS: '\u2212',
     TIMES: '\u00d7',
-    DIVIDE: '\u00f7'
+    DIVIDE: '\u00f7',
+
+    ITEM_RADIUS: 18
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

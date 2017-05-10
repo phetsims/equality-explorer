@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
@@ -19,9 +20,6 @@ define( function( require ) {
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
   var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
-
-  // constants
-  var ITEM_RADIUS = 22;
 
   /**
    * @constructor
@@ -32,7 +30,7 @@ define( function( require ) {
     var appleNode = new Image( appleImage );
     var orangeNode = new Image( orangeImage );
     var oneNode = new NumberNode( 1, {
-      radius: ITEM_RADIUS,
+      radius: EqualityExplorerConstants.ITEM_RADIUS,
       fill: 'rgb( 246, 229, 214 )'
     } );
 
