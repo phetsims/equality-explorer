@@ -37,7 +37,7 @@ define( function( require ) {
 
     var sceneControl = new BasicsSceneControl( model.scenes, model.sceneProperty, {
       right: resetAllButton.right,
-      bottom: resetAllButton.top - 50
+      bottom: resetAllButton.top - 40
     } );
     this.addChild( sceneControl );
 
