@@ -57,8 +57,8 @@ define( function( require ) {
 
     var vBoxChildren = [];
 
-    var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.35 } );
-    var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.35 } );
+    var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.3 } );
+    var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.3 } );
     var maxIconWidth = Math.max( snapshotIcon.width, trashIcon.width );
     var maxIconHeight = Math.max( snapshotIcon.height, trashIcon.height );
 
@@ -71,18 +71,21 @@ define( function( require ) {
 
       var numberButton = new RectangularPushButton( {
         content: new Text( i + 1, {
-          font: NUMBER_FONT
+          font: NUMBER_FONT,
+          xMargin: 5,
+          yMargin: 2
         } ),
         baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
         center: numberLabel.center,
         visible: false
       } );
+      numberButton.touchArea = numberButton.localBounds.dilatedXY( 10, 10 );
 
       var numbersParent = new Node( {
         children: [ numberLabel, numberButton ]
       } );
 
-      var equationNode = new Rectangle( 0, 0, 120, 70 ); //TODO use EquationNode
+      var equationNode = new Rectangle( 0, 0, 160, 50 ); //TODO use EquationNode
 
       var snapshotButton = new RectangularPushButton( {
         content: snapshotIcon,
@@ -90,6 +93,7 @@ define( function( require ) {
         xMargin: BUTTON_X_MARGIN + ( maxIconWidth - snapshotIcon.width ),
         yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - snapshotIcon.height )
       } );
+      snapshotButton.touchArea = snapshotButton.localBounds.dilatedXY( 10, 10 );
 
       var trashButton = new RectangularPushButton( {
         content: trashIcon,
@@ -99,13 +103,27 @@ define( function( require ) {
         yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - trashIcon.height ),
         visible: false
       } );
+      trashButton.touchArea = trashButton.localBounds.dilatedXY( 10, 10 );
 
       var buttonsParent = new Node( {
         children: [ trashButton, snapshotButton ]
       } );
 
+      //TODO placeholder that shows worst case snapshot, 3 terms on each side
+      if ( i === 0 ) {
+        numberButton.visible = true;
+        snapshotButton.visible = false;
+        trashButton.visible = true;
+        var equationText = new Text( '-40x + 40 = -40x + 40', {
+          font: new PhetFont( 30 ),
+          center: equationNode.center,
+          maxWidth: equationNode.width
+        } );
+        equationNode.addChild( equationText );
+      }
+
       var hBox = new HBox( {
-        spacing: 15,
+        spacing: 10,
         children: [ numbersParent, equationNode, buttonsParent ]
       } );
 
