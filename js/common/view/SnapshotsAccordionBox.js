@@ -76,10 +76,11 @@ define( function( require ) {
           yMargin: 2
         } ),
         baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+        touchAreaXDilation: 5,
+        touchAreaYDilation: 5,
         center: numberLabel.center,
         visible: false
       } );
-      numberButton.touchArea = numberButton.localBounds.dilatedXY( 10, 10 );
 
       var numbersParent = new Node( {
         children: [ numberLabel, numberButton ]
@@ -91,9 +92,10 @@ define( function( require ) {
         content: snapshotIcon,
         baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
         xMargin: BUTTON_X_MARGIN + ( maxIconWidth - snapshotIcon.width ),
-        yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - snapshotIcon.height )
+        yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - snapshotIcon.height ),
+        touchAreaXDilation: 5,
+        touchAreaYDilation: 5
       } );
-      snapshotButton.touchArea = snapshotButton.localBounds.dilatedXY( 10, 10 );
 
       var trashButton = new RectangularPushButton( {
         content: trashIcon,
@@ -101,9 +103,10 @@ define( function( require ) {
         baseColor: 'white',
         xMargin: BUTTON_X_MARGIN + ( maxIconWidth - trashIcon.width ),
         yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - trashIcon.height ),
+        touchAreaXDilation: 5,
+        touchAreaYDilation: 5,
         visible: false
       } );
-      trashButton.touchArea = trashButton.localBounds.dilatedXY( 10, 10 );
 
       var buttonsParent = new Node( {
         children: [ trashButton, snapshotButton ]

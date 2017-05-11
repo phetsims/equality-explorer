@@ -147,11 +147,14 @@ define( function( require ) {
     } );
 
     var clearScaleButton = new ClearScaleButton( {
+      touchAreaDilation: 5
       //TODO add ClearScaleButton listener
       //TODO disable ClearScaleButton when scale is empty
     } );
 
     var organizeButton = new OrganizeButton( {
+      touchAreaXDilation: 5,
+      touchAreaYDilation: 5
       //TODO disable OrganizeButton when scale is empty or organized
     } );
 
