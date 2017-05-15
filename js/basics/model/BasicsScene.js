@@ -16,16 +16,20 @@ define( function( require ) {
 
   /**
    * @param {Node} icon
-   * @param {ItemCreator[]} itemCreators
+   * @param {ItemCreator[]} leftItemCreators
+   * @param {ItemCreator[]} rightItemCreators
    * @constructor
    */
-  function BasicsScene( icon, itemCreators ) {
+  function BasicsScene( icon, leftItemCreators, rightItemCreators ) {
 
     // @public (read-only) {Node} used to represent the scene
     this.icon = new Node( { children: [ icon ] } );
 
-    // @public (read-only) {ItemCreator[]} in the left-to-right order that items appear in the ItemsPanel
-    this.itemCreators = itemCreators;
+    // @public (read-only) {ItemCreator[]} creators for items on left side of scale
+    this.leftItemCreators = leftItemCreators;
+
+    // @public (read-only) {ItemCreator[]} creators for items on right side of scale
+    this.rightItemCreators = rightItemCreators;
 
     // @public (read-only) {Property.<number>} angle of the scale in radians, zero is balanced
     this.scaleAngleProperty = new Property( 0 );

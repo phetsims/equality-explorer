@@ -38,13 +38,19 @@ define( function( require ) {
     appleNode.setScaleMagnitude( oneNode.width / appleNode.width, oneNode.height / appleNode.height );
     orangeNode.setScaleMagnitude( oneNode.width / orangeNode.width, oneNode.height / orangeNode.height );
 
-    var itemCreators = [
+    var leftItemCreators = [
       new ItemCreator( 3, appleNode ),
       new ItemCreator( 2, orangeNode ),
       new ItemCreator( 1, oneNode )
     ];
 
-    BasicsScene.call( this, appleNode, itemCreators );
+    var rightItemCreators = [
+      new ItemCreator( 3, appleNode ),
+      new ItemCreator( 2, orangeNode ),
+      new ItemCreator( 1, oneNode )
+    ];
+
+    BasicsScene.call( this, appleNode, leftItemCreators, rightItemCreators );
   }
 
   equalityExplorer.register( 'FruitScene', FruitScene );

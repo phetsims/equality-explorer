@@ -44,13 +44,13 @@ define( function( require ) {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
-    var leftItemsPanel = new ItemsPanel( scene.itemCreators, {
+    var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, {
       stroke: EqualityExplorerColors.LEFT_PLATE_COLOR,
       right: equationAccordionBox.centerX - 40,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var rightItemsPanel = new ItemsPanel( scene.itemCreators, {
+    var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, {
       stroke: EqualityExplorerColors.RIGHT_PLATE_COLOR,
       left: equationAccordionBox.centerX + 40,
       bottom: leftItemsPanel.bottom

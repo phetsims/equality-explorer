@@ -12,6 +12,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @param {number} value
@@ -21,12 +22,19 @@ define( function( require ) {
   function Item( value, options ) {
 
     // @public (read-only)
-    this.value = value;
+    this.valueProperty = new Property( value );
 
     EqualityExplorerMovable.call( this, options );
   }
 
   equalityExplorer.register( 'Item', Item );
 
-  return inherit( EqualityExplorerMovable, Item );
+  return inherit( EqualityExplorerMovable, Item, {
+
+    // @public @override
+    reset: function() {
+      this.valueProperty.reset();
+      EqualityExplorerMovable.prototype.reset.call( this );
+    }
+  } );
 } );

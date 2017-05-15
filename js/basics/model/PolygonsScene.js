@@ -34,13 +34,19 @@ define( function( require ) {
       rotation: -Math.PI / 2
     } );
 
-    var itemCreators = [
+    var leftItemCreators = [
       new ItemCreator( 3, hexagonNode ),
       new ItemCreator( 2, diamondNode ),
       new ItemCreator( 1, triangleNode )
     ];
 
-    BasicsScene.call( this, hexagonNode, itemCreators );
+    var rightItemCreators = [
+      new ItemCreator( 3, hexagonNode ),
+      new ItemCreator( 2, diamondNode ),
+      new ItemCreator( 1, triangleNode )
+    ];
+
+    BasicsScene.call( this, hexagonNode, leftItemCreators, rightItemCreators );
   }
 
   equalityExplorer.register( 'PolygonsScene', PolygonsScene );

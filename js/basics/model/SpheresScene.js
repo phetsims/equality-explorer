@@ -29,13 +29,19 @@ define( function( require ) {
     var orangeNode = new ShadedSphereNode( ITEM_DIAMETER, { mainColor: 'orange' } );
     var magentaNode = new ShadedSphereNode( ITEM_DIAMETER, { mainColor: 'magenta' } );
 
-    var itemCreators = [
+    var leftItemCreators = [
       new ItemCreator( 3, greenNode ),
       new ItemCreator( 2, orangeNode ),
       new ItemCreator( 1, magentaNode )
     ];
 
-    BasicsScene.call( this, greenNode, itemCreators );
+    var rightItemCreators = [
+      new ItemCreator( 3, greenNode ),
+      new ItemCreator( 2, orangeNode ),
+      new ItemCreator( 1, magentaNode )
+    ];
+
+    BasicsScene.call( this, greenNode, leftItemCreators, rightItemCreators );
   }
 
   equalityExplorer.register( 'SpheresScene', SpheresScene );
