@@ -21,23 +21,23 @@ define( function( require ) {
    */
   function BasicsScene( icon, itemCreators ) {
 
-    // @public (read-only) Node used to represent the scene
+    // @public (read-only) {Node} used to represent the scene
     this.icon = new Node( { children: [ icon ] } );
 
-    // @public (read-only)
+    // @public (read-only) {ItemCreator[]} in the left-to-right order that items appear in the ItemsPanel
     this.itemCreators = itemCreators;
 
-    // @public (read-only)
+    // @public (read-only) {Property.<number>} angle of the scale in radians, zero is balanced
     this.scaleAngleProperty = new Property( 0 );
 
-    // @private
+    // @private {number} determines whether the scale rotates clockwise (1) or counterclockwise (-1)
     this.rotationMultiplier = 1;
 
     // @public
     this.equationAccordionBoxExpandedProperty = new Property( true ); //TODO move to view
     this.snapshotsAccordionBoxExpandedProperty = new Property( true ); //TODO move to view
 
-    // @public whether the couplers that connects the 2 sides of the scale are coupled
+    // @public {Property.<boolean>} whether the couplers that connects the 2 sides of the scale are coupled
     this.coupledProperty = new Property( false );
   }
 
@@ -53,7 +53,10 @@ define( function( require ) {
       this.coupledProperty.reset();
     },
 
-    // @public
+    /**
+     * Updates time-dependent parts of the scene.
+     * @param {number} dt - time since the previous step, in seconds
+     */
     step: function( dt ) {
       this.rotateScale();
     },
