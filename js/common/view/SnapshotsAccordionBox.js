@@ -67,7 +67,7 @@ define( function( require ) {
       headHeight: 8,
       tailWidth: 4
     } );
-    var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.4 } ); //TODO left arrow icon
+    var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.4 } );
 
     // for making all buttons the same size
     var maxIconWidth = _.maxBy( [ snapshotIcon, loadIcon, trashIcon], function( icon ) { return icon.width; } ).width;
