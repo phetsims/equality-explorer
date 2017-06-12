@@ -60,9 +60,9 @@ define( function( require ) {
     } ) );
 
     // button icons
-    var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.3 } );
-    var loadIcon = new FontAwesomeNode( 'reorder', { scale: 0.3 } );
-    var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.3 } ); //TODO left arrow icon
+    var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
+    var loadIcon = new FontAwesomeNode( 'reorder', { scale: 0.4 } );
+    var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.4 } ); //TODO left arrow icon
 
     // for making all buttons the same size
     var maxIconWidth = _.maxBy( [ snapshotIcon, loadIcon, trashIcon], function( icon ) { return icon.width; } ).width;
@@ -99,7 +99,7 @@ define( function( require ) {
     } ) );
 
     var snapshotsVBox = new VBox( {
-      spacing: 30,
+      spacing: 25,
       children: vBoxChildren
     } );
 
