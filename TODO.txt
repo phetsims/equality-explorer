@@ -1,12 +1,7 @@
 TODO items for equality-explorer
 
-========================================================================================================================
-DESIGN
-
-My Snapshots: in worst case (3 terms on each side), snapshot labels are too wide
-
-Basics: What are the 3 scenes, their item types, and the relative "weight" of each item type?
-
-========================================================================================================================
-IMPLEMENTATION
+Remove items when returned to panel
+Compute scale angle
+Update equation
+Constrain dragging to left and right sides of scale
 
