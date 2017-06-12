@@ -51,9 +51,6 @@ define( function( require ) {
      */
     step: function( dt ) {
 
-      //TODO is this an appropriate value?
-      dt = Math.min( dt, 0.1 );
-
       // step the selected scene
       for ( var i = 0; i < this.scenes.length; i++ ) {
         if ( this.scenes[ i ] === this.sceneProperty.value ) {
