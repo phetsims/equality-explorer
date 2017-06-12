@@ -77,6 +77,8 @@ define( function( require ) {
     for ( var i = 0; i < options.numberOfSnapshots; i++ ) {
 
       if ( i === 0 ) {
+
+        //TODO this equation is for demonstration
         var equationText = new Text( '-40 X + 40 X + 40 X = -40 X + 40 X + 40 X', {
           font: new PhetFont( 12 ),
           maxWidth: CONTENT_WIDTH
