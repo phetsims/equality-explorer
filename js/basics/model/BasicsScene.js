@@ -65,25 +65,9 @@ define( function( require ) {
       this.rotateScale();
     },
 
-    // @private for demo purposes only
+    // @private
     rotateScale: function() {
-
-      var maxAngle = Math.PI / 15; // maximum rotation
-      var deltaAngle = maxAngle / 80; // rotation per step
-
-      var newAngle = this.scaleAngleProperty.value + ( this.rotationMultiplier * deltaAngle );
-
-      if ( newAngle >= maxAngle ) {
-        newAngle = maxAngle;
-        this.rotationMultiplier = -1;
-      }
-      else if ( newAngle <= -maxAngle ) {
-        newAngle = -maxAngle;
-        this.rotationMultiplier = 1;
-      }
-
-      assert && assert( Math.abs( newAngle ) <= maxAngle );
-      this.scaleAngleProperty.value = newAngle;
+      //TODO compute the angle based on the items on the scale
     }
   } );
 } );
