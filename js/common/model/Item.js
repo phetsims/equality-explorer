@@ -14,15 +14,24 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
 
+  var idIndex = 0; // unique id assigned to each Item instance
+
   /**
-   * @param {number} value
+   * @param {number} value - the Item's initial value
+   * @param {Node} icon
    * @param {Object} [options]
    * @constructor
    */
-  function Item( value, options ) {
+  function Item( value, icon, options ) {
+
+    // @public (read-only)
+    this.id = idIndex++;
 
     // @public (read-only)
     this.valueProperty = new Property( value );
+
+    // @public (read-only)
+    this.icon = icon;
 
     EqualityExplorerMovable.call( this, options );
   }

@@ -13,16 +13,18 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var ItemCreatorNode = require( 'EQUALITY_EXPLORER/common/view/ItemCreatorNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   /**
    * @param {ItemCreator[]} itemCreators
+   * @param {Node} dragLayer
    * @param {Object} [options]
    * @constructor
    */
-  function ItemsPanel( itemCreators, options ) {
+  function ItemsPanel( itemCreators, dragLayer, options ) {
 
     options = _.extend( {
       lineWidth: 2,
@@ -33,7 +35,7 @@ define( function( require ) {
 
     var hBoxChildren = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
-      hBoxChildren.push( new Node( { children: [ itemCreators[ i ].icon ] } ) );
+      hBoxChildren.push( new ItemCreatorNode( itemCreators[ i ], dragLayer ) );
     }
 
     var hBox = new HBox( {

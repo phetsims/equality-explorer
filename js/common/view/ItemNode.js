@@ -7,16 +7,18 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
    * @param {Item} item
-   * @param {Node} icon
    * @param {Object} [options]
    * @constructor
    */
-  function ItemNode( item, icon, options ) {
+  function ItemNode( item, options ) {
 
-    options = options || {};
+    options = _.extend( {
+      cursor: 'pointer'
+    }, options );
 
     var self = this;
 
@@ -24,7 +26,7 @@ define( function( require ) {
     this.item = item;
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ icon ];
+    options.children = [ item.icon ];
 
     Node.call( this, options );
 
@@ -33,6 +35,29 @@ define( function( require ) {
       self.center = location;
     };
     item.locationProperty.link( locationObserver ); // unlink in dispose
+
+    // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
+    var startDragOffset;
+
+    // @private
+    this.dragListener = new SimpleDragHandler( {
+
+      allowTouchSnag: options.allowTouchSnag,
+
+      start: function( event, trail ) {
+        item.dragging = true;
+        startDragOffset = self.globalToParentPoint( event.pointer.point ).minus( item.locationProperty.value );
+      },
+
+      drag: function( event, trail ) {
+        item.moveTo( self.globalToParentPoint( event.pointer.point ).minus( startDragOffset ) );
+      },
+      
+      end: function( event, trail ) {
+        item.dragging = false;
+      }
+    } );
+    this.addInputListener( this.dragListener );
 
     // @private
     this.disposeItemNode = function() {
@@ -43,6 +68,15 @@ define( function( require ) {
   equalityExplorer.register( 'ItemNode', ItemNode );
 
   return inherit( Node, ItemNode, {
+
+    /**
+     * Starts dragging this Node.
+     * @param {Event} event
+     * @public
+     */
+    startDrag: function( event ) {
+      this.dragListener.startDrag( event );
+    },
 
     // @public @override
     dispose: function() {

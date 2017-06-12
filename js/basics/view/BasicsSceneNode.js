@@ -32,6 +32,8 @@ define( function( require ) {
 
     var self = this;
 
+    var dragLayer = new Node();
+
     var snapshotsAccordionBox = new SnapshotsAccordionBox( {
       expandedProperty: scene.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
@@ -44,13 +46,13 @@ define( function( require ) {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
-    var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, {
+    var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, dragLayer, {
       stroke: EqualityExplorerColors.LEFT_PLATE_COLOR,
       right: equationAccordionBox.centerX - 40,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, {
+    var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, dragLayer, {
       stroke: EqualityExplorerColors.RIGHT_PLATE_COLOR,
       left: equationAccordionBox.centerX + 40,
       bottom: leftItemsPanel.bottom
@@ -62,7 +64,11 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ snapshotsAccordionBox, equationAccordionBox, leftItemsPanel, rightItemsPanel, scaleNode ];
+    options.children = [
+      snapshotsAccordionBox, equationAccordionBox,
+      leftItemsPanel, rightItemsPanel, scaleNode,
+      dragLayer
+    ];
 
     Node.call( this, options );
 
