@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -61,7 +62,11 @@ define( function( require ) {
 
     // button icons
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
-    var loadIcon = new FontAwesomeNode( 'reorder', { scale: 0.4 } );
+    var loadIcon = new ArrowNode( 0, 0, -20, 0, {
+      headWidth: 15,
+      headHeight: 8,
+      tailWidth: 4
+    } );
     var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.4 } ); //TODO left arrow icon
 
     // for making all buttons the same size
@@ -105,7 +110,7 @@ define( function( require ) {
 
     var loadButton = new RectangularPushButton( {
       content: loadIcon,
-      baseColor: 'white',
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       xMargin: BUTTON_X_MARGIN + ( maxIconWidth - loadIcon.width ),
       yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - loadIcon.height ),
       touchAreaXDilation: 5,
@@ -135,6 +140,8 @@ define( function( require ) {
     } );
 
     AccordionBox.call( this, contentVBox, options );
+
+    //TODO disable load and trash buttons when there is no selection
   }
 
   equalityExplorer.register( 'SnapshotsAccordionBox', SnapshotsAccordionBox );
