@@ -69,7 +69,7 @@ define( function( require ) {
     } );
     var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.4 } );
 
-    // for making all buttons the same size
+    // determine the max icon dimensions
     var maxIconWidth = _.maxBy( [ snapshotIcon, loadIcon, trashIcon], function( icon ) { return icon.width; } ).width;
     var maxIconHeight = _.maxBy( [ snapshotIcon, loadIcon, trashIcon], function( icon ) { return icon.height; } ).height;
 
