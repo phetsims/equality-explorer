@@ -41,6 +41,8 @@ define( function( require ) {
 
         // create an Item
         var item = itemCreator.createItem( {
+
+          // initial location is slightly above the ItemCreatorNode
           location: dragLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) ).plusXY( 0, -5 )
         } );
 
