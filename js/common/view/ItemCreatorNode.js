@@ -22,6 +22,8 @@ define( function( require ) {
    */
   function ItemCreatorNode( itemCreator, dragLayer, options ) {
 
+    var self = this;
+
     options = _.extend( {
       cursor: 'pointer'
     }, options );
@@ -39,7 +41,7 @@ define( function( require ) {
 
         // create an Item
         var item = itemCreator.createItem( {
-          location: dragLayer.globalToLocalPoint( event.pointer.point ).plusXY( 0, -5 )
+          location: dragLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) ).plusXY( 0, -5 )
         } );
 
         // create an ItemNode
