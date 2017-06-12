@@ -1,6 +1,9 @@
 TODO items for equality-explorer
 
 Remove items when returned to panel
+Remove items on Reset scale
+Remove items on Reset All
+
 Compute scale angle
 Update equation
 Constrain dragging to left and right sides of scale
