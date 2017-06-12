@@ -27,6 +27,7 @@ define( function( require ) {
   // constants
   var BUTTON_X_MARGIN = 8;
   var BUTTON_Y_MARGIN = 5;
+  var CONTENT_WIDTH = 225;
 
   /**
    * @param {Object} [options]
@@ -54,7 +55,7 @@ define( function( require ) {
 
     var vBoxChildren = [];
 
-    vBoxChildren.push( new HSeparator( 225, {
+    vBoxChildren.push( new HSeparator( CONTENT_WIDTH, {
       stroke: 'rgb( 200, 200, 200 )'
     } ) );
 
@@ -72,9 +73,11 @@ define( function( require ) {
 
       if ( i === 0 ) {
         var equationText = new Text( '-40 X + 40 X + 40 X = -40 X + 40 X + 40 X', {
-          font: new PhetFont( 12 )
+          font: new PhetFont( 12 ),
+          maxWidth: CONTENT_WIDTH
         } );
         vBoxChildren.push( equationText );
+        //TODO make snapshots selectable, like radio button
       }
       else {
 
@@ -91,7 +94,7 @@ define( function( require ) {
       }
     }
 
-    vBoxChildren.push( new HSeparator( 225, {
+    vBoxChildren.push( new HSeparator( CONTENT_WIDTH, {
       stroke: 'rgb( 200, 200, 200 )'
     } ) );
 
@@ -108,6 +111,7 @@ define( function( require ) {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5
     } );
+    //TODO listener - load the selected snapshot
 
     var trashButton = new RectangularPushButton( {
       content: trashIcon,
@@ -117,6 +121,7 @@ define( function( require ) {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5
     } );
+    //TODO listener - delete the selected snapshot
 
     var buttonGroup = new HBox( {
       spacing: 20,
