@@ -27,8 +27,6 @@ define( function( require ) {
   var mySnapshotsString = require( 'string!EQUALITY_EXPLORER/mySnapshots' );
 
   // constants
-  var BUTTON_X_MARGIN = 3;
-  var BUTTON_Y_MARGIN = 1;
   var CONTENT_WIDTH = 225;
 
   /**
