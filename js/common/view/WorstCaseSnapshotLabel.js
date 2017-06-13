@@ -38,7 +38,8 @@ define( function( require ) {
     options.children = [
       createSideNode( leftItemCreators ),
       new Text( '=', TEXT_OPTIONS ),
-      createSideNode( rightItemCreators ) ];
+      createSideNode( rightItemCreators )
+    ];
 
     HBox.call( this, options );
   }
