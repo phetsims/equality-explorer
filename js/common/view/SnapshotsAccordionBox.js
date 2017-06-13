@@ -27,8 +27,8 @@ define( function( require ) {
   var mySnapshotsString = require( 'string!EQUALITY_EXPLORER/mySnapshots' );
 
   // constants
-  var BUTTON_X_MARGIN = 8;
-  var BUTTON_Y_MARGIN = 5;
+  var BUTTON_X_MARGIN = 3;
+  var BUTTON_Y_MARGIN = 1;
   var CONTENT_WIDTH = 225;
 
   /**
@@ -55,32 +55,20 @@ define( function( require ) {
       contentYMargin: 10
     }, options );
 
-    var vBoxChildren = [];
+    var snapshotsVBoxChildren = [];
 
-    vBoxChildren.push( new HSeparator( CONTENT_WIDTH, {
+    snapshotsVBoxChildren.push( new HSeparator( CONTENT_WIDTH, {
       stroke: 'rgb( 200, 200, 200 )'
     } ) );
 
-    // button icons
-    var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
-    var loadIcon = new ArrowNode( 0, 0, -20, 0, {
-      headWidth: 15,
-      headHeight: 8,
-      tailWidth: 4
-    } );
-    var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.4 } );
-
-    // determine the max icon dimensions
-    var maxIconWidth = _.maxBy( [ snapshotIcon, loadIcon, trashIcon ], function( icon ) { return icon.width; } ).width;
-    var maxIconHeight = _.maxBy( [ snapshotIcon, loadIcon, trashIcon ], function( icon ) { return icon.height; } ).height;
-
     // Create a row for each snapshot
+    var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
     for ( var i = 0; i < options.numberOfSnapshots; i++ ) {
 
       if ( i === 0 ) {
 
         //TODO for demonstration of worst-case layout
-        vBoxChildren.push( new WorstCaseSnapshotLabel( {
+        snapshotsVBoxChildren.push( new WorstCaseSnapshotLabel( {
           maxWidth: CONTENT_WIDTH
         } ) );
         //TODO make snapshots selectable, like radio button
@@ -90,50 +78,56 @@ define( function( require ) {
         var snapshotButton = new RectangularPushButton( {
           content: snapshotIcon,
           baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
-          xMargin: BUTTON_X_MARGIN + ( maxIconWidth - snapshotIcon.width ),
-          yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - snapshotIcon.height ),
+          xMargin: 8,
+          yMargin: 4,
           touchAreaXDilation: 5,
           touchAreaYDilation: 5
         } );
 
-        vBoxChildren.push( snapshotButton );
+        snapshotsVBoxChildren.push( snapshotButton );
       }
     }
 
-    vBoxChildren.push( new HSeparator( CONTENT_WIDTH, {
+    snapshotsVBoxChildren.push( new HSeparator( CONTENT_WIDTH, {
       stroke: 'rgb( 200, 200, 200 )'
     } ) );
 
     var snapshotsVBox = new VBox( {
-      spacing: 25,
-      children: vBoxChildren
+      spacing: 30,
+      children: snapshotsVBoxChildren
     } );
 
+    var loadIcon = new ArrowNode( 0, 0, -20, 0, {
+      headWidth: 15,
+      headHeight: 8,
+      tailWidth: 4
+    } );
     var loadButton = new RectangularPushButton( {
       content: loadIcon,
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
-      xMargin: BUTTON_X_MARGIN + ( maxIconWidth - loadIcon.width ),
-      yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - loadIcon.height ),
+      xMargin: 8,
+      yMargin: 4,
       touchAreaXDilation: 5,
       touchAreaYDilation: 5
     } );
     //TODO listener - load the selected snapshot
 
+    var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.45 } );
     var trashButton = new RectangularPushButton( {
       content: trashIcon,
       baseColor: 'white',
-      xMargin: BUTTON_X_MARGIN + ( maxIconWidth - trashIcon.width ),
-      yMargin: BUTTON_Y_MARGIN + ( maxIconHeight - trashIcon.height ),
+      xMargin: 12,
+      yMargin: 5,
       touchAreaXDilation: 5,
       touchAreaYDilation: 5
     } );
     //TODO listener - delete the selected snapshot
 
     var buttonGroup = new HBox( {
-      spacing: 20,
+      spacing: 50,
       children: [ loadButton, trashButton ]
     } );
-    vBoxChildren.push( buttonGroup );
+    snapshotsVBoxChildren.push( buttonGroup );
 
     var contentVBox = new VBox( {
       spacing: 10,

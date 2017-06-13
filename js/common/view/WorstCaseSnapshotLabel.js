@@ -2,7 +2,7 @@
 
 /**
  * Demonstrates the "worst case" scenario for a snapshot label, with maximum number of terms and width.
- * 
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
@@ -19,6 +19,8 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // constants
+  var TERM_SPACING = 1; // space between coefficient and icon in each term
+  var OPERATOR_SPACING = 4; // spacing between terms and operators
   var ITEM_DIAMETER = 2 * EqualityExplorerConstants.ITEM_RADIUS;
   var EQUATION_FONT = new PhetFont( 18 );
   var TEXT_OPTIONS = {
@@ -34,29 +36,27 @@ define( function( require ) {
     var maxIconHeight = new Text( '20', TEXT_OPTIONS ).height;
 
     options = _.extend( {
-      spacing: 5
+      spacing: OPERATOR_SPACING
     }, options );
 
-    var termNode = new HBox( {
-      spacing: 3,
+    // terms on one side of the equations
+    var termsNode = new HBox( {
+      spacing: OPERATOR_SPACING,
       children: [
-        new Text( '20', TEXT_OPTIONS ),
-        new ShadedSphereNode( ITEM_DIAMETER, {
+        createTermNode( 20, new ShadedSphereNode( ITEM_DIAMETER, {
           mainColor: 'green',
           maxHeight: maxIconHeight
-        } ),
+        } ) ),
         new Text( '+', TEXT_OPTIONS ),
-        new Text( '20', TEXT_OPTIONS ),
-        new ShadedSphereNode( ITEM_DIAMETER, {
+        createTermNode( 20, new ShadedSphereNode( ITEM_DIAMETER, {
           mainColor: 'orange',
           maxHeight: maxIconHeight
-        } ),
+        } ) ),
         new Text( '+', TEXT_OPTIONS ),
-        new Text( '20', TEXT_OPTIONS ),
-        new ShadedSphereNode( ITEM_DIAMETER, {
+        createTermNode( 20, new ShadedSphereNode( ITEM_DIAMETER, {
           mainColor: 'magenta',
           maxHeight: maxIconHeight
-        } )
+        } ) )
       ]
     } );
 
@@ -64,15 +64,22 @@ define( function( require ) {
 
     assert && assert( !options.children );
     options.children = [
-      new Node( { children: [ termNode] } ),
+      new Node( { children: [ termsNode ] } ),
       equalsNode,
-      new Node( { children: [ termNode] } )
+      new Node( { children: [ termsNode ] } )
     ];
 
     HBox.call( this, options );
   }
 
   equalityExplorer.register( 'WorstCaseSnapshotLabel', WorstCaseSnapshotLabel );
+
+  function createTermNode( coefficient, icon ) {
+    return new HBox( {
+      spacing: TERM_SPACING,
+      children: [ new Text( '' + coefficient, TEXT_OPTIONS ), icon ]
+    } );
+  }
 
   return inherit( HBox, WorstCaseSnapshotLabel );
 } );
