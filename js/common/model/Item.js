@@ -24,6 +24,13 @@ define( function( require ) {
    */
   function Item( value, icon, options ) {
 
+    options = _.extend( {
+      constantTerm: false // {boolean} does this Item evaluate to a constant?
+    }, options );
+
+    // @public (read-only)
+    this.constantTerm = options.constantTerm;
+
     // @public (read-only)
     this.id = idIndex++;
 

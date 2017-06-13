@@ -18,6 +18,7 @@ define( function( require ) {
 
   // constants
   var COEFFICIENT = 10;
+  var CONSTANT = 20;
   var TERM_SPACING = 1;  // space between coefficient and icon
   var OPERATOR_SPACING = 4; // space between terms and operators
   var TEXT_OPTIONS = { font: new PhetFont( 18 ) };
@@ -53,13 +54,23 @@ define( function( require ) {
    * @returns {Node}
    */
   function createSideNode( itemCreators ) {
+
     var children = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
-      children.push( createTermNode( COEFFICIENT, itemCreators[ i ].icon ) );
+
+      var itemCreator = itemCreators[ i ];
+      if ( itemCreator.constantTerm ) {
+        children.push( createConstantNode( CONSTANT ) );
+      }
+      else {
+        children.push( createTermNode( COEFFICIENT, itemCreator.icon ) );
+      }
+
       if ( i < itemCreators.length - 1 ) {
         children.push( new Text( '+', TEXT_OPTIONS ) );
       }
     }
+
     return new HBox( {
       spacing: OPERATOR_SPACING,
       children: children
@@ -83,6 +94,15 @@ define( function( require ) {
         } )
       ]
     } );
+  }
+
+  /**
+   * Creates a constant term.
+   * @param {number} constant
+   * @returns {Node}
+   */
+  function createConstantNode( constant ) {
+    return new Text( '' + constant, TEXT_OPTIONS );
   }
 
   return inherit( HBox, WorstCaseSnapshotLabel );

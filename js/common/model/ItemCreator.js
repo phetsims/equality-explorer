@@ -16,13 +16,19 @@ define( function( require ) {
   /**
    * @param {number} value
    * @param {Node} icon
+   * @param {Object} [options]
    * @constructor
    */
-  function ItemCreator( value, icon ) {
+  function ItemCreator( value, icon, options ) {
+
+    options = _.extend( {
+      constantTerm: false // {boolean} do Items evaluate to a constant?
+    }, options );
 
     // @public (read-only)
     this.value = value;
     this.icon = icon;
+    this.constantTerm = options.constantTerm;
   }
 
   equalityExplorer.register( 'ItemCreator', ItemCreator );
@@ -35,6 +41,9 @@ define( function( require ) {
      * @returns {Item}
      */
     createItem: function( options ) {
+      options = _.extend( {
+        constantTerm: this.constantTerm
+      }, options );
       return new Item( this.value, this.icon, options );
     }
   } );

@@ -41,13 +41,13 @@ define( function( require ) {
     var leftItemCreators = [
       new ItemCreator( 3, appleNode ),
       new ItemCreator( 2, orangeNode ),
-      new ItemCreator( 1, oneNode )
+      new ItemCreator( 1, oneNode, { constantTerm: true } )
     ];
 
     var rightItemCreators = [
       new ItemCreator( 3, appleNode ),
       new ItemCreator( 2, orangeNode ),
-      new ItemCreator( 1, oneNode )
+      new ItemCreator( 1, oneNode, { constantTerm: true } )
     ];
 
     BasicsScene.call( this, appleNode, leftItemCreators, rightItemCreators );
