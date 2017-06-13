@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  var WorstCaseSnapshotLabel = require( 'EQUALITY_EXPLORER/common/view/WorstCaseSnapshotLabel' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -70,20 +71,18 @@ define( function( require ) {
     var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.4 } );
 
     // determine the max icon dimensions
-    var maxIconWidth = _.maxBy( [ snapshotIcon, loadIcon, trashIcon], function( icon ) { return icon.width; } ).width;
-    var maxIconHeight = _.maxBy( [ snapshotIcon, loadIcon, trashIcon], function( icon ) { return icon.height; } ).height;
+    var maxIconWidth = _.maxBy( [ snapshotIcon, loadIcon, trashIcon ], function( icon ) { return icon.width; } ).width;
+    var maxIconHeight = _.maxBy( [ snapshotIcon, loadIcon, trashIcon ], function( icon ) { return icon.height; } ).height;
 
     // Create a row for each snapshot
     for ( var i = 0; i < options.numberOfSnapshots; i++ ) {
 
       if ( i === 0 ) {
 
-        //TODO this equation is for demonstration
-        var equationText = new Text( '-40 X + 40 X + 40 X = -40 X + 40 X + 40 X', {
-          font: new PhetFont( 12 ),
+        //TODO for demonstration of worst-case layout
+        vBoxChildren.push( new WorstCaseSnapshotLabel( {
           maxWidth: CONTENT_WIDTH
-        } );
-        vBoxChildren.push( equationText );
+        } ) );
         //TODO make snapshots selectable, like radio button
       }
       else {
@@ -133,9 +132,9 @@ define( function( require ) {
     var buttonGroup = new HBox( {
       spacing: 20,
       children: [ loadButton, trashButton ]
-    });
+    } );
     vBoxChildren.push( buttonGroup );
-    
+
     var contentVBox = new VBox( {
       spacing: 10,
       children: [ snapshotsVBox, buttonGroup ]
