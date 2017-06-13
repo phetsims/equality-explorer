@@ -45,7 +45,11 @@ define( function( require ) {
 
   equalityExplorer.register( 'WorstCaseSnapshotLabel', WorstCaseSnapshotLabel );
 
-
+  /**
+   * Creates one side of the equation
+   * @param {ItemCreator[]} itemCreators
+   * @returns {Node}
+   */
   function createSideNode( itemCreators ) {
     var children = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
@@ -60,6 +64,12 @@ define( function( require ) {
     } );
   }
 
+  /**
+   * Creates a term in the equation
+   * @param {number} coefficient
+   * @param {Node} icon
+   * @returns {Node}
+   */
   function createTermNode( coefficient, icon ) {
     return new HBox( {
       spacing: TERM_SPACING,
