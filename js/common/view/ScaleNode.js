@@ -185,7 +185,7 @@ define( function( require ) {
 
       // rotate and fill the arrow
       arrowNode.rotateAround( new Vector2( arrowNode.centerX, arrowNode.bottom ), deltaAngle );
-      arrowNode.fill = ( angle === 0 ) ? 'green' : 'orange';
+      arrowNode.fill = ( angle === 0 ) ? 'rgb( 0, 200, 0 )' : 'orange';
 
       // left plate
       var leftPlatePivotCenter = self.globalToLocalPoint( beamNode.localToGlobalPoint( leftPlatePivotNode.center ) );
