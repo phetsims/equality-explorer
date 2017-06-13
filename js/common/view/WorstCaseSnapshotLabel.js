@@ -43,17 +43,17 @@ define( function( require ) {
     var termsNode = new HBox( {
       spacing: OPERATOR_SPACING,
       children: [
-        createTermNode( 20, new ShadedSphereNode( ITEM_DIAMETER, {
+        createTermNode( 10, new ShadedSphereNode( ITEM_DIAMETER, {
           mainColor: 'green',
           maxHeight: maxIconHeight
         } ) ),
         new Text( '+', TEXT_OPTIONS ),
-        createTermNode( 20, new ShadedSphereNode( ITEM_DIAMETER, {
+        createTermNode( 10, new ShadedSphereNode( ITEM_DIAMETER, {
           mainColor: 'orange',
           maxHeight: maxIconHeight
         } ) ),
         new Text( '+', TEXT_OPTIONS ),
-        createTermNode( 20, new ShadedSphereNode( ITEM_DIAMETER, {
+        createTermNode( 10, new ShadedSphereNode( ITEM_DIAMETER, {
           mainColor: 'magenta',
           maxHeight: maxIconHeight
         } ) )
