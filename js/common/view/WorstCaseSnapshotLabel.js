@@ -17,8 +17,9 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  var TERM_SPACING = 1; // space between coefficient and icon in each term
-  var OPERATOR_SPACING = 4; // spacing between terms and operators
+  var COEFFICIENT = 10;
+  var TERM_SPACING = 1;  // space between coefficient and icon
+  var OPERATOR_SPACING = 4; // space between terms and operators
   var TEXT_OPTIONS = { font: new PhetFont( 18 ) };
   var MAX_ICON_HEIGHT = new Text( '20', TEXT_OPTIONS ).height;
 
@@ -31,7 +32,7 @@ define( function( require ) {
   function WorstCaseSnapshotLabel( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
-      spacing: OPERATOR_SPACING
+      spacing: OPERATOR_SPACING // space between sides of the equation and relational operator
     }, options );
 
     assert && assert( !options.children );
@@ -54,7 +55,7 @@ define( function( require ) {
   function createSideNode( itemCreators ) {
     var children = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
-      children.push( createTermNode( 10, itemCreators[ i ].icon ) );
+      children.push( createTermNode( COEFFICIENT, itemCreators[ i ].icon ) );
       if ( i < itemCreators.length - 1 ) {
         children.push( new Text( '+', TEXT_OPTIONS ) );
       }
