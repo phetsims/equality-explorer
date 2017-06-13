@@ -24,7 +24,7 @@ define( function( require ) {
       //TODO fill in credits
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
-      team: '',
+      team: 'Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
       qualityAssurance: '',
       graphicArts: '',
       thanks: ''
