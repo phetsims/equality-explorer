@@ -10,74 +10,66 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // constants
   var TERM_SPACING = 1; // space between coefficient and icon in each term
   var OPERATOR_SPACING = 4; // spacing between terms and operators
-  var ITEM_DIAMETER = 2 * EqualityExplorerConstants.ITEM_RADIUS;
-  var EQUATION_FONT = new PhetFont( 18 );
-  var TEXT_OPTIONS = {
-    font: EQUATION_FONT
-  };
+  var TEXT_OPTIONS = { font: new PhetFont( 18 ) };
+  var MAX_ICON_HEIGHT = new Text( '20', TEXT_OPTIONS ).height;
 
   /**
+   * @param {ItemCreator[]} leftItemCreators
+   * @param {ItemCreator[]} rightItemCreators
    * @param {Object} [options]
    * @constructor
    */
-  function WorstCaseSnapshotLabel( options ) {
-
-    var maxIconHeight = new Text( '20', TEXT_OPTIONS ).height;
+  function WorstCaseSnapshotLabel( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
       spacing: OPERATOR_SPACING
     }, options );
 
-    // terms on one side of the equations
-    var termsNode = new HBox( {
-      spacing: OPERATOR_SPACING,
-      children: [
-        createTermNode( 10, new ShadedSphereNode( ITEM_DIAMETER, {
-          mainColor: 'green',
-          maxHeight: maxIconHeight
-        } ) ),
-        new Text( '+', TEXT_OPTIONS ),
-        createTermNode( 10, new ShadedSphereNode( ITEM_DIAMETER, {
-          mainColor: 'orange',
-          maxHeight: maxIconHeight
-        } ) ),
-        new Text( '+', TEXT_OPTIONS ),
-        createTermNode( 10, new ShadedSphereNode( ITEM_DIAMETER, {
-          mainColor: 'magenta',
-          maxHeight: maxIconHeight
-        } ) )
-      ]
-    } );
-
-    var equalsNode = new Text( '=', TEXT_OPTIONS );
-
     assert && assert( !options.children );
     options.children = [
-      new Node( { children: [ termsNode ] } ),
-      equalsNode,
-      new Node( { children: [ termsNode ] } )
-    ];
+      createSideNode( leftItemCreators ),
+      new Text( '=', TEXT_OPTIONS ),
+      createSideNode( rightItemCreators ) ];
 
     HBox.call( this, options );
   }
 
   equalityExplorer.register( 'WorstCaseSnapshotLabel', WorstCaseSnapshotLabel );
 
+
+  function createSideNode( itemCreators ) {
+    var children = [];
+    for ( var i = 0; i < itemCreators.length; i++ ) {
+      children.push( createTermNode( 10, itemCreators[ i ].icon ) );
+      if ( i < itemCreators.length - 1 ) {
+        children.push( new Text( '+', TEXT_OPTIONS ) );
+      }
+    }
+    return new HBox( {
+      spacing: OPERATOR_SPACING,
+      children: children
+    } );
+  }
+
   function createTermNode( coefficient, icon ) {
     return new HBox( {
       spacing: TERM_SPACING,
-      children: [ new Text( '' + coefficient, TEXT_OPTIONS ), icon ]
+      children: [
+        new Text( '' + coefficient, TEXT_OPTIONS ),
+        new Node( {
+          children: [ icon ],
+          maxHeight: MAX_ICON_HEIGHT
+        } )
+      ]
     } );
   }
 

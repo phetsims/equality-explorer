@@ -34,7 +34,7 @@ define( function( require ) {
 
     var dragLayer = new Node();
 
-    var snapshotsAccordionBox = new SnapshotsAccordionBox( {
+    var snapshotsAccordionBox = new SnapshotsAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
       expandedProperty: scene.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN

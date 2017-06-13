@@ -30,10 +30,12 @@ define( function( require ) {
   var CONTENT_WIDTH = 225;
 
   /**
+   * @param {ItemCreator[]} leftItemCreators
+   * @param {ItemCreator[]} rightItemCreators
    * @param {Object} [options]
    * @constructor
    */
-  function SnapshotsAccordionBox( options ) {
+  function SnapshotsAccordionBox( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
       numberOfSnapshots: 5,
@@ -66,7 +68,7 @@ define( function( require ) {
       if ( i === 0 ) {
 
         //TODO for demonstration of worst-case layout
-        snapshotsVBoxChildren.push( new WorstCaseSnapshotLabel( {
+        snapshotsVBoxChildren.push( new WorstCaseSnapshotLabel( leftItemCreators, rightItemCreators, {
           maxWidth: CONTENT_WIDTH
         } ) );
         //TODO make snapshots selectable, like radio button
