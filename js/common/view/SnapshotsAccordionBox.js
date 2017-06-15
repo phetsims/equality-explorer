@@ -97,7 +97,7 @@ define( function( require ) {
       children: snapshotsVBoxChildren
     } );
 
-    //TODO change icon to font-awesome icon that AM likes
+    //TODO change icon to font-awesome fa-reply icon
     var loadIcon = new ArrowNode( 0, 0, -20, 0, {
       headWidth: 15,
       headHeight: 8,
