@@ -10,8 +10,6 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var WorstCaseSnapshotLabel = require( 'EQUALITY_EXPLORER/common/view/WorstCaseSnapshotLabel' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -22,6 +20,7 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+  var WorstCaseSnapshotLabel = require( 'EQUALITY_EXPLORER/common/view/WorstCaseSnapshotLabel' );
 
   // strings
   var mySnapshotsString = require( 'string!EQUALITY_EXPLORER/mySnapshots' );
@@ -97,12 +96,7 @@ define( function( require ) {
       children: snapshotsVBoxChildren
     } );
 
-    //TODO change icon to font-awesome fa-reply icon
-    var loadIcon = new ArrowNode( 0, 0, -20, 0, {
-      headWidth: 15,
-      headHeight: 8,
-      tailWidth: 4
-    } );
+    var loadIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
     var loadButton = new RectangularPushButton( {
       content: loadIcon,
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
