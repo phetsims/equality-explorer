@@ -9,12 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var SpheresScene = require( 'EQUALITY_EXPLORER/basics/model/SpheresScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var FruitScene = require( 'EQUALITY_EXPLORER/basics/model/FruitScene' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PolygonsScene = require( 'EQUALITY_EXPLORER/basics/model/PolygonsScene' );
   var Property = require( 'AXON/Property' );
+  var SpheresScene = require( 'EQUALITY_EXPLORER/basics/model/SpheresScene' );
 
   /**
    * @constructor
