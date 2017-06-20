@@ -17,12 +17,13 @@ define( function( require ) {
   var idIndex = 0; // unique id assigned to each Item instance
 
   /**
+   * @param {string} name - internal name, not displayed to the user
    * @param {number} value - the Item's initial value
    * @param {Node} icon
    * @param {Object} [options]
    * @constructor
    */
-  function Item( value, icon, options ) {
+  function Item( name, value, icon, options ) {
 
     options = _.extend( {
       constantTerm: false // {boolean} does this Item evaluate to a constant?
@@ -33,6 +34,9 @@ define( function( require ) {
 
     // @public (read-only)
     this.id = idIndex++;
+
+    // @public (read-only)
+    this.name = name;
 
     // @public (read-only)
     this.valueProperty = new Property( value );

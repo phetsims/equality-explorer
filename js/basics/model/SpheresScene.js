@@ -30,15 +30,15 @@ define( function( require ) {
     var magentaNode = new ShadedSphereNode( ITEM_DIAMETER, { mainColor: 'magenta' } );
 
     var leftItemCreators = [
-      new ItemCreator( 3, greenNode ),
-      new ItemCreator( 2, orangeNode ),
-      new ItemCreator( 1, magentaNode )
+      new ItemCreator( 'greenSphere', 3, greenNode ),
+      new ItemCreator( 'orangeSphere', 2, orangeNode ),
+      new ItemCreator( 'magentaSphere', 1, magentaNode )
     ];
 
     var rightItemCreators = [
-      new ItemCreator( 3, greenNode ),
-      new ItemCreator( 2, orangeNode ),
-      new ItemCreator( 1, magentaNode )
+      new ItemCreator( 'greenSphere', 3, greenNode ),
+      new ItemCreator( 'orangeSphere', 2, orangeNode ),
+      new ItemCreator( 'magentaSphere', 1, magentaNode )
     ];
 
     BasicsScene.call( this, greenNode, leftItemCreators, rightItemCreators );

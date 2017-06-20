@@ -14,18 +14,20 @@ define( function( require ) {
   var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
 
   /**
+   * @param {string} name - internal name, not displayed to the user
    * @param {number} value
    * @param {Node} icon
    * @param {Object} [options]
    * @constructor
    */
-  function ItemCreator( value, icon, options ) {
+  function ItemCreator( name, value, icon, options ) {
 
     options = _.extend( {
       constantTerm: false // {boolean} do Items evaluate to a constant?
     }, options );
 
     // @public (read-only)
+    this.name = name;
     this.value = value;
     this.icon = icon;
     this.constantTerm = options.constantTerm;
@@ -44,7 +46,7 @@ define( function( require ) {
       options = _.extend( {
         constantTerm: this.constantTerm
       }, options );
-      return new Item( this.value, this.icon, options );
+      return new Item( this.name, this.value, this.icon, options );
     }
   } );
 } );

@@ -39,15 +39,15 @@ define( function( require ) {
     orangeNode.setScaleMagnitude( oneNode.width / orangeNode.width, oneNode.height / orangeNode.height );
 
     var leftItemCreators = [
-      new ItemCreator( 3, appleNode ),
-      new ItemCreator( 2, orangeNode ),
-      new ItemCreator( 1, oneNode, { constantTerm: true } )
+      new ItemCreator( 'apple', 3, appleNode ),
+      new ItemCreator( 'orange', 2, orangeNode ),
+      new ItemCreator( 'one', 1, oneNode, { constantTerm: true } )
     ];
 
     var rightItemCreators = [
-      new ItemCreator( 3, appleNode ),
-      new ItemCreator( 2, orangeNode ),
-      new ItemCreator( 1, oneNode, { constantTerm: true } )
+      new ItemCreator( 'apple', 3, appleNode ),
+      new ItemCreator( 'orange', 2, orangeNode ),
+      new ItemCreator( 'one', 1, oneNode, { constantTerm: true } )
     ];
 
     BasicsScene.call( this, appleNode, leftItemCreators, rightItemCreators );

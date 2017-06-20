@@ -35,15 +35,15 @@ define( function( require ) {
     } );
 
     var leftItemCreators = [
-      new ItemCreator( 3, hexagonNode ),
-      new ItemCreator( 2, diamondNode ),
-      new ItemCreator( 1, triangleNode )
+      new ItemCreator( 'hexagon', 3, hexagonNode ),
+      new ItemCreator( 'diamond', 2, diamondNode ),
+      new ItemCreator( 'triangle', 1, triangleNode )
     ];
 
     var rightItemCreators = [
-      new ItemCreator( 3, hexagonNode ),
-      new ItemCreator( 2, diamondNode ),
-      new ItemCreator( 1, triangleNode )
+      new ItemCreator( 'hexagon', 3, hexagonNode ),
+      new ItemCreator( 'diamond', 2, diamondNode ),
+      new ItemCreator( 'triangle', 1, triangleNode )
     ];
 
     BasicsScene.call( this, hexagonNode, leftItemCreators, rightItemCreators );
