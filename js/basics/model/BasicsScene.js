@@ -47,6 +47,7 @@ define( function( require ) {
 
     // @public (read-only) dimensions for the grid of items on each plate of the scale
     this.scaleGridSize = new Dimension2( 6, 6 );
+    var numberOfCells = this.scaleGridSize.width * this.scaleGridSize.height;
 
     // lengthProperty for each ObservableArray.<Item>
     var lengthProperties = [];
@@ -65,19 +66,23 @@ define( function( require ) {
     this.rightItemCreators.forEach( function( itemCreator ) {
       maxItemWeight = Math.max( maxItemWeight, itemCreator.weightProperty.value );
     } );
-    var maxWeight = maxItemWeight * this.scaleGridSize.width * this.scaleGridSize.height;
+    var maxWeight = maxItemWeight * numberOfCells;
 
     // @public (read-only) {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
     this.scaleAngleProperty = new DerivedProperty( lengthProperties, function() {
 
-      //TODO assert that sum of lengthProperties <= number of cells
+      // sum of lengthProperties <= number of cells
+      assert && assert( _.reduce( lengthProperties,
+          function( numberOfItems, lengthProperty ) {
+            return numberOfItems + lengthProperty.value;
+          }, 0 ) <= numberOfCells, 'more items than cells' );
 
       var totalWeight = 0;
       self.leftItemCreators.forEach( function( itemCreator ) {
-        totalWeight -= itemCreator.total;
+        totalWeight -= itemCreator.total; // subtract
       } );
       self.rightItemCreators.forEach( function( itemCreator ) {
-        totalWeight += itemCreator.total;
+        totalWeight += itemCreator.total; // add
       } );
 
       var scaleAngle = ( totalWeight / maxWeight ) * MAX_SCALE_ANGLE;
