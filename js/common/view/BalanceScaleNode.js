@@ -2,6 +2,7 @@
 
 /**
  * The balance scale used throughout Equality Explorer.
+ * Origin is at the point where the beam is balanced on the fulcrum.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -29,7 +30,6 @@ define( function( require ) {
   var TOP_FACE_FILL = 'rgb( 177, 177, 177 )';
   var FRONT_FACE_FILL = 'rgb( 100, 100, 100 )';
   var FULCRUM_FILL = 'rgb( 204, 204, 204 )';
-  var PLATFORM_PIVOT_FILL = 'rgb( 204, 204, 204 )';
 
   // base
   var BASE_WIDTH = 200;
@@ -45,13 +45,6 @@ define( function( require ) {
   var FULCRUM_TOP_WIDTH = 15;
   var FULCRUM_BOTTOM_WIDTH = 25;
 
-  // platform pivots, connect a weighing platform to the beam
-  var PLATFORM_PIVOT_DIAMETER = 16;
-  var PLATFORM_PIVOT_OPTIONS = {
-    fill: PLATFORM_PIVOT_FILL,
-    stroke: 'black'
-  };
-
   // arrow
   var ARROW_LENGTH = 75;
 
@@ -62,15 +55,12 @@ define( function( require ) {
    */
   function BalanceScaleNode( scale, options ) {
 
-    var self = this;
-
     options = _.extend( {
       leftPlatformFill: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
       rightPlatformFill: EqualityExplorerColors.RIGHT_PLATFORM_COLOR
     }, options );
 
-    options.centerX = scale.location.x;
-    options.y = scale.location.y; //TODO not correct
+    options.center = scale.location;
 
     // the fulcrum that the beam balances on
     var fulcrumTaper = FULCRUM_BOTTOM_WIDTH - FULCRUM_TOP_WIDTH;
@@ -83,6 +73,8 @@ define( function( require ) {
     var fulcrumNode = new Path( fulcrumShape, {
       stroke: 'black',
       fill: FULCRUM_FILL,
+
+      // origin is at center-top of fulcrum
       centerX: 0,
       top: 0
     } );
@@ -99,7 +91,7 @@ define( function( require ) {
       top: fulcrumNode.bottom - ( BASE_DEPTH / 2 )
     } );
 
-    // the beam that supports a plate on either end
+    // the beam that supports a weighing platform on either end
     var beamNode = new BoxNode( {
       width: scale.beamWidth,
       height: BEAM_HEIGHT,
@@ -127,31 +119,18 @@ define( function( require ) {
       bottom: 0
     } );
 
-    // pivot points that connect the platforms to the beam
-    var platformPivotShape = new Shape().circle( 0, 0, PLATFORM_PIVOT_DIAMETER / 2 );
-    var leftPivotNode = new Path( platformPivotShape, _.extend( {}, PLATFORM_PIVOT_OPTIONS,  {
-      centerX: scale.platformXInset,
-      bottom: -0.5 * BEAM_DEPTH
-    } ) );
-    beamNode.addChild( leftPivotNode );
-    var rightPivotNode = new Path( platformPivotShape, _.extend( {}, PLATFORM_PIVOT_OPTIONS, {
-      centerX: beamNode.width - scale.platformXInset,
-      bottom: -0.5 * BEAM_DEPTH
-    } ) );
-    beamNode.addChild( rightPivotNode );
-
     // left platform
     var leftPlatformNode = new WeighingPlatformNode( {
-      color: options.leftPlatformFill,
-      center: beamNode.center // correct location handled by scale.angleProperty observer
+      supportHeight: scale.platformYOffset,
+      color: options.leftPlatformFill
     } );
     leftPlatformNode.setScaleMagnitude( scale.leftPlatform.diameter / leftPlatformNode.width, 1 );
     assert && assert( leftPlatformNode.width === scale.leftPlatform.diameter );
 
     // right platform
     var rightPlatformNode = new WeighingPlatformNode( {
-      color: options.rightPlatformFill,
-      center: beamNode.center // correct location handled by scale.angleProperty observer
+      supportHeight: scale.platformYOffset,
+      color: options.rightPlatformFill
     } );
     rightPlatformNode.setScaleMagnitude( scale.rightPlatform.diameter / rightPlatformNode.width, 1 );
     assert && assert( rightPlatformNode.width === scale.rightPlatform.diameter );
@@ -168,7 +147,7 @@ define( function( require ) {
       //TODO disable OrganizeButton when scale is empty or organized
     } );
 
-    // buttons in the front face of the base
+    // buttons on the front face of the base
     var buttonsParent = new HBox( {
       children: [ clearScaleButton, organizeButton ],
       spacing: 25,
@@ -178,14 +157,14 @@ define( function( require ) {
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [
-      leftPlatformNode,
-      rightPlatformNode,
       baseNode,
       buttonsParent,
       fulcrumNode,
       dashedLine,
       arrowNode,
-      beamNode
+      beamNode,
+      leftPlatformNode,
+      rightPlatformNode
     ];
 
     // draw a red dot at the origin
@@ -206,16 +185,16 @@ define( function( require ) {
       // rotate and fill the arrow
       arrowNode.rotateAround( new Vector2( arrowNode.centerX, arrowNode.bottom ), deltaAngle );
       arrowNode.fill = ( angle === 0 ) ? EqualityExplorerColors.SCALE_ARROW_BALANCED : EqualityExplorerColors.SCALE_ARROW_UNBALANCED;
+    } );
 
-      // left platform
-      var leftPivotCenter = self.globalToLocalPoint( beamNode.localToGlobalPoint( leftPivotNode.center ) );
-      leftPlatformNode.centerX = leftPivotCenter.x;
-      leftPlatformNode.bottom = leftPivotCenter.y;
+    // unlink unnecessary, BalanceScaleNode exists for lifetime of sim
+    scale.leftPlatform.locationProperty.link( function( location ) {
+      leftPlatformNode.translation = leftPlatformNode.globalToParentPoint( location );
+    } );
 
-      // right platform
-      var rightPivotCenter = self.globalToLocalPoint( beamNode.localToGlobalPoint( rightPivotNode.center ) );
-      rightPlatformNode.centerX = rightPivotCenter.x;
-      rightPlatformNode.bottom = rightPivotCenter.y;
+    // unlink unnecessary, BalanceScaleNode exists for lifetime of sim
+    scale.rightPlatform.locationProperty.link( function( location ) {
+      rightPlatformNode.translation = rightPlatformNode.globalToParentPoint( location );
     } );
   }
 

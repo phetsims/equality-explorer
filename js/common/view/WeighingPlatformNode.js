@@ -2,6 +2,7 @@
 
 /**
  * A weighing platform on the balance scale.
+ * Includes a plate and a vertical support that attaches it to the balance beam.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -16,6 +17,10 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
+  // constants
+  var SUPPORT_FILL = 'rgb( 204, 204, 204 )';
+  var SUPPORT_STROKE = 'black';
+
   /**
    * @param {Object} [options]
    * @constructor
@@ -23,7 +28,9 @@ define( function( require ) {
   function WeighingPlatformNode( options ) {
 
     options = _.extend( {
-      color: '#666666' // {Color|string} color of the outside of the plate
+      color: '#666666', // {Color|string} color of the outside of the plate
+      supportHeight: 25, // {number} height of the support that connects the platform to the balance beam
+      pivotRadius: 8  // {number} radius of the pivot point that attaches to the balance beam
     }, options );
 
     // The main body of the plate.
@@ -66,16 +73,29 @@ define( function( require ) {
       centerY: 0
     } );
 
-    // Flange on the bottom of that plate that attaches to pivot on scale
-    var flangeNode = new Rectangle( 0, 0, 10, 35, {
-      fill: 'rgb( 204, 204, 204 )',
-      stroke: 'black',
+    // rod on the bottom of that platform that attaches to pivot
+    var rodNode = new Rectangle( 0, 0, 10, options.supportHeight - options.pivotRadius, {
+      fill: SUPPORT_FILL,
+      stroke: SUPPORT_STROKE
+    } );
+
+    // Pivot point that connects to the balance beam
+    var pivotNode = new Circle( options.pivotRadius, {
+      fill: SUPPORT_FILL,
+      stroke: SUPPORT_STROKE,
+      centerX: rodNode.centerX,
+      centerY: rodNode.bottom
+    } );
+
+    // Put all of the parts of the support together
+    var supportNode = new Node( {
+      children: [ rodNode, pivotNode ],
       centerX: platformNode.centerX,
       top: platformNode.centerY
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ flangeNode, platformNode ];
+    options.children = [ supportNode, platformNode ];
 
     // draw a red dot at the origin
     if ( phet.chipper.queryParameters.dev ) {
@@ -94,7 +114,7 @@ define( function( require ) {
   return inherit( Node, WeighingPlatformNode, {
 
     /**
-     * Sets the plate's color.
+     * Sets the platform's color.
      * @param {Color|string} color
      */
     setColor: function( color ) {

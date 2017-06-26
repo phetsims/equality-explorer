@@ -52,7 +52,6 @@ define( function( require ) {
     this.platformXInset = options.platformXInset;
     this.platformYOffset = options.platformYOffset;
     this.platformGridSize = options.platformGridSize;
-    var numberOfCells = this.platformGridSize.width * this.platformGridSize.height;
 
     // lengthProperty for each ObservableArray.<Item>
     var lengthProperties = [];
@@ -62,6 +61,8 @@ define( function( require ) {
     rightItemCreators.forEach( function( itemCreator ) {
       lengthProperties.push( itemCreator.items.lengthProperty );
     } );
+
+    var numberOfCells = this.platformGridSize.width * this.platformGridSize.height;
 
     //TODO support dynamic weight for changing value of x
     var maxItemWeight = 0;
@@ -99,13 +100,17 @@ define( function( require ) {
     // {DerivedProperty.<number>} location of the right weighing platform
     var rightLocationProperty = new DerivedProperty( [ this.angleProperty ],
       function( angle ) {
+        var absXInset = Math.abs( self.platformXInset );
+        var absYOffset = Math.abs( self.platformYOffset );
         if ( angle === 0 ) {
-          return new Vector2( self.location.x - ( self.beamWidth / 2 ) - self.platformXInset, self.location.y );
+          return new Vector2( self.location.x + ( self.beamWidth / 2 ) - absXInset, self.location.y - absYOffset );
         }
         else {
-          var dx = Math.cos( angle ) * ( ( self.beamWidth / 2 ) - self.platformXInset );
-          var dy = Math.sin( angle ) * ( ( self.beamWidth / 2 ) - self.platformXInset );
-          return new Vector2( self.location.x + dx, self.location.y + dy - self.platformYOffset );
+          var hypotenuse = ( self.beamWidth / 2 ) - absXInset;
+          var dx = Math.cos( angle ) * hypotenuse;
+          var dy = Math.sin( angle ) * hypotenuse;
+          console.log( 'dx=' + dx + ' dy=' + dy );//XXX
+          return new Vector2( self.location.x + dx, self.location.y + dy - absYOffset );
         }
       }
     );
@@ -113,9 +118,10 @@ define( function( require ) {
     // {DerivedProperty.<number>} location of the left weighing platform
     var leftLocationProperty = new DerivedProperty( [ rightLocationProperty ],
       function( rightLocation ) {
+        var absYOffset = Math.abs( self.platformYOffset );
         var dx = rightLocation.x - self.location.x;
-        var dy = rightLocation.y - self.location.y;
-        return new Vector2( self.location.x - dx, self.location.y - dy );
+        var dy = ( rightLocation.y + absYOffset ) - self.location.y;
+        return new Vector2( self.location.x - dx, self.location.y - dy - absYOffset );
       }
     );
 
