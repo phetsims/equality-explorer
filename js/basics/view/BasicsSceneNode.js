@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -16,7 +17,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemsPanel = require( 'EQUALITY_EXPLORER/common/view/ItemsPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var ScaleNode = require( 'EQUALITY_EXPLORER/common/view/ScaleNode' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
 
   /**
@@ -47,21 +47,18 @@ define( function( require ) {
     } );
 
     var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, dragLayer, {
-      stroke: EqualityExplorerColors.LEFT_PLATE_COLOR,
+      stroke: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
       right: equationAccordionBox.centerX - 40,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, dragLayer, {
-      stroke: EqualityExplorerColors.RIGHT_PLATE_COLOR,
+      stroke: EqualityExplorerColors.RIGHT_PLATFORM_COLOR,
       left: equationAccordionBox.centerX + 40,
       bottom: leftItemsPanel.bottom
     } );
 
-    var scaleNode = new ScaleNode( scene.scaleAngleProperty, {
-      centerX: equationAccordionBox.centerX,
-      bottom: leftItemsPanel.top - 20
-    } );
+    var scaleNode = new BalanceScaleNode( scene.scale );
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [

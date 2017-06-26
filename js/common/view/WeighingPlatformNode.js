@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A plate on the scale.
+ * A weighing platform on the balance scale.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Circle = require( 'SCENERY/nodes/Circle' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -19,7 +20,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function PlateNode( options ) {
+  function WeighingPlatformNode( options ) {
 
     options = _.extend( {
       color: '#666666' // {Color|string} color of the outside of the plate
@@ -58,16 +59,28 @@ define( function( require ) {
       center: wallNode.center
     } );
 
+    // Put all of the parts of the platform together
+    var platformNode = new Node( {
+      children: [ plateNode, wallNode, insideNode, rimNode ],
+      centerX: 0,
+      centerY: 0
+    } );
+
     // Flange on the bottom of that plate that attaches to pivot on scale
     var flangeNode = new Rectangle( 0, 0, 10, 35, {
       fill: 'rgb( 204, 204, 204 )',
       stroke: 'black',
-      centerX: plateNode.centerX,
-      top: plateNode.centerY
+      centerX: platformNode.centerX,
+      top: platformNode.centerY
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ flangeNode, plateNode, wallNode, insideNode, rimNode ];
+    options.children = [ flangeNode, platformNode ];
+
+    // draw a red dot at the origin
+    if ( phet.chipper.queryParameters.dev ) {
+      options.children.push( new Circle( 4, { fill: 'red' } ) );
+    }
 
     Node.call( this, options );
 
@@ -76,9 +89,9 @@ define( function( require ) {
     this.rimNode = rimNode;
   }
 
-  equalityExplorer.register( 'PlateNode', PlateNode );
+  equalityExplorer.register( 'WeighingPlatformNode', WeighingPlatformNode );
 
-  return inherit( Node, PlateNode, {
+  return inherit( Node, WeighingPlatformNode, {
 
     /**
      * Sets the plate's color.
