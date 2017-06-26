@@ -41,10 +41,11 @@ define( function( require ) {
 
         // create an Item
         var item = itemCreator.createItem( {
-
-          // initial location is slightly above the ItemCreatorNode
-          location: dragLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) ).plusXY( 0, -5 )
+          location: dragLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) )
         } );
+
+        // move slightly above the ItemCreatorNode
+        item.locationProperty.value = item.locationProperty.value.plusXY( 0, -5 );
 
         // create an ItemNode
         var itemNode = new ItemNode( item );
