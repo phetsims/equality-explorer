@@ -36,7 +36,7 @@ define( function( require ) {
       location: new Vector2( 0, 0 ), // location of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
       platformXInset: 45, // inset of the platforms from the ends of the beam
-      platformYOffset: 50, // offset of the platform from the beam
+      platformYOffset: -50, // offset of the platform from the beam
       platformDiameter: 300, // diameter of the weighing platforms
       platformGridSize: new Dimension2( 6, 6 ) // dimensions for the grid of items on each weighing platform
     }, options );
