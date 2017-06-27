@@ -121,7 +121,7 @@ define( function( require ) {
 
     // left platform
     var leftPlatformNode = new WeighingPlatformNode( {
-      supportHeight: scale.platformYOffset,
+      supportHeight: Math.abs( scale.platformYOffset ),
       color: options.leftPlatformFill
     } );
     leftPlatformNode.setScaleMagnitude( scale.leftPlatform.diameter / leftPlatformNode.width, 1 );
@@ -129,7 +129,7 @@ define( function( require ) {
 
     // right platform
     var rightPlatformNode = new WeighingPlatformNode( {
-      supportHeight: scale.platformYOffset,
+      supportHeight: Math.abs( scale.platformYOffset ),
       color: options.rightPlatformFill
     } );
     rightPlatformNode.setScaleMagnitude( scale.rightPlatform.diameter / rightPlatformNode.width, 1 );
