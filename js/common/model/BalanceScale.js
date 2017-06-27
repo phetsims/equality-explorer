@@ -109,7 +109,6 @@ define( function( require ) {
           var hypotenuse = ( self.beamWidth / 2 ) - absXInset;
           var dx = Math.cos( angle ) * hypotenuse;
           var dy = Math.sin( angle ) * hypotenuse;
-          console.log( 'dx=' + dx + ' dy=' + dy );//XXX
           return new Vector2( self.location.x + dx, self.location.y + dy - absYOffset );
         }
       }
