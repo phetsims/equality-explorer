@@ -189,12 +189,14 @@ define( function( require ) {
 
     // unlink unnecessary, BalanceScaleNode exists for lifetime of sim
     scale.leftPlatform.locationProperty.link( function( location ) {
-      leftPlatformNode.translation = leftPlatformNode.globalToParentPoint( location );
+      leftPlatformNode.x = location.x - scale.location.x;
+      leftPlatformNode.y = location.y - scale.location.y; 
     } );
 
     // unlink unnecessary, BalanceScaleNode exists for lifetime of sim
     scale.rightPlatform.locationProperty.link( function( location ) {
-      rightPlatformNode.translation = rightPlatformNode.globalToParentPoint( location );
+      rightPlatformNode.x = location.x - scale.location.x;
+      rightPlatformNode.y = location.y - scale.location.y;
     } );
   }
 
