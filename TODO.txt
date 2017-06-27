@@ -1,5 +1,13 @@
 TODO items for equality-explorer
 
+------------------------------------------------------------------------------------------------------------------------
+DESIGN
+
+Does scale need to animate? Animate only when delta angle exceeds some threshold?...
+
+------------------------------------------------------------------------------------------------------------------------
+IMPLEMENTATION
+
 Location of weighing platforms is incorrect when items are present
 
 Remove items when returned to panel
