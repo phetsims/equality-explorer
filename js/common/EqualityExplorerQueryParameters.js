@@ -21,7 +21,7 @@ define( function( require ) {
     slow: { type: 'flag' },
 
     // Size of the grid on the scale's weighing platforms.
-    // A grid size that exceeds the width of the weighing platform will result in an assertion failure.
+    // A grid size that exceeds the width of the weighing platforms will result in an assertion failure.
     gridSize: {
       type: 'array',
       elementSchema: {
