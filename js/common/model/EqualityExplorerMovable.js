@@ -1,6 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO copied from EqualityExplorerMovable, which was copied from function-builder.Movable
+//TODO migrate to common code? This was copied from unit-rates.URMovable, which was copied from function-builder.Movable
 /**
  * A model element that is movable.
  * It has a current location and a desired destination.

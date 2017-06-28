@@ -1,6 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO This was copied from NumberPicker and heavily modified. Move to scenery-phet, factor out commonality.
+//TODO migrate to common code? This was copied from NumberPicker and heavily modified.
 /**
  * User-interface component for picking one of several values
  * This is essentially a value with integrated up/down spinners.
