@@ -12,6 +12,7 @@ Differentiate between items on and off scale
 Remove items when returned to panel
 Remove items on Reset scale
 Remove items on Reset All
+Disable item panel when platform is full
 
 Update equation
 Constrain dragging to left and right sides of scale
