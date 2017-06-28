@@ -99,8 +99,8 @@ define( function( require ) {
     var itemGridNode = new ItemGridNode( {
       gridSize: weighingPlatform.gridSize,
       cellSize: weighingPlatform.cellSize,
-      centerX: 0,
-      bottom: 0
+      centerX: platformNode.centerX,
+      bottom: platformNode.centerY
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
