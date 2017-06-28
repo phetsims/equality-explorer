@@ -38,7 +38,7 @@ define( function( require ) {
       platformXInset: 45, // inset of the platforms from the ends of the beam
       platformYOffset: -50, // offset of the platform from the beam
       platformDiameter: 300, // diameter of the weighing platforms
-      gridSize: new Dimension2( 3, 3 ), // dimensions for the grid of items on each weighing platform
+      gridSize: new Dimension2( 6, 6 ), // dimensions for the grid of items on each weighing platform
       cellXMargin: 3,
       cellYMargin: 0
     }, options );
