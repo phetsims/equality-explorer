@@ -52,7 +52,7 @@ define( function( require ) {
       lengthProperties.push( itemCreator.items.lengthProperty );
     } );
 
-    // update the equation
+    // update the equation, unmultilink unnecessary
     Property.multilink( lengthProperties, function() {
       self.children = [
         createSideNode( leftItemCreators ),

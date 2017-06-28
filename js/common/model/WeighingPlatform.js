@@ -36,12 +36,13 @@ define( function( require ) {
     this.gridSize = options.gridSize;
     this.cellSize = options.cellSize;
 
-    // Disable all ItemCreators if the platform is full
     var maxItems = this.gridSize.width * this.gridSize.height;
     var lengthProperties = [];
     itemCreators.forEach( function( itemCreator ) {
       lengthProperties.push( itemCreator.items.lengthProperty );
     } );
+
+    // Disable all ItemCreators if the platform is full, unmultilink unnecessary
     Property.multilink( lengthProperties, function() {
       var totalItems = 0;
       for ( var i = 0; i < lengthProperties.length; i++ ) {

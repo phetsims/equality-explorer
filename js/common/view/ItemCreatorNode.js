@@ -58,7 +58,7 @@ define( function( require ) {
       }
     } );
 
-    // Enable and disable
+    // Enable and disable, unlink unnecessary
     itemCreator.enabledProperty.link( function( enabled ) {
       self.pickable = enabled;
       self.opacity = ( enabled ? 1 : 0.5 );

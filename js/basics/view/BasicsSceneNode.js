@@ -73,7 +73,7 @@ define( function( require ) {
       ]
     } );
 
-    // unlink not needed, BasicsSceneNodeNode exists for lifetime of the sim
+    // Make this scene visible when it's selected, unlink unnecessary
     sceneProperty.link( function( newScene ) {
       self.visible = ( newScene === scene );
     } );

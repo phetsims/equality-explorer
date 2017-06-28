@@ -170,7 +170,7 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    // unlink unnecessary, BalanceScaleNode exists for lifetime of sim
+    // adjust parts of the scale that depend on angle, unlink unnecessary
     scale.angleProperty.link( function( angle, oldAngle ) {
 
       var deltaAngle = angle - oldAngle;
@@ -183,13 +183,13 @@ define( function( require ) {
       arrowNode.fill = ( angle === 0 ) ? EqualityExplorerColors.SCALE_ARROW_BALANCED : EqualityExplorerColors.SCALE_ARROW_UNBALANCED;
     } );
 
-    // unlink unnecessary, BalanceScaleNode exists for lifetime of sim
+    // move the left platform, unlink unnecessary
     scale.leftPlatform.locationProperty.link( function( location ) {
       leftPlatformNode.x = location.x - scale.location.x;
       leftPlatformNode.y = location.y - scale.location.y; 
     } );
 
-    // unlink unnecessary, BalanceScaleNode exists for lifetime of sim
+    // move the right platform, unlink unnecessary
     scale.rightPlatform.locationProperty.link( function( location ) {
       rightPlatformNode.x = location.x - scale.location.x;
       rightPlatformNode.y = location.y - scale.location.y;
