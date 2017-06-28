@@ -10,7 +10,9 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
@@ -25,6 +27,7 @@ define( function( require ) {
 
   // constants
   var EQUATION_FONT = new PhetFont( 24 );
+  var CONTENT_SIZE = new Dimension2( 185, 75 );
 
   /**
    * @param {Property.<number>} valueProperty
@@ -38,8 +41,8 @@ define( function( require ) {
       fill: 'white',
       showTitleWhenExpanded: false,
       titleNode: new Text( variableString, {
-        font: new PhetFont( 18 )
-        //TODO maxWidth
+        font: new PhetFont( 18 ),
+        maxWidth: 0.75 * CONTENT_SIZE.width
       } ),
       titleAlignX: 'left',
       titleXSpacing: 8,
@@ -48,13 +51,18 @@ define( function( require ) {
       buttonYMargin: 8,
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5,
-      contentXMargin: 0,
-      contentYMargin: 0
+      contentXMargin: 20,
+      contentYMargin: 10
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, 185, 75 );
+    var backgroundNode = new Rectangle( 0, 0, CONTENT_SIZE.width, CONTENT_SIZE.height );
 
-    var xEqualsText = new Text( xString + ' =', {
+    var xText = new Text( xString, {
+      font: EQUATION_FONT,
+      maxWidth: 0.75 * CONTENT_SIZE.width
+    } );
+
+    var equalsText = new Text( '=', {
       font: EQUATION_FONT
     } );
 
@@ -62,16 +70,13 @@ define( function( require ) {
     var valuePicker = new NumberPicker( valueProperty, new Property( valueRange ), {
       color: 'black',
       font: EQUATION_FONT,
-      xMargin: 6,
-      left: xEqualsText.right + 5,
-      centerY: xEqualsText.centerY
+      xMargin: 6
     } );
 
-    var equationNode = new Node( {
-      children: [ xEqualsText, valuePicker ],
-      center: backgroundNode.center,
-      maxWidth: backgroundNode.width - 20,
-      maxHeight: backgroundNode.height - 10
+    var equationNode = new HBox( {
+      children: [ xText, equalsText, valuePicker ],
+      spacing: 5,
+      center: backgroundNode.center
     } );
 
     var contentNode = new Node( {
