@@ -38,6 +38,9 @@ define( function( require ) {
 
     // @public {ObservableArray.<Item>}
     this.items = new ObservableArray();
+
+    // @public is this ItemCreator enabled?
+    this.enabledProperty = new Property( true );
   }
 
   equalityExplorer.register( 'ItemCreator', ItemCreator );

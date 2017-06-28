@@ -12,13 +12,15 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @param {DerivedProperty} locationProperty
+   * @param {ItemCreator[]} itemCreators
    * @param {Object} [options]
    * @constructor
    */
-  function WeighingPlatform( locationProperty, options ) {
+  function WeighingPlatform( locationProperty, itemCreators, options ) {
 
     options = _.extend( {
       supportHeight: 10,
@@ -33,6 +35,22 @@ define( function( require ) {
     this.diameter = options.diameter;
     this.gridSize = options.gridSize;
     this.cellSize = options.cellSize;
+
+    // Disable all ItemCreators if the platform is full
+    var maxItems = this.gridSize.width * this.gridSize.height;
+    var lengthProperties = [];
+    itemCreators.forEach( function( itemCreator ) {
+      lengthProperties.push( itemCreator.items.lengthProperty );
+    } );
+    Property.multilink( lengthProperties, function() {
+      var totalItems = 0;
+      for ( var i = 0; i < lengthProperties.length; i++ ) {
+        totalItems += lengthProperties[ i ].value;
+      }
+      for ( i = 0; i < itemCreators.length; i++ ) {
+        itemCreators[ i ].enabledProperty.value = ( totalItems < maxItems );
+      }
+    } );
   }
 
   equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );

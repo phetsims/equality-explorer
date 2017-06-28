@@ -38,7 +38,7 @@ define( function( require ) {
       platformXInset: 45, // inset of the platforms from the ends of the beam
       platformYOffset: -50, // offset of the platform from the beam
       platformDiameter: 300, // diameter of the weighing platforms
-      gridSize: new Dimension2( 6, 6 ), // dimensions for the grid of items on each weighing platform
+      gridSize: new Dimension2( 3, 3 ), // dimensions for the grid of items on each weighing platform
       cellXMargin: 3,
       cellYMargin: 0
     }, options );
@@ -54,6 +54,7 @@ define( function( require ) {
     this.platformXInset = options.platformXInset;
     this.platformYOffset = options.platformYOffset;
     this.gridSize = options.gridSize;
+    this.maxItems = this.gridSize.width * this.gridSize.height;
     
     // {ItemCreator[]} all ItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
@@ -71,11 +72,9 @@ define( function( require ) {
       maxCellLength = Math.max( maxCellLength, itemCreator.icon.height );
     } );
 
-    var numberOfCells = this.gridSize.width * this.gridSize.height;
-
     //TODO support dynamic weight for changing value of x
     // @public (read-only) maximum weight that the scale can hold
-    this.maxWeight = maxItemWeight * numberOfCells;
+    this.maxWeight = maxItemWeight * this.maxItems;
     
     var cellWidth = maxCellLength + ( 2 * options.cellXMargin );
     var cellHeight = maxCellLength + ( 2 * options.cellYMargin );
@@ -85,12 +84,6 @@ define( function( require ) {
 
     // @public (read-only) {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
     this.angleProperty = new DerivedProperty( lengthProperties, function() {
-
-      // sum of lengthProperties <= number of cells
-      assert && assert( _.reduce( lengthProperties,
-          function( numberOfItems, lengthProperty ) {
-            return numberOfItems + lengthProperty.value;
-          }, 0 ) <= numberOfCells, 'more items than cells' );
 
       var totalWeight = 0;
       leftItemCreators.forEach( function( itemCreator ) {
@@ -142,8 +135,8 @@ define( function( require ) {
     };
 
     // @public (read-only)
-    this.leftPlatform = new WeighingPlatform( leftLocationProperty, platformOptions );
-    this.rightPlatform = new WeighingPlatform( rightLocationProperty, platformOptions );
+    this.leftPlatform = new WeighingPlatform( leftLocationProperty, leftItemCreators, platformOptions );
+    this.rightPlatform = new WeighingPlatform( rightLocationProperty, rightItemCreators, platformOptions );
   }
 
   equalityExplorer.register( 'BalanceScale', BalanceScale );

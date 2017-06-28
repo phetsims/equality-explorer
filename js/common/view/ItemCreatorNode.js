@@ -57,6 +57,12 @@ define( function( require ) {
         itemNode.startDrag( event );
       }
     } );
+
+    // Enable and disable
+    itemCreator.enabledProperty.link( function( enabled ) {
+      self.pickable = enabled;
+      self.opacity = ( enabled ? 1 : 0.5 );
+    } );
   }
 
   equalityExplorer.register( 'ItemCreatorNode', ItemCreatorNode );
