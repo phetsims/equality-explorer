@@ -98,6 +98,7 @@ define( function( require ) {
 
     var loadIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
     var loadButton = new RectangularPushButton( {
+      //TODO add loadButton listener
       content: loadIcon,
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       xMargin: 8,
@@ -105,10 +106,10 @@ define( function( require ) {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5
     } );
-    //TODO listener - load the selected snapshot
 
     var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.45 } );
     var trashButton = new RectangularPushButton( {
+      //TODO add trashButton listener
       content: trashIcon,
       baseColor: 'white',
       xMargin: 12,
@@ -116,7 +117,7 @@ define( function( require ) {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5
     } );
-    //TODO listener - delete the selected snapshot
+
 
     var buttonGroup = new HBox( {
       spacing: 50,

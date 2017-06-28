@@ -1,6 +1,5 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO placeholder
 /**
  * Panel that contains the items that can be dragged out onto the scale.
  *

@@ -57,7 +57,7 @@ define( function( require ) {
      * @param {number} dt - time since the previous step, in seconds
      */
     step: function( dt ) {
-      //TODO animate rotation of the scale to its desired angle
+      //TODO animate Items
     }
   } );
 } );

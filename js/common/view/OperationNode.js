@@ -85,7 +85,7 @@ define( function( require ) {
       scale: 0.65
     } );
     var goButton = new RoundPushButton( {
-      //TODO add listener to Go button
+      //TODO add goButton listener
       content: goButtonIcon,
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       minXMargin: 10,

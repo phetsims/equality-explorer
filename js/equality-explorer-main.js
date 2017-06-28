@@ -21,7 +21,7 @@ define( function( require ) {
 
   var options = {
     credits: {
-      //TODO fill in credits
+      //TODO fill in credits, https://github.com/phetsims/equality-explorer/issues/2
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
       team: 'Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
