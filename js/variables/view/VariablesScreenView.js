@@ -28,7 +28,7 @@ define( function( require ) {
     ScreenView.call( this );
 
     // @private
-    this.variableAccordionBoxExpandedProperty = new Property( true );
+    this.variableAccordionBoxExpandedProperty = new Property( true ); //TODO this should be per scene
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
