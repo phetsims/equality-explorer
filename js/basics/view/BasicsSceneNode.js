@@ -24,12 +24,9 @@ define( function( require ) {
    * @param {BasicsScene} scene
    * @param {Property.<BasicsScene>} sceneProperty
    * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
    * @constructor
    */
-  function BasicsSceneNode( scene, sceneProperty, layoutBounds, options ) {
-
-    options = options || {};
+  function BasicsSceneNode( scene, sceneProperty, layoutBounds ) {
 
     var self = this;
 
@@ -65,14 +62,16 @@ define( function( require ) {
 
     var scaleNode = new BalanceScaleNode( scene.scale );
 
-    assert && assert( !options.children, 'decoration not supported' );
-    options.children = [
-      snapshotsAccordionBox, equationAccordionBox,
-      leftItemsPanel, rightItemsPanel, scaleNode,
-      dragLayer
-    ];
-
-    Node.call( this, options );
+    Node.call( this, {
+      children: [
+        snapshotsAccordionBox,
+        equationAccordionBox,
+        leftItemsPanel,
+        rightItemsPanel,
+        scaleNode,
+        dragLayer
+      ]
+    } );
 
     // unlink not needed, BasicsSceneNodeNode exists for lifetime of the sim
     sceneProperty.link( function( newScene ) {
