@@ -89,7 +89,7 @@ define( function( require ) {
       children: [
         new Text( '' + coefficient, TEXT_OPTIONS ),
         new Node( {
-          children: [ icon ],
+          children: [ icon ], // wrap the icon since we're using scenery DAG feature
           maxHeight: MAX_ICON_HEIGHT
         } )
       ]

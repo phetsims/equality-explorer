@@ -25,6 +25,7 @@ define( function( require ) {
   function BasicsScene( icon, leftItemCreators, rightItemCreators ) {
 
     // @public (read-only) {Node} used to represent the scene
+    // wrap the icon since we're using scenery DAG feature
     this.icon = new Node( { children: [ icon ] } );
 
     // @public (read-only) {ItemCreator[]} creators for items on left side of scale

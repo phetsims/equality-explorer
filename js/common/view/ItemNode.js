@@ -26,7 +26,7 @@ define( function( require ) {
     this.item = item;
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ item.icon ];
+    options.children = [ item.icon ]; // wrap the icon since we're using scenery DAG feature
 
     Node.call( this, options );
 
