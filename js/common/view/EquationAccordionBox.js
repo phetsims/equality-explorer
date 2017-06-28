@@ -54,13 +54,18 @@ define( function( require ) {
       maxHeight: backgroundNode.height
     } );
 
+    // wrapper to avoid exceeding stack size when bounds of equationNode changes
+    var equationParent = new Node( {
+      children: [ equationNode ]
+    } );
+
     // Center the equation when it changes
     equationNode.on( 'bounds', function() {
-      equationNode.center = backgroundNode.center;
+      equationParent.center = backgroundNode.center;
     } );
 
     var contentNode = new Node( {
-      children: [ backgroundNode, equationNode ]
+      children: [ backgroundNode, equationParent ]
     } );
 
     AccordionBox.call( this, contentNode, options );
