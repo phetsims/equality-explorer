@@ -25,8 +25,8 @@ define( function( require ) {
     options = _.extend( {
       supportHeight: 10,
       diameter: 20,
-      gridSize: new Dimension2( 5, 5 ),
-      cellSize: new Dimension2( 10, 10 )
+      gridSize: new Dimension2( 1, 1 ),
+      cellSize: new Dimension2( 5, 5 )
     }, options );
 
     // @public (read-only)

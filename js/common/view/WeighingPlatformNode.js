@@ -73,6 +73,8 @@ define( function( require ) {
       centerX: 0,
       centerY: 0
     } );
+    platformNode.setScaleMagnitude( weighingPlatform.diameter / platformNode.width, 1 );
+    assert && assert( platformNode.width === weighingPlatform.diameter );
 
     // rod on the bottom of that platform that attaches to pivot
     var rodNode = new Rectangle( 0, 0, 10, weighingPlatform.supportHeight - options.pivotRadius, {

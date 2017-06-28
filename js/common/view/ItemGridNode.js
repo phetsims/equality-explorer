@@ -24,8 +24,8 @@ define( function( require ) {
   function ItemGridNode( options ) {
 
     options = _.extend( {
-      gridSize: new Dimension2( 6, 6 ),
-      cellSize: new Dimension2( 20, 20 )
+      gridSize: new Dimension2( 1, 1 ),
+      cellSize: new Dimension2( 5, 5 )
     }, options );
 
     var backgroundWidth = options.gridSize.width * options.cellSize.width;

@@ -15,6 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Vector2 = require( 'DOT/Vector2' );
   var WeighingPlatform = require( 'EQUALITY_EXPLORER/common/model/WeighingPlatform' );
@@ -38,7 +39,7 @@ define( function( require ) {
       platformXInset: 45, // inset of the platforms from the ends of the beam
       platformYOffset: -50, // offset of the platform from the beam
       platformDiameter: 300, // diameter of the weighing platforms
-      gridSize: new Dimension2( 6, 6 ), // dimensions for the grid of items on each weighing platform
+      gridSize: EqualityExplorerQueryParameters.gridSize, // {Dimension2} dimensions for the grid of items on each weighing platform
       cellXMargin: 3,
       cellYMargin: 0
     }, options );
@@ -81,6 +82,9 @@ define( function( require ) {
     
     // @public (read-only) size of each cell in the grid
     this.cellSize = new Dimension2( cellWidth, cellHeight );
+
+    assert && assert( this.gridSize.width * this.cellSize.width <= options.platformDiameter,
+      'grid is wider than platform' );
 
     // @public (read-only) {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
     this.angleProperty = new DerivedProperty( lengthProperties, function() {
