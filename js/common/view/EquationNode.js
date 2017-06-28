@@ -18,11 +18,10 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  var TERM_SPACING = 2;  // space between coefficient and icon
-  var PLUS_SPACING = 6; // space between terms and the plus operator
-  var RELATIONAL_SPACING = 12; // space around the relational operator
-  var TEXT_OPTIONS = { font: new PhetFont( 24 ) };
-  var MAX_ICON_HEIGHT = new Text( '20', TEXT_OPTIONS ).height;
+  var DEFAULT_FONT = new PhetFont( 24 );
+  var DEFAULT_COEFFICIENT_SPACING = 2;  // space between coefficient and icon
+  var DEFAULT_PLUS_SPACING = 6;  // space around plus operators
+  var DEFAULT_RELATIONAL_SPACING = 12; // space around the relational operator
 
   /**
    * @param {ItemCreator[]} leftItemCreators
@@ -35,8 +34,16 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      spacing: RELATIONAL_SPACING // space around the relational operator
+      termSpacing: DEFAULT_COEFFICIENT_SPACING, // space between coefficient and icon
+      plusSpacing: DEFAULT_PLUS_SPACING, // space around plus operator
+      relationalSpacing: DEFAULT_RELATIONAL_SPACING, // space around the relational operator
+      font: DEFAULT_FONT
     }, options );
+
+    assert && assert( options.spacing === undefined, 'use relationalSpacing' );
+    options.spacing = options.relationalSpacing;
+    
+    options.maxIconHeight = new Text( '0', { font: options.font } ).height;
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ new Text( '' ) ]; // need valid bounds when the supertype constructor is called
@@ -55,9 +62,15 @@ define( function( require ) {
     // update the equation, unmultilink unnecessary
     Property.multilink( lengthProperties, function() {
       self.children = [
-        createSideNode( leftItemCreators ),
-        createRelationalOperator( leftItemCreators, rightItemCreators ),
-        createSideNode( rightItemCreators )
+        
+        // left side
+        createSideNode( leftItemCreators, options ),
+        
+        // relational operator
+        createRelationalOperator( leftItemCreators, rightItemCreators, options ),
+        
+        // right side
+        createSideNode( rightItemCreators, options )
       ];
     } );
   }
@@ -67,36 +80,42 @@ define( function( require ) {
   /**
    * Creates one side of the equation
    * @param {ItemCreator[]} itemCreators
+   * @param {Object} [options]
    * @returns {Node}
    */
-  function createSideNode( itemCreators ) {
+  function createSideNode( itemCreators, options ) {
+
+    options = _.extend( {
+      font: DEFAULT_FONT,
+      plusSpacing: DEFAULT_PLUS_SPACING
+    }, options );
 
     var children = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
 
       var itemCreator = itemCreators[ i ];
 
-      if (  itemCreator.items.length > 0 ) {
+      if ( itemCreator.items.length > 0 ) {
 
-        if ( children.length > 0  ) {
-          children.push( new Text( '+', TEXT_OPTIONS ) );
+        if ( children.length > 0 ) {
+          children.push( new Text( '+', { font: options.font } ) );
         }
 
         if ( itemCreator.constantTerm ) {
-          children.push( createConstantNode( itemCreator.items.length * itemCreator.weightProperty.value ) );
+          children.push( createConstantNode( itemCreator.items.length * itemCreator.weightProperty.value, options ) );
         }
         else {
-          children.push( createTermNode( itemCreator.items.length, itemCreator.icon ) );
+          children.push( createTermNode( itemCreator.items.length, itemCreator.icon, options ) );
         }
       }
     }
 
     if ( children.length === 0 ) {
-      children.push( new Text( '0', TEXT_OPTIONS ) );
+      children.push( new Text( '0', { font: options.font } ) );
     }
 
     return new HBox( {
-      spacing: PLUS_SPACING,
+      spacing: options.plusSpacing,
       children: children
     } );
   }
@@ -105,16 +124,24 @@ define( function( require ) {
    * Creates a term in the equation
    * @param {number} coefficient
    * @param {Node} icon
+   * @param {Object} [options]
    * @returns {Node}
    */
-  function createTermNode( coefficient, icon ) {
+  function createTermNode( coefficient, icon, options ) {
+    
+    options = _.extend( {
+      font: DEFAULT_FONT,
+      termSpacing: DEFAULT_COEFFICIENT_SPACING,
+      maxIconHeight: 20
+    }, options );
+    
     return new HBox( {
-      spacing: TERM_SPACING,
+      spacing: options.termSpacing,
       children: [
-        new Text( '' + coefficient, TEXT_OPTIONS ),
+        new Text( '' + coefficient, { font: options.font } ),
         new Node( {
-          children: [ icon ],
-          maxHeight: MAX_ICON_HEIGHT
+          children: [ icon ], // wrap the icon since we're using scenery DAG feature
+          maxHeight: options.maxIconHeight
         } )
       ]
     } );
@@ -123,30 +150,44 @@ define( function( require ) {
   /**
    * Creates a constant term.
    * @param {number} constant
+   * @param {Object} [options]
    * @returns {Node}
    */
-  function createConstantNode( constant ) {
-    return new Text( '' + constant, TEXT_OPTIONS );
+  function createConstantNode( constant, options ) {
+    
+    options = _.extend( {
+      font: DEFAULT_FONT
+    }, options );
+    
+    return new Text( '' + constant, { font: options.font } );
   }
 
   /**
    * Creates the operator that describes the relationship between the left and right sides.
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
+   * @param {Object} [options]
    * @returns {Node}
    */
-  function createRelationalOperator( leftItemCreators, rightItemCreators ) {
+  function createRelationalOperator( leftItemCreators, rightItemCreators, options ) {
 
+    options = _.extend( {
+      font: DEFAULT_FONT
+    }, options );
+
+    // evaluate the left side
     var leftWeight = 0;
     for ( var i = 0; i < leftItemCreators.length; i++ ) {
       leftWeight += leftItemCreators[ i ].items.length * leftItemCreators[ i ].weightProperty.value;
     }
 
+    // evaluate the right side
     var rightWeight = 0;
     for ( i = 0; i < rightItemCreators.length; i++ ) {
       rightWeight += rightItemCreators[ i ].items.length * rightItemCreators[ i ].weightProperty.value;
     }
 
+    // determine the operator that describes the relationship between left and right sides
     var relationalSymbol = null;
     if ( leftWeight < rightWeight ) {
       relationalSymbol = '<';
@@ -157,7 +198,9 @@ define( function( require ) {
     else {
       relationalSymbol = '=';
     }
-    return new Text( relationalSymbol, TEXT_OPTIONS );
+    assert && assert( relationalSymbol );
+
+    return new Text( relationalSymbol, { font: options.font } );
   }
 
   return inherit( HBox, EquationNode );
