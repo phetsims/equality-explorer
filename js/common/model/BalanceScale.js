@@ -38,7 +38,9 @@ define( function( require ) {
       platformXInset: 45, // inset of the platforms from the ends of the beam
       platformYOffset: -50, // offset of the platform from the beam
       platformDiameter: 300, // diameter of the weighing platforms
-      platformGridSize: new Dimension2( 6, 6 ) // dimensions for the grid of items on each weighing platform
+      gridSize: new Dimension2( 6, 6 ), // dimensions for the grid of items on each weighing platform
+      cellXMargin: 3,
+      cellYMargin: 0
     }, options );
 
     assert && assert( options.beamWidth - ( 2 * options.platformXInset ) > options.platformDiameter,
@@ -51,28 +53,35 @@ define( function( require ) {
     this.beamWidth = options.beamWidth;
     this.platformXInset = options.platformXInset;
     this.platformYOffset = options.platformYOffset;
-    this.platformGridSize = options.platformGridSize;
+    this.gridSize = options.gridSize;
+    
+    // {ItemCreator[]} all ItemCreator instances
+    var itemCreators = leftItemCreators.concat( rightItemCreators );
 
-    // lengthProperty for each ObservableArray.<Item>
-    var lengthProperties = [];
-    leftItemCreators.forEach( function( itemCreator ) {
+    var lengthProperties = []; // {Property.<number>[]} lengthProperty for each ObservableArray.<Item>
+    var maxItemWeight = 0;
+    var maxCellLength = 0;
+    itemCreators.forEach( function( itemCreator ) {
+      
       lengthProperties.push( itemCreator.items.lengthProperty );
-    } );
-    rightItemCreators.forEach( function( itemCreator ) {
-      lengthProperties.push( itemCreator.items.lengthProperty );
+      
+      maxItemWeight = Math.max( maxItemWeight, itemCreator.weightProperty.value );
+      
+      maxCellLength = Math.max( maxCellLength, itemCreator.icon.width );
+      maxCellLength = Math.max( maxCellLength, itemCreator.icon.height );
     } );
 
-    var numberOfCells = this.platformGridSize.width * this.platformGridSize.height;
+    var numberOfCells = this.gridSize.width * this.gridSize.height;
 
     //TODO support dynamic weight for changing value of x
-    var maxItemWeight = 0;
-    leftItemCreators.forEach( function( itemCreator ) {
-      maxItemWeight = Math.max( maxItemWeight, itemCreator.weightProperty.value );
-    } );
-    rightItemCreators.forEach( function( itemCreator ) {
-      maxItemWeight = Math.max( maxItemWeight, itemCreator.weightProperty.value );
-    } );
-    var maxWeight = maxItemWeight * numberOfCells;
+    // @public (read-only) maximum weight that the scale can hold
+    this.maxWeight = maxItemWeight * numberOfCells;
+    
+    var cellWidth = maxCellLength + ( 2 * options.cellXMargin );
+    var cellHeight = maxCellLength + ( 2 * options.cellYMargin );
+    
+    // @public (read-only) size of each cell in the grid
+    this.cellSize = new Dimension2( cellWidth, cellHeight );
 
     // @public (read-only) {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
     this.angleProperty = new DerivedProperty( lengthProperties, function() {
@@ -91,7 +100,7 @@ define( function( require ) {
         totalWeight += itemCreator.total; // add
       } );
 
-      var scaleAngle = ( totalWeight / maxWeight ) * MAX_SCALE_ANGLE;
+      var scaleAngle = ( totalWeight / self.maxWeight ) * MAX_SCALE_ANGLE;
       assert && assert( Math.abs( scaleAngle ) <= MAX_SCALE_ANGLE, 'scaleAngle out of range: ' + scaleAngle );
 
       return scaleAngle;
@@ -124,9 +133,17 @@ define( function( require ) {
       }
     );
 
+    // options that apply to both weighing platforms
+    var platformOptions = {
+      supportHeight: Math.abs( options.platformYOffset ),
+      diameter: options.platformDiameter,
+      gridSize: this.gridSize,
+      cellSize: this.cellSize
+    };
+
     // @public (read-only)
-    this.leftPlatform = new WeighingPlatform( leftLocationProperty, options.platformDiameter, options.platformGridSize );
-    this.rightPlatform = new WeighingPlatform( rightLocationProperty, options.platformDiameter, options.platformGridSize );
+    this.leftPlatform = new WeighingPlatform( leftLocationProperty, platformOptions );
+    this.rightPlatform = new WeighingPlatform( rightLocationProperty, platformOptions );
   }
 
   equalityExplorer.register( 'BalanceScale', BalanceScale );

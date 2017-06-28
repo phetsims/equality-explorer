@@ -13,6 +13,7 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var ItemGridNode = require( 'EQUALITY_EXPLORER/common/view/ItemGridNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -22,14 +23,14 @@ define( function( require ) {
   var SUPPORT_STROKE = 'black';
 
   /**
+   * @param {WeighingPlatform} weighingPlatform
    * @param {Object} [options]
    * @constructor
    */
-  function WeighingPlatformNode( options ) {
+  function WeighingPlatformNode( weighingPlatform, options ) {
 
     options = _.extend( {
       color: '#666666', // {Color|string} color of the outside of the plate
-      supportHeight: 25, // {number} height of the support that connects the platform to the balance beam
       pivotRadius: 8  // {number} radius of the pivot point that attaches to the balance beam
     }, options );
 
@@ -74,7 +75,7 @@ define( function( require ) {
     } );
 
     // rod on the bottom of that platform that attaches to pivot
-    var rodNode = new Rectangle( 0, 0, 10, options.supportHeight - options.pivotRadius, {
+    var rodNode = new Rectangle( 0, 0, 10, weighingPlatform.supportHeight - options.pivotRadius, {
       fill: SUPPORT_FILL,
       stroke: SUPPORT_STROKE
     } );
@@ -94,8 +95,16 @@ define( function( require ) {
       top: platformNode.centerY
     } );
 
+    // Grid where items appear
+    var itemGridNode = new ItemGridNode( {
+      gridSize: weighingPlatform.gridSize,
+      cellSize: weighingPlatform.cellSize,
+      centerX: 0,
+      bottom: 0
+    } );
+
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ supportNode, platformNode ];
+    options.children = [ supportNode, platformNode, itemGridNode ];
 
     // draw a red dot at the origin
     if ( phet.chipper.queryParameters.dev ) {

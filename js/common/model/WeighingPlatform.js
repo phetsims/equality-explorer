@@ -9,21 +9,30 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
    * @param {DerivedProperty} locationProperty
-   * @param {number} diameter
-   * @param {Dimension2} gridSize
+   * @param {Object} [options]
    * @constructor
    */
-  function WeighingPlatform( locationProperty, diameter, gridSize ) {
+  function WeighingPlatform( locationProperty, options ) {
+
+    options = _.extend( {
+      supportHeight: 10,
+      diameter: 20,
+      gridSize: new Dimension2( 5, 5 ),
+      cellSize: new Dimension2( 10, 10 )
+    }, options );
 
     // @public (read-only)
     this.locationProperty = locationProperty;
-    this.diameter = diameter;
-    this.gridSize = gridSize;
+    this.supportHeight = options.supportHeight;
+    this.diameter = options.diameter;
+    this.gridSize = options.gridSize;
+    this.cellSize = options.cellSize;
   }
 
   equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );

@@ -120,16 +120,14 @@ define( function( require ) {
     } );
 
     // left platform
-    var leftPlatformNode = new WeighingPlatformNode( {
-      supportHeight: Math.abs( scale.platformYOffset ),
+    var leftPlatformNode = new WeighingPlatformNode( scale.leftPlatform, {
       color: options.leftPlatformFill
     } );
     leftPlatformNode.setScaleMagnitude( scale.leftPlatform.diameter / leftPlatformNode.width, 1 );
     assert && assert( leftPlatformNode.width === scale.leftPlatform.diameter );
 
     // right platform
-    var rightPlatformNode = new WeighingPlatformNode( {
-      supportHeight: Math.abs( scale.platformYOffset ),
+    var rightPlatformNode = new WeighingPlatformNode( scale.rightPlatform, {
       color: options.rightPlatformFill
     } );
     rightPlatformNode.setScaleMagnitude( scale.rightPlatform.diameter / rightPlatformNode.width, 1 );
