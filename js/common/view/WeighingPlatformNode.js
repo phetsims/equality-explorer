@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemGridNode = require( 'EQUALITY_EXPLORER/common/view/ItemGridNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -109,7 +110,7 @@ define( function( require ) {
     options.children = [ supportNode, platformNode, itemGridNode ];
 
     // draw a red dot at the origin
-    if ( phet.chipper.queryParameters.dev ) {
+    if ( EqualityExplorerQueryParameters.showOrigin ) {
       options.children.push( new Circle( 4, { fill: 'red' } ) );
     }
 

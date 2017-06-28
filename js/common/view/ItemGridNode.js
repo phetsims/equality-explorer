@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -40,7 +41,7 @@ define( function( require ) {
     options.children = [ this.backgroundNode ];
 
     // draw the grid
-    if ( phet.chipper.queryParameters.dev ) {
+    if ( EqualityExplorerQueryParameters.showGrid ) {
 
       var cellWidth = options.cellSize.width;
       var cellHeight = options.cellSize.height;

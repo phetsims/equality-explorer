@@ -20,6 +20,12 @@ define( function( require ) {
     // Makes all animation run slowly, so that things are easier to grab while they're animating
     slow: { type: 'flag' },
 
+    // Show the origin of various objects, typically rendered as a red dot
+    showOrigin: { type: 'flag' },
+
+    // Shows the grid on each of the weighing platforms
+    showGrid: { type: 'flag' },
+
     // Size of the grid on the scale's weighing platforms.
     // A grid size that exceeds the width of the weighing platforms will result in an assertion failure.
     gridSize: {
@@ -46,6 +52,7 @@ define( function( require ) {
     };
 
     equalityExplorer.log( 'slow=' + EqualityExplorerQueryParameters.slow );
+    equalityExplorer.log( 'showOrigin=' + EqualityExplorerQueryParameters.showOrigin );
     equalityExplorer.log( 'gridSize=' + EqualityExplorerQueryParameters.gridSize.toString() );
   }
 

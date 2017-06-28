@@ -16,6 +16,7 @@ define( function( require ) {
   var ClearScaleButton = require( 'EQUALITY_EXPLORER/common/view/ClearScaleButton' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -164,7 +165,7 @@ define( function( require ) {
     ];
 
     // draw a red dot at the origin
-    if ( phet.chipper.queryParameters.dev ) {
+    if ( EqualityExplorerQueryParameters.showOrigin ) {
       options.children.push( new Circle( 4, { fill: 'red' } ) );
     }
 
