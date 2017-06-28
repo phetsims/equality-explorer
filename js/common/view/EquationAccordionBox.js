@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
+  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -20,6 +21,9 @@ define( function( require ) {
 
   // strings
   var equationOrInequalityString = require( 'string!EQUALITY_EXPLORER/equationOrInequality' );
+
+  // constants
+  var CONTENT_SIZE = new Dimension2( 425, 60 );
 
   /**
    * @param {ItemCreator[]} leftItemCreators
@@ -33,8 +37,8 @@ define( function( require ) {
       fill: 'white',
       showTitleWhenExpanded: false,
       titleNode: new Text( equationOrInequalityString, {
-        font: new PhetFont( 18 )
-        //TODO maxWidth
+        font: new PhetFont( 18 ),
+        maxWidth: 0.75 * CONTENT_SIZE.width
       } ),
       titleAlignX: 'left',
       titleXSpacing: 8,
@@ -47,7 +51,7 @@ define( function( require ) {
       contentYMargin: 0
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, 425, 60 );
+    var backgroundNode = new Rectangle( 0, 0, CONTENT_SIZE.width, CONTENT_SIZE.height );
 
     var equationNode = new EquationNode( leftItemCreators, rightItemCreators, {
       maxWidth: backgroundNode.width,

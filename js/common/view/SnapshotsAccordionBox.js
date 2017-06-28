@@ -40,8 +40,8 @@ define( function( require ) {
       numberOfSnapshots: 5,
       fill: 'white',
       titleNode: new Text( mySnapshotsString, {
-        font: new PhetFont( 18 )
-        //TODO maxWidth
+        font: new PhetFont( 18 ),
+        maxWidth: 0.75 * CONTENT_WIDTH
       } ),
       titleAlignX: 'left',
       titleXSpacing: 8,
