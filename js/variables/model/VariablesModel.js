@@ -19,9 +19,6 @@ define( function( require ) {
    */
   function VariablesModel() {
 
-    // @public
-    this.variableAccordionBoxExpandedProperty = new Property( true ); //TODO move to view
-
     // @public (read-only)
     this.variableRange = new RangeWithValue( -40, 40, 1 );
 
@@ -35,7 +32,6 @@ define( function( require ) {
 
     // @public resets the model
     reset: function() {
-      this.variableAccordionBoxExpandedProperty.reset();
       this.variableValueProperty.reset();
     },
 
