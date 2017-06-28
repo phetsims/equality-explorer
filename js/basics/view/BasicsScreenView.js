@@ -23,12 +23,15 @@ define( function( require ) {
    */
   function BasicsScreenView( model ) {
 
+    var self = this;
+
     ScreenView.call( this );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
+        self.reset();
       },
       right: this.layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
@@ -41,14 +44,24 @@ define( function( require ) {
     } );
     this.addChild( sceneControl );
 
-    // create the view for each scene
+    // @private create the view for each scene
+    this.sceneNodes = [];
     for ( var i = 0; i < model.scenes.length; i++ ) {
-      var categoryNode = new BasicsSceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds );
-      this.addChild( categoryNode );
+      var sceneNode = new BasicsSceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds );
+      this.sceneNodes.push( sceneNode );
+      this.addChild( sceneNode );
     }
   }
 
   equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );
 
-  return inherit( ScreenView, BasicsScreenView );
+  return inherit( ScreenView, BasicsScreenView, {
+
+    // @public
+    reset: function() {
+      for ( var i = 0; i < this.sceneNodes.length; i++ ) {
+        this.sceneNodes[ i ].reset();
+      }
+    }
+  } );
 } );

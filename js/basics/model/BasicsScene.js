@@ -38,10 +38,6 @@ define( function( require ) {
       location: new Vector2( 380, 425 )
     } );
 
-    // @public
-    this.equationAccordionBoxExpandedProperty = new Property( true ); //TODO move to view
-    this.snapshotsAccordionBoxExpandedProperty = new Property( true ); //TODO move to view
-
     // @public {Property.<boolean>} whether the couplers that connects the 2 sides of the scale are coupled
     this.coupledProperty = new Property( false );
   }
@@ -52,8 +48,6 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.equationAccordionBoxExpandedProperty.reset();
-      this.snapshotsAccordionBoxExpandedProperty.reset();
       this.coupledProperty.reset();
     },
 

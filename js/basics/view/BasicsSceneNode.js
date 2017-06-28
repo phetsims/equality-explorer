@@ -17,6 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemsPanel = require( 'EQUALITY_EXPLORER/common/view/ItemsPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Property = require( 'AXON/Property' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
 
   /**
@@ -32,16 +33,20 @@ define( function( require ) {
 
     var self = this;
 
+    // view-specific Properties
+    this.equationAccordionBoxExpandedProperty = new Property( true );
+    this.snapshotsAccordionBoxExpandedProperty = new Property( true );
+
     var dragLayer = new Node();
 
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
-      expandedProperty: scene.snapshotsAccordionBoxExpandedProperty,
+      expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
     var equationAccordionBox = new EquationAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
-      expandedProperty: scene.equationAccordionBoxExpandedProperty,
+      expandedProperty: this.equationAccordionBoxExpandedProperty,
       centerX: layoutBounds.left + ( snapshotsAccordionBox.left - layoutBounds.left ) / 2,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
@@ -77,5 +82,12 @@ define( function( require ) {
 
   equalityExplorer.register( 'BasicsSceneNode', BasicsSceneNode );
 
-  return inherit( Node, BasicsSceneNode );
+  return inherit( Node, BasicsSceneNode, {
+
+    // @public
+    reset: function() {
+      this.equationAccordionBoxExpandedProperty.reset();
+      this.snapshotsAccordionBoxExpandedProperty.reset();
+    }
+  } );
 } );
