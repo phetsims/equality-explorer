@@ -32,7 +32,7 @@ define( function( require ) {
 
     // view-specific Properties
     this.equationAccordionBoxExpandedProperty = new Property( true );
-    this.snapshotsAccordionBoxExpandedProperty = new Property( true );
+    this.snapshotsAccordionBoxExpandedProperty = new Property( false ); //TODO default to true
 
     var dragLayer = new Node();
 
