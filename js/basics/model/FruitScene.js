@@ -26,17 +26,17 @@ define( function( require ) {
    */
   function FruitScene() {
 
-    // icons for each Item type
-    var appleNode = new Image( appleImage );
-    var orangeNode = new Image( orangeImage );
+    // icons for each Item type, identical heights
     var oneNode = new NumberNode( 1, {
       radius: EqualityExplorerConstants.ITEM_RADIUS,
       fill: 'rgb( 246, 229, 214 )'
     } );
-
-    //TODO temporary? scale icons to have identical dimensions
-    appleNode.setScaleMagnitude( oneNode.width / appleNode.width, oneNode.height / appleNode.height );
-    orangeNode.setScaleMagnitude( oneNode.width / orangeNode.width, oneNode.height / orangeNode.height );
+    var appleNode = new Image( appleImage, {
+      maxHeight: oneNode.height
+    } );
+    var orangeNode = new Image( orangeImage, {
+      maxHeight: oneNode.height
+    } );
 
     var leftItemCreators = [
       new ItemCreator( 'apple', 3, appleNode ),
