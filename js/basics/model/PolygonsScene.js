@@ -23,13 +23,13 @@ define( function( require ) {
   function PolygonsScene() {
 
     // icons for each Item type
-    var hexagonNode = new Path( Shape.regularPolygon( 6, EqualityExplorerConstants.ITEM_RADIUS ), {
+    var hexagonNode = new Path( Shape.regularPolygon( 6, EqualityExplorerConstants.ITEM_HEIGHT ), {
       fill: 'rgb( 124, 69, 157 )'
     } );
-    var diamondNode = new Path( Shape.regularPolygon( 4, EqualityExplorerConstants.ITEM_RADIUS ), {
+    var diamondNode = new Path( Shape.regularPolygon( 4, EqualityExplorerConstants.ITEM_HEIGHT ), {
       fill: 'red'
     } );
-    var triangleNode = new Path( Shape.regularPolygon( 3, EqualityExplorerConstants.ITEM_RADIUS ), {
+    var triangleNode = new Path( Shape.regularPolygon( 3, EqualityExplorerConstants.ITEM_HEIGHT ), {
       fill: 'rgb( 155, 205, 100 )',
       rotation: -Math.PI / 2
     } );

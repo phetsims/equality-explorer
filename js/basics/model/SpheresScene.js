@@ -17,7 +17,7 @@ define( function( require ) {
   var ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
   // constants
-  var ITEM_DIAMETER = 2 * EqualityExplorerConstants.ITEM_RADIUS;
+  var ITEM_DIAMETER = 2 * EqualityExplorerConstants.ITEM_HEIGHT;
 
   /**
    * @constructor
