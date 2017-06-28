@@ -22,10 +22,12 @@ define( function( require ) {
   var equationOrInequalityString = require( 'string!EQUALITY_EXPLORER/equationOrInequality' );
 
   /**
+   * @param {ItemCreator[]} leftItemCreators
+   * @param {ItemCreator[]} rightItemCreators
    * @param {Object} [options]
    * @constructor
    */
-  function EquationAccordionBox( options ) {
+  function EquationAccordionBox( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
       fill: 'white',
@@ -45,14 +47,18 @@ define( function( require ) {
       contentYMargin: 0
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, 300, 60 );
+    var backgroundNode = new Rectangle( 0, 0, 425, 60 );
 
-    var equationNode = new EquationNode( {
-      center: backgroundNode.center,
-      maxWidth: backgroundNode.width - 20,
-      maxHeight: backgroundNode.height - 20
+    var equationNode = new EquationNode( leftItemCreators, rightItemCreators, {
+      maxWidth: backgroundNode.width,
+      maxHeight: backgroundNode.height
     } );
-    
+
+    // Center the equation when it changes
+    equationNode.on( 'bounds', function() {
+      equationNode.center = backgroundNode.center;
+    } );
+
     var contentNode = new Node( {
       children: [ backgroundNode, equationNode ]
     } );

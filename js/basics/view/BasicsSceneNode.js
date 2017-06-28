@@ -40,7 +40,7 @@ define( function( require ) {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
-    var equationAccordionBox = new EquationAccordionBox( {
+    var equationAccordionBox = new EquationAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
       expandedProperty: scene.equationAccordionBoxExpandedProperty,
       centerX: layoutBounds.left + ( snapshotsAccordionBox.left - layoutBounds.left ) / 2,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
