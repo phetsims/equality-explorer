@@ -121,14 +121,16 @@ define( function( require ) {
 
     // left platform
     var leftPlatformNode = new WeighingPlatformNode( scale.leftPlatform, {
-      color: options.leftPlatformFill
+      color: options.leftPlatformFill,
+      center: beamNode.center // correct location will be set later in constructor
     } );
     leftPlatformNode.setScaleMagnitude( scale.leftPlatform.diameter / leftPlatformNode.width, 1 );
     assert && assert( leftPlatformNode.width === scale.leftPlatform.diameter );
 
     // right platform
     var rightPlatformNode = new WeighingPlatformNode( scale.rightPlatform, {
-      color: options.rightPlatformFill
+      color: options.rightPlatformFill,
+      center: beamNode.center // correct location will be set later in constructor
     } );
     rightPlatformNode.setScaleMagnitude( scale.rightPlatform.diameter / rightPlatformNode.width, 1 );
     assert && assert( rightPlatformNode.width === scale.rightPlatform.diameter );
