@@ -14,20 +14,22 @@ define( function( require ) {
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
-    // Enables console logging
+    // Enables console logging.
     log: { type: 'flag' },
 
-    // Makes all animation run slowly, so that things are easier to grab while they're animating
+    // Makes all animation run slowly, so that things are easier to grab while they're animating.
+    // Useful for testing multi-touch.
     slow: { type: 'flag' },
 
-    // Show the origin of various objects, typically rendered as a red dot
+    // Shows the origin of various objects, typically rendered as a red dot.
     showOrigin: { type: 'flag' },
 
-    // Shows the grid on each of the weighing platforms
+    // Shows the grid on each of the weighing platforms.
     showGrid: { type: 'flag' },
 
     // Size of the grid on the scale's weighing platforms.
     // A grid size that exceeds the width of the weighing platforms will result in an assertion failure.
+    // Setting to a smaller gridSize is useful for testing what happens when the scale is full.
     gridSize: {
       type: 'array',
       elementSchema: {
