@@ -43,19 +43,19 @@ define( function( require ) {
   assert && assert( EqualityExplorerQueryParameters.gridSize.length === 2, 'invalid gridSize' );
   EqualityExplorerQueryParameters.gridSize = new Dimension2( EqualityExplorerQueryParameters.gridSize[ 0 ], EqualityExplorerQueryParameters.gridSize[ 1 ] );
 
-  // enable logging to the console
   if ( EqualityExplorerQueryParameters.log ) {
 
+    // add a log function that displays messages in green
     equalityExplorer.log = function( message ) {
-      console.log( '%clog: ' + message, 'color: #009900' ); // display messages in green
+      console.log( '%clog: ' + message, 'color: #009900' );
     };
 
-    //TODO iterate over EqualityExplorerQueryParameters properties
-    equalityExplorer.log( 'log=' + EqualityExplorerQueryParameters.slow );
-    equalityExplorer.log( 'slow=' + EqualityExplorerQueryParameters.slow );
-    equalityExplorer.log( 'showOrigin=' + EqualityExplorerQueryParameters.showOrigin );
-    equalityExplorer.log( 'showGrid=' + EqualityExplorerQueryParameters.showGrid );
-    equalityExplorer.log( 'gridSize=' + EqualityExplorerQueryParameters.gridSize.toString() );
+    // log the values of all query parameters
+    for ( var property in EqualityExplorerQueryParameters ) {
+      if ( EqualityExplorerQueryParameters.hasOwnProperty( property ) ) {
+        equalityExplorer.log( property + '=' + EqualityExplorerQueryParameters[ property ] );
+      }
+    }
   }
 
   return EqualityExplorerQueryParameters;
