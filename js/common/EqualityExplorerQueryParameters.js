@@ -46,13 +46,15 @@ define( function( require ) {
   // enable logging to the console
   if ( EqualityExplorerQueryParameters.log ) {
 
-    console.log( 'enabling log' );
-      equalityExplorer.log = function( message ) {
+    equalityExplorer.log = function( message ) {
       console.log( '%clog: ' + message, 'color: #009900' ); // display messages in green
     };
 
+    //TODO iterate over EqualityExplorerQueryParameters properties
+    equalityExplorer.log( 'log=' + EqualityExplorerQueryParameters.slow );
     equalityExplorer.log( 'slow=' + EqualityExplorerQueryParameters.slow );
     equalityExplorer.log( 'showOrigin=' + EqualityExplorerQueryParameters.showOrigin );
+    equalityExplorer.log( 'showGrid=' + EqualityExplorerQueryParameters.showGrid );
     equalityExplorer.log( 'gridSize=' + EqualityExplorerQueryParameters.gridSize.toString() );
   }
 
