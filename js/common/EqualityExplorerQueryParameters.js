@@ -43,6 +43,7 @@ define( function( require ) {
   assert && assert( EqualityExplorerQueryParameters.gridSize.length === 2, 'invalid gridSize' );
   EqualityExplorerQueryParameters.gridSize = new Dimension2( EqualityExplorerQueryParameters.gridSize[ 0 ], EqualityExplorerQueryParameters.gridSize[ 1 ] );
 
+  //TODO migrate to common code? This is a pattern that I've been repeating.
   if ( EqualityExplorerQueryParameters.log ) {
 
     // add a log function that displays messages in green
