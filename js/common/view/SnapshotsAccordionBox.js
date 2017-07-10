@@ -55,7 +55,7 @@ define( function( require ) {
     // title
     options.titleNode = options.titleNode || new Text( mySnapshotsString, {
         font: new PhetFont( 18 ),
-        maxWidth: 0.75 * options.maxWidth
+        maxWidth: 0.85 * options.maxWidth
       } );
 
     var snapshotsVBoxChildren = [];

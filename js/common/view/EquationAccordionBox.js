@@ -22,9 +22,6 @@ define( function( require ) {
   // strings
   var equationOrInequalityString = require( 'string!EQUALITY_EXPLORER/equationOrInequality' );
 
-  // constants
-  var CONTENT_SIZE = new Dimension2( 425, 60 );
-
   /**
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
@@ -34,12 +31,10 @@ define( function( require ) {
   function EquationAccordionBox( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
+      maxWidth: 460,
+      maxHeight: 60,
       fill: 'white',
       showTitleWhenExpanded: false,
-      titleNode: new Text( equationOrInequalityString, {
-        font: new PhetFont( 18 ),
-        maxWidth: 0.75 * CONTENT_SIZE.width
-      } ),
       titleAlignX: 'left',
       titleXSpacing: 8,
       buttonLength: 20,
@@ -51,11 +46,19 @@ define( function( require ) {
       contentYMargin: 0
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, CONTENT_SIZE.width, CONTENT_SIZE.height );
+    options.titleNode = options.titleNode || new Text( equationOrInequalityString, {
+        font: new PhetFont( 18 ),
+        maxWidth: 0.85 * options.maxWidth
+      } );
+
+    var contentWidth = options.maxWidth - ( 2 * options.contentXMargin );
+    var contentHeight = options.maxHeight - ( 2 * options.contentYMargin );
+
+    var backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     var equationNode = new EquationNode( leftItemCreators, rightItemCreators, {
-      maxWidth: backgroundNode.width,
-      maxHeight: backgroundNode.height
+      maxWidth: contentWidth,
+      maxHeight: contentHeight
     } );
 
     // wrapper to avoid exceeding stack size when bounds of equationNode changes
