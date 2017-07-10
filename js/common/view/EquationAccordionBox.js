@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -25,10 +24,11 @@ define( function( require ) {
   /**
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
+   * @param {Vector2} scaleLocation - to keep the equation's relational operator aligned with the scale
    * @param {Object} [options]
    * @constructor
    */
-  function EquationAccordionBox( leftItemCreators, rightItemCreators, options ) {
+  function EquationAccordionBox( leftItemCreators, rightItemCreators, scaleLocation, options ) {
 
     options = _.extend( {
       maxWidth: 460,

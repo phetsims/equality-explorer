@@ -38,11 +38,12 @@ define( function( require ) {
 
     var scaleNode = new BalanceScaleNode( scene.scale );
 
-    var equationAccordionBox = new EquationAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
-      expandedProperty: this.equationAccordionBoxExpandedProperty,
-      centerX: scene.scale.location.x,
-      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
-    } );
+    var equationAccordionBox = new EquationAccordionBox(
+      scene.leftItemCreators, scene.rightItemCreators, scene.scale.location, {
+        expandedProperty: this.equationAccordionBoxExpandedProperty,
+        centerX: scene.scale.location.x,
+        top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
+      } );
 
     var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, dragLayer, {
       stroke: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
