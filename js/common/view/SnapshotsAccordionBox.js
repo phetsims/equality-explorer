@@ -25,7 +25,7 @@ define( function( require ) {
   var mySnapshotsString = require( 'string!EQUALITY_EXPLORER/mySnapshots' );
 
   // constants
-  var CONTENT_WIDTH = 240;
+  var CONTENT_WIDTH = 280;
 
   /**
    * @param {ItemCreator[]} leftItemCreators

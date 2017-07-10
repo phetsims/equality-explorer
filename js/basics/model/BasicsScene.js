@@ -36,7 +36,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.scale = new BalanceScale( this.leftItemCreators, this.rightItemCreators, {
-      location: new Vector2( 380, 425 )
+      location: new Vector2( 355, 425 )
     } );
 
     // @public {Property.<boolean>} whether the couplers that connects the 2 sides of the scale are coupled
