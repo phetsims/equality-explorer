@@ -36,31 +36,32 @@ define( function( require ) {
 
     var dragLayer = new Node();
 
-    var snapshotsAccordionBox = new SnapshotsAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
-      expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
-      right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
-      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
-    } );
+    var scaleNode = new BalanceScaleNode( scene.scale );
 
     var equationAccordionBox = new EquationAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
       expandedProperty: this.equationAccordionBoxExpandedProperty,
-      centerX: layoutBounds.left + ( snapshotsAccordionBox.left - layoutBounds.left ) / 2,
+      centerX: scene.scale.location.x,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
     var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, dragLayer, {
       stroke: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
-      right: equationAccordionBox.centerX - 40,
+      centerX: scene.scale.leftPlatform.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, dragLayer, {
       stroke: EqualityExplorerColors.RIGHT_PLATFORM_COLOR,
-      left: equationAccordionBox.centerX + 40,
+      centerX: scene.scale.rightPlatform.locationProperty.value.x,
       bottom: leftItemsPanel.bottom
     } );
 
-    var scaleNode = new BalanceScaleNode( scene.scale );
+    var snapshotsAccordionBox = new SnapshotsAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
+      maxWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
+      expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
+      right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
+      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
+    } );
 
     Node.call( this, {
       children: [

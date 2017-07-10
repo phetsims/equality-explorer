@@ -24,9 +24,6 @@ define( function( require ) {
   // strings
   var mySnapshotsString = require( 'string!EQUALITY_EXPLORER/mySnapshots' );
 
-  // constants
-  var CONTENT_WIDTH = 280;
-
   /**
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
@@ -36,12 +33,9 @@ define( function( require ) {
   function SnapshotsAccordionBox( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
+      maxWidth: 100,
       numberOfSnapshots: 5,
       fill: 'white',
-      titleNode: new Text( mySnapshotsString, {
-        font: new PhetFont( 18 ),
-        maxWidth: 0.75 * CONTENT_WIDTH
-      } ),
       titleAlignX: 'left',
       titleXSpacing: 8,
       buttonLength: 20,
@@ -53,9 +47,18 @@ define( function( require ) {
       contentYMargin: 10
     }, options );
 
+    // title
+    options.titleNode = options.titleNode || new Text( mySnapshotsString, {
+        font: new PhetFont( 18 ),
+        maxWidth: 0.75 * options.maxWidth
+      } );
+
     var snapshotsVBoxChildren = [];
 
-    snapshotsVBoxChildren.push( new HSeparator( CONTENT_WIDTH, {
+    var contentWidth = options.maxWidth - ( 2 * options.contentXMargin );
+
+    // separator between title and snapshots
+    snapshotsVBoxChildren.push( new HSeparator( contentWidth, {
       stroke: 'rgb( 200, 200, 200 )'
     } ) );
 
@@ -75,7 +78,8 @@ define( function( require ) {
       snapshotsVBoxChildren.push( snapshotButton );
     }
 
-    snapshotsVBoxChildren.push( new HSeparator( CONTENT_WIDTH, {
+    // separator between snapshots and buttons
+    snapshotsVBoxChildren.push( new HSeparator( contentWidth, {
       stroke: 'rgb( 200, 200, 200 )'
     } ) );
 
