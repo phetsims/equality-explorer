@@ -20,13 +20,12 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var WorstCaseSnapshotLabel = require( 'EQUALITY_EXPLORER/common/view/WorstCaseSnapshotLabel' );
 
   // strings
   var mySnapshotsString = require( 'string!EQUALITY_EXPLORER/mySnapshots' );
 
   // constants
-  var CONTENT_WIDTH = 225;
+  var CONTENT_WIDTH = 240;
 
   /**
    * @param {ItemCreator[]} leftItemCreators
@@ -64,27 +63,16 @@ define( function( require ) {
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
     for ( var i = 0; i < options.numberOfSnapshots; i++ ) {
 
-      if ( i === 0 ) {
+      var snapshotButton = new RectangularPushButton( {
+        content: snapshotIcon,
+        baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+        xMargin: 8,
+        yMargin: 4,
+        touchAreaXDilation: 5,
+        touchAreaYDilation: 5
+      } );
 
-        //TODO for demonstration of worst-case layout
-        snapshotsVBoxChildren.push( new WorstCaseSnapshotLabel( leftItemCreators, rightItemCreators, {
-          maxWidth: CONTENT_WIDTH
-        } ) );
-        //TODO make snapshots selectable, like radio button
-      }
-      else {
-
-        var snapshotButton = new RectangularPushButton( {
-          content: snapshotIcon,
-          baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
-          xMargin: 8,
-          yMargin: 4,
-          touchAreaXDilation: 5,
-          touchAreaYDilation: 5
-        } );
-
-        snapshotsVBoxChildren.push( snapshotButton );
-      }
+      snapshotsVBoxChildren.push( snapshotButton );
     }
 
     snapshotsVBoxChildren.push( new HSeparator( CONTENT_WIDTH, {
