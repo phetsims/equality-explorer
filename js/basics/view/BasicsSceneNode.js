@@ -34,16 +34,10 @@ define( function( require ) {
     this.equationAccordionBoxExpandedProperty = new Property( true );
     this.snapshotsAccordionBoxExpandedProperty = new Property( false ); //TODO default to true
 
+    // Items are in this layer while they are being dragged and animating
     var dragLayer = new Node();
 
     var scaleNode = new BalanceScaleNode( scene.scale );
-
-    var equationAccordionBox = new EquationAccordionBox(
-      scene.leftItemCreators, scene.rightItemCreators, {
-        expandedProperty: this.equationAccordionBoxExpandedProperty,
-        centerX: scene.scale.location.x,
-        top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
-      } );
 
     var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, dragLayer, {
       stroke: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
@@ -57,6 +51,13 @@ define( function( require ) {
       bottom: leftItemsPanel.bottom
     } );
 
+    var equationAccordionBox = new EquationAccordionBox(
+      scene.leftItemCreators, scene.rightItemCreators, {
+        expandedProperty: this.equationAccordionBoxExpandedProperty,
+        centerX: scene.scale.location.x,
+        top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
+      } );
+
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
       maxWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
@@ -66,12 +67,12 @@ define( function( require ) {
 
     Node.call( this, {
       children: [
-        snapshotsAccordionBox,
-        equationAccordionBox,
+        scaleNode,
         leftItemsPanel,
         rightItemsPanel,
-        scaleNode,
-        dragLayer
+        equationAccordionBox,
+        snapshotsAccordionBox,
+        dragLayer // on top, so that dragged Items are in front of everything else
       ]
     } );
 
