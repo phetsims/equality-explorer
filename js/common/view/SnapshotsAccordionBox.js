@@ -88,6 +88,7 @@ define( function( require ) {
       children: snapshotsVBoxChildren
     } );
 
+    // Button to load a snapshot
     var loadIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
     var loadButton = new RectangularPushButton( {
       //TODO add loadButton listener
@@ -99,6 +100,7 @@ define( function( require ) {
       touchAreaYDilation: 5
     } );
 
+    // Button to trash (delete) a snapshot
     var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.45 } );
     var trashButton = new RectangularPushButton( {
       //TODO add trashButton listener
@@ -109,7 +111,6 @@ define( function( require ) {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5
     } );
-
 
     var buttonGroup = new HBox( {
       spacing: 50,
