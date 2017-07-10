@@ -24,11 +24,10 @@ define( function( require ) {
   /**
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
-   * @param {Vector2} scaleLocation - to keep the equation's relational operator aligned with the scale
    * @param {Object} [options]
    * @constructor
    */
-  function EquationAccordionBox( leftItemCreators, rightItemCreators, scaleLocation, options ) {
+  function EquationAccordionBox( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
       maxWidth: 460,

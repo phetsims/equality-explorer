@@ -39,7 +39,7 @@ define( function( require ) {
     var scaleNode = new BalanceScaleNode( scene.scale );
 
     var equationAccordionBox = new EquationAccordionBox(
-      scene.leftItemCreators, scene.rightItemCreators, scene.scale.location, {
+      scene.leftItemCreators, scene.rightItemCreators, {
         expandedProperty: this.equationAccordionBoxExpandedProperty,
         centerX: scene.scale.location.x,
         top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
