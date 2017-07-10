@@ -24,6 +24,11 @@ define( function( require ) {
   // strings
   var mySnapshotsString = require( 'string!EQUALITY_EXPLORER/mySnapshots' );
 
+  // constants
+  var SEPARATOR_OPTIONS = {
+    stroke: 'rgb( 200, 200, 200 )'
+  };
+
   /**
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
@@ -58,9 +63,7 @@ define( function( require ) {
     var contentWidth = options.maxWidth - ( 2 * options.contentXMargin );
 
     // separator between title and snapshots
-    snapshotsVBoxChildren.push( new HSeparator( contentWidth, {
-      stroke: 'rgb( 200, 200, 200 )'
-    } ) );
+    snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
 
     // Create a row for each snapshot
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
@@ -79,9 +82,7 @@ define( function( require ) {
     }
 
     // separator between snapshots and buttons
-    snapshotsVBoxChildren.push( new HSeparator( contentWidth, {
-      stroke: 'rgb( 200, 200, 200 )'
-    } ) );
+    snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
 
     var snapshotsVBox = new VBox( {
       spacing: 30,
