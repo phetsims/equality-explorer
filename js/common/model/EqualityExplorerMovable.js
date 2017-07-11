@@ -13,6 +13,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
@@ -27,12 +28,16 @@ define( function( require ) {
 
     options = _.extend( {
       location: new Vector2( 0, 0 ), // {Vector2} initial location
+      dragBounds: Bounds2.EVERYTHING, // {Bounds2} bounds that constrain dragging
       dragging: false, // {boolean} is this instance being dragged by the user?
       animationSpeed: EqualityExplorerQueryParameters.slow ? 100 : 400 // {number} distance/second when animating
     }, options );
 
     // @public (read-only) {Property.<Vector2>} DO NOT set this directly! Use moveTo or animateTo.
     this.locationProperty = new Property( options.location );
+    
+    // @public (read-only)
+    this.dragBounds = options.dragBounds;
 
     // @public drag handlers must manage this flag during a drag sequence
     this.dragging = options.dragging;

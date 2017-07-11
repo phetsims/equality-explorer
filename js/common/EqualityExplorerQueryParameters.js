@@ -27,6 +27,9 @@ define( function( require ) {
     // Shows the grid on each of the weighing platforms.
     showGrid: { type: 'flag' },
 
+    // Shows the drag bounds for Items
+    showDragBounds: { type: 'flag' },
+
     // Size of the grid on the scale's weighing platforms.
     // A grid size that exceeds the width of the weighing platforms will result in an assertion failure.
     // Setting to a smaller gridSize is useful for testing what happens when the scale is full.

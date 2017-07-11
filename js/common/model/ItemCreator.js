@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
@@ -25,7 +26,8 @@ define( function( require ) {
   function ItemCreator( name, weight, icon, options ) {
 
     options = _.extend( {
-      constantTerm: false // {boolean} do Items evaluate to a constant?
+      constantTerm: false, // {boolean} do Items evaluate to a constant?
+      dragBounds: Bounds2.EVERYTHING
     }, options );
 
     // @public (read-only)
@@ -33,13 +35,16 @@ define( function( require ) {
     this.icon = icon;
     this.constantTerm = options.constantTerm;
 
+    // @public {Bounds2} drag bounds for Items created
+    this.dragBounds = options.dragBounds;
+
     // @public {Property.<number>} weight of Items
     this.weightProperty = new Property( weight );
 
-    // @public {ObservableArray.<Item>}
+    // @public {ObservableArray.<Item>} Items that have been created
     this.items = new ObservableArray();
 
-    // @public is this ItemCreator enabled?
+    // @public {Property.<boolean>} is this ItemCreator enabled?
     this.enabledProperty = new Property( true );
   }
 
@@ -58,9 +63,12 @@ define( function( require ) {
      * @returns {Item}
      */
     createItem: function( options ) {
+
       options = _.extend( {
-        constantTerm: this.constantTerm
+        constantTerm: this.constantTerm,
+        dragBounds: this.dragBounds
       }, options );
+
       var item = new Item( this.name, this.weightProperty, this.icon, options );
       this.items.add( item );
       return item;

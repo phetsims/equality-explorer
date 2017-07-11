@@ -13,11 +13,13 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemsPanel = require( 'EQUALITY_EXPLORER/common/view/ItemsPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
 
   /**
@@ -80,6 +82,26 @@ define( function( require ) {
     sceneProperty.link( function( newScene ) {
       self.visible = ( newScene === scene );
     } );
+
+    // Render the drag bounds for the left and right platforms
+    if ( EqualityExplorerQueryParameters.showDragBounds ) {
+
+      // left
+      this.addChild( new Rectangle(
+        scene.leftDragBounds.minX, scene.leftDragBounds.minY,
+        scene.leftDragBounds.width, scene.leftDragBounds.height, {
+          stroke: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
+          lineDash: [ 2, 6 ]
+        } ) );
+
+      // right
+      this.addChild( new Rectangle(
+        scene.rightDragBounds.minX, scene.rightDragBounds.minY,
+        scene.rightDragBounds.width, scene.rightDragBounds.height, {
+          stroke: EqualityExplorerColors.RIGHT_PLATFORM_COLOR,
+          lineDash: [ 2, 6 ]
+        } ) );
+    }
   }
 
   equalityExplorer.register( 'BasicsSceneNode', BasicsSceneNode );

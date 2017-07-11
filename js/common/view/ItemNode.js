@@ -50,7 +50,9 @@ define( function( require ) {
       },
 
       drag: function( event, trail ) {
-        item.moveTo( self.globalToParentPoint( event.pointer.point ).minus( startDragOffset ) );
+        var location = self.globalToParentPoint( event.pointer.point ).minus( startDragOffset );
+        var boundedLocation = item.dragBounds.closestPointTo( location );
+        item.moveTo( boundedLocation );
       },
       
       end: function( event, trail ) {
