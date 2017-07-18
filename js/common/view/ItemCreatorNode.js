@@ -36,6 +36,8 @@ define( function( require ) {
     Node.call( this, options );
 
     this.addInputListener( {
+
+      // Create model and view for an Item
       down: function( event ) {
 
         // Don't try to start drags with a right mouse button or an attached pointer.
@@ -51,8 +53,6 @@ define( function( require ) {
 
         // create an ItemNode
         var itemNode = new ItemNode( item );
-
-        // add ItemNode to scenegraph
         dragLayer.addChild( itemNode );
 
         // clean up when the Item is disposed
