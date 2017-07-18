@@ -22,6 +22,8 @@ define( function( require ) {
    */
   function ItemCreatorNode( itemCreator, dragLayer, options ) {
 
+    assert && assert( itemCreator.weighingPlatform );
+
     var self = this;
 
     options = _.extend( {
@@ -52,7 +54,7 @@ define( function( require ) {
         item.locationProperty.value = item.locationProperty.value.plusXY( 0, -5 );
 
         // create an ItemNode
-        var itemNode = new ItemNode( item );
+        var itemNode = new ItemNode( item, itemCreator.weighingPlatform );
         dragLayer.addChild( itemNode );
 
         // clean up when the Item is disposed

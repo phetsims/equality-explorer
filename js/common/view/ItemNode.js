@@ -1,5 +1,10 @@
 // Copyright 2017, University of Colorado Boulder
 
+/**
+ * Visual representation of an Item.
+ *
+ * @author Chris Malley (PixelZoom, Inc.)
+ */
 define( function( require ) {
   'use strict';
 
@@ -11,16 +16,17 @@ define( function( require ) {
 
   /**
    * @param {Item} item
+   * @param {WeighingPlatform} weighingPlatform
    * @param {Object} [options]
    * @constructor
    */
-  function ItemNode( item, options ) {
+  function ItemNode( item, weighingPlatform, options ) {
+
+    var self = this;
 
     options = _.extend( {
       cursor: 'pointer'
     }, options );
-
-    var self = this;
 
     // @public (read-only)
     this.item = item;
@@ -46,6 +52,11 @@ define( function( require ) {
 
       start: function( event, trail ) {
         item.dragging = true;
+        if ( weighingPlatform.containsItem( item ) ) {
+          weighingPlatform.removeItem( item );
+          //TODO move item to global (dragLayer) coordinate frame
+          //TODO move itemNode from weighingPlatformNode to dragLayer
+        }
         startDragOffset = self.globalToParentPoint( event.pointer.point ).minus( item.locationProperty.value );
       },
 
@@ -54,16 +65,21 @@ define( function( require ) {
         var boundedLocation = item.dragBounds.closestPointTo( location );
         item.moveTo( boundedLocation );
       },
-      
+
       end: function( event, trail ) {
+
         item.dragging = false;
 
-        //TODO animate to platform or panel
-        item.animateTo( item.locationProperty.initialValue, {
-          animationCompletedCallback: function() {
-            item.dispose();
-          }
-        } );
+        if ( item.locationProperty.value.y > weighingPlatform.locationProperty.value.y ) {
+
+          // Item was released below the platform, animate back to panel and dispose
+          self.animateToPanel( item );
+        }
+        else {
+
+          // Item was released above the platform, animate to closest available cell
+          self.animateToClosestCell( item, weighingPlatform );
+        }
       }
     } );
     this.addInputListener( this.dragListener );
@@ -82,6 +98,50 @@ define( function( require ) {
     dispose: function() {
       this.disposeItemNode();
       Node.prototype.dispose.call( this );
+    },
+
+    /**
+     * Returns an Item to the panel where it was created.
+     * @param {Item} item
+     */
+    animateToPanel: function( item ) {
+      item.animateTo( item.locationProperty.initialValue, {
+        animationCompletedCallback: function() {
+          item.dispose();
+        }
+      } );
+    },
+
+    /**
+     * Animates an Item to an empty cell on the weighing platform.
+     * @param {Item} item
+     * @param {WeighingPlatform} weighingPlatform
+     */
+    animateToClosestCell: function( item, weighingPlatform ) {
+
+      var self = this;
+
+      var cell = weighingPlatform.getClosestEmptyCell( item.locationProperty.value );
+      assert && assert( cell, 'weighing platform is full' );
+
+      var cellLocation = weighingPlatform.getCellLocation( cell );
+
+      item.animateTo( cellLocation, {
+
+        // If the target cell has become occupied, choose another cell.
+        animationStepCallback: function() {
+          if ( !weighingPlatform.isEmptyCell( cell ) ) {
+            self.animateToClosestCell( item, weighingPlatform );
+          }
+        },
+
+        // When the Item reaches the cell, put it in the cell.
+        animationCompletedCallback: function() {
+          weighingPlatform.addItem( item, cell );
+          //TODO move itemNode from dragLayer to weighingPlatformNode
+          //TODO move item location to weighingPlatform coordinate frame
+        }
+      } );
     }
   } );
 } );
