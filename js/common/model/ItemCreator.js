@@ -58,6 +58,16 @@ define( function( require ) {
     },
 
     /**
+     * Animate Items.
+     * @param {number} dt - time since the previous step, in seconds
+     */
+    step: function( dt ) {
+      this.items.forEach( function( item ) {
+         item.step( dt );
+      } );
+    },
+
+    /**
      * Creates an Item.
      * @param {Object} [options] - same as Item constructor
      * @returns {Item}

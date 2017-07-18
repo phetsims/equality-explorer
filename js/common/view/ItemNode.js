@@ -57,6 +57,13 @@ define( function( require ) {
       
       end: function( event, trail ) {
         item.dragging = false;
+
+        //TODO animate to platform or panel
+        item.animateTo( item.locationProperty.initialValue, {
+          animationCompletedCallback: function() {
+            item.dispose();
+          }
+        } );
       }
     } );
     this.addInputListener( this.dragListener );

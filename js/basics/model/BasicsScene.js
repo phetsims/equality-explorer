@@ -23,7 +23,7 @@ define( function( require ) {
   var DRAG_BOUNDS_Y_MARGIN = 10;
   var DRAG_BOUNDS_MIN_Y = 100;
   var DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.maxY - DRAG_BOUNDS_Y_MARGIN;
-  
+
   /**
    * @param {Node} icon
    * @param {ItemCreator[]} leftItemCreators
@@ -55,7 +55,7 @@ define( function( require ) {
     leftItemCreators.forEach( function( itemCreator ) {
       itemCreator.dragBounds = self.leftDragBounds;
     } );
-    
+
     // @public (read-only, for debugging) drag bounds for right platform
     this.rightDragBounds = new Bounds2( this.scale.location.x + DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
       this.scale.location.x + DRAG_BOUNDS_X_MARGIN + this.leftDragBounds.width, DRAG_BOUNDS_MAX_Y );
@@ -81,7 +81,14 @@ define( function( require ) {
      * @param {number} dt - time since the previous step, in seconds
      */
     step: function( dt ) {
-      //TODO animate Items
+
+      this.leftItemCreators.forEach( function( itemCreator ) {
+        itemCreator.step( dt );
+      } );
+
+      this.rightItemCreators.forEach( function( itemCreator ) {
+        itemCreator.step( dt );
+      } );
     }
   } );
 } );
