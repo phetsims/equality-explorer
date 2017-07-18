@@ -39,7 +39,7 @@ define( function( require ) {
     // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
     var startDragOffset;
 
-    // @private
+    // @public (read-only)
     this.dragListener = new SimpleDragHandler( {
 
       allowTouchSnag: options.allowTouchSnag,
@@ -70,15 +70,6 @@ define( function( require ) {
   equalityExplorer.register( 'ItemNode', ItemNode );
 
   return inherit( Node, ItemNode, {
-
-    /**
-     * Starts dragging this Node.
-     * @param {Event} event
-     * @public
-     */
-    startDrag: function( event ) {
-      this.dragListener.startDrag( event );
-    },
 
     // @public @override
     dispose: function() {

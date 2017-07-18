@@ -61,6 +61,7 @@ define( function( require ) {
      * Creates an Item.
      * @param {Object} [options] - same as Item constructor
      * @returns {Item}
+     * @public
      */
     createItem: function( options ) {
 
@@ -71,12 +72,27 @@ define( function( require ) {
 
       var item = new Item( this.name, this.weightProperty, this.icon, options );
       this.items.add( item );
+
+      // clean up when the item is disposed
+      item.disposedEmitter.addListener( this.removeItem.bind( this ) );
+
       return item;
+    },
+
+    /**
+     * Removes an Item.
+     * @param {Item} item
+     * @private
+     */
+    removeItem: function( item ) {
+      assert && assert( this.items.contains( item ), 'item not found: ' + item.toString() );
+      this.items.remove( item );
     },
 
     /**
      * Gets the total weight of all items.
      * @returns {number}
+     * @public
      */
     get total() { return this.items.length * this.weightProperty.value; }
   } );

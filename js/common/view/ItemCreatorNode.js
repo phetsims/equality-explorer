@@ -55,8 +55,15 @@ define( function( require ) {
         // add ItemNode to scenegraph
         dragLayer.addChild( itemNode );
 
+        // clean up when the Item is disposed
+        var disposedListener = function( item ) {
+          item.disposedEmitter.removeListener( disposedListener );
+          itemNode.dispose();
+        };
+        item.disposedEmitter.addListener( disposedListener );
+
         // Propagate drag to the ItemNode
-        itemNode.startDrag( event );
+        itemNode.dragListener.startDrag( event );
       }
     } );
 

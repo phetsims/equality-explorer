@@ -9,11 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
   var inherit = require( 'PHET_CORE/inherit' );
 
-  var idIndex = 0; // unique id assigned to each Item instance
+  var idIndex = 0; // unique number assigned to each Item instance
 
   /**
    * @param {string} name - internal name, not displayed to the user
@@ -43,10 +44,28 @@ define( function( require ) {
     // @public (read-only)
     this.icon = icon;
 
+    // @public (read-only) emit1 when Item.dispose has completed
+    this.disposedEmitter = new Emitter();
+
     EqualityExplorerMovable.call( this, options );
   }
 
   equalityExplorer.register( 'Item', Item );
 
-  return inherit( EqualityExplorerMovable, Item );
+  return inherit( EqualityExplorerMovable, Item, {
+
+    // @public
+    dispose: function() {
+      EqualityExplorerMovable.prototype.dispose.call( this );
+      this.disposedEmitter.emit1( this );
+    },
+
+    /**
+     * @returns {string}
+     * @public
+     */
+    toString: function() {
+      return this.name + ':' + this.id;
+    }
+  } );
 } );

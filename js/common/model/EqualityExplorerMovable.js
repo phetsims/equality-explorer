@@ -53,11 +53,20 @@ define( function( require ) {
 
     // @private {function|null} called when animation to destination completes, set using animateTo
     this.animationCompletedCallback = null;
+
+    // @public (read-only) has dispose been called?
+    this.disposed = false;
   }
 
   equalityExplorer.register( 'EqualityExplorerMovable', EqualityExplorerMovable );
 
   return inherit( Object, EqualityExplorerMovable, {
+
+    // @public
+    dispose: function() {
+      assert && assert( !this.disposed, 'dispose called again' );
+      this.disposed = true;
+    },
 
     // @public
     reset: function() {
@@ -107,7 +116,10 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
-      var doStep = !this.dragging && ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
+
+      var doStep = !this.disposed && !this.dragging &&
+                   ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
+
       if ( doStep ) {
 
         // optional callback
