@@ -13,6 +13,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -70,6 +71,8 @@ define( function( require ) {
 
   equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );
 
+
+
   return inherit( Object, WeighingPlatform, {
 
     /**
@@ -79,10 +82,9 @@ define( function( require ) {
      * @public
      */
     addItem: function( item, cell ) {
-      assert && assert( this.cells[ cell.row ][ cell.column ] === null,
-        'cell is occupied: row=' + cell.row + ' column=' + cell.column );
-      assert && assert( !this.containsItem( item ),
-        'Item is already in grid: ' + item.toString() );
+      assert && this.assertValidCell( cell );
+      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + this.cellToString( cell ) );
+      assert && assert( !this.containsItem( item ), 'Item is already in grid: ' + item.toString() );
       this.cells[ cell.row ][ cell.column ] = item;
     },
 
@@ -101,7 +103,7 @@ define( function( require ) {
           }
         }
       }
-      assert && assert( removed, 'Item was not removed: ' + item.toString() );
+      assert && assert( removed, 'Item is not in grid: ' + item.toString() );
     },
 
     /**
@@ -110,6 +112,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     isEmptyCell: function( cell ) {
+      assert && this.assertValidCell( cell );
       return ( this.cells[ cell.row ][ cell.column ] === null );
     },
 
@@ -136,16 +139,40 @@ define( function( require ) {
      */
     getClosestEmptyCell: function( location ) {
 
-      //TODO find closest, fill from bottom up for now
-      var cell = null;
-      for ( var row = this.gridSize.height - 1; row >= 0 && !cell; row--) {
-        for ( var column = 0; column < this.gridSize.width && !cell; column++ ) {
-          if ( this.cells[ row ][ column ] === null ) {
-            cell = { row: row, column: column };
+      var closestCell = this.getFirstEmptyCell();
+      if ( !closestCell ) {
+        return null;
+      }
+
+      var closestDistance = this.getCellLocation( closestCell ).distance( location );
+
+      var currentCell = null; // the cell we're currently examining
+
+      // Find the closest cell based on distance
+      for ( var row = 0; row < this.gridSize.height; row++ ) {
+        for ( var column = 0; column < this.gridSize.width; column++ ) {
+          if ( this.isEmptyCell( { row: row, column: column } ) ) {
+            currentCell = { row: row, column: column };
+            var currentDistance = this.getCellLocation( currentCell ).distance( location );
+            if ( currentDistance < closestDistance ) {
+              closestDistance = currentDistance;
+              closestCell = currentCell;
+            }
           }
         }
       }
-      return cell;
+
+      // Now look below the closest cell to see if there are any empty cells in the same row.
+      // This accounts for gravity, so Items fall to the cell that is closest to the bottom of the grid.
+      for ( row = this.gridSize.height - 1; row > closestCell.row; row-- ) {
+        currentCell = { row: row, column: closestCell.column };
+        if ( this.isEmptyCell( currentCell ) ) {
+          closestCell = currentCell;
+          break;
+        }
+      }
+
+      return closestCell;
     },
 
     /**
@@ -155,7 +182,8 @@ define( function( require ) {
      * @public
      */
     getCellLocation: function( cell ) {
-      assert && assert( ( typeof cell.row === 'number' ) && ( typeof cell.column === 'number' ) );
+      assert && this.assertValidCell( cell );
+
       var upperLeft = this.getGridUpperLeft();
       var x = upperLeft.x + ( cell.column * this.cellSize.width ) + ( 0.5 * this.cellSize.width );
       var y = upperLeft.y + ( cell.row * this.cellSize.height ) + ( 0.5 * this.cellSize.height );
@@ -171,6 +199,40 @@ define( function( require ) {
       var x = this.locationProperty.value.x - ( this.gridSize.width * this.cellSize.width ) / 2;
       var y = this.locationProperty.value.y - ( this.gridSize.height * this.cellSize.height );
       return new Vector2( x, y );
+    },
+
+    /**
+     * Examines the grid from left to right, top to bottom, and returns the first empty cell.
+     * @returns {row:number, column:number} null if the grid is full
+     */
+    getFirstEmptyCell: function() {
+      var cell = null;
+      for ( var row = this.gridSize.height - 1; row >= 0; row-- ) {
+        for ( var column = 0; column < this.gridSize.width && !cell; column++ ) {
+          if ( this.cells[ row ][ column ] === null ) {
+            cell = { row: row, column: column };
+          }
+        }
+      }
+      return cell;
+    },
+
+    //TODO use a better implementation for 'cell'?
+    // @private
+    assertValidCell: function( cell ) {
+      if ( assert ) {
+        assert( cell );
+        assert( typeof cell.row === 'number' );
+        assert( typeof cell.column === 'number' );
+        assert( cell.row >= 0 && cell.row < this.gridSize.height, 'row out of bounds: ' + cell.row );
+        assert( cell.column >= 0 && cell.column < this.gridSize.width, 'column out of bounds: ' + cell.column );
+      }
+    },
+
+    // @private
+    cellToString: function( cell ) {
+      assert && this.assertValidCell( cell );
+      return StringUtils.fillIn( '[{{row}},{{column}}]', cell );
     }
   } );
 } );
