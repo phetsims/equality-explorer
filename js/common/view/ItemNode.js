@@ -122,26 +122,33 @@ define( function( require ) {
       var self = this;
 
       var cell = weighingPlatform.getClosestEmptyCell( item.locationProperty.value );
-      assert && assert( cell, 'weighing platform is full' );
+      if ( !cell ) {
 
-      var cellLocation = weighingPlatform.getCellLocation( cell );
+        // Platform has become empty, or there is no available cell above the item's location.
+        // Return the item to panel.
+        this.animateToPanel( item );
+      }
+      else {
 
-      item.animateTo( cellLocation, {
+        var cellLocation = weighingPlatform.getCellLocation( cell );
 
-        // If the target cell has become occupied, choose another cell.
-        animationStepCallback: function() {
-          if ( !weighingPlatform.isEmptyCell( cell ) ) {
-            self.animateToClosestCell( item, weighingPlatform );
+        item.animateTo( cellLocation, {
+
+          // If the target cell has become occupied, choose another cell.
+          animationStepCallback: function() {
+            if ( !weighingPlatform.isEmptyCell( cell ) ) {
+              self.animateToClosestCell( item, weighingPlatform );
+            }
+          },
+
+          // When the Item reaches the cell, put it in the cell.
+          animationCompletedCallback: function() {
+            weighingPlatform.addItem( item, cell );
+            //TODO move itemNode from dragLayer to weighingPlatformNode
+            //TODO move item location to weighingPlatform coordinate frame
           }
-        },
-
-        // When the Item reaches the cell, put it in the cell.
-        animationCompletedCallback: function() {
-          weighingPlatform.addItem( item, cell );
-          //TODO move itemNode from dragLayer to weighingPlatformNode
-          //TODO move item location to weighingPlatform coordinate frame
-        }
-      } );
+        } );
+      }
     }
   } );
 } );
