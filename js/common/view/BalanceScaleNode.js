@@ -140,8 +140,11 @@ define( function( require ) {
 
     var organizeButton = new OrganizeButton( {
       touchAreaXDilation: 5,
-      touchAreaYDilation: 5
-      //TODO disable OrganizeButton when scale is empty or organized
+      touchAreaYDilation: 5,
+      listener: function() {
+        //TODO disable OrganizeButton when scale is empty or organized
+        scale.organize();
+      }
     } );
 
     // buttons on the front face of the base

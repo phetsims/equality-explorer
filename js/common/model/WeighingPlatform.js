@@ -72,8 +72,16 @@ define( function( require ) {
   equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );
 
 
-
   return inherit( Object, WeighingPlatform, {
+
+    /**
+     * Organizes Items on the platform, as specified in #4
+     * @public
+     */
+    organize: function() {
+      console.log( 'organize' );//XXX
+      //TODO
+    },
 
     /**
      * Adds an Item to a specific cell in the grid.

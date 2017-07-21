@@ -145,5 +145,15 @@ define( function( require ) {
 
   equalityExplorer.register( 'BalanceScale', BalanceScale );
 
-  return inherit( Object, BalanceScale );
+  return inherit( Object, BalanceScale, {
+
+    /**
+     * Organizes Items on the scale, as specified in #4
+     * @public
+     */
+    organize: function() {
+      this.leftPlatform.organize();
+      this.rightPlatform.organize();
+    }
+  } );
 } );
