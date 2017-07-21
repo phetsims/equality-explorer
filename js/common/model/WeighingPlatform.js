@@ -79,8 +79,8 @@ define( function( require ) {
      * @public
      */
     organize: function() {
-      console.log( 'organize' );//XXX
-      //TODO
+      //TODO organize Items on the platform, see #4
+      //TODO cancel drag for all Items on the platform, in case the user is manually organizing
     },
 
     /**
