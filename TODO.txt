@@ -15,3 +15,4 @@ Differentiate between items on and off scale
 Remove items on Reset scale
 Remove items on Reset All
 
+
