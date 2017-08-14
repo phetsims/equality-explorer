@@ -47,9 +47,6 @@ define( function( require ) {
     // @public {Property.<boolean>} is this ItemCreator enabled?
     this.enabledProperty = new Property( true );
 
-    // @public {WeightingPlatform}
-    this.weighingPlatform = null; // set after construction, when associated with a BalanceScale
-
     // @private
     this.removeItemBound = this.removeItem.bind( this );
   }

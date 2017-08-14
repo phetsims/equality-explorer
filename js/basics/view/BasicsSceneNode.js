@@ -41,13 +41,13 @@ define( function( require ) {
 
     var scaleNode = new BalanceScaleNode( scene.scale );
 
-    var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, dragLayer, {
+    var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, scene.scale.leftPlatform, dragLayer, {
       stroke: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
       centerX: scene.scale.leftPlatform.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, dragLayer, {
+    var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, scene.scale.rightPlatform, dragLayer, {
       stroke: EqualityExplorerColors.RIGHT_PLATFORM_COLOR,
       centerX: scene.scale.rightPlatform.locationProperty.value.x,
       bottom: leftItemsPanel.bottom

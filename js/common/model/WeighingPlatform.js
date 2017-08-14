@@ -9,20 +9,20 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
+  var ObservableArray = require( 'AXON/ObservableArray' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @param {DerivedProperty} locationProperty
-   * @param {ItemCreator[]} itemCreators
    * @param {Object} [options]
    * @constructor
    */
-  function WeighingPlatform( locationProperty, itemCreators, options ) {
+  function WeighingPlatform( locationProperty, options ) {
 
     var self = this;
 
@@ -40,25 +40,6 @@ define( function( require ) {
     this.gridSize = options.gridSize;
     this.cellSize = options.cellSize;
 
-    var maxItems = this.gridSize.width * this.gridSize.height;
-    var lengthProperties = [];
-    itemCreators.forEach( function( itemCreator ) {
-      lengthProperties.push( itemCreator.items.lengthProperty );
-      itemCreator.weighingPlatform = self;
-    } );
-
-    //TODO this should be handled by BalanceScale
-    // Disable all ItemCreators if the platform is full, unmultilink unnecessary
-    Property.multilink( lengthProperties, function() {
-      var totalItems = 0;
-      for ( var i = 0; i < lengthProperties.length; i++ ) {
-        totalItems += lengthProperties[ i ].value;
-      }
-      for ( i = 0; i < itemCreators.length; i++ ) {
-        itemCreators[ i ].enabledProperty.value = ( totalItems < maxItems );
-      }
-    } );
-
     // @private {Item[][]} null indicates an empty cell
     this.cells = [];
     for ( var row = 0; row < this.gridSize.height; row++ ) {
@@ -69,6 +50,18 @@ define( function( require ) {
       this.cells.push( rowOfCells );
     }
 
+    // @public (read-only) {ObservableArray.<Item>} Items that are on the platform
+    this.items = new ObservableArray();
+
+    // @public the total weight of the Items that are on the platform
+    this.weightProperty = new DerivedProperty( [ this.items.lengthProperty ], function( length ) {
+      var weight = 0;
+      self.items.forEach( function( item ) {
+       weight += item.weightProperty.value;
+      } );
+      return weight;
+    } );
+
     // @private
     this.removeItemBound = this.removeItem.bind( this );
   }
@@ -77,6 +70,14 @@ define( function( require ) {
 
 
   return inherit( Object, WeighingPlatform, {
+
+    /**
+     * Gets the number of cells in the grid. This is the capacity of the platform.
+     * @returns {number}
+     */
+    get numberOfCells() {
+      return this.gridSize.width * this.gridSize.height;
+    },
 
     /**
      * Organizes Items on the platform, as specified in #4
@@ -98,6 +99,7 @@ define( function( require ) {
       assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + this.cellToString( cell ) );
       assert && assert( !this.containsItem( item ), 'Item is already in grid: ' + item.toString() );
       this.cells[ cell.row ][ cell.column ] = item;
+      this.items.push( item );
       item.disposedEmitter.addListener( this.removeItemBound );
     },
 
@@ -112,6 +114,7 @@ define( function( require ) {
         for ( var column = 0; column < this.gridSize.width && !removed; column++ ) {
           if ( this.cells[ row ][ column ] === item ) {
             this.cells[ row ][ column ] = null;
+            this.items.remove( item );
             item.disposedEmitter.removeListener( this.removeItemBound );
             removed = true;
           }
@@ -125,13 +128,9 @@ define( function( require ) {
      * @public
      */
     disposeAllItems: function() {
-      for ( var row = 0; row < this.gridSize.height; row++ ) {
-        for ( var column = 0; column < this.gridSize.width; column++ ) {
-          var item = this.cells[ row ][ column ];
-          if ( item ) {
-            item.dispose();
-          }
-        }
+      while ( this.items.length > 0 ) {
+        var item = this.items.get( 0 );
+        item.dispose();
       }
     },
 
@@ -152,13 +151,7 @@ define( function( require ) {
      * @public
      */
     containsItem: function( item ) {
-      var found = false;
-      for ( var row = 0; row < this.gridSize.height && !found; row++ ) {
-        for ( var column = 0; column < this.gridSize.width && !found; column++ ) {
-          found = ( this.cells[ row ][ column ] === item );
-        }
-      }
-      return found;
+      return this.items.contains( item );
     },
 
     /**

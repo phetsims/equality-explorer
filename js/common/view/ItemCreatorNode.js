@@ -17,13 +17,12 @@ define( function( require ) {
 
   /**
    * @param {ItemCreator} itemCreator
+   * @param {WeighingPlatform} weighingPlatform
    * @param {Node} dragLayer
    * @param {Object} [options]
    * @constructor
    */
-  function ItemCreatorNode( itemCreator, dragLayer, options ) {
-
-    assert && assert( itemCreator.weighingPlatform );
+  function ItemCreatorNode( itemCreator, weighingPlatform, dragLayer, options ) {
 
     var self = this;
 
@@ -49,7 +48,7 @@ define( function( require ) {
         } );
 
         // create an ItemNode
-        var itemNode = new ItemNode( item, itemCreator.weighingPlatform );
+        var itemNode = new ItemNode( item, weighingPlatform );
         dragLayer.addChild( itemNode );
 
         // clean up when the Item is disposed

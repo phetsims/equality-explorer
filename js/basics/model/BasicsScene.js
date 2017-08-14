@@ -65,9 +65,38 @@ define( function( require ) {
 
     // @public {Property.<boolean>} whether the couplers that connects the 2 sides of the scale are coupled
     this.coupledProperty = new Property( false );
+
+    // Wire up enable/disable for ItemCreators, based on capacity of the scale's weighing platforms
+    enableItemCreators( leftItemCreators, this.scale.leftPlatform.numberOfCells );
+    enableItemCreators( rightItemCreators, this.scale.rightPlatform.numberOfCells );
   }
 
   equalityExplorer.register( 'BasicsScene', BasicsScene );
+
+  /**
+   * Disables an ItemCreator so that it can't create more than some max number of Items.
+   * @param {ItemCreator[]} itemCreators
+   * @param {number} maxItems
+   */
+  function enableItemCreators( itemCreators, maxItems ) {
+
+    // Get the length Property for each ItemCreator's Item array
+    var lengthProperties = [];
+    itemCreators.forEach( function( itemCreator ) {
+      lengthProperties.push( itemCreator.items.lengthProperty );
+    } );
+
+    // Disable all ItemCreators if the maximum is reached, unmultilink unnecessary
+    Property.multilink( lengthProperties, function() {
+      var totalItems = 0;
+      for ( var i = 0; i < lengthProperties.length; i++ ) {
+        totalItems += lengthProperties[ i ].value;
+      }
+      for ( i = 0; i < itemCreators.length; i++ ) {
+        itemCreators[ i ].enabledProperty.value = ( totalItems < maxItems );
+      }
+    } );
+  }
 
   return inherit( Object, BasicsScene, {
 

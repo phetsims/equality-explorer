@@ -17,6 +17,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
   var WeighingPlatform = require( 'EQUALITY_EXPLORER/common/model/WeighingPlatform' );
 
@@ -55,53 +56,37 @@ define( function( require ) {
     this.platformXInset = options.platformXInset;
     this.platformYOffset = options.platformYOffset;
     this.gridSize = options.gridSize;
-    this.maxItems = this.gridSize.width * this.gridSize.height;
-    
+
     // {ItemCreator[]} all ItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
-    var lengthProperties = []; // {Property.<number>[]} lengthProperty for each ObservableArray.<Item>
+    //TODO replace this with options.maxItemWeightProperty and options.cellSize
     var maxItemWeight = 0;
     var maxCellLength = 0;
     itemCreators.forEach( function( itemCreator ) {
-      
-      lengthProperties.push( itemCreator.items.lengthProperty );
-      
+
       maxItemWeight = Math.max( maxItemWeight, itemCreator.weightProperty.value );
-      
+
       maxCellLength = Math.max( maxCellLength, itemCreator.icon.width );
       maxCellLength = Math.max( maxCellLength, itemCreator.icon.height );
     } );
 
     //TODO support dynamic weight for changing value of x
-    // @public (read-only) maximum weight that the scale can hold
-    this.maxWeight = maxItemWeight * this.maxItems;
-    
+    // maximum weight that a weighing platform can hold
+    var maxItems = this.gridSize.width * this.gridSize.height;
+    var maxWeight = maxItemWeight * maxItems;
+
     var cellWidth = maxCellLength + ( 2 * options.cellXMargin );
     var cellHeight = maxCellLength + ( 2 * options.cellYMargin );
-    
+
     // @public (read-only) size of each cell in the grid
     this.cellSize = new Dimension2( cellWidth, cellHeight );
 
     assert && assert( this.gridSize.width * this.cellSize.width <= options.platformDiameter,
       'grid is wider than platform' );
 
-    // @public (read-only) {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
-    this.angleProperty = new DerivedProperty( lengthProperties, function() {
-
-      var totalWeight = 0;
-      leftItemCreators.forEach( function( itemCreator ) {
-        totalWeight -= itemCreator.totalWeight; // subtract
-      } );
-      rightItemCreators.forEach( function( itemCreator ) {
-        totalWeight += itemCreator.totalWeight; // add
-      } );
-
-      var scaleAngle = ( totalWeight / self.maxWeight ) * MAX_SCALE_ANGLE;
-      assert && assert( Math.abs( scaleAngle ) <= MAX_SCALE_ANGLE, 'scaleAngle out of range: ' + scaleAngle );
-
-      return scaleAngle;
-    } );
+    // @public (read-only) {Property.<number>} angle of the scale in radians, zero is balanced
+    this.angleProperty = new Property( 0 );
 
     // {DerivedProperty.<number>} location of the right weighing platform
     var rightLocationProperty = new DerivedProperty( [ this.angleProperty ],
@@ -139,8 +124,16 @@ define( function( require ) {
     };
 
     // @public (read-only)
-    this.leftPlatform = new WeighingPlatform( leftLocationProperty, leftItemCreators, platformOptions );
-    this.rightPlatform = new WeighingPlatform( rightLocationProperty, rightItemCreators, platformOptions );
+    this.leftPlatform = new WeighingPlatform( leftLocationProperty, platformOptions );
+    this.rightPlatform = new WeighingPlatform( rightLocationProperty, platformOptions );
+
+    //TODO angleProperty should be derived, but leftLocationProperty and rightLocationProperty depend on it
+    Property.multilink( [ this.leftPlatform.weightProperty, this.rightPlatform.weightProperty ],
+      function( leftWeight, rightWeight ) {
+        var angle = ( ( rightWeight - leftWeight ) / maxWeight ) * MAX_SCALE_ANGLE;
+        assert && assert( Math.abs( angle ) <= MAX_SCALE_ANGLE, 'angle out of range: ' + angle );
+        self.angleProperty.value = angle;
+      } );
   }
 
   equalityExplorer.register( 'BalanceScale', BalanceScale );
