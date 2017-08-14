@@ -38,7 +38,7 @@ define( function( require ) {
     // @public {Bounds2} drag bounds for Items created
     this.dragBounds = options.dragBounds;
 
-    // @public {Property.<number>} weight of Items
+    // @public {Property.<number>} weight of each Item. All Items have the same weight.
     this.weightProperty = new Property( weight );
 
     // @public {ObservableArray.<Item>} Items that have been created
@@ -49,6 +49,9 @@ define( function( require ) {
 
     // @public {WeightingPlatform}
     this.weighingPlatform = null; // set after construction, when associated with a BalanceScale
+
+    // @private
+    this.removeItemBound = this.removeItem.bind( this );
   }
 
   equalityExplorer.register( 'ItemCreator', ItemCreator );
@@ -57,6 +60,7 @@ define( function( require ) {
 
     // @public
     reset: function() {
+      this.disposeAllItems();
       this.weightProperty.reset();
     },
 
@@ -87,13 +91,13 @@ define( function( require ) {
       this.items.add( item );
 
       // clean up when the item is disposed
-      item.disposedEmitter.addListener( this.removeItem.bind( this ) );
+      item.disposedEmitter.addListener( this.removeItemBound );
 
       return item;
     },
 
     /**
-     * Removes an Item.
+     * Removes an Item, called when Item.dispose is called.
      * @param {Item} item
      * @private
      */
@@ -103,10 +107,21 @@ define( function( require ) {
     },
 
     /**
-     * Gets the total weight of all items.
+     * Disposes of all Items that were created by this ItemCreator.
+     * @public
+     */
+    disposeAllItems: function() {
+      while ( this.items.length > 0 ) {
+        var item = this.items.get( 0 );
+        item.dispose();
+      }
+    },
+
+    /**
+     * Gets the total weight of all Items that were created by this ItemCreator.
      * @returns {number}
      * @public
      */
-    get total() { return this.items.length * this.weightProperty.value; }
+    get totalWeight() { return this.items.length * this.weightProperty.value; }
   } );
 } );

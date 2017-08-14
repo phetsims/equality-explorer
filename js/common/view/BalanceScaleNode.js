@@ -133,8 +133,10 @@ define( function( require ) {
     } );
 
     var clearScaleButton = new ClearScaleButton( {
-      touchAreaDilation: 5
-      //TODO add ClearScaleButton listener
+      touchAreaDilation: 5,
+      listener: function() {
+        scale.disposeAllItems();
+      }
       //TODO disable ClearScaleButton when scale is empty
     } );
 

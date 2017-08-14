@@ -47,6 +47,7 @@ define( function( require ) {
       itemCreator.weighingPlatform = self;
     } );
 
+    //TODO this should be handled by BalanceScale
     // Disable all ItemCreators if the platform is full, unmultilink unnecessary
     Property.multilink( lengthProperties, function() {
       var totalItems = 0;
@@ -67,6 +68,9 @@ define( function( require ) {
       }
       this.cells.push( rowOfCells );
     }
+
+    // @private
+    this.removeItemBound = this.removeItem.bind( this );
   }
 
   equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );
@@ -94,6 +98,7 @@ define( function( require ) {
       assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + this.cellToString( cell ) );
       assert && assert( !this.containsItem( item ), 'Item is already in grid: ' + item.toString() );
       this.cells[ cell.row ][ cell.column ] = item;
+      item.disposedEmitter.addListener( this.removeItemBound );
     },
 
     /**
@@ -107,11 +112,27 @@ define( function( require ) {
         for ( var column = 0; column < this.gridSize.width && !removed; column++ ) {
           if ( this.cells[ row ][ column ] === item ) {
             this.cells[ row ][ column ] = null;
+            item.disposedEmitter.removeListener( this.removeItemBound );
             removed = true;
           }
         }
       }
       assert && assert( removed, 'Item is not in grid: ' + item.toString() );
+    },
+
+    /**
+     * Disposes of all Items that are on the platform.
+     * @public
+     */
+    disposeAllItems: function() {
+      for ( var row = 0; row < this.gridSize.height; row++ ) {
+        for ( var column = 0; column < this.gridSize.width; column++ ) {
+          var item = this.cells[ row ][ column ];
+          if ( item ) {
+            item.dispose();
+          }
+        }
+      }
     },
 
     /**
@@ -225,7 +246,7 @@ define( function( require ) {
       return cell;
     },
 
-    //TODO use a better implementation for 'cell'?
+    //TODO use a better abstraction for 'cell'?
     // @private
     assertValidCell: function( cell ) {
       if ( assert ) {

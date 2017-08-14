@@ -91,10 +91,10 @@ define( function( require ) {
 
       var totalWeight = 0;
       leftItemCreators.forEach( function( itemCreator ) {
-        totalWeight -= itemCreator.total; // subtract
+        totalWeight -= itemCreator.totalWeight; // subtract
       } );
       rightItemCreators.forEach( function( itemCreator ) {
-        totalWeight += itemCreator.total; // add
+        totalWeight += itemCreator.totalWeight; // add
       } );
 
       var scaleAngle = ( totalWeight / self.maxWeight ) * MAX_SCALE_ANGLE;
@@ -154,6 +154,15 @@ define( function( require ) {
     organize: function() {
       this.leftPlatform.organize();
       this.rightPlatform.organize();
+    },
+
+    /**
+     * Disposes of all Items that are on the scale.
+     * @public
+     */
+    disposeAllItems: function() {
+      this.leftPlatform.disposeAllItems();
+      this.rightPlatform.disposeAllItems();
     }
   } );
 } );

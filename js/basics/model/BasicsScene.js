@@ -73,7 +73,18 @@ define( function( require ) {
 
     // @public
     reset: function() {
+      this.deleteAllItems();
       this.coupledProperty.reset();
+    },
+
+    // @private deletes all Items
+    deleteAllItems: function() {
+      this.leftItemCreators.forEach( function( itemCreator ) {
+        itemCreator.reset();
+      } );
+      this.rightItemCreators.forEach( function( itemCreator ) {
+        itemCreator.reset();
+      } );
     },
 
     /**

@@ -56,8 +56,9 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      EqualityExplorerMovable.prototype.dispose.call( this );
       this.disposedEmitter.emit1( this );
+      this.disposedEmitter.removeAllListeners();
+      EqualityExplorerMovable.prototype.dispose.call( this );
     },
 
     /**
@@ -65,7 +66,7 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-      return this.name + ':' + this.id;
+      return this.name + this.id;
     }
   } );
 } );
