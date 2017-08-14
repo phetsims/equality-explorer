@@ -13,6 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemNode = require( 'EQUALITY_EXPLORER/common/view/ItemNode' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
    * @param {ItemCreator} itemCreator
@@ -37,13 +38,10 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    this.addInputListener( {
+    this.addInputListener( SimpleDragHandler.createForwardingListener(
 
-      // Create model and view for an Item
-      down: function( event ) {
-
-        // Don't try to start drags with a right mouse button or an attached pointer.
-        if ( !event.canStartPress() ) { return; }
+      // down function, creates model and view for an Item
+      function( event ) {
 
         // create an Item
         var item = itemCreator.createItem( {
@@ -67,6 +65,8 @@ define( function( require ) {
         // Propagate drag to the ItemNode
         itemNode.dragListener.startDrag( event );
       }
+    ), {
+      allowTouchSnag: true
     } );
 
     // Enable and disable, unlink unnecessary
