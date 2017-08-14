@@ -52,6 +52,10 @@ define( function( require ) {
 
       start: function( event, trail ) {
         item.dragging = true;
+
+        // move up slightly
+        self.item.locationProperty.value = self.item.locationProperty.value.plusXY( 0, -5 );
+
         if ( weighingPlatform.containsItem( item ) ) {
           weighingPlatform.removeItem( item );
           //TODO move item to global (dragLayer) coordinate frame

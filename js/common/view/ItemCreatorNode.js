@@ -48,9 +48,6 @@ define( function( require ) {
           location: dragLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) )
         } );
 
-        // move slightly above the ItemCreatorNode
-        item.locationProperty.value = item.locationProperty.value.plusXY( 0, -5 );
-
         // create an ItemNode
         var itemNode = new ItemNode( item, itemCreator.weighingPlatform );
         dragLayer.addChild( itemNode );
