@@ -12,7 +12,6 @@ IMPLEMENTATION
 
 Decide who is responsible for tracking items (ItemCreator? WeighingPlatform? both?)
 Differentiate between items on and off scale
-Remove items on Reset scale
-Remove items on Reset All
+
 
 
