@@ -25,6 +25,8 @@ define( function( require ) {
    */
   function ItemCreator( name, weight, icon, options ) {
 
+    var self = this;
+
     options = _.extend( {
       constantTerm: false, // {boolean} do Items evaluate to a constant?
       dragBounds: Bounds2.EVERYTHING
@@ -41,17 +43,23 @@ define( function( require ) {
     // @public {Property.<number>} weight of each Item. All Items have the same weight.
     this.weightProperty = new Property( weight );
 
-    // @public {ObservableArray.<Item>} all Items that currently exist
+    // @public (read-only) {ObservableArray.<Item>} all Items that currently exist
     this.items = new ObservableArray();
 
-    // @public {ObservableArray.<Item>} Items that are on the scale, a subset of this.items
+    // @public (read-only) {ObservableArray.<Item>} Items that are on the scale, a subset of this.items
     this.itemsOnScale = new ObservableArray();
 
     // @public {Property.<boolean>} is this ItemCreator enabled?
     this.enabledProperty = new Property( true );
 
-    // @private
-    this.removeItemBound = this.removeItem.bind( this );
+    // @private {function( Item )} called when Item.dispose is called
+    this.itemWasDisposedBound = function( item ) {
+      assert && assert( self.items.contains( item ), 'item not found: ' + item.toString() );
+      if ( self.itemsOnScale.contains( item ) ) {
+        self.itemsOnScale.remove( item );
+      }
+      self.items.remove( item );
+    };
   }
 
   equalityExplorer.register( 'ItemCreator', ItemCreator );
@@ -65,8 +73,9 @@ define( function( require ) {
     },
 
     /**
-     * Animate Items.
+     * Animates Items.
      * @param {number} dt - time since the previous step, in seconds
+     * @public
      */
     step: function( dt ) {
       this.items.forEach( function( item ) {
@@ -91,22 +100,9 @@ define( function( require ) {
       this.items.add( item );
 
       // clean up when the item is disposed
-      item.disposedEmitter.addListener( this.removeItemBound );
+      item.disposedEmitter.addListener( this.itemWasDisposedBound );
 
       return item;
-    },
-
-    /**
-     * Removes an Item, called when Item.dispose is called.
-     * @param {Item} item
-     * @private
-     */
-    removeItem: function( item ) {
-      assert && assert( this.items.contains( item ), 'item not found: ' + item.toString() );
-      if ( this.itemsOnScale.contains( item ) ) {
-        this.itemsOnScale.remove( item );
-      }
-      this.items.remove( item );
     },
 
     /**
@@ -133,7 +129,7 @@ define( function( require ) {
 
     /**
      * Disposes of all Items that were created by this ItemCreator.
-     * @public
+     * @private
      */
     disposeAllItems: function() {
       this.itemsOnScale.clear();
