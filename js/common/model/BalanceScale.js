@@ -41,7 +41,7 @@ define( function( require ) {
       platformYOffset: -50, // offset of the platform from the beam
       platformDiameter: 300, // diameter of the weighing platforms
       gridSize: EqualityExplorerQueryParameters.gridSize, // {Dimension2} dimensions for the grid of items on each weighing platform
-      cellXMargin: 3,
+      cellXMargin: 2,
       cellYMargin: 0
     }, options );
 
