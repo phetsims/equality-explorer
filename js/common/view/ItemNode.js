@@ -63,8 +63,6 @@ define( function( require ) {
         if ( weighingPlatform.containsItem( item ) ) {
           weighingPlatform.removeItem( item );
           self.itemCreator.removeItemFromScale( item );
-          //TODO move item to global (dragLayer) coordinate frame
-          //TODO move itemNode from weighingPlatformNode to dragLayer
         }
         startDragOffset = self.globalToParentPoint( event.pointer.point ).minus( item.locationProperty.value );
       },
@@ -154,8 +152,6 @@ define( function( require ) {
           animationCompletedCallback: function() {
             weighingPlatform.addItem( item, cell );
             self.itemCreator.addItemToScale( item );
-            //TODO move itemNode from dragLayer to weighingPlatformNode
-            //TODO move item location to weighingPlatform coordinate frame
           }
         } );
       }
