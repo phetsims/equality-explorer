@@ -204,6 +204,8 @@ define( function( require ) {
 
     /**
      * Gets the location of a specific cell, in global coordinates.
+     * A cell's location is in the center of the cell.
+     *
      * @param {row:number, column:number} cell
      * @returns {Vector2}
      * @public
