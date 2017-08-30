@@ -16,11 +16,12 @@ define( function( require ) {
 
   /**
    * @param {Item} item
+   * @param {ItemCreator} itemCreator
    * @param {WeighingPlatform} weighingPlatform
    * @param {Object} [options]
    * @constructor
    */
-  function ItemNode( item, weighingPlatform, options ) {
+  function ItemNode( item, itemCreator, weighingPlatform, options ) {
 
     var self = this;
 
@@ -30,6 +31,9 @@ define( function( require ) {
 
     // @public (read-only)
     this.item = item;
+
+    // @private
+    this.itemCreator = itemCreator;
 
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ item.icon ]; // wrap the icon since we're using scenery DAG feature
@@ -58,6 +62,7 @@ define( function( require ) {
 
         if ( weighingPlatform.containsItem( item ) ) {
           weighingPlatform.removeItem( item );
+          self.itemCreator.removeItemFromScale( item );
           //TODO move item to global (dragLayer) coordinate frame
           //TODO move itemNode from weighingPlatformNode to dragLayer
         }
@@ -148,6 +153,7 @@ define( function( require ) {
           // When the Item reaches the cell, put it in the cell.
           animationCompletedCallback: function() {
             weighingPlatform.addItem( item, cell );
+            self.itemCreator.addItemToScale( item );
             //TODO move itemNode from dragLayer to weighingPlatformNode
             //TODO move item location to weighingPlatform coordinate frame
           }

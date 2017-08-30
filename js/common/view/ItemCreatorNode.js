@@ -48,7 +48,7 @@ define( function( require ) {
         } );
 
         // create an ItemNode
-        var itemNode = new ItemNode( item, weighingPlatform );
+        var itemNode = new ItemNode( item, itemCreator, weighingPlatform );
         dragLayer.addChild( itemNode );
 
         // clean up when the Item is disposed

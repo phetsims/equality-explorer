@@ -56,7 +56,7 @@ define( function( require ) {
     // {Property.<number>[]} lengthProperty for each ObservableArray.<Item>
     var lengthProperties = [];
     itemCreators.forEach( function( itemCreator ) {
-      lengthProperties.push( itemCreator.items.lengthProperty );
+      lengthProperties.push( itemCreator.itemsOnScale.lengthProperty );
     } );
 
     // update the equation, unmultilink unnecessary
@@ -95,17 +95,18 @@ define( function( require ) {
 
       var itemCreator = itemCreators[ i ];
 
-      if ( itemCreator.items.length > 0 ) {
+      var numberOfItemsOnScale = itemCreator.itemsOnScale.length;
+      if ( numberOfItemsOnScale > 0 ) {
 
         if ( children.length > 0 ) {
           children.push( new Text( '+', { font: options.font } ) );
         }
 
         if ( itemCreator.constantTerm ) {
-          children.push( createConstantNode( itemCreator.items.length * itemCreator.weightProperty.value, options ) );
+          children.push( createConstantNode( numberOfItemsOnScale * itemCreator.weightProperty.value, options ) );
         }
         else {
-          children.push( createTermNode( itemCreator.items.length, itemCreator.icon, options ) );
+          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, options ) );
         }
       }
     }
@@ -178,13 +179,13 @@ define( function( require ) {
     // evaluate the left side
     var leftWeight = 0;
     for ( var i = 0; i < leftItemCreators.length; i++ ) {
-      leftWeight += leftItemCreators[ i ].items.length * leftItemCreators[ i ].weightProperty.value;
+      leftWeight += leftItemCreators[ i ].itemsOnScale.length * leftItemCreators[ i ].weightProperty.value;
     }
 
     // evaluate the right side
     var rightWeight = 0;
     for ( i = 0; i < rightItemCreators.length; i++ ) {
-      rightWeight += rightItemCreators[ i ].items.length * rightItemCreators[ i ].weightProperty.value;
+      rightWeight += rightItemCreators[ i ].itemsOnScale.length * rightItemCreators[ i ].weightProperty.value;
     }
 
     // determine the operator that describes the relationship between left and right sides

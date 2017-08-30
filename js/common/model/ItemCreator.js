@@ -41,8 +41,11 @@ define( function( require ) {
     // @public {Property.<number>} weight of each Item. All Items have the same weight.
     this.weightProperty = new Property( weight );
 
-    // @public {ObservableArray.<Item>} Items that have been created
+    // @public {ObservableArray.<Item>} all Items that currently exist
     this.items = new ObservableArray();
+
+    // @public {ObservableArray.<Item>} Items that are on the scale, a subset of this.items
+    this.itemsOnScale = new ObservableArray();
 
     // @public {Property.<boolean>} is this ItemCreator enabled?
     this.enabledProperty = new Property( true );
@@ -100,7 +103,30 @@ define( function( require ) {
      */
     removeItem: function( item ) {
       assert && assert( this.items.contains( item ), 'item not found: ' + item.toString() );
+      if ( this.itemsOnScale.contains( item ) ) {
+        this.itemsOnScale.remove( item );
+      }
       this.items.remove( item );
+    },
+
+    /**
+     * Records the fact that an Item is on the scale.
+     * @param {Item} item
+     */
+    addItemToScale: function( item ) {
+      assert && assert( this.items.contains( item ), 'item not found: ' + item.toString() );
+      assert && assert( !this.itemsOnScale.contains( item ), 'item already on scale: ' + item.toString() );
+      this.itemsOnScale.push( item );
+    },
+
+    /**
+     * Records the fact that an Item is no longer on the scale.
+     * @param {Item} item
+     */
+    removeItemFromScale: function( item ) {
+      assert && assert( this.items.contains( item ), 'item not found: ' + item.toString() );
+      assert && assert( this.itemsOnScale.contains( item ), 'item already on scale: ' + item.toString() );
+      this.itemsOnScale.remove( item );
     },
 
     /**
@@ -108,6 +134,7 @@ define( function( require ) {
      * @public
      */
     disposeAllItems: function() {
+      this.itemsOnScale.clear();
       while ( this.items.length > 0 ) {
         var item = this.items.get( 0 );
         item.dispose();
