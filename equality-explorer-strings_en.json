@@ -14,8 +14,8 @@
   "screen.solving": {
     "value": "Solving"
   },
-  "mySnapshots": {
-    "value": "My Snapshots"
+  "snapshots": {
+    "value": "Snapshots"
   },
   "equationOrInequality": {
     "value": "Equation or Inequality"

@@ -22,7 +22,7 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var mySnapshotsString = require( 'string!EQUALITY_EXPLORER/mySnapshots' );
+  var snapshotsString = require( 'string!EQUALITY_EXPLORER/snapshots' );
 
   // constants
   var SEPARATOR_OPTIONS = {
@@ -53,7 +53,7 @@ define( function( require ) {
     }, options );
 
     // title
-    options.titleNode = options.titleNode || new Text( mySnapshotsString, {
+    options.titleNode = options.titleNode || new Text( snapshotsString, {
         font: new PhetFont( 18 ),
         maxWidth: 0.85 * options.maxWidth
       } );
