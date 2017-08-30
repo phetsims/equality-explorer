@@ -74,7 +74,7 @@ define( function( require ) {
   equalityExplorer.register( 'BasicsScene', BasicsScene );
 
   /**
-   * Disables an ItemCreator so that it can't create more than some max number of Items.
+   * Wires up an ItemCreator's enabled Property, so that it can't create more than some max number of Items.
    * @param {ItemCreator[]} itemCreators
    * @param {number} maxItems
    */
