@@ -10,6 +10,9 @@ Does scale need to animate? Animate only when delta angle exceeds some threshold
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+move item between dragLayer and weighingPlatform
+disable "clear scale" button when scale is empty
+disable "organize" button when scale is empty or organized
 
 
 
