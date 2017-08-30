@@ -112,6 +112,7 @@ define( function( require ) {
     /**
      * Records the fact that an Item is on the scale.
      * @param {Item} item
+     * @public
      */
     addItemToScale: function( item ) {
       assert && assert( this.items.contains( item ), 'item not found: ' + item.toString() );
@@ -122,6 +123,7 @@ define( function( require ) {
     /**
      * Records the fact that an Item is no longer on the scale.
      * @param {Item} item
+     * @public
      */
     removeItemFromScale: function( item ) {
       assert && assert( this.items.contains( item ), 'item not found: ' + item.toString() );
