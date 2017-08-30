@@ -26,10 +26,14 @@ define( function( require ) {
     var hexagonNode = new Path( Shape.regularPolygon( 6, EqualityExplorerConstants.ITEM_HEIGHT ), {
       fill: 'rgb( 124, 69, 157 )'
     } );
-    var diamondNode = new Path( Shape.regularPolygon( 4, EqualityExplorerConstants.ITEM_HEIGHT ), {
+
+    var diamondSideLength = EqualityExplorerConstants.ITEM_HEIGHT * Math.sin( Math.PI / 3 );
+    var diamondNode = new Path( Shape.regularPolygon( 4, diamondSideLength ), {
       fill: 'red'
     } );
-    var triangleNode = new Path( Shape.regularPolygon( 3, EqualityExplorerConstants.ITEM_HEIGHT ), {
+
+    var triangleSideLength = EqualityExplorerConstants.ITEM_HEIGHT / Math.sin( Math.PI / 3 );
+    var triangleNode = new Path( Shape.regularPolygon( 3, triangleSideLength ), {
       fill: 'rgb( 155, 205, 100 )',
       rotation: -Math.PI / 2
     } );
