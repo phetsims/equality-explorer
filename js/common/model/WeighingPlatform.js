@@ -57,13 +57,18 @@ define( function( require ) {
     this.weightProperty = new DerivedProperty( [ this.items.lengthProperty ], function( length ) {
       var weight = 0;
       self.items.forEach( function( item ) {
-       weight += item.weightProperty.value;
+        weight += item.weightProperty.value;
       } );
       return weight;
     } );
 
     // @private
     this.removeItemBound = this.removeItem.bind( this );
+
+    // When the platform moves, adjust the location of all Items.
+    this.locationProperty.link( function( location ) {
+      self.updateItemLocations();
+    } );
   }
 
   equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );
@@ -198,7 +203,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the location of a specific cell.
+     * Gets the location of a specific cell, in global coordinates.
      * @param {row:number, column:number} cell
      * @returns {Vector2}
      * @public
@@ -255,6 +260,22 @@ define( function( require ) {
     cellToString: function( cell ) {
       assert && this.assertValidCell( cell );
       return StringUtils.fillIn( '[{{row}},{{column}}]', cell );
+    },
+
+    /**
+     * Synchronize Item locations with their respective cell locations.
+     * @private
+     */
+    updateItemLocations: function() {
+      for ( var row = 0; row < this.gridSize.height; row++ ) {
+        for ( var column = 0; column < this.gridSize.width; column++ ) {
+          var cell = { row: row, column: column };
+          if ( !this.isEmptyCell( cell ) ) {
+            var item = this.cells[ row ][ cell.column ];
+            item.moveTo( this.getCellLocation( cell ) );
+          }
+        }
+      }
     }
   } );
 } );
