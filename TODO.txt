@@ -11,7 +11,6 @@ Does scale need to animate? Animate only when delta angle exceeds some threshold
 IMPLEMENTATION
 
 bottom of items sit slightly below the bottom of their cell
-disable "clear scale" button when scale is empty
 disable "organize" button when scale is empty or organized
 
 
