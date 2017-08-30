@@ -125,7 +125,7 @@ define( function( require ) {
      */
     removeItemFromScale: function( item ) {
       assert && assert( this.items.contains( item ), 'item not found: ' + item.toString() );
-      assert && assert( this.itemsOnScale.contains( item ), 'item already on scale: ' + item.toString() );
+      assert && assert( this.itemsOnScale.contains( item ), 'item not on scale: ' + item.toString() );
       this.itemsOnScale.remove( item );
     },
 
