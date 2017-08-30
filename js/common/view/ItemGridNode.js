@@ -33,8 +33,9 @@ define( function( require ) {
     var backgroundHeight = options.gridSize.height * options.cellSize.height;
 
     // @private
+    var backgroundFill = ( EqualityExplorerQueryParameters.showGrid ? 'rgba( 255, 255, 255, 0.5 )' : null );
     this.backgroundNode = new Rectangle( 0, 0, backgroundWidth, backgroundHeight, {
-      fill: 'rgba( 255, 255, 255, 0.5 )'
+      fill: backgroundFill
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
