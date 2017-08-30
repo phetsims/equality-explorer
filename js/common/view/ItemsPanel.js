@@ -20,11 +20,11 @@ define( function( require ) {
   /**
    * @param {ItemCreator[]} itemCreators
    * @param {WeighingPlatform} weighingPlatform
-   * @param {Node} dragLayer
+   * @param {Node} itemsLayer
    * @param {Object} [options]
    * @constructor
    */
-  function ItemsPanel( itemCreators, weighingPlatform, dragLayer, options ) {
+  function ItemsPanel( itemCreators, weighingPlatform, itemsLayer, options ) {
 
     options = _.extend( {
       lineWidth: 2,
@@ -35,7 +35,7 @@ define( function( require ) {
 
     var hBoxChildren = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
-      hBoxChildren.push( new ItemCreatorNode( itemCreators[ i ], weighingPlatform, dragLayer ) );
+      hBoxChildren.push( new ItemCreatorNode( itemCreators[ i ], weighingPlatform, itemsLayer ) );
     }
 
     var hBox = new HBox( {

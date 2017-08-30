@@ -18,11 +18,11 @@ define( function( require ) {
   /**
    * @param {ItemCreator} itemCreator
    * @param {WeighingPlatform} weighingPlatform
-   * @param {Node} dragLayer
+   * @param {Node} itemsLayer
    * @param {Object} [options]
    * @constructor
    */
-  function ItemCreatorNode( itemCreator, weighingPlatform, dragLayer, options ) {
+  function ItemCreatorNode( itemCreator, weighingPlatform, itemsLayer, options ) {
 
     var self = this;
 
@@ -44,12 +44,12 @@ define( function( require ) {
 
         // create an Item
         var item = itemCreator.createItem( {
-          location: dragLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) )
+          location: itemsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) )
         } );
 
         // create an ItemNode
         var itemNode = new ItemNode( item, itemCreator, weighingPlatform );
-        dragLayer.addChild( itemNode );
+        itemsLayer.addChild( itemNode );
 
         // clean up when the Item is disposed
         var disposedListener = function( item ) {
