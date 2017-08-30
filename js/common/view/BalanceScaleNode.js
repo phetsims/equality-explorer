@@ -137,17 +137,17 @@ define( function( require ) {
       listener: function() {
         scale.disposeAllItems();
       }
-      //TODO disable ClearScaleButton when scale is empty
     } );
+    //TODO disable ClearScaleButton when scale is empty
 
     var organizeButton = new OrganizeButton( {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
       listener: function() {
-        //TODO disable OrganizeButton when scale is empty or organized
         scale.organize();
       }
     } );
+    //TODO disable OrganizeButton when scale is empty or organized
 
     // buttons on the front face of the base
     var buttonsParent = new HBox( {
