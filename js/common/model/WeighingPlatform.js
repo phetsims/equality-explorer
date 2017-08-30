@@ -18,7 +18,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {DerivedProperty} locationProperty
+   * @param {DerivedProperty.<Vector2>} locationProperty
    * @param {Object} [options]
    * @constructor
    */
