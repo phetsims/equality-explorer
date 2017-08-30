@@ -10,6 +10,7 @@ Does scale need to animate? Animate only when delta angle exceeds some threshold
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+implement "organize" feature
 disable "organize" button when scale is organized
 
 
