@@ -23,7 +23,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Property = require( 'AXON/Propertyk' );
+  var Property = require( 'AXON/Property' );
   var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
   var WeighingPlatformNode = require( 'EQUALITY_EXPLORER/common/view/WeighingPlatformNode' );
@@ -140,12 +140,6 @@ define( function( require ) {
       }
     } );
 
-    // disable ClearScaleButton when scale is empty
-    Property.multilink( [ scale.leftPlatform.items.lengthProperty, scale.rightPlatform.items.lengthProperty ],
-      function( leftLength, rightLenght ) {
-        clearScaleButton.enabled = ( ( leftLength + rightLenght ) > 0 );
-      } );
-
     var organizeButton = new OrganizeButton( {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
@@ -153,7 +147,16 @@ define( function( require ) {
         scale.organize();
       }
     } );
-    //TODO disable OrganizeButton when scale is empty or organized
+
+    // disable ClearScaleButton and OrganizeButton when scale is empty
+    Property.multilink( [ scale.leftPlatform.items.lengthProperty, scale.rightPlatform.items.lengthProperty ],
+      function( leftLength, rightLength ) {
+        var enabled = ( ( leftLength + rightLength ) > 0 );
+        clearScaleButton.enabled = enabled;
+        organizeButton.enabled = enabled;
+      } );
+
+    //TODO disable OrganizeButton when scale is organized
 
     // buttons on the front face of the base
     var buttonsParent = new HBox( {
