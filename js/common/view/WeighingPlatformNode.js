@@ -102,8 +102,8 @@ define( function( require ) {
     var itemGridNode = new ItemGridNode( {
       gridSize: weighingPlatform.gridSize,
       cellSize: weighingPlatform.cellSize,
-      centerX: platformNode.centerX,
-      bottom: platformNode.centerY
+      centerX: 0,
+      bottom: options.pivotRadius / 2
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
