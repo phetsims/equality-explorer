@@ -139,13 +139,6 @@ define( function( require ) {
         var item = this.items.get( 0 );
         item.dispose();
       }
-    },
-
-    /**
-     * Gets the total weight of all Items that were created by this ItemCreator.
-     * @returns {number}
-     * @public
-     */
-    get totalWeight() { return this.items.length * this.weightProperty.value; }
+    }
   } );
 } );
