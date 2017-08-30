@@ -62,13 +62,14 @@ define( function( require ) {
 
     //TODO replace this with options.maxItemWeightProperty and options.cellSize
     var maxItemWeight = 0;
-    var maxCellLength = 0;
+    var maxCellWidth = 0;
+    var maxCellHeight = 0;
     itemCreators.forEach( function( itemCreator ) {
 
       maxItemWeight = Math.max( maxItemWeight, itemCreator.weightProperty.value );
 
-      maxCellLength = Math.max( maxCellLength, itemCreator.icon.width );
-      maxCellLength = Math.max( maxCellLength, itemCreator.icon.height );
+      maxCellWidth = Math.max( maxCellWidth, itemCreator.icon.width );
+      maxCellHeight = Math.max( maxCellHeight, itemCreator.icon.height );
     } );
 
     //TODO support dynamic weight for changing value of x
@@ -76,8 +77,8 @@ define( function( require ) {
     var maxItems = this.gridSize.width * this.gridSize.height;
     var maxWeight = maxItemWeight * maxItems;
 
-    var cellWidth = maxCellLength + ( 2 * options.cellXMargin );
-    var cellHeight = maxCellLength + ( 2 * options.cellYMargin );
+    var cellWidth = maxCellWidth + ( 2 * options.cellXMargin );
+    var cellHeight = maxCellHeight + ( 2 * options.cellYMargin );
 
     // @public (read-only) size of each cell in the grid
     this.cellSize = new Dimension2( cellWidth, cellHeight );
