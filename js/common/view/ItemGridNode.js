@@ -32,10 +32,10 @@ define( function( require ) {
     var backgroundWidth = options.gridSize.width * options.cellSize.width;
     var backgroundHeight = options.gridSize.height * options.cellSize.height;
 
-    // @private
-    var backgroundFill = ( EqualityExplorerQueryParameters.showGrid ? 'rgba( 255, 255, 255, 0.5 )' : null );
+    // @private This background is displayed when the user is manually rearranging Items on the platform
     this.backgroundNode = new Rectangle( 0, 0, backgroundWidth, backgroundHeight, {
-      fill: backgroundFill
+      fill: 'rgba( 255, 255, 255, 0.5 )',
+      visible: false
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
@@ -64,7 +64,7 @@ define( function( require ) {
 
       var gridNode = new Path( gridShape, {
         center: this.backgroundNode.center,
-        stroke: 'red',
+        stroke: 'rgb( 160, 160, 160 )',
         lineWidth: 0.25
       } );
       options.children.push( gridNode );
