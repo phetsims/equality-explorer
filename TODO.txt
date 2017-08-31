@@ -11,6 +11,7 @@ IMPLEMENTATION
 
 separate debug grid from "white rectangle"
 get rid of WeighingPlatform.items, use ItemCreator.itemsOnScale
+snapshots
 implement "organize" feature
 disable "organize" button when scale is organized
 
