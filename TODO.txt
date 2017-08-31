@@ -5,7 +5,7 @@ DESIGN
 
 Reconsider "white rectangle" feature?
 Does relational operator in equation need to be horizontally aligned with center of scale?
-Does scale need to animate? Animate only when delta angle exceeds some threshold?...
+How to emphasize the relational operator in the equation?
 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
