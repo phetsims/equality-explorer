@@ -4,13 +4,12 @@ TODO items for equality-explorer
 DESIGN
 
 Does relational operator in equation need to be horizontally aligned with center of scale?
-
 Does scale need to animate? Animate only when delta angle exceeds some threshold?...
 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-get rid of WeighingPlatform.items
+get rid of WeighingPlatform.items, use ItemCreator.itemsOnScale
 implement "organize" feature
 disable "organize" button when scale is organized
 
