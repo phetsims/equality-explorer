@@ -25,15 +25,16 @@ define( function( require ) {
   function ItemGridNode( options ) {
 
     options = _.extend( {
-      gridSize: new Dimension2( 1, 1 ),
+      rows: 1,
+      columns: 1,
       cellSize: new Dimension2( 5, 5 )
     }, options );
 
-    var backgroundWidth = options.gridSize.width * options.cellSize.width;
-    var backgroundHeight = options.gridSize.height * options.cellSize.height;
+    var gridWidth =  options.columns * options.cellSize.width;
+    var gridHeight = options.rows * options.cellSize.height;
 
-    // @private This background is displayed when the user is manually rearranging Items on the platform
-    this.backgroundNode = new Rectangle( 0, 0, backgroundWidth, backgroundHeight, {
+    // @private displayed when the user is manually rearranging Items on the platform
+    this.backgroundNode = new Rectangle( 0, 0, gridWidth, gridHeight, {
       fill: 'rgba( 255, 255, 255, 0.5 )',
       visible: false
     } );
@@ -44,22 +45,17 @@ define( function( require ) {
     // draw the grid
     if ( EqualityExplorerQueryParameters.showGrid ) {
 
-      var cellWidth = options.cellSize.width;
-      var cellHeight = options.cellSize.height;
-      var gridWidth =  options.gridSize.width * cellWidth;
-      var gridHeight = options.gridSize.height * cellHeight;
-
       // border
       var gridShape = new Shape().rect( 0, 0, this.backgroundNode.width, this.backgroundNode.height );
 
       // horizontal lines
-      for ( var row = 1; row < options.gridSize.height; row++ ) {
-        gridShape.moveTo( 0, row * cellHeight ).lineTo( gridWidth, row * cellHeight );
+      for ( var row = 1; row < options.rows; row++ ) {
+        gridShape.moveTo( 0, row * options.cellSize.height ).lineTo( gridWidth, row * options.cellSize.height );
       }
 
       // vertical lines
-      for ( var column = 1; column < options.gridSize.width; column++ ) {
-        gridShape.moveTo( column * cellWidth, 0 ).lineTo( column * cellWidth, gridHeight );
+      for ( var column = 1; column < options.columns; column++ ) {
+        gridShape.moveTo( column * options.cellSize.width, 0 ).lineTo( column * options.cellSize.width, gridHeight );
       }
 
       var gridNode = new Path( gridShape, {

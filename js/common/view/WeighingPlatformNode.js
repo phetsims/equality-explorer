@@ -100,7 +100,8 @@ define( function( require ) {
 
     // Grid where items appear
     var itemGridNode = new ItemGridNode( {
-      gridSize: weighingPlatform.gridSize,
+      rows: weighingPlatform.gridSize.height,
+      columns: weighingPlatform.gridSize.width,
       cellSize: weighingPlatform.cellSize,
       centerX: 0,
       bottom: options.pivotRadius / 2
