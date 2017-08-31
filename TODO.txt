@@ -9,6 +9,7 @@ Does scale need to animate? Animate only when delta angle exceeds some threshold
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+separate debug grid from "white rectangle"
 get rid of WeighingPlatform.items, use ItemCreator.itemsOnScale
 implement "organize" feature
 disable "organize" button when scale is organized
