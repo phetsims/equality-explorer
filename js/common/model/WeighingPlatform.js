@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Platform where items are placed to be weighed on a balance scale.
+ * Platform where Items are placed to be weighed on a balance scale.
  *
  * @author Chris Malley (PixelZoom, Inc)
  */
