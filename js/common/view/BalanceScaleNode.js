@@ -62,7 +62,8 @@ define( function( require ) {
       rightPlatformFill: EqualityExplorerColors.RIGHT_PLATFORM_COLOR
     }, options );
 
-    options.center = scale.location;
+    options.x = scale.location.x;
+    options.y = scale.location.y;
 
     // the fulcrum that the beam balances on
     var fulcrumTaper = FULCRUM_BOTTOM_WIDTH - FULCRUM_TOP_WIDTH;

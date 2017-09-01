@@ -9,7 +9,6 @@ Does relational operator in equation need to be horizontally aligned with center
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-with ?showGrid&showOrigin, the entire scale gets moved up a bit, so items sit below cells
 get rid of WeighingPlatform.items, use ItemCreator.itemsOnScale
 snapshots
 implement "organize" feature
