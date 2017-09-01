@@ -8,6 +8,7 @@ Reconsider "white rectangle" feature?
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+add query parameters to populate the scale with items
 get rid of WeighingPlatform.items, use ItemCreator.itemsOnScale
 better implementation of grid cells
 snapshots
