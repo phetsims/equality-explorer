@@ -55,10 +55,7 @@ define( function( require ) {
 
     var backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
-    var equationNode = new EquationNode( leftItemCreators, rightItemCreators, {
-      // maxWidth: contentWidth,
-      // maxHeight: contentHeight
-    } );
+    var equationNode = new EquationNode( leftItemCreators, rightItemCreators );
 
     // wrapper to avoid exceeding stack size when bounds of equationNode changes
     var equationParent = new Node( {
