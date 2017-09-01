@@ -3,6 +3,7 @@
 /**
  * The balance scale used throughout Equality Explorer.
  * Origin is at the point where the beam is balanced on the fulcrum.
+ * Do not attempt to position this Node via options; it positions itself based on model.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
