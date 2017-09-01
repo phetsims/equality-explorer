@@ -32,11 +32,11 @@ define( function( require ) {
 
       // fonts
       relationalOperatorFont: new PhetFont( { size: 50, weight: 'bold' } ), // for relational operator
-      plusFont: new PhetFont( 24 ), // for plus operator
-      numberFont: new PhetFont( 24 ), // for coefficients and constants
+      plusFont: new PhetFont( 32 ), // for plus operator
+      numberFont: new PhetFont( 32 ), // for coefficients and constants
 
       // horizontal spacing
-      relationalOperatorSpacing: 25, // space around the relational operator
+      relationalOperatorSpacing: 20, // space around the relational operator
       plusSpacing: 8, // space around plus operator
       coefficientSpacing: 2 // space between coefficient and icon
 
