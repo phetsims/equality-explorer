@@ -21,7 +21,8 @@ define( function( require ) {
   var DEFAULT_FONT = new PhetFont( 24 );
   var DEFAULT_COEFFICIENT_SPACING = 2;  // space between coefficient and icon
   var DEFAULT_PLUS_SPACING = 6;  // space around plus operators
-  var DEFAULT_RELATIONAL_SPACING = 12; // space around the relational operator
+  var DEFAULT_RELATIONAL_SPACING = 30; // space around the relational operator
+  var RELATIONAL_OPERATOR_FONT = new PhetFont( { size: 50, weight: 'bold' } );
 
   /**
    * @param {ItemCreator[]} leftItemCreators
@@ -65,7 +66,7 @@ define( function( require ) {
         createSideNode( leftItemCreators, options ),
         
         // relational operator
-        createRelationalOperator( leftItemCreators, rightItemCreators, options ),
+        createRelationalOperator( leftItemCreators, rightItemCreators ),
         
         // right side
         createSideNode( rightItemCreators, options )
@@ -167,7 +168,7 @@ define( function( require ) {
   function createRelationalOperator( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
-      font: DEFAULT_FONT
+      font: RELATIONAL_OPERATOR_FONT
     }, options );
 
     // evaluate the left side
