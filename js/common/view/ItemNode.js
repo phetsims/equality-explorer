@@ -56,6 +56,8 @@ define( function( require ) {
 
       start: function( event, trail ) {
         item.dragging = true;
+        
+        self.moveToFront();
 
         // move up slightly
         self.item.locationProperty.value = self.item.locationProperty.value.plusXY( 0, -5 );
