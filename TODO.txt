@@ -10,8 +10,10 @@ How to emphasize the relational operator in the equation?
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+make items in equation the same size as those in the play area
 separate debug grid from "white rectangle"
 get rid of WeighingPlatform.items, use ItemCreator.itemsOnScale
+keep relational operator centered in equations accordion box
 snapshots
 implement "organize" feature
 disable "organize" button when scale is organized
