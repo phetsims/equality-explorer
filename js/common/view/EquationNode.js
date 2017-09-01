@@ -30,10 +30,13 @@ define( function( require ) {
 
     options = _.extend( {
 
+      // icons
+      iconScale: 0.75,
+
       // fonts
-      relationalOperatorFont: new PhetFont( { size: 50, weight: 'bold' } ), // for relational operator
-      plusFont: new PhetFont( 32 ), // for plus operator
-      numberFont: new PhetFont( 32 ), // for coefficients and constants
+      relationalOperatorFont: new PhetFont( { size: 40, weight: 'bold' } ), // for relational operator
+      plusFont: new PhetFont( 28 ), // for plus operator
+      numberFont: new PhetFont( 28 ), // for coefficients and constants
 
       // horizontal spacing
       relationalOperatorSpacing: 20, // space around the relational operator
@@ -64,10 +67,10 @@ define( function( require ) {
       relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
 
       var leftSideNode = createSideNode( leftItemCreators,
-        options.plusFont, options.numberFont, options.plusSpacing, options.coefficientSpacing );
+        options.iconScale, options.plusFont, options.numberFont, options.plusSpacing, options.coefficientSpacing );
 
       var rightSideNode = createSideNode( rightItemCreators,
-        options.plusFont, options.numberFont, options.plusSpacing, options.coefficientSpacing );
+        options.iconScale, options.plusFont, options.numberFont, options.plusSpacing, options.coefficientSpacing );
 
       self.children = [ leftSideNode, relationalOperatorNode, rightSideNode ];
 
@@ -123,13 +126,14 @@ define( function( require ) {
   /**
    * Creates one side of the equation
    * @param {ItemCreator[]} itemCreators
+   * @param {number} iconScale - scale for Item icons
    * @param {Font} plusFont - font for plus operators
    * @param {Font} numberFont - font for coefficients and constants
    * @param {number} plusSpacing - space around plus operators
    * @param {number} coefficientSpacing - space between coefficients and icons
    * @returns {Node}
    */
-  function createSideNode( itemCreators, plusFont, numberFont, plusSpacing, coefficientSpacing ) {
+  function createSideNode( itemCreators, iconScale, plusFont, numberFont, plusSpacing, coefficientSpacing ) {
 
     var children = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
@@ -147,7 +151,7 @@ define( function( require ) {
           children.push( createConstantNode( numberOfItemsOnScale * itemCreator.weightProperty.value, numberFont ) );
         }
         else {
-          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, numberFont, coefficientSpacing ) );
+          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing ) );
         }
       }
     }
@@ -166,17 +170,24 @@ define( function( require ) {
    * Creates a term.
    * @param {number} coefficient
    * @param {Node} icon
+   * @param {number} iconScale - scale for icon
    * @param {Font} font - font for coefficient or constant
    * @param {spacing} coefficientSpacing - horizontal space between coefficient and icon
    * @returns {Node}
    */
-  function createTermNode( coefficient, icon, font, coefficientSpacing ) {
+  function createTermNode( coefficient, icon, iconScale, font, coefficientSpacing ) {
+
+    var constantNode = createConstantNode( coefficient, font );
+
+    // wrap the icon, since we're using scenery DAG feature
+    var wrappedIcon = new Node( {
+      children: [ icon ],
+      scale: iconScale
+    } );
+
     return new HBox( {
       spacing: coefficientSpacing,
-      children: [
-        createConstantNode( coefficient, font ),
-        new Node( { children: [ icon ] } ) // wrap the icon, since we're using scenery DAG feature
-      ]
+      children: [ constantNode, wrappedIcon ]
     } );
   }
 
