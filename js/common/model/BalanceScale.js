@@ -4,6 +4,7 @@
  * Model of a balance scale.
  * Consists of 2 weighing platforms that sit on either ends of a beam.
  * The center of the beam is balanced on a fulcrum.
+ * Origin is at the point where the beam is balanced on the fulcrum.
  * Items are arranged in a 2D (xy) grid on each weighing platform.
  *
  * @author Chris Malley (PixelZoom, Inc)
