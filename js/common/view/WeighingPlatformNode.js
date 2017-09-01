@@ -13,8 +13,8 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
+  var GridNode = require( 'EQUALITY_EXPLORER/common/view/GridNode' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemGridNode = require( 'EQUALITY_EXPLORER/common/view/ItemGridNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -103,7 +103,7 @@ define( function( require ) {
 
     // Grid where Items appear
     if ( EqualityExplorerQueryParameters.showGrid ) {
-      options.children.push( new ItemGridNode( {
+      options.children.push( new GridNode( {
         rows: weighingPlatform.gridSize.height,
         columns: weighingPlatform.gridSize.width,
         cellSize: weighingPlatform.cellSize,

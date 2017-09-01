@@ -1,8 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Items are placed in this 2D grid on a weighing platform.
- * Displayed only for debugging purposes via 'showGrid' query parameter.
+ * A rectangular 2D grid of cells.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,7 +19,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ItemGridNode( options ) {
+  function GridNode( options ) {
 
     options = _.extend( {
       rows: 1,
@@ -49,7 +48,7 @@ define( function( require ) {
     Path.call( this, gridShape, options );
   }
 
-  equalityExplorer.register( 'ItemGridNode', ItemGridNode );
+  equalityExplorer.register( 'GridNode', GridNode );
 
-  return inherit( Path, ItemGridNode );
+  return inherit( Path, GridNode );
 } );
