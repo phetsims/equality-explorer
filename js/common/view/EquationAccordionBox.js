@@ -64,7 +64,8 @@ define( function( require ) {
 
     // Center the equation when it changes
     equationNode.on( 'bounds', function() {
-      equationParent.center = backgroundNode.center;
+      equationParent.x = backgroundNode.centerX;
+      equationParent.centerY = backgroundNode.centerY;
     } );
 
     var contentNode = new Node( {

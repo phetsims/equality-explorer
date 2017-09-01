@@ -18,11 +18,12 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  var DEFAULT_FONT = new PhetFont( 24 );
+  var DEFAULT_TERM_FONT = new PhetFont( 24 );
+  var DEFAULT_RELATIONAL_OPERATOR_FONT = new PhetFont( { size: 50, weight: 'bold' } );
   var DEFAULT_COEFFICIENT_SPACING = 2;  // space between coefficient and icon
   var DEFAULT_PLUS_SPACING = 6;  // space around plus operators
   var DEFAULT_RELATIONAL_SPACING = 30; // space around the relational operator
-  var RELATIONAL_OPERATOR_FONT = new PhetFont( { size: 50, weight: 'bold' } );
+
 
   /**
    * @param {ItemCreator[]} leftItemCreators
@@ -35,19 +36,17 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      termSpacing: DEFAULT_COEFFICIENT_SPACING, // space between coefficient and icon
+      termFont: DEFAULT_TERM_FONT,
+      relationalOperatorFont: DEFAULT_RELATIONAL_OPERATOR_FONT,
+      coefficientSpacing: DEFAULT_COEFFICIENT_SPACING, // space between coefficient and icon
       plusSpacing: DEFAULT_PLUS_SPACING, // space around plus operator
-      relationalSpacing: DEFAULT_RELATIONAL_SPACING, // space around the relational operator
-      font: DEFAULT_FONT
+      relationalOperatorSpacing: DEFAULT_RELATIONAL_SPACING // space around the relational operator
     }, options );
 
-    assert && assert( options.spacing === undefined, 'use relationalSpacing' );
-    options.spacing = options.relationalSpacing;
-    
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ new Text( '' ) ]; // need valid bounds when the supertype constructor is called
 
-    HBox.call( this, options );
+    Node.call( this, options );
 
     // {ItemCreator[]} all ItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
@@ -58,19 +57,30 @@ define( function( require ) {
       lengthProperties.push( itemCreator.itemsOnScale.lengthProperty );
     } );
 
+    var SIDE_OPTIONS = {
+      font: options.termFont,
+      coefficientSpacing: options.coefficientSpacing,
+      plusSpacing: options.plusSpacing
+    };
+
     // update the equation, unmultilink unnecessary
     Property.multilink( lengthProperties, function() {
-      self.children = [
-        
-        // left side
-        createSideNode( leftItemCreators, options ),
-        
-        // relational operator
-        createRelationalOperator( leftItemCreators, rightItemCreators ),
-        
-        // right side
-        createSideNode( rightItemCreators, options )
-      ];
+
+      var relationalOperatorNode = createRelationalOperator( leftItemCreators, rightItemCreators, {
+        font: options.relationalOperatorFont,
+        centerX: 0
+      } );
+
+      var leftSideNode = createSideNode( leftItemCreators, SIDE_OPTIONS );
+      var rightSideNode = createSideNode( rightItemCreators, SIDE_OPTIONS );
+
+      self.children = [ leftSideNode, relationalOperatorNode, rightSideNode ];
+
+      relationalOperatorNode.centerX = 0;
+      leftSideNode.right = relationalOperatorNode.left - options.relationalOperatorSpacing;
+      leftSideNode.centerY = relationalOperatorNode.centerY;
+      rightSideNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
+      rightSideNode.centerY = relationalOperatorNode.centerY;
     } );
   }
 
@@ -85,7 +95,7 @@ define( function( require ) {
   function createSideNode( itemCreators, options ) {
 
     options = _.extend( {
-      font: DEFAULT_FONT,
+      font: DEFAULT_TERM_FONT,
       plusSpacing: DEFAULT_PLUS_SPACING
     }, options );
 
@@ -128,14 +138,14 @@ define( function( require ) {
    * @returns {Node}
    */
   function createTermNode( coefficient, icon, options ) {
-    
+
     options = _.extend( {
-      font: DEFAULT_FONT,
-      termSpacing: DEFAULT_COEFFICIENT_SPACING
+      font: DEFAULT_TERM_FONT,
+      coefficientSpacing: DEFAULT_COEFFICIENT_SPACING
     }, options );
-    
+
     return new HBox( {
-      spacing: options.termSpacing,
+      spacing: options.coefficientSpacing,
       children: [
         new Text( '' + coefficient, { font: options.font } ),
         new Node( { children: [ icon ] } ) // wrap the icon, since we're using scenery DAG feature
@@ -150,11 +160,11 @@ define( function( require ) {
    * @returns {Node}
    */
   function createConstantNode( constant, options ) {
-    
+
     options = _.extend( {
-      font: DEFAULT_FONT
+      font: DEFAULT_TERM_FONT
     }, options );
-    
+
     return new Text( '' + constant, { font: options.font } );
   }
 
@@ -168,7 +178,7 @@ define( function( require ) {
   function createRelationalOperator( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
-      font: RELATIONAL_OPERATOR_FONT
+      font: DEFAULT_RELATIONAL_OPERATOR_FONT
     }, options );
 
     // evaluate the left side
@@ -199,5 +209,5 @@ define( function( require ) {
     return new Text( relationalSymbol, { font: options.font } );
   }
 
-  return inherit( HBox, EquationNode );
+  return inherit( Node, EquationNode );
 } );
