@@ -43,8 +43,6 @@ define( function( require ) {
     assert && assert( options.spacing === undefined, 'use relationalSpacing' );
     options.spacing = options.relationalSpacing;
     
-    options.maxIconHeight = new Text( '0', { font: options.font } ).height;
-
     assert && assert( !options.children, 'decoration not supported' );
     options.children = [ new Text( '' ) ]; // need valid bounds when the supertype constructor is called
 
@@ -132,18 +130,14 @@ define( function( require ) {
     
     options = _.extend( {
       font: DEFAULT_FONT,
-      termSpacing: DEFAULT_COEFFICIENT_SPACING,
-      maxIconHeight: 20
+      termSpacing: DEFAULT_COEFFICIENT_SPACING
     }, options );
     
     return new HBox( {
       spacing: options.termSpacing,
       children: [
         new Text( '' + coefficient, { font: options.font } ),
-        new Node( {
-          children: [ icon ], // wrap the icon since we're using scenery DAG feature
-          maxHeight: options.maxIconHeight
-        } )
+        new Node( { children: [ icon ] } ) // wrap the icon, since we're using scenery DAG feature
       ]
     } );
   }
