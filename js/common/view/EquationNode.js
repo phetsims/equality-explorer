@@ -2,6 +2,7 @@
 
 /**
  * Displays an equation or inequality.
+ * Origin is at the center of the relational operator.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -17,14 +18,6 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  // constants
-  var DEFAULT_TERM_FONT = new PhetFont( 24 );
-  var DEFAULT_RELATIONAL_OPERATOR_FONT = new PhetFont( { size: 50, weight: 'bold' } );
-  var DEFAULT_COEFFICIENT_SPACING = 2;  // space between coefficient and icon
-  var DEFAULT_PLUS_SPACING = 6;  // space around plus operators
-  var DEFAULT_RELATIONAL_SPACING = 30; // space around the relational operator
-
-
   /**
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
@@ -36,17 +29,25 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      termFont: DEFAULT_TERM_FONT,
-      relationalOperatorFont: DEFAULT_RELATIONAL_OPERATOR_FONT,
-      coefficientSpacing: DEFAULT_COEFFICIENT_SPACING, // space between coefficient and icon
-      plusSpacing: DEFAULT_PLUS_SPACING, // space around plus operator
-      relationalOperatorSpacing: DEFAULT_RELATIONAL_SPACING // space around the relational operator
+
+      // fonts
+      relationalOperatorFont: new PhetFont( { size: 50, weight: 'bold' } ), // for relational operator
+      plusFont: new PhetFont( 24 ), // for plus operator
+      numberFont: new PhetFont( 24 ), // for coefficients and constants
+
+      // horizontal spacing
+      relationalOperatorSpacing: 25, // space around the relational operator
+      plusSpacing: 8, // space around plus operator
+      coefficientSpacing: 2 // space between coefficient and icon
+
     }, options );
 
-    assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ new Text( '' ) ]; // need valid bounds when the supertype constructor is called
+    Node.call( this );
 
-    Node.call( this, options );
+    // Correct initial operator will be set in multilink below
+    var relationalOperatorNode = new Text( '=', {
+      font: options.relationalOperatorFont
+    } );
 
     // {ItemCreator[]} all ItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
@@ -57,129 +58,40 @@ define( function( require ) {
       lengthProperties.push( itemCreator.itemsOnScale.lengthProperty );
     } );
 
-    var SIDE_OPTIONS = {
-      font: options.termFont,
-      coefficientSpacing: options.coefficientSpacing,
-      plusSpacing: options.plusSpacing
-    };
-
     // update the equation, unmultilink unnecessary
     Property.multilink( lengthProperties, function() {
 
-      var relationalOperatorNode = createRelationalOperator( leftItemCreators, rightItemCreators, {
-        font: options.relationalOperatorFont,
-        centerX: 0
-      } );
+      relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
 
-      var leftSideNode = createSideNode( leftItemCreators, SIDE_OPTIONS );
-      var rightSideNode = createSideNode( rightItemCreators, SIDE_OPTIONS );
+      var leftSideNode = createSideNode( leftItemCreators,
+        options.plusFont, options.numberFont, options.plusSpacing, options.coefficientSpacing );
+
+      var rightSideNode = createSideNode( rightItemCreators,
+        options.plusFont, options.numberFont, options.plusSpacing, options.coefficientSpacing );
 
       self.children = [ leftSideNode, relationalOperatorNode, rightSideNode ];
 
+      // Layout, with origin at center of relational operator
       relationalOperatorNode.centerX = 0;
+      relationalOperatorNode.centerY = 0;
       leftSideNode.right = relationalOperatorNode.left - options.relationalOperatorSpacing;
       leftSideNode.centerY = relationalOperatorNode.centerY;
       rightSideNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
       rightSideNode.centerY = relationalOperatorNode.centerY;
     } );
+
+    this.mutate( options );
   }
 
   equalityExplorer.register( 'EquationNode', EquationNode );
 
   /**
-   * Creates one side of the equation
-   * @param {ItemCreator[]} itemCreators
-   * @param {Object} [options]
-   * @returns {Node}
-   */
-  function createSideNode( itemCreators, options ) {
-
-    options = _.extend( {
-      font: DEFAULT_TERM_FONT,
-      plusSpacing: DEFAULT_PLUS_SPACING
-    }, options );
-
-    var children = [];
-    for ( var i = 0; i < itemCreators.length; i++ ) {
-
-      var itemCreator = itemCreators[ i ];
-
-      var numberOfItemsOnScale = itemCreator.itemsOnScale.length;
-      if ( numberOfItemsOnScale > 0 ) {
-
-        if ( children.length > 0 ) {
-          children.push( new Text( '+', { font: options.font } ) );
-        }
-
-        if ( itemCreator.constantTerm ) {
-          children.push( createConstantNode( numberOfItemsOnScale * itemCreator.weightProperty.value, options ) );
-        }
-        else {
-          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, options ) );
-        }
-      }
-    }
-
-    if ( children.length === 0 ) {
-      children.push( new Text( '0', { font: options.font } ) );
-    }
-
-    return new HBox( {
-      spacing: options.plusSpacing,
-      children: children
-    } );
-  }
-
-  /**
-   * Creates a term in the equation
-   * @param {number} coefficient
-   * @param {Node} icon
-   * @param {Object} [options]
-   * @returns {Node}
-   */
-  function createTermNode( coefficient, icon, options ) {
-
-    options = _.extend( {
-      font: DEFAULT_TERM_FONT,
-      coefficientSpacing: DEFAULT_COEFFICIENT_SPACING
-    }, options );
-
-    return new HBox( {
-      spacing: options.coefficientSpacing,
-      children: [
-        new Text( '' + coefficient, { font: options.font } ),
-        new Node( { children: [ icon ] } ) // wrap the icon, since we're using scenery DAG feature
-      ]
-    } );
-  }
-
-  /**
-   * Creates a constant term.
-   * @param {number} constant
-   * @param {Object} [options]
-   * @returns {Node}
-   */
-  function createConstantNode( constant, options ) {
-
-    options = _.extend( {
-      font: DEFAULT_TERM_FONT
-    }, options );
-
-    return new Text( '' + constant, { font: options.font } );
-  }
-
-  /**
-   * Creates the operator that describes the relationship between the left and right sides.
+   * Gets the operator that describes the relationship between the left and right sides.
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
-   * @param {Object} [options]
-   * @returns {Node}
+   * @returns {string}
    */
-  function createRelationalOperator( leftItemCreators, rightItemCreators, options ) {
-
-    options = _.extend( {
-      font: DEFAULT_RELATIONAL_OPERATOR_FONT
-    }, options );
+  function getRelationalOperator( leftItemCreators, rightItemCreators ) {
 
     // evaluate the left side
     var leftWeight = 0;
@@ -204,9 +116,78 @@ define( function( require ) {
     else {
       relationalSymbol = '=';
     }
-    assert && assert( relationalSymbol );
 
-    return new Text( relationalSymbol, { font: options.font } );
+    return relationalSymbol;
+  }
+
+  /**
+   * Creates one side of the equation
+   * @param {ItemCreator[]} itemCreators
+   * @param {Font} plusFont - font for plus operators
+   * @param {Font} numberFont - font for coefficients and constants
+   * @param {number} plusSpacing - space around plus operators
+   * @param {number} coefficientSpacing - space between coefficients and icons
+   * @returns {Node}
+   */
+  function createSideNode( itemCreators, plusFont, numberFont, plusSpacing, coefficientSpacing ) {
+
+    var children = [];
+    for ( var i = 0; i < itemCreators.length; i++ ) {
+
+      var itemCreator = itemCreators[ i ];
+
+      var numberOfItemsOnScale = itemCreator.itemsOnScale.length;
+      if ( numberOfItemsOnScale > 0 ) {
+
+        if ( children.length > 0 ) {
+          children.push( new Text( '+', { font: plusFont } ) );
+        }
+
+        if ( itemCreator.constantTerm ) {
+          children.push( createConstantNode( numberOfItemsOnScale * itemCreator.weightProperty.value, numberFont ) );
+        }
+        else {
+          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, numberFont, coefficientSpacing ) );
+        }
+      }
+    }
+
+    if ( children.length === 0 ) {
+      children.push( new Text( '0', { font: numberFont } ) );
+    }
+
+    return new HBox( {
+      spacing: plusSpacing,
+      children: children
+    } );
+  }
+
+  /**
+   * Creates a term.
+   * @param {number} coefficient
+   * @param {Node} icon
+   * @param {Font} font - font for coefficient or constant
+   * @param {spacing} coefficientSpacing - horizontal space between coefficient and icon
+   * @returns {Node}
+   */
+  function createTermNode( coefficient, icon, font, coefficientSpacing ) {
+    return new HBox( {
+      spacing: coefficientSpacing,
+      children: [
+        createConstantNode( coefficient, font ),
+        new Node( { children: [ icon ] } ) // wrap the icon, since we're using scenery DAG feature
+      ]
+    } );
+  }
+
+  /**
+   * Creates a constant.
+   * @param {number} constant
+   * @param {Font} font
+   * @returns {Node}
+   */
+  function createConstantNode( constant, font ) {
+    return new Text( '' + constant, { font: font } );
   }
 
   return inherit( Node, EquationNode );
