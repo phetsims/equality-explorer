@@ -9,7 +9,6 @@ Does relational operator in equation need to be horizontally aligned with center
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-make items fall down when a lower cell becomes empty
 get rid of WeighingPlatform.items, use ItemCreator.itemsOnScale
 better implementation of grid cells
 snapshots
