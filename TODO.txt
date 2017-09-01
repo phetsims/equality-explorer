@@ -11,6 +11,7 @@ IMPLEMENTATION
 
 make items fall down when a lower cell becomes empty
 get rid of WeighingPlatform.items, use ItemCreator.itemsOnScale
+better implementation of grid cells
 snapshots
 implement "organize" feature
 disable "organize" button when scale is organized

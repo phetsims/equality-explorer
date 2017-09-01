@@ -122,10 +122,33 @@ define( function( require ) {
             this.items.remove( item );
             item.disposedEmitter.removeListener( this.removeItemBound );
             removed = true;
+            this.shiftDown( { row: row, column: column } );
           }
         }
       }
       assert && assert( removed, 'Item is not in grid: ' + item.toString() );
+    },
+
+    /**
+     * Shifts all Items in a column down 1 cell, to fill empty cell caused by removing an Item.
+     * @param {row:number, column: number} cell - the cell that was occupied by the removed Item
+     */
+    shiftDown: function( cell ) {
+      for ( var row = cell.row - 1; row >= 0; row-- ) {
+        if ( !this.isEmptyCell( { row: row, column: cell.column } ) ) {
+
+          // remove Item from it's current cell
+          var item = this.cells[ row ][ cell.column ];
+          this.cells[ row ][ cell.column ] = null;
+
+          // move Item down 1 row
+          var newCell = { row: row + 1, column: cell.column };
+          assert && assert( this.isEmptyCell( newCell ),
+            'cell is not empty: row=' + newCell.row + ', column: ' + newCell.column );
+          this.cells[ newCell.row ][ newCell.column ] = item;
+          item.moveTo( this.getCellLocation( newCell ) );
+        }
+      }
     },
 
     /**
