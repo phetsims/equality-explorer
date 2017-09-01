@@ -30,7 +30,7 @@ define( function( require ) {
   function EquationAccordionBox( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
-      maxWidth: 460,
+      maxWidth: 550,
       maxHeight: 60,
       fill: 'white',
       showTitleWhenExpanded: false,
@@ -56,8 +56,8 @@ define( function( require ) {
     var backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     var equationNode = new EquationNode( leftItemCreators, rightItemCreators, {
-      maxWidth: contentWidth,
-      maxHeight: contentHeight
+      // maxWidth: contentWidth,
+      // maxHeight: contentHeight
     } );
 
     // wrapper to avoid exceeding stack size when bounds of equationNode changes
