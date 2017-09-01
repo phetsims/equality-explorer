@@ -4,7 +4,6 @@ TODO items for equality-explorer
 DESIGN
 
 Reconsider "white rectangle" feature?
-Does relational operator in equation need to be horizontally aligned with center of scale?
 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
