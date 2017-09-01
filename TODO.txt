@@ -10,7 +10,7 @@ How to emphasize the relational operator in the equation?
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-separate debug grid from "white rectangle"
+with ?showGrid&showOrigin, the entire scale gets moved up a bit, so items sit below cells
 get rid of WeighingPlatform.items, use ItemCreator.itemsOnScale
 keep relational operator centered in equations accordion box
 snapshots

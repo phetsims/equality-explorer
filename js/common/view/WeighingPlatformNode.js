@@ -98,19 +98,21 @@ define( function( require ) {
       top: platformNode.centerY
     } );
 
-    // Grid where items appear
-    var itemGridNode = new ItemGridNode( {
-      rows: weighingPlatform.gridSize.height,
-      columns: weighingPlatform.gridSize.width,
-      cellSize: weighingPlatform.cellSize,
-      centerX: 0,
-      bottom: options.pivotRadius / 2
-    } );
-
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ supportNode, platformNode, itemGridNode ];
+    options.children = [ supportNode, platformNode ];
 
-    // draw a red dot at the origin
+    // Grid where Items appear
+    if ( EqualityExplorerQueryParameters.showGrid ) {
+      options.children.push( new ItemGridNode( {
+        rows: weighingPlatform.gridSize.height,
+        columns: weighingPlatform.gridSize.width,
+        cellSize: weighingPlatform.cellSize,
+        centerX: 0,
+        bottom: 0
+      } ) );
+    }
+
+    // Red dot at the origin
     if ( EqualityExplorerQueryParameters.showOrigin ) {
       options.children.push( new Circle( 4, { fill: 'red' } ) );
     }
