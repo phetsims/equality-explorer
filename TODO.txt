@@ -13,7 +13,5 @@ better implementation of grid cells
 add query parameters to populate the scale with items
 snapshots
 implement "organize" feature
-disable "organize" button when scale is organized
-
 
 
