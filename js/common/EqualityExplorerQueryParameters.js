@@ -19,7 +19,7 @@ define( function( require ) {
 
     // Makes all animation run slowly, so that things are easier to grab while they're animating.
     // Useful for testing multi-touch.
-    slow: { type: 'flag' },
+    slowMotion: { type: 'flag' },
 
     // Shows the origin of various objects, typically rendered as a red dot.
     showOrigin: { type: 'flag' },
