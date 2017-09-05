@@ -112,6 +112,7 @@ define( function( require ) {
     /**
      * Returns an Item to the panel where it was created.
      * @param {Item} item
+     * @private
      */
     animateToPanel: function( item ) {
       item.animateTo( item.locationProperty.initialValue, {
@@ -125,6 +126,7 @@ define( function( require ) {
      * Animates an Item to an empty cell on the weighing platform.
      * @param {Item} item
      * @param {WeighingPlatform} weighingPlatform
+     * @private
      */
     animateToClosestCell: function( item, weighingPlatform ) {
 
