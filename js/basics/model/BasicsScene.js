@@ -83,7 +83,7 @@ define( function( require ) {
     // Get the length Property for each ItemCreator's Item array
     var lengthProperties = [];
     itemCreators.forEach( function( itemCreator ) {
-      lengthProperties.push( itemCreator.items.lengthProperty );
+      lengthProperties.push( itemCreator.allItems.lengthProperty );
     } );
 
     // Disable all ItemCreators if the maximum is reached, unmultilink unnecessary

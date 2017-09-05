@@ -44,9 +44,9 @@ define( function( require ) {
     this.weightProperty = new Property( weight );
 
     // @public (read-only) {ObservableArray.<Item>} all Items that currently exist
-    this.items = new ObservableArray();
+    this.allItems = new ObservableArray();
 
-    // @public (read-only) {ObservableArray.<Item>} Items that are on the scale, a subset of this.items
+    // @public (read-only) {ObservableArray.<Item>} Items that are on the scale, a subset of allItems
     this.itemsOnScale = new ObservableArray();
 
     // @public {Property.<boolean>} is this ItemCreator enabled?
@@ -54,11 +54,11 @@ define( function( require ) {
 
     // @private {function( Item )} called when Item.dispose is called
     this.itemWasDisposedBound = function( item ) {
-      assert && assert( self.items.contains( item ), 'item not found: ' + item.toString() );
+      assert && assert( self.allItems.contains( item ), 'item not found: ' + item.toString() );
       if ( self.itemsOnScale.contains( item ) ) {
         self.itemsOnScale.remove( item );
       }
-      self.items.remove( item );
+      self.allItems.remove( item );
     };
   }
 
@@ -78,7 +78,7 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
-      this.items.forEach( function( item ) {
+      this.allItems.forEach( function( item ) {
          item.step( dt );
       } );
     },
@@ -97,7 +97,7 @@ define( function( require ) {
       }, options );
 
       var item = new Item( this.name, this.weightProperty, this.icon, options );
-      this.items.add( item );
+      this.allItems.add( item );
 
       // clean up when the item is disposed
       item.disposedEmitter.addListener( this.itemWasDisposedBound );
@@ -111,7 +111,7 @@ define( function( require ) {
      * @public
      */
     addItemToScale: function( item ) {
-      assert && assert( this.items.contains( item ), 'item not found: ' + item.toString() );
+      assert && assert( this.allItems.contains( item ), 'item not found: ' + item.toString() );
       assert && assert( !this.itemsOnScale.contains( item ), 'item already on scale: ' + item.toString() );
       this.itemsOnScale.push( item );
     },
@@ -122,7 +122,7 @@ define( function( require ) {
      * @public
      */
     removeItemFromScale: function( item ) {
-      assert && assert( this.items.contains( item ), 'item not found: ' + item.toString() );
+      assert && assert( this.allItems.contains( item ), 'item not found: ' + item.toString() );
       assert && assert( this.itemsOnScale.contains( item ), 'item not on scale: ' + item.toString() );
       this.itemsOnScale.remove( item );
     },
@@ -133,8 +133,8 @@ define( function( require ) {
      */
     disposeAllItems: function() {
       this.itemsOnScale.clear();
-      while ( this.items.length > 0 ) {
-        var item = this.items.get( 0 );
+      while ( this.allItems.length > 0 ) {
+        var item = this.allItems.get( 0 );
         item.dispose();
       }
     }
