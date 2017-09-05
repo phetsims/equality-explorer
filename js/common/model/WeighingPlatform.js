@@ -41,7 +41,8 @@ define( function( require ) {
     this.gridSize = options.gridSize;
     this.cellSize = options.cellSize;
 
-    // @private {Item[][]} null indicates an empty cell
+    // @private {Item[][]} the 2D grid of cells.
+    // Initialized to empty, where null indicates an empty cell.
     // Indexed from upper-left of the grid, in row-major order.
     this.cells = [];
     for ( var row = 0; row < this.gridSize.height; row++ ) {
@@ -79,12 +80,23 @@ define( function( require ) {
 
   equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );
 
+  /**
+   * Converts row and column indices to a cell data structure.
+   * @param {number} row
+   * @param {number} column
+   * @returns {{row:number, column:number}}
+   * @private
+   */
+  function toCell( row, column ) {
+    return { row: row, column: column };
+  }
 
   return inherit( Object, WeighingPlatform, {
 
     /**
      * Gets the number of cells in the grid. This is the capacity of the platform.
      * @returns {number}
+     * @public
      */
     get numberOfCells() {
       return this.gridSize.width * this.gridSize.height;
@@ -100,7 +112,7 @@ define( function( require ) {
     },
 
     /**
-     * Adds an Item to a specific cell in the grid.
+     * Adds an Item to the platform, in a specific cell in the grid.
      * @param {Item} item
      * @param {row:number, column:number} cell
      * @public
@@ -114,7 +126,7 @@ define( function( require ) {
     },
 
     /**
-     * Removes an Item from the platform.
+     * Removes an Item from the platform. Items above the removed item move down.
      * @param {Item} item
      * @public
      */
@@ -122,7 +134,7 @@ define( function( require ) {
       var cell = this.getCellForItem( item );
       assert && assert( cell, 'item not found: ' + item.toString() );
       item.disposedEmitter.removeListener( this.removeItemBound );
-      this.putItemInCell( null, cell );
+      this.clearCell( cell );
       this.shiftDown( cell );
     },
 
@@ -133,16 +145,16 @@ define( function( require ) {
     shiftDown: function( cell ) {
       for ( var row = cell.row - 1; row >= 0; row-- ) {
 
-        var currentCell = this.toCell( row, cell.column );
+        var currentCell = toCell( row, cell.column );
 
         if ( !this.isEmptyCell( currentCell ) ) {
 
           // remove Item from it's current cell
           var item = this.getItemInCell( currentCell );
-          this.putItemInCell( null, currentCell );
+          this.clearCell( currentCell );
 
           // move Item down 1 row
-          var newCell = this.toCell( row + 1, cell.column );
+          var newCell = toCell( row + 1, cell.column );
           assert && assert( this.isEmptyCell( newCell ), 'cell is not empty: ' + this.cellToString( newCell ) );
           this.putItemInCell( item, newCell );
           item.moveTo( this.getCellLocation( newCell ) );
@@ -170,7 +182,7 @@ define( function( require ) {
       for ( var row = 0; row < this.gridSize.height && !cell; row++ ) {
         var column = this.cells[ row ].indexOf( item );
         if ( column !== -1 ) {
-          cell = this.toCell( row, column );
+          cell = toCell( row, column );
         }
       }
       return cell;
@@ -221,7 +233,7 @@ define( function( require ) {
       // Now look below the closest cell to see if there are any empty cells in the same row.
       // This accounts for gravity, so Items fall to the cell that is closest to the bottom of the grid.
       for ( row = this.gridSize.height - 1; row > closestCell.row; row-- ) {
-        currentCell = this.toCell( row, closestCell.column );
+        currentCell = toCell( row, closestCell.column );
         if ( this.isEmptyCell( currentCell ) ) {
           closestCell = currentCell;
           break;
@@ -268,7 +280,7 @@ define( function( require ) {
       var emptyCell = null;
       for ( var row = this.gridSize.height - 1; row >= 0; row-- ) {
         for ( var column = 0; column < this.gridSize.width && !emptyCell; column++ ) {
-          var cell = this.toCell( row, column );
+          var cell = toCell( row, column );
           if ( this.isEmptyCell( cell ) ) {
             emptyCell = cell;
           }
@@ -292,16 +304,6 @@ define( function( require ) {
     },
 
     /**
-     * String representation of the data structure used to represent a cell.
-     * @param {row:number, column:number} cell
-     * @returns {string}
-     */
-    cellToString: function( cell ) {
-      assert && this.assertValidCell( cell );
-      return StringUtils.fillIn( '[{{row}},{{column}}]', cell );
-    },
-
-    /**
      * Gets the Item in a cell.
      * @param {row:number, column:number} cell
      * @returns {Item|null} null if the cell is empty
@@ -313,25 +315,24 @@ define( function( require ) {
     },
 
     /**
-     * Puts an Item in a cell.
+     * Puts an Item in a cell. The cell must be empty.
      * @param {Item|null} item
      * @param {row:number, column:number} cell
      * @private
      */
     putItemInCell: function( item, cell ) {
       assert && assert( item === null || item instanceof Item );
+      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + this.cellToString( cell ) );
       this.cells[ cell.row ][ cell.column ] = item;
     },
 
     /**
-     * Converts row and column to a cell data structure.
-     * @param {number} row
-     * @param {number} column
-     * @returns {{row:number, column:number}}
-     * @private
+     * Clears a cell, making it empty. If the cell is already empty, this is a no-op.
+     * @param {row:number, column:number} cell
      */
-    toCell: function( row, column ) {
-      return { row: row, column: column };
+    clearCell: function( cell ) {
+      assert && this.assertValidCell( cell );
+      this.cells[ cell.row ][ cell.column ] = null;
     },
 
     /**
@@ -341,11 +342,21 @@ define( function( require ) {
     updateItemLocations: function() {
       for ( var row = 0; row < this.gridSize.height; row++ ) {
         for ( var column = 0; column < this.gridSize.width; column++ ) {
-          var cell = this.toCell( row, column );
+          var cell = toCell( row, column );
           var item = this.getItemInCell( cell );
           item && item.moveTo( this.getCellLocation( cell ) );
         }
       }
+    },
+
+    /**
+     * String representation of the data structure used to represent a cell.
+     * @param {row:number, column:number} cell
+     * @returns {string}
+     */
+    cellToString: function( cell ) {
+      assert && this.assertValidCell( cell );
+      return StringUtils.fillIn( '[{{row}},{{column}}]', cell );
     }
   } );
 } );
