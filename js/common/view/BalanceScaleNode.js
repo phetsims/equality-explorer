@@ -158,7 +158,7 @@ define( function( require ) {
         organizeButton.enabled = enabled;
       } );
 
-    //TODO disable OrganizeButton when scale is organized
+    //TODO #7 disable OrganizeButton when scale is organized
 
     // buttons on the front face of the base
     var buttonsParent = new HBox( {
