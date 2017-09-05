@@ -81,7 +81,8 @@ define( function( require ) {
   equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );
 
   /**
-   * Converts row and column indices to a cell data structure.
+   * Converts row and column indices to a cell data structure. While clients have references to cells,
+   * the specifics of the data structure is private to WeighingPlatform.
    * @param {number} row
    * @param {number} column
    * @returns {{row:number, column:number}}
