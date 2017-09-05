@@ -13,9 +13,9 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Multilink = require( 'AXON/Multilink' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
@@ -61,8 +61,8 @@ define( function( require ) {
       lengthProperties.push( itemCreator.itemsOnScale.lengthProperty );
     } );
 
-    // update the equation, unmultilink unnecessary
-    Property.multilink( lengthProperties, function() {
+    // update the equation, unlink in dispose
+    var lengthMultilink = new Multilink( lengthProperties, function() {
 
       relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
 
@@ -82,6 +82,11 @@ define( function( require ) {
       rightSideNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
       rightSideNode.centerY = relationalOperatorNode.centerY;
     } );
+
+    // @private
+    this.disposeEquationNode = function() {
+      lengthMultilink.dispose();
+    };
 
     this.mutate( options );
   }
@@ -201,5 +206,12 @@ define( function( require ) {
     return new Text( '' + constant, { font: font } );
   }
 
-  return inherit( Node, EquationNode );
+  return inherit( Node, EquationNode, {
+
+    // @public @override
+    dispose: function() {
+      this.disposeEquationNode();
+      Node.prototype.dispose.call( this );
+    }
+  } );
 } );
