@@ -151,9 +151,9 @@ define( function( require ) {
     } );
 
     // disable ClearScaleButton and OrganizeButton when scale is empty
-    Property.multilink( [ scale.leftPlatform.itemsOnPlatform.lengthProperty, scale.rightPlatform.itemsOnPlatform.lengthProperty ],
-      function( leftLength, rightLength ) {
-        var enabled = ( ( leftLength + rightLength ) > 0 );
+    Property.multilink( [ scale.leftPlatform.weightProperty, scale.rightPlatform.weightProperty ],
+      function( leftWeight, rightWeight ) {
+        var enabled = ( ( leftWeight + rightWeight ) > 0 );
         clearScaleButton.enabled = enabled;
         organizeButton.enabled = enabled;
       } );

@@ -50,7 +50,7 @@ define( function( require ) {
       this.cells.push( rowOfCells );
     }
 
-    // @public (read-only) {ObservableArray.<Item>} Items that are on the platform
+    // @private {ObservableArray.<Item>} Items that are on the platform
     this.itemsOnPlatform = new ObservableArray();
 
     // @public the total weight of the Items that are on the platform
