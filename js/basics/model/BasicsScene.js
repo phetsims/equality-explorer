@@ -80,17 +80,17 @@ define( function( require ) {
    */
   function enableItemCreators( itemCreators, maxItems ) {
 
-    // Get the length Property for each ItemCreator's Item array
-    var lengthProperties = [];
+    // Get Properties needed to total up all Items
+    var numberOfItemsProperties = [];
     itemCreators.forEach( function( itemCreator ) {
-      lengthProperties.push( itemCreator.allItems.lengthProperty );
+      numberOfItemsProperties.push( itemCreator.numberOfItemsProperty );
     } );
 
-    // Disable all ItemCreators if the maximum is reached, unmultilink unnecessary
-    Property.multilink( lengthProperties, function() {
+    // Disable all ItemCreators if the maximum number of Items is reached, unmultilink unnecessary
+    Property.multilink( numberOfItemsProperties, function() {
       var totalItems = 0;
-      for ( var i = 0; i < lengthProperties.length; i++ ) {
-        totalItems += lengthProperties[ i ].value;
+      for ( var i = 0; i < numberOfItemsProperties.length; i++ ) {
+        totalItems += numberOfItemsProperties[ i ].value;
       }
       for ( i = 0; i < itemCreators.length; i++ ) {
         itemCreators[ i ].enabledProperty.value = ( totalItems < maxItems );

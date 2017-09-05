@@ -58,14 +58,14 @@ define( function( require ) {
     var dependencies = [];
     itemCreators.forEach( function( itemCreator ) {
       dependencies.push( itemCreator.weightProperty );
-      dependencies.push( itemCreator.itemsOnScale.lengthProperty );
+      dependencies.push( itemCreator.numberOfItemsOnScaleProperty );
     } );
 
     // @public the total weight of the Items that are on the platform
     this.weightProperty = new DerivedProperty( dependencies, function() {
       var weight = 0;
       itemCreators.forEach( function( itemCreator ) {
-        weight += ( itemCreator.itemsOnScale.lengthProperty.value * itemCreator.weightProperty.value );
+        weight += ( itemCreator.numberOfItemsOnScaleProperty.value * itemCreator.weightProperty.value );
       } );
       return weight;
     } );

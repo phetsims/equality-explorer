@@ -59,7 +59,7 @@ define( function( require ) {
     var dependencies = [];
     itemCreators.forEach( function( itemCreator ) {
       dependencies.push( itemCreator.weightProperty );
-      dependencies.push( itemCreator.itemsOnScale.lengthProperty );
+      dependencies.push( itemCreator.numberOfItemsOnScaleProperty );
     } );
 
     // update the equation, unlink in dispose
@@ -105,13 +105,13 @@ define( function( require ) {
     // evaluate the left side
     var leftWeight = 0;
     for ( var i = 0; i < leftItemCreators.length; i++ ) {
-      leftWeight += leftItemCreators[ i ].itemsOnScale.length * leftItemCreators[ i ].weightProperty.value;
+      leftWeight += leftItemCreators[ i ].numberOfItemsOnScaleProperty.value * leftItemCreators[ i ].weightProperty.value;
     }
 
     // evaluate the right side
     var rightWeight = 0;
     for ( i = 0; i < rightItemCreators.length; i++ ) {
-      rightWeight += rightItemCreators[ i ].itemsOnScale.length * rightItemCreators[ i ].weightProperty.value;
+      rightWeight += rightItemCreators[ i ].numberOfItemsOnScaleProperty.value * rightItemCreators[ i ].weightProperty.value;
     }
 
     // determine the operator that describes the relationship between left and right sides
@@ -146,7 +146,7 @@ define( function( require ) {
 
       var itemCreator = itemCreators[ i ];
 
-      var numberOfItemsOnScale = itemCreator.itemsOnScale.length;
+      var numberOfItemsOnScale = itemCreator.numberOfItemsOnScaleProperty.value;
       if ( numberOfItemsOnScale > 0 ) {
 
         if ( children.length > 0 ) {

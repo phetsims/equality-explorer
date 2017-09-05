@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
@@ -24,8 +25,6 @@ define( function( require ) {
    * @constructor
    */
   function ItemCreator( name, weight, icon, options ) {
-
-    var self = this;
 
     options = _.extend( {
       constantTerm: false, // {boolean} do Items evaluate to a constant?
@@ -43,23 +42,31 @@ define( function( require ) {
     // @public {Property.<number>} weight of each Item. All Items have the same weight.
     this.weightProperty = new Property( weight );
 
-    // @public (read-only) {ObservableArray.<Item>} all Items that currently exist
+    // @private {ObservableArray.<Item>} all Items that currently exist
     this.allItems = new ObservableArray();
 
-    // @public (read-only) {ObservableArray.<Item>} Items that are on the scale, a subset of allItems
+    // @private {ObservableArray.<Item>} Items that are on the scale, a subset of allItems
     this.itemsOnScale = new ObservableArray();
+
+    // @public (read-only) {DerivedProperty.<number>} total number of Items
+    // This is an adapter, so that we can fully encapsulate allItems.
+    this.numberOfItemsProperty = new DerivedProperty( [ this.allItems.lengthProperty ],
+      function( length ) {
+        return length;
+      } );
+
+    // @public (read-only) {DerivedProperty.<number>} number of Items on the scale
+    // This is an adapter, so that we can fully encapsulate itemsOnScale.
+    this.numberOfItemsOnScaleProperty = new DerivedProperty( [ this.itemsOnScale.lengthProperty ],
+      function( length ) {
+        return length;
+      } );
 
     // @public {Property.<boolean>} is this ItemCreator enabled?
     this.enabledProperty = new Property( true );
 
-    // @private {function( Item )} called when Item.dispose is called
-    this.itemWasDisposedBound = function( item ) {
-      assert && assert( self.allItems.contains( item ), 'item not found: ' + item.toString() );
-      if ( self.itemsOnScale.contains( item ) ) {
-        self.itemsOnScale.remove( item );
-      }
-      self.allItems.remove( item );
-    };
+    // @private called when Item.dispose is called
+    this.itemWasDisposedBound = this.itemWasDisposed.bind( this );
   }
 
   equalityExplorer.register( 'ItemCreator', ItemCreator );
@@ -133,8 +140,7 @@ define( function( require ) {
      */
     disposeAllItems: function() {
       while ( this.allItems.length > 0 ) {
-        var item = this.allItems.get( 0 );
-        item.dispose();
+        this.allItems.get( 0 ).dispose(); // results in call to itemWasDisposed
       }
     },
 
@@ -144,9 +150,21 @@ define( function( require ) {
      */
     disposeItemsOnScale: function() {
       while ( this.itemsOnScale.length > 0 ) {
-        var item = this.allItems.get( 0 );
-        item.dispose();
+        this.itemsOnScale.get( 0 ).dispose(); // results in call to itemWasDisposed
       }
+    },
+
+    /**
+     * Called when Item.dispose is called.
+     * @param {Item} item
+     * @private
+     */
+    itemWasDisposed: function( item ) {
+      assert && assert( this.allItems.contains( item ), 'item not found: ' + item.toString() );
+      if ( this.itemsOnScale.contains( item ) ) {
+        this.itemsOnScale.remove( item );
+      }
+      this.allItems.remove( item );
     }
   } );
 } );
