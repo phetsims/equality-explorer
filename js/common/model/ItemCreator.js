@@ -162,7 +162,7 @@ define( function( require ) {
     itemWasDisposed: function( item ) {
       assert && assert( this.allItems.contains( item ), 'item not found: ' + item.toString() );
       if ( this.itemsOnScale.contains( item ) ) {
-        this.itemsOnScale.remove( item );
+        this.removeItemFromScale( item );
       }
       this.allItems.remove( item );
     }
