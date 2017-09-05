@@ -51,12 +51,12 @@ define( function( require ) {
     }
 
     // @public (read-only) {ObservableArray.<Item>} Items that are on the platform
-    this.items = new ObservableArray();
+    this.itemsOnPlatform = new ObservableArray();
 
     // @public the total weight of the Items that are on the platform
-    this.weightProperty = new DerivedProperty( [ this.items.lengthProperty ], function( length ) {
+    this.weightProperty = new DerivedProperty( [ this.itemsOnPlatform.lengthProperty ], function( length ) {
       var weight = 0;
-      self.items.forEach( function( item ) {
+      self.itemsOnPlatform.forEach( function( item ) {
         weight += item.weightProperty.value;
       } );
       return weight;
@@ -104,7 +104,7 @@ define( function( require ) {
       assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + this.cellToString( cell ) );
       assert && assert( !this.containsItem( item ), 'Item is already in grid: ' + item.toString() );
       this.cells[ cell.row ][ cell.column ] = item;
-      this.items.push( item );
+      this.itemsOnPlatform.push( item );
       item.disposedEmitter.addListener( this.removeItemBound );
     },
 
@@ -119,7 +119,7 @@ define( function( require ) {
         for ( var column = 0; column < this.gridSize.width && !removed; column++ ) {
           if ( this.cells[ row ][ column ] === item ) {
             this.cells[ row ][ column ] = null;
-            this.items.remove( item );
+            this.itemsOnPlatform.remove( item );
             item.disposedEmitter.removeListener( this.removeItemBound );
             removed = true;
             this.shiftDown( { row: row, column: column } );
@@ -156,8 +156,8 @@ define( function( require ) {
      * @public
      */
     disposeAllItems: function() {
-      while ( this.items.length > 0 ) {
-        var item = this.items.get( 0 );
+      while ( this.itemsOnPlatform.length > 0 ) {
+        var item = this.itemsOnPlatform.get( 0 );
         item.dispose();
       }
     },
@@ -179,7 +179,7 @@ define( function( require ) {
      * @public
      */
     containsItem: function( item ) {
-      return this.items.contains( item );
+      return this.itemsOnPlatform.contains( item );
     },
 
     /**
