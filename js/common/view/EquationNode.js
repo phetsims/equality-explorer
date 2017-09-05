@@ -55,7 +55,7 @@ define( function( require ) {
     // {ItemCreator[]} all ItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
-    // {Property.<number>[]} dependencies that require the equation to be updated
+    // {Property} dependencies that require the equation to be updated
     var dependencies = [];
     itemCreators.forEach( function( itemCreator ) {
       dependencies.push( itemCreator.weightProperty );
