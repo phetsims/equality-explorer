@@ -132,8 +132,18 @@ define( function( require ) {
      * @private
      */
     disposeAllItems: function() {
-      this.itemsOnScale.clear();
       while ( this.allItems.length > 0 ) {
+        var item = this.allItems.get( 0 );
+        item.dispose();
+      }
+    },
+
+    /**
+     * Disposes of all Items that are on the scale.
+     * @public
+     */
+    disposeItemsOnScale: function() {
+      while ( this.itemsOnScale.length > 0 ) {
         var item = this.allItems.get( 0 );
         item.dispose();
       }

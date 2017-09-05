@@ -13,7 +13,6 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -51,9 +50,9 @@ define( function( require ) {
       this.cells.push( rowOfCells );
     }
 
-    // @private {ObservableArray.<Item>} Items that are on the platform.
+    // @private Items that are on the platform.
     // This is kept for convenience, so we don't have to iterate over itemCreators.
-    this.itemsOnPlatform = new ObservableArray();
+    this.itemsOnPlatform = [];
 
     // {Property} dependencies that require weight to be updated
     var dependencies = [];
@@ -123,12 +122,13 @@ define( function( require ) {
      * @public
      */
     removeItem: function( item ) {
+      assert && assert( this.containsItem( item ), 'item not found: ' + item.toString() );
+      this.itemsOnPlatform.splice( this.itemsOnPlatform.indexOf( item ), 1 );
       var removed = false;
       for ( var row = 0; row < this.gridSize.height && !removed; row++ ) {
         for ( var column = 0; column < this.gridSize.width && !removed; column++ ) {
           if ( this.cells[ row ][ column ] === item ) {
             this.cells[ row ][ column ] = null;
-            this.itemsOnPlatform.remove( item );
             item.disposedEmitter.removeListener( this.removeItemBound );
             removed = true;
             this.shiftDown( { row: row, column: column } );
@@ -161,17 +161,6 @@ define( function( require ) {
     },
 
     /**
-     * Disposes of all Items that are on the platform.
-     * @public
-     */
-    disposeAllItems: function() {
-      while ( this.itemsOnPlatform.length > 0 ) {
-        var item = this.itemsOnPlatform.get( 0 );
-        item.dispose();
-      }
-    },
-
-    /**
      * Is the specific cell empty?
      * @param {row:number, column:number} cell
      * @returns {boolean}
@@ -188,7 +177,7 @@ define( function( require ) {
      * @public
      */
     containsItem: function( item ) {
-      return this.itemsOnPlatform.contains( item );
+      return ( this.itemsOnPlatform.indexOf( item ) !== -1 );
     },
 
     /**

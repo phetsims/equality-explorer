@@ -58,6 +58,10 @@ define( function( require ) {
     this.platformYOffset = options.platformYOffset;
     this.gridSize = options.gridSize;
 
+    // @private
+    this.leftItemCreators = leftItemCreators;
+    this.rightItemCreators = rightItemCreators;
+
     // {ItemCreator[]} all ItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
@@ -156,8 +160,12 @@ define( function( require ) {
      * @public
      */
     disposeAllItems: function() {
-      this.leftPlatform.disposeAllItems();
-      this.rightPlatform.disposeAllItems();
+      this.leftItemCreators.forEach( function( itemCreator ) {
+        itemCreator.disposeItemsOnScale();
+      } );
+      this.rightItemCreators.forEach( function( itemCreator ) {
+        itemCreator.disposeItemsOnScale();
+      } );
     }
   } );
 } );
