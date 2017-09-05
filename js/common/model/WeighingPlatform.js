@@ -41,6 +41,7 @@ define( function( require ) {
     this.cellSize = options.cellSize;
 
     // @private {Item[][]} null indicates an empty cell
+    // Indexed from upper-left of the grid, in row-major order.
     this.cells = [];
     for ( var row = 0; row < this.gridSize.height; row++ ) {
       var rowOfCells = [];
