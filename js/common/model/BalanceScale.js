@@ -126,8 +126,8 @@ define( function( require ) {
     };
 
     // @public (read-only)
-    this.leftPlatform = new WeighingPlatform( leftLocationProperty, platformOptions );
-    this.rightPlatform = new WeighingPlatform( rightLocationProperty, platformOptions );
+    this.leftPlatform = new WeighingPlatform( leftLocationProperty, leftItemCreators, platformOptions );
+    this.rightPlatform = new WeighingPlatform( rightLocationProperty, rightItemCreators, platformOptions );
 
     //TODO angleProperty should be derived, but leftLocationProperty and rightLocationProperty depend on it
     Property.multilink( [ this.leftPlatform.weightProperty, this.rightPlatform.weightProperty ],

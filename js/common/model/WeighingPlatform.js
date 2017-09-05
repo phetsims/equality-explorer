@@ -19,10 +19,11 @@ define( function( require ) {
 
   /**
    * @param {DerivedProperty.<Vector2>} locationProperty
+   * @param {ItemCreator[]} itemCreators
    * @param {Object} [options]
    * @constructor
    */
-  function WeighingPlatform( locationProperty, options ) {
+  function WeighingPlatform( locationProperty, itemCreators, options ) {
 
     var self = this;
 
@@ -50,14 +51,22 @@ define( function( require ) {
       this.cells.push( rowOfCells );
     }
 
-    // @private {ObservableArray.<Item>} Items that are on the platform
+    // @private {ObservableArray.<Item>} Items that are on the platform.
+    // This is kept for convenience, so we don't have to iterate over itemCreators.
     this.itemsOnPlatform = new ObservableArray();
 
+    // {Property} dependencies that require weight to be updated
+    var dependencies = [];
+    itemCreators.forEach( function( itemCreator ) {
+      dependencies.push( itemCreator.weightProperty );
+      dependencies.push( itemCreator.itemsOnScale.lengthProperty );
+    } );
+
     // @public the total weight of the Items that are on the platform
-    this.weightProperty = new DerivedProperty( [ this.itemsOnPlatform.lengthProperty ], function( length ) {
+    this.weightProperty = new DerivedProperty( dependencies, function() {
       var weight = 0;
-      self.itemsOnPlatform.forEach( function( item ) {
-        weight += item.weightProperty.value;
+      itemCreators.forEach( function( itemCreator ) {
+        weight += ( itemCreator.itemsOnScale.lengthProperty.value * itemCreator.weightProperty.value );
       } );
       return weight;
     } );
