@@ -133,7 +133,7 @@ define( function( require ) {
       var cell = weighingPlatform.getClosestEmptyCell( item.locationProperty.value );
       if ( !cell ) {
 
-        // Platform has become empty, or there is no available cell above the item's location.
+        // Platform has become full, or there is no available cell above the item's location.
         // Return the item to panel.
         this.animateToPanel( item );
       }
