@@ -55,14 +55,15 @@ define( function( require ) {
     // {ItemCreator[]} all ItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
-    // {Property.<number>[]} lengthProperty for each ObservableArray.<Item>
-    var lengthProperties = [];
+    // {Property.<number>[]} dependencies that require the equation to be updated
+    var dependencies = [];
     itemCreators.forEach( function( itemCreator ) {
-      lengthProperties.push( itemCreator.itemsOnScale.lengthProperty );
+      dependencies.push( itemCreator.weightProperty );
+      dependencies.push( itemCreator.itemsOnScale.lengthProperty );
     } );
 
     // update the equation, unlink in dispose
-    var lengthMultilink = new Multilink( lengthProperties, function() {
+    var lengthMultilink = new Multilink( dependencies, function() {
 
       relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
 
