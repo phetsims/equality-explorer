@@ -8,7 +8,6 @@ Reconsider "white rectangle" feature?
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-add query parameters to populate the scale with items
 snapshots
 implement "organize" feature
 
