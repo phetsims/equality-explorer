@@ -14,7 +14,6 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -83,6 +82,7 @@ define( function( require ) {
   /**
    * Data structure that identifies a cell in the 2D grid.
    * While clients have references to Cells, the specifics of this data structure is private to WeighingPlatform.
+   * (Note: Considered using Vector2 or Dimension2, but row and column improve readability of the code.)
    * @param {number} row
    * @param {number} column
    * @constructor
@@ -118,7 +118,7 @@ define( function( require ) {
      */
     addItem: function( item, cell ) {
       assert && this.assertValidCell( cell );
-      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + this.cellToString( cell ) );
+      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + cell );
       assert && assert( !this.containsItem( item ), 'item is already in grid: ' + item.toString() );
       this.putItemInCell( item, cell );
       item.disposedEmitter.addListener( this.removeItemBound );
@@ -143,7 +143,7 @@ define( function( require ) {
      * @private
      */
     shiftDown: function( cell ) {
-      assert && assert( this.isEmptyCell( cell ), 'cell is not empty: ' + this.cellToString( cell ) );
+      assert && assert( this.isEmptyCell( cell ), 'cell is not empty: ' + cell );
       for ( var row = cell.row - 1; row >= 0; row-- ) {
 
         var currentCell = new Cell( row, cell.column );
@@ -156,7 +156,7 @@ define( function( require ) {
 
           // move Item down 1 row
           var newCell = new Cell( row + 1, cell.column );
-          assert && assert( this.isEmptyCell( newCell ), 'cell is not empty: ' + this.cellToString( newCell ) );
+          assert && assert( this.isEmptyCell( newCell ), 'cell is not empty: ' + cell );
           this.putItemInCell( item, newCell );
           item.moveTo( this.getCellLocation( newCell ) );
         }
@@ -230,7 +230,7 @@ define( function( require ) {
       // Find the closest cell based on distance
       for ( var row = 0; row < this.gridSize.height; row++ ) {
         for ( var column = 0; column < this.gridSize.width; column++ ) {
-          var cell = { row: row, column: column };
+          var cell = new Cell( row, column );
           if ( this.isEmptyCell( cell ) ) {
             currentCell = cell;
             var currentDistance = this.getCellLocation( currentCell ).distance( location );
@@ -302,22 +302,20 @@ define( function( require ) {
     },
 
     /**
-     * Validates the data structure used to represent a cell. Intended to be called when assertions are enabled.
-     * @param {*} cell
+     * Validates a Cell. Intended to be called when assertions are enabled.
+     * @param {Cell} cell
      * @private
      */
     assertValidCell: function( cell ) {
       if ( assert ) {
-        assert( cell );
-        assert( typeof cell.row === 'number' );
-        assert( typeof cell.column === 'number' );
+        assert( cell instanceof Cell );
         assert( cell.row >= 0 && cell.row < this.gridSize.height, 'row out of bounds: ' + cell.row );
         assert( cell.column >= 0 && cell.column < this.gridSize.width, 'column out of bounds: ' + cell.column );
       }
     },
 
     /**
-     * Gets the number of cells in the grid. This is the capacity of the platform.
+     * Gets the number of Cells in the grid. This is the capacity of the platform.
      * @returns {number}
      * @public
      */
@@ -344,7 +342,7 @@ define( function( require ) {
      */
     putItemInCell: function( item, cell ) {
       assert && assert( item === null || item instanceof Item );
-      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + this.cellToString( cell ) );
+      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + cell );
       this.cells[ cell.row ][ cell.column ] = item;
     },
 
@@ -356,17 +354,6 @@ define( function( require ) {
     clearCell: function( cell ) {
       assert && this.assertValidCell( cell );
       this.cells[ cell.row ][ cell.column ] = null;
-    },
-
-    /**
-     * String representation of the data structure used to represent a cell.
-     * @param {Cell} cell
-     * @returns {string}
-     * @private
-     */
-    cellToString: function( cell ) {
-      assert && this.assertValidCell( cell );
-      return StringUtils.fillIn( '[{{row}},{{column}}]', cell );
     }
   } );
 } );
