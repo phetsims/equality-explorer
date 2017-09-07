@@ -38,6 +38,8 @@ define( function( require ) {
   function VariableAccordionBox( valueProperty, valueRange, options ) {
 
     options = _.extend( {
+
+      // supertype options
       fill: 'white',
       showTitleWhenExpanded: false,
       titleNode: new Text( variableString, {

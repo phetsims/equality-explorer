@@ -38,6 +38,8 @@ define( function( require ) {
   function SnapshotsAccordionBox( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
+
+      // supertype options
       maxWidth: 100,
       numberOfSnapshots: 5,
       fill: 'white',

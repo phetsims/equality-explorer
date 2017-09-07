@@ -26,9 +26,9 @@ define( function( require ) {
       height: 10, // {number} height of the front face
       depth: 20,  // {number} depth of the top face after flattening to 2D
       vanishingPointDistance: 100, // distance of the vanishing point from the center of the top face
-      stroke: 'black',
-      topFill: 'white',
-      frontFill: 'white'
+      topFill: 'white', // {Color|string} fill for the top face of the box
+      frontFill: 'white', // {Color|string} fill fo the front face of the box
+      stroke: 'black' // {Color|string} stroke used for both faces of the box
     }, options );
 
     var hypotenuse = Math.sqrt( options.vanishingPointDistance * options.vanishingPointDistance + ( options.width / 2 ) * ( options.width/ 2 ) );

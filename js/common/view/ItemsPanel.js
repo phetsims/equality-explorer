@@ -27,6 +27,8 @@ define( function( require ) {
   function ItemsPanel( itemCreators, weighingPlatform, itemsLayer, options ) {
 
     options = _.extend( {
+
+      // supertype options
       lineWidth: 2,
       cornerRadius: 6
     }, options );

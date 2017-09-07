@@ -20,6 +20,8 @@ define( function( require ) {
   function ClearScaleButton( options ) {
 
     options = _.extend( {
+
+      // supertype options
       baseColor: 'rgb( 242, 242, 242 )',
       scale: 0.65,
       touchAreaDilation: 5

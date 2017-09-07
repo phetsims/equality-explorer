@@ -59,6 +59,8 @@ define( function( require ) {
   function BalanceScaleNode( scale, options ) {
 
     options = _.extend( {
+
+      // {Color|string} used to color-code the weighing platforms
       leftPlatformFill: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
       rightPlatformFill: EqualityExplorerColors.RIGHT_PLATFORM_COLOR
     }, options );

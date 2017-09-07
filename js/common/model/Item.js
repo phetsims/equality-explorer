@@ -54,7 +54,7 @@ define( function( require ) {
 
   return inherit( EqualityExplorerMovable, Item, {
 
-    // @public
+    // @public @override
     dispose: function() {
       this.disposedEmitter.emit1( this );
       this.disposedEmitter.removeAllListeners();

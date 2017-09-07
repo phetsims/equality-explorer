@@ -30,6 +30,8 @@ define( function( require ) {
   function EquationAccordionBox( leftItemCreators, rightItemCreators, options ) {
 
     options = _.extend( {
+
+      // supertype options
       maxWidth: 600,
       maxHeight: 60,
       fill: 'white',

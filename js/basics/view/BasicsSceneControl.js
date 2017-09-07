@@ -24,7 +24,7 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // RadioButtonGroup options
+      // supertype options
       orientation: 'horizontal',
       baseColor: 'white',
       spacing: 12,
