@@ -80,7 +80,21 @@ define( function( require ) {
 
   equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );
 
-  inherit( Object, WeighingPlatform, {
+  /**
+   * Data structure that identifies a cell in the 2D grid.
+   * While clients have references to Cells, the specifics of this data structure is private to WeighingPlatform.
+   * @param {number} row
+   * @param {number} column
+   * @constructor
+   */
+  function Cell( row, column ) {
+    
+    // @public (read-only)
+    this.row = row;
+    this.column = column;
+  }
+
+  return inherit( Object, WeighingPlatform, {
 
     /**
      * Synchronizes Item locations with their respective cell locations.
@@ -355,19 +369,4 @@ define( function( require ) {
       return StringUtils.fillIn( '[{{row}},{{column}}]', cell );
     }
   } );
-
-  /**
-   * Data structure that identifies a cell in the 2D grid.
-   * While clients have references to cells, the specifics of this data structure is private to WeighingPlatform.
-   * @param {number} row
-   * @param {number} column
-   * @constructor
-   */
-  function Cell( row, column ) {
-    // @public (read-only)
-    this.row = row;
-    this.column = column;
-  }
-
-  return WeighingPlatform;
 } );
