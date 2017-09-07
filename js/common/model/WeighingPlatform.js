@@ -80,19 +80,7 @@ define( function( require ) {
 
   equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );
 
-  /**
-   * Converts row and column indices to a cell data structure. While clients have references to cells,
-   * the specifics of the data structure is private to WeighingPlatform.
-   * @param {number} row
-   * @param {number} column
-   * @returns {{row:number, column:number}}
-   * @private
-   */
-  function toCell( row, column ) {
-    return { row: row, column: column };
-  }
-
-  return inherit( Object, WeighingPlatform, {
+  inherit( Object, WeighingPlatform, {
 
     /**
      * Synchronizes Item locations with their respective cell locations.
@@ -101,7 +89,7 @@ define( function( require ) {
     updateItemLocations: function() {
       for ( var row = 0; row < this.gridSize.height; row++ ) {
         for ( var column = 0; column < this.gridSize.width; column++ ) {
-          var cell = toCell( row, column );
+          var cell = new Cell( row, column );
           var item = this.getItemInCell( cell );
           item && item.moveTo( this.getCellLocation( cell ) );
         }
@@ -120,7 +108,7 @@ define( function( require ) {
     /**
      * Adds an Item to the platform, in a specific cell in the grid.
      * @param {Item} item
-     * @param {row:number, column:number} cell
+     * @param {Cell} cell
      * @public
      */
     addItem: function( item, cell ) {
@@ -146,14 +134,14 @@ define( function( require ) {
 
     /**
      * Shifts all Items in a column down 1 cell, to fill the empty cell caused by removing an Item.
-     * @param {row:number, column: number} cell - the cell that was occupied by the removed Item
+     * @param {Cell} cell - the cell that was occupied by the removed Item
      * @private
      */
     shiftDown: function( cell ) {
       assert && assert( this.isEmptyCell( cell ), 'cell is not empty: ' + this.cellToString( cell ) );
       for ( var row = cell.row - 1; row >= 0; row-- ) {
 
-        var currentCell = toCell( row, cell.column );
+        var currentCell = new Cell( row, cell.column );
 
         if ( !this.isEmptyCell( currentCell ) ) {
 
@@ -162,7 +150,7 @@ define( function( require ) {
           this.clearCell( currentCell );
 
           // move Item down 1 row
-          var newCell = toCell( row + 1, cell.column );
+          var newCell = new Cell( row + 1, cell.column );
           assert && assert( this.isEmptyCell( newCell ), 'cell is not empty: ' + this.cellToString( newCell ) );
           this.putItemInCell( item, newCell );
           item.moveTo( this.getCellLocation( newCell ) );
@@ -172,7 +160,7 @@ define( function( require ) {
 
     /**
      * Is the specified cell empty?
-     * @param {row:number, column:number} cell
+     * @param {Cell} cell
      * @returns {boolean}
      * @public
      */
@@ -184,7 +172,7 @@ define( function( require ) {
     /**
      * Gets the cell that an Item occupies.
      * @param item
-     * @returns {row:number, column:number} null item doesn't occupy a cell
+     * @returns {Cell} null item doesn't occupy a cell
      * @private
      */
     getCellForItem: function( item ) {
@@ -192,7 +180,7 @@ define( function( require ) {
       for ( var row = 0; row < this.gridSize.height && !cell; row++ ) {
         var column = this.cells[ row ].indexOf( item );
         if ( column !== -1 ) {
-          cell = toCell( row, column );
+          cell = new Cell( row, column );
         }
       }
       return cell;
@@ -211,7 +199,7 @@ define( function( require ) {
     /**
      * Gets the closest empty cell to a specified location.
      * @param {Vector2} location
-     * @returns {row:number, column:number}
+     * @returns {Cell}
      * @public
      */
     getClosestEmptyCell: function( location ) {
@@ -243,7 +231,7 @@ define( function( require ) {
       // Now look below the closest cell to see if there are any empty cells in the same row.
       // This accounts for gravity, so Items fall to the cell that is closest to the bottom of the grid.
       for ( row = this.gridSize.height - 1; row > closestCell.row; row-- ) {
-        currentCell = toCell( row, closestCell.column );
+        currentCell = new Cell( row, closestCell.column );
         if ( this.isEmptyCell( currentCell ) ) {
           closestCell = currentCell;
           break;
@@ -255,14 +243,14 @@ define( function( require ) {
 
     /**
      * Examines the grid from left to right, top to bottom, and returns the first empty cell.
-     * @returns {row:number, column:number} null if the grid is full
+     * @returns {Cell} null if the grid is full
      * @private
      */
     getFirstEmptyCell: function() {
       var emptyCell = null;
       for ( var row = this.gridSize.height - 1; row >= 0; row-- ) {
         for ( var column = 0; column < this.gridSize.width && !emptyCell; column++ ) {
-          var cell = toCell( row, column );
+          var cell = new Cell( row, column );
           if ( this.isEmptyCell( cell ) ) {
             emptyCell = cell;
           }
@@ -275,7 +263,7 @@ define( function( require ) {
      * Gets the location of a specific cell, in global coordinates.
      * A cell's location is in the center of the cell.
      *
-     * @param {row:number, column:number} cell
+     * @param {Cell} cell
      * @returns {Vector2}
      * @public
      */
@@ -325,7 +313,7 @@ define( function( require ) {
 
     /**
      * Gets the Item in a cell.
-     * @param {row:number, column:number} cell
+     * @param {Cell} cell
      * @returns {Item|null} null if the cell is empty
      * @private
      */
@@ -337,7 +325,7 @@ define( function( require ) {
     /**
      * Puts an Item in a cell. The cell must be empty.
      * @param {Item|null} item
-     * @param {row:number, column:number} cell
+     * @param {Cell} cell
      * @private
      */
     putItemInCell: function( item, cell ) {
@@ -348,7 +336,7 @@ define( function( require ) {
 
     /**
      * Clears a cell, making it empty. If the cell is already empty, this is a no-op.
-     * @param {row:number, column:number} cell
+     * @param {Cell} cell
      * @private
      */
     clearCell: function( cell ) {
@@ -358,7 +346,7 @@ define( function( require ) {
 
     /**
      * String representation of the data structure used to represent a cell.
-     * @param {row:number, column:number} cell
+     * @param {Cell} cell
      * @returns {string}
      * @private
      */
@@ -367,4 +355,19 @@ define( function( require ) {
       return StringUtils.fillIn( '[{{row}},{{column}}]', cell );
     }
   } );
+
+  /**
+   * Data structure that identifies a cell in the 2D grid.
+   * While clients have references to cells, the specifics of this data structure is private to WeighingPlatform.
+   * @param {number} row
+   * @param {number} column
+   * @constructor
+   */
+  function Cell( row, column ) {
+    // @public (read-only)
+    this.row = row;
+    this.column = column;
+  }
+
+  return WeighingPlatform;
 } );
