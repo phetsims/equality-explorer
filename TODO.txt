@@ -9,6 +9,6 @@ Reconsider "white rectangle" feature?
 IMPLEMENTATION
 
 snapshots
-implement "organize" feature
+"organize" feature
 
 
