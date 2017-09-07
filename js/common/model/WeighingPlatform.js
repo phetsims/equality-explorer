@@ -111,15 +111,6 @@ define( function( require ) {
     },
 
     /**
-     * Organizes Items on the platform, as specified in #4
-     * @public
-     */
-    organize: function() {
-      //TODO organize Items on the platform, see #4
-      //TODO cancel drag for all Items on the platform, in case the user is manually organizing
-    },
-
-    /**
      * Adds an Item to the platform, in a specific cell in the grid.
      * @param {Item} item
      * @param {Cell} cell
@@ -170,6 +161,15 @@ define( function( require ) {
           item.moveTo( this.getCellLocation( newCell ) );
         }
       }
+    },
+
+    /**
+     * Organizes Items on the platform, as specified in #4
+     * @public
+     */
+    organize: function() {
+      //TODO organize Items on the platform, see #4
+      //TODO cancel drag for all Items on the platform, in case the user is manually organizing
     },
 
     /**
