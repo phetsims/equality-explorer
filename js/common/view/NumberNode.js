@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO better name for this type?
 /**
  * Displays a number in a circle.
  *
