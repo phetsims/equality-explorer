@@ -134,6 +134,7 @@ define( function( require ) {
     this.rightPlatform = new WeighingPlatform( rightLocationProperty, rightItemCreators, platformOptions );
 
     //TODO angleProperty should be derived, but leftLocationProperty and rightLocationProperty depend on it
+    // unlink is unnecessary
     Property.multilink( [ this.leftPlatform.weightProperty, this.rightPlatform.weightProperty ],
       function( leftWeight, rightWeight ) {
         var angle = ( ( rightWeight - leftWeight ) / maxWeight ) * MAX_SCALE_ANGLE;

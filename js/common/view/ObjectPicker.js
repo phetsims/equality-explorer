@@ -219,7 +219,7 @@ define( function( require ) {
     //------------------------------------------------------------
     // Observers and InputListeners
 
-    // up
+    // up - removeInputListener unnecessary
     upParent.addInputListener( new ButtonStateListener( upStateProperty ) );
     var upListener = new FireOnHoldInputListener( {
       listener: function() {
@@ -230,7 +230,7 @@ define( function( require ) {
     } );
     upParent.addInputListener( upListener );
 
-    // down
+    // down - removeInputListener unnecessary
     downParent.addInputListener( new ButtonStateListener( downStateProperty ) );
     var downListener = new FireOnHoldInputListener( {
       listener: function() {
@@ -241,6 +241,7 @@ define( function( require ) {
     } );
     downParent.addInputListener( downListener );
 
+    //TODO unlink?
     // enable/disable
     upEnabledProperty.link( function( enabled ) { upListener.enabled = enabled; } );
     downEnabledProperty.link( function( enabled ) { downListener.enabled = enabled; } );
@@ -267,13 +268,13 @@ define( function( require ) {
        valueProperty.value = items[ index ].value;
     } );
 
-    // @private update colors for 'up' components
+    // @private update colors for 'up' components, unmultilink unnecessary
     Property.multilink( [ upStateProperty, upEnabledProperty ], function( buttonState, enabled ) {
       assert && assert( _.includes( BUTTON_STATES, buttonState ) );
       updateColors( buttonState, enabled, upBackground, upArrow, backgroundColors, arrowColors );
     } );
 
-    // @private update colors for 'down' components
+    // @private update colors for 'down' components, unmultilink unnecessary
     Property.multilink( [ downStateProperty, downEnabledProperty ], function( buttonState, enabled ) {
       assert && assert( _.includes( BUTTON_STATES, buttonState ) );
       updateColors( buttonState, enabled, downBackground, downArrow, backgroundColors, arrowColors );

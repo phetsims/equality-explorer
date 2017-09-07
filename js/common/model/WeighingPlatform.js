@@ -72,7 +72,7 @@ define( function( require ) {
     // @private
     this.removeItemBound = this.removeItem.bind( this );
 
-    // When the platform moves, adjust the location of all Items.
+    // When the platform moves, adjust the location of all Items. unlink is unnecessary.
     this.locationProperty.link( function( location ) {
       self.updateItemLocations();
     } );

@@ -62,7 +62,7 @@ define( function( require ) {
       dependencies.push( itemCreator.numberOfItemsOnScaleProperty );
     } );
 
-    // update the equation, unlink in dispose
+    // update the equation, dispose of this Multilink in dispose
     var lengthMultilink = new Multilink( dependencies, function() {
 
       relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
