@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Creates Items with a specified value and icon.
+ * Creates and manages Items.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
