@@ -51,12 +51,10 @@ define( function( require ) {
         var itemNode = new ItemNode( item, itemCreator, weighingPlatform );
         itemsLayer.addChild( itemNode );
 
-        // clean up when the Item is disposed
-        var disposedListener = function( item ) {
-          item.disposedEmitter.removeListener( disposedListener );
+        // Clean up when the Item is disposed. Item.dispose handles removal of this listener.
+        item.disposedEmitter.addListener( function( item ) {
           itemNode.dispose();
-        };
-        item.disposedEmitter.addListener( disposedListener );
+        } );
 
         // Propagate drag to the ItemNode
         itemNode.dragListener.startDrag( event );

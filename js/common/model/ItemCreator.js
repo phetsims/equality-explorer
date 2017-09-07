@@ -106,7 +106,7 @@ define( function( require ) {
       var item = new Item( this.name, this.weightProperty, this.icon, options );
       this.allItems.add( item );
 
-      // clean up when the item is disposed
+      // Clean up when the item is disposed. Item.dispose handles removal of this listener.
       item.disposedEmitter.addListener( this.itemWasDisposedBound );
 
       return item;
