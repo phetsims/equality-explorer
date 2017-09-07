@@ -135,6 +135,15 @@ define( function( require ) {
     },
 
     /**
+     * Gets the set of Items that are on the scale.
+     * @returns {Item[]}
+     * @public
+     */
+    getItemsOnScale: function() {
+      return this.itemsOnScale.getArray().slice(); // defensive shallow copy
+    },
+
+    /**
      * Disposes of all Items that were created by this ItemCreator.
      * @private
      */

@@ -41,6 +41,9 @@ define( function( require ) {
     this.gridSize = options.gridSize;
     this.cellSize = options.cellSize;
 
+    // @private
+    this.itemCreators = itemCreators;
+
     // @private {Item[][]} the 2D grid of cells.
     // Initialized to empty, where null indicates an empty cell.
     // Indexed from upper-left of the grid, in row-major order.
@@ -89,7 +92,7 @@ define( function( require ) {
    * @constructor
    */
   function Cell( row, column ) {
-    
+
     // @public (read-only)
     this.row = row;
     this.column = column;
@@ -169,8 +172,20 @@ define( function( require ) {
      * @public
      */
     organize: function() {
-      //TODO organize Items on the platform, see #4
-      //TODO cancel drag for all Items on the platform, in case the user is manually organizing
+
+      var self = this;
+
+      this.clearAllCells();
+
+      this.itemCreators.forEach( function( itemCreator ) {
+        var items = itemCreator.getItemsOnScale();
+        items.forEach( function( item ) {
+
+          //TODO choose cell based on algorithm in #4
+          var cell = self.getFirstEmptyCell();
+          self.putItemInCell( item, cell );
+        } );
+      } );
     },
 
     /**
@@ -345,6 +360,7 @@ define( function( require ) {
       assert && assert( item === null || item instanceof Item );
       assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + cell );
       this.cells[ cell.row ][ cell.column ] = item;
+      item.moveTo( this.getCellLocation( cell ) );
     },
 
     /**
@@ -355,6 +371,18 @@ define( function( require ) {
     clearCell: function( cell ) {
       assert && this.assertValidCell( cell );
       this.cells[ cell.row ][ cell.column ] = null;
+    },
+
+    /**
+     * Clears all cells in the grid.
+     * @private
+     */
+    clearAllCells: function() {
+      for ( var row = 0; row < this.gridSize.height; row++ ) {
+        for ( var column = 0; column < this.gridSize.width; column++ ) {
+          this.clearCell( new Cell( row, column ) );
+        }
+      }
     }
   } );
 } );
