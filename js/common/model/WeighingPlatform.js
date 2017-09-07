@@ -2,6 +2,7 @@
 
 /**
  * Platform where Items are placed to be weighed on a balance scale.
+ * Items are arranged in a 2D grid of cells, where each cell can be occupied by at most one Item.
  *
  * @author Chris Malley (PixelZoom, Inc)
  */
