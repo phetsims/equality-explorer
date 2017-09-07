@@ -28,7 +28,7 @@ define( function( require ) {
 
     options = _.extend( {
       constantTerm: false, // {boolean} do Items evaluate to a constant?
-      dragBounds: Bounds2.EVERYTHING
+      dragBounds: Bounds2.EVERYTHING // {Bounds2} dragging is constrained to these bounds
     }, options );
 
     // @public (read-only)

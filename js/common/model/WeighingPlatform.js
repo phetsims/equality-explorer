@@ -28,10 +28,10 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      supportHeight: 10,
-      diameter: 20,
-      gridSize: new Dimension2( 1, 1 ),
-      cellSize: new Dimension2( 5, 5 )
+      supportHeight: 10, // height of the vertical support that connects the platform to the scale
+      diameter: 20, // diameter of the platforms platter
+      gridSize: new Dimension2( 1, 1 ), // dimensions of the grid (columns x rows)
+      cellSize: new Dimension2( 5, 5 ) // dimensions of each cell in the grid
     }, options );
 
     // @public (read-only)

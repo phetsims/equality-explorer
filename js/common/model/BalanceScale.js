@@ -41,9 +41,9 @@ define( function( require ) {
       platformXInset: 45, // inset of the platforms from the ends of the beam
       platformYOffset: -50, // offset of the platform from the beam
       platformDiameter: 300, // diameter of the weighing platforms
-      gridSize: EqualityExplorerQueryParameters.gridSize, // {Dimension2} dimensions for the grid of items on each weighing platform
-      cellXMargin: 2,
-      cellYMargin: 0
+      gridSize: EqualityExplorerQueryParameters.gridSize, // {Dimension2} dimensions for weighing platform grid
+      gridXMargin: 2, // horizontal space between stacks of Items
+      gridYMargin: 0  // vertical space between Items in each stack
     }, options );
 
     assert && assert( options.beamWidth - ( 2 * options.platformXInset ) > options.platformDiameter,
@@ -82,8 +82,8 @@ define( function( require ) {
     var maxItems = this.gridSize.width * this.gridSize.height;
     var maxWeight = maxItemWeight * maxItems;
 
-    var cellWidth = maxCellWidth + ( 2 * options.cellXMargin );
-    var cellHeight = maxCellHeight + ( 2 * options.cellYMargin );
+    var cellWidth = maxCellWidth + ( 2 * options.gridXMargin );
+    var cellHeight = maxCellHeight + ( 2 * options.gridYMargin );
 
     // @public (read-only) size of each cell in the grid
     this.cellSize = new Dimension2( cellWidth, cellHeight );
