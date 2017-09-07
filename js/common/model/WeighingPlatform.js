@@ -95,12 +95,17 @@ define( function( require ) {
   return inherit( Object, WeighingPlatform, {
 
     /**
-     * Gets the number of cells in the grid. This is the capacity of the platform.
-     * @returns {number}
-     * @public
+     * Synchronizes Item locations with their respective cell locations.
+     * @private
      */
-    get numberOfCells() {
-      return this.gridSize.width * this.gridSize.height;
+    updateItemLocations: function() {
+      for ( var row = 0; row < this.gridSize.height; row++ ) {
+        for ( var column = 0; column < this.gridSize.width; column++ ) {
+          var cell = toCell( row, column );
+          var item = this.getItemInCell( cell );
+          item && item.moveTo( this.getCellLocation( cell ) );
+        }
+      }
     },
 
     /**
@@ -140,10 +145,12 @@ define( function( require ) {
     },
 
     /**
-     * Shifts all Items in a column down 1 cell, to fill empty cell caused by removing an Item.
+     * Shifts all Items in a column down 1 cell, to fill the empty cell caused by removing an Item.
      * @param {row:number, column: number} cell - the cell that was occupied by the removed Item
+     * @private
      */
     shiftDown: function( cell ) {
+      assert && assert( this.isEmptyCell( cell ), 'cell is not empty: ' + this.cellToString( cell ) );
       for ( var row = cell.row - 1; row >= 0; row-- ) {
 
         var currentCell = toCell( row, cell.column );
@@ -164,9 +171,10 @@ define( function( require ) {
     },
 
     /**
-     * Is the specific cell empty?
+     * Is the specified cell empty?
      * @param {row:number, column:number} cell
      * @returns {boolean}
+     * @public
      */
     isEmptyCell: function( cell ) {
       assert && this.assertValidCell( cell );
@@ -177,6 +185,7 @@ define( function( require ) {
      * Gets the cell that an Item occupies.
      * @param item
      * @returns {row:number, column:number} null item doesn't occupy a cell
+     * @private
      */
     getCellForItem: function( item ) {
       var cell = null;
@@ -245,6 +254,24 @@ define( function( require ) {
     },
 
     /**
+     * Examines the grid from left to right, top to bottom, and returns the first empty cell.
+     * @returns {row:number, column:number} null if the grid is full
+     * @private
+     */
+    getFirstEmptyCell: function() {
+      var emptyCell = null;
+      for ( var row = this.gridSize.height - 1; row >= 0; row-- ) {
+        for ( var column = 0; column < this.gridSize.width && !emptyCell; column++ ) {
+          var cell = toCell( row, column );
+          if ( this.isEmptyCell( cell ) ) {
+            emptyCell = cell;
+          }
+        }
+      }
+      return emptyCell;
+    },
+
+    /**
      * Gets the location of a specific cell, in global coordinates.
      * A cell's location is in the center of the cell.
      *
@@ -273,26 +300,9 @@ define( function( require ) {
     },
 
     /**
-     * Examines the grid from left to right, top to bottom, and returns the first empty cell.
-     * @returns {row:number, column:number} null if the grid is full
-     * @private
-     */
-    getFirstEmptyCell: function() {
-      var emptyCell = null;
-      for ( var row = this.gridSize.height - 1; row >= 0; row-- ) {
-        for ( var column = 0; column < this.gridSize.width && !emptyCell; column++ ) {
-          var cell = toCell( row, column );
-          if ( this.isEmptyCell( cell ) ) {
-            emptyCell = cell;
-          }
-        }
-      }
-      return emptyCell;
-    },
-
-    /**
      * Validates the data structure used to represent a cell. Intended to be called when assertions are enabled.
      * @param {*} cell
+     * @private
      */
     assertValidCell: function( cell ) {
       if ( assert ) {
@@ -302,6 +312,15 @@ define( function( require ) {
         assert( cell.row >= 0 && cell.row < this.gridSize.height, 'row out of bounds: ' + cell.row );
         assert( cell.column >= 0 && cell.column < this.gridSize.width, 'column out of bounds: ' + cell.column );
       }
+    },
+
+    /**
+     * Gets the number of cells in the grid. This is the capacity of the platform.
+     * @returns {number}
+     * @public
+     */
+    get numberOfCells() {
+      return this.gridSize.width * this.gridSize.height;
     },
 
     /**
@@ -330,6 +349,7 @@ define( function( require ) {
     /**
      * Clears a cell, making it empty. If the cell is already empty, this is a no-op.
      * @param {row:number, column:number} cell
+     * @private
      */
     clearCell: function( cell ) {
       assert && this.assertValidCell( cell );
@@ -337,23 +357,10 @@ define( function( require ) {
     },
 
     /**
-     * Synchronize Item locations with their respective cell locations.
-     * @private
-     */
-    updateItemLocations: function() {
-      for ( var row = 0; row < this.gridSize.height; row++ ) {
-        for ( var column = 0; column < this.gridSize.width; column++ ) {
-          var cell = toCell( row, column );
-          var item = this.getItemInCell( cell );
-          item && item.moveTo( this.getCellLocation( cell ) );
-        }
-      }
-    },
-
-    /**
      * String representation of the data structure used to represent a cell.
      * @param {row:number, column:number} cell
      * @returns {string}
+     * @private
      */
     cellToString: function( cell ) {
       assert && this.assertValidCell( cell );
