@@ -173,59 +173,81 @@ define( function( require ) {
      */
     organize: function() {
 
-      var self = this;
-
-      this.clearAllCells();
-
       // total up the number of Items that we need to organize
       var numberOfItemsToOrganize = 0;
       this.itemCreators.forEach( function( itemCreator ) {
         numberOfItemsToOrganize += itemCreator.getNumberOfItemsOnScale();
       } );
 
-      // start with the bottom-left cell
-      var row = this.gridSize.height - 1;
-      var column = 0;
+      if ( numberOfItemsToOrganize > 0 ) {
 
-      this.itemCreators.forEach( function( itemCreator ) {
+        var self = this;
 
-        var items = itemCreator.getItemsOnScale();
+        this.clearAllCells();
 
-        // stack the Items in columns, from left to right
-        for ( var i = 0; i < items.length; i++ ) {
+        // start with the bottom-left cell
+        var row = this.gridSize.height - 1;
+        var column = 0;
 
-          var item = items[ i ];
-          self.putItemInCell( item, new Cell( row, column ) );
-          numberOfItemsToOrganize--;
+        this.itemCreators.forEach( function( itemCreator ) {
 
-          // advance to the next cell
-          if ( i < items.length - 1 ) {
-            if ( row > 0 ) {
+          var items = itemCreator.getItemsOnScale();
 
-              // next cell in the current column
-              row--;
+          // stack the Items in columns, from left to right
+          for ( var i = 0; i < items.length; i++ ) {
+
+            var item = items[ i ];
+            self.putItemInCell( item, new Cell( row, column ) );
+            numberOfItemsToOrganize--;
+
+            // advance to the next cell
+            if ( i < items.length - 1 ) {
+              if ( row > 0 ) {
+
+                // next cell in the current column
+                row--;
+              }
+              else {
+
+                // start a new column
+                row = self.gridSize.height - 1;
+                column++;
+              }
             }
-            else {
+          }
 
-              // start a new column
+          if ( numberOfItemsToOrganize > 0 ) {
+
+            // Start a new column if we have enough cells to the right of the current column.
+            // Otherwise continue to fill the current column.
+            var numberOfCellsToRight = ( self.gridSize.width - column - 1 ) * self.gridSize.height;
+            if ( numberOfCellsToRight >= numberOfItemsToOrganize ) {
               row = self.gridSize.height - 1;
               column++;
             }
+            else {
+              row--;
+            }
+          }
+        } );
+        assert && assert( numberOfItemsToOrganize === 0 );
+
+        // Center the stacks on the platform by shifting Items to the right.
+        var numberOfEmptyColumns = self.gridSize.width - column - 1;
+        var numberOfColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
+        if ( numberOfColumnsToShiftRight > 0 ) {
+          for ( row = self.gridSize.height - 1; row >= 0; row-- ) {
+            for ( column = self.gridSize.width - 1; column >= 0; column-- ) {
+              var cell = new Cell( row, column );
+              var item = this.getItemInCell( cell );
+              if ( item ) {
+                this.clearCell( cell );
+                this.putItemInCell( item, new Cell( row, column + numberOfColumnsToShiftRight ) );
+              }
+            }
           }
         }
-
-        // Start a new column if we have enough cells to the right of the current column.
-        // Otherwise continue to fill the current column.
-        var numberOfCellsToRight = ( self.gridSize.width - column - 1 ) * self.gridSize.height;
-        if ( numberOfCellsToRight >= numberOfItemsToOrganize ) {
-          row = self.gridSize.height - 1;
-          column++;
-        }
-        else {
-          row--;
-        }
-      } );
-      assert && assert( numberOfItemsToOrganize === 0 );
+      }
     },
 
     /**
