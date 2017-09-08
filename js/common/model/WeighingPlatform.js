@@ -217,7 +217,7 @@ define( function( require ) {
         // Start a new column if we have enough cells to the right of the current column.
         // Otherwise continue to fill the current column.
         var numberOfCellsToRight = ( self.gridSize.width - column - 1 ) * self.gridSize.height;
-        if ( numberOfCellsToRight >=  numberOfItemsToOrganize ) {
+        if ( numberOfCellsToRight >= numberOfItemsToOrganize ) {
           row = self.gridSize.height - 1;
           column++;
         }
@@ -225,6 +225,7 @@ define( function( require ) {
           row--;
         }
       } );
+      assert && assert( numberOfItemsToOrganize === 0 );
     },
 
     /**
