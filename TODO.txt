@@ -10,6 +10,5 @@ IMPLEMENTATION
 
 query parameter to populate scale at startup
 snapshots
-"organize" feature
 
 
