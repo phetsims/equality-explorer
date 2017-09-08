@@ -168,7 +168,7 @@ define( function( require ) {
     },
 
     /**
-     * Organizes Items on the platform, as specified in #4
+     * Organizes Items on the platform, as specified in https://github.com/phetsims/equality-explorer/issues/4
      * @public
      */
     organize: function() {
@@ -177,7 +177,13 @@ define( function( require ) {
 
       this.clearAllCells();
 
-      // start with leftmost column
+      // total up the number of Items that we need to organize
+      var numberOfItemsToOrganize = 0;
+      this.itemCreators.forEach( function( itemCreator ) {
+        numberOfItemsToOrganize += itemCreator.getNumberOfItemsOnScale();
+      } );
+
+      // start with the bottom-left cell
       var row = this.gridSize.height - 1;
       var column = 0;
 
@@ -186,22 +192,38 @@ define( function( require ) {
         var items = itemCreator.getItemsOnScale();
 
         // stack the Items in columns, from left to right
-        items.forEach( function( item ) {
+        for ( var i = 0; i < items.length; i++ ) {
 
+          var item = items[ i ];
           self.putItemInCell( item, new Cell( row, column ) );
+          numberOfItemsToOrganize--;
 
-          row--;
-          if ( row < 0 ) {
-            // start a new column
-            row = self.gridSize.height - 1;
-            column++;
+          // advance to the next cell
+          if ( i < items.length - 1 ) {
+            if ( row > 0 ) {
+
+              // next cell in the current column
+              row--;
+            }
+            else {
+
+              // start a new column
+              row = self.gridSize.height - 1;
+              column++;
+            }
           }
-        } );
+        }
 
-        //TODO determine whether it's OK to start a new column, based on the number of remaining Items
-        // start a new column for the next Item type
-        row = self.gridSize.height - 1;
-        column++;
+        // Start a new column if we have enough cells to the right of the current column.
+        // Otherwise continue to fill the current column.
+        var numberOfCellsToRight = ( self.gridSize.width - column - 1 ) * self.gridSize.height;
+        if ( numberOfCellsToRight >=  numberOfItemsToOrganize ) {
+          row = self.gridSize.height - 1;
+          column++;
+        }
+        else {
+          row--;
+        }
       } );
     },
 

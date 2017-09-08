@@ -144,6 +144,14 @@ define( function( require ) {
     },
 
     /**
+     * Gets the number of Items on the scale.
+     * @returns {number}
+     */
+    getNumberOfItemsOnScale: function() {
+      return this.itemsOnScale.length;
+    },
+
+    /**
      * Disposes of all Items that were created by this ItemCreator.
      * @private
      */
