@@ -8,7 +8,7 @@ Reconsider "white rectangle" feature?
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-query parameter to populate scale at startup
+call ItemNodeCreator.populateScale after the scenegraph is fully constructed
 snapshots
 
 

@@ -39,6 +39,25 @@ define( function( require ) {
         type: 'number'
       },
       defaultValue: [ 6, 6 ]
+    },
+
+    // Number of items that are initially on the left weighing platform.
+    // This is intended to be used for debugging and testing, not in production situations.
+    leftItems: {
+      type: 'array',
+      elementSchema: {
+        type: 'number'
+      },
+      defaultValue: [ 0, 0, 0 ]
+    },
+
+    // Similar to leftItems, but for the right weighing platform.
+    rightItems: {
+      type: 'array',
+      elementSchema: {
+        type: 'number'
+      },
+      defaultValue: [ 0, 0, 0 ]
     }
   } );
 

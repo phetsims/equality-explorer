@@ -13,6 +13,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
@@ -69,6 +70,16 @@ define( function( require ) {
     // Wire up enable/disable for ItemCreators, based on capacity of the scale's weighing platforms
     enableItemCreators( leftItemCreators, this.scale.leftPlatform.numberOfCells );
     enableItemCreators( rightItemCreators, this.scale.rightPlatform.numberOfCells );
+
+    // validate query parameters that populate the scale
+    assert && assert( this.leftItemCreators.length === EqualityExplorerQueryParameters.leftItems.length,
+      'wrong number of elements in query parameter leftItems' );
+    assert && assert( _.reduce( EqualityExplorerQueryParameters.leftItems, function( sum, n ) { return sum + n; } ) <= this.scale.leftPlatform.numberOfCells,
+      'too many items in query parameter leftItems' );
+    assert && assert( this.rightItemCreators.length === EqualityExplorerQueryParameters.rightItems.length,
+      'wrong number of elements in query parameter rightItems' );
+    assert && assert( _.reduce( EqualityExplorerQueryParameters.rightItems, function( sum, n ) { return sum + n; } ) <= this.scale.rightPlatform.numberOfCells,
+      'too many items in query parameter rightItems' );
   }
 
   equalityExplorer.register( 'BasicsScene', BasicsScene );
