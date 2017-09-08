@@ -176,7 +176,7 @@ define( function( require ) {
      */
     organize: function() {
 
-      // total up the number of Items that we need to organize
+      // total up the number of Items to organize
       var numberOfItemsToOrganize = 0;
       this.itemCreators.forEach( function( itemCreator ) {
         numberOfItemsToOrganize += itemCreator.getNumberOfItemsOnScale();
