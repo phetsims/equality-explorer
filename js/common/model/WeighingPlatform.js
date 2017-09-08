@@ -86,7 +86,10 @@ define( function( require ) {
   /**
    * Data structure that identifies a cell in the 2D grid.
    * While clients have references to Cells, the specifics of this data structure is private to WeighingPlatform.
-   * (Note: Considered using Vector2 or Dimension2, but row and column improve readability of the code.)
+   * Notes:
+   * - Considered using Vector2 or Dimension2, but row and column improve readability of the code.
+   * - This is solely a lightweight data structure, so no need to use inherit.
+   * 
    * @param {number} row
    * @param {number} column
    * @constructor
