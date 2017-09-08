@@ -149,6 +149,7 @@ define( function( require ) {
       touchAreaYDilation: 5,
       listener: function() {
         scale.organize();
+        organizeButton.enabled = false;
       }
     } );
 
@@ -163,7 +164,7 @@ define( function( require ) {
     // buttons on the front face of the base
     var buttonsParent = new HBox( {
       children: [ clearScaleButton, organizeButton ],
-      spacing: 25,
+      spacing: 100,
       centerX: baseNode.centerX,
       centerY: baseNode.bottom - ( BASE_HEIGHT / 2 )
     } );
