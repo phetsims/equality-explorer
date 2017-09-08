@@ -177,14 +177,31 @@ define( function( require ) {
 
       this.clearAllCells();
 
+      // start with leftmost column
+      var row = this.gridSize.height - 1;
+      var column = 0;
+
       this.itemCreators.forEach( function( itemCreator ) {
+
         var items = itemCreator.getItemsOnScale();
+
+        // stack the Items in columns, from left to right
         items.forEach( function( item ) {
 
-          //TODO choose cell based on algorithm in #4
-          var cell = self.getFirstEmptyCell();
-          self.putItemInCell( item, cell );
+          self.putItemInCell( item, new Cell( row, column ) );
+
+          row--;
+          if ( row < 0 ) {
+            // start a new column
+            row = self.gridSize.height - 1;
+            column++;
+          }
         } );
+
+        //TODO determine whether it's OK to start a new column, based on the number of remaining Items
+        // start a new column for the next Item type
+        row = self.gridSize.height - 1;
+        column++;
       } );
     },
 
