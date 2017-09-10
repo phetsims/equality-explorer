@@ -196,40 +196,43 @@ define( function( require ) {
 
           var items = itemCreator.getItemsOnScale();
 
-          // stack the Items in columns, from left to right
-          for ( var i = 0; i < items.length; i++ ) {
+          if ( items.length > 0 ) {
 
-            var item = items[ i ];
-            self.putItemInCell( item, new Cell( row, column ) );
-            numberOfItemsToOrganize--;
+            // stack the Items in columns, from left to right
+            for ( var i = 0; i < items.length; i++ ) {
 
-            // advance to the next cell
-            if ( i < items.length - 1 ) {
-              if ( row > 0 ) {
+              var item = items[ i ];
+              self.putItemInCell( item, new Cell( row, column ) );
+              numberOfItemsToOrganize--;
 
-                // next cell in the current column
-                row--;
+              // advance to the next cell
+              if ( i < items.length - 1 ) {
+                if ( row > 0 ) {
+
+                  // next cell in the current column
+                  row--;
+                }
+                else {
+
+                  // start a new column
+                  row = self.gridSize.height - 1;
+                  column++;
+                }
               }
-              else {
+            }
 
-                // start a new column
+            if ( numberOfItemsToOrganize > 0 ) {
+
+              // Start a new column if we have enough cells to the right of the current column.
+              // Otherwise continue to fill the current column.
+              var numberOfCellsToRight = ( self.gridSize.width - column - 1 ) * self.gridSize.height;
+              if ( numberOfCellsToRight >= numberOfItemsToOrganize ) {
                 row = self.gridSize.height - 1;
                 column++;
               }
-            }
-          }
-
-          if ( numberOfItemsToOrganize > 0 ) {
-
-            // Start a new column if we have enough cells to the right of the current column.
-            // Otherwise continue to fill the current column.
-            var numberOfCellsToRight = ( self.gridSize.width - column - 1 ) * self.gridSize.height;
-            if ( numberOfCellsToRight >= numberOfItemsToOrganize ) {
-              row = self.gridSize.height - 1;
-              column++;
-            }
-            else {
-              row--;
+              else {
+                row--;
+              }
             }
           }
         } );
