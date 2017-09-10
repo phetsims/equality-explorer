@@ -89,7 +89,7 @@ define( function( require ) {
    * Notes:
    * - Considered using Vector2 or Dimension2, but row and column improve readability of the code.
    * - This is solely a lightweight data structure, so no need to use inherit.
-   * 
+   *
    * @param {number} row
    * @param {number} column
    * @constructor
@@ -360,7 +360,6 @@ define( function( require ) {
     /**
      * Gets the location of a specific cell, in global coordinates.
      * A cell's location is in the center of the cell.
-     *
      * @param {Cell} cell
      * @returns {Vector2}
      * @public
