@@ -12,6 +12,7 @@ define( function( require ) {
   var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -38,16 +39,31 @@ define( function( require ) {
       rotation: -Math.PI / 2
     } );
 
+    var itemCreatorsIndex = 0;
     var leftItemCreators = [
-      new ItemCreator( 'hexagon', 3, hexagonNode ),
-      new ItemCreator( 'diamond', 2, diamondNode ),
-      new ItemCreator( 'triangle', 1, triangleNode )
+      new ItemCreator( 'hexagon', 3, hexagonNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'diamond', 2, diamondNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'triangle', 1, triangleNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } )
     ];
 
+    //TODO duplicate code
+    itemCreatorsIndex = 0;
     var rightItemCreators = [
-      new ItemCreator( 'hexagon', 3, hexagonNode ),
-      new ItemCreator( 'diamond', 2, diamondNode ),
-      new ItemCreator( 'triangle', 1, triangleNode )
+      new ItemCreator( 'hexagon', 3, hexagonNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.rightItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'diamond', 2, diamondNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.rightItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'triangle', 1, triangleNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.rightItems[ itemCreatorsIndex++ ]
+      } )
     ];
 
     BasicsScene.call( this, hexagonNode, leftItemCreators, rightItemCreators );

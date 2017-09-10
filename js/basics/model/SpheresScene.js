@@ -12,6 +12,7 @@ define( function( require ) {
   var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
@@ -29,16 +30,31 @@ define( function( require ) {
     var orangeNode = new ShadedSphereNode( ITEM_DIAMETER, { mainColor: 'orange' } );
     var magentaNode = new ShadedSphereNode( ITEM_DIAMETER, { mainColor: 'magenta' } );
 
+    var itemCreatorsIndex = 0;
     var leftItemCreators = [
-      new ItemCreator( 'greenSphere', 3, greenNode ),
-      new ItemCreator( 'orangeSphere', 2, orangeNode ),
-      new ItemCreator( 'magentaSphere', 1, magentaNode )
+      new ItemCreator( 'greenSphere', 3, greenNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'orangeSphere', 2, orangeNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'magentaSphere', 1, magentaNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } )
     ];
 
+    //TODO duplicate code
+    itemCreatorsIndex = 0;
     var rightItemCreators = [
-      new ItemCreator( 'greenSphere', 3, greenNode ),
-      new ItemCreator( 'orangeSphere', 2, orangeNode ),
-      new ItemCreator( 'magentaSphere', 1, magentaNode )
+      new ItemCreator( 'greenSphere', 3, greenNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'orangeSphere', 2, orangeNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'magentaSphere', 1, magentaNode, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } )
     ];
 
     BasicsScene.call( this, greenNode, leftItemCreators, rightItemCreators );

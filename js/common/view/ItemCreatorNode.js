@@ -72,6 +72,15 @@ define( function( require ) {
       self.pickable = enabled;
       self.opacity = ( enabled ? 1 : 0.5 );
     } );
+
+    // Populate the scale after the sim is loaded, so that ItemCreatorNodes have valid locations.
+    // This feature is for debugging and testing, not intended for production.
+    // See the leftItem and rightItem query parameters.
+    var frameStartedCallback = function() {
+      self.populateScale( itemCreator.numberOfItemsOnScale );
+      phet.joist.sim.frameStartedEmitter.removeListener( frameStartedCallback );
+    };
+    phet.joist.sim.frameStartedEmitter.addListener( frameStartedCallback );
   }
 
   equalityExplorer.register( 'ItemCreatorNode', ItemCreatorNode );

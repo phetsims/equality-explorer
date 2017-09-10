@@ -28,13 +28,15 @@ define( function( require ) {
 
     options = _.extend( {
       constantTerm: false, // {boolean} do Items evaluate to a constant?
-      dragBounds: Bounds2.EVERYTHING // {Bounds2} dragging is constrained to these bounds
+      dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
+      numberOfItemsOnScale: 0 // number of items initially on the scale
     }, options );
 
     // @public (read-only)
     this.name = name;
     this.icon = icon;
     this.constantTerm = options.constantTerm;
+    this.numberOfItemsOnScale = options.numberOfItemsOnScale;
 
     // @public {Bounds2} drag bounds for Items created
     this.dragBounds = options.dragBounds;

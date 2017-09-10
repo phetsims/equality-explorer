@@ -21,11 +21,10 @@ define( function( require ) {
    * @param {ItemCreator[]} itemCreators
    * @param {WeighingPlatform} weighingPlatform
    * @param {Node} itemsLayer
-   * @param {number[]} numberOfItemsOnScale
    * @param {Object} [options]
    * @constructor
    */
-  function ItemsPanel( itemCreators, weighingPlatform, itemsLayer, numberOfItemsOnScale, options ) {
+  function ItemsPanel( itemCreators, weighingPlatform, itemsLayer, options ) {
 
     options = _.extend( {
 
@@ -53,17 +52,6 @@ define( function( require ) {
     } );
 
     Panel.call( this, content, options );
-
-    // Populate the scale after the sim is loaded, so that ItemCreatorNodes have valid locations.
-    // This feature is for debugging and testing, not intended for production.
-    // See the leftItem and rightItem query parameters.
-    var populateScale = function() {
-      for ( var i = 0; i < itemCreatorNodes.length; i++ ) {
-        itemCreatorNodes[ i ].populateScale( numberOfItemsOnScale[ i ] );
-      }
-      phet.joist.sim.frameStartedEmitter.removeListener( populateScale );
-    };
-    phet.joist.sim.frameStartedEmitter.addListener( populateScale );
   }
 
   equalityExplorer.register( 'ItemsPanel', ItemsPanel );
