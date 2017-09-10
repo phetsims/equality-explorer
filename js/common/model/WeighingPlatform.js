@@ -125,7 +125,7 @@ define( function( require ) {
      */
     addItem: function( item, cell ) {
       assert && this.assertValidCell( cell );
-      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + cell );
+      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + cell.row + ',' + cell.column );
       assert && assert( !this.containsItem( item ), 'item is already in grid: ' + item.toString() );
       this.putItemInCell( item, cell );
       item.disposedEmitter.addListener( this.removeItemBound );
@@ -150,7 +150,7 @@ define( function( require ) {
      * @private
      */
     shiftDown: function( cell ) {
-      assert && assert( this.isEmptyCell( cell ), 'cell is not empty: ' + cell );
+      assert && assert( this.isEmptyCell( cell ), 'cell is not empty: ' + cell.row + ',' + cell.column );
       for ( var row = cell.row - 1; row >= 0; row-- ) {
 
         var currentCell = new Cell( row, cell.column );
@@ -163,7 +163,7 @@ define( function( require ) {
 
           // move Item down 1 row
           var newCell = new Cell( row + 1, cell.column );
-          assert && assert( this.isEmptyCell( newCell ), 'cell is not empty: ' + cell );
+          assert && assert( this.isEmptyCell( newCell ), 'cell is not empty: ' + cell.row + ',' + cell.column );
           this.putItemInCell( item, newCell );
           item.moveTo( this.getCellLocation( newCell ) );
         }
@@ -426,7 +426,7 @@ define( function( require ) {
      */
     putItemInCell: function( item, cell ) {
       assert && assert( item === null || item instanceof Item );
-      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + cell );
+      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + cell.row + ',' + cell.column );
       this.cells[ cell.row ][ cell.column ] = item;
       item.moveTo( this.getCellLocation( cell ) );
     },
