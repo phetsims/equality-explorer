@@ -59,7 +59,7 @@ define( function( require ) {
     // See the leftItem and rightItem query parameters.
     var populateScale = function() {
       for ( var i = 0; i < itemCreatorNodes.length; i++ ) {
-        itemCreatorNodes[i].populateScale( numberOfItemsOnScale[ i ] );
+        itemCreatorNodes[ i ].populateScale( numberOfItemsOnScale[ i ] );
       }
       phet.joist.sim.frameStartedEmitter.removeListener( populateScale );
     };
