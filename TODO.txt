@@ -8,7 +8,6 @@ Reconsider "white rectangle" feature?
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-call ItemNodeCreator.populateScale after the scenegraph is fully constructed
 snapshots
 
 
