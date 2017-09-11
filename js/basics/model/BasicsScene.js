@@ -71,15 +71,20 @@ define( function( require ) {
     enableItemCreators( leftItemCreators, this.scale.leftPlatform.numberOfCells );
     enableItemCreators( rightItemCreators, this.scale.rightPlatform.numberOfCells );
 
-    // validate query parameters that populate the scale
-    assert && assert( this.leftItemCreators.length === EqualityExplorerQueryParameters.leftItems.length,
-      'wrong number of elements in query parameter leftItems' );
-    assert && assert( _.reduce( EqualityExplorerQueryParameters.leftItems, function( sum, n ) { return sum + n; } ) <= this.scale.leftPlatform.numberOfCells,
-      'too many items in query parameter leftItems' );
-    assert && assert( this.rightItemCreators.length === EqualityExplorerQueryParameters.rightItems.length,
-      'wrong number of elements in query parameter rightItems' );
-    assert && assert( _.reduce( EqualityExplorerQueryParameters.rightItems, function( sum, n ) { return sum + n; } ) <= this.scale.rightPlatform.numberOfCells,
-      'too many items in query parameter rightItems' );
+    // Validate query parameters that populate the scale.  These are Errors instead of assertions, because we have
+    // no control over that the user enters, and these query parameters may be provided when assertions are disabled.
+    if ( this.leftItemCreators.length !== EqualityExplorerQueryParameters.leftItems.length ) {
+      throw new Error( 'query parameter leftItems must have ' + this.leftItemCreators.length + ' values' );
+    }
+    if ( _.reduce( EqualityExplorerQueryParameters.leftItems, function( sum, n ) { return sum + n; } ) > this.scale.leftPlatform.numberOfCells ) {
+      throw new Error( 'query parameter leftItems contains too many items, max is ' + this.scale.leftPlatform.numberOfCells );
+    }
+    if ( this.rightItemCreators.length !== EqualityExplorerQueryParameters.rightItems.length ) {
+      throw new Error( 'query parameter rightItems must have ' + this.rightItemCreators.length + ' values' );
+    }
+    if ( _.reduce( EqualityExplorerQueryParameters.rightItems, function( sum, n ) { return sum + n; } ) > this.scale.rightPlatform.numberOfCells ) {
+      throw new Error( 'query parameter rightItems contains too many items, max is ' + this.scale.rightPlatform.numberOfCells );
+    }
   }
 
   equalityExplorer.register( 'BasicsScene', BasicsScene );
