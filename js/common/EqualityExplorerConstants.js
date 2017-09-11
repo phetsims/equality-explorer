@@ -24,7 +24,7 @@ define( function( require ) {
     TIMES: '\u00d7',
     DIVIDE: '\u00f7',
 
-    ITEM_HEIGHT: 16
+    ITEM_HEIGHT: 32
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

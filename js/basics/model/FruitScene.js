@@ -29,14 +29,14 @@ define( function( require ) {
 
     // icons for each Item type, identical heights
     var oneNode = new NumberNode( 1, {
-      radius: EqualityExplorerConstants.ITEM_HEIGHT,
+      radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
       fill: 'rgb( 246, 229, 214 )'
     } );
     var appleNode = new Image( appleImage, {
-      maxHeight: oneNode.height
+      maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
     } );
     var orangeNode = new Image( orangeImage, {
-      maxHeight: oneNode.height
+      maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
     } );
 
     var itemCreatorsIndex = 0;

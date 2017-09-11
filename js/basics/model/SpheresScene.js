@@ -17,18 +17,15 @@ define( function( require ) {
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
-  // constants
-  var ITEM_DIAMETER = 2 * EqualityExplorerConstants.ITEM_HEIGHT;
-
   /**
    * @constructor
    */
   function SpheresScene() {
 
     // icons for each Item type
-    var greenNode = new ShadedSphereNode( ITEM_DIAMETER, { mainColor: 'green' } );
-    var orangeNode = new ShadedSphereNode( ITEM_DIAMETER, { mainColor: 'orange' } );
-    var magentaNode = new ShadedSphereNode( ITEM_DIAMETER, { mainColor: 'magenta' } );
+    var greenNode = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'green' } );
+    var orangeNode = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'orange' } );
+    var magentaNode = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'magenta' } );
 
     var itemCreatorsIndex = 0;
     var leftItemCreators = [

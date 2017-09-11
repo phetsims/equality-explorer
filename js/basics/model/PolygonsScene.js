@@ -24,16 +24,16 @@ define( function( require ) {
   function PolygonsScene() {
 
     // icons for each Item type
-    var hexagonNode = new Path( Shape.regularPolygon( 6, EqualityExplorerConstants.ITEM_HEIGHT ), {
+    var hexagonNode = new Path( Shape.regularPolygon( 6, EqualityExplorerConstants.ITEM_HEIGHT / 2 ), {
       fill: 'rgb( 124, 69, 157 )'
     } );
 
-    var diamondSideLength = EqualityExplorerConstants.ITEM_HEIGHT * Math.sin( Math.PI / 3 );
+    var diamondSideLength = EqualityExplorerConstants.ITEM_HEIGHT * Math.sin( Math.PI / 3 ) / 2;
     var diamondNode = new Path( Shape.regularPolygon( 4, diamondSideLength ), {
       fill: 'red'
     } );
 
-    var triangleSideLength = EqualityExplorerConstants.ITEM_HEIGHT / Math.sin( Math.PI / 3 );
+    var triangleSideLength = EqualityExplorerConstants.ITEM_HEIGHT / Math.sin( Math.PI / 3 ) / 2;
     var triangleNode = new Path( Shape.regularPolygon( 3, triangleSideLength ), {
       fill: 'rgb( 155, 205, 100 )',
       rotation: -Math.PI / 2
