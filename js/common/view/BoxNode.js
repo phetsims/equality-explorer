@@ -2,7 +2,7 @@
 
 //TODO migrate to common code?
 /**
- * A pseudo-3D box, with perspective.
+ * A pseudo-3D box, with perspective. The front and top faces are visible.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
