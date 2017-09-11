@@ -9,5 +9,3 @@ Reconsider "white rectangle" feature?
 IMPLEMENTATION
 
 snapshots
-
-
