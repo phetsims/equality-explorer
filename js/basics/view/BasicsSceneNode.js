@@ -56,7 +56,10 @@ define( function( require ) {
     var equationAccordionBox = new EquationAccordionBox(
       scene.leftItemCreators, scene.rightItemCreators, {
         expandedProperty: this.equationAccordionBoxExpandedProperty,
-        centerX: scene.scale.location.x,
+
+        // Slightly off center, so that the equation's relational operator is horizontally centered
+        // above the scale's arrow. The offset was determined empirically.
+        centerX: scene.scale.location.x - 15,
         top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
       } );
 
