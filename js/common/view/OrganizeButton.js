@@ -26,7 +26,7 @@ define( function( require ) {
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW
     }, options );
 
-    //TODO finalize icon for OrganizeButton
+    //TODO finalize icon for OrganizeButton, see https://github.com/phetsims/equality-explorer/issues/9
     var diameter = 7;
     var spacing = 3;
     var iconShape = new Shape()
