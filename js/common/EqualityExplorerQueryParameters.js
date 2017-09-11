@@ -43,6 +43,7 @@ define( function( require ) {
 
     // Number of items that are initially on the left weighing platform.
     // This is intended to be used for debugging and testing, not in production situations.
+    // See https://github.com/phetsims/equality-explorer/issues/8
     leftItems: {
       type: 'array',
       elementSchema: {
