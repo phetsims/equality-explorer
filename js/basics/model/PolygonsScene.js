@@ -34,26 +34,29 @@ define( function( require ) {
    * @constructor
    */
   function PolygonsScene() {
-    BasicsScene.call( this, HEXAGON_NODE, createItemCreators(), createItemCreators() );
+    BasicsScene.call( this, HEXAGON_NODE,
+      createItemCreators( EqualityExplorerQueryParameters.leftItems ),
+      createItemCreators( EqualityExplorerQueryParameters.rightItems ) );
   }
 
   equalityExplorer.register( 'PolygonsScene', PolygonsScene );
 
   /**
    * Creates the set of ItemCreators for this scene.
+   * @param {number[]} numberOfItemsOnScale
    * @returns {ItemCreator[]}
    */
-  function createItemCreators() {
+  function createItemCreators( numberOfItemsOnScale ) {
     var itemCreatorsIndex = 0;
     return [
       new ItemCreator( 'hexagon', 3, HEXAGON_NODE, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } ),
       new ItemCreator( 'diamond', 2, DIAMOND_NODE, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } ),
       new ItemCreator( 'triangle', 1, TRIANGLE_NODE, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } )
     ];
   }

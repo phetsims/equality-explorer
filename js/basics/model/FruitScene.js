@@ -38,26 +38,29 @@ define( function( require ) {
    * @constructor
    */
   function FruitScene() {
-    BasicsScene.call( this, APPLE_NODE, createItemCreators(), createItemCreators() );
+    BasicsScene.call( this, APPLE_NODE,
+      createItemCreators( EqualityExplorerQueryParameters.leftItems ),
+      createItemCreators( EqualityExplorerQueryParameters.rightItems ) );
   }
 
   equalityExplorer.register( 'FruitScene', FruitScene );
 
   /**
    * Creates the set of ItemCreators for this scene.
+   * @param {number[]} numberOfItemsOnScale
    * @returns {ItemCreator[]}
    */
-  function createItemCreators() {
+  function createItemCreators( numberOfItemsOnScale ) {
     var itemCreatorsIndex = 0;
     return [
       new ItemCreator( 'apple', 3, APPLE_NODE, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } ),
       new ItemCreator( 'orange', 2, ORANGE_NODE, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } ),
       new ItemCreator( 'one', 1, ONE_NODE, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ],
+        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ],
         constantTerm: true
       } )
     ];

@@ -26,26 +26,29 @@ define( function( require ) {
    * @constructor
    */
   function SpheresScene() {
-    BasicsScene.call( this, GREEN_SPHERE_NODE, createItemCreators(), createItemCreators() );
+    BasicsScene.call( this, GREEN_SPHERE_NODE,
+      createItemCreators( EqualityExplorerQueryParameters.leftItems ),
+      createItemCreators( EqualityExplorerQueryParameters.rightItems ) );
   }
 
   equalityExplorer.register( 'SpheresScene', SpheresScene );
 
   /**
    * Creates the set of ItemCreators for this scene.
+   * @param {number[]} numberOfItemsOnScale
    * @returns {ItemCreator[]}
    */
-  function createItemCreators() {
+  function createItemCreators( numberOfItemsOnScale ) {
     var itemCreatorsIndex = 0;
     return [
       new ItemCreator( 'greenSphere', 3, GREEN_SPHERE_NODE, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } ),
       new ItemCreator( 'orangeSphere', 2, ORANGE_SPHERE_NODE, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } ),
       new ItemCreator( 'magentaSphere', 1, MAGENTA_SPHERE_NODE, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } )
     ];
   }
