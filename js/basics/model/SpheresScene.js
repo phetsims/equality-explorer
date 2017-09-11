@@ -17,47 +17,38 @@ define( function( require ) {
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
+  // Nodes that are reused via scenery's DAG feature
+  var GREEN_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'green' } );
+  var ORANGE_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'orange' } );
+  var MAGENTA_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'magenta' } )
+
   /**
    * @constructor
    */
   function SpheresScene() {
-
-    // icons for each Item type
-    var greenNode = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'green' } );
-    var orangeNode = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'orange' } );
-    var magentaNode = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'magenta' } );
-
-    var itemCreatorsIndex = 0;
-    var leftItemCreators = [
-      new ItemCreator( 'greenSphere', 3, greenNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
-      } ),
-      new ItemCreator( 'orangeSphere', 2, orangeNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
-      } ),
-      new ItemCreator( 'magentaSphere', 1, magentaNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
-      } )
-    ];
-
-    //TODO duplicate code
-    itemCreatorsIndex = 0;
-    var rightItemCreators = [
-      new ItemCreator( 'greenSphere', 3, greenNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
-      } ),
-      new ItemCreator( 'orangeSphere', 2, orangeNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
-      } ),
-      new ItemCreator( 'magentaSphere', 1, magentaNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
-      } )
-    ];
-
-    BasicsScene.call( this, greenNode, leftItemCreators, rightItemCreators );
+    BasicsScene.call( this, GREEN_SPHERE_NODE, createItemCreators(), createItemCreators() );
   }
 
   equalityExplorer.register( 'SpheresScene', SpheresScene );
+
+  /**
+   * Creates the set of ItemCreators for this scene.
+   * @returns {ItemCreator[]}
+   */
+  function createItemCreators() {
+    var itemCreatorsIndex = 0;
+    return [
+      new ItemCreator( 'greenSphere', 3, GREEN_SPHERE_NODE, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'orangeSphere', 2, ORANGE_SPHERE_NODE, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'magentaSphere', 1, MAGENTA_SPHERE_NODE, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } )
+    ];
+  }
 
   return inherit( BasicsScene, SpheresScene );
 } );

@@ -18,58 +18,45 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
 
+  // Nodes that are reused via scenery's DAG feature
+  var HEXAGON_NODE = new Path( Shape.regularPolygon( 6, EqualityExplorerConstants.ITEM_HEIGHT / 2 ), {
+    fill: 'rgb( 124, 69, 157 )'
+  } );
+  var DIAMOND_NODE = new Path( Shape.regularPolygon( 4, EqualityExplorerConstants.ITEM_HEIGHT * Math.sin( Math.PI / 3 ) / 2 ), {
+    fill: 'red'
+  } );
+  var TRIANGLE_NODE = new Path( Shape.regularPolygon( 3, EqualityExplorerConstants.ITEM_HEIGHT / Math.sin( Math.PI / 3 ) / 2 ), {
+    fill: 'rgb( 155, 205, 100 )',
+    rotation: -Math.PI / 2
+  } );
+
   /**
    * @constructor
    */
   function PolygonsScene() {
-
-    // icons for each Item type
-    var hexagonNode = new Path( Shape.regularPolygon( 6, EqualityExplorerConstants.ITEM_HEIGHT / 2 ), {
-      fill: 'rgb( 124, 69, 157 )'
-    } );
-
-    var diamondSideLength = EqualityExplorerConstants.ITEM_HEIGHT * Math.sin( Math.PI / 3 ) / 2;
-    var diamondNode = new Path( Shape.regularPolygon( 4, diamondSideLength ), {
-      fill: 'red'
-    } );
-
-    var triangleSideLength = EqualityExplorerConstants.ITEM_HEIGHT / Math.sin( Math.PI / 3 ) / 2;
-    var triangleNode = new Path( Shape.regularPolygon( 3, triangleSideLength ), {
-      fill: 'rgb( 155, 205, 100 )',
-      rotation: -Math.PI / 2
-    } );
-
-    var itemCreatorsIndex = 0;
-    var leftItemCreators = [
-      new ItemCreator( 'hexagon', 3, hexagonNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
-      } ),
-      new ItemCreator( 'diamond', 2, diamondNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
-      } ),
-      new ItemCreator( 'triangle', 1, triangleNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
-      } )
-    ];
-
-    //TODO duplicate code
-    itemCreatorsIndex = 0;
-    var rightItemCreators = [
-      new ItemCreator( 'hexagon', 3, hexagonNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.rightItems[ itemCreatorsIndex++ ]
-      } ),
-      new ItemCreator( 'diamond', 2, diamondNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.rightItems[ itemCreatorsIndex++ ]
-      } ),
-      new ItemCreator( 'triangle', 1, triangleNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.rightItems[ itemCreatorsIndex++ ]
-      } )
-    ];
-
-    BasicsScene.call( this, hexagonNode, leftItemCreators, rightItemCreators );
+    BasicsScene.call( this, HEXAGON_NODE, createItemCreators(), createItemCreators() );
   }
 
   equalityExplorer.register( 'PolygonsScene', PolygonsScene );
+
+  /**
+   * Creates the set of ItemCreators for this scene.
+   * @returns {ItemCreator[]}
+   */
+  function createItemCreators() {
+    var itemCreatorsIndex = 0;
+    return [
+      new ItemCreator( 'hexagon', 3, HEXAGON_NODE, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'diamond', 2, DIAMOND_NODE, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } ),
+      new ItemCreator( 'triangle', 1, TRIANGLE_NODE, {
+        numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
+      } )
+    ];
+  }
 
   return inherit( BasicsScene, PolygonsScene );
 } );

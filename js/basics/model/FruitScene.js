@@ -22,56 +22,46 @@ define( function( require ) {
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
   var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
 
+  // Nodes that are reused via scenery's DAG feature
+  var ONE_NODE = new NumberNode( 1, {
+    radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
+    fill: 'rgb( 246, 229, 214 )'
+  } );
+  var APPLE_NODE = new Image( appleImage, {
+    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
+  } );
+  var ORANGE_NODE = new Image( orangeImage, {
+    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
+  } );
+
   /**
    * @constructor
    */
   function FruitScene() {
+    BasicsScene.call( this, APPLE_NODE, createItemCreators(), createItemCreators() );
+  }
 
-    // icons for each Item type, identical heights
-    var oneNode = new NumberNode( 1, {
-      radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
-      fill: 'rgb( 246, 229, 214 )'
-    } );
-    var appleNode = new Image( appleImage, {
-      maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
-    } );
-    var orangeNode = new Image( orangeImage, {
-      maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
-    } );
+  equalityExplorer.register( 'FruitScene', FruitScene );
 
+  /**
+   * Creates the set of ItemCreators for this scene.
+   * @returns {ItemCreator[]}
+   */
+  function createItemCreators() {
     var itemCreatorsIndex = 0;
-    var leftItemCreators = [
-      new ItemCreator( 'apple', 3, appleNode, {
+    return [
+      new ItemCreator( 'apple', 3, APPLE_NODE, {
         numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
       } ),
-      new ItemCreator( 'orange', 2, orangeNode, {
+      new ItemCreator( 'orange', 2, ORANGE_NODE, {
         numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ]
       } ),
-      new ItemCreator( 'one', 1, oneNode, {
+      new ItemCreator( 'one', 1, ONE_NODE, {
         numberOfItemsOnScale: EqualityExplorerQueryParameters.leftItems[ itemCreatorsIndex++ ],
         constantTerm: true
       } )
     ];
-
-    //TODO duplicate code
-    itemCreatorsIndex = 0;
-    var rightItemCreators = [
-      new ItemCreator( 'apple', 3, appleNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.rightItems[ itemCreatorsIndex++ ]
-      } ),
-      new ItemCreator( 'orange', 2, orangeNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.rightItems[ itemCreatorsIndex++ ]
-      } ),
-      new ItemCreator( 'one', 1, oneNode, {
-        numberOfItemsOnScale: EqualityExplorerQueryParameters.rightItems[ itemCreatorsIndex++ ],
-        constantTerm: true
-      } )
-    ];
-
-    BasicsScene.call( this, appleNode, leftItemCreators, rightItemCreators );
   }
-
-  equalityExplorer.register( 'FruitScene', FruitScene );
 
   return inherit( BasicsScene, FruitScene );
 } );
