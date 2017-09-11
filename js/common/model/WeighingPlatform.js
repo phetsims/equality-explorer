@@ -342,7 +342,7 @@ define( function( require ) {
     /**
      * Examines the grid from left to right, top to bottom, and returns the first empty cell.
      * @returns {Cell} null if the grid is full
-     * @private
+     * @public
      */
     getFirstEmptyCell: function() {
       var emptyCell = null;

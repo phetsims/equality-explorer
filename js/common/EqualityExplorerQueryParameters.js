@@ -43,6 +43,7 @@ define( function( require ) {
 
     // Number of items that are initially on the left weighing platform.
     // This is intended to be used for debugging and testing, not in production situations.
+    // See https://github.com/phetsims/equality-explorer/issues/8
     leftItems: {
       type: 'array',
       elementSchema: {
@@ -67,7 +68,7 @@ define( function( require ) {
   assert && assert( EqualityExplorerQueryParameters.gridSize.length === 2, 'invalid gridSize' );
   EqualityExplorerQueryParameters.gridSize = new Dimension2( EqualityExplorerQueryParameters.gridSize[ 0 ], EqualityExplorerQueryParameters.gridSize[ 1 ] );
 
-  //TODO migrate to common code? This is a pattern that I've been repeating.
+  //TODO migrate to common code? See https://github.com/phetsims/query-string-machine/issues/28
   if ( EqualityExplorerQueryParameters.log ) {
 
     // add a log function that displays messages in green

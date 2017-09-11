@@ -20,7 +20,7 @@ define( function( require ) {
   // Nodes that are reused via scenery's DAG feature
   var GREEN_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'green' } );
   var ORANGE_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'orange' } );
-  var MAGENTA_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'magenta' } )
+  var MAGENTA_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'magenta' } );
 
   /**
    * @constructor
