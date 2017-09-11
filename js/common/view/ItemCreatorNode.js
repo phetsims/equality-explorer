@@ -75,7 +75,7 @@ define( function( require ) {
 
     // Populate the scale after the sim is loaded, so that ItemCreatorNodes have valid locations.
     // This feature is for debugging and testing, not intended for production.
-    // See the leftItem and rightItem query parameters.
+    // See the leftItem and rightItem query parameters, and https://github.com/phetsims/equality-explorer/issues/8.
     var frameStartedCallback = function() {
       self.populateScale( itemCreator.numberOfItemsOnScale );
       phet.joist.sim.frameStartedEmitter.removeListener( frameStartedCallback );
