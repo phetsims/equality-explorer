@@ -39,7 +39,7 @@ define( function( require ) {
       },
       defaultValue: [ 6, 6 ], // rows, columns
       isValidValue: function( value ) {
-        return ( value.length === 2 );
+        return ( value.length === 2 ) && ( value[ 0 ] > 0 ) && ( value[ 1 ] > 0 );
       }
     },
 
