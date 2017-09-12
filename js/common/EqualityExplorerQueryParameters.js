@@ -51,7 +51,7 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0 ]
+      defaultValue: [ 0, 0, 0 ] // in the order that Items appear in the panel below the scale
     },
 
     // Similar to leftItems, but for the right weighing platform.
