@@ -38,12 +38,18 @@ define( function( require ) {
     options = _.extend( {
       location: new Vector2( 0, 0 ), // location of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
+
+      // options related to the weighing platform's look
       platformXInset: 45, // inset of the platforms from the ends of the beam
       platformYOffset: -50, // offset of the platform from the beam
       platformDiameter: 300, // diameter of the weighing platforms
-      gridSize: EqualityExplorerQueryParameters.gridSize, // {Dimension2} dimensions for weighing platform grid
+
+      // options related to the weighing platform's 2D grid
+      gridRows: EqualityExplorerQueryParameters.gridSize[ 0 ], // {number} rows in the grid
+      gridColumns: EqualityExplorerQueryParameters.gridSize[ 1 ], // {number} columns in grid
       gridXMargin: 2, // horizontal space between stacks of Items
       gridYMargin: 0  // vertical space between Items in each stack
+
     }, options );
 
     assert && assert( options.beamWidth - ( 2 * options.platformXInset ) > options.platformDiameter,
@@ -56,7 +62,6 @@ define( function( require ) {
     this.beamWidth = options.beamWidth;
     this.platformXInset = options.platformXInset;
     this.platformYOffset = options.platformYOffset;
-    this.gridSize = options.gridSize;
 
     // @private
     this.leftItemCreators = leftItemCreators;
@@ -79,7 +84,7 @@ define( function( require ) {
 
     //TODO support dynamic weight for changing value of x
     // maximum weight that a weighing platform can hold
-    var maxItems = this.gridSize.width * this.gridSize.height;
+    var maxItems = options.gridRows * options.gridColumns;
     var maxWeight = maxItemWeight * maxItems;
 
     var cellWidth = maxCellWidth + ( 2 * options.gridXMargin );
@@ -88,7 +93,7 @@ define( function( require ) {
     // @public (read-only) size of each cell in the grid
     this.cellSize = new Dimension2( cellWidth, cellHeight );
 
-    assert && assert( this.gridSize.width * this.cellSize.width <= options.platformDiameter,
+    assert && assert( options.gridColumns * this.cellSize.width <= options.platformDiameter,
       'grid is wider than platform' );
 
     // @public (read-only) {Property.<number>} angle of the scale in radians, zero is balanced
@@ -125,7 +130,8 @@ define( function( require ) {
     var platformOptions = {
       supportHeight: Math.abs( options.platformYOffset ),
       diameter: options.platformDiameter,
-      gridSize: this.gridSize,
+      gridRows: options.gridRows,
+      gridColumns: options.gridColumns,
       cellSize: this.cellSize
     };
 

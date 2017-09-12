@@ -104,8 +104,8 @@ define( function( require ) {
     // Grid where Items appear
     if ( EqualityExplorerQueryParameters.showGrid ) {
       options.children.push( new GridNode( {
-        rows: weighingPlatform.gridSize.height,
-        columns: weighingPlatform.gridSize.width,
+        rows: weighingPlatform.gridRows,
+        columns: weighingPlatform.gridColumns,
         cellSize: weighingPlatform.cellSize,
         centerX: 0,
         bottom: 0

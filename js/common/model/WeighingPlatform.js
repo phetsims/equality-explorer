@@ -30,7 +30,8 @@ define( function( require ) {
     options = _.extend( {
       supportHeight: 10, // height of the vertical support that connects the platform to the scale
       diameter: 20, // diameter of the platforms platter
-      gridSize: new Dimension2( 1, 1 ), // dimensions of the grid (columns x rows)
+      gridRows: 1, // rows in the 2D grid
+      gridColumns: 1, // columns in the 2D grid
       cellSize: new Dimension2( 5, 5 ) // dimensions of each cell in the grid
     }, options );
 
@@ -38,7 +39,8 @@ define( function( require ) {
     this.locationProperty = locationProperty;
     this.supportHeight = options.supportHeight;
     this.diameter = options.diameter;
-    this.gridSize = options.gridSize;
+    this.gridRows = options.gridRows;
+    this.gridColumns = options.gridColumns;
     this.cellSize = options.cellSize;
 
     // @private
@@ -48,9 +50,9 @@ define( function( require ) {
     // Initialized to empty, where null indicates an empty cell.
     // Indexed from upper-left of the grid, in row-major order.
     this.cells = [];
-    for ( var row = 0; row < this.gridSize.height; row++ ) {
+    for ( var row = 0; row < this.gridRows; row++ ) {
       var rowOfCells = [];
-      for ( var column = 0; column < this.gridSize.width; column++ ) {
+      for ( var column = 0; column < this.gridColumns; column++ ) {
         rowOfCells.push( null );
       }
       this.cells.push( rowOfCells );
@@ -108,8 +110,8 @@ define( function( require ) {
      * @private
      */
     updateItemLocations: function() {
-      for ( var row = 0; row < this.gridSize.height; row++ ) {
-        for ( var column = 0; column < this.gridSize.width; column++ ) {
+      for ( var row = 0; row < this.gridRows; row++ ) {
+        for ( var column = 0; column < this.gridColumns; column++ ) {
           var cell = new Cell( row, column );
           var item = this.getItemInCell( cell );
           item && item.moveTo( this.getCellLocation( cell ) );
@@ -189,7 +191,7 @@ define( function( require ) {
         this.clearAllCells();
 
         // start with the bottom-left cell
-        var row = this.gridSize.height - 1;
+        var row = this.gridRows - 1;
         var column = 0;
 
         this.itemCreators.forEach( function( itemCreator ) {
@@ -215,7 +217,7 @@ define( function( require ) {
                 else {
 
                   // start a new column
-                  row = self.gridSize.height - 1;
+                  row = self.gridRows - 1;
                   column++;
                 }
               }
@@ -225,9 +227,9 @@ define( function( require ) {
 
               // Start a new column if we have enough cells to the right of the current column.
               // Otherwise continue to fill the current column.
-              var numberOfCellsToRight = ( self.gridSize.width - column - 1 ) * self.gridSize.height;
+              var numberOfCellsToRight = ( self.gridColumns - column - 1 ) * self.gridRows;
               if ( numberOfCellsToRight >= numberOfItemsToOrganize ) {
-                row = self.gridSize.height - 1;
+                row = self.gridRows - 1;
                 column++;
               }
               else {
@@ -239,16 +241,16 @@ define( function( require ) {
         assert && assert( numberOfItemsToOrganize === 0 );
 
         // Center the stacks on the platform by shifting Items to the right.
-        var numberOfEmptyColumns = self.gridSize.width - column - 1;
-        var numberOfColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
-        if ( numberOfColumnsToShiftRight > 0 ) {
-          for ( row = self.gridSize.height - 1; row >= 0; row-- ) {
-            for ( column = self.gridSize.width - 1; column >= 0; column-- ) {
+        var numberOfEmptyColumns = self.gridColumns - column - 1;
+        var gridColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
+        if ( gridColumnsToShiftRight > 0 ) {
+          for ( row = self.gridRows - 1; row >= 0; row-- ) {
+            for ( column = self.gridColumns - 1; column >= 0; column-- ) {
               var cell = new Cell( row, column );
               var item = this.getItemInCell( cell );
               if ( item ) {
                 this.clearCell( cell );
-                this.putItemInCell( item, new Cell( row, column + numberOfColumnsToShiftRight ) );
+                this.putItemInCell( item, new Cell( row, column + gridColumnsToShiftRight ) );
               }
             }
           }
@@ -275,7 +277,7 @@ define( function( require ) {
      */
     getCellForItem: function( item ) {
       var cell = null;
-      for ( var row = 0; row < this.gridSize.height && !cell; row++ ) {
+      for ( var row = 0; row < this.gridRows && !cell; row++ ) {
         var column = this.cells[ row ].indexOf( item );
         if ( column !== -1 ) {
           cell = new Cell( row, column );
@@ -312,8 +314,8 @@ define( function( require ) {
       var currentCell = null; // the cell we're currently examining
 
       // Find the closest cell based on distance
-      for ( var row = 0; row < this.gridSize.height; row++ ) {
-        for ( var column = 0; column < this.gridSize.width; column++ ) {
+      for ( var row = 0; row < this.gridRows; row++ ) {
+        for ( var column = 0; column < this.gridColumns; column++ ) {
           var cell = new Cell( row, column );
           if ( this.isEmptyCell( cell ) ) {
             currentCell = cell;
@@ -328,7 +330,7 @@ define( function( require ) {
 
       // Now look below the closest cell to see if there are any empty cells in the same row.
       // This accounts for gravity, so Items fall to the cell that is closest to the bottom of the grid.
-      for ( row = this.gridSize.height - 1; row > closestCell.row; row-- ) {
+      for ( row = this.gridRows - 1; row > closestCell.row; row-- ) {
         currentCell = new Cell( row, closestCell.column );
         if ( this.isEmptyCell( currentCell ) ) {
           closestCell = currentCell;
@@ -346,8 +348,8 @@ define( function( require ) {
      */
     getFirstEmptyCell: function() {
       var emptyCell = null;
-      for ( var row = this.gridSize.height - 1; row >= 0; row-- ) {
-        for ( var column = 0; column < this.gridSize.width && !emptyCell; column++ ) {
+      for ( var row = this.gridRows - 1; row >= 0; row-- ) {
+        for ( var column = 0; column < this.gridColumns && !emptyCell; column++ ) {
           var cell = new Cell( row, column );
           if ( this.isEmptyCell( cell ) ) {
             emptyCell = cell;
@@ -379,8 +381,8 @@ define( function( require ) {
      * @private
      */
     getGridUpperLeft: function() {
-      var x = this.locationProperty.value.x - ( this.gridSize.width * this.cellSize.width ) / 2;
-      var y = this.locationProperty.value.y - ( this.gridSize.height * this.cellSize.height );
+      var x = this.locationProperty.value.x - ( this.gridColumns * this.cellSize.width ) / 2;
+      var y = this.locationProperty.value.y - ( this.gridRows * this.cellSize.height );
       return new Vector2( x, y );
     },
 
@@ -392,8 +394,8 @@ define( function( require ) {
     assertValidCell: function( cell ) {
       if ( assert ) {
         assert( cell instanceof Cell );
-        assert( cell.row >= 0 && cell.row < this.gridSize.height, 'row out of bounds: ' + cell.row );
-        assert( cell.column >= 0 && cell.column < this.gridSize.width, 'column out of bounds: ' + cell.column );
+        assert( cell.row >= 0 && cell.row < this.gridRows, 'row out of bounds: ' + cell.row );
+        assert( cell.column >= 0 && cell.column < this.gridColumns, 'column out of bounds: ' + cell.column );
       }
     },
 
@@ -403,7 +405,7 @@ define( function( require ) {
      * @public
      */
     get numberOfCells() {
-      return this.gridSize.width * this.gridSize.height;
+      return this.gridColumns * this.gridRows;
     },
 
     /**
@@ -445,8 +447,8 @@ define( function( require ) {
      * @private
      */
     clearAllCells: function() {
-      for ( var row = 0; row < this.gridSize.height; row++ ) {
-        for ( var column = 0; column < this.gridSize.width; column++ ) {
+      for ( var row = 0; row < this.gridRows; row++ ) {
+        for ( var column = 0; column < this.gridColumns; column++ ) {
           this.clearCell( new Cell( row, column ) );
         }
       }

@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
@@ -38,7 +37,10 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 6, 6 ]
+      defaultValue: [ 6, 6 ], // rows, columns
+      isValidValue: function( value ) {
+        return ( value.length === 2 );
+      }
     },
 
     // Number of items that are initially on the left weighing platform.
@@ -63,10 +65,6 @@ define( function( require ) {
   } );
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
-
-  // coerce gridSize to Dimension2
-  assert && assert( EqualityExplorerQueryParameters.gridSize.length === 2, 'invalid gridSize' );
-  EqualityExplorerQueryParameters.gridSize = new Dimension2( EqualityExplorerQueryParameters.gridSize[ 0 ], EqualityExplorerQueryParameters.gridSize[ 1 ] );
 
   //TODO migrate to common code? See https://github.com/phetsims/query-string-machine/issues/28
   if ( EqualityExplorerQueryParameters.log ) {
