@@ -64,13 +64,7 @@ define( function( require ) {
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
 
   // log the values of all sim-specific query parameters
-  if ( phet.log ) {
-    for ( var property in EqualityExplorerQueryParameters ) {
-      if ( EqualityExplorerQueryParameters.hasOwnProperty( property ) ) {
-        phet.log( property + '=' + EqualityExplorerQueryParameters[ property ] );
-      }
-    }
-  }
+  phet.log && phet.log( 'query parameters: ' + JSON.stringify( EqualityExplorerQueryParameters, null, 2 ) );
 
   return EqualityExplorerQueryParameters;
 } );
