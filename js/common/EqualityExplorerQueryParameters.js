@@ -13,9 +13,6 @@ define( function( require ) {
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
-    // Enables console logging.
-    log: { type: 'flag' },
-
     // Makes all animation run slowly, so that things are easier to grab while they're animating.
     // Useful for testing multi-touch.
     slowMotion: { type: 'flag' },
@@ -66,18 +63,11 @@ define( function( require ) {
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
 
-  //TODO migrate to common code? See https://github.com/phetsims/query-string-machine/issues/28
-  if ( EqualityExplorerQueryParameters.log ) {
-
-    // add a log function that displays messages in green
-    equalityExplorer.log = function( message ) {
-      console.log( '%clog: ' + message, 'color: #009900' );
-    };
-
-    // log the values of all query parameters
+  // log the values of all sim-specific query parameters
+  if ( phet.log ) {
     for ( var property in EqualityExplorerQueryParameters ) {
       if ( EqualityExplorerQueryParameters.hasOwnProperty( property ) ) {
-        equalityExplorer.log( property + '=' + EqualityExplorerQueryParameters[ property ] );
+        phet.log( property + '=' + EqualityExplorerQueryParameters[ property ] );
       }
     }
   }
