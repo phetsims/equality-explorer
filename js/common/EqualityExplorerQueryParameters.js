@@ -24,7 +24,8 @@ define( function( require ) {
     // Shows the grid on each of the weighing platforms.
     showGrid: { type: 'flag' },
 
-    // Shows the drag bounds for Items
+    // Shows the drag bounds for Items.
+    // Rendered as a dotted rectangle, color coded to the associated weighing platform.
     showDragBounds: { type: 'flag' },
 
     // Size of the grid on the scale's weighing platforms.
