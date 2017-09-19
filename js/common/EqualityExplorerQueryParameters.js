@@ -18,7 +18,7 @@ define( function( require ) {
     // Useful for testing multi-touch.
     slowMotion: { type: 'flag' },
 
-    // Shows the origin of various objects, typically rendered as a red dot.
+    // Shows the origin of various objects, rendered as a red dot.
     showOrigin: { type: 'flag' },
 
     // Shows the grid on each of the weighing platforms.
