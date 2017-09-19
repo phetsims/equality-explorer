@@ -39,9 +39,10 @@ define( function( require ) {
 
     options = _.extend( {
 
+      numberOfSnapshots: 5,
+
       // supertype options
       maxWidth: 100,
-      numberOfSnapshots: 5,
       fill: 'white',
       titleAlignX: 'left',
       titleXSpacing: 8,
@@ -52,10 +53,12 @@ define( function( require ) {
       buttonTouchAreaYDilation: 5,
       contentXMargin: 10,
       contentYMargin: 10
+
     }, options );
 
     // title
-    options.titleNode = options.titleNode || new Text( snapshotsString, {
+    assert && assert( !options.titleNode, 'sets its own titleNode' );
+    options.titleNode = new Text( snapshotsString, {
         font: new PhetFont( 18 ),
         maxWidth: 0.85 * options.maxWidth
       } );
