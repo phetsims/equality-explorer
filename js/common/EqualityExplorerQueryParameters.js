@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Util = require( 'DOT/Util' );
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
@@ -48,7 +49,11 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0 ] // in the order that Items appear in the panel below the scale
+      defaultValue: [ 0, 0, 0 ], // in the order that Items appear in the panel below the scale
+      isValidValue: function( array ) {
+        // all values are positive integers
+        return _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } );
+      }
     },
 
     // Similar to leftItems, but for the right weighing platform.
@@ -57,7 +62,10 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0 ]
+      defaultValue: [ 0, 0, 0 ],
+      isValidValue: function( array ) {
+        return _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } );
+      }
     }
   } );
 
