@@ -51,7 +51,7 @@ define( function( require ) {
       },
       defaultValue: [ 0, 0, 0 ], // in the order that Items appear in the panel below the scale
       isValidValue: function( array ) {
-        // all values are positive integers
+        // all values are zero or positive integers
         return _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } );
       }
     },
