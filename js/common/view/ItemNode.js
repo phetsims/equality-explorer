@@ -60,7 +60,7 @@ define( function( require ) {
         self.moveToFront();
 
         // move up slightly
-        self.item.locationProperty.value = self.item.locationProperty.value.plusXY( 0, -5 );
+        self.item.locationProperty.value = self.item.locationProperty.value.plusXY( -5, -5 );
 
         if ( weighingPlatform.containsItem( item ) ) {
           weighingPlatform.removeItem( item );
