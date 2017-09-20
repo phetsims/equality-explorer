@@ -6,6 +6,29 @@ DESIGN
 Reconsider "white rectangle" feature?
 
 ------------------------------------------------------------------------------------------------------------------------
+REQUIREMENTS
+
+Ghost moves y-proportionally below the plate. Above the plate tracks exactly. x-axis movement is tracked exactly.
+
+Animation of ghost and dragged item occurs such that they arrive at their cells at same time.
+
+If left plate is full, can still drag out of right panel, but items will always fly back to panels.
+
+Solving: No limit to number of items to pull out of panels.
+
+------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
 snapshots
+
+REQUIREMENTS
+
+Ghost moves y-proportionally below the plate. Above the plate tracks exactly. x-axis movement is tracked exactly.
+
+Animation of ghost and dragged item occurs such that they arrive at their cells at same time.
+
+If left plate is full, can still drag out of right panel, but items will always fly back to panels.
+
+No limit to number of items to pull out of panels in Solving.
+
+On drag start, pop up and left (scale and panels).
