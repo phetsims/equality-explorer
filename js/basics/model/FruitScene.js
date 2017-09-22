@@ -51,15 +51,22 @@ define( function( require ) {
    * @returns {ItemCreator[]}
    */
   function createItemCreators( numberOfItemsOnScale ) {
+
+    //TODO get rid of fruitWeights query parameter when things have stabilized
+    var fruitWeights = EqualityExplorerQueryParameters.fruitWeights || [ 3, 2, 1 ];
+    if ( fruitWeights.length !== 3 ) {
+      throw new Error( 'fruitWeights query parameter requires 3 values' );
+    }
+
     var itemCreatorsIndex = 0;
     return [
-      new ItemCreator( 'apple', 3, APPLE_NODE, {
+      new ItemCreator( 'apple', fruitWeights[ 0 ], APPLE_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } ),
-      new ItemCreator( 'orange', 2, ORANGE_NODE, {
+      new ItemCreator( 'orange', fruitWeights[ 1 ], ORANGE_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } ),
-      new ItemCreator( 'one', 1, ONE_NODE, {
+      new ItemCreator( 'one', fruitWeights[ 2 ], ONE_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ],
         constantTerm: true
       } )

@@ -67,6 +67,17 @@ define( function( require ) {
       isValidValue: function( array ) {
         return _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } );
       }
+    },
+
+    //TODO get rid of fruitWeights query parameter when things have stabilized
+    // Specify the weights for Items in Fruit scene of the Basics screen.
+    // This is a development feature for testing how the scale moves with various weights.
+    fruitWeights: {
+      type: 'array',
+      elementSchema: {
+        type: 'number'
+      },
+      defaultValue: null
     }
   } );
 
