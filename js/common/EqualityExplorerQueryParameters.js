@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Util = require( 'DOT/Util' );
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
