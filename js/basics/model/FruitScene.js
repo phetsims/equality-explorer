@@ -52,8 +52,7 @@ define( function( require ) {
    */
   function createItemCreators( numberOfItemsOnScale ) {
 
-    //TODO get rid of fruitWeights query parameter when things have stabilized
-    var fruitWeights = EqualityExplorerQueryParameters.fruitWeights || [ 3, 2, 1 ];
+    var fruitWeights = EqualityExplorerQueryParameters.fruitWeights;
     if ( fruitWeights.length !== 3 ) {
       throw new Error( 'fruitWeights query parameter requires 3 values' );
     }

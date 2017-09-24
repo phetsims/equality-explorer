@@ -44,7 +44,7 @@ define( function( require ) {
   var BEAM_DEPTH = 8;
   
   // beam pivot
-  var FULCRUM_HEIGHT = 40;
+  var FULCRUM_HEIGHT = EqualityExplorerQueryParameters.fulcrumHeight;
   var FULCRUM_TOP_WIDTH = 15;
   var FULCRUM_BOTTOM_WIDTH = 25;
 

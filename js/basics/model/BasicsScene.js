@@ -46,8 +46,9 @@ define( function( require ) {
     this.rightItemCreators = rightItemCreators;
 
     // @public (read-only)
+    var yOffset = EqualityExplorerQueryParameters.fulcrumHeight - EqualityExplorerConstants.FULCRUM_HEIGHT;
     this.scale = new BalanceScale( this.leftItemCreators, this.rightItemCreators, {
-      location: new Vector2( 355, 425 )
+      location: new Vector2( 355, 425 - yOffset )
     } );
 
     // @public (read-only, for debugging) drag bounds for left platform

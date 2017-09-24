@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Util = require( 'DOT/Util' );
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
@@ -69,7 +70,7 @@ define( function( require ) {
       }
     },
 
-    //TODO get rid of fruitWeights query parameter when things have stabilized
+    //TODO delete fruitWeights query parameter when design has stabilized
     // Specify the weights for Items in Fruit scene of the Basics screen.
     // This is a development feature for testing how the scale moves with various weights.
     fruitWeights: {
@@ -77,7 +78,36 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: null
+      defaultValue: [ 3, 2, 1 ]
+    },
+
+    // TODO delete fulcrumHeight query parameter when design has stabilized
+    // Height of the scale's fulcrum, on which the balance beam sits.
+    fulcrumHeight: {
+      type: 'number',
+      defaultValue: EqualityExplorerConstants.FULCRUM_HEIGHT,
+      isValidValue: function( value ) {
+        return value > 0;
+      }
+    },
+
+    // TODO delete plateSupportHeight query parameter when design has stabilized
+    plateSupportHeight: {
+      type: 'number',
+      defaultValue: EqualityExplorerConstants.PLATE_SUPPORT_HEIGHT,
+      isValidValue: function( value ) {
+        return value > 0;
+      }
+    },
+
+    // TODO delete maxScaleAngle query parameter when design has stabilized
+    // maximum angle that the scale can move (plus or minus) in degrees
+    maxScaleAngle: {
+      type: 'number',
+      defaultValue: EqualityExplorerConstants.MAX_SCALE_ANGLE * 180 / Math.PI, // radians to degrees
+      isValidValue: function( value ) {
+        return value > 0 && value < 90;
+      }
     }
   } );
 

@@ -23,7 +23,7 @@ define( function( require ) {
   var WeighingPlatform = require( 'EQUALITY_EXPLORER/common/model/WeighingPlatform' );
 
   // constants
-  var MAX_SCALE_ANGLE = Math.PI / 15; // maximum rotation angle of the scale
+  var MAX_SCALE_ANGLE = EqualityExplorerQueryParameters.maxScaleAngle * Math.PI / 180;  // degrees to radians
 
   /**
    * @param {ItemCreator[]} leftItemCreators
@@ -41,7 +41,9 @@ define( function( require ) {
 
       // options related to the weighing platform's look
       platformXInset: 45, // inset of the platforms from the ends of the beam
-      platformYOffset: -50, // offset of the platform from the beam
+
+      //TODO fix this
+      platformYOffset: -( EqualityExplorerQueryParameters.plateSupportHeight ) , // offset of the platform from the beam
       platformDiameter: 300, // diameter of the weighing platforms
 
       // options related to the weighing platform's 2D grid
