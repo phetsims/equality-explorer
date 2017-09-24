@@ -28,6 +28,7 @@ define( function( require ) {
     // Rendered as a dotted rectangle, color coded to the associated plate.
     showDragBounds: { type: 'flag' },
 
+    //TODO delete gridSize when design has stabilized
     // Size of the grid on the scale's plates.
     // A grid size that exceeds the width of the plates will result in an assertion failure.
     // Setting to a smaller gridSize is useful for testing what happens when the scale is full.
@@ -69,7 +70,7 @@ define( function( require ) {
       }
     },
 
-    //TODO delete fruitWeights query parameter when design has stabilized
+    //TODO delete fruitWeights when design has stabilized
     // Specify the weights for Items in Fruit scene of the Basics screen.
     // This is a development feature for testing how the scale moves with various weights.
     fruitWeights: {
@@ -80,7 +81,7 @@ define( function( require ) {
       defaultValue: [ 3, 2, 1 ]
     },
 
-    // TODO delete fulcrumHeight query parameter when design has stabilized
+    // TODO delete fulcrumHeight when design has stabilized
     // Height of the scale's fulcrum, on which the balance beam sits.
     fulcrumHeight: {
       type: 'number',
@@ -90,7 +91,7 @@ define( function( require ) {
       }
     },
 
-    // TODO delete plateSupportHeight query parameter when design has stabilized
+    // TODO delete plateSupportHeight when design has stabilized
     plateSupportHeight: {
       type: 'number',
       defaultValue: 50,
@@ -99,7 +100,7 @@ define( function( require ) {
       }
     },
 
-    // TODO delete maxScaleAngle query parameter when design has stabilized
+    // TODO delete maxScaleAngle when design has stabilized
     // maximum angle that the scale can move (plus or minus) in degrees
     maxScaleAngle: {
       type: 'number',
@@ -109,7 +110,7 @@ define( function( require ) {
       }
     },
 
-    // TODO delete scaleY query parameter when design has stabilized
+    // TODO delete scaleY when design has stabilized
     // y coordinate for the scale's location, the point where the fulcrum contacts the balance beam
     scaleY: {
       type: 'number',
