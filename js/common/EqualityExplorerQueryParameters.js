@@ -85,7 +85,7 @@ define( function( require ) {
     // Height of the scale's fulcrum, on which the balance beam sits.
     fulcrumHeight: {
       type: 'number',
-      defaultValue: EqualityExplorerConstants.FULCRUM_HEIGHT,
+      defaultValue: 40,
       isValidValue: function( value ) {
         return value > 0;
       }
@@ -94,7 +94,7 @@ define( function( require ) {
     // TODO delete plateSupportHeight query parameter when design has stabilized
     plateSupportHeight: {
       type: 'number',
-      defaultValue: EqualityExplorerConstants.PLATE_SUPPORT_HEIGHT,
+      defaultValue: 50,
       isValidValue: function( value ) {
         return value > 0;
       }
@@ -104,10 +104,17 @@ define( function( require ) {
     // maximum angle that the scale can move (plus or minus) in degrees
     maxScaleAngle: {
       type: 'number',
-      defaultValue: EqualityExplorerConstants.MAX_SCALE_ANGLE * 180 / Math.PI, // radians to degrees
+      defaultValue: 12, // degrees
       isValidValue: function( value ) {
         return value > 0 && value < 90;
       }
+    },
+
+    // TODO delete scaleY query parameter when design has stabilized
+    // y coordinate for the scale's location, the point where the fulcrum contacts the balance beam
+    scaleY: {
+      type: 'number',
+      defaultValue: 420
     }
   } );
 
