@@ -2,10 +2,10 @@
 
 /**
  * Model of a balance scale.
- * Consists of 2 weighing platforms that sit on either ends of a beam.
+ * Consists of 2 plates that sit on either ends of a beam.
  * The center of the beam is balanced on a fulcrum.
  * Origin is at the point where the beam is balanced on the fulcrum.
- * Items are arranged in a 2D (xy) grid on each weighing platform.
+ * Items are arranged in a 2D (xy) grid on each plate.
  *
  * @author Chris Malley (PixelZoom, Inc)
  */
@@ -18,9 +18,9 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
   var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
-  var WeighingPlatform = require( 'EQUALITY_EXPLORER/common/model/WeighingPlatform' );
 
   // constants
   var MAX_SCALE_ANGLE = EqualityExplorerQueryParameters.maxScaleAngle * Math.PI / 180;  // degrees to radians
@@ -39,14 +39,12 @@ define( function( require ) {
       location: new Vector2( 0, 0 ), // location of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
 
-      // options related to the weighing platform's look
-      platformXInset: 45, // inset of the platforms from the ends of the beam
+      // height of vertical support that connects plate to beam
+      plateSupportHeight: EqualityExplorerQueryParameters.plateSupportHeight,
+      plateDiameter: 300, // diameter of the plates
+      plateXInset: 45, // inset of the plates from the ends of the beam
 
-      //TODO fix this
-      platformYOffset: -( EqualityExplorerQueryParameters.plateSupportHeight ) , // offset of the platform from the beam
-      platformDiameter: 300, // diameter of the weighing platforms
-
-      // options related to the weighing platform's 2D grid
+      // options related to the plate's 2D grid
       gridRows: EqualityExplorerQueryParameters.gridSize[ 0 ], // {number} rows in the grid
       gridColumns: EqualityExplorerQueryParameters.gridSize[ 1 ], // {number} columns in grid
       gridXMargin: 2, // horizontal space between stacks of Items
@@ -54,16 +52,13 @@ define( function( require ) {
 
     }, options );
 
-    assert && assert( options.beamWidth - ( 2 * options.platformXInset ) > options.platformDiameter,
-      'platforms will overlap' );
+    assert && assert( options.beamWidth - ( 2 * options.plateXInset ) > options.plateDiameter, 'plates will overlap' );
 
     // @public (read-only)
     this.location = options.location;
 
     // @public (read-only)
     this.beamWidth = options.beamWidth;
-    this.platformXInset = options.platformXInset;
-    this.platformYOffset = options.platformYOffset;
 
     // @private
     this.leftItemCreators = leftItemCreators;
@@ -85,7 +80,7 @@ define( function( require ) {
     } );
 
     //TODO support dynamic weight for changing value of x
-    // maximum weight that a weighing platform can hold
+    // maximum weight that a plate can hold
     var maxItems = options.gridRows * options.gridColumns;
     var maxWeight = maxItemWeight * maxItems;
 
@@ -95,55 +90,53 @@ define( function( require ) {
     // @public (read-only) size of each cell in the grid
     this.cellSize = new Dimension2( cellWidth, cellHeight );
 
-    assert && assert( options.gridColumns * this.cellSize.width <= options.platformDiameter,
-      'grid is wider than platform' );
+    assert && assert( options.gridColumns * this.cellSize.width <= options.plateDiameter, 'grid is wider than plate' );
 
     // @public (read-only) {Property.<number>} angle of the scale in radians, zero is balanced
     this.angleProperty = new Property( 0 );
 
-    // {DerivedProperty.<number>} location of the right weighing platform
+    // {DerivedProperty.<number>} location of the right plate
     var rightLocationProperty = new DerivedProperty( [ this.angleProperty ],
       function( angle ) {
-        var absXInset = Math.abs( self.platformXInset );
-        var absYOffset = Math.abs( self.platformYOffset );
+        var absXInset = Math.abs( options.plateXInset );
         if ( angle === 0 ) {
-          return new Vector2( self.location.x + ( self.beamWidth / 2 ) - absXInset, self.location.y - absYOffset );
+          return new Vector2( self.location.x + ( self.beamWidth / 2 ) - absXInset,
+            self.location.y - options.plateSupportHeight );
         }
         else {
           var hypotenuse = ( self.beamWidth / 2 ) - absXInset;
           var dx = Math.cos( angle ) * hypotenuse;
           var dy = Math.sin( angle ) * hypotenuse;
-          return new Vector2( self.location.x + dx, self.location.y + dy - absYOffset );
+          return new Vector2( self.location.x + dx, self.location.y + dy - options.plateSupportHeight );
         }
       }
     );
 
-    // {DerivedProperty.<number>} location of the left weighing platform
+    // {DerivedProperty.<number>} location of the left plate
     var leftLocationProperty = new DerivedProperty( [ rightLocationProperty ],
       function( rightLocation ) {
-        var absYOffset = Math.abs( self.platformYOffset );
         var dx = rightLocation.x - self.location.x;
-        var dy = ( rightLocation.y + absYOffset ) - self.location.y;
-        return new Vector2( self.location.x - dx, self.location.y - dy - absYOffset );
+        var dy = ( rightLocation.y + options.plateSupportHeight ) - self.location.y;
+        return new Vector2( self.location.x - dx, self.location.y - dy - options.plateSupportHeight );
       }
     );
 
-    // options that apply to both weighing platforms
-    var platformOptions = {
-      supportHeight: Math.abs( options.platformYOffset ),
-      diameter: options.platformDiameter,
+    // options that apply to both plates
+    var plateOptions = {
+      supportHeight: options.plateSupportHeight,
+      diameter: options.plateDiameter,
       gridRows: options.gridRows,
       gridColumns: options.gridColumns,
       cellSize: this.cellSize
     };
 
     // @public (read-only)
-    this.leftPlatform = new WeighingPlatform( leftLocationProperty, leftItemCreators, platformOptions );
-    this.rightPlatform = new WeighingPlatform( rightLocationProperty, rightItemCreators, platformOptions );
+    this.leftPlate = new Plate( leftLocationProperty, leftItemCreators, plateOptions );
+    this.rightPlate = new Plate( rightLocationProperty, rightItemCreators, plateOptions );
 
     //TODO angleProperty should be derived, but leftLocationProperty and rightLocationProperty depend on it
     // unlink is unnecessary
-    Property.multilink( [ this.leftPlatform.weightProperty, this.rightPlatform.weightProperty ],
+    Property.multilink( [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
       function( leftWeight, rightWeight ) {
         var angle = ( ( rightWeight - leftWeight ) / maxWeight ) * MAX_SCALE_ANGLE;
         assert && assert( Math.abs( angle ) <= MAX_SCALE_ANGLE, 'angle out of range: ' + angle );
@@ -160,8 +153,8 @@ define( function( require ) {
      * @public
      */
     organize: function() {
-      this.leftPlatform.organize();
-      this.rightPlatform.organize();
+      this.leftPlate.organize();
+      this.rightPlate.organize();
     },
 
     /**

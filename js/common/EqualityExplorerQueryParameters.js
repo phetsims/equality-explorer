@@ -21,15 +21,15 @@ define( function( require ) {
     // Shows the origin of various objects, rendered as a red dot.
     showOrigin: { type: 'flag' },
 
-    // Shows the grid on each of the weighing platforms.
+    // Shows the grid on each of the plates.
     showGrid: { type: 'flag' },
 
     // Shows the drag bounds for Items.
-    // Rendered as a dotted rectangle, color coded to the associated weighing platform.
+    // Rendered as a dotted rectangle, color coded to the associated plate.
     showDragBounds: { type: 'flag' },
 
-    // Size of the grid on the scale's weighing platforms.
-    // A grid size that exceeds the width of the weighing platforms will result in an assertion failure.
+    // Size of the grid on the scale's plates.
+    // A grid size that exceeds the width of the plates will result in an assertion failure.
     // Setting to a smaller gridSize is useful for testing what happens when the scale is full.
     gridSize: {
       type: 'array',
@@ -42,7 +42,7 @@ define( function( require ) {
       }
     },
 
-    // Number of items that are initially on the left weighing platform.
+    // Number of items that are initially on the left plate.
     // This is intended to be used for debugging and testing, not in production situations.
     // See https://github.com/phetsims/equality-explorer/issues/8
     leftItems: {
@@ -57,7 +57,7 @@ define( function( require ) {
       }
     },
 
-    // Similar to leftItems, but for the right weighing platform.
+    // Similar to leftItems, but for the right plate.
     rightItems: {
       type: 'array',
       elementSchema: {

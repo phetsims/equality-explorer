@@ -17,12 +17,12 @@ define( function( require ) {
 
   /**
    * @param {ItemCreator} itemCreator
-   * @param {WeighingPlatform} weighingPlatform
+   * @param {Plate} plate
    * @param {Node} itemsLayer
    * @param {Object} [options]
    * @constructor
    */
-  function ItemCreatorNode( itemCreator, weighingPlatform, itemsLayer, options ) {
+  function ItemCreatorNode( itemCreator, plate, itemsLayer, options ) {
 
     var self = this;
 
@@ -37,7 +37,7 @@ define( function( require ) {
 
     // @private
     this.itemCreator = itemCreator;
-    this.weighingPlatform = weighingPlatform;
+    this.plate = plate;
     this.itemsLayer = itemsLayer;
 
     Node.call( this, options );
@@ -52,7 +52,7 @@ define( function( require ) {
         } );
 
         // create an ItemNode
-        var itemNode = new ItemNode( item, itemCreator, weighingPlatform );
+        var itemNode = new ItemNode( item, itemCreator, plate );
         itemsLayer.addChild( itemNode );
 
         // Clean up when the Item is disposed. Item.dispose handles removal of this listener.
@@ -108,13 +108,13 @@ define( function( require ) {
         } );
 
         // create an ItemNode
-        var itemNode = new ItemNode( item, this.itemCreator, this.weighingPlatform );
+        var itemNode = new ItemNode( item, this.itemCreator, this.plate );
         this.itemsLayer.addChild( itemNode );
 
         // put the Item on the scale
         this.itemCreator.addItemToScale( item );
-        var cell = this.weighingPlatform.getFirstEmptyCell();
-        this.weighingPlatform.addItem( item, cell );
+        var cell = this.plate.getFirstEmptyCell();
+        this.plate.addItem( item, cell );
 
         // Clean up when the Item is disposed. Item.dispose handles removal of this listener.
         // IFEE creates a closure for itemNode.

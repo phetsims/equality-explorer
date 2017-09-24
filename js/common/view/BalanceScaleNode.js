@@ -24,10 +24,10 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var PlateNode = require( 'EQUALITY_EXPLORER/common/view/PlateNode' );
   var Property = require( 'AXON/Property' );
   var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
-  var WeighingPlatformNode = require( 'EQUALITY_EXPLORER/common/view/WeighingPlatformNode' );
 
   // colors
   var TOP_FACE_FILL = 'rgb( 177, 177, 177 )';
@@ -60,9 +60,9 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // {Color|string} used to color-code the weighing platforms
-      leftPlatformFill: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
-      rightPlatformFill: EqualityExplorerColors.RIGHT_PLATFORM_COLOR
+      // {Color|string} used to color-code the scale's plates
+      leftPlateFill: EqualityExplorerColors.LEFT_PLATE_COLOR,
+      rightPlateFill: EqualityExplorerColors.RIGHT_PLATE_COLOR
     }, options );
 
     options.x = scale.location.x;
@@ -97,7 +97,7 @@ define( function( require ) {
       top: fulcrumNode.bottom - ( BASE_DEPTH / 2 )
     } );
 
-    // the beam that supports a weighing platform on either end
+    // the beam that supports a plate on either end
     var beamNode = new BoxNode( {
       width: scale.beamWidth,
       height: BEAM_HEIGHT,
@@ -125,15 +125,15 @@ define( function( require ) {
       bottom: 0
     } );
 
-    // left platform
-    var leftPlatformNode = new WeighingPlatformNode( scale.leftPlatform, {
-      color: options.leftPlatformFill,
+    // left plate
+    var leftPlateNode = new PlateNode( scale.leftPlate, {
+      color: options.leftPlateFill,
       center: beamNode.center // correct location will be set later in constructor
     } );
 
-    // right platform
-    var rightPlatformNode = new WeighingPlatformNode( scale.rightPlatform, {
-      color: options.rightPlatformFill,
+    // right plate
+    var rightPlateNode = new PlateNode( scale.rightPlate, {
+      color: options.rightPlateFill,
       center: beamNode.center // correct location will be set later in constructor
     } );
 
@@ -154,7 +154,7 @@ define( function( require ) {
     } );
 
     // disable ClearScaleButton and OrganizeButton when scale is empty. unlink is unnecessary.
-    Property.multilink( [ scale.leftPlatform.weightProperty, scale.rightPlatform.weightProperty ],
+    Property.multilink( [ scale.leftPlate.weightProperty, scale.rightPlate.weightProperty ],
       function( leftWeight, rightWeight ) {
         var enabled = ( ( leftWeight + rightWeight ) > 0 );
         clearScaleButton.enabled = enabled;
@@ -177,8 +177,8 @@ define( function( require ) {
       dashedLine,
       arrowNode,
       beamNode,
-      leftPlatformNode,
-      rightPlatformNode
+      leftPlateNode,
+      rightPlateNode
     ];
 
     // draw a red dot at the origin
@@ -201,16 +201,16 @@ define( function( require ) {
       arrowNode.fill = ( angle === 0 ) ? EqualityExplorerColors.SCALE_ARROW_BALANCED : EqualityExplorerColors.SCALE_ARROW_UNBALANCED;
     } );
 
-    // move the left platform, unlink unnecessary
-    scale.leftPlatform.locationProperty.link( function( location ) {
-      leftPlatformNode.x = location.x - scale.location.x;
-      leftPlatformNode.y = location.y - scale.location.y; 
+    // move the left plate, unlink unnecessary
+    scale.leftPlate.locationProperty.link( function( location ) {
+      leftPlateNode.x = location.x - scale.location.x;
+      leftPlateNode.y = location.y - scale.location.y;
     } );
 
-    // move the right platform, unlink unnecessary
-    scale.rightPlatform.locationProperty.link( function( location ) {
-      rightPlatformNode.x = location.x - scale.location.x;
-      rightPlatformNode.y = location.y - scale.location.y;
+    // move the right plate, unlink unnecessary
+    scale.rightPlate.locationProperty.link( function( location ) {
+      rightPlateNode.x = location.x - scale.location.x;
+      rightPlateNode.y = location.y - scale.location.y;
     } );
   }
 

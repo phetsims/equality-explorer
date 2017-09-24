@@ -50,14 +50,14 @@ define( function( require ) {
       location: new Vector2( 355, EqualityExplorerQueryParameters.scaleY )
     } );
 
-    // @public (read-only, for debugging) drag bounds for left platform
+    // @public (read-only, for debugging) drag bounds for left plate
     this.leftDragBounds = new Bounds2( DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
       this.scale.location.x - DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MAX_Y );
     leftItemCreators.forEach( function( itemCreator ) {
       itemCreator.dragBounds = self.leftDragBounds;
     } );
 
-    // @public (read-only, for debugging) drag bounds for right platform
+    // @public (read-only, for debugging) drag bounds for right plate
     this.rightDragBounds = new Bounds2( this.scale.location.x + DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
       this.scale.location.x + DRAG_BOUNDS_X_MARGIN + this.leftDragBounds.width, DRAG_BOUNDS_MAX_Y );
     rightItemCreators.forEach( function( itemCreator ) {
@@ -67,23 +67,23 @@ define( function( require ) {
     // @public {Property.<boolean>} whether the couplers that connects the 2 sides of the scale are coupled
     this.coupledProperty = new Property( false );
 
-    // Wire up enable/disable for ItemCreators, based on capacity of the scale's weighing platforms
-    enableItemCreators( leftItemCreators, this.scale.leftPlatform.numberOfCells );
-    enableItemCreators( rightItemCreators, this.scale.rightPlatform.numberOfCells );
+    // Wire up enable/disable for ItemCreators, based on capacity of the scale's plates
+    enableItemCreators( leftItemCreators, this.scale.leftPlate.numberOfCells );
+    enableItemCreators( rightItemCreators, this.scale.rightPlate.numberOfCells );
 
     // Validate query parameters that populate the scale.  These are Errors instead of assertions, because we have
     // no control over that the user enters, and these query parameters may be provided when assertions are disabled.
     if ( this.leftItemCreators.length !== EqualityExplorerQueryParameters.leftItems.length ) {
       throw new Error( 'query parameter leftItems must have ' + this.leftItemCreators.length + ' values' );
     }
-    if ( _.reduce( EqualityExplorerQueryParameters.leftItems, function( sum, n ) { return sum + n; } ) > this.scale.leftPlatform.numberOfCells ) {
-      throw new Error( 'query parameter leftItems contains too many items, max is ' + this.scale.leftPlatform.numberOfCells );
+    if ( _.reduce( EqualityExplorerQueryParameters.leftItems, function( sum, n ) { return sum + n; } ) > this.scale.leftPlate.numberOfCells ) {
+      throw new Error( 'query parameter leftItems contains too many items, max is ' + this.scale.leftPlate.numberOfCells );
     }
     if ( this.rightItemCreators.length !== EqualityExplorerQueryParameters.rightItems.length ) {
       throw new Error( 'query parameter rightItems must have ' + this.rightItemCreators.length + ' values' );
     }
-    if ( _.reduce( EqualityExplorerQueryParameters.rightItems, function( sum, n ) { return sum + n; } ) > this.scale.rightPlatform.numberOfCells ) {
-      throw new Error( 'query parameter rightItems contains too many items, max is ' + this.scale.rightPlatform.numberOfCells );
+    if ( _.reduce( EqualityExplorerQueryParameters.rightItems, function( sum, n ) { return sum + n; } ) > this.scale.rightPlate.numberOfCells ) {
+      throw new Error( 'query parameter rightItems contains too many items, max is ' + this.scale.rightPlate.numberOfCells );
     }
   }
 

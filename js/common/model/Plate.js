@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Platform where Items are placed to be weighed on a balance scale.
+ * Plate where Items are placed to be weighed on a balance scale.
  * Items are arranged in a 2D grid of cells, where each cell can be occupied by at most one Item.
  *
  * @author Chris Malley (PixelZoom, Inc)
@@ -23,13 +23,13 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function WeighingPlatform( locationProperty, itemCreators, options ) {
+  function Plate( locationProperty, itemCreators, options ) {
 
     var self = this;
 
     options = _.extend( {
-      supportHeight: 10, // height of the vertical support that connects the platform to the scale
-      diameter: 20, // diameter of the platforms platter
+      supportHeight: 10, // height of the vertical support that connects the plate to the scale
+      diameter: 20, // diameter of the plate
       gridRows: 1, // rows in the 2D grid
       gridColumns: 1, // columns in the 2D grid
       cellSize: new Dimension2( 5, 5 ) // dimensions of each cell in the grid
@@ -65,7 +65,7 @@ define( function( require ) {
       weightDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
     } );
 
-    // @public the total weight of the Items that are on the platform
+    // @public the total weight of the Items that are on the plate
     this.weightProperty = new DerivedProperty( weightDependencies, function() {
       var weight = 0;
       itemCreators.forEach( function( itemCreator ) {
@@ -77,17 +77,17 @@ define( function( require ) {
     // @private
     this.removeItemBound = this.removeItem.bind( this );
 
-    // When the platform moves, adjust the location of all Items. unlink is unnecessary.
+    // When the plate moves, adjust the location of all Items. unlink is unnecessary.
     this.locationProperty.link( function( location ) {
       self.updateItemLocations();
     } );
   }
 
-  equalityExplorer.register( 'WeighingPlatform', WeighingPlatform );
+  equalityExplorer.register( 'Plate', Plate );
 
   /**
    * Data structure that identifies a cell in the 2D grid.
-   * While clients have references to Cells, the specifics of this data structure is private to WeighingPlatform.
+   * While clients have references to Cells, the specifics of this data structure is private to Plate.
    * Notes:
    * - Considered using Vector2 or Dimension2, but row and column improve readability of the code.
    * - This is solely a lightweight data structure, so no need to use inherit.
@@ -103,7 +103,7 @@ define( function( require ) {
     this.column = column;
   }
 
-  return inherit( Object, WeighingPlatform, {
+  return inherit( Object, Plate, {
 
     /**
      * Synchronizes Item locations with their respective cell locations.
@@ -120,7 +120,7 @@ define( function( require ) {
     },
 
     /**
-     * Adds an Item to the platform, in a specific cell in the grid.
+     * Adds an Item to the plate, in a specific cell in the grid.
      * @param {Item} item
      * @param {Cell} cell
      * @public
@@ -134,7 +134,7 @@ define( function( require ) {
     },
 
     /**
-     * Removes an Item from the platform. Items above the removed item move down.
+     * Removes an Item from the plate. Items above the removed item move down.
      * @param {Item} item
      * @public
      */
@@ -173,7 +173,7 @@ define( function( require ) {
     },
 
     /**
-     * Organizes Items on the platform, as specified in https://github.com/phetsims/equality-explorer/issues/4
+     * Organizes Items on the plate, as specified in https://github.com/phetsims/equality-explorer/issues/4
      * @public
      */
     organize: function() {
@@ -240,7 +240,7 @@ define( function( require ) {
         } );
         assert && assert( numberOfItemsToOrganize === 0 );
 
-        // Center the stacks on the platform by shifting Items to the right.
+        // Center the stacks on the plate by shifting Items to the right.
         var numberOfEmptyColumns = self.gridColumns - column - 1;
         var gridColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
         if ( gridColumnsToShiftRight > 0 ) {
@@ -400,7 +400,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the number of Cells in the grid. This is the capacity of the platform.
+     * Gets the number of Cells in the grid. This is the capacity of the plate.
      * @returns {number}
      * @public
      */

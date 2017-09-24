@@ -41,15 +41,15 @@ define( function( require ) {
 
     var scaleNode = new BalanceScaleNode( scene.scale );
 
-    var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, scene.scale.leftPlatform, itemsLayer, {
-      stroke: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
-      centerX: scene.scale.leftPlatform.locationProperty.value.x,
+    var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, scene.scale.leftPlate, itemsLayer, {
+      stroke: EqualityExplorerColors.LEFT_PLATE_COLOR,
+      centerX: scene.scale.leftPlate.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, scene.scale.rightPlatform, itemsLayer, {
-      stroke: EqualityExplorerColors.RIGHT_PLATFORM_COLOR,
-      centerX: scene.scale.rightPlatform.locationProperty.value.x,
+    var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, scene.scale.rightPlate, itemsLayer, {
+      stroke: EqualityExplorerColors.RIGHT_PLATE_COLOR,
+      centerX: scene.scale.rightPlate.locationProperty.value.x,
       bottom: leftItemsPanel.bottom
     } );
 
@@ -86,14 +86,14 @@ define( function( require ) {
       self.visible = ( newScene === scene );
     } );
 
-    // Render the drag bounds for the left and right platforms
+    // Render the drag bounds for the left and right plates
     if ( EqualityExplorerQueryParameters.showDragBounds ) {
 
       // left
       this.addChild( new Rectangle(
         scene.leftDragBounds.minX, scene.leftDragBounds.minY,
         scene.leftDragBounds.width, scene.leftDragBounds.height, {
-          stroke: EqualityExplorerColors.LEFT_PLATFORM_COLOR,
+          stroke: EqualityExplorerColors.LEFT_PLATE_COLOR,
           lineDash: [ 2, 6 ]
         } ) );
 
@@ -101,7 +101,7 @@ define( function( require ) {
       this.addChild( new Rectangle(
         scene.rightDragBounds.minX, scene.rightDragBounds.minY,
         scene.rightDragBounds.width, scene.rightDragBounds.height, {
-          stroke: EqualityExplorerColors.RIGHT_PLATFORM_COLOR,
+          stroke: EqualityExplorerColors.RIGHT_PLATE_COLOR,
           lineDash: [ 2, 6 ]
         } ) );
     }

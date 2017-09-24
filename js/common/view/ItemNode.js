@@ -17,11 +17,11 @@ define( function( require ) {
   /**
    * @param {Item} item
    * @param {ItemCreator} itemCreator
-   * @param {WeighingPlatform} weighingPlatform
+   * @param {Plate} plate
    * @param {Object} [options]
    * @constructor
    */
-  function ItemNode( item, itemCreator, weighingPlatform, options ) {
+  function ItemNode( item, itemCreator, plate, options ) {
 
     var self = this;
 
@@ -62,8 +62,8 @@ define( function( require ) {
         // move up and left
         self.item.locationProperty.value = self.item.locationProperty.value.plusXY( -5, -5 );
 
-        if ( weighingPlatform.containsItem( item ) ) {
-          weighingPlatform.removeItem( item );
+        if ( plate.containsItem( item ) ) {
+          plate.removeItem( item );
           self.itemCreator.removeItemFromScale( item );
         }
         startDragOffset = self.globalToParentPoint( event.pointer.point ).minus( item.locationProperty.value );
@@ -79,15 +79,15 @@ define( function( require ) {
 
         item.dragging = false;
 
-        if ( item.locationProperty.value.y > weighingPlatform.locationProperty.value.y ) {
+        if ( item.locationProperty.value.y > plate.locationProperty.value.y ) {
 
-          // Item was released below the platform, animate back to panel and dispose
+          // Item was released below the plate, animate back to panel and dispose
           self.animateToPanel( item );
         }
         else {
 
-          // Item was released above the platform, animate to closest available cell
-          self.animateToClosestCell( item, weighingPlatform );
+          // Item was released above the plate, animate to closest available cell
+          self.animateToClosestCell( item, plate );
         }
       }
     } );
@@ -123,38 +123,38 @@ define( function( require ) {
     },
 
     /**
-     * Animates an Item to an empty cell on the weighing platform.
+     * Animates an Item to an empty cell on the plate.
      * @param {Item} item
-     * @param {WeighingPlatform} weighingPlatform
+     * @param {Plate} plate
      * @private
      */
-    animateToClosestCell: function( item, weighingPlatform ) {
+    animateToClosestCell: function( item, plate ) {
 
       var self = this;
 
-      var cell = weighingPlatform.getClosestEmptyCell( item.locationProperty.value );
+      var cell = plate.getClosestEmptyCell( item.locationProperty.value );
       if ( !cell ) {
 
-        // Platform has become full, or there is no available cell above the item's location.
+        // Plate has become full, or there is no available cell above the item's location.
         // Return the item to panel.
         this.animateToPanel( item );
       }
       else {
 
-        var cellLocation = weighingPlatform.getCellLocation( cell );
+        var cellLocation = plate.getCellLocation( cell );
 
         item.animateTo( cellLocation, {
 
           // If the target cell has become occupied, choose another cell.
           animationStepCallback: function() {
-            if ( !weighingPlatform.isEmptyCell( cell ) ) {
-              self.animateToClosestCell( item, weighingPlatform );
+            if ( !plate.isEmptyCell( cell ) ) {
+              self.animateToClosestCell( item, plate );
             }
           },
 
           // When the Item reaches the cell, put it in the cell.
           animationCompletedCallback: function() {
-            weighingPlatform.addItem( item, cell );
+            plate.addItem( item, cell );
             self.itemCreator.addItemToScale( item );
           }
         } );
