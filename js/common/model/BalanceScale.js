@@ -149,7 +149,7 @@ define( function( require ) {
   return inherit( Object, BalanceScale, {
 
     /**
-     * Organizes Items on the scale, as specified in #4
+     * Organizes Items on the scale, as specified in https://github.com/phetsims/equality-explorer/issues/4
      * @public
      */
     organize: function() {
