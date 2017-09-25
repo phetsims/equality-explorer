@@ -31,6 +31,8 @@ x range is [-40,40]
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+Add couplers that open/close but don't constraint anything, so we can play around while discussing
+
 Reduce x and -x terms in equation, show symbol instead of icons
 
 Hook up x and -x to VariablesModel.variableValueProperty
