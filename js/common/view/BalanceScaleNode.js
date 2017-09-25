@@ -43,7 +43,7 @@ define( function( require ) {
   var BEAM_HEIGHT = 5;
   var BEAM_DEPTH = 8;
   
-  // beam pivot
+  // fulcrum that the beam is balanced on
   var FULCRUM_HEIGHT = EqualityExplorerQueryParameters.fulcrumHeight;
   var FULCRUM_TOP_WIDTH = 15;
   var FULCRUM_BOTTOM_WIDTH = 25;
