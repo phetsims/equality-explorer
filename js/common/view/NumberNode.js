@@ -48,7 +48,7 @@ define( function( require ) {
       center: circleNode.center
     } );
 
-    assert && assert( !options.children, 'decoration not supported' );
+    assert && assert( !options.children, 'this subtype defines its children' );
     options.children = [ circleNode, textNode ];
 
     Node.call( this, options );

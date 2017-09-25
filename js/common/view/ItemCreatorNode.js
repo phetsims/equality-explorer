@@ -30,7 +30,7 @@ define( function( require ) {
       cursor: 'pointer'
     }, options );
 
-    assert && assert( !options.children, 'decoration not supported' );
+    assert && assert( !options.children, 'this subtype defines its children' );
     options.children = [
       itemCreator.icon // careful, itemCreator.icon is using scenery DAG feature
     ];

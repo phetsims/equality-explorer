@@ -93,7 +93,7 @@ define( function( require ) {
       centerY: supportNode.bottom
     } );
 
-    assert && assert( !options.children, 'decoration not supported' );
+    assert && assert( !options.children, 'this subtype defines its children' );
     options.children = [ supportNode, pivotNode, plateNode ];
 
     // Grid where Items appear

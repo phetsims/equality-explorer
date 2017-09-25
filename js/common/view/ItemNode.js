@@ -35,7 +35,7 @@ define( function( require ) {
     // @private
     this.itemCreator = itemCreator;
 
-    assert && assert( !options.children, 'decoration not supported' );
+    assert && assert( !options.children, 'this subtype defines its children' );
     options.children = [ item.icon ]; // wrap the icon since we're using scenery DAG feature
 
     Node.call( this, options );
