@@ -13,6 +13,8 @@ Numbers: 18 of each item
 Variables: 9 of each item, so there’s always space for inverses to appear.
 Solving: no limits
 
+Arrow color when unbalanced, use something other than orange?
+
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
 
