@@ -25,7 +25,8 @@ define( function( require ) {
   // Nodes that are reused via scenery's DAG feature
   var ONE_NODE = new NumberNode( 1, {
     radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
-    fill: 'rgb( 246, 229, 214 )'
+    fill: 'rgb( 246, 229, 214 )',
+    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
   var APPLE_NODE = new Image( appleImage, {
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
