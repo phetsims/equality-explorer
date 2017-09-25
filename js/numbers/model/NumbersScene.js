@@ -25,7 +25,7 @@ define( function( require ) {
   var NEGATIVE_ONE_NODE = new IntegerNode( -1, {
     radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
     fill: 'rgb( 246, 229, 214 )',
-    lineDash: [ 2, 2 ],
+    lineDash: [ 3, 3 ],
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
 

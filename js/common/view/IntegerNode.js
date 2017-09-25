@@ -28,7 +28,7 @@ define( function( require ) {
 
     options = _.extend( {
       radius: 20,
-      margin: 3,
+      margin: 8,
       fill: 'white',
       stroke: 'black',
       lineDash: [],
