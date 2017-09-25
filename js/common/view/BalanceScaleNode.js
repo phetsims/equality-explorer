@@ -137,6 +137,7 @@ define( function( require ) {
       center: beamNode.center // correct location will be set later in constructor
     } );
 
+    // pressing this button clears all Items from the scale
     var clearScaleButton = new ClearScaleButton( {
       touchAreaDilation: 5,
       listener: function() {
@@ -144,6 +145,7 @@ define( function( require ) {
       }
     } );
 
+    // pressing this button organizes Items on the scale, grouping like Items together
     var organizeButton = new OrganizeButton( {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
