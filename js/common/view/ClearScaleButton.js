@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Button used to clear the scale.
+ * Pressing this button clears all Items from the scale.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,10 +14,11 @@ define( function( require ) {
   var ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
 
   /**
+   * @param {BalanceScale} scale
    * @param {Object} [options]
    * @constructor
    */
-  function ClearScaleButton( options ) {
+  function ClearScaleButton( scale, options ) {
 
     options = _.extend( {
 
@@ -25,7 +26,13 @@ define( function( require ) {
       baseColor: 'rgb( 242, 242, 242 )',
       scale: 0.65,
       touchAreaDilation: 5
+
     }, options );
+
+    assert && assert( !options.listener, 'button defines its listener' );
+    options.listener = function() {
+      scale.disposeAllItems();
+    };
 
     ResetButton.call( this, options );
   }

@@ -138,22 +138,10 @@ define( function( require ) {
     } );
 
     // pressing this button clears all Items from the scale
-    var clearScaleButton = new ClearScaleButton( {
-      touchAreaDilation: 5,
-      listener: function() {
-        scale.disposeAllItems();
-      }
-    } );
+    var clearScaleButton = new ClearScaleButton( scale );
 
     // pressing this button organizes Items on the scale, grouping like Items together
-    var organizeButton = new OrganizeButton( {
-      touchAreaXDilation: 5,
-      touchAreaYDilation: 5,
-      listener: function() {
-        scale.organize();
-        organizeButton.enabled = false;
-      }
-    } );
+    var organizeButton = new OrganizeButton( scale );
 
     // disable ClearScaleButton and OrganizeButton when scale is empty. unlink is unnecessary.
     Property.multilink( [ scale.leftPlate.weightProperty, scale.rightPlate.weightProperty ],

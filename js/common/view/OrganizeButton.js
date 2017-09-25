@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Pressing this button will organize the items on the scale, grouping like items together.
+ * Pressing this button organizes Items on the scale, grouping like items together.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -17,13 +17,21 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   /**
+   * @param {BalanceScale} scale
    * @param {Object} [options]
    * @constructor
    */
-  function OrganizeButton( options ) {
+  function OrganizeButton( scale, options ) {
+
+    var self = this;
 
     options = _.extend( {
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW
+
+      // supertype options
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+      touchAreaXDilation: 5,
+      touchAreaYDilation: 5
+      
     }, options );
 
     //TODO finalize icon for OrganizeButton, see https://github.com/phetsims/equality-explorer/issues/9
@@ -32,7 +40,7 @@ define( function( require ) {
     var iconShape = new Shape()
       .rect( 0, 0, diameter, diameter )
       .rect( 0, diameter + spacing, diameter, diameter )
-      .rect( diameter + spacing, diameter + spacing, diameter, diameter  )
+      .rect( diameter + spacing, diameter + spacing, diameter, diameter )
       .circle( 3 * ( diameter + spacing ), 0.5 * diameter, diameter / 2 )
       .circle( 3 * ( diameter + spacing ), 1.5 * diameter + spacing, diameter / 2 );
 
@@ -40,8 +48,14 @@ define( function( require ) {
       fill: 'black'
     } );
 
-    assert && assert( !options.content, 'button provides its own content' );
+    assert && assert( !options.content, 'button defines its content' );
     options.content = iconNode;
+
+    assert && assert( !options.listener, 'button defines its listener' );
+    options.listener = function() {
+      scale.organize();
+      self.enabled = false;
+    };
 
     RectangularPushButton.call( this, options );
   }
