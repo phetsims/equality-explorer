@@ -31,8 +31,6 @@ IMPLEMENTATION
 
 Red arrow when scale bottoms out, white arrow when unbalanced.
 
-Combine constant terms (1, -1) in equations.
-
 Make scale bottom out at 30 in all screens
 
 Tweak scale look and angle to make it look bottomed out.

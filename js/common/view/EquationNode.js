@@ -141,6 +141,8 @@ define( function( require ) {
    */
   function createSideNode( itemCreators, iconScale, plusFont, numberFont, plusSpacing, coefficientSpacing ) {
 
+    var constantValue = 0;
+
     var children = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
 
@@ -154,7 +156,8 @@ define( function( require ) {
         }
 
         if ( itemCreator.constantTerm ) {
-          children.push( createConstantNode( numberOfItemsOnScale * itemCreator.weightProperty.value, numberFont ) );
+          // combine all constants into 1 term
+          constantValue += ( numberOfItemsOnScale * itemCreator.weightProperty.value );
         }
         else {
           children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing ) );
@@ -162,7 +165,11 @@ define( function( require ) {
       }
     }
 
-    if ( children.length === 0 ) {
+    if ( constantValue !== 0 ) {
+      // put the constant term last
+      children.push( createConstantNode( constantValue, numberFont ) );
+    }
+    else if ( children.length === 0 ) {
       children.push( new Text( '0', { font: numberFont } ) );
     }
 
