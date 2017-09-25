@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var IntegerNode = require( 'EQUALITY_EXPLORER/common/view/IntegerNode' );
@@ -19,12 +20,12 @@ define( function( require ) {
   // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
   var POSITIVE_ONE_NODE = new IntegerNode( 1, {
     radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
-    fill: 'rgb( 246, 229, 214 )',
+    fill: EqualityExplorerColors.POSITIVE_ONE_FILL,
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
   var NEGATIVE_ONE_NODE = new IntegerNode( -1, {
     radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
-    fill: 'rgb( 246, 229, 214 )',
+    fill: EqualityExplorerColors.NEGATIVE_ONE_FILL,
     lineDash: [ 3, 3 ],
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
