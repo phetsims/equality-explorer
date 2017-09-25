@@ -21,6 +21,8 @@ to decide at what weight the scale “bottoms out” and can’t move any more. 
 the “bottom out weight” to be large (eg, 400), then there will be many scenarios where putting an item on the
 scale results in little perceptible movement of the scale.
 
+Make the scale's arrow 'red' when the scale is bottomed out?
+
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
 
