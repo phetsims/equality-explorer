@@ -36,7 +36,7 @@ define( function( require ) {
       location: new Vector2( 0, 0 ), // location of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
       maxAngle: EqualityExplorerQueryParameters.maxScaleAngle * Math.PI / 180, // degrees to radians
-      maxWeight: EqualityExplorerQueryParameters.maxWeight, // weight at which the scale 'bottoms out'
+      maxWeight: EqualityExplorerQueryParameters.maxWeight, // weight at which a plate 'bottoms out'
 
       // height of vertical support that connects plate to beam
       plateSupportHeight: EqualityExplorerQueryParameters.plateSupportHeight,
