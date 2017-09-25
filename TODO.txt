@@ -29,10 +29,6 @@ x range is [-40,40]
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Red arrow when scale bottoms out, white arrow when unbalanced.
-
-Make scale bottom out at 30 in all screens
-
 Tweak scale look and angle to make it look bottomed out.
 
 Snapshots
