@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
 
@@ -28,7 +29,7 @@ define( function( require ) {
     ScreenView.call( this );
 
     // @private
-    this.variableAccordionBoxExpandedProperty = new Property( true ); //TODO this should be per scene
+    this.variableAccordionBoxExpandedProperty = new Property( true );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
@@ -41,9 +42,14 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
+    // @private
+    this.sceneNode = new SceneNode( model.scene, model.sceneProperty, this.layoutBounds );
+    this.addChild( this.sceneNode );
+
     var variableAccordionBox = new VariableAccordionBox( model.variableValueProperty, model.variableRange, {
       expandedProperty: this.variableAccordionBoxExpandedProperty,
-      center: this.layoutBounds.center
+      right: this.sceneNode.snapshotsAccordionBox.right,
+      top: this.sceneNode.snapshotsAccordionBox.bottom + 10
     } );
     this.addChild( variableAccordionBox );
   }

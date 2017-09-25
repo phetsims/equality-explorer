@@ -105,6 +105,9 @@ define( function( require ) {
           lineDash: [ 2, 6 ]
         } ) );
     }
+
+    // @public (read-only) for layout only
+    this.snapshotsAccordionBox = snapshotsAccordionBox;
   }
 
   equalityExplorer.register( 'SceneNode', SceneNode );

@@ -37,7 +37,7 @@ define( function( require ) {
 
       titleFont: new PhetFont( 18 ),
       equationFont: new PhetFont( 24 ),
-      contentSize: new Dimension2( 305, 50 ),
+      contentSize: new Dimension2( 250, 50 ),
 
       // supertype options
       fill: 'white',

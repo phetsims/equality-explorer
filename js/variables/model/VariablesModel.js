@@ -13,6 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var VariablesScene = require( 'EQUALITY_EXPLORER/variables/model/VariablesScene' );
 
   /**
    * @constructor
@@ -24,6 +25,16 @@ define( function( require ) {
 
     // @public
     this.variableValueProperty = new Property( this.variableRange.defaultValue );
+
+    // @public (read-only)
+    this.scene = new VariablesScene();
+
+    //TODO make this go away
+    // @public
+    this.sceneProperty = new Property( this.scene );
+    this.sceneProperty.lazyLink( function( scene ) {
+      throw new Error( 'sceneProperty should never change, there is only 1 scene' );
+    } );
   }
 
   equalityExplorer.register( 'VariablesModel', VariablesModel );
