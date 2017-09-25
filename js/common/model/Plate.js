@@ -58,20 +58,43 @@ define( function( require ) {
       this.cells.push( rowOfCells );
     }
 
-    // {Property} dependencies that require weight to be updated
-    var weightDependencies = [];
+    // {Property[]} dependencies that require numberOfItemsOnPlateProperty to be updated
+    var numberOfItemsOnPlateDependencies = [];
     itemCreators.forEach( function( itemCreator ) {
-      weightDependencies.push( itemCreator.weightProperty );
-      weightDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
+      numberOfItemsOnPlateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
     } );
 
-    // @public the total weight of the Items that are on the plate
+    // @public {Property.<number>} total number of Items that are on the plate
+    this.numberOfItemsOnPlateProperty = new DerivedProperty( numberOfItemsOnPlateDependencies, function() {
+      var count = 0;
+      itemCreators.forEach( function( itemCreator ) {
+        count += itemCreator.numberOfItemsOnScaleProperty.value;
+      } );
+      return count;
+    } );
+
+    // {Property[]} dependencies that require weightProperty to be updated
+    var weightDependencies = [ this.numberOfItemsOnPlateProperty ];
+    itemCreators.forEach( function( itemCreator ) {
+      weightDependencies.push( itemCreator.weightProperty );
+    } );
+
+    // @public {Property.<number>} total weight of the Items that are on the plate
     this.weightProperty = new DerivedProperty( weightDependencies, function() {
       var weight = 0;
       itemCreators.forEach( function( itemCreator ) {
         weight += ( itemCreator.numberOfItemsOnScaleProperty.value * itemCreator.weightProperty.value );
       } );
       return weight;
+    } );
+
+    // @public the total number of the Items that are on the plate
+    this.numberOfItemsOnPlate = new DerivedProperty( weightDependencies, function() {
+      var count = 0;
+      itemCreators.forEach( function( itemCreator ) {
+        count += itemCreator.numberOfItemsOnScaleProperty.value;
+      } );
+      return count;
     } );
 
     // @private

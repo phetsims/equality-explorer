@@ -145,9 +145,9 @@ define( function( require ) {
     var organizeButton = new OrganizeButton( scale );
 
     // disable ClearScaleButton and OrganizeButton when scale is empty. unlink is unnecessary.
-    Property.multilink( [ scale.leftPlate.weightProperty, scale.rightPlate.weightProperty ],
-      function( leftWeight, rightWeight ) {
-        var enabled = ( ( leftWeight + rightWeight ) > 0 );
+    Property.multilink( [ scale.leftPlate.numberOfItemsOnPlateProperty, scale.rightPlate.numberOfItemsOnPlateProperty ],
+      function( leftCount, rightCount ) {
+        var enabled = ( leftCount + rightCount > 0 );
         clearScaleButton.enabled = enabled;
         organizeButton.enabled = enabled;
       } );
