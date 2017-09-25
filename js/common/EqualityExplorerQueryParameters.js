@@ -104,7 +104,7 @@ define( function( require ) {
     },
 
     // TODO delete maxWeight when design has stabilized
-    // maximum weight on either plate before the scale 'bottoms out'
+    // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it
     maxWeight: {
       type: 'number',
       defaultValue: 30,
