@@ -44,8 +44,8 @@ define( function( require ) {
    */
   function createItemCreators() {
     return [
-      new ItemCreator( '1', 1, POSITIVE_ONE_NODE ),
-      new ItemCreator( '-1', -1, NEGATIVE_ONE_NODE )
+      new ItemCreator( '1', 1, POSITIVE_ONE_NODE, { constantTerm: true } ),
+      new ItemCreator( '-1', -1, NEGATIVE_ONE_NODE, { constantTerm: true } )
     ];
   }
 
