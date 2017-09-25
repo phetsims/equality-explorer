@@ -46,10 +46,14 @@ define( function( require ) {
     this.sceneNode = new SceneNode( model.scene, model.sceneProperty, this.layoutBounds );
     this.addChild( this.sceneNode );
 
+    // Get the bounds of the Snapshot accordion box, relative to this ScreenView
+    var globalBounds = this.sceneNode.snapshotsAccordionBox.parentToGlobalBounds( this.sceneNode.snapshotsAccordionBox.bounds );
+    var localBounds = this.globalToLocalBounds( globalBounds );
+
     var variableAccordionBox = new VariableAccordionBox( model.variableValueProperty, model.variableRange, {
       expandedProperty: this.variableAccordionBoxExpandedProperty,
-      right: this.sceneNode.snapshotsAccordionBox.right,
-      top: this.sceneNode.snapshotsAccordionBox.bottom + 10
+      right: localBounds.right,
+      top: localBounds.bottom + 10
     } );
     this.addChild( variableAccordionBox );
   }
