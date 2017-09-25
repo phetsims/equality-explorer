@@ -5,27 +5,13 @@ DESIGN QUESTIONS
 
 Reconsider "white box" feature
 
-Numbers: If the left side of the scale contains two 1's and three -1's, does the left side of the equation
-show “2 + -3” or “-1"?  I suspect the latter, but there are no examples in the design doc that show the Numbers
-screen with both 1 and -1 on the scale.
-
 Snapshots: Is position of items on scale saved and restored?
 
 Item limits (proposed by AM in Slack):
 Basics: 36 total items, any combination
-Variables: 8 (9?) of each item, so there’s always space for inverses to appear.
 Numbers: 18 of each item
+Variables: 9 of each item, so there’s always space for inverses to appear.
 Solving: no limits
-
-Solving: Since there are no limits, at what weight does the scale "bottom out"?
-
-Variables, Solving: Does changing x cause the scale to move or recalibrate? If the scale does move, then we need
-to decide at what weight the scale “bottoms out” and can’t move any more.  x range is [-40,40]. If we choose the
-“bottom out weight” to be small (eg, 40), then there will be many scenarios where it’s bottomed out. If we choose
-the “bottom out weight” to be large (eg, 400), then there will be many scenarios where putting an item on the
-scale results in little perceptible movement of the scale.
-
-Make the scale's arrow 'red' when the scale is bottomed out? Something other than 'orange' when not balanced?
 
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
@@ -42,6 +28,14 @@ x range is [-40,40]
 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
+
+Red arrow when scale bottoms out, white arrow when unbalanced.
+
+Combine constant terms (1, -1) in equations.
+
+Make scale bottom out at 30 in all screens
+
+Tweak scale look and angle to make it look bottomed out.
 
 Snapshots
 
