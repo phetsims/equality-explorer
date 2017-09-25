@@ -15,8 +15,8 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var IntegerNode = require( 'EQUALITY_EXPLORER/common/view/IntegerNode' );
+  var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
 
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
@@ -66,7 +66,7 @@ define( function( require ) {
       new ItemCreator( 'orange', fruitWeights[ 1 ], ORANGE_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
       } ),
-      new ItemCreator( 'one', fruitWeights[ 2 ], ONE_NODE, {
+      new ItemCreator( '1', fruitWeights[ 2 ], ONE_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ],
         constantTerm: true
       } )
