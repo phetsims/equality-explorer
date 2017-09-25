@@ -13,9 +13,7 @@ define( function( require ) {
 
   var EqualityExplorerColors = {
     LEFT_PLATE_COLOR: 'rgb( 207, 60, 63 )',
-    RIGHT_PLATE_COLOR: 'rgb( 62, 72, 158 )',
-    SCALE_ARROW_BALANCED: 'rgb( 0, 200, 0 )',
-    SCALE_ARROW_UNBALANCED: 'orange'
+    RIGHT_PLATE_COLOR: 'rgb( 62, 72, 158 )'
   };
 
   equalityExplorer.register( 'EqualityExplorerColors', EqualityExplorerColors );

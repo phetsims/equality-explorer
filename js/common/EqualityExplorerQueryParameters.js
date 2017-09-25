@@ -103,6 +103,16 @@ define( function( require ) {
       }
     },
 
+    // TODO delete maxWeight when design has stabilized
+    // maximum weight on either plate before the scale 'bottoms out'
+    maxWeight: {
+      type: 'number',
+      defaultValue: 30,
+      isValidValue: function( value ) {
+        return value > 0;
+      }
+    },
+
     // TODO delete scaleY when design has stabilized
     // y coordinate for the scale's location, the point where the fulcrum contacts the balance beam
     scaleY: {

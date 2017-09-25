@@ -189,7 +189,15 @@ define( function( require ) {
 
       // rotate and fill the arrow
       arrowNode.rotateAround( new Vector2( arrowNode.centerX, arrowNode.bottom ), deltaAngle );
-      arrowNode.fill = ( angle === 0 ) ? EqualityExplorerColors.SCALE_ARROW_BALANCED : EqualityExplorerColors.SCALE_ARROW_UNBALANCED;
+      if ( angle === 0 ) {
+        arrowNode.fill = 'rgb( 0, 200, 0 )';
+      }
+      else if ( Math.abs( angle ) === scale.maxAngle ) {
+        arrowNode.fill = 'red'; // the scale is bottomed out
+      }
+      else {
+        arrowNode.fill = 'orange';
+      }
     } );
 
     // move the left plate, unlink unnecessary

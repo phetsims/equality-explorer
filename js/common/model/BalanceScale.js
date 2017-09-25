@@ -22,9 +22,6 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  // constants
-  var MAX_SCALE_ANGLE = EqualityExplorerQueryParameters.maxScaleAngle * Math.PI / 180;  // degrees to radians
-
   /**
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
@@ -38,6 +35,8 @@ define( function( require ) {
     options = _.extend( {
       location: new Vector2( 0, 0 ), // location of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
+      maxAngle: EqualityExplorerQueryParameters.maxScaleAngle * Math.PI / 180, // degrees to radians
+      maxWeight: EqualityExplorerQueryParameters.maxWeight, // weight at which the scale 'bottoms out'
 
       // height of vertical support that connects plate to beam
       plateSupportHeight: EqualityExplorerQueryParameters.plateSupportHeight,
@@ -59,6 +58,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.beamWidth = options.beamWidth;
+    this.maxAngle = options.maxAngle;
 
     // @private
     this.leftItemCreators = leftItemCreators;
@@ -67,29 +67,18 @@ define( function( require ) {
     // {ItemCreator[]} all ItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
-    //TODO replace this with options.maxItemWeightProperty and options.cellSize
-    var maxItemWeight = 0;
-    var maxCellWidth = 0;
-    var maxCellHeight = 0;
+    // Find the maximum width and height of all Item icons
+    var maxIconWidth = 0;
+    var maxIconHeight = 0;
     itemCreators.forEach( function( itemCreator ) {
-
-      maxItemWeight = Math.max( maxItemWeight, itemCreator.weightProperty.value );
-
-      maxCellWidth = Math.max( maxCellWidth, itemCreator.icon.width );
-      maxCellHeight = Math.max( maxCellHeight, itemCreator.icon.height );
+      maxIconWidth = Math.max( maxIconWidth, itemCreator.icon.width );
+      maxIconHeight = Math.max( maxIconHeight, itemCreator.icon.height );
     } );
 
-    //TODO support dynamic weight for changing value of x
-    // maximum weight that a plate can hold
-    var maxItems = options.gridRows * options.gridColumns;
-    var maxWeight = maxItemWeight * maxItems;
-
-    var cellWidth = maxCellWidth + ( 2 * options.gridXMargin );
-    var cellHeight = maxCellHeight + ( 2 * options.gridYMargin );
-
     // @public (read-only) size of each cell in the grid
-    this.cellSize = new Dimension2( cellWidth, cellHeight );
-
+    this.cellSize = new Dimension2(
+      maxIconWidth + ( 2 * options.gridXMargin ),
+      maxIconHeight + ( 2 * options.gridYMargin ) );
     assert && assert( options.gridColumns * this.cellSize.width <= options.plateDiameter, 'grid is wider than plate' );
 
     // @public (read-only) {Property.<number>} angle of the scale in radians, zero is balanced
@@ -138,8 +127,20 @@ define( function( require ) {
     // unlink is unnecessary
     Property.multilink( [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
       function( leftWeight, rightWeight ) {
-        var angle = ( ( rightWeight - leftWeight ) / maxWeight ) * MAX_SCALE_ANGLE;
-        assert && assert( Math.abs( angle ) <= MAX_SCALE_ANGLE, 'angle out of range: ' + angle );
+
+        // compute the weight difference between the 2 plates
+        var weightDelta = ( rightWeight - leftWeight );
+
+        // constrain to maxWeight so the scale bottoms out
+        if ( weightDelta > options.maxWeight ) {
+          weightDelta = options.maxWeight;
+        }
+        else if ( weightDelta < -options.maxWeight ) {
+          weightDelta = -options.maxWeight;
+        }
+
+        var angle = ( weightDelta / options.maxWeight ) * options.maxAngle;
+        assert && assert( Math.abs( angle ) <= options.maxAngle, 'angle out of range: ' + angle );
         self.angleProperty.value = angle;
       } );
   }
