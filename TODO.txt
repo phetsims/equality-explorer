@@ -29,7 +29,5 @@ x range is [-40,40]
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Tweak scale look and angle to make it look bottomed out.
-
 Snapshots
 

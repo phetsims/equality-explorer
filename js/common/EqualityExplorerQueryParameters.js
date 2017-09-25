@@ -78,7 +78,7 @@ define( function( require ) {
     // Height of the scale's fulcrum, on which the balance beam sits.
     fulcrumHeight: {
       type: 'number',
-      defaultValue: 40,
+      defaultValue: 52,
       isValidValue: function( value ) {
         return value > 0;
       }
@@ -87,7 +87,7 @@ define( function( require ) {
     // TODO delete plateSupportHeight when design has stabilized
     plateSupportHeight: {
       type: 'number',
-      defaultValue: 50,
+      defaultValue: 70,
       isValidValue: function( value ) {
         return value > 0;
       }
@@ -97,7 +97,7 @@ define( function( require ) {
     // maximum angle that the scale can move (plus or minus) in degrees
     maxScaleAngle: {
       type: 'number',
-      defaultValue: 12, // degrees
+      defaultValue: 22, // degrees
       isValidValue: function( value ) {
         return value > 0 && value < 90;
       }
