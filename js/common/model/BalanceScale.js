@@ -149,7 +149,7 @@ define( function( require ) {
   return inherit( Object, BalanceScale, {
 
     /**
-     * Organizes Items on the scale.
+     * Organizes Items on the scale, grouping like items together.
      * @public
      */
     organize: function() {
