@@ -5,6 +5,10 @@ DESIGN QUESTIONS
 
 Reconsider "white box" feature
 
+Numbers: If the left side of the scale contains two 1's and three -1's, does the left side of the equation
+show “2 + -3” or “-1" ?  There are no examples in the design doc that show the Numbers screen with both
+1 and -1 on the scale.
+
 Snapshots: Is position of items on scale saved and restored?
 
 Item limits (proposed by AM in Slack):
