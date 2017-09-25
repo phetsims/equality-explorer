@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Radio buttons for selecting a scene in the 'Basics' screen.
+ * Radio buttons for selecting a scene.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -15,12 +15,12 @@ define( function( require ) {
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
 
   /**
-   * @param {BasicsScene[]} scenes
-   * @param {Property.<BasicsScene>} sceneProperty
+   * @param {Scene[]} scenes
+   * @param {Property.<Scene>} sceneProperty
    * @param {Object} [options]
    * @constructor
    */
-  function BasicsSceneControl( scenes, sceneProperty, options ) {
+  function SceneControl( scenes, sceneProperty, options ) {
 
     options = _.extend( {
 
@@ -44,7 +44,7 @@ define( function( require ) {
     RadioButtonGroup.call( this, sceneProperty, contentArray, options );
   }
 
-  equalityExplorer.register( 'BasicsSceneControl', BasicsSceneControl );
+  equalityExplorer.register( 'SceneControl', SceneControl );
 
-  return inherit( RadioButtonGroup, BasicsSceneControl );
+  return inherit( RadioButtonGroup, SceneControl );
 } );

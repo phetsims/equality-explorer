@@ -9,13 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  //TODO generalize BasicsScene and move to js/common/model/
-  var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var IntegerNode = require( 'EQUALITY_EXPLORER/common/view/IntegerNode' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
+  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
   var POSITIVE_ONE_NODE = new IntegerNode( 1, {
@@ -34,7 +33,7 @@ define( function( require ) {
    * @constructor
    */
   function NumbersScene() {
-    BasicsScene.call( this, POSITIVE_ONE_NODE, createItemCreators(), createItemCreators() );
+    Scene.call( this, POSITIVE_ONE_NODE, createItemCreators(), createItemCreators() );
   }
 
   equalityExplorer.register( 'NumbersScene', NumbersScene );
@@ -50,5 +49,5 @@ define( function( require ) {
     ];
   }
 
-  return inherit( BasicsScene, NumbersScene );
+  return inherit( Scene, NumbersScene );
 } );

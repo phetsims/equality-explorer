@@ -9,11 +9,11 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var BasicsSceneNode = require( 'EQUALITY_EXPLORER/basics/view/BasicsSceneNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
 
   /**
@@ -35,7 +35,7 @@ define( function( require ) {
     this.addChild( resetAllButton );
 
     // @private
-    this.sceneNode = new BasicsSceneNode( model.scene, model.sceneProperty, this.layoutBounds );
+    this.sceneNode = new SceneNode( model.scene, model.sceneProperty, this.layoutBounds );
     this.addChild( this.sceneNode );
   }
 

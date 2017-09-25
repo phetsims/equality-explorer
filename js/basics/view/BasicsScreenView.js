@@ -9,12 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var BasicsSceneControl = require( 'EQUALITY_EXPLORER/basics/view/BasicsSceneControl' );
-  var BasicsSceneNode = require( 'EQUALITY_EXPLORER/basics/view/BasicsSceneNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var SceneControl = require( 'EQUALITY_EXPLORER/common/view/SceneControl' );
+  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
 
   /**
@@ -38,7 +38,7 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    var sceneControl = new BasicsSceneControl( model.scenes, model.sceneProperty, {
+    var sceneControl = new SceneControl( model.scenes, model.sceneProperty, {
       right: resetAllButton.right,
       bottom: resetAllButton.top - 40
     } );
@@ -47,7 +47,7 @@ define( function( require ) {
     // @private create the view for each scene
     this.sceneNodes = [];
     for ( var i = 0; i < model.scenes.length; i++ ) {
-      var sceneNode = new BasicsSceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds );
+      var sceneNode = new SceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds );
       this.sceneNodes.push( sceneNode );
       this.addChild( sceneNode );
     }

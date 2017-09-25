@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Base type for a scene in the 'Basics' screen.
+ * Base type for a scene in Equality Explorer sim.  A scene is a collection of Items.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -31,7 +31,7 @@ define( function( require ) {
    * @param {ItemCreator[]} rightItemCreators
    * @constructor
    */
-  function BasicsScene( icon, leftItemCreators, rightItemCreators ) {
+  function Scene( icon, leftItemCreators, rightItemCreators ) {
 
     var self = this;
 
@@ -72,7 +72,7 @@ define( function( require ) {
     enableItemCreators( rightItemCreators, this.scale.rightPlate.numberOfCells );
   }
 
-  equalityExplorer.register( 'BasicsScene', BasicsScene );
+  equalityExplorer.register( 'Scene', Scene );
 
   /**
    * Wires up an ItemCreator's enabled Property, so that it can't create more than some max number of Items.
@@ -99,7 +99,7 @@ define( function( require ) {
     } );
   }
 
-  return inherit( Object, BasicsScene, {
+  return inherit( Object, Scene, {
 
     // @public
     reset: function() {

@@ -9,13 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var Shape = require( 'KITE/Shape' );
 
   // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
@@ -37,7 +37,7 @@ define( function( require ) {
    * @constructor
    */
   function PolygonsScene() {
-    BasicsScene.call( this, HEXAGON_NODE,
+    Scene.call( this, HEXAGON_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftItems ),
       createItemCreators( EqualityExplorerQueryParameters.rightItems ) );
   }
@@ -64,5 +64,5 @@ define( function( require ) {
     ];
   }
 
-  return inherit( BasicsScene, PolygonsScene );
+  return inherit( Scene, PolygonsScene );
 } );

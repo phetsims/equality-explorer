@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Displays a scene in the 'Basics' screen.
+ * Base type for displaying scenes in Equality Explorer.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -23,12 +23,12 @@ define( function( require ) {
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
 
   /**
-   * @param {BasicsScene} scene
-   * @param {Property.<BasicsScene>} sceneProperty
+   * @param {Scene} scene
+   * @param {Property.<Scene>} sceneProperty
    * @param {Bounds2} layoutBounds
    * @constructor
    */
-  function BasicsSceneNode( scene, sceneProperty, layoutBounds ) {
+  function SceneNode( scene, sceneProperty, layoutBounds ) {
 
     var self = this;
 
@@ -107,9 +107,9 @@ define( function( require ) {
     }
   }
 
-  equalityExplorer.register( 'BasicsSceneNode', BasicsSceneNode );
+  equalityExplorer.register( 'SceneNode', SceneNode );
 
-  return inherit( Node, BasicsSceneNode, {
+  return inherit( Node, SceneNode, {
 
     // @public
     reset: function() {
