@@ -32,7 +32,7 @@ If left plate is full, can still drag out of right panel, but items will always 
 
 1 and -1 (or x and -x) combined to 0, which then fades ala Expression Exchange.
 
-Variable range is [-40,40]
+x range is [-40,40]
 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
