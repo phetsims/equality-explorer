@@ -15,7 +15,6 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -26,18 +25,21 @@ define( function( require ) {
   var DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.maxY - DRAG_BOUNDS_Y_MARGIN;
 
   /**
-   * @param {Node} icon
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
+   * @param {Object} [options]
    * @constructor
    */
-  function Scene( icon, leftItemCreators, rightItemCreators ) {
+  function Scene( leftItemCreators, rightItemCreators, options ) {
 
     var self = this;
 
+    options = _.extend( {
+     icon: null // {Node|null} optional icon used to represent the scene
+    }, options );
+
     // @public (read-only) {Node} used to represent the scene
-    // wrap the icon since we're using scenery DAG feature
-    this.icon = new Node( { children: [ icon ] } );
+    this.icon = options.icon;
 
     // @public (read-only) {ItemCreator[]} creators for items on left side of scale
     this.leftItemCreators = leftItemCreators;

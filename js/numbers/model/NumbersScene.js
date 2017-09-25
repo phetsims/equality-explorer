@@ -33,7 +33,7 @@ define( function( require ) {
    * @constructor
    */
   function NumbersScene() {
-    Scene.call( this, POSITIVE_ONE_NODE, createItemCreators(), createItemCreators() );
+    Scene.call( this, createItemCreators(), createItemCreators() );
   }
 
   equalityExplorer.register( 'NumbersScene', NumbersScene );

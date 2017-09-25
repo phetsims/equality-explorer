@@ -35,6 +35,7 @@ define( function( require ) {
     // describe a radio button for each scene
     var contentArray = [];
     scenes.forEach( function( scene ) {
+      assert && assert( scene.icon, 'scene must have an icon' );
       contentArray.push( {
         value: scene,
         node: new Node( { children: [ scene.icon ] } ) // wrap the icon since we're using scenery DAG feature
