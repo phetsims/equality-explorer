@@ -44,11 +44,12 @@ define( function( require ) {
     // @public resets the model
     reset: function() {
       this.variableValueProperty.reset();
+      this.scene.reset();
     },
 
     // @public
     step: function( dt ) {
-      //TODO implement step
+      this.scene.step( dt );
     }
   } );
 } );
