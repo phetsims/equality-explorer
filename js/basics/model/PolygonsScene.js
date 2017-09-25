@@ -19,15 +19,18 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   // Nodes that are reused via scenery's DAG feature
-  var HEXAGON_NODE = new Path( Shape.regularPolygon( 6, EqualityExplorerConstants.ITEM_HEIGHT / 2 ), {
-    fill: 'rgb( 124, 69, 157 )'
+  var HEXAGON_NODE = new Path( Shape.regularPolygon( 6, 100 ), {
+    fill: 'rgb( 124, 69, 157 )',
+    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
-  var DIAMOND_NODE = new Path( Shape.regularPolygon( 4, EqualityExplorerConstants.ITEM_HEIGHT * Math.sin( Math.PI / 3 ) / 2 ), {
-    fill: 'red'
+  var DIAMOND_NODE = new Path( Shape.regularPolygon( 4, 100 ), {
+    fill: 'red',
+    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
-  var TRIANGLE_NODE = new Path( Shape.regularPolygon( 3, EqualityExplorerConstants.ITEM_HEIGHT / Math.sin( Math.PI / 3 ) / 2 ), {
+  var TRIANGLE_NODE = new Path( Shape.regularPolygon( 3, 100 ), {
     fill: 'rgb( 155, 205, 100 )',
-    rotation: -Math.PI / 2
+    rotation: -Math.PI / 2,
+    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
 
   /**
