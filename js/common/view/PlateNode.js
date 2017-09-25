@@ -46,8 +46,8 @@ define( function( require ) {
 
     // Inside bottom surface of the plate, were Items will sit.
     // Path description (d= field) from assets/scale/inside.svg
-    var insideString = 'M243.527,69.984c0,2.25-64.234,8.75-143,8.75c-78.764,0-142.25-5.988-142.25-9.25c0-5.25,63.836-10.462,142.602-10.462S243.527,64.484,243.527,69.984';
-    var insideNode = new Path( insideString, {
+    var insideSVG = 'M243.527,69.984c0,2.25-64.234,8.75-143,8.75c-78.764,0-142.25-5.988-142.25-9.25c0-5.25,63.836-10.462,142.602-10.462S243.527,64.484,243.527,69.984';
+    var insideNode = new Path( insideSVG, {
       fill: '#E4E4E4',
       centerX: outsideNode.centerX,
       top: outsideNode.top
@@ -55,15 +55,15 @@ define( function( require ) {
 
     // Inside wall of the plate.
     // Path description (d= field) from assets/scale/rim.svg
-    var wallString = 'M251.869,68.484c0,7.364-67.6,13.333-150.99,13.333c-83.389,0-150.988-5.969-150.988-13.333c0-7.363,67.6-13.333,150.988-13.333C184.27,55.151,251.869,61.121,251.869,68.484';
-    var wallNode = new Path( wallString, {
+    var wallSVG = 'M251.869,68.484c0,7.364-67.6,13.333-150.99,13.333c-83.389,0-150.988-5.969-150.988-13.333c0-7.363,67.6-13.333,150.988-13.333C184.27,55.151,251.869,61.121,251.869,68.484';
+    var wallNode = new Path( wallSVG, {
       fill: '#B1B1B1',
       centerX: outsideNode.centerX,
       bottom: insideNode.bottom
     } );
 
     // Rim around the top of the plate, colored the same as the outside surface of the plate.
-    var rimNode = new Path( wallString, {
+    var rimNode = new Path( wallSVG, {
       stroke: options.color,
       center: wallNode.center
     } );
@@ -77,10 +77,12 @@ define( function( require ) {
     plateNode.setScaleMagnitude( plate.diameter / plateNode.width, 1 );
     assert && assert( plateNode.width === plate.diameter );
 
-    // vertical rod on the bottom of that plate that attaches to pivot
+    // Vertical rod on the bottom of that plate that attaches to pivot
     var rodNode = new Rectangle( 0, 0, 10, plate.supportHeight - options.pivotRadius, {
       fill: SUPPORT_FILL,
-      stroke: SUPPORT_STROKE
+      stroke: SUPPORT_STROKE,
+      centerX: plateNode.centerX,
+      top: plateNode.centerY
     } );
 
     // Pivot point that connects to the balance beam
@@ -91,15 +93,8 @@ define( function( require ) {
       centerY: rodNode.bottom
     } );
 
-    // Put all of the parts of the support together
-    var supportNode = new Node( {
-      children: [ rodNode, pivotNode ],
-      centerX: plateNode.centerX,
-      top: plateNode.centerY
-    } );
-
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ supportNode, plateNode ];
+    options.children = [ rodNode, pivotNode, plateNode ];
 
     // Grid where Items appear
     if ( EqualityExplorerQueryParameters.showGrid ) {
