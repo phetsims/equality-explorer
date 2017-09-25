@@ -26,11 +26,16 @@ define( function( require ) {
    * @param {Scene} scene
    * @param {Property.<Scene>} sceneProperty
    * @param {Bounds2} layoutBounds
+   * @param {Object} [options]
    * @constructor
    */
-  function SceneNode( scene, sceneProperty, layoutBounds ) {
+  function SceneNode( scene, sceneProperty, layoutBounds, options ) {
 
     var self = this;
+
+    options = _.extend( {
+      itemsPanelSpacing: 50
+    }, options );
 
     // view-specific Properties
     this.equationAccordionBoxExpandedProperty = new Property( true );
@@ -42,12 +47,14 @@ define( function( require ) {
     var scaleNode = new BalanceScaleNode( scene.scale );
 
     var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, scene.scale.leftPlate, itemsLayer, {
+      spacing: options.itemsPanelSpacing,
       stroke: EqualityExplorerColors.LEFT_PLATE_COLOR,
       centerX: scene.scale.leftPlate.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, scene.scale.rightPlate, itemsLayer, {
+      spacing: options.itemsPanelSpacing,
       stroke: EqualityExplorerColors.RIGHT_PLATE_COLOR,
       centerX: scene.scale.rightPlate.locationProperty.value.x,
       bottom: leftItemsPanel.bottom

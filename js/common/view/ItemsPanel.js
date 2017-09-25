@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -16,6 +17,9 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+
+  // constants
+  var CONTENT_SIZE = new Dimension2( 275, 50 );
 
   /**
    * @param {ItemCreator[]} itemCreators
@@ -27,13 +31,15 @@ define( function( require ) {
   function ItemsPanel( itemCreators, plate, itemsLayer, options ) {
 
     options = _.extend( {
+      
+      spacing: 50, // horizontal space between ItemCreatorNodes
 
       // supertype options
       lineWidth: 2,
       cornerRadius: 6
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, 275, 50 );
+    var backgroundNode = new Rectangle( 0, 0, CONTENT_SIZE.width, CONTENT_SIZE.height );
 
     var itemCreatorNodes = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
@@ -41,10 +47,12 @@ define( function( require ) {
     }
 
     var hBox = new HBox( {
-      spacing: 50,
+      spacing: options.spacing,
       align: 'center',
       children: itemCreatorNodes,
-      center: backgroundNode.center
+      center: backgroundNode.center,
+      maxWidth: CONTENT_SIZE.width,
+      maxHeight: CONTENT_SIZE.height
     } );
 
     var content = new Node( {
