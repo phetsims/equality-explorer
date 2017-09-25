@@ -15,6 +15,13 @@ Solving: no limits
 
 Arrow color when unbalanced, use something other than orange?
 
+Solving: When you start dragging something on one plate, does the corresponding thing on the other plate
+becomes non-interactive?
+
+Solving: What happens when universal operation is applied while an item is being dragged?
+
+Solving: What happens when the variable value is changed while the "composite x" item is being dragged?
+
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
 
