@@ -48,10 +48,10 @@ define( function( require ) {
       fill: 'black'
     } );
 
-    assert && assert( !options.content, 'button defines its content' );
+    assert && assert( !options.content, 'this subtype defines its content' );
     options.content = iconNode;
 
-    assert && assert( !options.listener, 'button defines its listener' );
+    assert && assert( !options.listener, 'this subtype defines its listener' );
     options.listener = function() {
       scale.organize();
       self.enabled = false;

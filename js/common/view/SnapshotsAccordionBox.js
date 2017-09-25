@@ -57,7 +57,7 @@ define( function( require ) {
     }, options );
 
     // title
-    assert && assert( !options.titleNode, 'sets its own titleNode' );
+    assert && assert( !options.titleNode, 'this subtype defines its titleNode' );
     options.titleNode = new Text( snapshotsString, {
         font: new PhetFont( 18 ),
         maxWidth: 0.85 * options.maxWidth
