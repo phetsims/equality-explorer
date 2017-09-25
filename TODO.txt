@@ -33,5 +33,11 @@ x range is [-40,40]
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+Reduce x and -x terms in equation, show symbol instead of icons
+
+Hook up x and -x to VariablesModel.variableValueProperty
+
+Combine inverses to create '0'
+
 Snapshots
 
