@@ -77,8 +77,8 @@ define( function( require ) {
     plateNode.setScaleMagnitude( plate.diameter / plateNode.width, 1 );
     assert && assert( plateNode.width === plate.diameter );
 
-    // Vertical rod on the bottom of that plate that attaches to pivot
-    var rodNode = new Rectangle( 0, 0, 10, plate.supportHeight - options.pivotRadius, {
+    // Vertical support that attaches the plate to the pivot point
+    var supportNode = new Rectangle( 0, 0, 10, plate.supportHeight - options.pivotRadius, {
       fill: SUPPORT_FILL,
       stroke: SUPPORT_STROKE,
       centerX: plateNode.centerX,
@@ -89,12 +89,12 @@ define( function( require ) {
     var pivotNode = new Circle( options.pivotRadius, {
       fill: SUPPORT_FILL,
       stroke: SUPPORT_STROKE,
-      centerX: rodNode.centerX,
-      centerY: rodNode.bottom
+      centerX: supportNode.centerX,
+      centerY: supportNode.bottom
     } );
 
     assert && assert( !options.children, 'decoration not supported' );
-    options.children = [ rodNode, pivotNode, plateNode ];
+    options.children = [ supportNode, pivotNode, plateNode ];
 
     // Grid where Items appear
     if ( EqualityExplorerQueryParameters.showGrid ) {
