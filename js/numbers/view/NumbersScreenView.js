@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BasicsSceneNode = require( 'EQUALITY_EXPLORER/basics/view/BasicsSceneNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -32,9 +33,19 @@ define( function( require ) {
       bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
     this.addChild( resetAllButton );
+
+    // @private
+    this.sceneNode = new BasicsSceneNode( model.scene, model.sceneProperty, this.layoutBounds );
+    this.addChild( this.sceneNode );
   }
 
   equalityExplorer.register( 'NumbersScreenView', NumbersScreenView );
 
-  return inherit( ScreenView, NumbersScreenView );
+  return inherit( ScreenView, NumbersScreenView, {
+
+    // @public
+    reset: function() {
+      this.sceneNode.reset();
+    }
+  } );
 } );

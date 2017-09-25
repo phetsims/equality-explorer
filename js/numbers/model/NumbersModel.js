@@ -11,12 +11,23 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumbersScene = require( 'EQUALITY_EXPLORER/numbers/model/NumbersScene' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
    */
   function NumbersModel() {
-    //TODO implement constructor
+
+    // @public (read-only)
+    this.scene = new NumbersScene();
+
+    //TODO make this go away
+    // @public
+    this.sceneProperty = new Property( this.scene );
+    this.sceneProperty.lazyLink( function( scene ) {
+      throw new Error( 'sceneProperty should never change, there is only 1 scene' );
+    } );
   }
 
   equalityExplorer.register( 'NumbersModel', NumbersModel );
@@ -25,12 +36,12 @@ define( function( require ) {
 
     // @public resets the model
     reset: function() {
-      //TODO implement reset
+      this.scene.reset();
     },
 
     // @public
     step: function( dt ) {
-      //TODO implement step
+      this.scene.step( dt );
     }
   } );
 } );

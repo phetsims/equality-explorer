@@ -43,7 +43,7 @@ define( function( require ) {
       }
     },
 
-    // Number of items that are initially on the left plate.
+    // Number of items that are initially on the left plate in the Basics screen.
     // This is intended to be used for debugging and testing, not in production situations.
     // See https://github.com/phetsims/equality-explorer/issues/8
     leftItems: {
@@ -51,23 +51,16 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0 ], // in the order that Items appear in the panel below the scale
-      isValidValue: function( array ) {
-        // all values are zero or positive integers
-        return _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } );
-      }
+      defaultValue: [ 0, 0, 0 ] // in the order that Items appear in the panel below the scale
     },
 
-    // Similar to leftItems, but for the right plate.
+    // Similar to leftItems, but for the right plate in the Basics screen.
     rightItems: {
       type: 'array',
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0 ],
-      isValidValue: function( array ) {
-        return _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } );
-      }
+      defaultValue: [ 0, 0, 0 ]
     },
 
     //TODO delete fruitWeights when design has stabilized
@@ -119,6 +112,18 @@ define( function( require ) {
   } );
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
+
+  // Validate leftItems and rightItems
+  function validateItems( array ) {
+    assert && assert( array.length === 3, 'requires 3 values' );
+    var numberOfCells = EqualityExplorerQueryParameters.gridSize[ 0 ] * EqualityExplorerQueryParameters.gridSize[ 1 ];
+    assert && assert( _.reduce( EqualityExplorerQueryParameters.leftItems, function( sum, n ) { return sum + n; } ) <= numberOfCells,
+      'sum of values must be <= number of cells in grid' );
+    assert && assert( _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } ),
+      'all values must be integers' );
+  }
+  validateItems( EqualityExplorerQueryParameters.leftItems );
+  validateItems( EqualityExplorerQueryParameters.rightItems );
 
   // log the values of all sim-specific query parameters
   phet.log && phet.log( 'query parameters: ' + JSON.stringify( EqualityExplorerQueryParameters, null, 2 ) );

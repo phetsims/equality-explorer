@@ -70,21 +70,6 @@ define( function( require ) {
     // Wire up enable/disable for ItemCreators, based on capacity of the scale's plates
     enableItemCreators( leftItemCreators, this.scale.leftPlate.numberOfCells );
     enableItemCreators( rightItemCreators, this.scale.rightPlate.numberOfCells );
-
-    // Validate query parameters that populate the scale.  These are Errors instead of assertions, because we have
-    // no control over that the user enters, and these query parameters may be provided when assertions are disabled.
-    if ( this.leftItemCreators.length !== EqualityExplorerQueryParameters.leftItems.length ) {
-      throw new Error( 'query parameter leftItems must have ' + this.leftItemCreators.length + ' values' );
-    }
-    if ( _.reduce( EqualityExplorerQueryParameters.leftItems, function( sum, n ) { return sum + n; } ) > this.scale.leftPlate.numberOfCells ) {
-      throw new Error( 'query parameter leftItems contains too many items, max is ' + this.scale.leftPlate.numberOfCells );
-    }
-    if ( this.rightItemCreators.length !== EqualityExplorerQueryParameters.rightItems.length ) {
-      throw new Error( 'query parameter rightItems must have ' + this.rightItemCreators.length + ' values' );
-    }
-    if ( _.reduce( EqualityExplorerQueryParameters.rightItems, function( sum, n ) { return sum + n; } ) > this.scale.rightPlate.numberOfCells ) {
-      throw new Error( 'query parameter rightItems contains too many items, max is ' + this.scale.rightPlate.numberOfCells );
-    }
   }
 
   equalityExplorer.register( 'BasicsScene', BasicsScene );
