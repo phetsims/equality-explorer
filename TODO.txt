@@ -8,11 +8,18 @@ Reconsider "white box" feature
 Snapshots: Is position of items on scale saved and restored?
 
 Item limits (proposed by AM in Slack):
-On the Variables screen, they can drag up to 8 of any object, so there’s always space for inverses to appear.
-On the Numbers screen the limit would be 18
-On the Solving screen, there would not be limits
+Basics: 36 total items, any combination
+Variables: 8 (9?) of each item, so there’s always space for inverses to appear.
+Numbers: 18 of each item
+Solving: no limits
 
-Solving: Since there are no limits, when does the scale "bottom out"?
+Solving: Since there are no limits, at what weight does the scale "bottom out"?
+
+Variables, Solving: Does changing x cause the scale to move or recalibrate? If the scale does move, then we need
+to decide at what weight the scale “bottoms out” and can’t move any more.  x range is [-40,40]. If we choose the
+“bottom out weight” to be small (eg, 40), then there will be many scenarios where it’s bottomed out. If we choose
+the “bottom out weight” to be large (eg, 400), then there will be many scenarios where putting an item on the
+scale results in little perceptible movement of the scale.
 
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
@@ -24,6 +31,8 @@ Animation of ghost and dragged item occurs such that they arrive at their cells 
 If left plate is full, can still drag out of right panel, but items will always fly back to panels.
 
 1 and -1 (or x and -x) combined to 0, which then fades ala Expression Exchange.
+
+Variable range is [-40,40]
 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
