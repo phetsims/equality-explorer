@@ -25,10 +25,6 @@ define( function( require ) {
   var variableString = require( 'string!EQUALITY_EXPLORER/variable' );
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
-  // constants
-  var EQUATION_FONT = new PhetFont( 24 );
-  var CONTENT_SIZE = new Dimension2( 185, 75 );
-
   /**
    * @param {Property.<number>} valueProperty
    * @param {Range} valueRange
@@ -39,13 +35,13 @@ define( function( require ) {
 
     options = _.extend( {
 
+      titleFont: new PhetFont( 18 ),
+      equationFont: new PhetFont( 24 ),
+      contentSize: new Dimension2( 305, 50 ),
+
       // supertype options
       fill: 'white',
       showTitleWhenExpanded: false,
-      titleNode: new Text( variableString, {
-        font: new PhetFont( 18 ),
-        maxWidth: 0.75 * CONTENT_SIZE.width
-      } ),
       titleAlignX: 'left',
       titleXSpacing: 8,
       buttonLength: 20,
@@ -57,28 +53,36 @@ define( function( require ) {
       contentYMargin: 10
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, CONTENT_SIZE.width, CONTENT_SIZE.height );
+    assert && assert( !options.titleNode, 'subtype defines its titleNode' );
+    options.titleNode = new Text( variableString, {
+      font: options.titleFont,
+      maxWidth: 0.75 * options.contentSize.width
+    } );
+
+    var backgroundNode = new Rectangle( 0, 0, options.contentSize.width, options.contentSize.height );
 
     var xText = new Text( xString, {
-      font: EQUATION_FONT,
-      maxWidth: 0.75 * CONTENT_SIZE.width
+      font: options.equationFont,
+      maxWidth: 0.5 * options.contentSize.width
     } );
 
     var equalsText = new Text( '=', {
-      font: EQUATION_FONT
+      font: options.equationFont
     } );
 
     // NumberPicker.dispose not needed, VariableAccordionBox exists for lifetime of the sim
     var valuePicker = new NumberPicker( valueProperty, new Property( valueRange ), {
       color: 'black',
-      font: EQUATION_FONT,
+      font: options.equationFont,
       xMargin: 6
     } );
 
     var equationNode = new HBox( {
       children: [ xText, equalsText, valuePicker ],
       spacing: 5,
-      center: backgroundNode.center
+      center: backgroundNode.center,
+      maxWidth: options.contentSize.width,
+      maxHeight: options.contentSize.height
     } );
 
     var contentNode = new Node( {
