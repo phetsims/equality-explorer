@@ -1,8 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO better name for this type?
 /**
- * Displays a number in a circle.
+ * Displays an integer in a circle.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -16,13 +15,16 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {number} value
    * @param {Object} {options}
    * @constructor
    */
-  function NumberNode( value, options ) {
+  function IntegerNode( value, options ) {
+
+    assert && assert( Util.isInteger( value ), 'value must be an integer: ' + value );
 
     options = _.extend( {
       radius: 20,
@@ -54,7 +56,7 @@ define( function( require ) {
     Node.call( this, options );
   }
 
-  equalityExplorer.register( 'NumberNode', NumberNode );
+  equalityExplorer.register( 'IntegerNode', IntegerNode );
 
-  return inherit( Node, NumberNode );
+  return inherit( Node, IntegerNode );
 } );

@@ -16,14 +16,14 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
-  var NumberNode = require( 'EQUALITY_EXPLORER/common/view/NumberNode' );
+  var IntegerNode = require( 'EQUALITY_EXPLORER/common/view/IntegerNode' );
 
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
   var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
 
   // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
-  var ONE_NODE = new NumberNode( 1, {
+  var ONE_NODE = new IntegerNode( 1, {
     radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
     fill: 'rgb( 246, 229, 214 )',
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
