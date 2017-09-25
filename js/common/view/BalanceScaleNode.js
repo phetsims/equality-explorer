@@ -109,18 +109,19 @@ define( function( require ) {
       top: fulcrumNode.top - ( 0.5 * BEAM_DEPTH )
     } );
 
-    // dashed line that is perpendicular to the base
-    var dashedLine = new Line( 0, 0, 0, 1.2 * ARROW_LENGTH, {
-      lineDash: [ 4, 4 ],
-      stroke: 'black',
-      centerX: beamNode.centerX,
-      bottom: 0
-    } );
-
     // arrow at the center on the beam, points perpendicular to the beam
     var arrowNode = new ArrowNode( 0, 0, 0, -ARROW_LENGTH, {
       headHeight: 20,
       headWidth: 15,
+      centerX: beamNode.centerX,
+      bottom: 0
+    } );
+
+    // A dashed line that is perpendicular to the base.
+    // When the scale is balanced, the arrow will be aligned with this line.
+    var dashedLine = new Line( 0, 0, 0, 1.2 * ARROW_LENGTH, {
+      lineDash: [ 4, 4 ],
+      stroke: 'black',
       centerX: beamNode.centerX,
       bottom: 0
     } );
