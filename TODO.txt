@@ -23,6 +23,8 @@ Animation of ghost and dragged item occurs such that they arrive at their cells 
 
 If left plate is full, can still drag out of right panel, but items will always fly back to panels.
 
+1 and -1 combined to 0, which then fades ala Expression Exchange.
+
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
