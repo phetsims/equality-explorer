@@ -33,7 +33,7 @@ IMPLEMENTATION
 
 Variables: put x, -x, 1, -1 on right plate. Equation is messed up, shows '0 = 1[x] + 1[-x] + +'
 
-Add couplers that open/close but don't constraint anything, so we can play around while discussing
+Add couplers that open/close but don't constrain anything, so we can play around while discussing
 
 Reduce x and -x terms in equation, show symbol instead of icons
 
