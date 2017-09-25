@@ -114,6 +114,7 @@ define( function( require ) {
     }
 
     // @public (read-only) for layout only
+    this.equationAccordionBox = equationAccordionBox;
     this.snapshotsAccordionBox = snapshotsAccordionBox;
   }
 

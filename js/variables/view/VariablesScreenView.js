@@ -52,6 +52,7 @@ define( function( require ) {
     var globalBounds = this.sceneNode.snapshotsAccordionBox.parentToGlobalBounds( this.sceneNode.snapshotsAccordionBox.bounds );
     var localBounds = this.globalToLocalBounds( globalBounds );
 
+    // Variables accordion box, below the Snapshots accordion box
     var variableAccordionBox = new VariableAccordionBox( model.variableValueProperty, model.variableRange, {
       expandedProperty: this.variableAccordionBoxExpandedProperty,
       right: localBounds.right,
