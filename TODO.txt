@@ -26,5 +26,5 @@ If left plate is full, can still drag out of right panel, but items will always 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-snapshots
+Snapshots
 
