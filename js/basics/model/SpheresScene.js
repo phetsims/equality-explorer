@@ -17,7 +17,7 @@ define( function( require ) {
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
-  // Nodes that are reused via scenery's DAG feature
+  // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
   var GREEN_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'green' } );
   var ORANGE_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'orange' } );
   var MAGENTA_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'magenta' } );

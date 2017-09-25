@@ -18,7 +18,7 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
 
-  // Nodes that are reused via scenery's DAG feature
+  // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
   var HEXAGON_NODE = new Path( Shape.regularPolygon( 6, 100 ), {
     fill: 'rgb( 124, 69, 157 )',
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT

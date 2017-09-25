@@ -22,7 +22,7 @@ define( function( require ) {
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
   var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
 
-  // Nodes that are reused via scenery's DAG feature
+  // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
   var ONE_NODE = new NumberNode( 1, {
     radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
     fill: 'rgb( 246, 229, 214 )',
