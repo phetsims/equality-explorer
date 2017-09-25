@@ -8,6 +8,11 @@ Reconsider "white box" feature
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
 
+Item limits:
+On the Variables screen, they can drag up to 8 of any object, so there’s always space for inverses to appear.
+On the Numbers screen the limit would be 18
+On the Solving screen, there would not be limits
+
 Ghost moves y-proportionally below the plate. Above the plate tracks exactly. x-axis movement is tracked exactly.
 
 Animation of ghost and dragged item occurs such that they arrive at their cells at same time.
