@@ -65,6 +65,7 @@ define( function( require ) {
     // @public
     reset: function() {
       this.variableAccordionBoxExpandedProperty.reset();
+      this.sceneNode.reset();
     }
   } );
 } );

@@ -22,12 +22,15 @@ define( function( require ) {
    */
   function NumbersScreenView( model ) {
 
+    var self = this;
+    
     ScreenView.call( this );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
+        self.reset();
       },
       right: this.layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
