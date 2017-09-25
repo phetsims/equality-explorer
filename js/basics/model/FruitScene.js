@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
@@ -16,7 +17,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var IntegerNode = require( 'EQUALITY_EXPLORER/common/view/IntegerNode' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
-  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
@@ -39,7 +39,7 @@ define( function( require ) {
    * @constructor
    */
   function FruitScene() {
-    Scene.call( this, APPLE_NODE,
+    BasicsScene.call( this, APPLE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftItems ),
       createItemCreators( EqualityExplorerQueryParameters.rightItems ) );
   }
@@ -73,5 +73,5 @@ define( function( require ) {
     ];
   }
 
-  return inherit( Scene, FruitScene );
+  return inherit( BasicsScene, FruitScene );
 } );
