@@ -42,8 +42,6 @@ If left plate is full, can still drag out of right panel, but items will always 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Add couplers that open/close but don't constrain anything, so we can play around while discussing.
-
 Reduce x and -x terms in equation, show symbol instead of icons
 
 Hook up x and -x to VariablesModel.variableValueProperty
