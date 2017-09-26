@@ -47,7 +47,9 @@ define( function( require ) {
     // @private create the view for each scene
     this.sceneNodes = [];
     for ( var i = 0; i < model.scenes.length; i++ ) {
-      var sceneNode = new SceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds );
+      var sceneNode = new SceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds, {
+        coupledControlVisible: false
+      } );
       this.sceneNodes.push( sceneNode );
       this.addChild( sceneNode );
     }

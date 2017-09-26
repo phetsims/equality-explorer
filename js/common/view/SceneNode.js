@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
+  var CoupledControl = require( 'EQUALITY_EXPLORER/common/view/CoupledControl' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -34,7 +35,8 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      itemsPanelSpacing: 50
+      itemsPanelSpacing: 50,
+      coupledControlVisible: true
     }, options );
 
     // view-specific Properties
@@ -60,6 +62,12 @@ define( function( require ) {
       bottom: leftItemsPanel.bottom
     } );
 
+    var coupledControl = new CoupledControl( scene.coupledProperty, {
+      visible: options.coupledControlVisible,
+      centerX: leftItemsPanel.right + ( ( rightItemsPanel.left - leftItemsPanel.right ) / 2 ),
+      centerY: leftItemsPanel.centerY
+    } );
+
     var equationAccordionBox = new EquationAccordionBox(
       scene.leftItemCreators, scene.rightItemCreators, {
         expandedProperty: this.equationAccordionBoxExpandedProperty,
@@ -82,6 +90,7 @@ define( function( require ) {
         scaleNode,
         leftItemsPanel,
         rightItemsPanel,
+        coupledControl,
         equationAccordionBox,
         snapshotsAccordionBox,
         itemsLayer // on top, so that Items are in front of everything else
