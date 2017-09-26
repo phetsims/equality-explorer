@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO CoupledToggleSwitch is one of several design alternatives, delete if not used
 /**
  * Toggle switch for turning coupling on/off that uses 'train coupler' images.
  * 

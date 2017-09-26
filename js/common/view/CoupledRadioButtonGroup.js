@@ -1,5 +1,6 @@
 // Copyright 2014-2016, University of Colorado Boulder
 
+//TODO CoupledRadioButtonGroup is one of several design alternatives, delete if not used
 /**
  * Radio buttons for turning coupling on/off.
  *
