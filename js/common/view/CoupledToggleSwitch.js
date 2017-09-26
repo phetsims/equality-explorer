@@ -37,10 +37,10 @@ define( function( require ) {
       scale: 0.4
     }, options );
 
-
     var leftCouplerNode = new Image( couplerRedImage );
     var rightCouplerNode = new Image( couplerBlueImage );
 
+    // transparent background, so we can position this Node without caring where the couplers are
     var backgroundWidth = leftCouplerNode.width +  rightCouplerNode.width + OPEN_SPACING;
     var backgroundHeight = Math.max( leftCouplerNode.height, rightCouplerNode.height );
     var backgroundNode = new Rectangle( 0, 0, backgroundWidth, backgroundHeight );
