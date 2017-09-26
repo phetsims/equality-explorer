@@ -24,6 +24,8 @@ Solving: What happens when universal operation is applied while an item is being
 
 Solving: What happens when the variable value is changed while the "composite x" item is being dragged?
 
+Conflicting uses of color coding: items, arrow, plates, panels
+
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
 
