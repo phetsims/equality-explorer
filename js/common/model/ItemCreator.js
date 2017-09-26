@@ -16,6 +16,7 @@ define( function( require ) {
   var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {string} name - internal name, not displayed to the user
@@ -31,6 +32,9 @@ define( function( require ) {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
       numberOfItemsOnScale: 0 // number of items initially on the scale
     }, options );
+
+    assert && assert( ( options.numberOfItemsOnScale >= 0 ) && Util.isInteger( options.numberOfItemsOnScale ),
+      'numberOfItemsOnScale is invalid: ' + options.numberOfItemsOnScale );
 
     // @public (read-only)
     this.name = name;

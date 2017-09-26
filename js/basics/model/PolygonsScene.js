@@ -38,8 +38,9 @@ define( function( require ) {
    */
   function PolygonsScene() {
     BasicsScene.call( this, HEXAGON_NODE,
-      createItemCreators( EqualityExplorerQueryParameters.leftItems ),
-      createItemCreators( EqualityExplorerQueryParameters.rightItems ) );
+      createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
+      createItemCreators( EqualityExplorerQueryParameters.rightBasics )
+    );
   }
 
   equalityExplorer.register( 'PolygonsScene', PolygonsScene );
@@ -50,16 +51,16 @@ define( function( require ) {
    * @returns {ItemCreator[]}
    */
   function createItemCreators( numberOfItemsOnScale ) {
-    var itemCreatorsIndex = 0;
+    assert && assert( numberOfItemsOnScale.length === 3 );
     return [
       new ItemCreator( 'hexagon', 3, HEXAGON_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
       new ItemCreator( 'diamond', 2, DIAMOND_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } ),
       new ItemCreator( 'triangle', 1, TRIANGLE_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } )
     ];
   }

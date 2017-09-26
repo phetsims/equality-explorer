@@ -40,8 +40,9 @@ define( function( require ) {
    */
   function FruitScene() {
     BasicsScene.call( this, APPLE_NODE,
-      createItemCreators( EqualityExplorerQueryParameters.leftItems ),
-      createItemCreators( EqualityExplorerQueryParameters.rightItems ) );
+      createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
+      createItemCreators( EqualityExplorerQueryParameters.rightBasics )
+    );
   }
 
   equalityExplorer.register( 'FruitScene', FruitScene );
@@ -52,22 +53,17 @@ define( function( require ) {
    * @returns {ItemCreator[]}
    */
   function createItemCreators( numberOfItemsOnScale ) {
-
-    var fruitWeights = EqualityExplorerQueryParameters.fruitWeights;
-    if ( fruitWeights.length !== 3 ) {
-      throw new Error( 'fruitWeights query parameter requires 3 values' );
-    }
-
-    var itemCreatorsIndex = 0;
+    assert && assert( numberOfItemsOnScale.length === 3 );
+    assert && assert( EqualityExplorerQueryParameters.fruitWeights.length === 3 );
     return [
-      new ItemCreator( 'apple', fruitWeights[ 0 ], APPLE_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
+      new ItemCreator( 'apple', EqualityExplorerQueryParameters.fruitWeights[ 0 ], APPLE_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'orange', fruitWeights[ 1 ], ORANGE_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
+      new ItemCreator( 'orange', EqualityExplorerQueryParameters.fruitWeights[ 1 ], ORANGE_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } ),
-      new ItemCreator( '1', fruitWeights[ 2 ], ONE_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ],
+      new ItemCreator( '1', EqualityExplorerQueryParameters.fruitWeights[ 2 ], ONE_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ 2 ],
         constantTerm: true
       } )
     ];

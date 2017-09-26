@@ -27,8 +27,9 @@ define( function( require ) {
    */
   function SpheresScene() {
     BasicsScene.call( this, GREEN_SPHERE_NODE,
-      createItemCreators( EqualityExplorerQueryParameters.leftItems ),
-      createItemCreators( EqualityExplorerQueryParameters.rightItems ) );
+      createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
+      createItemCreators( EqualityExplorerQueryParameters.rightBasics )
+    );
   }
 
   equalityExplorer.register( 'SpheresScene', SpheresScene );
@@ -39,16 +40,16 @@ define( function( require ) {
    * @returns {ItemCreator[]}
    */
   function createItemCreators( numberOfItemsOnScale ) {
-    var itemCreatorsIndex = 0;
+    assert && assert( numberOfItemsOnScale.length === 3 );
     return [
       new ItemCreator( 'greenSphere', 3, GREEN_SPHERE_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
       new ItemCreator( 'orangeSphere', 2, ORANGE_SPHERE_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } ),
       new ItemCreator( 'magentaSphere', 1, MAGENTA_SPHERE_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ itemCreatorsIndex++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } )
     ];
   }

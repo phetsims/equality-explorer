@@ -46,21 +46,71 @@ define( function( require ) {
     // Number of items that are initially on the left plate in the Basics screen.
     // This is intended to be used for debugging and testing, not in production situations.
     // See https://github.com/phetsims/equality-explorer/issues/8
-    leftItems: {
+    leftBasics: {
       type: 'array',
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0 ] // in the order that Items appear in the panel below the scale
+      defaultValue: [ 0, 0, 0 ], // in the order that Items appear in the panel below the scale
+      isValidValue: function( value ) {
+        return isValidItemsArray( value, 3 );
+      }
     },
 
-    // Similar to leftItems, but for the right plate in the Basics screen.
-    rightItems: {
+    // Similar to leftBasics, but for the right plate in the Basics screen.
+    rightBasics: {
       type: 'array',
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0 ]
+      defaultValue: [ 0, 0, 0 ],
+      isValidValue: function( value ) {
+        return isValidItemsArray( value, 3 );
+      }
+    },
+
+    leftNumbers: {
+      type: 'array',
+      elementSchema: {
+        type: 'number'
+      },
+      defaultValue: [ 0, 0 ], // in the order that Items appear in the panel below the scale
+      isValidValue: function( value ) {
+        return isValidItemsArray( value, 2 );
+      }
+    },
+
+    rightNumbers: {
+      type: 'array',
+      elementSchema: {
+        type: 'number'
+      },
+      defaultValue: [ 0, 0 ],
+      isValidValue: function( value ) {
+        return isValidItemsArray( value, 2 );
+      }
+    },
+
+    leftVariables: {
+      type: 'array',
+      elementSchema: {
+        type: 'number'
+      },
+      defaultValue: [ 0, 0, 0, 0 ], // in the order that Items appear in the panel below the scale
+      isValidValue: function( value ) {
+        return isValidItemsArray( value, 4 );
+      }
+    },
+
+    rightVariables: {
+      type: 'array',
+      elementSchema: {
+        type: 'number'
+      },
+      defaultValue: [ 0, 0, 0, 0 ],
+      isValidValue: function( value ) {
+        return isValidItemsArray( value, 4 );
+      }
     },
 
     //TODO delete fruitWeights when design has stabilized
@@ -123,17 +173,14 @@ define( function( require ) {
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
 
-  // Validate leftItems and rightItems
-  function validateItems( array ) {
-    assert && assert( array.length === 3, 'requires 3 values' );
-    var numberOfCells = EqualityExplorerQueryParameters.gridSize[ 0 ] * EqualityExplorerQueryParameters.gridSize[ 1 ];
-    assert && assert( _.reduce( EqualityExplorerQueryParameters.leftItems, function( sum, n ) { return sum + n; } ) <= numberOfCells,
-      'sum of values must be <= number of cells in grid' );
-    assert && assert( _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } ),
-      'all values must be integers' );
+  // Validates an array that indicates the number of Items on a plate
+  function isValidItemsArray( array, length ) {
+    return ( array.length === length ) &&
+           // every value in the array is an integer
+           ( _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } ) ) &&
+           // sum of values in the array doesn't exceed number of cells
+           ( _.reduce( array, function( sum, n ) { return sum + n; } ) <= 36 );
   }
-  validateItems( EqualityExplorerQueryParameters.leftItems );
-  validateItems( EqualityExplorerQueryParameters.rightItems );
 
   // log the values of all sim-specific query parameters
   phet.log && phet.log( 'query parameters: ' + JSON.stringify( EqualityExplorerQueryParameters, null, 2 ) );

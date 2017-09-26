@@ -12,6 +12,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var IntegerNode = require( 'EQUALITY_EXPLORER/common/view/IntegerNode' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
@@ -44,21 +45,36 @@ define( function( require ) {
    * @constructor
    */
   function VariablesScene() {
-    Scene.call( this, createItemCreators(), createItemCreators() );
+    Scene.call( this,
+      createItemCreators( EqualityExplorerQueryParameters.leftVariables ),
+      createItemCreators( EqualityExplorerQueryParameters.rightVariables )
+    );
   }
 
   equalityExplorer.register( 'VariablesScene', VariablesScene );
 
   /**
    * Creates the set of ItemCreators for this scene.
+   * @param {number} numberOfItemsOnScale
    * @returns {ItemCreator[]}
    */
-  function createItemCreators() {
+  function createItemCreators( numberOfItemsOnScale ) {
+    assert && assert( numberOfItemsOnScale.length === 4 );
     return [
-      new ItemCreator( 'x', 2, POSITIVE_X_NODE ),
-      new ItemCreator( '-x', -2, NEGATIVE_X_NODE ),
-      new ItemCreator( '1', 1, POSITIVE_ONE_NODE, { constantTerm: true } ),
-      new ItemCreator( '-1', -1, NEGATIVE_ONE_NODE, { constantTerm: true } )
+      new ItemCreator( 'x', 2, POSITIVE_X_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
+      } ),
+      new ItemCreator( '-x', -2, NEGATIVE_X_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ 1 ],
+      } ),
+      new ItemCreator( '1', 1, POSITIVE_ONE_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ 2 ],
+        constantTerm: true
+      } ),
+      new ItemCreator( '-1', -1, NEGATIVE_ONE_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ 3 ],
+        constantTerm: true
+      } )
     ];
   }
 
