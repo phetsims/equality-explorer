@@ -69,6 +69,9 @@ define( function( require ) {
       }
     },
 
+    // Number of items that are initially on the left plate in the Numbers screen.
+    // This is intended to be used for debugging and testing, not in production situations.
+    // See https://github.com/phetsims/equality-explorer/issues/8
     leftNumbers: {
       type: 'array',
       elementSchema: {
@@ -80,6 +83,7 @@ define( function( require ) {
       }
     },
 
+    // Similar to leftNumbers, but for the right plate in the Numbers screen.
     rightNumbers: {
       type: 'array',
       elementSchema: {
@@ -91,6 +95,10 @@ define( function( require ) {
       }
     },
 
+
+    // Number of items that are initially on the left plate in the Variables screen.
+    // This is intended to be used for debugging and testing, not in production situations.
+    // See https://github.com/phetsims/equality-explorer/issues/8
     leftVariables: {
       type: 'array',
       elementSchema: {
@@ -102,6 +110,7 @@ define( function( require ) {
       }
     },
 
+    // Similar to leftVariables, but for the right plate in the Variables screen.
     rightVariables: {
       type: 'array',
       elementSchema: {
