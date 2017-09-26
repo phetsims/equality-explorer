@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
-  var CoupledControl = require( 'EQUALITY_EXPLORER/common/view/CoupledControl' );
+  var CoupledRadioButtonGroup = require( 'EQUALITY_EXPLORER/common/view/CoupledRadioButtonGroup' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -62,7 +62,7 @@ define( function( require ) {
       bottom: leftItemsPanel.bottom
     } );
 
-    var coupledControl = new CoupledControl( scene.coupledProperty, {
+    var coupledControl = new CoupledRadioButtonGroup( scene.coupledProperty, {
       visible: options.coupledControlVisible,
       centerX: leftItemsPanel.right + ( ( rightItemsPanel.left - leftItemsPanel.right ) / 2 ),
       centerY: leftItemsPanel.centerY

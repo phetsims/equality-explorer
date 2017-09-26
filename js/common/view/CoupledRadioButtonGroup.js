@@ -20,7 +20,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function CoupledControl( coupledProperty, options ) {
+  function CoupledRadioButtonGroup( coupledProperty, options ) {
 
     options = _.extend( {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
@@ -36,7 +36,7 @@ define( function( require ) {
     ], options );
   }
 
-  equalityExplorer.register( 'CoupledControl', CoupledControl );
+  equalityExplorer.register( 'CoupledRadioButtonGroup', CoupledRadioButtonGroup );
 
-  return inherit( RadioButtonGroup, CoupledControl );
+  return inherit( RadioButtonGroup, CoupledRadioButtonGroup );
 } );
