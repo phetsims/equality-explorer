@@ -23,7 +23,7 @@ define( function( require ) {
 
   // constants
   var OPEN_SPACING = 20; // space between couplers in the open position
-  var CLOSED_OVERLAP = 30;
+  var CLOSED_OVERLAP = 31;
 
   /**
    * @param {Property.<boolean>} coupledProperty
