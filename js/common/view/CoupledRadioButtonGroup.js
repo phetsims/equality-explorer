@@ -1,7 +1,7 @@
 // Copyright 2014-2016, University of Colorado Boulder
 
 /**
- * Control for turning coupling on/off.
+ * Radio buttons for turning coupling on/off.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

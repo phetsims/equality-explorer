@@ -19,7 +19,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // constants
-  var CONTENT_SIZE = new Dimension2( 275, 50 );
+  var CONTENT_SIZE = new Dimension2( 250, 50 );
 
   /**
    * @param {ItemCreator[]} itemCreators
@@ -32,7 +32,7 @@ define( function( require ) {
 
     options = _.extend( {
       
-      spacing: 50, // horizontal space between ItemCreatorNodes
+      spacing: 45, // horizontal space between ItemCreatorNodes
 
       // supertype options
       lineWidth: 2,

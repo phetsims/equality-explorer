@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
-  var CoupledRadioButtonGroup = require( 'EQUALITY_EXPLORER/common/view/CoupledRadioButtonGroup' );
+  var CoupledToggleSwitch = require( 'EQUALITY_EXPLORER/common/view/CoupledToggleSwitch' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -62,7 +62,7 @@ define( function( require ) {
       bottom: leftItemsPanel.bottom
     } );
 
-    var coupledControl = new CoupledRadioButtonGroup( scene.coupledProperty, {
+    var coupledControl = new CoupledToggleSwitch( scene.coupledProperty, {
       visible: options.coupledControlVisible,
       centerX: leftItemsPanel.right + ( ( rightItemsPanel.left - leftItemsPanel.right ) / 2 ),
       centerY: leftItemsPanel.centerY
@@ -88,9 +88,9 @@ define( function( require ) {
     Node.call( this, {
       children: [
         scaleNode,
+        coupledControl,
         leftItemsPanel,
         rightItemsPanel,
-        coupledControl,
         equationAccordionBox,
         snapshotsAccordionBox,
         itemsLayer // on top, so that Items are in front of everything else
