@@ -28,7 +28,7 @@ define( function( require ) {
     options = _.extend( {
 
       // supertype options
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+      baseColor: PhetColorScheme.BUTTON_YELLOW,
       touchAreaXDilation: 5,
       touchAreaYDilation: 5
       

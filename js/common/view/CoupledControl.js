@@ -23,7 +23,7 @@ define( function( require ) {
   function CoupledControl( coupledProperty, options ) {
 
     options = _.extend( {
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+      baseColor: PhetColorScheme.BUTTON_YELLOW,
       selectedLineWidth: 2,
       spacing: 4,
       orientation: 'vertical',

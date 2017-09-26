@@ -76,7 +76,7 @@ define( function( require ) {
 
       var snapshotButton = new RectangularPushButton( {
         content: snapshotIcon,
-        baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+        baseColor: PhetColorScheme.BUTTON_YELLOW,
         xMargin: 8,
         yMargin: 4,
         touchAreaXDilation: 5,
@@ -99,7 +99,7 @@ define( function( require ) {
     var loadButton = new RectangularPushButton( {
       //TODO add loadButton listener
       content: loadIcon,
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+      baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 8,
       yMargin: 4,
       touchAreaXDilation: 5,
