@@ -36,8 +36,6 @@ If left plate is full, can still drag out of right panel, but items will always 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Variables: put x, -x, 1, -1 on right plate. Equation is messed up, shows '0 = 1[x] + 1[-x] + +'
-
 Add couplers that open/close but don't constrain anything, so we can play around while discussing.
 
 Alternatives to couplers: font-awesome link and unlink?

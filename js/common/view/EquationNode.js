@@ -11,6 +11,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Multilink = require( 'AXON/Multilink' );
@@ -151,23 +152,30 @@ define( function( require ) {
       var numberOfItemsOnScale = itemCreator.numberOfItemsOnScaleProperty.value;
       if ( numberOfItemsOnScale > 0 ) {
 
-        if ( children.length > 0 ) {
-          children.push( new Text( '+', { font: plusFont } ) );
-        }
-
         if ( itemCreator.constantTerm ) {
           // combine all constants into 1 term
           constantValue += ( numberOfItemsOnScale * itemCreator.weightProperty.value );
         }
         else {
+          if ( children.length > 0 ) {
+            children.push( new Text( EqualityExplorerConstants.PLUS, { font: plusFont } ) );
+          }
           children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing ) );
         }
       }
     }
 
     if ( constantValue !== 0 ) {
+
       // put the constant term last
-      children.push( createConstantNode( constantValue, numberFont ) );
+      if ( children.length > 0 ) {
+        var operator = ( constantValue > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
+        children.push( new Text( operator, { font: plusFont } ) );
+        children.push( createConstantNode( Math.abs( constantValue ), numberFont ) );
+      }
+      else {
+        children.push( createConstantNode( constantValue, numberFont ) );
+      }
     }
     else if ( children.length === 0 ) {
       children.push( new Text( '0', { font: numberFont } ) );
