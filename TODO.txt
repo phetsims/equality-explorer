@@ -7,6 +7,8 @@ Reconsider "white box" feature
 
 Snapshots: Is position of items on scale saved and restored?
 
+Rethink UI for coupling
+
 Item limits (proposed by AM in Slack):
 Basics: 36 total items, any combination
 Numbers: 18 of each item
