@@ -50,17 +50,23 @@ define( function( require ) {
 
     Node.call( this, options );
 
+    // sync with the model
     coupledProperty.link( function( coupled ) {
       if ( coupled ) {
+        
+        // close couplers
         leftCouplerNode.left = backgroundNode.left + CLOSED_OVERLAP;
         rightCouplerNode.right = backgroundNode.right - CLOSED_OVERLAP;
       }
       else {
+
+        // open couplers
         leftCouplerNode.left = backgroundNode.left;
         rightCouplerNode.right = backgroundNode.right;
       }
     } );
 
+    // toggle the state when the user clicks on this Node
     this.addInputListener( new DownUpListener( {
       up: function( event ) {
         coupledProperty.value = !coupledProperty.value;
