@@ -3,6 +3,8 @@ TODO items for equality-explorer
 ------------------------------------------------------------------------------------------------------------------------
 DESIGN QUESTIONS
 
+Items for Basics screen, https://github.com/phetsims/equality-explorer/issues/6
+
 Reconsider "white box" feature
 
 Snapshots: Is position of items on scale saved and restored?
