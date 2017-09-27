@@ -57,14 +57,14 @@ define( function( require ) {
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
     // {Property} dependencies that require the equation to be updated
-    var dependencies = [];
+    var updateDependencies = [];
     itemCreators.forEach( function( itemCreator ) {
-      dependencies.push( itemCreator.weightProperty );
-      dependencies.push( itemCreator.numberOfItemsOnScaleProperty );
+      updateDependencies.push( itemCreator.weightProperty );
+      updateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
     } );
 
     // update the equation, dispose of this Multilink in dispose
-    var lengthMultilink = new Multilink( dependencies, function() {
+    var updateMultilink = new Multilink( updateDependencies, function() {
 
       relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
 
@@ -87,7 +87,7 @@ define( function( require ) {
 
     // @private
     this.disposeEquationNode = function() {
-      lengthMultilink.dispose();
+      updateMultilink.dispose();
     };
 
     this.mutate( options );
