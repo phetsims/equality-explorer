@@ -41,6 +41,8 @@ IMPLEMENTATION
 
 Add drop shadow to dragged objects
 
+Add ability to specify different maxWeight for each scene
+
 Dynamically size Variables accordion box to match Snapshots accordion box.
 
 Size all panels the same way, by specifying contentWidth and contentHeight, not by hijacking maxWidth and maxHeight
