@@ -43,8 +43,8 @@ If left plate is full, can still drag out of right panel, but items will always 
 IMPLEMENTATION
 
 Item type hierarchy: ConstantItem, VariableItem
-
-Reduce x and -x terms in equation, show symbol instead of icons
+                                       
+Reduce x and -x terms in equation, show symbol instead of icons (and remove temporary hack in EquationNode)
 
 Hook up x and -x to VariablesModel.variableValueProperty
 
