@@ -1,11 +1,11 @@
 {
-  "comment": "# equality-explorer 1.0.0-dev.22 Tue Sep 26 2017 14:52:08 GMT-0600 (MDT)",
+  "comment": "# equality-explorer 1.0.0-dev.23 Wed Sep 27 2017 12:07:50 GMT-0600 (MDT)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
   },
   "axon": {
-    "sha": "1eecfa9f782acf0b16ebd19a1e3eaa1f1d3ac660",
+    "sha": "d02ef5f8e120fc78309938038c238efebc7bb2d8",
     "branch": "master"
   },
   "brand": {
@@ -17,19 +17,19 @@
     "branch": "master"
   },
   "dot": {
-    "sha": "d2a1e0db4d9649a61545adb58cff7a0ab36a08b9",
+    "sha": "8c2cfa7f29df484e4f2130a9b9a3cb556d0f7b26",
     "branch": "master"
   },
   "equality-explorer": {
-    "sha": "62dd000e466d75deb3062a16a49b1da0b08b1116",
+    "sha": "1a41565430de93337950b411d0cb0be5bfab4ffd",
     "branch": "master"
   },
   "joist": {
-    "sha": "59302f51551cd895fe3d5ec80bbf66871a479dd8",
+    "sha": "e6cf26c36259d68bf5f1862828a5e99c509e57c0",
     "branch": "master"
   },
   "kite": {
-    "sha": "baae5c16800d64bac13993abf587007b7e6ab4f3",
+    "sha": "762e2d40f5ff135c54fc991f471e0bc55c04cb9d",
     "branch": "master"
   },
   "phet-core": {
@@ -45,11 +45,11 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "aaa3ccacff30fff595568ef04b2ac41fc6f83523",
+    "sha": "ccfe30a68ed0ed2f2f454e514957967df9154c7d",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "69943c95552d53e0153f236e4a05130064ecde44",
+    "sha": "68d30f57bbf3ce4bab0f8a9bff48402a6598ab74",
     "branch": "master"
   },
   "sherpa": {
@@ -57,7 +57,7 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "3c61a4ac797652d54f7d77e7257c186d2fb6dcb5",
+    "sha": "9aa62c8aca865959b085ddbc998f7a2b900fc2ea",
     "branch": "master"
   },
   "tandem": {
