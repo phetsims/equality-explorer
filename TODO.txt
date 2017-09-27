@@ -28,6 +28,8 @@ Solving: What happens when the variable value is changed while the "composite x"
 
 Conflicting uses of color coding: items, arrow, plates, panels
 
+Migrate design decisions from Slack to Google doc
+
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
 
