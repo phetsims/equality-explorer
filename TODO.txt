@@ -9,8 +9,6 @@ Rethink UI for coupling, https://github.com/phetsims/equality-explorer/issues/11
 
 Reconsider "white box" feature
 
-Drop shadow on dragged items?
-
 Solving multi-touch:
 - When you start dragging something on one plate, does the corresponding thing on the other plate become non-interactive?
 - What happens when universal operation is applied while an item is being dragged?
