@@ -29,10 +29,13 @@ define( function( require ) {
 
     options = _.extend( {
       constantTerm: false, // {boolean} do Items evaluate to a constant?
+      variableTerm: false, // {boolean} do Items represent a variable?
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
       numberOfItemsOnScale: 0 // number of items initially on the scale
     }, options );
 
+    assert && assert( !( options.contantTerm && options.variableTerm ),
+      'cannot be both a constant and a variable' );
     assert && assert( ( options.numberOfItemsOnScale >= 0 ) && Util.isInteger( options.numberOfItemsOnScale ),
       'numberOfItemsOnScale is invalid: ' + options.numberOfItemsOnScale );
 
@@ -40,6 +43,7 @@ define( function( require ) {
     this.name = name;
     this.icon = icon;
     this.constantTerm = options.constantTerm;
+    this.variableTerm = options.variableTerm;
     this.numberOfItemsOnScale = options.numberOfItemsOnScale;
 
     // @public {Bounds2} drag bounds for Items created
@@ -106,6 +110,7 @@ define( function( require ) {
 
       options = _.extend( {
         constantTerm: this.constantTerm,
+        variableTerm: this.variableTerm,
         dragBounds: this.dragBounds
       }, options );
 

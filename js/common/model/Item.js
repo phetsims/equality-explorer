@@ -26,11 +26,17 @@ define( function( require ) {
   function Item( name, weightProperty, icon, options ) {
 
     options = _.extend( {
-      constantTerm: false // {boolean} does this Item evaluate to a constant?
+      constantTerm: false, // {boolean} does this Item evaluate to a constant?
+      variableTerm: false // {boolean} does this Item represent a variable?
     }, options );
 
+    assert && assert( !( options.contantTerm && options.variableTerm ),
+      'Item cannot be both a constant and a variable' );
+
+    //TODO this smells like subtyping is called for
     // @public (read-only)
     this.constantTerm = options.constantTerm;
+    this.variableTerm = options.variableTerm;
 
     // @public (read-only)
     this.id = idIndex++;

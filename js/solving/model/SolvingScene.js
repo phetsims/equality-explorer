@@ -19,12 +19,15 @@ define( function( require ) {
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var VariableNode = require( 'EQUALITY_EXPLORER/common/view/VariableNode' );
 
+  // strings
+  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+
   // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
-  var POSITIVE_X_NODE = new VariableNode( 'x', {
+  var POSITIVE_X_NODE = new VariableNode( xString, {
     fill: EqualityExplorerColors.POSITIVE_X_FILL,
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
-  var NEGATIVE_X_NODE = new VariableNode( '-x', {
+  var NEGATIVE_X_NODE = new VariableNode( '-' + xString, {
     fill: EqualityExplorerColors.NEGATIVE_X_FILL,
     lineDash: [ 4, 4 ],
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
@@ -56,8 +59,8 @@ define( function( require ) {
    */
   function createItemCreators() {
     return [
-      new ItemCreator( 'x', 2, POSITIVE_X_NODE ),
-      new ItemCreator( '-x', -2, NEGATIVE_X_NODE ),
+      new ItemCreator( 'x', 2, POSITIVE_X_NODE, { variableTerm: true } ),
+      new ItemCreator( '-x', -2, NEGATIVE_X_NODE, { variableTerm: true } ),
       new ItemCreator( '1', 1, POSITIVE_ONE_NODE, { constantTerm: true } ),
       new ItemCreator( '-1', -1, NEGATIVE_ONE_NODE, { constantTerm: true } )
     ];

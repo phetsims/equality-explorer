@@ -19,6 +19,9 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
 
+  // strings
+  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+
   /**
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
@@ -143,6 +146,7 @@ define( function( require ) {
   function createSideNode( itemCreators, iconScale, plusFont, numberFont, plusSpacing, coefficientSpacing ) {
 
     var constantValue = 0;
+    var coefficientValue = 0;
 
     var children = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
@@ -153,8 +157,19 @@ define( function( require ) {
       if ( numberOfItemsOnScale > 0 ) {
 
         if ( itemCreator.constantTerm ) {
+
           // combine all constants into 1 term
           constantValue += ( numberOfItemsOnScale * itemCreator.weightProperty.value );
+        }
+        else if ( itemCreator.variableTerm ) {
+
+          //TODO temporary hack for consolidating variables into 1 term
+          if ( itemCreator.name === 'x' ) {
+            coefficientValue += numberOfItemsOnScale;
+          }
+          else {
+            coefficientValue -= numberOfItemsOnScale;
+          }
         }
         else {
           if ( children.length > 0 ) {
@@ -163,6 +178,15 @@ define( function( require ) {
           children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing ) );
         }
       }
+    }
+
+    //TODO temporary hack for consolidating variables into 1 term
+    if ( coefficientValue !== 0 ) {
+      assert && assert( children.length === 0, 'equation with a variable should have no terms so far' );
+      var variableIcon = new Text( xString, {
+        font: numberFont
+      } );
+      children.push( createTermNode( coefficientValue, variableIcon, 1, numberFont, coefficientSpacing ) );
     }
 
     if ( constantValue !== 0 ) {
@@ -177,7 +201,8 @@ define( function( require ) {
         children.push( createConstantNode( constantValue, numberFont ) );
       }
     }
-    else if ( children.length === 0 ) {
+
+    if ( children.length === 0 ) {
       children.push( new Text( '0', { font: numberFont } ) );
     }
 
