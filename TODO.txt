@@ -17,8 +17,6 @@ Numbers: 18 of each item
 Variables: 9 of each item, so there’s always space for inverses to appear.
 Solving: no limits
 
-Arrow color when unbalanced, use something other than orange?
-
 Solving: When you start dragging something on one plate, does the corresponding thing on the other plate
 become non-interactive?
 
@@ -27,6 +25,8 @@ Solving: What happens when universal operation is applied while an item is being
 Solving: What happens when the variable value is changed while the "composite x" item is being dragged?
 
 Conflicting uses of color coding: items, arrow, plates, panels
+
+Arrow color when unbalanced, use something other than orange?
 
 Migrate design decisions from Slack to Google doc
 
