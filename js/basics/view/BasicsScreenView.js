@@ -38,21 +38,27 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    var sceneControl = new SceneControl( model.scenes, model.sceneProperty, {
-      right: resetAllButton.right,
-      bottom: resetAllButton.top - 40
-    } );
-    this.addChild( sceneControl );
-
     // @private create the view for each scene
     this.sceneNodes = [];
+    var sceneNode;
     for ( var i = 0; i < model.scenes.length; i++ ) {
-      var sceneNode = new SceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds, {
+      sceneNode = new SceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds, {
         coupledControlVisible: false
       } );
       this.sceneNodes.push( sceneNode );
       this.addChild( sceneNode );
     }
+
+    // Get the bounds of the Snapshot accordion box, relative to this ScreenView
+    var globalBounds = sceneNode.snapshotsAccordionBox.parentToGlobalBounds( sceneNode.snapshotsAccordionBox.bounds );
+    var localBounds = this.globalToLocalBounds( globalBounds );
+
+    // Center the scene control in the space below the Snapshots accordion box  
+    var sceneControl = new SceneControl( model.scenes, model.sceneProperty, {
+      centerX: localBounds.centerX,
+      centerY: localBounds.bottom + ( resetAllButton.top - localBounds.bottom ) / 2
+    } );
+    this.addChild( sceneControl );
   }
 
   equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );
