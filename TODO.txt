@@ -37,7 +37,7 @@ situation where need to create a zero-pair and a plate is full
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Get padlock artwork from AM
+Get padlock artwork from AM, use it for coupling feature
 
 Add drop shadow to dragged objects
 
