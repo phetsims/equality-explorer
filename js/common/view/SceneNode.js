@@ -84,9 +84,8 @@ define( function( require ) {
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
-    console.log( 'snapshotsAccordionBox.width=' + snapshotsAccordionBox.width );
 
-    Node.call( this, {
+    Node.call( this, {          
       children: [
         scaleNode,
         coupledControl,

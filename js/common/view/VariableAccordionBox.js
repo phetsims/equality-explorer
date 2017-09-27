@@ -37,7 +37,8 @@ define( function( require ) {
 
       titleFont: new PhetFont( 18 ),
       equationFont: new PhetFont( 24 ),
-      contentSize: new Dimension2( 249, 50 ), // determined empirically
+      contentWidth: 249,
+      contentHeight: 50,
 
       // supertype options
       fill: 'white',
@@ -56,14 +57,14 @@ define( function( require ) {
     assert && assert( !options.titleNode, 'subtype defines its titleNode' );
     options.titleNode = new Text( variableString, {
       font: options.titleFont,
-      maxWidth: 0.75 * options.contentSize.width
+      maxWidth: 0.75 * options.contentWidth
     } );
 
-    var backgroundNode = new Rectangle( 0, 0, options.contentSize.width, options.contentSize.height );
+    var backgroundNode = new Rectangle( 0, 0, options.contentWidth, options.contentHeight );
 
     var xText = new Text( xString, {
       font: options.equationFont,
-      maxWidth: 0.5 * options.contentSize.width
+      maxWidth: 0.5 * options.contentWidth
     } );
 
     var equalsText = new Text( '=', {
@@ -81,8 +82,8 @@ define( function( require ) {
       children: [ xText, equalsText, valuePicker ],
       spacing: 5,
       center: backgroundNode.center,
-      maxWidth: options.contentSize.width,
-      maxHeight: options.contentSize.height
+      maxWidth: options.contentWidth,
+      maxHeight: options.contentHeight
     } );
 
     var contentNode = new Node( {
