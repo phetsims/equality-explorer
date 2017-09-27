@@ -9,8 +9,6 @@ Rethink UI for coupling, https://github.com/phetsims/equality-explorer/issues/11
 
 Reconsider "white box" feature
 
-Snapshots: Is position of items on scale saved and restored?
-
 Item limits (proposed by AM in Slack):
 Basics: 36 total items, any combination
 Numbers: 18 of each item
@@ -57,4 +55,6 @@ Hook up x and -x to VariablesModel.variableValueProperty
 Combine inverses to create '0'
 
 Snapshots
+- show 'x' in snapshots, based on a new toggle control in the button group
+- save and restore the user's arrangement of items on the scale
 
