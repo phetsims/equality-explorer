@@ -9,12 +9,6 @@ Rethink UI for coupling, https://github.com/phetsims/equality-explorer/issues/11
 
 Reconsider "white box" feature
 
-Item limits (proposed by AM in Slack):
-Basics: 36 total items, any combination
-Numbers: 18 of each item
-Variables: 9 of each item, so there’s always space for inverses to appear.
-Solving: no limits
-
 Drop shadow on dragged items?
 
 Solving multi-touch:
@@ -38,6 +32,9 @@ Animation of ghost and dragged item occurs such that they arrive at their cells 
 If left plate is full, can still drag out of right panel, but items will always fly back to panels.
 
 1 and -1 (or x and -x) combined to 0, which then fades ala Expression Exchange.
+
+Item limits: 36 on either plate, any combination, show dialog "left plate full" or "right plate full" in any
+situation where need to create a zero-pair and a plate is full
 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
