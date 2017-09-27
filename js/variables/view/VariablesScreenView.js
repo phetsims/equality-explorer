@@ -56,7 +56,7 @@ define( function( require ) {
     var variableAccordionBox = new VariableAccordionBox( model.variableValueProperty, model.variableRange, {
       expandedProperty: this.variableAccordionBoxExpandedProperty,
       right: localBounds.right,
-      top: localBounds.bottom + 20
+      top: localBounds.bottom + 15
     } );
     this.addChild( variableAccordionBox );
   }
