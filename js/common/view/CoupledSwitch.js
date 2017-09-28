@@ -45,7 +45,7 @@ define( function( require ) {
         trueNode.bottom = falseNode.bottom;
       },
 
-      // put the origin at the center of the 'closed' lock
+      // put the origin at the center of the 'closed' lock, to facilitate layout
       x: -lockClosedNode.width / 2,
       y: -lockClosedNode.height / 2
     } );
