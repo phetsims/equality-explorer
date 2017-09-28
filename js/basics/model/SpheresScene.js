@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO this scene is a temporary placeholder
 /**
  * The 'Spheres' scene in the 'Basics' screen.
  *

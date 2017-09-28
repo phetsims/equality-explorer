@@ -12,10 +12,10 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var FruitScene = require( 'EQUALITY_EXPLORER/basics/model/FruitScene' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MoreSpheresScene = require( 'EQUALITY_EXPLORER/basics/model/MoreSpheresScene' );
   var PolygonsScene = require( 'EQUALITY_EXPLORER/basics/model/PolygonsScene' );
   var Property = require( 'AXON/Property' );
   var SpheresScene = require( 'EQUALITY_EXPLORER/basics/model/SpheresScene' );
+  var SpheresScene2 = require( 'EQUALITY_EXPLORER/basics/model/SpheresScene2' );
 
   /**
    * @constructor
@@ -27,7 +27,7 @@ define( function( require ) {
       new FruitScene(),
       new PolygonsScene(),
       new SpheresScene(),
-      new MoreSpheresScene()
+      new SpheresScene2()
     ];
 
     // @public the selected scene

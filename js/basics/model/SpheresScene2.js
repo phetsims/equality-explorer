@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO this scene is a temporary placeholder
 /**
  * The 'Spheres' scene in the 'Basics' screen.
  *
@@ -25,14 +26,14 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function MoreSpheresScene() {
+  function SpheresScene2() {
     BasicsScene.call( this, SPHERE1_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics )
     );
   }
 
-  equalityExplorer.register( 'MoreSpheresScene', MoreSpheresScene );
+  equalityExplorer.register( 'SpheresScene2', SpheresScene2 );
 
   /**
    * Creates the set of ItemCreators for this scene.
@@ -54,5 +55,5 @@ define( function( require ) {
     ];
   }
 
-  return inherit( BasicsScene, MoreSpheresScene );
+  return inherit( BasicsScene, SpheresScene2 );
 } );
