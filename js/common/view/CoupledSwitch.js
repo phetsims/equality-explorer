@@ -23,8 +23,7 @@ define( function( require ) {
   function CoupledSwitch( coupledProperty, options ) {
 
     options = _.extend( {
-      cursor: 'pointer',
-      scale: 1.25
+      cursor: 'pointer'
     }, options );
 
     // icons, these are not pickable
