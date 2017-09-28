@@ -18,8 +18,6 @@ Conflicting uses of color coding: items, arrow, plates, panels
 
 Arrow color when unbalanced, use something other than orange?
 
-Migrate design decisions from Slack to Google doc
-
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
 
@@ -49,7 +47,7 @@ Reduce x and -x terms in equation, show symbol instead of icons (and remove temp
 
 Hook up x and -x to VariablesModel.variableValueProperty
 
-Combine inverses to create '0'
+Combine inverses to create '0', fade out
 
 Snapshots
 - show 'x' in snapshots, based on a new toggle control in the button group
