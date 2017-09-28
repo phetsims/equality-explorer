@@ -35,11 +35,15 @@ define( function( require ) {
     // icons
     var lockClosedNode = new Image( lockClosedImage );
     var lockOpenedNode = new Image( lockOpenedImage, {
+
+      // This is dependent on the specific image files, and aligns the body of the lock in both images.
       left: lockClosedNode.left,
       bottom: lockClosedNode.bottom
     } );
 
-    // this node allows us to put the origin at the center of the 'closed' lock
+    // We couldn't use sun.ToggleNode for this type because it center aligns both icons.
+    // That doesn't work for the icons here.
+    // This node allows us to put the origin at the center of the 'closed' lock
     var parentNode = new Node( {
       children: [ lockClosedNode, lockOpenedNode ],
       x: -lockClosedNode.width / 2,
