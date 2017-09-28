@@ -18,15 +18,15 @@ define( function( require ) {
   var ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
   // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
-  var MAROON_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'maroon' } );
-  var BLACK_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'black' } );
-  var PINK_SPHERE_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'pink' } );
+  var SPHERE1_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'maroon' } );
+  var SPHERE2_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'black' } );
+  var SPHERE3_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'blue' } );
 
   /**
    * @constructor
    */
   function MoreSpheresScene() {
-    BasicsScene.call( this, MAROON_SPHERE_NODE,
+    BasicsScene.call( this, SPHERE1_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics )
     );
@@ -42,13 +42,13 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'greenSphere', 3, MAROON_SPHERE_NODE, {
+      new ItemCreator( 'greenSphere', 3, SPHERE1_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'orangeSphere', 2, BLACK_SPHERE_NODE, {
+      new ItemCreator( 'orangeSphere', 2, SPHERE2_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } ),
-      new ItemCreator( 'magentaSphere', 1, PINK_SPHERE_NODE, {
+      new ItemCreator( 'magentaSphere', 1, SPHERE3_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } )
     ];
