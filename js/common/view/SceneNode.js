@@ -63,7 +63,7 @@ define( function( require ) {
     var coupledSwitch = new CoupledSwitch( scene.coupledProperty, {
       visible: options.coupledSwitchVisible,
       x: scene.scale.location.x,
-      y: leftItemsPanel.centerY
+      y: leftItemsPanel.centerY - 5 // offset determined empirically
     } );
 
     var equationAccordionBox = new EquationAccordionBox(
