@@ -35,7 +35,8 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-     icon: null // {Node|null} optional icon used to represent the scene
+      icon: null, // {Node|null} optional icon used to represent the scene
+      maxWeight: 30 // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it
     }, options );
 
     // @public (read-only) {Node} used to represent the scene
@@ -49,7 +50,8 @@ define( function( require ) {
 
     // @public (read-only)
     this.scale = new BalanceScale( this.leftItemCreators, this.rightItemCreators, {
-      location: new Vector2( 355, EqualityExplorerQueryParameters.scaleY )
+      location: new Vector2( 355, EqualityExplorerQueryParameters.scaleY ),
+      maxWeight: options.maxWeight
     } );
 
     // @public (read-only, for debugging) drag bounds for left plate

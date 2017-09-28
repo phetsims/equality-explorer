@@ -39,8 +39,6 @@ IMPLEMENTATION
 
 Add drop shadow to dragged objects
 
-Specify different maxWeight for each scene
-
 Add 4th scene to Basics
 
 Dynamically size Variables accordion box to match Snapshots accordion box.

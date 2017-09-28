@@ -162,16 +162,6 @@ define( function( require ) {
       }
     },
 
-    // TODO delete maxWeight when design has stabilized
-    // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it
-    maxWeight: {
-      type: 'number',
-      defaultValue: 30,
-      isValidValue: function( value ) {
-        return value > 0;
-      }
-    },
-
     // TODO delete scaleY when design has stabilized
     // y coordinate for the scale's location, the point where the fulcrum contacts the balance beam
     scaleY: {
