@@ -37,10 +37,6 @@ situation where need to create a zero-pair and a plate is full
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Get padlock artwork from AM, use it for coupling feature
-
-Get rid of color coding for scale and panels
-
 Add drop shadow to dragged objects
 
 Specify different maxWeight for each scene
