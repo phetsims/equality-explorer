@@ -178,7 +178,7 @@ define( function( require ) {
           if ( children.length > 0 ) {
             children.push( new Text( EqualityExplorerConstants.PLUS, { font: plusFont } ) );
           }
-          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing ) );
+          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing, false ) );
         }
       }
     }
@@ -189,7 +189,7 @@ define( function( require ) {
       var variableIcon = new Text( xString, {
         font: variableFont
       } );
-      children.push( createTermNode( coefficientValue, variableIcon, 1, numberFont, coefficientSpacing ) );
+      children.push( createTermNode( coefficientValue, variableIcon, 1, numberFont, coefficientSpacing, true ) );
     }
 
     if ( constantValue !== 0 ) {
@@ -222,11 +222,10 @@ define( function( require ) {
    * @param {number} iconScale - scale for icon
    * @param {Font} font - font for coefficient or constant
    * @param {spacing} coefficientSpacing - horizontal space between coefficient and icon
+   * @param {boolean} hideOne - whether to hide 1 and -1
    * @returns {Node}
    */
-  function createTermNode( coefficient, icon, iconScale, font, coefficientSpacing ) {
-
-    var constantNode = createConstantNode( coefficient, font );
+  function createTermNode( coefficient, icon, iconScale, font, coefficientSpacing, hideOne ) {
 
     // wrap the icon, since we're using scenery DAG feature
     var wrappedIcon = new Node( {
@@ -234,10 +233,33 @@ define( function( require ) {
       scale: iconScale
     } );
 
-    return new HBox( {
-      spacing: coefficientSpacing,
-      children: [ constantNode, wrappedIcon ]
-    } );
+    var termNode = null;
+
+    if ( !hideOne || Math.abs( coefficient ) !== 1 ) {
+
+      // show the coefficient
+      var constantNode = createConstantNode( coefficient, font );
+      termNode = new HBox( {
+        spacing: coefficientSpacing,
+        children: [ constantNode, wrappedIcon ]
+      } );
+    }
+    else if ( coefficient === 1 ) {
+
+      // 1x becomes x
+      termNode = wrappedIcon;
+    }
+    else {
+
+      // -1x becomes -x
+      var signNode = new Text( '-', { font: font } );
+      termNode = new HBox( {
+        spacing: 2,
+        children: [ signNode, wrappedIcon ]
+      } );
+    }
+
+    return termNode;
   }
 
   /**
