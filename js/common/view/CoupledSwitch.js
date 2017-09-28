@@ -1,7 +1,9 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO CoupledSwitch is one of several design alternatives, delete if not used
 /**
+ * Padlock used to turning coupling on/off.
+ * Origin is at the center of the 'closed' padlock image. Use x,y options for layout.
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
@@ -10,10 +12,13 @@ define( function( require ) {
   // modules
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+
+  // images
+  var lockClosedImage = require( 'image!EQUALITY_EXPLORER/lock-closed.png' );
+  var lockOpenedImage = require( 'image!EQUALITY_EXPLORER/lock-opened.png' );
 
   /**
    * @param {Property.<boolean>} coupledProperty
@@ -23,32 +28,33 @@ define( function( require ) {
   function CoupledSwitch( coupledProperty, options ) {
 
     options = _.extend( {
-      cursor: 'pointer'
+      cursor: 'pointer',
+      scale: 0.4
     }, options );
 
-    // icons, these are not pickable
-    var lockedNode = new FontAwesomeNode( 'lock' );
-    var unlockedNode = new FontAwesomeNode( 'unlock_alt' );
+    // icons
+    var lockClosedNode = new Image( lockClosedImage );
+    var lockOpenedNode = new Image( lockOpenedImage, {
+      left: lockClosedNode.left,
+      bottom: lockClosedNode.bottom
+    } );
 
-    // transparent background
-    var backgroundWidth = Math.max( lockedNode.width, unlockedNode.width );
-    var backgroundHeight = Math.max( lockedNode.height, unlockedNode.height );
-    var backgroundNode = new Rectangle( 0, 0, backgroundWidth, backgroundHeight );
-
-    lockedNode.centerX = backgroundNode.centerX;
-    lockedNode.bottom = backgroundNode.bottom;
-    unlockedNode.centerX = backgroundNode.centerX;
-    unlockedNode.bottom = backgroundNode.bottom;
+    // this node allows us to put the origin at the center of the 'closed' lock
+    var parentNode = new Node( {
+      children: [ lockClosedNode, lockOpenedNode ],
+      x: -lockClosedNode.width / 2,
+      y: -lockClosedNode.height / 2
+    } );
 
     assert && assert( !options.children, 'subtype defines its children' );
-    options.children = [ backgroundNode, lockedNode, unlockedNode ];
+    options.children = [ parentNode ];
 
     Node.call( this, options );
 
     // sync with the model
     coupledProperty.link( function( coupled ) {
-      lockedNode.visible = coupled;
-      unlockedNode.visible = !coupled;
+      lockClosedNode.visible = coupled;
+      lockOpenedNode.visible = !coupled;
     } );
 
     // toggle the state when the user clicks on this Node

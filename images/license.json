@@ -7,6 +7,22 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "copied from unit-rates"
   },
+  "lock-closed.png": {
+    "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Amanda McGarry"
+  },
+  "lock-opened.png": {
+    "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Amanda McGarry"
+  },
   "orange.png": {
     "text": [
       "Copyright 2015-2017 University of Colorado Boulder"

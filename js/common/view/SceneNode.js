@@ -61,8 +61,8 @@ define( function( require ) {
 
     var coupledSwitch = new CoupledSwitch( scene.coupledProperty, {
       visible: options.coupledSwitchVisible,
-      centerX: scene.scale.location.x,
-      centerY: leftItemsPanel.centerY
+      x: scene.scale.location.x,
+      y: leftItemsPanel.centerY
     } );
 
     var equationAccordionBox = new EquationAccordionBox(
