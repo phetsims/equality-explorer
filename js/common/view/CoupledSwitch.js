@@ -63,6 +63,8 @@ define( function( require ) {
         coupledProperty.value = !coupledProperty.value;
       }
     } ) );
+
+    this.touchArea = this.localBounds.dilatedXY( 20, 10 );
   }
 
   equalityExplorer.register( 'CoupledSwitch', CoupledSwitch );
