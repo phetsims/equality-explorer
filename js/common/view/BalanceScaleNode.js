@@ -16,7 +16,6 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var ClearScaleButton = require( 'EQUALITY_EXPLORER/common/view/ClearScaleButton' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -58,13 +57,7 @@ define( function( require ) {
    */
   function BalanceScaleNode( scale, options ) {
 
-    options = _.extend( {
-
-      // {Color|string} used to color-code the scale's plates
-      leftPlateFill: EqualityExplorerColors.LEFT_PLATE_COLOR,
-      rightPlateFill: EqualityExplorerColors.RIGHT_PLATE_COLOR
-    }, options );
-
+    options = options || {};
     options.x = scale.location.x;
     options.y = scale.location.y;
 
@@ -128,13 +121,11 @@ define( function( require ) {
 
     // left plate
     var leftPlateNode = new PlateNode( scale.leftPlate, {
-      color: options.leftPlateFill,
       center: beamNode.center // correct location will be set later in constructor
     } );
 
     // right plate
     var rightPlateNode = new PlateNode( scale.rightPlate, {
-      color: options.rightPlateFill,
       center: beamNode.center // correct location will be set later in constructor
     } );
 

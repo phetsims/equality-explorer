@@ -12,7 +12,6 @@ define( function( require ) {
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
   var CoupledSwitch = require( 'EQUALITY_EXPLORER/common/view/CoupledSwitch' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
@@ -107,7 +106,6 @@ define( function( require ) {
       this.addChild( new Rectangle(
         scene.leftDragBounds.minX, scene.leftDragBounds.minY,
         scene.leftDragBounds.width, scene.leftDragBounds.height, {
-          stroke: EqualityExplorerColors.LEFT_PLATE_COLOR,
           lineDash: [ 2, 6 ]
         } ) );
 
@@ -115,7 +113,6 @@ define( function( require ) {
       this.addChild( new Rectangle(
         scene.rightDragBounds.minX, scene.rightDragBounds.minY,
         scene.rightDragBounds.width, scene.rightDragBounds.height, {
-          stroke: EqualityExplorerColors.RIGHT_PLATE_COLOR,
           lineDash: [ 2, 6 ]
         } ) );
     }

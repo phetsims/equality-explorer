@@ -12,8 +12,6 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
 
   var EqualityExplorerColors = {
-    LEFT_PLATE_COLOR: 'rgb( 207, 60, 63 )',
-    RIGHT_PLATE_COLOR: 'rgb( 62, 72, 158 )',
     POSITIVE_ONE_FILL: 'rgb( 246, 228, 213 )',
     NEGATIVE_ONE_FILL: 'rgb( 248, 238, 229 )',
     POSITIVE_X_FILL: 'rgb( 49, 193, 238 )',
