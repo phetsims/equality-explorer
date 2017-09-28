@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO make this extend ToggleNode, add options.alignIcons strategy to ToggleNode
 /**
  * Padlock used to turning coupling on/off.
  * Origin is at the center of the 'closed' padlock image. Use x,y options for layout.
