@@ -50,14 +50,12 @@ define( function( require ) {
 
     var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, scene.scale.leftPlate, itemsLayer, {
       spacing: options.itemsPanelSpacing,
-      stroke: EqualityExplorerColors.LEFT_PLATE_COLOR,
       centerX: scene.scale.leftPlate.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, scene.scale.rightPlate, itemsLayer, {
       spacing: options.itemsPanelSpacing,
-      stroke: EqualityExplorerColors.RIGHT_PLATE_COLOR,
       centerX: scene.scale.rightPlate.locationProperty.value.x,
       bottom: leftItemsPanel.bottom
     } );

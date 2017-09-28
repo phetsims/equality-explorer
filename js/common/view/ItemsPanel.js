@@ -35,7 +35,7 @@ define( function( require ) {
       spacing: 45, // horizontal space between ItemCreatorNodes
 
       // supertype options
-      lineWidth: 2,
+      lineWidth: 1,
       cornerRadius: 6
     }, options );
 
