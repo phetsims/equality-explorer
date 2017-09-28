@@ -20,6 +20,7 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+  var XCheckBox = require( 'EQUALITY_EXPLORER/common/view/XCheckBox' );
 
   // strings
   var snapshotsString = require( 'string!EQUALITY_EXPLORER/snapshots' );
@@ -40,6 +41,7 @@ define( function( require ) {
     options = _.extend( {
 
       numberOfSnapshots: 5,
+      xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
 
       // supertype options
       maxWidth: 100,
@@ -59,9 +61,9 @@ define( function( require ) {
     // title
     assert && assert( !options.titleNode, 'this subtype defines its titleNode' );
     options.titleNode = new Text( snapshotsString, {
-        font: new PhetFont( 18 ),
-        maxWidth: 0.85 * options.maxWidth
-      } );
+      font: new PhetFont( 18 ),
+      maxWidth: 0.85 * options.maxWidth
+    } );
 
     var snapshotsVBoxChildren = [];
 
@@ -118,10 +120,22 @@ define( function( require ) {
       touchAreaYDilation: 5
     } );
 
+    var buttonGroupChildren = [ loadButton, trashButton ];
+
+    // Check box for making 'x' visible
+    if ( options.xVisibleProperty ) {
+      var xCheckBox = new XCheckBox( options.xVisibleProperty, {
+        touchAreaXDilation: 5,
+        touchAreaYDilation: 5
+      } );
+      buttonGroupChildren.push( xCheckBox );
+    }
+
     var buttonGroup = new HBox( {
       spacing: 50,
-      children: [ loadButton, trashButton ]
+      children: buttonGroupChildren
     } );
+
     snapshotsVBoxChildren.push( buttonGroup );
 
     var contentVBox = new VBox( {

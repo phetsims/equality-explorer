@@ -35,6 +35,7 @@ define( function( require ) {
 
     options = _.extend( {
       itemsPanelSpacing: 50,
+      xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
       coupledSwitchVisible: true
     }, options );
 
@@ -76,6 +77,7 @@ define( function( require ) {
       } );
 
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
+      xVisibleProperty: options.xVisibleProperty,
       maxWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,

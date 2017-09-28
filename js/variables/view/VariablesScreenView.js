@@ -28,8 +28,15 @@ define( function( require ) {
 
     ScreenView.call( this );
 
-    // @private
-    this.variableAccordionBoxExpandedProperty = new Property( true );
+    // @private view-specific Properties
+    this.viewProperties = {
+
+      // whether the Variable accordion box is expanded or collapsed
+      variableAccordionBoxExpandedProperty: new Property( true ),
+
+      // whether 'x' value is visible in snapshots
+      xVisibleProperty: new Property( true )
+    };
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
@@ -44,6 +51,7 @@ define( function( require ) {
 
     // @private
     this.sceneNode = new SceneNode( model.scene, model.sceneProperty, this.layoutBounds, {
+      xVisibleProperty: this.viewProperties.xVisibleProperty,
       itemsPanelSpacing: 30
     } );
     this.addChild( this.sceneNode );
@@ -54,7 +62,7 @@ define( function( require ) {
 
     // Variables accordion box, below the Snapshots accordion box
     var variableAccordionBox = new VariableAccordionBox( model.variableValueProperty, model.variableRange, {
-      expandedProperty: this.variableAccordionBoxExpandedProperty,
+      expandedProperty: this.viewProperties.variableAccordionBoxExpandedProperty,
       right: localBounds.right,
       top: localBounds.bottom + 15
     } );
@@ -67,7 +75,15 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.variableAccordionBoxExpandedProperty.reset();
+
+      // reset all view-specific Properties
+      for ( var property in this.viewProperties ) {
+        if ( this.viewProperties.hasOwnProperty( property ) ) {
+          this.viewProperties[ property ].reset();
+        }
+      }
+
+      // reset the scene's view
       this.sceneNode.reset();
     }
   } );
