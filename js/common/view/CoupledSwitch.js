@@ -1,6 +1,5 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO make this extend ToggleNode, add options.alignIcons strategy to ToggleNode
 /**
  * Padlock used to turning coupling on/off.
  * Origin is at the center of the 'closed' padlock image. Use x,y options for layout.
@@ -16,6 +15,7 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var ToggleNode = require( 'SUN/ToggleNode' );
 
   // images
   var lockClosedImage = require( 'image!EQUALITY_EXPLORER/lock-closed.png' );
@@ -35,32 +35,25 @@ define( function( require ) {
 
     // icons
     var lockClosedNode = new Image( lockClosedImage );
-    var lockOpenedNode = new Image( lockOpenedImage, {
+    var lockOpenedNode = new Image( lockOpenedImage );
+
+    var toggleNode = new ToggleNode( lockClosedNode, lockOpenedNode, coupledProperty, {
 
       // This is dependent on the specific image files, and aligns the body of the lock in both images.
-      left: lockClosedNode.left,
-      bottom: lockClosedNode.bottom
-    } );
+      alignIcons: function( trueNode, falseNode ) {
+        trueNode.left = falseNode.left;
+        trueNode.bottom = falseNode.bottom;
+      },
 
-    // We couldn't use sun.ToggleNode for this type because it center aligns both icons.
-    // That doesn't work for the icons here.
-    // This node allows us to put the origin at the center of the 'closed' lock
-    var parentNode = new Node( {
-      children: [ lockClosedNode, lockOpenedNode ],
+      // put the origin at the center of the 'closed' lock
       x: -lockClosedNode.width / 2,
       y: -lockClosedNode.height / 2
     } );
 
     assert && assert( !options.children, 'subtype defines its children' );
-    options.children = [ parentNode ];
+    options.children = [ toggleNode ];
 
     Node.call( this, options );
-
-    // sync with the model
-    coupledProperty.link( function( coupled ) {
-      lockClosedNode.visible = coupled;
-      lockOpenedNode.visible = !coupled;
-    } );
 
     // toggle the state when the user clicks on this Node
     this.addInputListener( new DownUpListener( {
