@@ -1,6 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO CoupledLockButton is one of several design alternatives, delete if not used
+//TODO CoupledSwitch is one of several design alternatives, delete if not used
 /**
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,7 +20,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function CoupledLockButton( coupledProperty, options ) {
+  function CoupledSwitch( coupledProperty, options ) {
 
     options = _.extend( {
       cursor: 'pointer',
@@ -60,7 +60,7 @@ define( function( require ) {
     } ) );
   }
 
-  equalityExplorer.register( 'CoupledLockButton', CoupledLockButton );
+  equalityExplorer.register( 'CoupledSwitch', CoupledSwitch );
 
-  return inherit( Node, CoupledLockButton );
+  return inherit( Node, CoupledSwitch );
 } );

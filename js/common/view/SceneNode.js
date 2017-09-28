@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
-  var CoupledToggleSwitch = require( 'EQUALITY_EXPLORER/common/view/CoupledToggleSwitch' );
+  var CoupledSwitch = require( 'EQUALITY_EXPLORER/common/view/CoupledSwitch' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -36,7 +36,7 @@ define( function( require ) {
 
     options = _.extend( {
       itemsPanelSpacing: 50,
-      coupledControlVisible: true
+      coupledSwitchVisible: true
     }, options );
 
     // view-specific Properties
@@ -62,9 +62,9 @@ define( function( require ) {
       bottom: leftItemsPanel.bottom
     } );
 
-    var coupledControl = new CoupledToggleSwitch( scene.coupledProperty, {
-      visible: options.coupledControlVisible,
-      centerX: leftItemsPanel.right + ( ( rightItemsPanel.left - leftItemsPanel.right ) / 2 ),
+    var coupledSwitch = new CoupledSwitch( scene.coupledProperty, {
+      visible: options.coupledSwitchVisible,
+      centerX: scene.scale.location.x,
       centerY: leftItemsPanel.centerY
     } );
 
@@ -88,7 +88,7 @@ define( function( require ) {
     Node.call( this, {          
       children: [
         scaleNode,
-        coupledControl,
+        coupledSwitch,
         leftItemsPanel,
         rightItemsPanel,
         equationAccordionBox,

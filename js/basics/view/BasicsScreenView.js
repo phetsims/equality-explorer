@@ -43,7 +43,7 @@ define( function( require ) {
     var sceneNode;
     for ( var i = 0; i < model.scenes.length; i++ ) {
       sceneNode = new SceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds, {
-        coupledControlVisible: false
+        coupledSwitchVisible: false
       } );
       this.sceneNodes.push( sceneNode );
       this.addChild( sceneNode );
