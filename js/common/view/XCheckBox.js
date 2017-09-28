@@ -12,7 +12,7 @@ define( function( require ) {
   var CheckBox = require( 'SUN/CheckBox' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
@@ -26,7 +26,7 @@ define( function( require ) {
   function XCheckBox( xVisibleProperty, options ) {
 
     var contentNode = new Text( xString, {
-      font: new PhetFont( 24 )
+      font: new MathSymbolFont( 24 )
     } );
 
     CheckBox.call( this, contentNode, xVisibleProperty, options );

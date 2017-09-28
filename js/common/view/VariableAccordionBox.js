@@ -13,6 +13,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -36,6 +37,7 @@ define( function( require ) {
 
       titleFont: new PhetFont( 18 ),
       equationFont: new PhetFont( 24 ),
+      variableFont: new MathSymbolFont( 24 ),
       contentWidth: 249,
       contentHeight: 50,
 
@@ -62,7 +64,7 @@ define( function( require ) {
     var backgroundNode = new Rectangle( 0, 0, options.contentWidth, options.contentHeight );
 
     var xText = new Text( xString, {
-      font: options.equationFont,
+      font: options.variableFont,
       maxWidth: 0.5 * options.contentWidth
     } );
 

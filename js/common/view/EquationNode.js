@@ -14,6 +14,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Multilink = require( 'AXON/Multilink' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -41,6 +42,7 @@ define( function( require ) {
       relationalOperatorFont: new PhetFont( { size: 40, weight: 'bold' } ), // for relational operator
       plusFont: new PhetFont( 28 ), // for plus operator
       numberFont: new PhetFont( 28 ), // for coefficients and constants
+      variableFont: new MathSymbolFont( 28 ), // for variables, like 'x'
 
       // horizontal spacing
       relationalOperatorSpacing: 20, // space around the relational operator
@@ -72,10 +74,10 @@ define( function( require ) {
       relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
 
       var leftSideNode = createSideNode( leftItemCreators,
-        options.iconScale, options.plusFont, options.numberFont, options.plusSpacing, options.coefficientSpacing );
+        options.iconScale, options.plusFont, options.numberFont, options.variableFont, options.plusSpacing, options.coefficientSpacing );
 
       var rightSideNode = createSideNode( rightItemCreators,
-        options.iconScale, options.plusFont, options.numberFont, options.plusSpacing, options.coefficientSpacing );
+        options.iconScale, options.plusFont, options.numberFont, options.variableFont, options.plusSpacing, options.coefficientSpacing );
 
       self.children = [ leftSideNode, relationalOperatorNode, rightSideNode ];
 
@@ -139,11 +141,12 @@ define( function( require ) {
    * @param {number} iconScale - scale for Item icons
    * @param {Font} plusFont - font for plus operators
    * @param {Font} numberFont - font for coefficients and constants
+   * @param {Font} variableFont - font for variables, like 'x'
    * @param {number} plusSpacing - space around plus operators
    * @param {number} coefficientSpacing - space between coefficients and icons
    * @returns {Node}
    */
-  function createSideNode( itemCreators, iconScale, plusFont, numberFont, plusSpacing, coefficientSpacing ) {
+  function createSideNode( itemCreators, iconScale, plusFont, numberFont, variableFont, plusSpacing, coefficientSpacing ) {
 
     var constantValue = 0;
     var coefficientValue = 0;
@@ -184,7 +187,7 @@ define( function( require ) {
     if ( coefficientValue !== 0 ) {
       assert && assert( children.length === 0, 'equation with a variable should have no terms so far' );
       var variableIcon = new Text( xString, {
-        font: numberFont
+        font: variableFont
       } );
       children.push( createTermNode( coefficientValue, variableIcon, 1, numberFont, coefficientSpacing ) );
     }

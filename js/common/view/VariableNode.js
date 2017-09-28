@@ -11,8 +11,8 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -25,12 +25,12 @@ define( function( require ) {
 
     options = _.extend( {
       squareLength: 40,
-      margin: 8,
+      margin: 6,
       fill: 'white',
       stroke: 'black',
       lineDash: [],
       textFill: 'black',
-      font: new PhetFont( 20 )
+      font: new MathSymbolFont( 24 )
     }, options );
 
     var squareNode = new Rectangle( 0, 0, options.squareLength, options.squareLength, {
