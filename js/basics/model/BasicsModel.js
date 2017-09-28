@@ -25,6 +25,7 @@ define( function( require ) {
     this.scenes = [
       new FruitScene(),
       new PolygonsScene(),
+      new SpheresScene(),
       new SpheresScene()
     ];
 

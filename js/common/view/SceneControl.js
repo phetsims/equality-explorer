@@ -27,7 +27,7 @@ define( function( require ) {
       // supertype options
       orientation: 'horizontal',
       baseColor: 'white',
-      spacing: 12,
+      spacing: 8,
       buttonContentXMargin: 15,
       buttonContentYMargin: 12
     }, options );
