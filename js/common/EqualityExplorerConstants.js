@@ -55,9 +55,9 @@ define( function( require ) {
     COIN1_NODE: new Image( coin1Image, IMAGE_OPTIONS ),
     COIN2_NODE: new Image( coin2Image, IMAGE_OPTIONS ),
     COIN3_NODE: new Image( coin3Image, IMAGE_OPTIONS ),
-    ANIMAL1_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'green' } ),
-    ANIMAL2_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'orange' } ),
-    ANIMAL3_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'magenta' } ),
+    ANIMAL1_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'green', stroke: 'black' } ),
+    ANIMAL2_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'cyan', stroke: 'black' } ),
+    ANIMAL3_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'magenta', stroke: 'black' } ),
     POSITIVE_ONE_NODE: new IntegerNode( 1, {
       radius: ITEM_HEIGHT / 2,
       fill: 'rgb( 246, 228, 213 )',
