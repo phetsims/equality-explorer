@@ -44,8 +44,8 @@ define( function( require ) {
       plateXInset: 45, // inset of the plates from the ends of the beam
 
       // options related to the plate's 2D grid
-      gridRows: EqualityExplorerQueryParameters.gridSize[ 0 ], // {number} rows in the grid
-      gridColumns: EqualityExplorerQueryParameters.gridSize[ 1 ], // {number} columns in grid
+      gridRows: 6, // {number} rows in the grid
+      gridColumns: 6, // {number} columns in grid
       gridXMargin: 2, // horizontal space between stacks of Items
       gridYMargin: 0  // vertical space between Items in each stack
 

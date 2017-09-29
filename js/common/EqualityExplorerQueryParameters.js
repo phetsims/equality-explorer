@@ -28,21 +28,6 @@ define( function( require ) {
     // Rendered as a dotted rectangle, color coded to the associated plate.
     showDragBounds: { type: 'flag' },
 
-    //TODO delete gridSize when design has stabilized
-    // Size of the grid on the scale's plates.
-    // A grid size that exceeds the width of the plates will result in an assertion failure.
-    // Setting to a smaller gridSize is useful for testing what happens when the scale is full.
-    gridSize: {
-      type: 'array',
-      elementSchema: {
-        type: 'number'
-      },
-      defaultValue: [ 6, 6 ], // rows, columns
-      isValidValue: function( value ) {
-        return ( value.length === 2 ) && ( value[ 0 ] > 0 ) && ( value[ 1 ] > 0 );
-      }
-    },
-
     // Number of items that are initially on the left plate in the Basics screen.
     // This is intended to be used for debugging and testing, not in production situations.
     // See https://github.com/phetsims/equality-explorer/issues/8
