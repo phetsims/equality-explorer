@@ -12,7 +12,7 @@ define( function( require ) {
   var AnimalsScene = require( 'EQUALITY_EXPLORER/basics/model/AnimalsScene' );
   var CoinsScene = require( 'EQUALITY_EXPLORER/basics/model/CoinsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var FruitScene = require( 'EQUALITY_EXPLORER/basics/model/FruitScene' );
+  var FruitsScene = require( 'EQUALITY_EXPLORER/basics/model/FruitsScene' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var ShapesScene = require( 'EQUALITY_EXPLORER/basics/model/ShapesScene' );
@@ -25,7 +25,7 @@ define( function( require ) {
     // @public
     this.scenes = [
       new ShapesScene(),
-      new FruitScene(),
+      new FruitsScene(),
       new CoinsScene(),
       new AnimalsScene()
     ];

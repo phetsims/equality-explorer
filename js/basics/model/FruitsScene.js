@@ -36,13 +36,13 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function FruitScene() {
-    BasicsScene.call( this, 'fruit', APPLE_NODE,
+  function FruitsScene() {
+    BasicsScene.call( this, 'fruits', APPLE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }
 
-  equalityExplorer.register( 'FruitScene', FruitScene );
+  equalityExplorer.register( 'FruitsScene', FruitsScene );
 
   /**
    * Creates the set of ItemCreators for this scene.
@@ -64,5 +64,5 @@ define( function( require ) {
     ];
   }
 
-  return inherit( BasicsScene, FruitScene );
+  return inherit( BasicsScene, FruitsScene );
 } );
