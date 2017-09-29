@@ -122,17 +122,6 @@ define( function( require ) {
       }
     },
 
-    //TODO delete fruitWeights when design has stabilized
-    // Specify the weights for Items in Fruit scene of the Basics screen.
-    // This is a development feature for testing how the scale moves with various weights.
-    fruitWeights: {
-      type: 'array',
-      elementSchema: {
-        type: 'number'
-      },
-      defaultValue: [ 3, 2, 1 ]
-    },
-
     // TODO delete fulcrumHeight when design has stabilized
     // Height of the scale's fulcrum, on which the balance beam sits.
     fulcrumHeight: {

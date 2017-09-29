@@ -1,11 +1,43 @@
 {
   "apple.png": {
     "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Amanda McGarry"
+  },
+  "coin1.png": {
+    "text": [
       "Copyright 2015-2017 University of Colorado Boulder"
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "copied from unit-rates"
+    "notes": "created by Amanda McGarry"
+  },
+  "coin2.png": {
+    "text": [
+      "Copyright 2015-2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Amanda McGarry"
+  },
+  "coin3.png": {
+    "text": [
+      "Copyright 2015-2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Amanda McGarry"
+  },
+  "lemon.png": {
+    "text": [
+      "Copyright 2015-2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Amanda McGarry"
   },
   "lock-closed.png": {
     "text": [
@@ -25,10 +57,26 @@
   },
   "orange.png": {
     "text": [
-      "Copyright 2015-2017 University of Colorado Boulder"
+      "Copyright 2017 University of Colorado Boulder"
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "copied from unit-rates"
+    "notes": "created by Amanda McGarry"
+  },
+  "sphere.png": {
+    "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Amanda McGarry"
+  },
+  "square.png": {
+    "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Amanda McGarry"
   }
 }

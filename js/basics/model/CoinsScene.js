@@ -1,8 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO this scene is a temporary placeholder
 /**
- * The 'Polygons' scene in the 'Basics' screen.
+ * The 'Coins' scene in the 'Basics' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,37 +13,37 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var Shape = require( 'KITE/Shape' );
+
+  // images
+  var coin1Image = require( 'image!EQUALITY_EXPLORER/coin1.png' );
+  var coin2Image = require( 'image!EQUALITY_EXPLORER/coin2.png' );
+  var coin3Image = require( 'image!EQUALITY_EXPLORER/coin3.png' );
 
   // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
-  var HEXAGON_NODE = new Path( Shape.regularPolygon( 6, 100 ), {
-    fill: 'rgb( 124, 69, 157 )',
+  var COIN1_NODE = new Image( coin1Image, {
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
-  var DIAMOND_NODE = new Path( Shape.regularPolygon( 4, 100 ), {
-    fill: 'red',
+  var COIN2_NODE = new Image( coin2Image, {
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
-  var TRIANGLE_NODE = new Path( Shape.regularPolygon( 3, 100 ), {
-    fill: 'rgb( 155, 205, 100 )',
-    rotation: -Math.PI / 2,
+  var COIN3_NODE = new Image( coin3Image, {
     maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
   } );
 
   /**
    * @constructor
    */
-  function PolygonsScene() {
-    BasicsScene.call( this, HEXAGON_NODE,
+  function CoinsScene() {
+    BasicsScene.call( this, COIN3_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics )
     );
   }
 
-  equalityExplorer.register( 'PolygonsScene', PolygonsScene );
+  equalityExplorer.register( 'CoinsScene', CoinsScene );
 
   /**
    * Creates the set of ItemCreators for this scene.
@@ -54,17 +53,17 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'hexagon', 3, HEXAGON_NODE, {
+      new ItemCreator( 'coinSpiral', 3, COIN1_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'diamond', 2, DIAMOND_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
-      } ),
-      new ItemCreator( 'triangle', 1, TRIANGLE_NODE, {
+      new ItemCreator( 'coinTriangle', 2, COIN2_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
+      } ),
+      new ItemCreator( 'coinGirl', 5, COIN3_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } )
     ];
   }
 
-  return inherit( BasicsScene, PolygonsScene );
+  return inherit( BasicsScene, CoinsScene );
 } );
