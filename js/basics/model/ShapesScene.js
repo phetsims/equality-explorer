@@ -13,30 +13,14 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var IntegerNode = require( 'EQUALITY_EXPLORER/common/view/IntegerNode' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
-
-  // images
-  var sphereImage = require( 'image!EQUALITY_EXPLORER/sphere.png' );
-  var squareImage = require( 'image!EQUALITY_EXPLORER/square.png' );
-
-  // Caution! These Nodes are reused via scenery's DAG feature. Do not attempt to transform them.
-  var IMAGE_OPTIONS = { maxHeight: EqualityExplorerConstants.ITEM_HEIGHT };
-  var SPHERE_NODE = new Image( sphereImage, IMAGE_OPTIONS );
-  var SQUARE_NODE = new Image( squareImage, IMAGE_OPTIONS );
-  var ONE_NODE = new IntegerNode( 1, {
-    radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
-    fill: 'rgb( 246, 229, 214 )',
-    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
-  } );
 
   /**
    * @constructor
    */
   function ShapesScene() {
-    BasicsScene.call( this, 'shapes', ONE_NODE,
+    BasicsScene.call( this, 'shapes', EqualityExplorerConstants.POSITIVE_ONE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }
@@ -51,13 +35,13 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'sphere', 2, SPHERE_NODE, {
+      new ItemCreator( 'sphere', 2, EqualityExplorerConstants.SPHERE_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'square', 3, SQUARE_NODE, {
+      new ItemCreator( 'square', 3, EqualityExplorerConstants.SQUARE_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } ),
-      new ItemCreator( '1', 1, ONE_NODE, {
+      new ItemCreator( '1', 1, EqualityExplorerConstants.POSITIVE_ONE_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ],
         constantTerm: true
       } )

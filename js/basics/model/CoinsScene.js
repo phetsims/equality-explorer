@@ -13,26 +13,14 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
-
-  // images
-  var coin1Image = require( 'image!EQUALITY_EXPLORER/coin1.png' );
-  var coin2Image = require( 'image!EQUALITY_EXPLORER/coin2.png' );
-  var coin3Image = require( 'image!EQUALITY_EXPLORER/coin3.png' );
-
-  // Caution! These Nodes are reused via scenery's DAG feature. Do not attempt to transform them.
-  var IMAGE_OPTIONS = { maxHeight: EqualityExplorerConstants.ITEM_HEIGHT };
-  var COIN1_NODE = new Image( coin1Image, IMAGE_OPTIONS );
-  var COIN2_NODE = new Image( coin2Image, IMAGE_OPTIONS );
-  var COIN3_NODE = new Image( coin3Image, IMAGE_OPTIONS );
 
   /**
    * @constructor
    */
   function CoinsScene() {
-    BasicsScene.call( this, 'coins', COIN3_NODE,
+    BasicsScene.call( this, 'coins', EqualityExplorerConstants.COIN3_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }
@@ -47,13 +35,13 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'coin1', 3, COIN1_NODE, {
+      new ItemCreator( 'coin1', 3, EqualityExplorerConstants.COIN1_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'coin2', 2, COIN2_NODE, {
+      new ItemCreator( 'coin2', 2, EqualityExplorerConstants.COIN2_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } ),
-      new ItemCreator( 'coin3', 5, COIN3_NODE, {
+      new ItemCreator( 'coin3', 5, EqualityExplorerConstants.COIN3_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } )
     ];

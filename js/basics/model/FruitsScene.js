@@ -13,26 +13,14 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
-
-  // images
-  var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
-  var lemonImage = require( 'image!EQUALITY_EXPLORER/lemon.png' );
-  var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
-
-  // Caution! These Nodes are reused via scenery's DAG feature. Do not attempt to transform them.
-  var IMAGE_OPTIONS = { maxHeight: EqualityExplorerConstants.ITEM_HEIGHT };
-  var APPLE_NODE = new Image( appleImage, IMAGE_OPTIONS );
-  var ORANGE_NODE = new Image( orangeImage, IMAGE_OPTIONS );
-  var LEMON_NODE = new Image( lemonImage, IMAGE_OPTIONS );
 
   /**
    * @constructor
    */
   function FruitsScene() {
-    BasicsScene.call( this, 'fruits', APPLE_NODE,
+    BasicsScene.call( this, 'fruits', EqualityExplorerConstants.APPLE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }
@@ -47,13 +35,13 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'apple', 4, APPLE_NODE, {
+      new ItemCreator( 'apple', 4, EqualityExplorerConstants.APPLE_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'lemon', 5, LEMON_NODE, {
+      new ItemCreator( 'lemon', 5, EqualityExplorerConstants.LEMON_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } ),
-      new ItemCreator( 'orange', 2, ORANGE_NODE, {
+      new ItemCreator( 'orange', 2, EqualityExplorerConstants.ORANGE_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } )
     ];
