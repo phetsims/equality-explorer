@@ -23,12 +23,9 @@ define( function( require ) {
   var squareImage = require( 'image!EQUALITY_EXPLORER/square.png' );
 
   // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
-  var SPHERE_NODE = new Image( sphereImage, {
-    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
-  } );
-  var SQUARE_NODE = new Image( squareImage, {
-    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
-  } );
+  var IMAGE_OPTIONS = { maxHeight: EqualityExplorerConstants.ITEM_HEIGHT };
+  var SPHERE_NODE = new Image( sphereImage, IMAGE_OPTIONS );
+  var SQUARE_NODE = new Image( squareImage, IMAGE_OPTIONS );
   var ONE_NODE = new IntegerNode( 1, {
     radius: EqualityExplorerConstants.ITEM_HEIGHT / 2,
     fill: 'rgb( 246, 229, 214 )',

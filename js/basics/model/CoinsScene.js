@@ -23,15 +23,10 @@ define( function( require ) {
   var coin3Image = require( 'image!EQUALITY_EXPLORER/coin3.png' );
 
   // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
-  var COIN1_NODE = new Image( coin1Image, {
-    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
-  } );
-  var COIN2_NODE = new Image( coin2Image, {
-    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
-  } );
-  var COIN3_NODE = new Image( coin3Image, {
-    maxHeight: EqualityExplorerConstants.ITEM_HEIGHT
-  } );
+  var IMAGE_OPTIONS = { maxHeight: EqualityExplorerConstants.ITEM_HEIGHT };
+  var COIN1_NODE = new Image( coin1Image, IMAGE_OPTIONS );
+  var COIN2_NODE = new Image( coin2Image, IMAGE_OPTIONS );
+  var COIN3_NODE = new Image( coin3Image, IMAGE_OPTIONS );
 
   /**
    * @constructor
