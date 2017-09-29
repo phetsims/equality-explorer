@@ -39,8 +39,7 @@ define( function( require ) {
   function FruitScene() {
     BasicsScene.call( this, APPLE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
-      createItemCreators( EqualityExplorerQueryParameters.rightBasics )
-    );
+      createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }
 
   equalityExplorer.register( 'FruitScene', FruitScene );

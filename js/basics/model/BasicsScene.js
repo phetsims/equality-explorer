@@ -18,13 +18,17 @@ define( function( require ) {
    * @param {Node} icon - icon used to represent the scene
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
+   * @param {Object} [options]
    * @constructor
    */
-  function BasicsScene( icon, leftItemCreators, rightItemCreators ) {
+  function BasicsScene( icon, leftItemCreators, rightItemCreators, options ) {
 
-    Scene.call( this, leftItemCreators, rightItemCreators, {
-      icon: new Node( { children: [ icon ] } ) // wrap the icon, since we're using scenery's DAG feature
-    } );
+    options = options || {};
+
+    assert && assert( !options.icon, 'subtype handles its own icon' );
+    options.icon = new Node( { children: [ icon ] } ); // wrap the icon, since we're using scenery's DAG feature
+
+    Scene.call( this, leftItemCreators, rightItemCreators, options );
 
     this.coupledProperty.link( function( coupled ) {
       assert && assert( !coupled, 'coupled is not supported in the Basics screen' );

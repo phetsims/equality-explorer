@@ -41,8 +41,7 @@ define( function( require ) {
   function ShapesScene() {
     BasicsScene.call( this, ONE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
-      createItemCreators( EqualityExplorerQueryParameters.rightBasics )
-    );
+      createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }
 
   equalityExplorer.register( 'ShapesScene', ShapesScene );

@@ -39,8 +39,7 @@ define( function( require ) {
   function CoinsScene() {
     BasicsScene.call( this, COIN3_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
-      createItemCreators( EqualityExplorerQueryParameters.rightBasics )
-    );
+      createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }
 
   equalityExplorer.register( 'CoinsScene', CoinsScene );
@@ -53,13 +52,13 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'coinSpiral', 3, COIN1_NODE, {
+      new ItemCreator( 'coin1', 3, COIN1_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'coinTriangle', 2, COIN2_NODE, {
+      new ItemCreator( 'coin2', 2, COIN2_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } ),
-      new ItemCreator( 'coinGirl', 5, COIN3_NODE, {
+      new ItemCreator( 'coin3', 5, COIN3_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } )
     ];

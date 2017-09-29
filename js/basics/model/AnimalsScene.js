@@ -1,8 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO this scene is a temporary placeholder
 /**
- * The 'Spheres' scene in the 'Basics' screen.
+ * The 'Animals' scene in the 'Basics' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -11,29 +10,31 @@ define( function( require ) {
 
   // modules
   var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
+  var Circle = require( 'SCENERY/nodes/Circle' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
-  var ShadedSphereNode = require( 'SCENERY_PHET/ShadedSphereNode' );
 
+  //TODO replace these with animals artwork
   // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
-  var SPHERE1_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'green' } );
-  var SPHERE2_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'orange' } );
-  var SPHERE3_NODE = new ShadedSphereNode( EqualityExplorerConstants.ITEM_HEIGHT, { mainColor: 'magenta' } );
+  var ANIMAL1_NODE = new Circle( EqualityExplorerConstants.ITEM_HEIGHT / 2, { fill: 'green' } );
+  var ANIMAL2_NODE = new Circle( EqualityExplorerConstants.ITEM_HEIGHT / 2, { fill: 'orange' } );
+  var ANIMAL3_NODE = new Circle( EqualityExplorerConstants.ITEM_HEIGHT / 2, { fill: 'magenta' } );
 
   /**
    * @constructor
    */
-  function SpheresScene() {
-    BasicsScene.call( this, SPHERE1_NODE,
+  function AnimalsScene() {
+    BasicsScene.call( this, ANIMAL1_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
-      createItemCreators( EqualityExplorerQueryParameters.rightBasics )
-    );
+      createItemCreators( EqualityExplorerQueryParameters.rightBasics ), {
+        maxWeight: 50
+      } );
   }
 
-  equalityExplorer.register( 'SpheresScene', SpheresScene );
+  equalityExplorer.register( 'AnimalsScene', AnimalsScene );
 
   /**
    * Creates the set of ItemCreators for this scene.
@@ -43,17 +44,17 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'greenSphere', 3, SPHERE1_NODE, {
+      new ItemCreator( 'animal1', 11, ANIMAL1_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'orangeSphere', 2, SPHERE2_NODE, {
+      new ItemCreator( 'animal2', 4, ANIMAL2_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } ),
-      new ItemCreator( 'magentaSphere', 1, SPHERE3_NODE, {
+      new ItemCreator( 'animal3', 6, ANIMAL3_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } )
     ];
   }
 
-  return inherit( BasicsScene, SpheresScene );
+  return inherit( BasicsScene, AnimalsScene );
 } );

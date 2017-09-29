@@ -9,13 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AnimalsScene = require( 'EQUALITY_EXPLORER/basics/model/AnimalsScene' );
   var CoinsScene = require( 'EQUALITY_EXPLORER/basics/model/CoinsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var FruitScene = require( 'EQUALITY_EXPLORER/basics/model/FruitScene' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var ShapesScene = require( 'EQUALITY_EXPLORER/basics/model/ShapesScene' );
-  var SpheresScene = require( 'EQUALITY_EXPLORER/basics/model/SpheresScene' );
 
   /**
    * @constructor
@@ -27,7 +27,7 @@ define( function( require ) {
       new ShapesScene(),
       new FruitScene(),
       new CoinsScene(),
-      new SpheresScene()
+      new AnimalsScene()
     ];
 
     // @public the selected scene

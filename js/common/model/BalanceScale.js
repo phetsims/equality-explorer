@@ -51,6 +51,8 @@ define( function( require ) {
 
     }, options );
 
+    console.log( 'maxWeight=' + options.maxWeight );//XXX
+
     assert && assert( options.beamWidth - ( 2 * options.plateXInset ) > options.plateDiameter, 'plates will overlap' );
 
     // @public (read-only)
