@@ -50,6 +50,7 @@ define( function( require ) {
 
   equalityExplorer.register( 'OrganizeButton', OrganizeButton );
 
+  //TODO #9 this ugly piece of code should be replaced with a PNG file
   /**
    * Creates the icon that appears on the button.
    * @returns {Node}
