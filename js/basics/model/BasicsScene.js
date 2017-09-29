@@ -31,7 +31,7 @@ define( function( require ) {
     Scene.call( this, leftItemCreators, rightItemCreators, options );
 
     this.coupledProperty.link( function( coupled ) {
-      assert && assert( !coupled, 'coupled is not supported in the Basics screen' );
+      assert && assert( !coupled, 'coupling is not supported in the Basics screen' );
     } );
   }
 
