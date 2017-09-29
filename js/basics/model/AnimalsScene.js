@@ -18,7 +18,7 @@ define( function( require ) {
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
 
   //TODO replace these with animals artwork
-  // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
+  // Caution! These Nodes are reused via scenery's DAG feature. Do not attempt to transform them.
   var ANIMAL1_NODE = new Circle( EqualityExplorerConstants.ITEM_HEIGHT / 2, { fill: 'green' } );
   var ANIMAL2_NODE = new Circle( EqualityExplorerConstants.ITEM_HEIGHT / 2, { fill: 'orange' } );
   var ANIMAL3_NODE = new Circle( EqualityExplorerConstants.ITEM_HEIGHT / 2, { fill: 'magenta' } );

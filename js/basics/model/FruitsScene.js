@@ -22,7 +22,7 @@ define( function( require ) {
   var lemonImage = require( 'image!EQUALITY_EXPLORER/lemon.png' );
   var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
 
-  // Caution! These Nodes that are reused via scenery's DAG feature. Do not attempt to transform them.
+  // Caution! These Nodes are reused via scenery's DAG feature. Do not attempt to transform them.
   var IMAGE_OPTIONS = { maxHeight: EqualityExplorerConstants.ITEM_HEIGHT };
   var APPLE_NODE = new Image( appleImage, IMAGE_OPTIONS );
   var ORANGE_NODE = new Image( orangeImage, IMAGE_OPTIONS );
