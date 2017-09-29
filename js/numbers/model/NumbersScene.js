@@ -35,7 +35,7 @@ define( function( require ) {
    * @constructor
    */
   function NumbersScene() {
-    Scene.call( this,
+    Scene.call( this, 'numbers',
       createItemCreators( EqualityExplorerQueryParameters.leftNumbers ),
       createItemCreators( EqualityExplorerQueryParameters.rightNumbers )
     );

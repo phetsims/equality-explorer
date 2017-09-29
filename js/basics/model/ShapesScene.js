@@ -39,7 +39,7 @@ define( function( require ) {
    * @constructor
    */
   function ShapesScene() {
-    BasicsScene.call( this, ONE_NODE,
+    BasicsScene.call( this, 'shapes', ONE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }

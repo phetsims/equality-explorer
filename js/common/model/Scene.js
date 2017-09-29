@@ -25,12 +25,13 @@ define( function( require ) {
   var DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.maxY - DRAG_BOUNDS_Y_MARGIN;
 
   /**
+   * @param {string} name - internal name, not displayed to the user
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
    * @param {Object} [options]
    * @constructor
    */
-  function Scene( leftItemCreators, rightItemCreators, options ) {
+  function Scene( name, leftItemCreators, rightItemCreators, options ) {
 
     var self = this;
 
@@ -38,6 +39,11 @@ define( function( require ) {
       icon: null, // {Node|null} optional icon used to represent the scene
       maxWeight: 30 // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it
     }, options );
+
+    phet.log && phet.log( name + ': maxWeight=' + options.maxWeight );
+
+    // @public (read-only)
+    this.name = name;
 
     // @public (read-only) {Node} used to represent the scene
     this.icon = options.icon;

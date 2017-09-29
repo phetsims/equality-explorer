@@ -48,7 +48,7 @@ define( function( require ) {
    * @constructor
    */
   function SolvingScene() {
-    Scene.call( this, createItemCreators(), createItemCreators() );
+    Scene.call( this, 'solving', createItemCreators(), createItemCreators() );
   }
 
   equalityExplorer.register( 'SolvingScene', SolvingScene );

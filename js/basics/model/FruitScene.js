@@ -37,7 +37,7 @@ define( function( require ) {
    * @constructor
    */
   function FruitScene() {
-    BasicsScene.call( this, APPLE_NODE,
+    BasicsScene.call( this, 'fruit', APPLE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }

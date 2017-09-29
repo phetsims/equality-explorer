@@ -48,7 +48,7 @@ define( function( require ) {
    * @constructor
    */
   function VariablesScene() {
-    Scene.call( this,
+    Scene.call( this, 'variables',
       createItemCreators( EqualityExplorerQueryParameters.leftVariables ),
       createItemCreators( EqualityExplorerQueryParameters.rightVariables )
     );

@@ -37,7 +37,7 @@ define( function( require ) {
    * @constructor
    */
   function CoinsScene() {
-    BasicsScene.call( this, COIN3_NODE,
+    BasicsScene.call( this, 'coins', COIN3_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }

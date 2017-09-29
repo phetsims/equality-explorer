@@ -27,7 +27,7 @@ define( function( require ) {
    * @constructor
    */
   function AnimalsScene() {
-    BasicsScene.call( this, ANIMAL1_NODE,
+    BasicsScene.call( this, 'animals', ANIMAL1_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ), {
         maxWeight: 50
