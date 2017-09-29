@@ -95,7 +95,6 @@ define( function( require ) {
       }
     },
 
-
     // Number of items that are initially on the left plate in the Variables screen.
     // This is intended to be used for debugging and testing, not in production situations.
     // See https://github.com/phetsims/equality-explorer/issues/8
