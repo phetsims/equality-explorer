@@ -18,8 +18,8 @@ define( function( require ) {
   var ToggleNode = require( 'SUN/ToggleNode' );
 
   // images
-  var lockClosedImage = require( 'image!EQUALITY_EXPLORER/lock-closed.png' );
-  var lockOpenedImage = require( 'image!EQUALITY_EXPLORER/lock-opened.png' );
+  var lockClosedImage = require( 'image!EQUALITY_EXPLORER/lockClosed.png' );
+  var lockOpenedImage = require( 'image!EQUALITY_EXPLORER/lockOpened.png' );
 
   /**
    * @param {Property.<boolean>} coupledProperty
