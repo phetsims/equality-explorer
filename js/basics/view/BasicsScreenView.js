@@ -42,7 +42,8 @@ define( function( require ) {
     this.sceneNodes = [];
     var sceneNode;
     for ( var i = 0; i < model.scenes.length; i++ ) {
-      sceneNode = new SceneNode( model.scenes[ i ], model.sceneProperty, this.layoutBounds, {
+      sceneNode = new SceneNode( model.scenes[ i ], this.layoutBounds, {
+        sceneProperty: model.sceneProperty,
         coupledSwitchVisible: false
       } );
       this.sceneNodes.push( sceneNode );

@@ -24,18 +24,18 @@ define( function( require ) {
 
   /**
    * @param {Scene} scene
-   * @param {Property.<Scene>} sceneProperty
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor
    */
-  function SceneNode( scene, sceneProperty, layoutBounds, options ) {
+  function SceneNode( scene, layoutBounds, options ) {
 
     var self = this;
 
     options = _.extend( {
       itemsPanelSpacing: 50,
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
+      sceneProperty: null, // {Property.<Scene>|null} the selected Scene
       coupledSwitchVisible: true
     }, options );
 
@@ -97,9 +97,11 @@ define( function( require ) {
     } );
 
     // Make this scene visible when it's selected, unlink unnecessary
-    sceneProperty.link( function( newScene ) {
-      self.visible = ( newScene === scene );
-    } );
+    if ( options.sceneProperty ) {
+      options.sceneProperty.link( function( newScene ) {
+        self.visible = ( newScene === scene );
+      } );
+    }
 
     // Render the drag bounds for the left and right plates
     if ( EqualityExplorerQueryParameters.showDragBounds ) {

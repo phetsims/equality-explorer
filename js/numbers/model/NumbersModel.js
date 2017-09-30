@@ -12,7 +12,6 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumbersScene = require( 'EQUALITY_EXPLORER/numbers/model/NumbersScene' );
-  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
@@ -21,13 +20,6 @@ define( function( require ) {
 
     // @public (read-only)
     this.scene = new NumbersScene();
-
-    //TODO make this go away
-    // @public
-    this.sceneProperty = new Property( this.scene );
-    this.sceneProperty.lazyLink( function( scene ) {
-      throw new Error( 'sceneProperty should never change, there is only 1 scene' );
-    } );
   }
 
   equalityExplorer.register( 'NumbersModel', NumbersModel );

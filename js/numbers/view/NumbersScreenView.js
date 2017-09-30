@@ -38,7 +38,7 @@ define( function( require ) {
     this.addChild( resetAllButton );
 
     // @private
-    this.sceneNode = new SceneNode( model.scene, model.sceneProperty, this.layoutBounds );
+    this.sceneNode = new SceneNode( model.scene, this.layoutBounds );
     this.addChild( this.sceneNode );
   }
 
