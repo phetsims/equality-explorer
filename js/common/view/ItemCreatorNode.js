@@ -43,6 +43,7 @@ define( function( require ) {
     Node.call( this, options );
 
     this.addInputListener( SimpleDragHandler.createForwardingListener(
+
       // down function, creates model and view for an Item
       function( event ) {
 
@@ -62,10 +63,10 @@ define( function( require ) {
 
         // Propagate drag to the ItemNode
         itemNode.dragListener.startDrag( event );
+      }, {
+        allowTouchSnag: true
       }
-    ), {
-      allowTouchSnag: true
-    } );
+    ) );
 
     // Enable and disable, unlink unnecessary
     itemCreator.enabledProperty.link( function( enabled ) {

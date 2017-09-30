@@ -52,7 +52,7 @@ define( function( require ) {
     // @public (read-only)
     this.dragListener = new SimpleDragHandler( {
 
-      allowTouchSnag: options.allowTouchSnag,
+      allowTouchSnag: true,
 
       start: function( event, trail ) {
         item.dragging = true;
