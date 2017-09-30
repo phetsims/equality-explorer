@@ -11,9 +11,9 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
+  var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
@@ -31,10 +31,10 @@ define( function( require ) {
    */
   function createItemCreators() {
     return [
-      new ItemCreator( 'x', 2, EqualityExplorerConstants.POSITIVE_X_NODE, EqualityExplorerConstants.X_SHADOW_NODE, { variableTerm: true } ),
-      new ItemCreator( '-x', -2, EqualityExplorerConstants.NEGATIVE_X_NODE, EqualityExplorerConstants.X_SHADOW_NODE, { variableTerm: true } ),
-      new ItemCreator( '1', 1, EqualityExplorerConstants.POSITIVE_ONE_NODE, EqualityExplorerConstants.ONE_SHADOW_NODE, { constantTerm: true } ),
-      new ItemCreator( '-1', -1, EqualityExplorerConstants.NEGATIVE_ONE_NODE, EqualityExplorerConstants.ONE_SHADOW_NODE, { constantTerm: true } )
+      new ItemCreator( 'x', 2, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, { variableTerm: true } ),
+      new ItemCreator( '-x', -2, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, { variableTerm: true } ),
+      new ItemCreator( '1', 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, { constantTerm: true } ),
+      new ItemCreator( '-1', -1, ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, { constantTerm: true } )
     ];
   }
 

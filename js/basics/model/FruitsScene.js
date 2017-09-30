@@ -11,16 +11,16 @@ define( function( require ) {
   // modules
   var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
+  var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
 
   /**
    * @constructor
    */
   function FruitsScene() {
-    BasicsScene.call( this, 'fruits', EqualityExplorerConstants.APPLE_NODE,
+    BasicsScene.call( this, 'fruits', ItemIcons.APPLE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }
@@ -35,13 +35,13 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'apple', 4, EqualityExplorerConstants.APPLE_NODE, EqualityExplorerConstants.APPLE_SHADOW_NODE, {
+      new ItemCreator( 'apple', 4, ItemIcons.APPLE_NODE, ItemIcons.APPLE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'lemon', 5, EqualityExplorerConstants.LEMON_NODE, EqualityExplorerConstants.LEMON_SHADOW_NODE, {
+      new ItemCreator( 'lemon', 5, ItemIcons.LEMON_NODE, ItemIcons.LEMON_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } ),
-      new ItemCreator( 'orange', 2, EqualityExplorerConstants.ORANGE_NODE, EqualityExplorerConstants.ORANGE_SHADOW_NODE, {
+      new ItemCreator( 'orange', 2, ItemIcons.ORANGE_NODE, ItemIcons.ORANGE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } )
     ];

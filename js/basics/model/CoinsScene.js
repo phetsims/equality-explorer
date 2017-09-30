@@ -11,16 +11,16 @@ define( function( require ) {
   // modules
   var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
+  var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
 
   /**
    * @constructor
    */
   function CoinsScene() {
-    BasicsScene.call( this, 'coins', EqualityExplorerConstants.COIN3_NODE,
+    BasicsScene.call( this, 'coins', ItemIcons.COIN3_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
   }
@@ -35,13 +35,13 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'coin1', 3, EqualityExplorerConstants.COIN1_NODE, EqualityExplorerConstants.COIN1_SHADOW_NODE, {
+      new ItemCreator( 'coin1', 3, ItemIcons.COIN1_NODE, ItemIcons.COIN1_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'coin2', 2, EqualityExplorerConstants.COIN2_NODE, EqualityExplorerConstants.COIN2_SHADOW_NODE, {
+      new ItemCreator( 'coin2', 2, ItemIcons.COIN2_NODE, ItemIcons.COIN2_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } ),
-      new ItemCreator( 'coin3', 5, EqualityExplorerConstants.COIN3_NODE, EqualityExplorerConstants.COIN3_SHADOW_NODE, {
+      new ItemCreator( 'coin3', 5, ItemIcons.COIN3_NODE, ItemIcons.COIN3_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } )
     ];
