@@ -38,6 +38,13 @@ define( function( require ) {
     assert && assert( !options.children, 'this subtype defines its children' );
     options.children = [ item.icon ]; // wrap the icon since we're using scenery DAG feature
 
+    var shadowNode = new Node( {
+      children: [ item.shadowIcon ], // wrap the icon since we're using scenery DAG feature
+      opacity: 0.4,
+      left: item.icon.left + 3,
+      top: item.icon.top + 3
+    } );
+
     Node.call( this, options );
 
     // synchronize location with model
@@ -56,11 +63,16 @@ define( function( require ) {
 
       start: function( event, trail ) {
         item.dragging = true;
-        
+
+        //TODO change addChild to visible and ignore shadow when positioning this Node
+        // add a shadow while dragging
+        self.addChild( shadowNode );
+        shadowNode.moveToBack();
+
         self.moveToFront();
 
         // move up and left
-        self.item.locationProperty.value = self.item.locationProperty.value.plusXY( -5, -5 );
+        self.item.locationProperty.value = self.item.locationProperty.value.plusXY( -2, -2 );
 
         if ( plate.containsItem( item ) ) {
           plate.removeItem( item );
@@ -78,6 +90,10 @@ define( function( require ) {
       end: function( event, trail ) {
 
         item.dragging = false;
+
+        //TODO change removeChild to visible
+        // remove the shadow when drag ends
+        self.removeChild( shadowNode );
 
         if ( item.locationProperty.value.y > plate.locationProperty.value.y ) {
 

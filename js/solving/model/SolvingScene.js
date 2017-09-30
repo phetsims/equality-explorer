@@ -31,10 +31,10 @@ define( function( require ) {
    */
   function createItemCreators() {
     return [
-      new ItemCreator( 'x', 2, EqualityExplorerConstants.POSITIVE_X_NODE, { variableTerm: true } ),
-      new ItemCreator( '-x', -2, EqualityExplorerConstants.NEGATIVE_X_NODE, { variableTerm: true } ),
-      new ItemCreator( '1', 1, EqualityExplorerConstants.POSITIVE_ONE_NODE, { constantTerm: true } ),
-      new ItemCreator( '-1', -1, EqualityExplorerConstants.NEGATIVE_ONE_NODE, { constantTerm: true } )
+      new ItemCreator( 'x', 2, EqualityExplorerConstants.POSITIVE_X_NODE, EqualityExplorerConstants.X_SHADOW_NODE, { variableTerm: true } ),
+      new ItemCreator( '-x', -2, EqualityExplorerConstants.NEGATIVE_X_NODE, EqualityExplorerConstants.X_SHADOW_NODE, { variableTerm: true } ),
+      new ItemCreator( '1', 1, EqualityExplorerConstants.POSITIVE_ONE_NODE, EqualityExplorerConstants.ONE_SHADOW_NODE, { constantTerm: true } ),
+      new ItemCreator( '-1', -1, EqualityExplorerConstants.NEGATIVE_ONE_NODE, EqualityExplorerConstants.ONE_SHADOW_NODE, { constantTerm: true } )
     ];
   }
 

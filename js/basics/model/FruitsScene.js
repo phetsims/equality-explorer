@@ -35,13 +35,13 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'apple', 4, EqualityExplorerConstants.APPLE_NODE, {
+      new ItemCreator( 'apple', 4, EqualityExplorerConstants.APPLE_NODE, EqualityExplorerConstants.APPLE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'lemon', 5, EqualityExplorerConstants.LEMON_NODE, {
+      new ItemCreator( 'lemon', 5, EqualityExplorerConstants.LEMON_NODE, EqualityExplorerConstants.LEMON_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } ),
-      new ItemCreator( 'orange', 2, EqualityExplorerConstants.ORANGE_NODE, {
+      new ItemCreator( 'orange', 2, EqualityExplorerConstants.ORANGE_NODE, EqualityExplorerConstants.ORANGE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } )
     ];

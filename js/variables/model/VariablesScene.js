@@ -36,19 +36,19 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 4 );
     return [
-      new ItemCreator( 'x', 2, EqualityExplorerConstants.POSITIVE_X_NODE, {
+      new ItemCreator( 'x', 2, EqualityExplorerConstants.POSITIVE_X_NODE, EqualityExplorerConstants.X_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ],
         variableTerm: true
       } ),
-      new ItemCreator( '-x', -2, EqualityExplorerConstants.NEGATIVE_X_NODE, {
+      new ItemCreator( '-x', -2, EqualityExplorerConstants.NEGATIVE_X_NODE, EqualityExplorerConstants.X_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ],
         variableTerm: true
       } ),
-      new ItemCreator( '1', 1, EqualityExplorerConstants.POSITIVE_ONE_NODE, {
+      new ItemCreator( '1', 1, EqualityExplorerConstants.POSITIVE_ONE_NODE, EqualityExplorerConstants.ONE_SHADOW_NODE,{
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ],
         constantTerm: true
       } ),
-      new ItemCreator( '-1', -1, EqualityExplorerConstants.NEGATIVE_ONE_NODE, {
+      new ItemCreator( '-1', -1, EqualityExplorerConstants.NEGATIVE_ONE_NODE, EqualityExplorerConstants.ONE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 3 ],
         constantTerm: true
       } )
