@@ -63,6 +63,7 @@ define( function( require ) {
     // Variables accordion box, below the Snapshots accordion box
     var variableAccordionBox = new VariableAccordionBox( model.variableValueProperty, model.variableRange, {
       expandedProperty: this.viewProperties.variableAccordionBoxExpandedProperty,
+      maxWidth: this.sceneNode.snapshotsAccordionBox.maxWidth, // same width as Snapshots
       right: localBounds.right,
       top: localBounds.bottom + 15
     } );

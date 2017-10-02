@@ -32,8 +32,8 @@ define( function( require ) {
     options = _.extend( {
 
       // supertype options
-      maxWidth: 600,
-      maxHeight: 60,
+      maxWidth: 600, // this also serves as the fixed width of the accordion box
+      maxHeight: 60, // this also serves as the fixed height of the accordion box
       fill: 'white',
       showTitleWhenExpanded: false,
       titleAlignX: 'left',
@@ -54,7 +54,6 @@ define( function( require ) {
 
     var contentWidth = options.maxWidth - ( 2 * options.contentXMargin );
     var contentHeight = options.maxHeight - ( 2 * options.contentYMargin );
-
     var backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     var equationNode = new EquationNode( leftItemCreators, rightItemCreators );

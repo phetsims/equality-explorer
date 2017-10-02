@@ -44,7 +44,7 @@ define( function( require ) {
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
 
       // supertype options
-      maxWidth: 100,
+      maxWidth: 100, // this also serves as the fixed width of the accordion box
       fill: 'white',
       titleAlignX: 'left',
       titleXSpacing: 8,

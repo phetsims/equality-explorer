@@ -12,13 +12,13 @@ define( function( require ) {
   var AccordionBox = require( 'SUN/AccordionBox' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
@@ -38,10 +38,11 @@ define( function( require ) {
       titleFont: new PhetFont( 18 ),
       equationFont: new PhetFont( 24 ),
       variableFont: new MathSymbolFont( 24 ),
-      contentWidth: 249,
-      contentHeight: 50,
 
       // supertype options
+      maxWidth: 249, // this also serves as the fixed width of the accordion box
+      contentXMargin: 20,
+      contentYMargin: 10,
       fill: 'white',
       showTitleWhenExpanded: false,
       titleAlignX: 'left',
@@ -50,22 +51,21 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 8,
       buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5,
-      contentXMargin: 20,
-      contentYMargin: 10
+      buttonTouchAreaYDilation: 5
     }, options );
 
     assert && assert( !options.titleNode, 'subtype defines its titleNode' );
     options.titleNode = new Text( variableString, {
       font: options.titleFont,
-      maxWidth: 0.75 * options.contentWidth
+      maxWidth: 0.75 * options.maxWidth
     } );
 
-    var backgroundNode = new Rectangle( 0, 0, options.contentWidth, options.contentHeight );
+    var contentWidth = options.maxWidth - ( 2 * options.contentXMargin );
+    var strut = new HStrut( contentWidth );
 
     var xText = new Text( xString, {
       font: options.variableFont,
-      maxWidth: 0.5 * options.contentWidth
+      maxWidth: 0.5 * options.maxWidth
     } );
 
     var equalsText = new Text( '=', {
@@ -82,13 +82,12 @@ define( function( require ) {
     var equationNode = new HBox( {
       children: [ xText, equalsText, valuePicker ],
       spacing: 5,
-      center: backgroundNode.center,
-      maxWidth: options.contentWidth,
-      maxHeight: options.contentHeight
+      center: strut.center,
+      maxWidth: contentWidth
     } );
 
     var contentNode = new Node( {
-      children: [ backgroundNode, equationNode ]
+      children: [ strut, equationNode ]
     } );
 
     AccordionBox.call( this, contentNode, options );

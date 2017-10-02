@@ -33,10 +33,6 @@ situation where need to create a zero-pair and a plate is full
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Dynamically size Variables accordion box to match Snapshots accordion box.
-
-Size all panels the same way, by specifying contentWidth and contentHeight, not by hijacking maxWidth and maxHeight
-
 Item type hierarchy: ConstantItem, VariableItem
                                        
 Reduce x and -x terms in equation, show symbol instead of icons (and remove temporary hack in EquationNode)
