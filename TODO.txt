@@ -33,6 +33,8 @@ situation where need to create a zero-pair and a plate is full
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+Remove organize button from Solving scale.
+
 Item type hierarchy: ConstantItem, VariableItem
                                        
 Reduce x and -x terms in equation, show symbol instead of icons (and remove temporary hack in EquationNode)
