@@ -14,7 +14,6 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var Shape = require( 'KITE/Shape' );
 
   /**
    * @param {BalanceScale} scale
@@ -37,7 +36,20 @@ define( function( require ) {
     }, options );
 
     assert && assert( !options.content, 'this subtype defines its content' );
-    options.content = createButtonContent();
+
+    // SVG path description is the "d=" field from organize-icon.svg
+    options.content = new Path(
+      'M253.5,162.5h-58v-58h58V162.5z M253.5,170.5h-58v58h58V170.5z M57.018,35.5\n' +
+      '\tc-16.568,0-30,13.432-30,30s13.432,30,30,30s30-13.432,30-30S73.586,35.5,57.018,35.5z M57.018,102.5c-16.568,0-30,13.432-30,30\n' +
+      '\ts13.432,30,30,30s30-13.432,30-30S73.586,102.5,57.018,102.5z M57.018,169.5c-16.568,0-30,13.432-30,30s13.432,30,30,30\n' +
+      '\ts30-13.432,30-30S73.586,169.5,57.018,169.5z M360.975,95.5l-34.677-60.061L291.622,95.5H360.975z M360.975,162.5l-34.677-60.061\n' +
+      '\tL291.622,162.5H360.975z M360.975,229.5l-34.677-60.061L291.622,229.5H360.975z M128.018,35.5c-16.568,0-30,13.432-30,30\n' +
+      '\ts13.432,30,30,30s30-13.432,30-30S144.586,35.5,128.018,35.5z M128.018,102.5c-16.568,0-30,13.432-30,30s13.432,30,30,30\n' +
+      '\ts30-13.432,30-30S144.586,102.5,128.018,102.5z M128.018,169.5c-16.568,0-30,13.432-30,30s13.432,30,30,30s30-13.432,30-30\n' +
+      '\tS144.586,169.5,128.018,169.5z', {
+        fill: 'black',
+        scale: 0.105
+      } );
 
     assert && assert( !options.listener, 'this subtype defines its listener' );
     options.listener = function() {
@@ -49,58 +61,6 @@ define( function( require ) {
   }
 
   equalityExplorer.register( 'OrganizeButton', OrganizeButton );
-
-  //TODO #9 this ugly piece of code could be replaced with a PNG file
-  /**
-   * Creates the icon that appears on the button.
-   * @returns {Node}
-   */
-  function createButtonContent() {
-
-    var diameter = 6; // diameter of each item
-    var xSpacing = 2; // horizontal space between columns
-    var xSpacingExtra = 3; // extra horizontal space between columns with different types of items
-    var ySpacing = 1; // vertical space between items in a column
-
-    var iconShape = new Shape();
-
-    // 2 columns of 3 circles
-    var left = 0;
-    var top = 0;
-    for ( var column = 0; column < 2; column++ ) {
-      for (var row = 0; row < 3; row++ ) {
-        iconShape.circle( left + 0.5 * diameter, top + 0.5 * diameter, diameter / 2 );
-        top += ( diameter + ySpacing );
-      }
-      left += ( diameter + xSpacing );
-      top = 0;
-    }
-
-    // 1 column of 2 squares
-    left += xSpacingExtra;
-    top = diameter + ySpacing;
-    for ( row = 0; row < 2; row++ ) {
-      iconShape.rect( left, top, diameter, diameter );
-      top += ( diameter + ySpacing );
-    }
-
-    // 1 column of 3 triangles
-    left += ( diameter + xSpacing + xSpacingExtra );
-    top = 0;
-    for ( row = 0; row < 3; row++ ) {
-      
-      // described from top center, moving clockwise
-      iconShape.moveTo( left + 0.5 * diameter, top )
-        .lineTo( left + diameter, top + diameter )
-        .lineTo( left, top + diameter )
-        .close();
-      top += ( diameter + ySpacing );
-    }
-
-    return new Path( iconShape, {
-      fill: 'black'
-    } );
-  }
 
   return inherit( RectangularPushButton, OrganizeButton );
 } );
