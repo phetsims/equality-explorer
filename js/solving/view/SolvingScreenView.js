@@ -13,12 +13,9 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var OperationNode = require( 'EQUALITY_EXPLORER/common/view/OperationNode' );
-  var Property = require( 'AXON/Property' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
+  var SolvingSceneNode = require( 'EQUALITY_EXPLORER/solving/view/SolvingSceneNode' );
 
   /**
    * @param {SolvingModel} model
@@ -27,16 +24,6 @@ define( function( require ) {
   function SolvingScreenView( model ) {
 
     var self = this;
-
-    // @private view-specific Properties
-    this.viewProperties = {
-
-      // whether the Variable accordion box is expanded or collapsed
-      variableAccordionBoxExpandedProperty: new Property( true ),
-
-      // whether 'x' value is visible in snapshots
-      xVisibleProperty: new Property( true )
-    };
 
     ScreenView.call( this );
 
@@ -52,36 +39,8 @@ define( function( require ) {
     this.addChild( resetAllButton );
 
     // @private
-    this.sceneNode = new SceneNode( model.scene, this.layoutBounds, {
-      organizeButtonVisible: false,
-      xVisibleProperty: this.viewProperties.xVisibleProperty,
-      itemsPanelSpacing: 30
-    } );
+    this.sceneNode = new SolvingSceneNode( model.scene, this.layoutBounds );
     this.addChild( this.sceneNode );
-
-    // Get the bounds of the Snapshot accordion box, relative to this ScreenView
-    var globalBounds = this.sceneNode.snapshotsAccordionBox.parentToGlobalBounds( this.sceneNode.snapshotsAccordionBox.bounds );
-    var localBounds = this.globalToLocalBounds( globalBounds );
-
-    // Variables accordion box, below the Snapshots accordion box
-    var variableAccordionBox = new VariableAccordionBox( model.scene.xProperty, EqualityExplorerConstants.X_RANGE, {
-      expandedProperty: this.viewProperties.variableAccordionBoxExpandedProperty,
-      fixedWidth: this.sceneNode.snapshotsAccordionBox.width, // same width as Snapshots
-      right: localBounds.right,
-      top: localBounds.bottom + 15
-    } );
-    this.addChild( variableAccordionBox );
-
-    // Get the bounds of the Equation accordion box, relative to this ScreenView
-    globalBounds = this.sceneNode.equationAccordionBox.parentToGlobalBounds( this.sceneNode.equationAccordionBox.bounds );
-    localBounds = this.globalToLocalBounds( globalBounds );
-
-    // Universal Operation, below Equation accordion box
-    var operationNode = new OperationNode( model.scene.operatorProperty, model.scene.operandProperty, {
-      centerX: model.scene.scale.location.x,
-      top: localBounds.bottom + 10
-    } );
-    this.addChild( operationNode );
   }
 
   equalityExplorer.register( 'SolvingScreenView', SolvingScreenView );
@@ -90,15 +49,6 @@ define( function( require ) {
 
     // @public
     reset: function() {
-
-      // reset all view-specific Properties
-      for ( var property in this.viewProperties ) {
-        if ( this.viewProperties.hasOwnProperty( property ) ) {
-          this.viewProperties[ property ].reset();
-        }
-      }
-
-      // reset the scene's view
       this.sceneNode.reset();
     }
   } );
