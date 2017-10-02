@@ -33,7 +33,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      itemsPanelSpacing: 50,
+      itemsPanelSpacing: 50, // spacing of Items in the panels that appear below the scale
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
       sceneProperty: null, // {Property.<Scene>|null} the selected Scene
       coupledSwitchVisible: true,
