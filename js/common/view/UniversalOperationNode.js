@@ -24,6 +24,14 @@ define( function( require ) {
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
 
+  // constants
+  var OPERATORS = [
+    EqualityExplorerConstants.PLUS,
+    EqualityExplorerConstants.MINUS,
+    EqualityExplorerConstants.TIMES,
+    EqualityExplorerConstants.DIVIDE
+  ];
+
   /**
    * @param {Property.<string>} operatorProperty
    * @param {Property.<number>} operandProperty
@@ -39,18 +47,22 @@ define( function( require ) {
       spacing: 15
     }, options );
 
+    // valid operator, unlink not needed
+    operatorProperty.link( function( operator ) {
+      assert && assert( _.includes( OPERATORS, operator ), 'invalid operator: ' + operator );
+    } );
+
+    // validate operand, unlink not needed
+    operandProperty.link( function( operand ) {
+      assert && assert( options.operandRange.contains( operand ), 'operand out of range: ' + operand );
+    } );
+
     // picker for choosing operator
-    var operators = [
-      EqualityExplorerConstants.PLUS,
-      EqualityExplorerConstants.MINUS,
-      EqualityExplorerConstants.TIMES,
-      EqualityExplorerConstants.DIVIDE
-    ];
     var operatorItems = [];
-    for ( var i = 0; i < operators.length; i++ ) {
+    for ( var i = 0; i < OPERATORS.length; i++ ) {
       operatorItems.push( {
-        value: operators[ i ],
-        node: new Text( operators[ i ], { font: options.operatorFont } )
+        value: OPERATORS[ i ],
+        node: new Text( OPERATORS[ i ], { font: options.operatorFont } )
       } );
     }
     var operatorPicker = new ObjectPicker( operatorProperty, operatorItems, {
