@@ -14,8 +14,6 @@ Solving multi-touch:
 
 Conflicting uses of color coding: items, arrow, plates, panels
 
-Arrow color when unbalanced, use something other than orange?
-
 Should we put a fontawesome lock icon on the scale when coupling is on?
 
 ------------------------------------------------------------------------------------------------------------------------
