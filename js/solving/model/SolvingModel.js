@@ -11,26 +11,13 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var SolvingScene = require( 'EQUALITY_EXPLORER/solving/model/SolvingScene' );
 
   /**
    * @constructor
    */
   function SolvingModel() {
-
-    // @public
-    this.operatorProperty = new Property( EqualityExplorerConstants.PLUS );
-    this.operandProperty = new Property( 1 );
-
-    // @public (read-only)
-    this.variableRange = new RangeWithValue( -40, 40, 1 );
-
-    // @public
-    this.variableValueProperty = new Property( this.variableRange.defaultValue );
 
     // @public (read-only)
     this.scene = new SolvingScene();
@@ -42,9 +29,6 @@ define( function( require ) {
 
     // @public resets the model
     reset: function() {
-      this.operatorProperty.reset();
-      this.operandProperty.reset();
-      this.variableValueProperty.reset();
       this.scene.reset();
     },
 

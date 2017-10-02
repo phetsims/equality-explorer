@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   var EqualityExplorerConstants = {
 
@@ -22,7 +23,9 @@ define( function( require ) {
     PLUS: '\u002b',
     MINUS: '\u2212',
     TIMES: '\u00d7',
-    DIVIDE: '\u00f7'
+    DIVIDE: '\u00f7',
+
+    X_RANGE: new RangeWithValue( -40, 40, 1 )
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

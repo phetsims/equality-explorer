@@ -59,29 +59,29 @@ define( function( require ) {
     } );
     this.addChild( this.sceneNode );
 
-    // Get the bounds of the Equation accordion box, relative to this ScreenView
-    var globalBounds = this.sceneNode.equationAccordionBox.parentToGlobalBounds( this.sceneNode.equationAccordionBox.bounds );
+    // Get the bounds of the Snapshot accordion box, relative to this ScreenView
+    var globalBounds = this.sceneNode.snapshotsAccordionBox.parentToGlobalBounds( this.sceneNode.snapshotsAccordionBox.bounds );
     var localBounds = this.globalToLocalBounds( globalBounds );
 
-    // Universal Operation, below Equation accordion box
-    var operationNode = new OperationNode( model.operatorProperty, model.operandProperty, {
-      centerX: model.scene.scale.location.x,
-      top: localBounds.bottom + 10
-    } );
-    this.addChild( operationNode );
-
-    // Get the bounds of the Snapshot accordion box, relative to this ScreenView
-    globalBounds = this.sceneNode.snapshotsAccordionBox.parentToGlobalBounds( this.sceneNode.snapshotsAccordionBox.bounds );
-    localBounds = this.globalToLocalBounds( globalBounds );
-
     // Variables accordion box, below the Snapshots accordion box
-    var variableAccordionBox = new VariableAccordionBox( model.variableValueProperty, model.variableRange, {
+    var variableAccordionBox = new VariableAccordionBox( model.scene.xProperty, EqualityExplorerConstants.X_RANGE, {
       expandedProperty: this.viewProperties.variableAccordionBoxExpandedProperty,
       fixedWidth: this.sceneNode.snapshotsAccordionBox.width, // same width as Snapshots
       right: localBounds.right,
       top: localBounds.bottom + 15
     } );
     this.addChild( variableAccordionBox );
+
+    // Get the bounds of the Equation accordion box, relative to this ScreenView
+    globalBounds = this.sceneNode.equationAccordionBox.parentToGlobalBounds( this.sceneNode.equationAccordionBox.bounds );
+    localBounds = this.globalToLocalBounds( globalBounds );
+
+    // Universal Operation, below Equation accordion box
+    var operationNode = new OperationNode( model.scene.operatorProperty, model.scene.operandProperty, {
+      centerX: model.scene.scale.location.x,
+      top: localBounds.bottom + 10
+    } );
+    this.addChild( operationNode );
   }
 
   equalityExplorer.register( 'SolvingScreenView', SolvingScreenView );
