@@ -37,8 +37,6 @@ Item type hierarchy: ConstantItem, VariableItem
                                        
 Reduce x and -x terms in equation, show symbol instead of icons (and remove temporary hack in EquationNode)
 
-Hook up x and -x to VariablesModel.variableValueProperty
-
 Combine inverses to create '0', fade out
 
 Snapshots
