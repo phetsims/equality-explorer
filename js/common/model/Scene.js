@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var BalanceScale = require( 'EQUALITY_EXPLORER/common/model/BalanceScale' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -74,8 +75,8 @@ define( function( require ) {
       itemCreator.dragBounds = self.rightDragBounds;
     } );
 
-    // @public {Property.<boolean>} whether the couplers that connects the 2 sides of the scale are coupled
-    this.coupledProperty = new Property( false );
+    // @public whether the 2 sides of the equation are coupled
+    this.coupledProperty = new BooleanProperty( false );
 
     // Wire up enable/disable for ItemCreators, based on capacity of the scale's plates
     enableItemCreators( leftItemCreators, this.scale.leftPlate.numberOfCells );
