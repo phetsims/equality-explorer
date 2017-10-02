@@ -20,7 +20,6 @@ define( function( require ) {
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -34,35 +33,26 @@ define( function( require ) {
 
   /**
    * @param {Property.<string>} operatorProperty
+   * @param {string[]} operators
    * @param {Property.<number>} operandProperty
+   * @param {RangeWithValue} operandRange
    * @param {Object} [options]
    * @constructor
    */
-  function UniversalOperationNode( operatorProperty, operandProperty, options ) {
+  function UniversalOperationNode( operatorProperty, operators, operandProperty, operandRange, options ) {
 
     options = _.extend( {
       operatorFont: new PhetFont( 24 ),
       operandFont: new PhetFont( 24 ),
-      operandRange: new Range( -10, 10 ),
       spacing: 15
     }, options );
 
-    // valid operator, unlink not needed
-    operatorProperty.link( function( operator ) {
-      assert && assert( _.includes( OPERATORS, operator ), 'invalid operator: ' + operator );
-    } );
-
-    // validate operand, unlink not needed
-    operandProperty.link( function( operand ) {
-      assert && assert( options.operandRange.contains( operand ), 'operand out of range: ' + operand );
-    } );
-
     // picker for choosing operator
     var operatorItems = [];
-    for ( var i = 0; i < OPERATORS.length; i++ ) {
+    for ( var i = 0; i < operators.length; i++ ) {
       operatorItems.push( {
         value: OPERATORS[ i ],
-        node: new Text( OPERATORS[ i ], { font: options.operatorFont } )
+        node: new Text( operators[ i ], { font: options.operatorFont } )
       } );
     }
     var operatorPicker = new ObjectPicker( operatorProperty, operatorItems, {
@@ -71,7 +61,7 @@ define( function( require ) {
     } );
 
     // picker for choosing operand
-    var operandPicker = new NumberPicker( operandProperty, new Property( options.operandRange ), {
+    var operandPicker = new NumberPicker( operandProperty, new Property( operandRange ), {
       color: 'black',
       font: options.operandFont,
       xMargin: 6,

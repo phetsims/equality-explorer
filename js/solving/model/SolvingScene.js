@@ -16,6 +16,7 @@ define( function( require ) {
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
   var Property = require( 'AXON/Property' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
@@ -23,12 +24,45 @@ define( function( require ) {
    */
   function SolvingScene() {
 
-    // @public (read-only) the value of the variable 'x'
-    this.xProperty = new Property( EqualityExplorerConstants.X_RANGE.defaultValue );
+    var self = this;
 
-    // @public (read-only) operator and operand for 'universal operation'
+    // @public (read-only) range of variable 'x'
+    this.xRange = EqualityExplorerConstants.X_RANGE;
+
+    // @public (read-only) the value of the variable 'x'
+    this.xProperty = new Property( this.xRange.defaultValue );
+
+    // valid xProperty
+    this.xProperty.link( function( x ) {
+      assert && assert( self.xRange.contains( x ), 'x out of range: ' + x );
+    } );
+
+    // @public (read-only) set of operators for universal operation
+    this.operators = [
+      EqualityExplorerConstants.PLUS,
+      EqualityExplorerConstants.MINUS,
+      EqualityExplorerConstants.TIMES,
+      EqualityExplorerConstants.DIVIDE
+    ];
+
+    // @public (read-only) operator for 'universal operation'
     this.operatorProperty = new Property( EqualityExplorerConstants.PLUS );
-    this.operandProperty = new Property( 1 );
+
+    // validate operator
+    this.operatorProperty.link( function( operator ) {
+      assert && assert( _.includes( self.operators, operator ), 'invalid operator: ' + operator );
+    } );
+
+    // @public (read-only) range for universal operand
+    this.operandRange = new RangeWithValue( -10, 10, 1 );
+
+    // @public (read-only) universal operand
+    this.operandProperty = new Property( this.operandRange.defaultValue );
+
+    // validate operand
+    this.operandProperty.link( function( operand ) {
+      assert && assert( self.operandRange.contains( operand ), 'operand out of range: ' + operand );
+    } );
 
     Scene.call( this, 'solving', createItemCreators( this.xProperty ), createItemCreators( this.xProperty ) );
   }

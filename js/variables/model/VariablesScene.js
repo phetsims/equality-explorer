@@ -23,8 +23,18 @@ define( function( require ) {
    */
   function VariablesScene() {
 
-    // @public  (read-only) the value of the variable 'x'
-    this.xProperty = new Property( EqualityExplorerConstants.X_RANGE.defaultValue );
+    var self = this;
+
+    // @public (read-only) range of variable 'x'
+    this.xRange = EqualityExplorerConstants.X_RANGE;
+
+    // @public (read-only) the value of the variable 'x'
+    this.xProperty = new Property( this.xRange.defaultValue );
+
+    // valid xProperty
+    this.xProperty.link( function( x ) {
+      assert && assert( self.xRange.contains( x ), 'x out of range: ' + x );
+    } );
 
     Scene.call( this, 'variables',
       createItemCreators( this.xProperty, EqualityExplorerQueryParameters.leftVariables ),

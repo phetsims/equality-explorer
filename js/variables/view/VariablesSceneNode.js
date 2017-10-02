@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
@@ -48,7 +47,7 @@ define( function( require ) {
     var localBounds = this.globalToLocalBounds( globalBounds );
 
     // Variables accordion box, below the Snapshots accordion box
-    var variableAccordionBox = new VariableAccordionBox( scene.xProperty, EqualityExplorerConstants.X_RANGE, {
+    var variableAccordionBox = new VariableAccordionBox( scene.xProperty, scene.xRange, {
       expandedProperty: this.viewProperties.variableAccordionBoxExpandedProperty,
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: localBounds.right,
