@@ -53,6 +53,7 @@ define( function( require ) {
 
     // @private
     this.sceneNode = new SceneNode( model.scene, this.layoutBounds, {
+      organizeButtonVisible: false,
       xVisibleProperty: this.viewProperties.xVisibleProperty,
       itemsPanelSpacing: 30
     } );

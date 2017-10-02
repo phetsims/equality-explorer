@@ -36,7 +36,8 @@ define( function( require ) {
       itemsPanelSpacing: 50,
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
       sceneProperty: null, // {Property.<Scene>|null} the selected Scene
-      coupledSwitchVisible: true
+      coupledSwitchVisible: true,
+      organizeButtonVisible: true
     }, options );
 
     // view-specific Properties
@@ -46,7 +47,9 @@ define( function( require ) {
     // Items live in this layer
     var itemsLayer = new Node();
 
-    var scaleNode = new BalanceScaleNode( scene.scale );
+    var scaleNode = new BalanceScaleNode( scene.scale, {
+      organizeButtonVisible: options.organizeButtonVisible
+    } );
 
     var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, scene.scale.leftPlate, itemsLayer, {
       spacing: options.itemsPanelSpacing,

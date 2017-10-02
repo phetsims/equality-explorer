@@ -37,11 +37,11 @@ define( function( require ) {
   var BASE_WIDTH = 200;
   var BASE_HEIGHT = 40;
   var BASE_DEPTH = 10;
-  
+
   // beam
   var BEAM_HEIGHT = 5;
   var BEAM_DEPTH = 8;
-  
+
   // fulcrum that the beam is balanced on
   var FULCRUM_HEIGHT = EqualityExplorerQueryParameters.fulcrumHeight;
   var FULCRUM_TOP_WIDTH = 15;
@@ -57,7 +57,10 @@ define( function( require ) {
    */
   function BalanceScaleNode( scale, options ) {
 
-    options = options || {};
+    options = _.extend( {
+      organizeButtonVisible: true
+    }, options );
+
     options.x = scale.location.x;
     options.y = scale.location.y;
 
@@ -133,7 +136,9 @@ define( function( require ) {
     var clearScaleButton = new ClearScaleButton( scale );
 
     // pressing this button organizes Items on the scale, grouping like Items together
-    var organizeButton = new OrganizeButton( scale );
+    var organizeButton = new OrganizeButton( scale, {
+      visible: options.organizeButtonVisible
+    } );
 
     // disable ClearScaleButton and OrganizeButton when scale is empty. unlink is unnecessary.
     Property.multilink( [ scale.leftPlate.numberOfItemsOnPlateProperty, scale.rightPlate.numberOfItemsOnPlateProperty ],
