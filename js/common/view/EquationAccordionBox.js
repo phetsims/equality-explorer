@@ -12,10 +12,10 @@ define( function( require ) {
   var AccordionBox = require( 'SUN/AccordionBox' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
@@ -32,7 +32,6 @@ define( function( require ) {
     options = _.extend( {
 
       fixedWidth: 600,
-      fixedHeight: 60,
 
       // supertype options
       fill: 'white',
@@ -45,13 +44,11 @@ define( function( require ) {
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5,
       contentXMargin: 0,
-      contentYMargin: 0
+      contentYMargin: 8
     }, options );
 
     assert && assert( options.maxWidth === undefined, 'subtype defines its maxWidth' );
-    assert && assert( options.maxHeight === undefined, 'subtype defines its maxHeight' );
     options.maxWidth = options.fixedWidth;
-    options.maxHeight = options.fixedHeight;
 
     options.titleNode = options.titleNode || new Text( equationOrInequalityString, {
         font: new PhetFont( 18 ),
@@ -59,8 +56,7 @@ define( function( require ) {
       } );
 
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
-    var contentHeight = options.fixedHeight - ( 2 * options.contentYMargin );
-    var backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
+    var strut = new HStrut( contentWidth );
 
     var equationNode = new EquationNode( leftItemCreators, rightItemCreators );
 
@@ -71,12 +67,12 @@ define( function( require ) {
 
     // Center the equation when it changes
     equationNode.on( 'bounds', function() {
-      equationParent.x = backgroundNode.centerX;
-      equationParent.centerY = backgroundNode.centerY;
+      equationParent.x = strut.centerX;
+      equationParent.centerY = strut.centerY;
     } );
 
     var contentNode = new Node( {
-      children: [ backgroundNode, equationParent ]
+      children: [ strut, equationParent ]
     } );
 
     AccordionBox.call( this, contentNode, options );
