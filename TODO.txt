@@ -3,8 +3,6 @@ TODO items for equality-explorer
 ------------------------------------------------------------------------------------------------------------------------
 DESIGN QUESTIONS
 
-Items for Basics screen, https://github.com/phetsims/equality-explorer/issues/6
-
 Reconsider "white box" feature
 
 Solving multi-touch:
@@ -30,6 +28,8 @@ situation where need to create a zero-pair and a plate is full
 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
+
+Integrate artwork for Animals scene
 
 Item type hierarchy: ConstantItem, VariableItem
                                        
