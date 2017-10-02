@@ -68,6 +68,7 @@ define( function( require ) {
 
     var equationAccordionBox = new EquationAccordionBox(
       scene.leftItemCreators, scene.rightItemCreators, {
+        fixedWidth: rightItemsPanel.right - leftItemsPanel.left,
         expandedProperty: this.equationAccordionBoxExpandedProperty,
 
         // Slightly off center, so that the equation's relational operator is horizontally centered

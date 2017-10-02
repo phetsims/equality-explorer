@@ -35,12 +35,13 @@ define( function( require ) {
 
     options = _.extend( {
 
-      fixedWidth: 100,
+      fixedWidth: 100, // this accordion box is designed to be a fixed width, regardless of its content
       titleFont: new PhetFont( 18 ),
       equationFont: new PhetFont( 24 ),
       variableFont: new MathSymbolFont( 24 ),
 
       // supertype options
+      resize: false,
       contentXMargin: 20,
       contentYMargin: 10,
       fill: 'white',

@@ -31,9 +31,10 @@ define( function( require ) {
 
     options = _.extend( {
 
-      fixedWidth: 600,
+      fixedWidth: 100, // this accordion box is designed to be a fixed width, regardless of its content
 
       // supertype options
+      resize: false,
       fill: 'white',
       showTitleWhenExpanded: false,
       titleAlignX: 'left',

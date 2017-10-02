@@ -40,11 +40,12 @@ define( function( require ) {
 
     options = _.extend( {
 
-      fixedWidth: 100,
+      fixedWidth: 100, // this accordion box is designed to be a fixed width, regardless of its content
       numberOfSnapshots: 5,
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
 
       // supertype options
+      resize: false,
       fill: 'white',
       titleAlignX: 'left',
       titleXSpacing: 8,
