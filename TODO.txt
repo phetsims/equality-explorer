@@ -29,11 +29,13 @@ IMPLEMENTATION
 
 Integrate artwork for Animals scene
 
+How to associate inverses?
+
+Combine inverses to create '0', fade out
+
 Item type hierarchy: ConstantItem, VariableItem
 
 Handling of variables in EquationNode, replace temporary hack
-
-Combine inverses to create '0', fade out
 
 Snapshots
 - save and restore the user's arrangement of items on the scale
