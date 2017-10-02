@@ -186,13 +186,13 @@ define( function( require ) {
       // rotate and fill the arrow
       arrowNode.rotateAround( new Vector2( arrowNode.centerX, arrowNode.bottom ), deltaAngle );
       if ( angle === 0 ) {
-        arrowNode.fill = 'rgb( 0, 200, 0 )';
+        arrowNode.fill = 'rgb( 0, 200, 0 )'; // the scale is balanced
       }
       else if ( Math.abs( angle ) === scale.maxAngle ) {
         arrowNode.fill = 'red'; // the scale is bottomed out
       }
       else {
-        arrowNode.fill = 'black';
+        arrowNode.fill = 'black'; // the scale is unbalanced, but not bottomed out
       }
     } );
 
