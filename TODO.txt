@@ -33,8 +33,6 @@ situation where need to create a zero-pair and a plate is full
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Clean up implementation of item shadows
-
 Dynamically size Variables accordion box to match Snapshots accordion box.
 
 Size all panels the same way, by specifying contentWidth and contentHeight, not by hijacking maxWidth and maxHeight

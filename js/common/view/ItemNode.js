@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -26,7 +27,8 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      cursor: 'pointer'
+      cursor: 'pointer',
+      shadowOffset: new Dimension2( 4, 4 )
     }, options );
 
     // @public (read-only)
@@ -35,21 +37,25 @@ define( function( require ) {
     // @private
     this.itemCreator = itemCreator;
 
-    assert && assert( !options.children, 'this subtype defines its children' );
-    options.children = [ item.icon ]; // wrap the icon since we're using scenery DAG feature
-
     var shadowNode = new Node( {
-      children: [ item.shadowIcon ], // wrap the icon since we're using scenery DAG feature
+      children: [ item.iconShadow ], // wrap the icon since we're using scenery DAG feature and need to offset it
       opacity: 0.4,
-      left: item.icon.left + 4,
-      top: item.icon.top + 4
+      left: item.icon.left + options.shadowOffset.width,
+      top: item.icon.top + options.shadowOffset.height,
+      visible: false
     } );
+
+    assert && assert( !options.children, 'this subtype defines its children' );
+    options.children = [ shadowNode, item.icon ]; // wrap the icon since we're using scenery DAG feature
 
     Node.call( this, options );
 
     // synchronize location with model
     var locationObserver = function( location ) {
-      self.center = location;
+      
+      // compensate for the shadow, so that position is in the center of the icon
+      self.centerX = location.x + ( options.shadowOffset.width / 2 );
+      self.centerY = location.y + ( options.shadowOffset.height / 2 );
     };
     item.locationProperty.link( locationObserver ); // unlink in dispose
 
@@ -62,17 +68,15 @@ define( function( require ) {
       allowTouchSnag: true,
 
       start: function( event, trail ) {
-        item.dragging = true;
 
-        //TODO change addChild to visible and ignore shadow when positioning this Node
-        // add a shadow while dragging
-        self.addChild( shadowNode );
-        shadowNode.moveToBack();
+        item.dragging = true;
+        shadowNode.visible = true;
 
         self.moveToFront();
 
-        // move up and left
-        self.item.locationProperty.value = self.item.locationProperty.value.plusXY( -2, -2 );
+        // move up and left, same amount as shadow offset so the shadow appears where the Item was
+        self.item.locationProperty.value =
+          self.item.locationProperty.value.plusXY( -options.shadowOffset.width, -options.shadowOffset.height );
 
         if ( plate.containsItem( item ) ) {
           plate.removeItem( item );
@@ -90,10 +94,7 @@ define( function( require ) {
       end: function( event, trail ) {
 
         item.dragging = false;
-
-        //TODO change removeChild to visible
-        // remove the shadow when drag ends
-        self.removeChild( shadowNode );
+        shadowNode.visible = false;
 
         if ( item.locationProperty.value.y > plate.locationProperty.value.y ) {
 

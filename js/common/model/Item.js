@@ -20,11 +20,11 @@ define( function( require ) {
    * @param {string} name - internal name, not displayed to the user
    * @param {Property.<number>} weightProperty
    * @param {Node} icon
-   * @param {Node} shadowIcon
+   * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function Item( name, weightProperty, icon, shadowIcon, options ) {
+  function Item( name, weightProperty, icon, iconShadow, options ) {
 
     options = _.extend( {
       constantTerm: false, // {boolean} does this Item evaluate to a constant?
@@ -51,7 +51,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.icon = icon;
-    this.shadowIcon = shadowIcon;
+    this.iconShadow = iconShadow;
 
     // @public (read-only) emit1 when Item.dispose has completed
     this.disposedEmitter = new Emitter();

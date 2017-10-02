@@ -22,11 +22,11 @@ define( function( require ) {
    * @param {string} name - internal name, not displayed to the user
    * @param {number} weight - initial weight of Items
    * @param {Node} icon
-   * @param {Node} shadowIcon
+   * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function ItemCreator( name, weight, icon, shadowIcon, options ) {
+  function ItemCreator( name, weight, icon, iconShadow, options ) {
 
     options = _.extend( {
       constantTerm: false, // {boolean} do Items evaluate to a constant?
@@ -43,7 +43,7 @@ define( function( require ) {
     // @public (read-only)
     this.name = name;
     this.icon = icon;
-    this.shadowIcon = shadowIcon;
+    this.iconShadow = iconShadow;
     this.constantTerm = options.constantTerm;
     this.variableTerm = options.variableTerm;
     this.numberOfItemsOnScale = options.numberOfItemsOnScale;
@@ -116,7 +116,7 @@ define( function( require ) {
         dragBounds: this.dragBounds
       }, options );
 
-      var item = new Item( this.name, this.weightProperty, this.icon, this.shadowIcon, options );
+      var item = new Item( this.name, this.weightProperty, this.icon, this.iconShadow, options );
       this.allItems.add( item );
 
       // Clean up when the item is disposed. Item.dispose handles removal of this listener.
