@@ -75,11 +75,11 @@ define( function( require ) {
       maxIconHeight = Math.max( maxIconHeight, itemCreator.icon.height );
     } );
 
-    // @public (read-only) size of each cell in the grid
-    this.cellSize = new Dimension2(
+    // size of each cell in the grid
+    var cellSize = new Dimension2(
       maxIconWidth + ( 2 * options.gridXMargin ),
       maxIconHeight + ( 2 * options.gridYMargin ) );
-    assert && assert( options.gridColumns * this.cellSize.width <= options.plateDiameter, 'grid is wider than plate' );
+    assert && assert( options.gridColumns * cellSize.width <= options.plateDiameter, 'grid is wider than plate' );
 
     // @public (read-only) {Property.<number>} angle of the scale in radians, zero is balanced
     this.angleProperty = new Property( 0 );
@@ -116,7 +116,7 @@ define( function( require ) {
       diameter: options.plateDiameter,
       gridRows: options.gridRows,
       gridColumns: options.gridColumns,
-      cellSize: this.cellSize
+      cellSize: cellSize
     };
 
     // @public (read-only)
