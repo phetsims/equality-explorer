@@ -27,7 +27,7 @@ define( function( require ) {
 
   return inherit( Object, SolvingModel, {
 
-    // @public resets the model
+    // @public
     reset: function() {
       this.scene.reset();
     },

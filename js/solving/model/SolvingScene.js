@@ -103,7 +103,10 @@ define( function( require ) {
 
   return inherit( Scene, SolvingScene, {
 
-    // @public
+    /**
+     * @public
+     * @override
+     */
     reset: function() {
       this.xProperty.reset();
       this.operatorProperty.reset();

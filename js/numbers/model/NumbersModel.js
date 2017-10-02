@@ -26,7 +26,7 @@ define( function( require ) {
 
   return inherit( Object, NumbersModel, {
 
-    // @public resets the model
+    // @public
     reset: function() {
       this.scene.reset();
     },

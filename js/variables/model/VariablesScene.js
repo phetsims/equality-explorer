@@ -85,7 +85,10 @@ define( function( require ) {
 
   return inherit( Scene, VariablesScene, {
 
-    // @public
+    /**
+     * @public
+     * @override
+     */
     reset: function() {
       this.xProperty.reset();
       Scene.prototype.reset.call( this );

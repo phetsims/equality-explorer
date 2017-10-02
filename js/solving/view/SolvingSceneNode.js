@@ -76,7 +76,10 @@ define( function( require ) {
 
   return inherit( SceneNode, SolvingSceneNode, {
 
-    // @public
+    /**
+     * @public
+     * @override
+     */
     reset: function() {
 
       // reset all view-specific Properties

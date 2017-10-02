@@ -60,7 +60,10 @@ define( function( require ) {
 
   return inherit( SceneNode, VariablesSceneNode, {
 
-    // @public
+    /**
+     * @public
+     * @override
+     */
     reset: function() {
 
       // reset all view-specific Properties
