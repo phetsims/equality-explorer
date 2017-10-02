@@ -22,6 +22,8 @@ define( function( require ) {
    */
   function BasicsModel() {
 
+    var self = this;
+
     // @public
     this.scenes = [
       new ShapesScene(),
@@ -32,6 +34,11 @@ define( function( require ) {
 
     // @public the selected scene
     this.sceneProperty = new Property( this.scenes[ 0 ] );
+
+    // validate scene, unlink not needed
+    this.sceneProperty.link( function( scene ) {
+      assert && assert( _.includes( self.scenes, scene ), 'invalid scenes' );
+    } );
   }
 
   equalityExplorer.register( 'BasicsModel', BasicsModel );
