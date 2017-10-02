@@ -10,8 +10,6 @@ Solving multi-touch:
 - What happens when universal operation is applied while an item is being dragged?
 - What happens when the variable value is changed while the "composite x" item is being dragged?
 
-Conflicting uses of color coding: items, arrow, plates, panels
-
 Should we put a fontawesome lock icon on the scale when coupling is on?
 
 ------------------------------------------------------------------------------------------------------------------------
