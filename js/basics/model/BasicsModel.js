@@ -37,7 +37,7 @@ define( function( require ) {
 
     // validate scene, unlink not needed
     this.sceneProperty.link( function( scene ) {
-      assert && assert( _.includes( self.scenes, scene ), 'invalid scenes' );
+      assert && assert( _.includes( self.scenes, scene ), 'invalid scene' );
     } );
   }
 
