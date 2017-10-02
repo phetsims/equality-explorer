@@ -1,6 +1,5 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO lots of duplication with VariablesScreenView
 /**
  * View for the 'Solving' screen.
  *
@@ -11,10 +10,8 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerScreenView = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var ScreenView = require( 'JOIST/ScreenView' );
   var SolvingSceneNode = require( 'EQUALITY_EXPLORER/solving/view/SolvingSceneNode' );
 
   /**
@@ -23,20 +20,7 @@ define( function( require ) {
    */
   function SolvingScreenView( model ) {
 
-    var self = this;
-
-    ScreenView.call( this );
-
-    // Reset All button
-    var resetAllButton = new ResetAllButton( {
-      listener: function() {
-        model.reset();
-        self.reset();
-      },
-      right: this.layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
-    } );
-    this.addChild( resetAllButton );
+    EqualityExplorerScreenView.call( this, model );
 
     // @private
     this.sceneNode = new SolvingSceneNode( model.scene, this.layoutBounds );
@@ -45,11 +29,16 @@ define( function( require ) {
 
   equalityExplorer.register( 'SolvingScreenView', SolvingScreenView );
 
-  return inherit( ScreenView, SolvingScreenView, {
+  return inherit( EqualityExplorerScreenView, SolvingScreenView, {
 
-    // @public
+    /**
+     * Resets things that are specific to the view.
+     * @public
+     * @override
+     */
     reset: function() {
       this.sceneNode.reset();
+      EqualityExplorerScreenView.prototype.reset.call( this );
     }
   } );
 } );

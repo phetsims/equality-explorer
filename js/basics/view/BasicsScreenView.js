@@ -10,12 +10,10 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerScreenView = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var SceneControl = require( 'EQUALITY_EXPLORER/common/view/SceneControl' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
-  var ScreenView = require( 'JOIST/ScreenView' );
 
   /**
    * @param {BasicsModel} model
@@ -23,20 +21,7 @@ define( function( require ) {
    */
   function BasicsScreenView( model ) {
 
-    var self = this;
-
-    ScreenView.call( this );
-
-    // Reset All button
-    var resetAllButton = new ResetAllButton( {
-      listener: function() {
-        model.reset();
-        self.reset();
-      },
-      right: this.layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
-    } );
-    this.addChild( resetAllButton );
+    EqualityExplorerScreenView.call( this, model );
 
     // @private create the view for each scene
     this.sceneNodes = [];
@@ -57,20 +42,25 @@ define( function( require ) {
     // Center the scene control in the space below the Snapshots accordion box  
     var sceneControl = new SceneControl( model.scenes, model.sceneProperty, {
       centerX: localBounds.centerX,
-      centerY: localBounds.bottom + ( resetAllButton.top - localBounds.bottom ) / 2
+      centerY: localBounds.bottom + ( this.resetAllButton.top - localBounds.bottom ) / 2
     } );
     this.addChild( sceneControl );
   }
 
   equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );
 
-  return inherit( ScreenView, BasicsScreenView, {
+  return inherit( EqualityExplorerScreenView, BasicsScreenView, {
 
-    // @public
+    /**
+     * Resets things that are specific to the view.
+     * @public
+     * @override
+     */
     reset: function() {
       for ( var i = 0; i < this.sceneNodes.length; i++ ) {
         this.sceneNodes[ i ].reset();
       }
+      EqualityExplorerScreenView.prototype.reset.call( this );
     }
   } );
 } );
