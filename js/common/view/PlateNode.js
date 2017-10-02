@@ -113,24 +113,9 @@ define( function( require ) {
     }
 
     Node.call( this, options );
-
-    // @private
-    this.outsideNode = outsideNode;
-    this.rimNode = rimNode;
   }
 
   equalityExplorer.register( 'PlateNode', PlateNode );
 
-  return inherit( Node, PlateNode, {
-
-    /**
-     * Sets the plate's color.
-     * @param {Color|string} color
-     */
-    setColor: function( color ) {
-      this.outsideNode.fill = color;
-      this.rimNode.stroke = color;
-    },
-    set color( value ) { this.setColor( value ); }
-  } );
+  return inherit( Node, PlateNode );
 } );
