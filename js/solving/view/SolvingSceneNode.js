@@ -13,9 +13,9 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var OperationNode = require( 'EQUALITY_EXPLORER/common/view/OperationNode' );
   var Property = require( 'AXON/Property' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
+  var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
 
   /**
@@ -64,7 +64,7 @@ define( function( require ) {
     localBounds = this.globalToLocalBounds( globalBounds );
 
     // Universal Operation, below Equation accordion box
-    var operationNode = new OperationNode( scene.operatorProperty, scene.operandProperty, {
+    var operationNode = new UniversalOperationNode( scene.operatorProperty, scene.operandProperty, {
       centerX: scene.scale.location.x,
       top: localBounds.bottom + 10
     } );

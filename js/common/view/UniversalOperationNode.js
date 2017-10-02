@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Control for specifying and applying an operation to both sides of the scale.
+ * The 'universal operation' control (as it's referred to in the design document)
+ * allows the user to apply an operation to both sides of the scale and equation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -29,7 +30,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function OperationNode( operatorProperty, operandProperty, options ) {
+  function UniversalOperationNode( operatorProperty, operandProperty, options ) {
 
     options = _.extend( {
       operatorFont: new PhetFont( 24 ),
@@ -106,7 +107,7 @@ define( function( require ) {
     } );
   }
 
-  equalityExplorer.register( 'OperationNode', OperationNode );
+  equalityExplorer.register( 'UniversalOperationNode', UniversalOperationNode );
 
-  return inherit( HBox, OperationNode );
+  return inherit( HBox, UniversalOperationNode );
 } );
