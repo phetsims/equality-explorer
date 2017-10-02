@@ -23,44 +23,46 @@ define( function( require ) {
    */
   function VariablesScene() {
 
-    var self = this;
-
-    Scene.call( this, 'variables',
-      createItemCreators( EqualityExplorerQueryParameters.leftVariables ),
-      createItemCreators( EqualityExplorerQueryParameters.rightVariables )
-    );
-
     // @public  (read-only) the value of the variable 'x'
     this.xProperty = new Property( EqualityExplorerConstants.X_RANGE.defaultValue );
-    this.xProperty.link( function( x ) {
 
-      //TODO this is a temporary hack
-      self.leftItemCreators[ 0 ].weightProperty.value = x;
-      self.leftItemCreators[ 1 ].weightProperty.value = -x;
-      self.rightItemCreators[ 0 ].weightProperty.value = x;
-      self.rightItemCreators[ 1 ].weightProperty.value = -x;
-    } );
+    Scene.call( this, 'variables',
+      createItemCreators( this.xProperty, EqualityExplorerQueryParameters.leftVariables ),
+      createItemCreators( this.xProperty, EqualityExplorerQueryParameters.rightVariables )
+    );
   }
 
   equalityExplorer.register( 'VariablesScene', VariablesScene );
 
   /**
    * Creates the set of ItemCreators for this scene.
+   * @param {Property.<number>} xProperty
    * @param {number} numberOfItemsOnScale
    * @returns {ItemCreator[]}
    */
-  function createItemCreators( numberOfItemsOnScale ) {
+  function createItemCreators( xProperty, numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 4 );
+
+    var positiveXCreator = new ItemCreator( 'x', xProperty.value, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      numberOfItemsOnScale: numberOfItemsOnScale[ 0 ],
+      variableTerm: true
+    } );
+
+    var negativeXCreator = new ItemCreator( '-x', -xProperty.value, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      numberOfItemsOnScale: numberOfItemsOnScale[ 1 ],
+      variableTerm: true
+    } );
+
+    // unlink not needed
+    xProperty.link( function( x ) {
+      positiveXCreator.weightProperty.value = x;
+      negativeXCreator.weightProperty.value = -x;
+    } );
+
     return [
-      new ItemCreator( 'x', 1, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ 0 ],
-        variableTerm: true
-      } ),
-      new ItemCreator( '-x', -1, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ 1 ],
-        variableTerm: true
-      } ),
-      new ItemCreator( '1', 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE,{
+      positiveXCreator,
+      negativeXCreator,
+      new ItemCreator( '1', 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ],
         constantTerm: true
       } ),
