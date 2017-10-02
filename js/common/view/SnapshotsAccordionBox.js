@@ -40,11 +40,11 @@ define( function( require ) {
 
     options = _.extend( {
 
+      fixedWidth: 100,
       numberOfSnapshots: 5,
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
 
       // supertype options
-      maxWidth: 100, // this also serves as the fixed width of the accordion box
       fill: 'white',
       titleAlignX: 'left',
       titleXSpacing: 8,
@@ -58,16 +58,19 @@ define( function( require ) {
 
     }, options );
 
+    assert && assert( options.maxWidth === undefined, 'subtype defines its maxWidth' );
+    options.maxWidth = options.fixedWidth;
+
     // title
     assert && assert( !options.titleNode, 'this subtype defines its titleNode' );
     options.titleNode = new Text( snapshotsString, {
       font: new PhetFont( 18 ),
-      maxWidth: 0.85 * options.maxWidth
+      maxWidth: 0.85 * options.fixedWidth
     } );
 
     var snapshotsVBoxChildren = [];
 
-    var contentWidth = options.maxWidth - ( 2 * options.contentXMargin );
+    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
     // separator between title and snapshots
     snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );

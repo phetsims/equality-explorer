@@ -35,12 +35,12 @@ define( function( require ) {
 
     options = _.extend( {
 
+      fixedWidth: 100,
       titleFont: new PhetFont( 18 ),
       equationFont: new PhetFont( 24 ),
       variableFont: new MathSymbolFont( 24 ),
 
       // supertype options
-      maxWidth: 249, // this also serves as the fixed width of the accordion box
       contentXMargin: 20,
       contentYMargin: 10,
       fill: 'white',
@@ -54,18 +54,21 @@ define( function( require ) {
       buttonTouchAreaYDilation: 5
     }, options );
 
+    assert && assert( options.maxWidth === undefined, 'subtype defines its maxWidth' );
+    options.maxWidth = options.fixedWidth;
+
     assert && assert( !options.titleNode, 'subtype defines its titleNode' );
     options.titleNode = new Text( variableString, {
       font: options.titleFont,
-      maxWidth: 0.75 * options.maxWidth
+      maxWidth: 0.75 * options.fixedWidth
     } );
 
-    var contentWidth = options.maxWidth - ( 2 * options.contentXMargin );
+    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
     var strut = new HStrut( contentWidth );
 
     var xText = new Text( xString, {
       font: options.variableFont,
-      maxWidth: 0.5 * options.maxWidth
+      maxWidth: 0.5 * options.fixedWidth
     } );
 
     var equalsText = new Text( '=', {

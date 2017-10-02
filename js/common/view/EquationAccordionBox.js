@@ -31,9 +31,10 @@ define( function( require ) {
 
     options = _.extend( {
 
+      fixedWidth: 600,
+      fixedHeight: 60,
+
       // supertype options
-      maxWidth: 600, // this also serves as the fixed width of the accordion box
-      maxHeight: 60, // this also serves as the fixed height of the accordion box
       fill: 'white',
       showTitleWhenExpanded: false,
       titleAlignX: 'left',
@@ -47,13 +48,18 @@ define( function( require ) {
       contentYMargin: 0
     }, options );
 
+    assert && assert( options.maxWidth === undefined, 'subtype defines its maxWidth' );
+    assert && assert( options.maxHeight === undefined, 'subtype defines its maxHeight' );
+    options.maxWidth = options.fixedWidth;
+    options.maxHeight = options.fixedHeight;
+
     options.titleNode = options.titleNode || new Text( equationOrInequalityString, {
         font: new PhetFont( 18 ),
-        maxWidth: 0.85 * options.maxWidth
+        maxWidth: 0.85 * options.fixedWidth
       } );
 
-    var contentWidth = options.maxWidth - ( 2 * options.contentXMargin );
-    var contentHeight = options.maxHeight - ( 2 * options.contentYMargin );
+    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
+    var contentHeight = options.fixedHeight - ( 2 * options.contentYMargin );
     var backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     var equationNode = new EquationNode( leftItemCreators, rightItemCreators );
