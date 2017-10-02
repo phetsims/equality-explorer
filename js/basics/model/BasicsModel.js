@@ -45,7 +45,10 @@ define( function( require ) {
 
   return inherit( Object, BasicsModel, {
 
-    // @public resets the model
+    /**
+     * Resets the model.
+     * @public
+     */
     reset: function() {
       for ( var i = 0; i < this.scenes.length; i++ ) {
         this.scenes[ i ].reset();

@@ -120,7 +120,10 @@ define( function( require ) {
 
   return inherit( Node, ItemNode, {
 
-    // @public @override
+    /**
+     * @public
+     * @override
+     */
     dispose: function() {
       this.disposeItemNode();
       Node.prototype.dispose.call( this );

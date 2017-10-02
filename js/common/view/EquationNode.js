@@ -274,7 +274,10 @@ define( function( require ) {
 
   return inherit( Node, EquationNode, {
 
-    // @public @override
+    /**
+     * @public
+     * @override
+     */
     dispose: function() {
       this.disposeEquationNode();
       Node.prototype.dispose.call( this );
