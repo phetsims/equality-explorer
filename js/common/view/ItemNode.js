@@ -41,8 +41,8 @@ define( function( require ) {
     var shadowNode = new Node( {
       children: [ item.shadowIcon ], // wrap the icon since we're using scenery DAG feature
       opacity: 0.4,
-      left: item.icon.left + 3,
-      top: item.icon.top + 3
+      left: item.icon.left + 4,
+      top: item.icon.top + 4
     } );
 
     Node.call( this, options );
