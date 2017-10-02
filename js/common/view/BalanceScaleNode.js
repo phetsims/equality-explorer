@@ -192,7 +192,7 @@ define( function( require ) {
         arrowNode.fill = 'red'; // the scale is bottomed out
       }
       else {
-        arrowNode.fill = 'orange';
+        arrowNode.fill = 'black';
       }
     } );
 
