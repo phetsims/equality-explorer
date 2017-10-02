@@ -32,12 +32,14 @@ IMPLEMENTATION
 Integrate artwork for Animals scene
 
 Item type hierarchy: ConstantItem, VariableItem
-                                       
-Reduce x and -x terms in equation, show symbol instead of icons (and remove temporary hack in EquationNode)
+
+Handling of variables in EquationNode, replace temporary hack
 
 Combine inverses to create '0', fade out
 
 Snapshots
-- show 'x' in snapshots, based on a new toggle control in the button group
 - save and restore the user's arrangement of items on the scale
+- save and restore 'x' value
+- show 'x=N' in snapshots, based on a new toggle control in the button group
+
 
