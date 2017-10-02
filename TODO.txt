@@ -37,6 +37,8 @@ Item type hierarchy: ConstantItem, VariableItem
 
 Handling of variables in EquationNode, replace temporary hack
 
+Implement coupled mode
+
 Snapshots
 - save and restore the user's arrangement of items on the scale
 - save and restore 'x' value
