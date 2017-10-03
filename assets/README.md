@@ -10,5 +10,5 @@ in `inside.svg`, `plate.svg` and `wall.svg`. The contents of "d=" field from the
 The .svg files were created in Illustrator by selecting pieces (subpaths) of `scale.ai` and doing "Save As" SVG.
 
 `OrganizeButton` creates its icon using a scenery Path that renders an SVG description of the icon. The artwork
-for the icon appears in `organize-icon.ai`. In Illustrator, Object > Compound Path > Make was used to turn the icon
+for the icon appears in `organize-icon.ai`. In Illustrator, `Object > Compound Path > Make` was used to turn the icon
 into a single path, then "Save As" `organize-icon.svg`. The contents of the "d=" field appears in the code.
