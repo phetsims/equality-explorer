@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Displays an equation or inequality.
+ * Displays an equation or inequality with at most 1 variable.
  * Origin is at the center of the relational operator.
  *
  * @author Chris Malley (PixelZoom, Inc.)
