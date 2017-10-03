@@ -31,7 +31,7 @@ Integrate artwork for Animals scene
 
 How to associate inverses?
 
-Combine inverses to create '0', fade out
+Combine inverses to create '0', halo, fade out
 
 Item type hierarchy: ConstantItem, VariableItem
 
