@@ -35,7 +35,7 @@ Combine inverses to create '0', fade out
 
 Item type hierarchy: ConstantItem, VariableItem
 
-Handling of variables in EquationNode, replace temporary hack
+Handling of variables and inverses in EquationNode, replace temporary hack
 
 Implement coupled mode
 
