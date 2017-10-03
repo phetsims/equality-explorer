@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Query parameters supported by this simulation.
+ * Query parameters that are specific to the Equality Explorer sim.
+ * Running with ?log will print these query parameters and their values to the console.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
