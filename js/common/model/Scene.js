@@ -27,8 +27,8 @@ define( function( require ) {
 
   /**
    * @param {string} name - internal name, not displayed to the user
-   * @param {ItemCreator[]} leftItemCreators
-   * @param {ItemCreator[]} rightItemCreators
+   * @param {ItemCreator[]} leftItemCreators - in the order that they appear in the left panel and left side of equations
+   * @param {ItemCreator[]} rightItemCreators - in the order that they appear in the right panel and right side of equations
    * @param {Object} [options]
    * @constructor
    */

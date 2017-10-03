@@ -24,7 +24,7 @@ define( function( require ) {
 
     var self = this;
 
-    // @public
+    // @public scenes, in the order that they appear from left-to-right as radio buttons
     this.scenes = [
       new ShapesScene(),
       new FruitsScene(),
