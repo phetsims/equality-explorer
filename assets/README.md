@@ -5,7 +5,7 @@ Images for the items in the "Basics" screen are found in `basics-artwork-without
 `basics-artwork-shadows.ai`. PNG files were exported with height=100. Some of the PNG files required
 additional processing (trimming transparent pixels, resizing to height=100) in Photoshop.
 
-`PlateNode` is composed of scenery Paths that render SVG descriptions of the pieces of the plates, as found
+`PlateNode` is composed of scenery Paths that render SVG descriptions of the pieces of the plate, as found
 in `inside.svg`, `plate.svg` and `wall.svg`. The contents of `"d=..."` field from these .svg files appears in `PlateNode.js`.
 The .svg files were created in Illustrator by selecting pieces (subpaths) of `scale.ai` and doing "Save As" SVG.
 
