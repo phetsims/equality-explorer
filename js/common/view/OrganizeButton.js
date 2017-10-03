@@ -38,6 +38,7 @@ define( function( require ) {
     assert && assert( !options.content, 'this subtype defines its content' );
 
     // SVG path description is the "d=" field from organize-icon.svg
+    // See assets/README.md for more details.
     options.content = new Path(
       'M253.5,162.5h-58v-58h58V162.5z M253.5,170.5h-58v58h58V170.5z M57.018,35.5\n' +
       '\tc-16.568,0-30,13.432-30,30s13.432,30,30,30s30-13.432,30-30S73.586,35.5,57.018,35.5z M57.018,102.5c-16.568,0-30,13.432-30,30\n' +
