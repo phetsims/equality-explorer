@@ -161,7 +161,7 @@ define( function( require ) {
     },
 
     /**
-     * Shifts all Items in a column down 1 cell, to fill the empty cell caused by removing an Item.
+     * Shifts all Items that are above a cell down 1 cell, to fill the empty cell caused by removing an Item.
      * @param {Cell} cell - the cell that was occupied by the removed Item
      * @private
      */
