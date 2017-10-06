@@ -88,15 +88,6 @@ define( function( require ) {
       return weight;
     } );
 
-    // @public the total number of the Items that are on the plate
-    this.numberOfItemsOnPlate = new DerivedProperty( weightDependencies, function() {
-      var count = 0;
-      itemCreators.forEach( function( itemCreator ) {
-        count += itemCreator.numberOfItemsOnScaleProperty.value;
-      } );
-      return count;
-    } );
-
     // @private
     this.removeItemBound = this.removeItem.bind( this );
 
