@@ -12,6 +12,8 @@ Solving multi-touch:
 
 Should we put a fontawesome lock icon on the scale when coupling is on?
 
+Snapshots UI has usability issues
+
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
 
