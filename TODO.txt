@@ -31,6 +31,8 @@ Be sure to consider scenarios where inverses sum to zero while coupling is enabl
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
+
 Integrate artwork for Animals scene
 
 How to associate inverses?
