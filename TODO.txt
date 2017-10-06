@@ -5,7 +5,7 @@ DESIGN QUESTIONS
 
 Reconsider "white box" feature
 
-Solving multi-touch:
+Solving screen, multi-touch:
 - When you start dragging something on one plate, does the corresponding thing on the other plate become non-interactive?
 - What happens when universal operation is applied while an item is being dragged?
 - What happens when the variable value is changed while the "composite x" item is being dragged?
