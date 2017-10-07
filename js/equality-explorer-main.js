@@ -26,7 +26,7 @@ define( function( require ) {
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
       team: 'Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
       qualityAssurance: '',
-      graphicArts: '',
+      graphicArts: 'Cheryl McCutchan',
       thanks: ''
     }
   };
