@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px"
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="500px" height="300px" viewBox="0 0 500 300" enable-background="new 0 0 500 300" xml:space="preserve">
-<path stroke="#FFFFFF" stroke-miterlimit="10" d="M253.5,162.5h-58v-58h58V162.5z M253.5,170.5h-58v58h58V170.5z M57.018,35.5
-	c-16.568,0-30,13.432-30,30s13.432,30,30,30s30-13.432,30-30S73.586,35.5,57.018,35.5z M57.018,102.5c-16.568,0-30,13.432-30,30
-	s13.432,30,30,30s30-13.432,30-30S73.586,102.5,57.018,102.5z M57.018,169.5c-16.568,0-30,13.432-30,30s13.432,30,30,30
-	s30-13.432,30-30S73.586,169.5,57.018,169.5z M360.975,95.5l-34.677-60.061L291.622,95.5H360.975z M360.975,162.5l-34.677-60.061
-	L291.622,162.5H360.975z M360.975,229.5l-34.677-60.061L291.622,229.5H360.975z M128.018,35.5c-16.568,0-30,13.432-30,30
-	s13.432,30,30,30s30-13.432,30-30S144.586,35.5,128.018,35.5z M128.018,102.5c-16.568,0-30,13.432-30,30s13.432,30,30,30
-	s30-13.432,30-30S144.586,102.5,128.018,102.5z M128.018,169.5c-16.568,0-30,13.432-30,30s13.432,30,30,30s30-13.432,30-30
-	S144.586,169.5,128.018,169.5z"/>
+<rect x="195.5" y="104.5" stroke="#FFFFFF" stroke-miterlimit="10" width="58" height="58"/>
+<rect x="195.5" y="170.5" stroke="#FFFFFF" stroke-miterlimit="10" width="58" height="58"/>
+<circle stroke="#FFFFFF" stroke-miterlimit="10" cx="57.018" cy="65.5" r="30"/>
+<circle stroke="#FFFFFF" stroke-miterlimit="10" cx="57.018" cy="132.5" r="30"/>
+<circle stroke="#FFFFFF" stroke-miterlimit="10" cx="57.018" cy="199.5" r="30"/>
+<polygon stroke="#FFFFFF" stroke-miterlimit="10" points="291.622,95.5 326.298,35.439 360.975,95.5 "/>
+<polygon stroke="#FFFFFF" stroke-miterlimit="10" points="291.622,162.5 326.298,102.439 360.975,162.5 "/>
+<polygon stroke="#FFFFFF" stroke-miterlimit="10" points="291.622,229.5 326.298,169.439 360.975,229.5 "/>
+<circle stroke="#FFFFFF" stroke-miterlimit="10" cx="128.018" cy="132.5" r="30"/>
+<circle stroke="#FFFFFF" stroke-miterlimit="10" cx="128.018" cy="199.5" r="30"/>
 </svg>
