@@ -14,6 +14,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -56,7 +57,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.scale = new BalanceScale( this.leftItemCreators, this.rightItemCreators, {
-      location: new Vector2( 355, 420 ),
+      location: new Vector2( 355, EqualityExplorerQueryParameters.scaleY ),
       maxWeight: options.maxWeight
     } );
 

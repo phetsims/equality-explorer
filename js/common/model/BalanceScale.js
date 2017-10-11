@@ -16,6 +16,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
   var Property = require( 'AXON/Property' );
@@ -34,11 +35,11 @@ define( function( require ) {
     options = _.extend( {
       location: new Vector2( 0, 0 ), // location of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
-      maxAngle: 22 * ( Math.PI / 180 ), // degrees to radians
+      maxAngle: EqualityExplorerQueryParameters.maxScaleAngle * Math.PI / 180, // degrees to radians
       maxWeight: 30, // weight at which a plate 'bottoms out'
 
       // height of vertical support that connects plate to beam
-      plateSupportHeight: 70,
+      plateSupportHeight: EqualityExplorerQueryParameters.plateSupportHeight,
       plateDiameter: 300, // diameter of the plates
       plateXInset: 45, // inset of the plates from the ends of the beam
 
