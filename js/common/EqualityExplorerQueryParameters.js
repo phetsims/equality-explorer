@@ -106,7 +106,12 @@ define( function( require ) {
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
 
-  // Validates an array that indicates the number of Items on a plate
+  /**
+   * Validates an array that indicates the number of Items on a plate.
+   * @param {[]} array
+   * @param {number} length - required length of array
+   * @returns {boolean}
+   */
   function isValidItemsArray( array, length ) {
     return ( array.length === length ) &&
            // every value in the array is an integer
