@@ -55,9 +55,7 @@ define( function( require ) {
       }
     },
 
-    // Number of items that are initially on the left plate in the Numbers screen.
-    // This is intended to be used for debugging and testing, not in production situations.
-    // See https://github.com/phetsims/equality-explorer/issues/8
+    // Similar to leftBasics, but for the Numbers screen.
     leftNumbers: {
       type: 'array',
       elementSchema: {
@@ -69,7 +67,7 @@ define( function( require ) {
       }
     },
 
-    // Similar to leftNumbers, but for the right plate in the Numbers screen.
+    // Similar to rightBasics, but for the Numbers screen.
     rightNumbers: {
       type: 'array',
       elementSchema: {
@@ -81,9 +79,7 @@ define( function( require ) {
       }
     },
 
-    // Number of items that are initially on the left plate in the Variables screen.
-    // This is intended to be used for debugging and testing, not in production situations.
-    // See https://github.com/phetsims/equality-explorer/issues/8
+    // Similar to leftBasics, but for the Variables screen.
     leftVariables: {
       type: 'array',
       elementSchema: {
@@ -95,7 +91,7 @@ define( function( require ) {
       }
     },
 
-    // Similar to leftVariables, but for the right plate in the Variables screen.
+    // Similar to rightBasics, but for the Variables screen.
     rightVariables: {
       type: 'array',
       elementSchema: {
@@ -115,7 +111,7 @@ define( function( require ) {
     return ( array.length === length ) &&
            // every value in the array is an integer
            ( _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } ) ) &&
-           // sum of values in the array doesn't exceed number of cells
+           // sum of values in the array doesn't exceed number of cells in grid
            ( _.reduce( array, function( sum, n ) { return sum + n; } ) <= 36 );
   }
 
