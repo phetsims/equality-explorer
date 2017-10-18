@@ -184,8 +184,7 @@ define( function( require ) {
       beamNode.rotateAround( new Vector2( beamNode.centerX, beamNode.centerY ), deltaAngle );
 
       // rotate and fill the arrow
-      arrowNode.bottom = 0;
-      arrowNode.rotateAround( new Vector2( arrowNode.centerX, arrowNode.bottom ), deltaAngle );
+      arrowNode.rotateAround( new Vector2( beamNode.centerX, 0 ), deltaAngle );
       if ( angle === 0 ) {
         arrowNode.fill = 'rgb( 0, 200, 0 )'; // the scale is balanced
       }
