@@ -21,12 +21,16 @@ define( function( require ) {
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
   var appleShadowImage = require( 'image!EQUALITY_EXPLORER/appleShadow.png' );
+  var catImage = require( 'image!EQUALITY_EXPLORER/cat.png' );
+  var catShadowImage = require( 'image!EQUALITY_EXPLORER/catShadow.png' );
   var coin1Image = require( 'image!EQUALITY_EXPLORER/coin1.png' );
   var coin1ShadowImage = require( 'image!EQUALITY_EXPLORER/coin1Shadow.png' );
   var coin2Image = require( 'image!EQUALITY_EXPLORER/coin2.png' );
   var coin2ShadowImage = require( 'image!EQUALITY_EXPLORER/coin2Shadow.png' );
   var coin3Image = require( 'image!EQUALITY_EXPLORER/coin3.png' );
   var coin3ShadowImage = require( 'image!EQUALITY_EXPLORER/coin3Shadow.png' );
+  var dogImage = require( 'image!EQUALITY_EXPLORER/dog.png' );
+  var dogShadowImage = require( 'image!EQUALITY_EXPLORER/dogShadow.png' );
   var lemonImage = require( 'image!EQUALITY_EXPLORER/lemon.png' );
   var lemonShadowImage = require( 'image!EQUALITY_EXPLORER/lemonShadow.png' );
   var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
@@ -35,6 +39,8 @@ define( function( require ) {
   var sphereShadowImage = require( 'image!EQUALITY_EXPLORER/sphereShadow.png' );
   var squareImage = require( 'image!EQUALITY_EXPLORER/square.png' );
   var squareShadowImage = require( 'image!EQUALITY_EXPLORER/squareShadow.png' );
+  var turtleImage = require( 'image!EQUALITY_EXPLORER/turtle.png' );
+  var turtleShadowImage = require( 'image!EQUALITY_EXPLORER/turtleShadow.png' );
 
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -48,14 +54,8 @@ define( function( require ) {
     APPLE_NODE: new Image( appleImage, IMAGE_OPTIONS ),
     APPLE_SHADOW_NODE: new Image( appleShadowImage, IMAGE_OPTIONS ),
 
-    ANIMAL1_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'green', stroke: 'black' } ),
-    ANIMAL1_SHADOW_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'black' } ),
-
-    ANIMAL2_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'cyan', stroke: 'black' } ),
-    ANIMAL2_SHADOW_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'black' } ),
-
-    ANIMAL3_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'magenta', stroke: 'black' } ),
-    ANIMAL3_SHADOW_NODE: new Circle( ITEM_HEIGHT / 2, { fill: 'black' } ),
+    CAT_NODE: new Image( catImage, IMAGE_OPTIONS ),
+    CAT_SHADOW_NODE: new Image( catShadowImage, IMAGE_OPTIONS ),
 
     COIN1_NODE: new Image( coin1Image, IMAGE_OPTIONS ),
     COIN1_SHADOW_NODE: new Image( coin1ShadowImage, IMAGE_OPTIONS ),
@@ -65,6 +65,9 @@ define( function( require ) {
 
     COIN3_NODE: new Image( coin3Image, IMAGE_OPTIONS ),
     COIN3_SHADOW_NODE: new Image( coin3ShadowImage, IMAGE_OPTIONS ),
+
+    DOG_NODE: new Image( dogImage, IMAGE_OPTIONS ),
+    DOG_SHADOW_NODE: new Image( dogShadowImage, IMAGE_OPTIONS ),
 
     LEMON_NODE: new Image( lemonImage, IMAGE_OPTIONS ),
     LEMON_SHADOW_NODE: new Image( lemonShadowImage, IMAGE_OPTIONS ),
@@ -77,6 +80,9 @@ define( function( require ) {
 
     SQUARE_NODE: new Image( squareImage, IMAGE_OPTIONS ),
     SQUARE_SHADOW_NODE: new Image( squareShadowImage, IMAGE_OPTIONS ),
+
+    TURTLE_NODE: new Image( turtleImage, IMAGE_OPTIONS ),
+    TURTLE_SHADOW_NODE: new Image( turtleShadowImage, IMAGE_OPTIONS ),
 
     POSITIVE_ONE_NODE: new IntegerNode( 1, {
       radius: ITEM_HEIGHT / 2,

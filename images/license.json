@@ -5,7 +5,7 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry"
+    "notes": "created by Mariah Hermsmeyer"
   },
   "appleShadow.png": {
     "text": [
@@ -13,7 +13,23 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry"
+    "notes": "created by Mariah Hermsmeyer"
+  },
+  "cat.png": {
+    "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Cheryl McCutchan"
+  },
+  "catShadow.png": {
+    "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Cheryl McCutchan"
   },
   "coin1.png": {
     "text": [
@@ -63,13 +79,29 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry"
   },
+  "dog.png": {
+    "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Cheryl McCutchan"
+  },
+  "dogShadow.png": {
+    "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Cheryl McCutchan"
+  },
   "lemon.png": {
     "text": [
       "Copyright 2015-2017 University of Colorado Boulder"
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry"
+    "notes": "created by Mariah Hermsmeyer"
   },
   "lemonShadow.png": {
     "text": [
@@ -77,7 +109,7 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry"
+    "notes": "created by Mariah Hermsmeyer"
   },
   "lockClosed.png": {
     "text": [
@@ -101,7 +133,7 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry"
+    "notes": "created by Mariah Hermsmeyer"
   },
   "orangeShadow.png": {
     "text": [
@@ -109,7 +141,7 @@
     ],
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Amanda McGarry"
+    "notes": "created by Mariah Hermsmeyer"
   },
   "sphere.png": {
     "text": [
@@ -142,5 +174,21 @@
     "projectURL": "http://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amanda McGarry"
+  },
+  "turtle.png": {
+    "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Cheryl McCutchan"
+  },
+  "turtleShadow.png": {
+    "text": [
+      "Copyright 2017 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Cheryl McCutchan"
   }
 }

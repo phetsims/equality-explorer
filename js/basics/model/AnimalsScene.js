@@ -20,7 +20,7 @@ define( function( require ) {
    * @constructor
    */
   function AnimalsScene() {
-    BasicsScene.call( this, 'animals', ItemIcons.ANIMAL1_NODE,
+    BasicsScene.call( this, 'animals', ItemIcons.TURTLE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
       createItemCreators( EqualityExplorerQueryParameters.rightBasics ), {
         maxWeight: 50
@@ -37,14 +37,14 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'animal1', 11, ItemIcons.ANIMAL1_NODE, ItemIcons.ANIMAL1_SHADOW_NODE, {
+      new ItemCreator( 'dog', 11, ItemIcons.DOG_NODE, ItemIcons.DOG_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'animal2', 4, ItemIcons.ANIMAL2_NODE, ItemIcons.ANIMAL2_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
-      } ),
-      new ItemCreator( 'animal3', 6, ItemIcons.ANIMAL3_NODE, ItemIcons.ANIMAL3_SHADOW_NODE, {
+      new ItemCreator( 'turtle', 4, ItemIcons.TURTLE_NODE, ItemIcons.TURTLE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
+      } ),
+      new ItemCreator( 'cat', 6, ItemIcons.CAT_NODE, ItemIcons.CAT_SHADOW_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } )
     ];
   }
