@@ -161,8 +161,8 @@ define( function( require ) {
       baseNode,
       buttonsParent,
       fulcrumNode,
-      dashedLine,
       beamNode,
+      dashedLine,
       arrowNode,
       leftPlateNode,
       rightPlateNode
