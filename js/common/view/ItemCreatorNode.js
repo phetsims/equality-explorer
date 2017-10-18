@@ -48,9 +48,8 @@ define( function( require ) {
       function( event ) {
 
         // create an Item
-        var item = itemCreator.createItem( {
-          location: itemsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) )
-        } );
+        var location = itemsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
+        var item = itemCreator.createItem( location );
 
         // create an ItemNode
         var itemNode = new ItemNode( item, itemCreator, plate );
@@ -104,9 +103,8 @@ define( function( require ) {
       for ( var i = 0; i < numberOfItems; i++ ) {
 
         // create an Item
-        var item = this.itemCreator.createItem( {
-          location: this.itemsLayer.globalToLocalPoint( this.parentToGlobalPoint( this.center ) )
-        } );
+        var location = this.itemsLayer.globalToLocalPoint( this.parentToGlobalPoint( this.center ) );
+        var item = this.itemCreator.createItem( location );
 
         // create an ItemNode
         var itemNode = new ItemNode( item, this.itemCreator, this.plate );

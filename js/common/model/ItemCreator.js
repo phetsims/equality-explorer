@@ -104,19 +104,18 @@ define( function( require ) {
 
     /**
      * Creates an Item.
-     * @param {Object} [options] - same as Item constructor
+     * @param {Vector2} location
      * @returns {Item}
      * @public
      */
-    createItem: function( options ) {
+    createItem: function( location ) {
 
-      options = _.extend( {
+      var item = new Item( this.name, this.weightProperty, this.icon, this.iconShadow, {
+        location: location,
         constantTerm: this.constantTerm,
         variableTerm: this.variableTerm,
         dragBounds: this.dragBounds
-      }, options );
-
-      var item = new Item( this.name, this.weightProperty, this.icon, this.iconShadow, options );
+      } );
       this.allItems.add( item );
 
       // Clean up when the item is disposed. Item.dispose handles removal of this listener.
