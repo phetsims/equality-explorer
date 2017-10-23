@@ -45,7 +45,7 @@ define( function( require ) {
       visible: false
     } );
 
-    assert && assert( !options.children, 'this subtype defines its children' );
+    assert && assert( !options.children, 'this type defines its children' );
     options.children = [ shadowNode, item.icon ]; // wrap the icon since we're using scenery DAG feature
 
     Node.call( this, options );

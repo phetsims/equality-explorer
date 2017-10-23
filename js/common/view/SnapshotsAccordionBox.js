@@ -65,7 +65,7 @@ define( function( require ) {
     options.maxWidth = options.fixedWidth;
 
     // title
-    assert && assert( !options.titleNode, 'this subtype defines its titleNode' );
+    assert && assert( !options.titleNode, 'this type defines its titleNode' );
     options.titleNode = new Text( snapshotsString, {
       font: new PhetFont( 18 ),
       maxWidth: 0.85 * options.fixedWidth

@@ -95,7 +95,7 @@ define( function( require ) {
       minYMargin: 10
     } );
 
-    assert && assert( !options.children, 'this subtype defines its children' );
+    assert && assert( !options.children, 'this type defines its children' );
     options.children = [ operatorPicker, operandPicker, goButton ];
 
     HBox.call( this, options );

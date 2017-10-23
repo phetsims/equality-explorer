@@ -58,7 +58,7 @@ define( function( require ) {
     assert && assert( options.maxWidth === undefined, 'subtype defines its maxWidth' );
     options.maxWidth = options.fixedWidth;
 
-    assert && assert( !options.titleNode, 'subtype defines its titleNode' );
+    assert && assert( !options.titleNode, 'this type defines its titleNode' );
     options.titleNode = new Text( variableString, {
       font: options.titleFont,
       maxWidth: 0.75 * options.fixedWidth

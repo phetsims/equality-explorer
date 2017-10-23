@@ -50,7 +50,7 @@ define( function( require ) {
       center: circleNode.center
     } );
 
-    assert && assert( !options.children, 'this subtype defines its children' );
+    assert && assert( !options.children, 'this type defines its children' );
     options.children = [ circleNode, textNode ];
 
     Node.call( this, options );

@@ -37,7 +37,7 @@ define( function( require ) {
       xVisibleProperty: new Property( true )
     };
 
-    assert && assert( !options.xVisibleProperty, 'subtype defines its own xVisibleProperty' );
+    assert && assert( !options.xVisibleProperty, 'this type defines its xVisibleProperty' );
     options.xVisibleProperty = this.viewProperties.xVisibleProperty;
 
     SceneNode.call( this, scene, layoutBounds, options );

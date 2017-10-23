@@ -156,7 +156,7 @@ define( function( require ) {
       centerY: baseNode.bottom - ( BASE_HEIGHT / 2 )
     } );
 
-    assert && assert( !options.children, 'this subtype defines its children' );
+    assert && assert( !options.children, 'this type defines its children' );
     options.children = [
       baseNode,
       buttonsParent,

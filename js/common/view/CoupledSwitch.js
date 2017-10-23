@@ -50,7 +50,7 @@ define( function( require ) {
       y: -lockClosedNode.height / 2
     } );
 
-    assert && assert( !options.children, 'subtype defines its children' );
+    assert && assert( !options.children, 'this type defines its children' );
     options.children = [ toggleNode ];
 
     Node.call( this, options );

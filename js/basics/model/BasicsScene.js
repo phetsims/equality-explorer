@@ -26,7 +26,7 @@ define( function( require ) {
 
     options = options || {};
 
-    assert && assert( !options.icon, 'subtype handles its own icon' );
+    assert && assert( !options.icon, 'this type defines its icon' );
     options.icon = new Node( { children: [ icon ] } ); // wrap the icon, since we're using scenery's DAG feature
 
     Scene.call( this, name, leftItemCreators, rightItemCreators, options );

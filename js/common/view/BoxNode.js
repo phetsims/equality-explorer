@@ -56,7 +56,7 @@ define( function( require ) {
       stroke: options.stroke
     } );
 
-    assert && assert( !options.children, 'this subtype defines its children' );
+    assert && assert( !options.children, 'this type defines its children' );
     options.children = [ topNode, frontNode ];
 
     Node.call( this, options );

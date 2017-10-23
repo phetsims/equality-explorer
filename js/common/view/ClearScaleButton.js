@@ -29,7 +29,7 @@ define( function( require ) {
 
     }, options );
 
-    assert && assert( !options.listener, 'this subtype defines its listener' );
+    assert && assert( !options.listener, 'this type defines its listener' );
     options.listener = function() {
       scale.disposeAllItems();
     };
