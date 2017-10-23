@@ -50,6 +50,6 @@ Snapshots
 - save and restore 'x' value
 - show 'x=N' in snapshots, based on a new toggle control in the button group
 
-Solving screen
+Solving screen - generalize other screens? different implementation?
 
 
