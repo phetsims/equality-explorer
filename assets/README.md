@@ -1,9 +1,16 @@
 Equality Explorer assets
 ================
 
-Images for the items in the "Basics" screen are found in `basics-artwork-without-shadow.ai` and
-`basics-artwork-shadows.ai`. PNG files were exported with height=100. Some of the PNG files required
-additional processing (trimming transparent pixels, resizing to height=100) in Photoshop.
+Images for the items in the "Basics" screen are found in `basics-artwork-without-shadows.ai` and
+`basics-artwork-shadows.ai`. Steps to create PNG files from these .ai files:
+1. open .ai file in Illustrator
+1. select artwork from a layer and copy it to the clipboard (Edit > Copy)
+2. paste to a new document (File > New, Edit > Paste)
+3. save as PNG with height 200 (File > Save For Web)
+4. open the PNG in Photoshop
+5. trim transparent pixels around the image (Image > Trim)
+6. size the image to height 100 (Image > Image Size)
+7. save the PNG (File > Save)
 
 `PlateNode` is composed of scenery `Paths` that render SVG descriptions of the pieces of the plate, as found
 in `inside.svg`, `plate.svg` and `wall.svg`. The .svg files were created in Illustrator by selecting pieces (subpaths) 
