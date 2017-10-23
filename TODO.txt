@@ -33,8 +33,6 @@ IMPLEMENTATION
 
 Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
 
-If we like reflected dog and cat, fix the .ai files.
-
 How to associate inverses? ItemCreator.setInverse?
 
 Combine inverses to create '0', halo, fade out.
