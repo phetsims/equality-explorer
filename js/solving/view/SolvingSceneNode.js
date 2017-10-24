@@ -10,9 +10,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
@@ -34,10 +34,10 @@ define( function( require ) {
     this.viewProperties = {
 
       // whether the Variable accordion box is expanded or collapsed
-      variableAccordionBoxExpandedProperty: new Property( true ),
+      variableAccordionBoxExpandedProperty: new BooleanProperty( true ),
 
       // whether 'x' value is visible in snapshots
-      xVisibleProperty: new Property( true )
+      xVisibleProperty: new BooleanProperty( true )
     };
 
     assert && assert( !options.xVisibleProperty, 'this type defines its xVisibleProperty' );

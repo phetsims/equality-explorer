@@ -17,6 +17,7 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
   var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -80,8 +81,8 @@ define( function( require ) {
       maxIconHeight + ( 2 * options.gridYMargin ) );
     assert && assert( options.gridColumns * cellSize.width <= options.plateDiameter, 'grid is wider than plate' );
 
-    // @public (read-only) {Property.<number>} angle of the scale in radians, zero is balanced
-    this.angleProperty = new Property( 0 );
+    // @public (read-only) angle of the scale in radians, zero is balanced
+    this.angleProperty = new NumberProperty( 0 );
 
     // {DerivedProperty.<number>} location of the right plate
     var rightLocationProperty = new DerivedProperty( [ this.angleProperty ],

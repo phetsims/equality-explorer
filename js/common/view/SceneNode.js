@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
   var CoupledSwitch = require( 'EQUALITY_EXPLORER/common/view/CoupledSwitch' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
@@ -18,7 +19,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemsPanel = require( 'EQUALITY_EXPLORER/common/view/ItemsPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
 
@@ -42,8 +42,8 @@ define( function( require ) {
     }, options );
 
     // view-specific Properties
-    this.equationAccordionBoxExpandedProperty = new Property( true );
-    this.snapshotsAccordionBoxExpandedProperty = new Property( true );
+    this.equationAccordionBoxExpandedProperty = new BooleanProperty( true );
+    this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( true );
 
     // Items live in this layer
     var itemsLayer = new Node();

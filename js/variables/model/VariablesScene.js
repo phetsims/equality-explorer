@@ -15,7 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
-  var Property = require( 'AXON/Property' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
@@ -29,7 +29,7 @@ define( function( require ) {
     this.xRange = EqualityExplorerConstants.X_RANGE;
 
     // @public (read-only) the value of the variable 'x'
-    this.xProperty = new Property( this.xRange.defaultValue );
+    this.xProperty = new NumberProperty( this.xRange.defaultValue );
 
     // valid xProperty
     this.xProperty.link( function( x ) {

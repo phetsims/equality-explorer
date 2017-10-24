@@ -15,9 +15,10 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
-  var Property = require( 'AXON/Property' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
+  var StringProperty = require( 'AXON/StringProperty' );
 
   /**
    * @constructor
@@ -30,7 +31,7 @@ define( function( require ) {
     this.xRange = EqualityExplorerConstants.X_RANGE;
 
     // @public (read-only) the value of the variable 'x'
-    this.xProperty = new Property( this.xRange.defaultValue );
+    this.xProperty = new NumberProperty( this.xRange.defaultValue );
 
     // valid xProperty
     this.xProperty.link( function( x ) {
@@ -46,7 +47,10 @@ define( function( require ) {
     ];
 
     // @public (read-only) operator for 'universal operation'
-    this.operatorProperty = new Property( EqualityExplorerConstants.PLUS );
+    this.operatorProperty = new StringProperty( EqualityExplorerConstants.PLUS, {
+      //TODO add validValues when StringProperty supports it, see https://github.com/phetsims/axon/issues/156
+      //validValues: this.operators
+    } );
 
     // validate operator
     this.operatorProperty.link( function( operator ) {
@@ -57,7 +61,9 @@ define( function( require ) {
     this.operandRange = new RangeWithValue( -10, 10, 1 );
 
     // @public (read-only) universal operand
-    this.operandProperty = new Property( this.operandRange.defaultValue );
+    this.operandProperty = new NumberProperty( this.operandRange.defaultValue, {
+      range: this.operandRange
+    } );
 
     // validate operand
     this.operandProperty.link( function( operand ) {
