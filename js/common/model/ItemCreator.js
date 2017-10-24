@@ -9,12 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  var Property = require( 'AXON/Property' );
   var Util = require( 'DOT/Util' );
 
   /**
@@ -50,8 +51,8 @@ define( function( require ) {
     // @public {Bounds2} drag bounds for Items created
     this.dragBounds = options.dragBounds;
 
-    // @public {Property.<number>} weight of each Item. All Items have the same weight.
-    this.weightProperty = new Property( weight );
+    // @public weight of each Item. All Items have the same weight.
+    this.weightProperty = new NumberProperty( weight );
 
     // @private {ObservableArray.<Item>} all Items that currently exist
     this.allItems = new ObservableArray();
@@ -65,8 +66,8 @@ define( function( require ) {
     // @public (read-only) so we don't need to expose itemsOnScale
     this.numberOfItemsOnScaleProperty = this.itemsOnScale.lengthProperty;
 
-    // @public {Property.<boolean>} is this ItemCreator enabled?
-    this.enabledProperty = new Property( true );
+    // @public is this ItemCreator enabled?
+    this.enabledProperty = new BooleanProperty( true );
 
     // @private called when Item.dispose is called
     this.itemWasDisposedBound = this.itemWasDisposed.bind( this );
