@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
@@ -57,22 +56,14 @@ define( function( require ) {
     // @private {ObservableArray.<Item>} all Items that currently exist
     this.allItems = new ObservableArray();
 
+    // @public (read-only) so we don't need to expose allItems
+    this.numberOfItemsProperty = this.allItems.lengthProperty;
+
     // @private {ObservableArray.<Item>} Items that are on the scale, a subset of allItems
     this.itemsOnScale = new ObservableArray();
 
-    // @public (read-only) {DerivedProperty.<number>} total number of Items
-    // This is an adapter, so that we can fully encapsulate allItems.
-    this.numberOfItemsProperty = new DerivedProperty( [ this.allItems.lengthProperty ],
-      function( length ) {
-        return length;
-      } );
-
-    // @public (read-only) {DerivedProperty.<number>} number of Items on the scale
-    // This is an adapter, so that we can fully encapsulate itemsOnScale.
-    this.numberOfItemsOnScaleProperty = new DerivedProperty( [ this.itemsOnScale.lengthProperty ],
-      function( length ) {
-        return length;
-      } );
+    // @public (read-only) so we don't need to expose itemsOnScale
+    this.numberOfItemsOnScaleProperty = this.itemsOnScale.lengthProperty;
 
     // @public {Property.<boolean>} is this ItemCreator enabled?
     this.enabledProperty = new Property( true );
