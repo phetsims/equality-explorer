@@ -48,8 +48,7 @@ define( function( require ) {
 
     // @public (read-only) operator for 'universal operation'
     this.operatorProperty = new StringProperty( EqualityExplorerConstants.PLUS, {
-      //TODO add validValues when StringProperty supports it, see https://github.com/phetsims/axon/issues/156
-      //validValues: this.operators
+      validValues: this.operators
     } );
 
     // validate operator
