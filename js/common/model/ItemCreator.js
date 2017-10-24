@@ -52,7 +52,9 @@ define( function( require ) {
     this.dragBounds = options.dragBounds;
 
     // @public weight of each Item. All Items have the same weight.
-    this.weightProperty = new NumberProperty( weight );
+    this.weightProperty = new NumberProperty( weight, {
+      isValidValue: function( value ) { return Util.isInteger( value ); } // integer values
+    } );
 
     // @private {ObservableArray.<Item>} all Items that currently exist
     this.allItems = new ObservableArray();
