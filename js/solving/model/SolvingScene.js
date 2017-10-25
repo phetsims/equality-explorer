@@ -90,8 +90,8 @@ define( function( require ) {
 
     // unlink not needed
     xProperty.link( function( x ) {
-      positiveXCreator.weightProperty.value = x;
-      negativeXCreator.weightProperty.value = -x;
+      positiveXCreator.itemWeightProperty.value = x;
+      negativeXCreator.itemWeightProperty.value = -x;
     } );
 
     return [

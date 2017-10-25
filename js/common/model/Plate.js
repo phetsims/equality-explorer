@@ -76,14 +76,14 @@ define( function( require ) {
     // {Property[]} dependencies for deriving weightProperty
     var weightDependencies = [ this.numberOfItemsOnPlateProperty ];
     itemCreators.forEach( function( itemCreator ) {
-      weightDependencies.push( itemCreator.weightProperty );
+      weightDependencies.push( itemCreator.itemWeightProperty );
     } );
 
     // @public {Property.<number>} total weight of the Items that are on the plate
     this.weightProperty = new DerivedProperty( weightDependencies, function() {
       var weight = 0;
       itemCreators.forEach( function( itemCreator ) {
-        weight += ( itemCreator.numberOfItemsOnScaleProperty.value * itemCreator.weightProperty.value );
+        weight += ( itemCreator.numberOfItemsOnScaleProperty.value * itemCreator.itemWeightProperty.value );
       } );
       return weight;
     } );

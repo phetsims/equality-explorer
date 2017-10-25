@@ -39,7 +39,7 @@ define( function( require ) {
     var worstCaseItemCreators = [];
     itemCreators.forEach( function( itemCreator ) {
 
-      var worstCaseItemCreator = new ItemCreator( itemCreator.name, itemCreator.weightProperty.value, itemCreator.icon, itemCreator.iconShadow, {
+      var worstCaseItemCreator = new ItemCreator( itemCreator.name, itemCreator.itemWeightProperty.value, itemCreator.icon, itemCreator.iconShadow, {
         constantTerm: itemCreator.constantTerm,
         variableTerm: itemCreator.variableTerm
       } );

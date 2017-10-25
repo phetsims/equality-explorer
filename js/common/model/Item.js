@@ -45,7 +45,7 @@ define( function( require ) {
     // @public (read-only)
     this.name = name;
 
-    //TODO is weightProperty needed here? It doesn't appear to be used, and ItemCreator.weightProperty seems sufficient
+    //TODO is weightProperty needed here? It doesn't appear to be used, and ItemCreator.itemWeightProperty seems sufficient
     // @public (read-only)
     this.weightProperty = weightProperty;
 
