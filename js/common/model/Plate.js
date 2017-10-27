@@ -24,8 +24,6 @@ define( function( require ) {
    */
   function Plate( locationProperty, itemCreators, options ) {
 
-    var self = this;
-
     options = _.extend( {
       supportHeight: 10, // height of the vertical support that connects the plate to the scale
       diameter: 20, // diameter of the plate
@@ -34,7 +32,7 @@ define( function( require ) {
       cellSize: new Dimension2( 5, 5 ) // dimensions of each cell in the grid
     }, options );
 
-    // @public (read-only)
+    // @public
     this.locationProperty = locationProperty;
 
     // @private
@@ -49,8 +47,6 @@ define( function( require ) {
     // @public (read-only)
     this.supportHeight = options.supportHeight;
     this.diameter = options.diameter;
-
-    //TODO delete these?
     this.gridRows = options.gridRows;
     this.gridColumns = options.gridColumns;
     this.cellSize = options.cellSize;
@@ -87,30 +83,11 @@ define( function( require ) {
 
     // @private
     this.removeItemBound = this.removeItem.bind( this );
-
-    // When the plate moves, adjust the location of all Items. unlink is unnecessary.
-    this.locationProperty.link( function( location ) {
-      self.updateItemLocations();
-    } );
   }
 
   equalityExplorer.register( 'Plate', Plate );
 
   return inherit( Object, Plate, {
-
-    /**
-     * Synchronizes Item locations with their respective cell locations.
-     * @private
-     */
-    updateItemLocations: function() {
-      for ( var row = 0; row < this.gridRows; row++ ) {
-        for ( var column = 0; column < this.gridColumns; column++ ) {
-          var index = this.grid.rowColumnToIndex( row, column );
-          var item = this.grid.getItemForCell( index );
-          item && item.moveTo( this.grid.getCellLocation( index ) );
-        }
-      }
-    },
 
     /**
      * Adds an Item to the plate, in a specific cell in the grid.
@@ -151,7 +128,7 @@ define( function( require ) {
         this.grid.clearAllCells();
 
         // start with the bottom-left cell
-        var row = this.gridRows - 1;
+        var row = self.grid.rows - 1;
         var column = 0;
 
         this.itemCreators.forEach( function( itemCreator ) {
@@ -179,7 +156,7 @@ define( function( require ) {
                 else {
 
                   // start a new column
-                  row = self.gridRows - 1;
+                  row = self.grid.rows - 1;
                   column++;
                 }
               }
@@ -189,9 +166,9 @@ define( function( require ) {
 
               // Start a new column if we have enough cells to the right of the current column.
               // Otherwise continue to fill the current column.
-              var numberOfCellsToRight = ( self.gridColumns - column - 1 ) * self.gridRows;
+              var numberOfCellsToRight = ( self.grid.columns - column - 1 ) * self.grid.rows;
               if ( numberOfCellsToRight >= numberOfItemsToOrganize ) {
-                row = self.gridRows - 1;
+                row = self.grid.rows - 1;
                 column++;
               }
               else {
@@ -203,11 +180,11 @@ define( function( require ) {
         assert && assert( numberOfItemsToOrganize === 0 );
 
         // Center the stacks on the plate by shifting Items to the right.
-        var numberOfEmptyColumns = self.gridColumns - column - 1;
+        var numberOfEmptyColumns = self.grid.columns - column - 1;
         var gridColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
         if ( gridColumnsToShiftRight > 0 ) {
-          for ( row = self.gridRows - 1; row >= 0; row-- ) {
-            for ( column = self.gridColumns - 1; column >= 0; column-- ) {
+          for ( row = self.grid.rows - 1; row >= 0; row-- ) {
+            for ( column = self.grid.columns - 1; column >= 0; column-- ) {
               var cellIndex = this.grid.rowColumnToIndex( row, column );
               var item = this.grid.getItemForCell( cellIndex );
               if ( item ) {

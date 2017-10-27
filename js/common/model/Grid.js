@@ -29,6 +29,8 @@ define( function( require ) {
    */
   function Grid( locationProperty, options ) {
 
+    var self = this;
+
     options = _.extend( {
       rows: 10,
       columns: 10,
@@ -36,7 +38,7 @@ define( function( require ) {
       cellHeight: 5
     }, options );
 
-    // @private
+    // @private (read-only)
     this.locationProperty = locationProperty;
 
     // @public (read-only)
@@ -53,6 +55,15 @@ define( function( require ) {
     for ( var index = 0; index < this.numberOfCells; index++ ) {
       this.cells[ index ] = NO_ITEM;
     }
+
+    // When the grid moves, move all Items that are in the grid. unlink not needed.
+    this.locationProperty.link( function( location ) {
+      for ( var index = 0; index < self.cells.length; index++ ) {
+        if ( self.cells[ index ] !== NO_ITEM ) {
+          self.cells[ index ].moveTo( self.getCellLocation( index ) );
+        }
+      }
+    } );
   }
 
   equalityExplorer.register( 'Grid', Grid );
