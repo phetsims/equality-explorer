@@ -37,12 +37,6 @@ define( function( require ) {
 
     // @private
     this.itemCreators = itemCreators;
-    this.grid = new Grid( locationProperty, {
-      rows: options.gridRows,
-      columns: options.gridColumns,
-      cellWidth: options.cellSize.width,
-      cellHeight: options.cellSize.height
-    } );
 
     // @public (read-only)
     this.supportHeight = options.supportHeight;
@@ -50,6 +44,14 @@ define( function( require ) {
     this.gridRows = options.gridRows;
     this.gridColumns = options.gridColumns;
     this.cellSize = options.cellSize;
+
+    // @private
+    this.grid = new Grid( locationProperty, {
+      rows: options.gridRows,
+      columns: options.gridColumns,
+      cellWidth: options.cellSize.width,
+      cellHeight: options.cellSize.height
+    } );
 
     // {Property[]} dependencies for deriving numberOfItemsOnPlateProperty
     var numberOfItemsOnPlateDependencies = [];
@@ -111,6 +113,65 @@ define( function( require ) {
       item.disposedEmitter.removeListener( this.removeItemBound );
       this.grid.clearCell( cellIndex );
       this.grid.shiftDown( cellIndex );
+    },
+
+    /**
+     * Is the specified cell empty?
+     * @param {number} cellIndex
+     * @returns {boolean}
+     * @public
+     */
+    isEmptyCell: function( cellIndex ) {
+      return this.grid.isEmptyCell( cellIndex );
+    },
+
+    /**
+     * Does the grid contain the specified Item?
+     * @param {Item} item
+     * @returns {boolean}
+     * @public
+     */
+    containsItem: function( item ) {
+      return this.grid.containsItem( item );
+    },
+
+    /**
+     * Gets the closest empty cell to a specified location.
+     * @param {Vector2} location
+     * @returns {number} cell index, -1 if the grid is full
+     * @public
+     */
+    getClosestEmptyCell: function( location ) {
+      return this.grid.getClosestEmptyCell( location );
+    },
+
+    /**
+     * Examines the grid from left to right, top to bottom, and returns the first empty cell.
+     * @returns {number} cell index, -1 if the grid is full
+     * @public
+     */
+    getFirstEmptyCell: function() {
+      return this.grid.getFirstEmptyCell();
+    },
+
+    /**
+     * Gets the location of a specific cell, in global coordinates.
+     * A cell's location is in the center of the cell.
+     * @param {number} cellIndex
+     * @returns {Vector2}
+     * @public
+     */
+    getCellLocation: function( cellIndex ) {
+      return this.grid.getCellLocation( cellIndex );
+    },
+
+    /**
+     * Gets the number of Cells in the grid. This is the capacity of the plate.
+     * @returns {number}
+     * @public
+     */
+    get numberOfCells() {
+      return this.grid.numberOfCells;
     },
 
     /**
@@ -198,65 +259,6 @@ define( function( require ) {
           }
         }
       }
-    },
-
-    /**
-     * Is the specified cell empty?
-     * @param {number} cellIndex
-     * @returns {boolean}
-     * @public
-     */
-    isEmptyCell: function( cellIndex ) {
-      return this.grid.isEmptyCell( cellIndex );
-    },
-
-    /**
-     * Does the grid contain the specified Item?
-     * @param {Item} item
-     * @returns {boolean}
-     * @public
-     */
-    containsItem: function( item ) {
-      return this.grid.containsItem( item );
-    },
-
-    /**
-     * Gets the closest empty cell to a specified location.
-     * @param {Vector2} location
-     * @returns {number} -1 if the grid is full
-     * @public
-     */
-    getClosestEmptyCell: function( location ) {
-      return this.grid.getClosestEmptyCell( location );
-    },
-
-    /**
-     * Examines the grid from left to right, top to bottom, and returns the first empty cell.
-     * @returns {number} -1 if the grid is full
-     * @public
-     */
-    getFirstEmptyCell: function() {
-      return this.grid.getFirstEmptyCell();
-    },
-
-    /**
-     * Gets the location of a specific cell, in global coordinates.
-     * A cell's location is in the center of the cell.
-     * @param {number} cellIndex
-     * @returns {Vector2}
-     * @public
-     */
-    getCellLocation: function( cellIndex ) {
-      return this.grid.getCellLocation( cellIndex );
-    },
-
-    /**
-     * Gets the number of Cells in the grid. This is the capacity of the plate.
-     * @returns {number}
-     * @public
-     */
-    get numberOfCells() {
-      return this.grid.numberOfCells;
     }
   } );
 } );
