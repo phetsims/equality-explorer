@@ -133,8 +133,7 @@ define( function( require ) {
     },
 
     /**
-     * Puts an Item in the specified cell.
-     * The cell must be empty, and there must be no empty cells below it.
+     * Puts an Item in the specified cell. The cell must be empty.
      * @param {Item} item
      * @param {number} index - the cell's index
      */
@@ -147,7 +146,7 @@ define( function( require ) {
     },
 
     /**
-     * Removes an Item from the grid. Any Items above it "fall" down.
+     * Removes an Item from the grid. Any Items above it move down to fill the empty cell.
      * @param {Item} item
      */
     removeItem: function( item ) {
@@ -209,7 +208,7 @@ define( function( require ) {
     },
 
     /**
-     * Finds the first empty cell, starting at bottom row, left-to-right.
+     * Finds the first empty cell, starting at bottom row, right-to-left.
      * @returns {number} - cell index, -1 if the grid is full
      * @public
      */
