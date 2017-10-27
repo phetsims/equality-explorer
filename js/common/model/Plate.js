@@ -53,28 +53,14 @@ define( function( require ) {
       cellHeight: options.cellSize.height
     } );
 
-    // {Property[]} dependencies for deriving numberOfItemsOnPlateProperty
-    var numberOfItemsOnPlateDependencies = [];
-    itemCreators.forEach( function( itemCreator ) {
-      numberOfItemsOnPlateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
-    } );
-
-    // @private total number of Items that are on the plate
-    this.numberOfItemsOnPlateProperty = new DerivedProperty( numberOfItemsOnPlateDependencies, function() {
-      var count = 0;
-      itemCreators.forEach( function( itemCreator ) {
-        count += itemCreator.numberOfItemsOnScaleProperty.value;
-      } );
-      return count;
-    } );
-
     // {Property[]} dependencies for deriving weightProperty
-    var weightDependencies = [ this.numberOfItemsOnPlateProperty ];
+    var weightDependencies = [];
     itemCreators.forEach( function( itemCreator ) {
+      weightDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
       weightDependencies.push( itemCreator.itemWeightProperty );
     } );
 
-    // @public {Property.<number>} total weight of the Items that are on the plate
+    // @public {DerivedProperty.<number>} total weight of the Items that are on the plate
     this.weightProperty = new DerivedProperty( weightDependencies, function() {
       var weight = 0;
       itemCreators.forEach( function( itemCreator ) {
@@ -180,7 +166,10 @@ define( function( require ) {
      */
     organize: function() {
 
-      var numberOfItemsToOrganize = this.numberOfItemsOnPlateProperty.value;
+      var numberOfItemsToOrganize = 0;
+      this.itemCreators.forEach( function( itemCreator ) {
+        numberOfItemsToOrganize += itemCreator.numberOfItemsOnScaleProperty.value;
+      } );
 
       if ( numberOfItemsToOrganize > 0 ) {
 
