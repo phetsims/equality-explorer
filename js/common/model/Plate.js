@@ -173,12 +173,12 @@ define( function( require ) {
 
       if ( numberOfItemsToOrganize > 0 ) {
 
-        var self = this;
+        var grid = this.grid;
 
-        this.grid.clearAllCells();
+        grid.clearAllCells();
 
         // start with the bottom-left cell
-        var row = self.grid.rows - 1;
+        var row = grid.rows - 1;
         var column = 0;
 
         this.itemCreators.forEach( function( itemCreator ) {
@@ -191,8 +191,8 @@ define( function( require ) {
             for ( var i = 0; i < items.length; i++ ) {
 
               var item = items[ i ];
-              var cellIndex = self.grid.rowColumnToIndex( row, column );
-              self.grid.putItem( item, cellIndex );
+              var cellIndex = grid.rowColumnToIndex( row, column );
+              grid.putItem( item, cellIndex );
 
               numberOfItemsToOrganize--;
 
@@ -206,7 +206,7 @@ define( function( require ) {
                 else {
 
                   // start a new column
-                  row = self.grid.rows - 1;
+                  row = grid.rows - 1;
                   column++;
                 }
               }
@@ -216,9 +216,9 @@ define( function( require ) {
 
               // Start a new column if we have enough cells to the right of the current column.
               // Otherwise continue to fill the current column.
-              var numberOfCellsToRight = ( self.grid.columns - column - 1 ) * self.grid.rows;
+              var numberOfCellsToRight = ( grid.columns - column - 1 ) * grid.rows;
               if ( numberOfCellsToRight >= numberOfItemsToOrganize ) {
-                row = self.grid.rows - 1;
+                row = grid.rows - 1;
                 column++;
               }
               else {
@@ -230,19 +230,19 @@ define( function( require ) {
         assert && assert( numberOfItemsToOrganize === 0 );
 
         // Center the stacks on the plate by shifting Items to the right.
-        var numberOfEmptyColumns = self.grid.columns - column - 1;
+        var numberOfEmptyColumns = grid.columns - column - 1;
         var gridColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
         if ( gridColumnsToShiftRight > 0 ) {
-          for ( row = self.grid.rows - 1; row >= 0; row-- ) {
-            for ( column = self.grid.columns - 1; column >= 0; column-- ) {
-              var cellIndex = this.grid.rowColumnToIndex( row, column );
-              var item = this.grid.getItemForCell( cellIndex );
+          for ( row = grid.rows - 1; row >= 0; row-- ) {
+            for ( column = grid.columns - 1; column >= 0; column-- ) {
+              var cellIndex = grid.rowColumnToIndex( row, column );
+              var item = grid.getItemForCell( cellIndex );
               if ( item ) {
 
                 // move Item 1 column to the right
-                this.grid.clearCell( cellIndex );
-                var rightIndex = this.grid.rowColumnToIndex( row, column + gridColumnsToShiftRight );
-                this.grid.putItem( item, rightIndex );
+                grid.clearCell( cellIndex );
+                var rightIndex = grid.rowColumnToIndex( row, column + gridColumnsToShiftRight );
+                grid.putItem( item, rightIndex );
               }
             }
           }
