@@ -106,7 +106,7 @@ define( function( require ) {
       for ( var row = 0; row < this.gridRows; row++ ) {
         for ( var column = 0; column < this.gridColumns; column++ ) {
           var index = this.grid.rowColumnToIndex( row, column );
-          var item = this.grid.getObjectForCell( index );
+          var item = this.grid.getItemForCell( index );
           item && item.moveTo( this.grid.getCellLocation( index ) );
         }
       }
@@ -119,7 +119,7 @@ define( function( require ) {
      * @public
      */
     addItem: function( item, cellIndex ) {
-      this.grid.putObject( item, cellIndex );
+      this.grid.putItem( item, cellIndex );
       item.disposedEmitter.addListener( this.removeItemBound );
     },
 
@@ -129,7 +129,7 @@ define( function( require ) {
      * @public
      */
     removeItem: function( item ) {
-      var cellIndex = this.grid.getCellForObject( item );
+      var cellIndex = this.grid.getCellForItem( item );
       assert && assert( cellIndex !== -1, 'item not found: ' + item.toString() );
       item.disposedEmitter.removeListener( this.removeItemBound );
       this.grid.clearCell( cellIndex );
@@ -165,7 +165,7 @@ define( function( require ) {
 
               var item = items[ i ];
               var cellIndex = self.grid.rowColumnToIndex( row, column );
-              self.grid.putObject( item, cellIndex );
+              self.grid.putItem( item, cellIndex );
 
               numberOfItemsToOrganize--;
 
@@ -209,13 +209,13 @@ define( function( require ) {
           for ( row = self.gridRows - 1; row >= 0; row-- ) {
             for ( column = self.gridColumns - 1; column >= 0; column-- ) {
               var cellIndex = this.grid.rowColumnToIndex( row, column );
-              var item = this.grid.getObjectForCell( cellIndex );
+              var item = this.grid.getItemForCell( cellIndex );
               if ( item ) {
 
                 // move Item 1 column to the right
                 this.grid.clearCell( cellIndex );
                 var rightIndex = this.grid.rowColumnToIndex( row, column + gridColumnsToShiftRight );
-                this.grid.putObject( item, rightIndex );
+                this.grid.putItem( item, rightIndex );
               }
             }
           }
@@ -240,7 +240,7 @@ define( function( require ) {
      * @public
      */
     containsItem: function( item ) {
-      return this.grid.containsObject( item );
+      return this.grid.containsItem( item );
     },
 
     /**
