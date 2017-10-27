@@ -39,7 +39,7 @@ define( function( require ) {
     }, options );
 
     // @private (read-only)
-    this.locationProperty = locationProperty;
+    this.locationProperty = locationProperty;                           f
 
     // @public (read-only)
     this.rows = options.rows;
