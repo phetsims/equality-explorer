@@ -13,9 +13,8 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Grid = require( 'EQUALITY_EXPLORER/common/model/Grid' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @param {DerivedProperty.<Vector2>} locationProperty
@@ -37,26 +36,24 @@ define( function( require ) {
 
     // @public (read-only)
     this.locationProperty = locationProperty;
-    this.supportHeight = options.supportHeight;
-    this.diameter = options.diameter;
-    this.gridRows = options.gridRows;
-    this.gridColumns = options.gridColumns;
-    this.cellSize = options.cellSize;
 
     // @private
     this.itemCreators = itemCreators;
+    this.grid = new Grid( locationProperty, {
+      rows: options.gridRows,
+      columns: options.gridColumns,
+      cellWidth: options.cellSize.width,
+      cellHeight: options.cellSize.height
+    } );
 
-    // @private {Item[][]} the 2D grid of cells.
-    // Initialized to empty, where null indicates an empty cell.
-    // Indexed from upper-left of the grid, in row-major order.
-    this.cells = [];
-    for ( var row = 0; row < this.gridRows; row++ ) {
-      var rowOfCells = [];
-      for ( var column = 0; column < this.gridColumns; column++ ) {
-        rowOfCells.push( null );
-      }
-      this.cells.push( rowOfCells );
-    }
+    // @public (read-only)
+    this.supportHeight = options.supportHeight;
+    this.diameter = options.diameter;
+
+    //TODO delete these?
+    this.gridRows = options.gridRows;
+    this.gridColumns = options.gridColumns;
+    this.cellSize = options.cellSize;
 
     // {Property[]} dependencies for deriving numberOfItemsOnPlateProperty
     var numberOfItemsOnPlateDependencies = [];
@@ -99,24 +96,6 @@ define( function( require ) {
 
   equalityExplorer.register( 'Plate', Plate );
 
-  /**
-   * Data structure that identifies a cell in the 2D grid.
-   * While clients have references to Cells, the specifics of this data structure is private to Plate.
-   * Notes:
-   * - Considered using Vector2 or Dimension2, but row and column improve readability of the code.
-   * - This is solely a lightweight data structure, so no need to use inherit.
-   *
-   * @param {number} row
-   * @param {number} column
-   * @constructor
-   */
-  function Cell( row, column ) {
-
-    // @public (read-only)
-    this.row = row;
-    this.column = column;
-  }
-
   return inherit( Object, Plate, {
 
     /**
@@ -126,9 +105,9 @@ define( function( require ) {
     updateItemLocations: function() {
       for ( var row = 0; row < this.gridRows; row++ ) {
         for ( var column = 0; column < this.gridColumns; column++ ) {
-          var cell = new Cell( row, column );
-          var item = this.getItemInCell( cell );
-          item && item.moveTo( this.getCellLocation( cell ) );
+          var index = this.grid.rowColumnToIndex( row, column );
+          var item = this.grid.getObjectForCell( index );
+          item && item.moveTo( this.grid.getCellLocation( index ) );
         }
       }
     },
@@ -136,14 +115,11 @@ define( function( require ) {
     /**
      * Adds an Item to the plate, in a specific cell in the grid.
      * @param {Item} item
-     * @param {Cell} cell
+     * @param {number} cellIndex
      * @public
      */
-    addItem: function( item, cell ) {
-      assert && this.assertValidCell( cell );
-      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + cell.row + ',' + cell.column );
-      assert && assert( !this.containsItem( item ), 'item is already in grid: ' + item.toString() );
-      this.putItemInCell( item, cell );
+    addItem: function( item, cellIndex ) {
+      this.grid.putObject( item, cellIndex );
       item.disposedEmitter.addListener( this.removeItemBound );
     },
 
@@ -153,37 +129,11 @@ define( function( require ) {
      * @public
      */
     removeItem: function( item ) {
-      var cell = this.getCellForItem( item );
-      assert && assert( cell, 'item not found: ' + item.toString() );
+      var cellIndex = this.grid.getCellForObject( item );
+      assert && assert( cellIndex !== -1, 'item not found: ' + item.toString() );
       item.disposedEmitter.removeListener( this.removeItemBound );
-      this.clearCell( cell );
-      this.shiftDown( cell );
-    },
-
-    /**
-     * Shifts all Items that are above a cell down 1 cell, to fill the empty cell caused by removing an Item.
-     * @param {Cell} cell - the cell that was occupied by the removed Item
-     * @private
-     */
-    shiftDown: function( cell ) {
-      assert && assert( this.isEmptyCell( cell ), 'cell is not empty: ' + cell.row + ',' + cell.column );
-      for ( var row = cell.row - 1; row >= 0; row-- ) {
-
-        var currentCell = new Cell( row, cell.column );
-
-        if ( !this.isEmptyCell( currentCell ) ) {
-
-          // remove Item from it's current cell
-          var item = this.getItemInCell( currentCell );
-          this.clearCell( currentCell );
-
-          // move Item down 1 row
-          var newCell = new Cell( row + 1, cell.column );
-          assert && assert( this.isEmptyCell( newCell ), 'cell is not empty: ' + cell.row + ',' + cell.column );
-          this.putItemInCell( item, newCell );
-          item.moveTo( this.getCellLocation( newCell ) );
-        }
-      }
+      this.grid.clearCell( cellIndex );
+      this.grid.shiftDown( cellIndex );
     },
 
     /**
@@ -198,7 +148,7 @@ define( function( require ) {
 
         var self = this;
 
-        this.clearAllCells();
+        this.grid.clearAllCells();
 
         // start with the bottom-left cell
         var row = this.gridRows - 1;
@@ -214,7 +164,9 @@ define( function( require ) {
             for ( var i = 0; i < items.length; i++ ) {
 
               var item = items[ i ];
-              self.putItemInCell( item, new Cell( row, column ) );
+              var cellIndex = self.grid.rowColumnToIndex( row, column );
+              self.grid.putObject( item, cellIndex );
+
               numberOfItemsToOrganize--;
 
               // advance to the next cell
@@ -256,11 +208,14 @@ define( function( require ) {
         if ( gridColumnsToShiftRight > 0 ) {
           for ( row = self.gridRows - 1; row >= 0; row-- ) {
             for ( column = self.gridColumns - 1; column >= 0; column-- ) {
-              var cell = new Cell( row, column );
-              var item = this.getItemInCell( cell );
+              var cellIndex = this.grid.rowColumnToIndex( row, column );
+              var item = this.grid.getObjectForCell( cellIndex );
               if ( item ) {
-                this.clearCell( cell );
-                this.putItemInCell( item, new Cell( row, column + gridColumnsToShiftRight ) );
+
+                // move Item 1 column to the right
+                this.grid.clearCell( cellIndex );
+                var rightIndex = this.grid.rowColumnToIndex( row, column + gridColumnsToShiftRight );
+                this.grid.putObject( item, rightIndex );
               }
             }
           }
@@ -270,30 +225,12 @@ define( function( require ) {
 
     /**
      * Is the specified cell empty?
-     * @param {Cell} cell
+     * @param {number} cellIndex
      * @returns {boolean}
      * @public
      */
-    isEmptyCell: function( cell ) {
-      assert && this.assertValidCell( cell );
-      return ( this.getItemInCell( cell ) === null );
-    },
-
-    /**
-     * Gets the cell that an Item occupies.
-     * @param item
-     * @returns {Cell} null item doesn't occupy a cell
-     * @private
-     */
-    getCellForItem: function( item ) {
-      var cell = null;
-      for ( var row = 0; row < this.gridRows && !cell; row++ ) {
-        var column = this.cells[ row ].indexOf( item );
-        if ( column !== -1 ) {
-          cell = new Cell( row, column );
-        }
-      }
-      return cell;
+    isEmptyCell: function( cellIndex ) {
+      return this.grid.isEmptyCell( cellIndex );
     },
 
     /**
@@ -303,110 +240,37 @@ define( function( require ) {
      * @public
      */
     containsItem: function( item ) {
-      return ( this.getCellForItem( item ) !== null );
+      return this.grid.containsObject( item );
     },
 
     /**
      * Gets the closest empty cell to a specified location.
      * @param {Vector2} location
-     * @returns {Cell}
+     * @returns {number} -1 if the grid is full
      * @public
      */
     getClosestEmptyCell: function( location ) {
-
-      var closestCell = this.getFirstEmptyCell();
-      if ( !closestCell ) {
-        return null;
-      }
-
-      var closestDistance = this.getCellLocation( closestCell ).distance( location );
-
-      var currentCell = null; // the cell we're currently examining
-
-      // Find the closest cell based on distance
-      for ( var row = 0; row < this.gridRows; row++ ) {
-        for ( var column = 0; column < this.gridColumns; column++ ) {
-          var cell = new Cell( row, column );
-          if ( this.isEmptyCell( cell ) ) {
-            currentCell = cell;
-            var currentDistance = this.getCellLocation( currentCell ).distance( location );
-            if ( currentDistance < closestDistance ) {
-              closestDistance = currentDistance;
-              closestCell = currentCell;
-            }
-          }
-        }
-      }
-
-      // Now look below the closest cell to see if there are any empty cells in the same row.
-      // This accounts for gravity, so Items fall to the cell that is closest to the bottom of the grid.
-      for ( row = this.gridRows - 1; row > closestCell.row; row-- ) {
-        currentCell = new Cell( row, closestCell.column );
-        if ( this.isEmptyCell( currentCell ) ) {
-          closestCell = currentCell;
-          break;
-        }
-      }
-
-      return closestCell;
+      return this.grid.getClosestEmptyCell( location );
     },
 
     /**
      * Examines the grid from left to right, top to bottom, and returns the first empty cell.
-     * @returns {Cell} null if the grid is full
+     * @returns {number} -1 if the grid is full
      * @public
      */
     getFirstEmptyCell: function() {
-      var emptyCell = null;
-      for ( var row = this.gridRows - 1; row >= 0; row-- ) {
-        for ( var column = 0; column < this.gridColumns && !emptyCell; column++ ) {
-          var cell = new Cell( row, column );
-          if ( this.isEmptyCell( cell ) ) {
-            emptyCell = cell;
-          }
-        }
-      }
-      return emptyCell;
+      return this.grid.getFirstEmptyCell();
     },
 
     /**
      * Gets the location of a specific cell, in global coordinates.
      * A cell's location is in the center of the cell.
-     * @param {Cell} cell
+     * @param {number} cellIndex
      * @returns {Vector2}
      * @public
      */
-    getCellLocation: function( cell ) {
-      assert && this.assertValidCell( cell );
-
-      var upperLeft = this.getGridUpperLeft();
-      var x = upperLeft.x + ( cell.column * this.cellSize.width ) + ( 0.5 * this.cellSize.width );
-      var y = upperLeft.y + ( cell.row * this.cellSize.height ) + ( 0.5 * this.cellSize.height );
-      return new Vector2( x, y );
-    },
-
-    /**
-     * Gets the location of the upper-left corner of the grid, in global coordinates.
-     * @returns {Vector2}
-     * @private
-     */
-    getGridUpperLeft: function() {
-      var x = this.locationProperty.value.x - ( this.gridColumns * this.cellSize.width ) / 2;
-      var y = this.locationProperty.value.y - ( this.gridRows * this.cellSize.height );
-      return new Vector2( x, y );
-    },
-
-    /**
-     * Validates a Cell. Intended to be called when assertions are enabled.
-     * @param {Cell} cell
-     * @private
-     */
-    assertValidCell: function( cell ) {
-      if ( assert ) {
-        assert( cell instanceof Cell );
-        assert( cell.row >= 0 && cell.row < this.gridRows, 'row out of bounds: ' + cell.row );
-        assert( cell.column >= 0 && cell.column < this.gridColumns, 'column out of bounds: ' + cell.column );
-      }
+    getCellLocation: function( cellIndex ) {
+      return this.grid.getCellLocation( cellIndex );
     },
 
     /**
@@ -415,53 +279,7 @@ define( function( require ) {
      * @public
      */
     get numberOfCells() {
-      return this.gridColumns * this.gridRows;
-    },
-
-    /**
-     * Gets the Item in a cell.
-     * @param {Cell} cell
-     * @returns {Item|null} null if the cell is empty
-     * @private
-     */
-    getItemInCell: function( cell ) {
-      assert && this.assertValidCell( cell );
-      return this.cells[ cell.row ][ cell.column ];
-    },
-
-    /**
-     * Puts an Item in a cell. The cell must be empty.
-     * @param {Item|null} item
-     * @param {Cell} cell
-     * @private
-     */
-    putItemInCell: function( item, cell ) {
-      assert && assert( item === null || item instanceof Item );
-      assert && assert( this.isEmptyCell( cell ), 'cell is occupied: ' + cell.row + ',' + cell.column );
-      this.cells[ cell.row ][ cell.column ] = item;
-      item.moveTo( this.getCellLocation( cell ) );
-    },
-
-    /**
-     * Clears a cell, making it empty. If the cell is already empty, this is a no-op.
-     * @param {Cell} cell
-     * @private
-     */
-    clearCell: function( cell ) {
-      assert && this.assertValidCell( cell );
-      this.cells[ cell.row ][ cell.column ] = null;
-    },
-
-    /**
-     * Clears all cells in the grid.
-     * @private
-     */
-    clearAllCells: function() {
-      for ( var row = 0; row < this.gridRows; row++ ) {
-        for ( var column = 0; column < this.gridColumns; column++ ) {
-          this.clearCell( new Cell( row, column ) );
-        }
-      }
+      return this.grid.numberOfCells;
     }
   } );
 } );

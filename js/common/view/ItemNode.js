@@ -152,8 +152,8 @@ define( function( require ) {
 
       var self = this;
 
-      var cell = plate.getClosestEmptyCell( item.locationProperty.value );
-      if ( !cell ) {
+      var cellIndex = plate.getClosestEmptyCell( item.locationProperty.value );
+      if ( cellIndex === -1 ) {
 
         // Plate has become full, or there is no available cell above the item's location.
         // Return the item to panel.
@@ -161,20 +161,20 @@ define( function( require ) {
       }
       else {
 
-        var cellLocation = plate.getCellLocation( cell );
+        var cellLocation = plate.getCellLocation( cellIndex );
 
         item.animateTo( cellLocation, {
 
           // If the target cell has become occupied, choose another cell.
           animationStepCallback: function() {
-            if ( !plate.isEmptyCell( cell ) ) {
+            if ( !plate.isEmptyCell( cellIndex ) ) {
               self.animateToClosestCell( item, plate );
             }
           },
 
           // When the Item reaches the cell, put it in the cell.
           animationCompletedCallback: function() {
-            plate.addItem( item, cell );
+            plate.addItem( item, cellIndex );
             self.itemCreator.addItemToScale( item );
           }
         } );

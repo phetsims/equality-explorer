@@ -112,9 +112,9 @@ define( function( require ) {
 
         // put the Item on the scale
         this.itemCreator.addItemToScale( item );
-        var cell = this.plate.getFirstEmptyCell();
-        assert && assert( cell, 'plate is full, numberOfItems is too large: ' + numberOfItems );
-        this.plate.addItem( item, cell );
+        var cellIndex = this.plate.getFirstEmptyCell();
+        assert && assert( cellIndex !== -1, 'plate is full, numberOfItems is too large: ' + numberOfItems );
+        this.plate.addItem( item, cellIndex );
 
         // Clean up when the Item is disposed. Item.dispose handles removal of this listener.
         // IFEE creates a closure for itemNode.
