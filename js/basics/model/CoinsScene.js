@@ -35,13 +35,16 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'coin1', 3, ItemIcons.COIN1_NODE, ItemIcons.COIN1_SHADOW_NODE, {
+      new ItemCreator( 'coin1', ItemIcons.COIN1_NODE, ItemIcons.COIN1_SHADOW_NODE, {
+        weight: 3,
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'coin2', 2, ItemIcons.COIN2_NODE, ItemIcons.COIN2_SHADOW_NODE, {
+      new ItemCreator( 'coin2', ItemIcons.COIN2_NODE, ItemIcons.COIN2_SHADOW_NODE, {
+        weight: 2,
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } ),
-      new ItemCreator( 'coin3', 5, ItemIcons.COIN3_NODE, ItemIcons.COIN3_SHADOW_NODE, {
+      new ItemCreator( 'coin3', ItemIcons.COIN3_NODE, ItemIcons.COIN3_SHADOW_NODE, {
+        weight: 5,
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } )
     ];

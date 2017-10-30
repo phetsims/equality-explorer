@@ -26,9 +26,10 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ItemCreator( name, weight, icon, iconShadow, options ) {
+  function ItemCreator( name, icon, iconShadow, options ) {
 
     options = _.extend( {
+      weight: 1, // {number} initial weight of Items
       constantTerm: false, // {boolean} do Items evaluate to a constant?
       variableTerm: false, // {boolean} do Items represent a variable?
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
@@ -53,7 +54,7 @@ define( function( require ) {
 
     // @public weight of each Item
     // Note that all Items created by an ItemCreator have the same weight, so Item does not have a weightProperty.
-    this.itemWeightProperty = new NumberProperty( weight, {
+    this.itemWeightProperty = new NumberProperty( options.weight, {
       isValidValue: function( value ) { return Util.isInteger( value ); } // integer values
     } );
 

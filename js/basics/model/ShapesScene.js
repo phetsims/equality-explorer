@@ -35,13 +35,16 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'sphere', 2, ItemIcons.SPHERE_NODE, ItemIcons.SPHERE_SHADOW_NODE, {
+      new ItemCreator( 'sphere', ItemIcons.SPHERE_NODE, ItemIcons.SPHERE_SHADOW_NODE, {
+        weight: 2,
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'square', 3, ItemIcons.SQUARE_NODE, ItemIcons.SQUARE_SHADOW_NODE, {
+      new ItemCreator( 'square', ItemIcons.SQUARE_NODE, ItemIcons.SQUARE_SHADOW_NODE, {
+        weight: 3,
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } ),
-      new ItemCreator( '1', 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      new ItemCreator( '1', ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+        weight: 1,
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ],
         constantTerm: true
       } )

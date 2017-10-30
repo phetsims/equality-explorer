@@ -37,13 +37,16 @@ define( function( require ) {
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     return [
-      new ItemCreator( 'dog', 11, ItemIcons.DOG_NODE, ItemIcons.DOG_SHADOW_NODE, {
+      new ItemCreator( 'dog', ItemIcons.DOG_NODE, ItemIcons.DOG_SHADOW_NODE, {
+        weight: 11,
         numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
       } ),
-      new ItemCreator( 'turtle', 4, ItemIcons.TURTLE_NODE, ItemIcons.TURTLE_SHADOW_NODE, {
+      new ItemCreator( 'turtle', ItemIcons.TURTLE_NODE, ItemIcons.TURTLE_SHADOW_NODE, {
+        weight: 4,
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ]
       } ),
-      new ItemCreator( 'cat', 6, ItemIcons.CAT_NODE, ItemIcons.CAT_SHADOW_NODE, {
+      new ItemCreator( 'cat', ItemIcons.CAT_NODE, ItemIcons.CAT_SHADOW_NODE, {
+        weight: 6,
         numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
       } )
     ];

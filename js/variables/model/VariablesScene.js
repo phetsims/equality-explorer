@@ -53,12 +53,14 @@ define( function( require ) {
   function createItemCreators( xProperty, numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 4 );
 
-    var positiveXCreator = new ItemCreator( 'x', xProperty.value, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var positiveXCreator = new ItemCreator( 'x', ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      weight: xProperty.value,
       numberOfItemsOnScale: numberOfItemsOnScale[ 0 ],
       variableTerm: true
     } );
 
-    var negativeXCreator = new ItemCreator( '-x', -xProperty.value, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var negativeXCreator = new ItemCreator( '-x', ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      weight: -xProperty.value,
       numberOfItemsOnScale: numberOfItemsOnScale[ 1 ],
       variableTerm: true
     } );
@@ -72,11 +74,13 @@ define( function( require ) {
     return [
       positiveXCreator,
       negativeXCreator,
-      new ItemCreator( '1', 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      new ItemCreator( '1', ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+        weight: 1,
         numberOfItemsOnScale: numberOfItemsOnScale[ 2 ],
         constantTerm: true
       } ),
-      new ItemCreator( '-1', -1, ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      new ItemCreator( '-1', ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+        weight: -1,
         numberOfItemsOnScale: numberOfItemsOnScale[ 3 ],
         constantTerm: true
       } )
