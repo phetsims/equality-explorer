@@ -39,6 +39,8 @@ Combine inverses to create '0', halo, fade out.
 if ( item1.constantTerm && item2.constantTerm && item1.weight === -item2.weight ) { combine }
 if ( item1.variableTerm && item2.variableTerm && item1.weight === -item2.weight ) { combine }
 
+Change how/when item creators are disabled.
+
 Item type hierarchy: ConstantItem, VariableItem
 
 Handling of variables and inverses in EquationNode, replace temporary hack
