@@ -14,8 +14,8 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
