@@ -51,7 +51,8 @@ define( function( require ) {
     // @public {Bounds2} drag bounds for Items created
     this.dragBounds = options.dragBounds;
 
-    // @public weight of each Item. All Items have the same weight.
+    // @public weight of each Item
+    // Note that all Items created by an ItemCreator have the same weight, so Item does not have a weightProperty.
     this.itemWeightProperty = new NumberProperty( weight, {
       isValidValue: function( value ) { return Util.isInteger( value ); } // integer values
     } );
@@ -104,7 +105,7 @@ define( function( require ) {
      */
     createItem: function( location ) {
 
-      var item = new Item( this.name, this.itemWeightProperty, this.icon, this.iconShadow, {
+      var item = new Item( this.name, this.icon, this.iconShadow, {
         location: location,
         constantTerm: this.constantTerm,
         variableTerm: this.variableTerm,

@@ -18,13 +18,12 @@ define( function( require ) {
 
   /**
    * @param {string} name - internal name, not displayed to the user
-   * @param {Property.<number>} weightProperty
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function Item( name, weightProperty, icon, iconShadow, options ) {
+  function Item( name, icon, iconShadow, options ) {
 
     options = _.extend( {
       constantTerm: false, // {boolean} does this Item evaluate to a constant?
@@ -44,10 +43,6 @@ define( function( require ) {
 
     // @public (read-only)
     this.name = name;
-
-    //TODO is weightProperty needed here? It doesn't appear to be used, and ItemCreator.itemWeightProperty seems sufficient
-    // @public (read-only)
-    this.weightProperty = weightProperty;
 
     // @public (read-only)
     this.icon = icon;
