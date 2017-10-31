@@ -10,11 +10,11 @@ define( function( require ) {
 
   // modules
   var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
+  var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
-  var MysteryItemCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryItemCreator' );
 
   /**
    * @constructor
@@ -37,13 +37,13 @@ define( function( require ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     var index = 0;
     return [
-      new MysteryItemCreator( 4, ItemIcons.APPLE_NODE, ItemIcons.APPLE_SHADOW_NODE, {
+      new ConstantItemCreator( 4, ItemIcons.APPLE_NODE, ItemIcons.APPLE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( 5, ItemIcons.LEMON_NODE, ItemIcons.LEMON_SHADOW_NODE, {
+      new ConstantItemCreator( 5, ItemIcons.LEMON_NODE, ItemIcons.LEMON_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( 2, ItemIcons.ORANGE_NODE, ItemIcons.ORANGE_SHADOW_NODE, {
+      new ConstantItemCreator( 2, ItemIcons.ORANGE_NODE, ItemIcons.ORANGE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } )
     ];

@@ -163,19 +163,29 @@ define( function( require ) {
       var numberOfItemsOnScale = itemCreator.numberOfItemsOnScaleProperty.value;
       if ( numberOfItemsOnScale > 0 ) {
 
-        if ( itemCreator instanceof ConstantItemCreator ) {
+        if ( itemCreator instanceof XItemCreator ) {
 
-          // combine all constants into 1 term
-          constantValue += ( numberOfItemsOnScale * itemCreator.weight );
-        }
-        else if ( itemCreator instanceof XItemCreator ) {
+          // these Items contribute to the coefficient for 'x'
           xCoefficient += ( itemCreator.coefficient * numberOfItemsOnScale );
         }
-        else {
-          if ( children.length > 0 ) {
-            children.push( new Text( EqualityExplorerConstants.PLUS, { font: plusFont } ) );
+        else if ( itemCreator instanceof ConstantItemCreator ) {
+
+          if ( itemCreator.constantTerm ) {
+
+            // these Items contribute to the constant term
+            constantValue += ( numberOfItemsOnScale * itemCreator.weight );
           }
-          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing, false ) );
+          else {
+
+            // these Items are displayed as coefficient and icon
+            if ( children.length > 0 ) {
+              children.push( new Text( EqualityExplorerConstants.PLUS, { font: plusFont } ) );
+            }
+            children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing, false ) );
+          }
+        }
+        else {
+          throw new Error( 'unsupported subtype of ItemCreator' );
         }
       }
     }

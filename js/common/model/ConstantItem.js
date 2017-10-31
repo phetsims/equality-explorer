@@ -1,8 +1,9 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * ConstantItem is an item that represents a constant numeric value.
- * All ConstantItems sum to produce a constant term shown in equations.
+ * ConstantItem is an item that has a constant weight.
+ * ConstantItems that are marked as being part of a 'constant term' will sum to
+ * produce the constant term shown in equations (see options.constantTerm).
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -23,8 +24,15 @@ define( function( require ) {
    */
   function ConstantItem( weight, icon, iconShadow, options ) {
 
+    options = _.extend( {
+      constantTerm: false
+    }, options );
+
     // @private
     this._weight = weight;
+
+    // @public (read-only)
+    this.constantTerm = options.constantTerm;
 
     Item.call( this, icon, iconShadow, options );
   }

@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * ConstantItemCreator creates and manages ConstantItems (items that represent a constant numeric value).
+ * ConstantItemCreator creates and manages ConstantItems, items that have a constant weight.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -23,8 +23,15 @@ define( function( require ) {
    */
   function ConstantItemCreator( weight, icon, iconShadow, options ) {
 
+    options = _.extend( {
+      constantTerm: false
+    }, options );
+
     // @private
     this._weight = weight;
+
+    // @public (read-only)
+    this.constantTerm = options.constantTerm;
 
     ItemCreator.call( this, icon, iconShadow, options );
   }
@@ -43,7 +50,8 @@ define( function( require ) {
     createItemProtected: function( location ) {
       return new ConstantItem( this._weight, this.icon, this.iconShadow, {
         location: location,
-        dragBounds: this.dragBounds
+        dragBounds: this.dragBounds,
+        constantTerm: this.constantTerm
       } );
     },
 

@@ -73,10 +73,12 @@ define( function( require ) {
       positiveXCreator,
       negativeXCreator,
       new ConstantItemCreator( 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ],
+        constantTerm: true // sum these items to a numeric value that appears in equations
       } ),
       new ConstantItemCreator( -1, ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ],
+        constantTerm: true // sum these items to a numeric value that appears in equations
       } )
     ];
   }
