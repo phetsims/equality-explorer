@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * ConstantItem is shown as a constant in equations, and sums with other ConstantItems.
+ * ConstantItem is an item that represents a constant numeric value.
+ * All ConstantItems sum to produce a constant term shown in equations.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * ConstantItemCreator creates items of type ConstantItem (constants).
+ * ConstantItemCreator creates and manages ConstantItems (items that represent a constant numeric value).
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

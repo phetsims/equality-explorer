@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO doc
+ * MysteryItem is an item that has constant weight, but whose weight the user must guess.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

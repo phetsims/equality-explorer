@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO doc
+ * MysteryItemCreator creates and manages MysteryItems (items whose weight is constant, but must be guessed).
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

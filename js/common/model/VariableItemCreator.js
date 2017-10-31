@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * VariableItemCreator creates items of type VariableItem (variables).
+ * VariableItemCreator creates and manages VariableItems (variables).
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
