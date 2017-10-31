@@ -43,8 +43,6 @@ if ( item1.variableTerm && item2.variableTerm && item1.weight === -item2.weight 
 
 Change how/when item creators are disabled.  Or get rid of feature?
 
-Handling of variables and inverses in EquationNode, replace temporary hack
-
 Implement coupled mode
 
 Snapshots
