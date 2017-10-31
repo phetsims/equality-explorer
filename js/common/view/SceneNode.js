@@ -37,8 +37,7 @@ define( function( require ) {
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
       sceneProperty: null, // {Property.<Scene>|null} the selected Scene
       coupledSwitchVisible: true,
-      organizeButtonVisible: true,
-      showWorstCaseEquation: false //TODO delete this
+      organizeButtonVisible: true
     }, options );
 
     // view-specific Properties
@@ -82,7 +81,6 @@ define( function( require ) {
       } );
 
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene.leftItemCreators, scene.rightItemCreators, {
-      showWorstCaseEquation: options.showWorstCaseEquation, //TODO delete this
       xVisibleProperty: options.xVisibleProperty,
       fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
