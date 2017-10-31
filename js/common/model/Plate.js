@@ -15,15 +15,16 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Grid = require( 'EQUALITY_EXPLORER/common/model/Grid' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
+  var Vector2 = require( 'DOT/Vector2' );
   var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
 
   /**
-   * @param {DerivedProperty.<Vector2>} locationProperty
    * @param {ItemCreator[]} itemCreators
    * @param {Object} [options]
    * @constructor
    */
-  function Plate( locationProperty, itemCreators, options ) {
+  function Plate( itemCreators, options ) {
 
     options = _.extend( {
       supportHeight: 10, // height of the vertical support that connects the plate to the scale
@@ -34,7 +35,7 @@ define( function( require ) {
     }, options );
 
     // @public
-    this.locationProperty = locationProperty;
+    this.locationProperty = new Property( new Vector2( 0, 0 ) );
 
     // @private
     this.itemCreators = itemCreators;
@@ -47,7 +48,7 @@ define( function( require ) {
     this.cellSize = options.cellSize;
 
     // @private
-    this.grid = new Grid( locationProperty, {
+    this.grid = new Grid( this.locationProperty, {
       rows: options.gridRows,
       columns: options.gridColumns,
       cellWidth: options.cellSize.width,

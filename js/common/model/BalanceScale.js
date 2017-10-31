@@ -17,9 +17,7 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
-  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -81,35 +79,6 @@ define( function( require ) {
       maxIconHeight + ( 2 * options.gridYMargin ) );
     assert && assert( options.gridColumns * cellSize.width <= options.plateDiameter, 'grid is wider than plate' );
 
-    // @public (read-only) angle of the scale in radians, zero is balanced
-    this.angleProperty = new NumberProperty( 0 );
-
-    // {DerivedProperty.<number>} location of the right plate
-    var rightLocationProperty = new DerivedProperty( [ this.angleProperty ],
-      function( angle ) {
-        var absXInset = Math.abs( options.plateXInset );
-        if ( angle === 0 ) {
-          return new Vector2( self.location.x + ( self.beamWidth / 2 ) - absXInset,
-            self.location.y - options.plateSupportHeight );
-        }
-        else {
-          var hypotenuse = ( self.beamWidth / 2 ) - absXInset;
-          var dx = Math.cos( angle ) * hypotenuse;
-          var dy = Math.sin( angle ) * hypotenuse;
-          return new Vector2( self.location.x + dx, self.location.y + dy - options.plateSupportHeight );
-        }
-      }
-    );
-
-    // {DerivedProperty.<number>} location of the left plate
-    var leftLocationProperty = new DerivedProperty( [ rightLocationProperty ],
-      function( rightLocation ) {
-        var dx = rightLocation.x - self.location.x;
-        var dy = ( rightLocation.y + options.plateSupportHeight ) - self.location.y;
-        return new Vector2( self.location.x - dx, self.location.y - dy - options.plateSupportHeight );
-      }
-    );
-
     // options that apply to both plates
     var plateOptions = {
       supportHeight: options.plateSupportHeight,
@@ -120,12 +89,11 @@ define( function( require ) {
     };
 
     // @public (read-only)
-    this.leftPlate = new Plate( leftLocationProperty, leftItemCreators, plateOptions );
-    this.rightPlate = new Plate( rightLocationProperty, rightItemCreators, plateOptions );
+    this.leftPlate = new Plate( leftItemCreators, plateOptions );
+    this.rightPlate = new Plate( rightItemCreators, plateOptions );
 
-    //TODO angleProperty should be derived, but leftLocationProperty and rightLocationProperty depend on it
-    // unlink is unnecessary
-    Property.multilink( [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
+    // @public {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
+    this.angleProperty = new DerivedProperty( [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
       function( leftWeight, rightWeight ) {
 
         // compute the weight difference between the 2 plates
@@ -141,8 +109,37 @@ define( function( require ) {
 
         var angle = ( weightDelta / options.maxWeight ) * options.maxAngle;
         assert && assert( Math.abs( angle ) <= options.maxAngle, 'angle out of range: ' + angle );
-        self.angleProperty.value = angle;
+        return angle;
       } );
+
+    // Move the plates when the angle changes. unlink not needed.
+    this.angleProperty.link( function( angle ) {
+
+      // hoist reusable vars
+      var dx = 0;
+      var dy = 0;
+
+      // move the right plate
+      var rightLocation = null;
+      var absXInset = Math.abs( options.plateXInset );
+      if ( angle === 0 ) {
+        rightLocation = new Vector2( self.location.x + ( self.beamWidth / 2 ) - absXInset,
+          self.location.y - options.plateSupportHeight );
+      }
+      else {
+        var hypotenuse = ( self.beamWidth / 2 ) - absXInset;
+        dx = Math.cos( angle ) * hypotenuse;
+        dy = Math.sin( angle ) * hypotenuse;
+        rightLocation = new Vector2( self.location.x + dx, self.location.y + dy - options.plateSupportHeight );
+      }
+      self.rightPlate.locationProperty.value = rightLocation;
+
+      // move the left plate, relative to the right plate
+      dx = rightLocation.x - self.location.x;
+      dy = ( rightLocation.y + options.plateSupportHeight ) - self.location.y;
+      self.leftPlate.locationProperty.value =
+        new Vector2( self.location.x - dx, self.location.y - dy - options.plateSupportHeight );
+    } );
   }
 
   equalityExplorer.register( 'BalanceScale', BalanceScale );
