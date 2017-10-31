@@ -41,12 +41,12 @@ Combine inverses to create '0', halo, fade out.
 if ( item1.constantTerm && item2.constantTerm && item1.weight === -item2.weight ) { combine }
 if ( item1.variableTerm && item2.variableTerm && item1.weight === -item2.weight ) { combine }
 
-Implement coupled mode
-
 Snapshots
 - save and restore the user's arrangement of items on the scale
 - save and restore 'x' value
 - show 'x=N' in snapshots, based on a new toggle control in the button group
+
+Coupled mode
 
 Solving screen - generalize other screens? different implementation?
 
