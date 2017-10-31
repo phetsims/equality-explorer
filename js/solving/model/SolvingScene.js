@@ -19,7 +19,7 @@ define( function( require ) {
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var StringProperty = require( 'AXON/StringProperty' );
-  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
+  var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
 
   /**
    * @constructor
@@ -82,8 +82,8 @@ define( function( require ) {
    */
   function createItemCreators( xProperty ) {
 
-    var positiveXCreator = new VariableItemCreator( 'x', xProperty.value, 'x', ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE );
-    var negativeXCreator = new VariableItemCreator( 'x', -xProperty.value, '-x', ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE );
+    var positiveXCreator = new XItemCreator( xProperty.value, 1, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE );
+    var negativeXCreator = new XItemCreator( -xProperty.value, -1, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE );
 
     // unlink not needed
     xProperty.lazyLink( function( x ) {

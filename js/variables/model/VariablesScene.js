@@ -17,7 +17,7 @@ define( function( require ) {
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
-  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
+  var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
 
   /**
    * @constructor
@@ -55,11 +55,11 @@ define( function( require ) {
     assert && assert( numberOfItemsOnScale.length === 4 );
     var index = 0;
 
-    var positiveXCreator = new VariableItemCreator( 'x', xProperty.value, 'x', ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var positiveXCreator = new XItemCreator( xProperty.value, 1, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
       numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
     } );
 
-    var negativeXCreator = new VariableItemCreator( 'x', -xProperty.value, '-x', ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var negativeXCreator = new XItemCreator( -xProperty.value, -1, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
       numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
     } );
 

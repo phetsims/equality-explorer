@@ -20,7 +20,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
+  var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
 
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -67,7 +67,7 @@ define( function( require ) {
     var updateDependencies = [];
     itemCreators.forEach( function( itemCreator ) {
       updateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
-      if ( itemCreator instanceof VariableItemCreator ) {
+      if ( itemCreator instanceof XItemCreator ) {
         updateDependencies.push( itemCreator.weightProperty );
       }
     } );
@@ -153,7 +153,7 @@ define( function( require ) {
   function createSideNode( itemCreators, iconScale, plusFont, numberFont, variableFont, plusSpacing, coefficientSpacing ) {
 
     var constantValue = 0;
-    var coefficientValue = 0;
+    var xCoefficient = 0;
 
     var children = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
@@ -163,20 +163,13 @@ define( function( require ) {
       var numberOfItemsOnScale = itemCreator.numberOfItemsOnScaleProperty.value;
       if ( numberOfItemsOnScale > 0 ) {
 
-        if ( itemCreator instanceof ConstantItemCreator) {
+        if ( itemCreator instanceof ConstantItemCreator ) {
 
           // combine all constants into 1 term
           constantValue += ( numberOfItemsOnScale * itemCreator.weight );
         }
-        else if ( itemCreator instanceof VariableItemCreator ) {
-
-          //TODO temporary hack for consolidating variables into 1 term
-          if ( itemCreator.debugName === 'x' ) {
-            coefficientValue += numberOfItemsOnScale;
-          }
-          else {
-            coefficientValue -= numberOfItemsOnScale;
-          }
+        else if ( itemCreator instanceof XItemCreator ) {
+          xCoefficient += ( itemCreator.coefficient * numberOfItemsOnScale );
         }
         else {
           if ( children.length > 0 ) {
@@ -187,13 +180,10 @@ define( function( require ) {
       }
     }
 
-    //TODO temporary hack for consolidating variables into 1 term
-    if ( coefficientValue !== 0 ) {
+    if ( xCoefficient !== 0 ) {
       assert && assert( children.length === 0, 'equation with a variable should have no terms so far' );
-      var variableIcon = new Text( xString, {
-        font: variableFont
-      } );
-      children.push( createTermNode( coefficientValue, variableIcon, 1, numberFont, coefficientSpacing, true ) );
+      var xIcon = new Text( xString, { font: variableFont } );
+      children.push( createTermNode( xCoefficient, xIcon, 1, numberFont, coefficientSpacing, true ) );
     }
 
     if ( constantValue !== 0 ) {

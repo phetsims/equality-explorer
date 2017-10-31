@@ -1,8 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * VariableItem is associated with a specific variable (e.g. 'x') and can sum with other Items that
- * are associated with the same variable.
+ * XItem is an item associated with the variable 'x' and can be summed with other XItems.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -15,28 +14,31 @@ define( function( require ) {
   var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
 
   /**
-   * @param {string} variableName - e.g. 'x'
    * @param {NumberProperty} weightProperty
-   * @param {string} debugName - internal name, not displayed to the user
+   * @param {number} coefficient
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function VariableItem( variableName, weightProperty, debugName, icon, iconShadow, options ) {
+  function XItem( weightProperty, coefficient, icon, iconShadow, options ) {
 
-    // @public (read-only)
-    this.variableName = variableName;
+    options = _.extend( {
+      signIsNegative: false
+    }, options );
 
     // @private
     this.weightProperty = weightProperty;
 
-    Item.call( this, debugName, icon, iconShadow, options );
+    // @public (read-only)
+    this.signIsNegative = options.signIsNegative;
+
+    Item.call( this, coefficient + 'x', icon, iconShadow, options );
   }
 
-  equalityExplorer.register( 'VariableItem', VariableItem );
+  equalityExplorer.register( 'XItem', XItem );
 
-  return inherit( Item, VariableItem, {
+  return inherit( Item, XItem, {
 
     /**
      * Gets the Item's weight.

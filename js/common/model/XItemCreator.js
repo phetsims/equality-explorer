@@ -1,57 +1,56 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * VariableItemCreator creates and manages VariableItems (variables).
+ * XItemCreator creates and manages XItems (items that are associated with the variable 'x').
  *
- * @author Chris Malley (PixelZoom, Inc.)
+ * @author Chris Malley (PixelZoom, Inc.)     
  */
 define( function( require ) {
   'use strict';
 
   // modules
-  var VariableItem = require( 'EQUALITY_EXPLORER/common/model/VariableItem' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Util = require( 'DOT/Util' );
+  var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
 
   /**
-   * @param {string} variableName - e.g. 'x'
    * @param {number} weight - initial weight
-   * @param {string} debugName - internal name, not displayed to the user
+   * @param {number} coefficient
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function VariableItemCreator( variableName, weight, debugName, icon, iconShadow, options ) {
-
+  function XItemCreator( weight, coefficient, icon, iconShadow, options ) {
+    
     var self = this;
 
     // @public (read-only)
-    this.variableName = variableName;
-
+    this.coefficient = coefficient;
+    
     // @public
     this.weightProperty = new NumberProperty( weight, {
       isValidValue: function( value ) { return Util.isInteger( value ); } // integer values
     } );
 
-    ItemCreator.call( this, debugName, icon, iconShadow, options );
+    ItemCreator.call( this, coefficient + 'x', icon, iconShadow, options );
 
-    // Update the weight of all VariableItems. unlink not required.
+    // Update the weight of all XItems. unlink not required.
     this.weightProperty.link( function( weight ) {
       var items = self.getItems();
       for ( var i = 0; i < items.length; i++ ) {
-        assert && assert( items[ i ] instanceof VariableItem, 'unexpected item type' );
+        assert && assert( items[ i ] instanceof XItem, 'unexpected item type' );
         items[ i ].weightProperty.value = weight;
       }
     } );
   }
 
-  equalityExplorer.register( 'VariableItemCreator', VariableItemCreator );
+  equalityExplorer.register( 'XItemCreator', XItemCreator );
 
-  return inherit( ItemCreator, VariableItemCreator, {
+  return inherit( ItemCreator, XItemCreator, {
 
     /**
      * Instantiates an Item.
@@ -61,7 +60,8 @@ define( function( require ) {
      * @override
      */
     createItemProtected: function( location ) {
-      return new VariableItem( this.variable, this.weightProperty, this.debugName, this.icon, this.iconShadow, {
+      return new XItem( this.weightProperty, this.coefficient, this.icon, this.iconShadow, {
+        signIsNegative: this.signIsNegative,
         location: location,
         dragBounds: this.dragBounds
       } );

@@ -15,7 +15,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Grid = require( 'EQUALITY_EXPLORER/common/model/Grid' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
+  var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
 
   /**
    * @param {DerivedProperty.<Vector2>} locationProperty
@@ -58,7 +58,7 @@ define( function( require ) {
     var weightDependencies = [];
     itemCreators.forEach( function( itemCreator ) {
       weightDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
-      if ( itemCreator instanceof VariableItemCreator ) {
+      if ( itemCreator instanceof XItemCreator ) {
         weightDependencies.push( itemCreator.weightProperty );
       }
     } );
