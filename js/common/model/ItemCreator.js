@@ -56,6 +56,7 @@ define( function( require ) {
     // @public (read-only) so we don't need to expose itemsOnScale
     this.numberOfItemsOnScaleProperty = this.itemsOnScale.lengthProperty;
 
+    //TODO remove enabledProperty if we ultimately decide not to disable ItemCreators
     // @public is this ItemCreator enabled?
     this.enabledProperty = new BooleanProperty( true );
 

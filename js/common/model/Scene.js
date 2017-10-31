@@ -15,7 +15,6 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -76,38 +75,9 @@ define( function( require ) {
 
     // @public whether the 2 sides of the equation are coupled
     this.coupledProperty = new BooleanProperty( false );
-
-    // Wire up enable/disable for ItemCreators, based on capacity of the scale's plates
-    enableItemCreators( leftItemCreators, this.scale.leftPlate.numberOfCells );
-    enableItemCreators( rightItemCreators, this.scale.rightPlate.numberOfCells );
   }
 
   equalityExplorer.register( 'Scene', Scene );
-
-  /**
-   * Wires up an ItemCreator's enabled Property, so that it can't create more than some max number of Items.
-   * @param {ItemCreator[]} itemCreators
-   * @param {number} maxItems
-   */
-  function enableItemCreators( itemCreators, maxItems ) {
-
-    // Get Properties needed to total up all Items
-    var numberOfItemsProperties = [];
-    itemCreators.forEach( function( itemCreator ) {
-      numberOfItemsProperties.push( itemCreator.numberOfItemsProperty );
-    } );
-
-    // Disable all ItemCreators if the maximum number of Items is reached, unmultilink unnecessary
-    Property.multilink( numberOfItemsProperties, function() {
-      var totalItems = 0;
-      for ( var i = 0; i < numberOfItemsProperties.length; i++ ) {
-        totalItems += numberOfItemsProperties[ i ].value;
-      }
-      for ( i = 0; i < itemCreators.length; i++ ) {
-        itemCreators[ i ].enabledProperty.value = ( totalItems < maxItems );
-      }
-    } );
-  }
 
   return inherit( Object, Scene, {
 
