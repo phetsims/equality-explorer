@@ -23,17 +23,16 @@ define( function( require ) {
    */
   function XItem( weightProperty, coefficient, icon, iconShadow, options ) {
 
-    options = _.extend( {
-      signIsNegative: false
-    }, options );
+    assert && assert( coefficient === 1 || coefficient === -1, 'invalid coefficient: ' + coefficient );
 
-    // @private
+    // @public
     this.weightProperty = weightProperty;
 
-    // @public (read-only)
-    this.signIsNegative = options.signIsNegative;
+    // @public (read-only) 
+    this.coefficient = coefficient;
 
-    Item.call( this, coefficient + 'x', icon, iconShadow, options );
+    var debugName = coefficient + 'x'; // i18n not needed
+    Item.call( this, debugName, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'XItem', XItem );

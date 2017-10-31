@@ -25,18 +25,21 @@ define( function( require ) {
    * @constructor
    */
   function XItemCreator( weight, coefficient, icon, iconShadow, options ) {
+
+    assert && assert( coefficient === 1 || coefficient === -1, 'invalid coefficient: ' + coefficient );
     
     var self = this;
 
-    // @public (read-only)
-    this.coefficient = coefficient;
-    
     // @public
     this.weightProperty = new NumberProperty( weight, {
       isValidValue: function( value ) { return Util.isInteger( value ); } // integer values
     } );
 
-    ItemCreator.call( this, coefficient + 'x', icon, iconShadow, options );
+    // @public (read-only)
+    this.coefficient = coefficient;
+
+    var debugName = coefficient + 'x'; // i18n not needed
+    ItemCreator.call( this, debugName, icon, iconShadow, options );
 
     // Update the weight of all XItems. unlink not required.
     this.weightProperty.link( function( weight ) {
@@ -61,7 +64,6 @@ define( function( require ) {
      */
     createItemProtected: function( location ) {
       return new XItem( this.weightProperty, this.coefficient, this.icon, this.iconShadow, {
-        signIsNegative: this.signIsNegative,
         location: location,
         dragBounds: this.dragBounds
       } );
