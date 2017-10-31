@@ -38,8 +38,7 @@ define( function( require ) {
     // @public (read-only)
     this.coefficient = coefficient;
 
-    var debugName = coefficient + 'x'; // i18n not needed
-    ItemCreator.call( this, debugName, icon, iconShadow, options );
+    ItemCreator.call( this, icon, iconShadow, options );
 
     // Update the weight of all XItems. unlink not required.
     this.weightProperty.link( function( weight ) {

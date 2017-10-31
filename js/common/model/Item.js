@@ -14,22 +14,15 @@ define( function( require ) {
   var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
   var inherit = require( 'PHET_CORE/inherit' );
 
-  var idIndex = 0; // unique number assigned to each Item instance, for debugging purposes
-
   /**
-   * @param {string} debugName - internal name, not displayed to the user
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function Item( debugName, icon, iconShadow, options ) {
-
-    // @private
-    this.id = idIndex++;
+  function Item( icon, iconShadow, options ) {
 
     // @public (read-only)
-    this.debugName = debugName;
     this.icon = icon;
     this.iconShadow = iconShadow;
     this.disposedEmitter = new Emitter(); // emit1 when Item.dispose has completed
@@ -59,14 +52,6 @@ define( function( require ) {
       this.disposedEmitter.emit1( this );
       this.disposedEmitter.removeAllListeners();
       EqualityExplorerMovable.prototype.dispose.call( this );
-    },
-
-    /**
-     * @returns {string}
-     * @public
-     */
-    toString: function() {
-      return this.debugName + this.id;
     }
   } );
 } );

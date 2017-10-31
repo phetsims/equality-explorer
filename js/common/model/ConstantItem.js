@@ -16,18 +16,17 @@ define( function( require ) {
 
   /**
    * @param {number} weight
-   * @param {string} debugName - internal name, not displayed to the user
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantItem( weight, debugName, icon, iconShadow, options ) {
+  function ConstantItem( weight, icon, iconShadow, options ) {
 
     // @private
     this._weight = weight;
 
-    Item.call( this, debugName, icon, iconShadow, options );
+    Item.call( this, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'ConstantItem', ConstantItem );

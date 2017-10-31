@@ -38,13 +38,13 @@ define( function( require ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     var index = 0;
     return [
-      new MysteryItemCreator( 11, 'dog', ItemIcons.DOG_NODE, ItemIcons.DOG_SHADOW_NODE, {
+      new MysteryItemCreator( 11, ItemIcons.DOG_NODE, ItemIcons.DOG_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( 4, 'turtle', ItemIcons.TURTLE_NODE, ItemIcons.TURTLE_SHADOW_NODE, {
+      new MysteryItemCreator( 4, ItemIcons.TURTLE_NODE, ItemIcons.TURTLE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( 6, 'cat', ItemIcons.CAT_NODE, ItemIcons.CAT_SHADOW_NODE, {
+      new MysteryItemCreator( 6, ItemIcons.CAT_NODE, ItemIcons.CAT_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } )
     ];

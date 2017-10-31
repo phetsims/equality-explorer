@@ -16,18 +16,17 @@ define( function( require ) {
 
   /**
    * @param {number} weight
-   * @param {string} debugName - internal name, not displayed to the user
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryItemCreator( weight, debugName, icon, iconShadow, options ) {
+  function MysteryItemCreator( weight, icon, iconShadow, options ) {
 
     // @private
     this._weight = weight;
 
-    ItemCreator.call( this, debugName, icon, iconShadow, options );
+    ItemCreator.call( this, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'MysteryItemCreator', MysteryItemCreator );
@@ -42,7 +41,7 @@ define( function( require ) {
      * @override
      */
     createItemProtected: function( location ) {
-      return new MysteryItem( this.weight, this.debugName, this.icon, this.iconShadow, {
+      return new MysteryItem( this.weight, this.icon, this.iconShadow, {
         location: location,
         dragBounds: this.dragBounds
       } );

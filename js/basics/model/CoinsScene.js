@@ -22,7 +22,8 @@ define( function( require ) {
   function CoinsScene() {
     BasicsScene.call( this, 'coins', ItemIcons.COIN3_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
-      createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
+      createItemCreators( EqualityExplorerQueryParameters.rightBasics )
+    );
   }
 
   equalityExplorer.register( 'CoinsScene', CoinsScene );
@@ -36,13 +37,13 @@ define( function( require ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     var index = 0;
     return [
-      new MysteryItemCreator( 3, 'coin1', ItemIcons.COIN1_NODE, ItemIcons.COIN1_SHADOW_NODE, {
+      new MysteryItemCreator( 3, ItemIcons.COIN1_NODE, ItemIcons.COIN1_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( 2, 'coin2', ItemIcons.COIN2_NODE, ItemIcons.COIN2_SHADOW_NODE, {
+      new MysteryItemCreator( 2, ItemIcons.COIN2_NODE, ItemIcons.COIN2_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( 5, 'coin3', ItemIcons.COIN3_NODE, ItemIcons.COIN3_SHADOW_NODE, {
+      new MysteryItemCreator( 5, ItemIcons.COIN3_NODE, ItemIcons.COIN3_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } )
     ];

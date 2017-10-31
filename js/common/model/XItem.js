@@ -31,8 +31,7 @@ define( function( require ) {
     // @public (read-only) 
     this.coefficient = coefficient;
 
-    var debugName = coefficient + 'x'; // i18n not needed
-    Item.call( this, debugName, icon, iconShadow, options );
+    Item.call( this, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'XItem', XItem );

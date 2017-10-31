@@ -94,8 +94,8 @@ define( function( require ) {
     return [
       positiveXCreator,
       negativeXCreator,
-      new ConstantItemCreator( 1, '1', ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE ),
-      new ConstantItemCreator( -1, '-1', ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE )
+      new ConstantItemCreator( 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE ),
+      new ConstantItemCreator( -1, ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE )
     ];
   }
 

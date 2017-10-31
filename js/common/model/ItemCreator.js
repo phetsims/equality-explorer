@@ -17,13 +17,12 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {string} debugName - internal name, not displayed to the user
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function ItemCreator( debugName, icon, iconShadow, options ) {
+  function ItemCreator( icon, iconShadow, options ) {
 
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
@@ -36,7 +35,6 @@ define( function( require ) {
       'numberOfItemsOnScale is invalid: ' + options.numberOfItemsOnScale );
 
     // @public (read-only)
-    this.debugName = debugName;
     this.icon = icon;
     this.iconShadow = iconShadow;
     this.numberOfItemsOnScale = options.numberOfItemsOnScale;

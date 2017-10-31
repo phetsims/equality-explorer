@@ -15,21 +15,21 @@ define( function( require ) {
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
-   * @param {string} name - internal name, not displayed to the user
+   * @param {string} debugName - internal name, not displayed to the user
    * @param {Node} icon - icon used to represent the scene
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
    * @param {Object} [options]
    * @constructor
    */
-  function BasicsScene( name, icon, leftItemCreators, rightItemCreators, options ) {
+  function BasicsScene( debugName, icon, leftItemCreators, rightItemCreators, options ) {
 
     options = options || {};
 
     assert && assert( !options.icon, 'this type defines its icon' );
     options.icon = new Node( { children: [ icon ] } ); // wrap the icon, since we're using scenery's DAG feature
 
-    Scene.call( this, name, leftItemCreators, rightItemCreators, options );
+    Scene.call( this, debugName, leftItemCreators, rightItemCreators, options );
 
     this.coupledProperty.link( function( coupled ) {
       assert && assert( !coupled, 'coupling is not supported in the Basics screen' );

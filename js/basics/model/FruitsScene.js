@@ -22,7 +22,8 @@ define( function( require ) {
   function FruitsScene() {
     BasicsScene.call( this, 'fruits', ItemIcons.APPLE_NODE,
       createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
-      createItemCreators( EqualityExplorerQueryParameters.rightBasics ) );
+      createItemCreators( EqualityExplorerQueryParameters.rightBasics )
+    );
   }
 
   equalityExplorer.register( 'FruitsScene', FruitsScene );
@@ -36,13 +37,13 @@ define( function( require ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     var index = 0;
     return [
-      new MysteryItemCreator( 4, 'apple', ItemIcons.APPLE_NODE, ItemIcons.APPLE_SHADOW_NODE, {
+      new MysteryItemCreator( 4, ItemIcons.APPLE_NODE, ItemIcons.APPLE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( 5, 'lemon', ItemIcons.LEMON_NODE, ItemIcons.LEMON_SHADOW_NODE, {
+      new MysteryItemCreator( 5, ItemIcons.LEMON_NODE, ItemIcons.LEMON_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( 2, 'orange', ItemIcons.ORANGE_NODE, ItemIcons.ORANGE_SHADOW_NODE, {
+      new MysteryItemCreator( 2, ItemIcons.ORANGE_NODE, ItemIcons.ORANGE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } )
     ];

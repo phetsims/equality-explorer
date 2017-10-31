@@ -16,18 +16,17 @@ define( function( require ) {
 
   /**
    * @param {number} weight
-   * @param {string} debugName - internal name, not displayed to the user
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantItemCreator( weight, debugName, icon, iconShadow, options ) {
+  function ConstantItemCreator( weight, icon, iconShadow, options ) {
 
     // @private
     this._weight = weight;
 
-    ItemCreator.call( this, debugName, icon, iconShadow, options );
+    ItemCreator.call( this, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'ConstantItemCreator', ConstantItemCreator );
@@ -42,7 +41,7 @@ define( function( require ) {
      * @override
      */
     createItemProtected: function( location ) {
-      return new ConstantItem( this._weight, this.debugName, this.icon, this.iconShadow, {
+      return new ConstantItem( this._weight, this.icon, this.iconShadow, {
         location: location,
         dragBounds: this.dragBounds
       } );
