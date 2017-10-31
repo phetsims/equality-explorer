@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * ConstantItemCreator creates and manages ConstantItems, items that have a constant weight.
+ * ConstantItemCreator creates and manages ConstantItems.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -12,7 +12,7 @@ define( function( require ) {
   var ConstantItem = require( 'EQUALITY_EXPLORER/common/model/ConstantItem' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
+  var MysteryItemCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryItemCreator' );
 
   /**
    * @param {number} weight
@@ -22,23 +22,12 @@ define( function( require ) {
    * @constructor
    */
   function ConstantItemCreator( weight, icon, iconShadow, options ) {
-
-    options = _.extend( {
-      constantTerm: false
-    }, options );
-
-    // @private
-    this._weight = weight;
-
-    // @public (read-only)
-    this.constantTerm = options.constantTerm;
-
-    ItemCreator.call( this, icon, iconShadow, options );
+    MysteryItemCreator.call( this, weight, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'ConstantItemCreator', ConstantItemCreator );
 
-  return inherit( ItemCreator, ConstantItemCreator, {
+  return inherit( MysteryItemCreator, ConstantItemCreator, {
 
     /**
      * Instantiates an Item.
@@ -50,19 +39,8 @@ define( function( require ) {
     createItemProtected: function( location ) {
       return new ConstantItem( this._weight, this.icon, this.iconShadow, {
         location: location,
-        dragBounds: this.dragBounds,
-        constantTerm: this.constantTerm
+        dragBounds: this.dragBounds
       } );
-    },
-
-    /**
-     * Gets the Item's weight.
-     * @returns {number}
-     * @public
-     * @override
-     */
-    get weight() {
-      return this._weight;
     }
   } );
 } );

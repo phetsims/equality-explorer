@@ -1,9 +1,9 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * ConstantItem is an item that has a constant weight.
- * ConstantItems that are marked as being part of a 'constant term' will sum to
- * produce the constant term shown in equations (see options.constantTerm).
+ * ConstantItem is a marker type, it includes no new functionality.
+ * Like MysteryItems, it has a constant weight.
+ * Unlike MysteryWeight, it's weight is revealed to the user, and it contributes to the constant term in equations.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -13,7 +13,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
+  var MysteryItem = require( 'EQUALITY_EXPLORER/common/model/MysteryItem' );
 
   /**
    * @param {number} weight
@@ -23,31 +23,10 @@ define( function( require ) {
    * @constructor
    */
   function ConstantItem( weight, icon, iconShadow, options ) {
-
-    options = _.extend( {
-      constantTerm: false
-    }, options );
-
-    // @private
-    this._weight = weight;
-
-    // @public (read-only)
-    this.constantTerm = options.constantTerm;
-
-    Item.call( this, icon, iconShadow, options );
+    MysteryItem.call( this, weight, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'ConstantItem', ConstantItem );
 
-  return inherit( Item, ConstantItem, {
-
-    /**
-     * Gets the Item's weight.
-     * @returns {number}
-     */
-    get weight() {
-      return this._weight;
-    }
-  } );
+  return inherit( MysteryItem, ConstantItem );
 } );
- 

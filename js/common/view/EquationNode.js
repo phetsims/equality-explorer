@@ -170,22 +170,16 @@ define( function( require ) {
         }
         else if ( itemCreator instanceof ConstantItemCreator ) {
 
-          if ( itemCreator.constantTerm ) {
-
-            // these Items contribute to the constant term
-            constantValue += ( numberOfItemsOnScale * itemCreator.weight );
-          }
-          else {
-
-            // these Items are displayed as coefficient and icon
-            if ( children.length > 0 ) {
-              children.push( new Text( EqualityExplorerConstants.PLUS, { font: plusFont } ) );
-            }
-            children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing, false ) );
-          }
+          // these Items contribute their weight to the constant term
+          constantValue += ( itemCreator.weight * numberOfItemsOnScale );
         }
         else {
-          throw new Error( 'unsupported subtype of ItemCreator' );
+
+          // these Items are displayed as a coefficient and icon
+          if ( children.length > 0 ) {
+            children.push( new Text( EqualityExplorerConstants.PLUS, { font: plusFont } ) );
+          }
+          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing, false ) );
         }
       }
     }

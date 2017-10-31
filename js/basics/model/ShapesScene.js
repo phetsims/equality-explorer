@@ -15,6 +15,7 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
+  var MysteryItemCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryItemCreator' );
 
   /**
    * @constructor
@@ -37,15 +38,14 @@ define( function( require ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
     var index = 0;
     return [
-      new ConstantItemCreator( 2, ItemIcons.SPHERE_NODE, ItemIcons.SPHERE_SHADOW_NODE, {
+      new MysteryItemCreator( 2, ItemIcons.SPHERE_NODE, ItemIcons.SPHERE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new ConstantItemCreator( 3, ItemIcons.SQUARE_NODE, ItemIcons.SQUARE_SHADOW_NODE, {
+      new MysteryItemCreator( 3, ItemIcons.SQUARE_NODE, ItemIcons.SQUARE_SHADOW_NODE, {
         numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
       new ConstantItemCreator( 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ],
-        constantTerm: true // sum these items to a numeric value that appears in equations
+        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } )
     ];
   }
