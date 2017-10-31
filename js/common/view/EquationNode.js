@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -19,6 +20,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
 
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -64,8 +66,10 @@ define( function( require ) {
     // {Property} dependencies that require the equation to be updated
     var updateDependencies = [];
     itemCreators.forEach( function( itemCreator ) {
-      updateDependencies.push( itemCreator.itemWeightProperty );
       updateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
+      if ( itemCreator instanceof VariableItemCreator ) {
+        updateDependencies.push( itemCreator.weightProperty );
+      }
     } );
 
     // update the equation, dispose of this Multilink in dispose
@@ -111,13 +115,13 @@ define( function( require ) {
     // evaluate the left side
     var leftWeight = 0;
     for ( var i = 0; i < leftItemCreators.length; i++ ) {
-      leftWeight += leftItemCreators[ i ].numberOfItemsOnScaleProperty.value * leftItemCreators[ i ].itemWeightProperty.value;
+      leftWeight += leftItemCreators[ i ].numberOfItemsOnScaleProperty.value * leftItemCreators[ i ].weight;
     }
 
     // evaluate the right side
     var rightWeight = 0;
     for ( i = 0; i < rightItemCreators.length; i++ ) {
-      rightWeight += rightItemCreators[ i ].numberOfItemsOnScaleProperty.value * rightItemCreators[ i ].itemWeightProperty.value;
+      rightWeight += rightItemCreators[ i ].numberOfItemsOnScaleProperty.value * rightItemCreators[ i ].weight;
     }
 
     // determine the operator that describes the relationship between left and right sides
@@ -159,15 +163,15 @@ define( function( require ) {
       var numberOfItemsOnScale = itemCreator.numberOfItemsOnScaleProperty.value;
       if ( numberOfItemsOnScale > 0 ) {
 
-        if ( itemCreator.constantTerm ) {
+        if ( itemCreator instanceof ConstantItemCreator) {
 
           // combine all constants into 1 term
-          constantValue += ( numberOfItemsOnScale * itemCreator.itemWeightProperty.value );
+          constantValue += ( numberOfItemsOnScale * itemCreator.weight );
         }
-        else if ( itemCreator.variableTerm ) {
+        else if ( itemCreator instanceof VariableItemCreator ) {
 
           //TODO temporary hack for consolidating variables into 1 term
-          if ( itemCreator.name === 'x' ) {
+          if ( itemCreator.debugName === 'x' ) {
             coefficientValue += numberOfItemsOnScale;
           }
           else {

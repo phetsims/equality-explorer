@@ -15,6 +15,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Grid = require( 'EQUALITY_EXPLORER/common/model/Grid' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
 
   /**
    * @param {DerivedProperty.<Vector2>} locationProperty
@@ -57,14 +58,16 @@ define( function( require ) {
     var weightDependencies = [];
     itemCreators.forEach( function( itemCreator ) {
       weightDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
-      weightDependencies.push( itemCreator.itemWeightProperty );
+      if ( itemCreator instanceof VariableItemCreator ) {
+        weightDependencies.push( itemCreator.weightProperty );
+      }
     } );
 
     // @public {DerivedProperty.<number>} total weight of the Items that are on the plate
     this.weightProperty = new DerivedProperty( weightDependencies, function() {
       var weight = 0;
       itemCreators.forEach( function( itemCreator ) {
-        weight += ( itemCreator.numberOfItemsOnScaleProperty.value * itemCreator.itemWeightProperty.value );
+        weight += ( itemCreator.numberOfItemsOnScaleProperty.value * itemCreator.weight );
       } );
       return weight;
     } );

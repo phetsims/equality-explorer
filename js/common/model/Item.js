@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * An item that can be placed on the scale.
+ * Base type for items that can be placed on the scale.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,42 +14,25 @@ define( function( require ) {
   var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
   var inherit = require( 'PHET_CORE/inherit' );
 
-  var idIndex = 0; // unique number assigned to each Item instance
+  var idIndex = 0; // unique number assigned to each Item instance, for debugging purposes
 
   /**
-   * @param {string} name - internal name, not displayed to the user
+   * @param {string} debugName - internal name, not displayed to the user
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function Item( name, icon, iconShadow, options ) {
+  function Item( debugName, icon, iconShadow, options ) {
 
-    options = _.extend( {
-      constantTerm: false, // {boolean} does this Item evaluate to a constant?
-      variableTerm: false // {boolean} does this Item represent a variable?
-    }, options );
-
-    assert && assert( !( options.contantTerm && options.variableTerm ),
-      'Item cannot be both a constant and a variable' );
-
-    //TODO this smells like subtyping is called for
-    // @public (read-only)
-    this.constantTerm = options.constantTerm;
-    this.variableTerm = options.variableTerm;
-
-    // @public (read-only)
+    // @private
     this.id = idIndex++;
 
     // @public (read-only)
-    this.name = name;
-
-    // @public (read-only)
+    this.debugName = debugName;
     this.icon = icon;
     this.iconShadow = iconShadow;
-
-    // @public (read-only) emit1 when Item.dispose has completed
-    this.disposedEmitter = new Emitter();
+    this.disposedEmitter = new Emitter(); // emit1 when Item.dispose has completed
 
     EqualityExplorerMovable.call( this, options );
   }
@@ -57,6 +40,16 @@ define( function( require ) {
   equalityExplorer.register( 'Item', Item );
 
   return inherit( EqualityExplorerMovable, Item, {
+
+    /**
+     * Gets the Item's weight
+     * @returns {number}
+     * @public
+     * @abstract
+     */
+    get weight() {
+      throw new Error( 'weight getter must be implemented by subtype' );
+    },
 
     /**
      * @public
@@ -73,7 +66,7 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-      return this.name + this.id;
+      return this.debugName + this.id;
     }
   } );
 } );

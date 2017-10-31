@@ -28,7 +28,6 @@ define( function( require ) {
     var sceneNode;
     for ( var i = 0; i < model.scenes.length; i++ ) {
       sceneNode = new SceneNode( model.scenes[ i ], this.layoutBounds, {
-        showWorstCaseEquation: true, //TODO delete this
         sceneProperty: model.sceneProperty,
         coupledSwitchVisible: false
       } );

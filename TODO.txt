@@ -31,6 +31,8 @@ Be sure to consider scenarios where inverses sum to zero while coupling is enabl
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+Fix organizeButton.enabled in BalanceScaleNode (see TODO)
+
 Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
 
 How to associate inverses? ItemCreator.setInverse?
@@ -40,8 +42,6 @@ if ( item1.constantTerm && item2.constantTerm && item1.weight === -item2.weight 
 if ( item1.variableTerm && item2.variableTerm && item1.weight === -item2.weight ) { combine }
 
 Change how/when item creators are disabled.  Or get rid of feature?
-
-Item type hierarchy: ConstantItem, VariableItem
 
 Handling of variables and inverses in EquationNode, replace temporary hack
 

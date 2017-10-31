@@ -10,11 +10,12 @@ define( function( require ) {
 
   // modules
   var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
+  var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
+  var MysteryItemCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryItemCreator' );
 
   /**
    * @constructor
@@ -34,19 +35,16 @@ define( function( require ) {
    */
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );
+    var index = 0;
     return [
-      new ItemCreator( 'sphere', ItemIcons.SPHERE_NODE, ItemIcons.SPHERE_SHADOW_NODE, {
-        weight: 2,
-        numberOfItemsOnScale: numberOfItemsOnScale[ 0 ]
+      new MysteryItemCreator( 2, 'sphere', ItemIcons.SPHERE_NODE, ItemIcons.SPHERE_SHADOW_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new ItemCreator( 'square', ItemIcons.SQUARE_NODE, ItemIcons.SQUARE_SHADOW_NODE, {
-        weight: 3,
-        numberOfItemsOnScale: numberOfItemsOnScale[ 1 ]
+      new MysteryItemCreator( 3, 'square', ItemIcons.SQUARE_NODE, ItemIcons.SQUARE_SHADOW_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new ItemCreator( '1', ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
-        weight: 1,
-        numberOfItemsOnScale: numberOfItemsOnScale[ 2 ],
-        constantTerm: true
+      new ConstantItemCreator( 1, '1', ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } )
     ];
   }

@@ -9,14 +9,15 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
+  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
 
   /**
    * @constructor
@@ -52,37 +53,30 @@ define( function( require ) {
    */
   function createItemCreators( xProperty, numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 4 );
+    var index = 0;
 
-    var positiveXCreator = new ItemCreator( 'x', ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
-      weight: xProperty.value,
-      numberOfItemsOnScale: numberOfItemsOnScale[ 0 ],
-      variableTerm: true
+    var positiveXCreator = new VariableItemCreator( 'x', xProperty.value, 'x', ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
     } );
 
-    var negativeXCreator = new ItemCreator( '-x', ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
-      weight: -xProperty.value,
-      numberOfItemsOnScale: numberOfItemsOnScale[ 1 ],
-      variableTerm: true
+    var negativeXCreator = new VariableItemCreator( 'x', -xProperty.value, '-x', ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
     } );
 
     // unlink not needed
-    xProperty.link( function( x ) {
-      positiveXCreator.itemWeightProperty.value = x;
-      negativeXCreator.itemWeightProperty.value = -x;
+    xProperty.lazyLink( function( x ) {
+      positiveXCreator.weightProperty.value = x;
+      negativeXCreator.weightProperty.value = -x;
     } );
 
     return [
       positiveXCreator,
       negativeXCreator,
-      new ItemCreator( '1', ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
-        weight: 1,
-        numberOfItemsOnScale: numberOfItemsOnScale[ 2 ],
-        constantTerm: true
+      new ConstantItemCreator( 1, '1', ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } ),
-      new ItemCreator( '-1', ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
-        weight: -1,
-        numberOfItemsOnScale: numberOfItemsOnScale[ 3 ],
-        constantTerm: true
+      new ConstantItemCreator( -1, '-1', ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
       } )
     ];
   }

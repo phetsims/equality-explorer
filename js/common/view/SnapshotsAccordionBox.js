@@ -20,7 +20,6 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var WorstCaseEquationNode = require( 'EQUALITY_EXPLORER/common/view/WorstCaseEquationNode' );
   var XCheckBox = require( 'EQUALITY_EXPLORER/common/view/XCheckBox' );
 
   // strings
@@ -41,7 +40,6 @@ define( function( require ) {
 
     options = _.extend( {
 
-      showWorstCaseEquation: false, //TODO delete this
       fixedWidth: 100, // this accordion box is designed to be a fixed width, regardless of its content
       numberOfSnapshots: 5,
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
@@ -82,24 +80,16 @@ define( function( require ) {
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
     for ( var i = 0; i < options.numberOfSnapshots; i++ ) {
 
-      if ( i === 0 && options.showWorstCaseEquation ) {
-        var equationNode = new WorstCaseEquationNode( leftItemCreators, rightItemCreators, {
-          maxWidth: contentWidth
-        } );
-        snapshotsVBoxChildren.push( equationNode );
-      }
-      else {
-        var snapshotButton = new RectangularPushButton( {
-          content: snapshotIcon,
-          baseColor: PhetColorScheme.BUTTON_YELLOW,
-          xMargin: 8,
-          yMargin: 4,
-          touchAreaXDilation: 5,
-          touchAreaYDilation: 5
-        } );
+      var snapshotButton = new RectangularPushButton( {
+        content: snapshotIcon,
+        baseColor: PhetColorScheme.BUTTON_YELLOW,
+        xMargin: 8,
+        yMargin: 4,
+        touchAreaXDilation: 5,
+        touchAreaYDilation: 5
+      } );
 
-        snapshotsVBoxChildren.push( snapshotButton );
-      }
+      snapshotsVBoxChildren.push( snapshotButton );
     }
 
     // separator between snapshots and buttons

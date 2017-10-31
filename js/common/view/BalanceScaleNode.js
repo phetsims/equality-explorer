@@ -143,6 +143,7 @@ define( function( require ) {
     // disable ClearScaleButton and OrganizeButton when scale is empty. unlink is unnecessary.
     Property.multilink( [ scale.leftPlate.weightProperty, scale.rightPlate.weightProperty ],
       function( leftWeight, rightWeight ) {
+        //TODO this doesn't work for constants and variables, should be based on number of items on scale
         var enabled = ( leftWeight > 0 || rightWeight > 0 );
         clearScaleButton.enabled = enabled;
         organizeButton.enabled = enabled;

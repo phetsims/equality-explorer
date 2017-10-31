@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Creates and manages Items.
+ * Abstract base type for creating and managing Items.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -13,52 +13,38 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {string} name - internal name, not displayed to the user
-   * @param {number} weight - initial weight of Items
+   * @param {string} debugName - internal name, not displayed to the user
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function ItemCreator( name, icon, iconShadow, options ) {
+  function ItemCreator( debugName, icon, iconShadow, options ) {
 
     options = _.extend( {
-      weight: 1, // {number} initial weight of Items
-      constantTerm: false, // {boolean} do Items evaluate to a constant?
-      variableTerm: false, // {boolean} do Items represent a variable?
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
+
+      //TODO this type doesn't do anything with this, move elsewhere?
       numberOfItemsOnScale: 0 // number of items initially on the scale
     }, options );
 
-    assert && assert( !( options.contantTerm && options.variableTerm ),
-      'cannot be both a constant and a variable' );
     assert && assert( ( options.numberOfItemsOnScale >= 0 ) && Util.isInteger( options.numberOfItemsOnScale ),
       'numberOfItemsOnScale is invalid: ' + options.numberOfItemsOnScale );
 
     // @public (read-only)
-    this.name = name;
+    this.debugName = debugName;
     this.icon = icon;
     this.iconShadow = iconShadow;
-    this.constantTerm = options.constantTerm;
-    this.variableTerm = options.variableTerm;
     this.numberOfItemsOnScale = options.numberOfItemsOnScale;
 
     // @public {Bounds2} drag bounds for Items created
     this.dragBounds = options.dragBounds;
 
-    // @public weight of each Item
-    // Note that all Items created by an ItemCreator have the same weight, so Item does not have a weightProperty.
-    this.itemWeightProperty = new NumberProperty( options.weight, {
-      isValidValue: function( value ) { return Util.isInteger( value ); } // integer values
-    } );
-
-    // @private {ObservableArray.<Item>} all Items that currently exist
+    // @protected {ObservableArray.<Item>} all Items that currently exist
     this.allItems = new ObservableArray();
 
     // @public (read-only) so we don't need to expose allItems
@@ -81,10 +67,30 @@ define( function( require ) {
 
   return inherit( Object, ItemCreator, {
 
+    /**
+     * Instantiates an Item.
+     * @param {Vector2} location
+     * @returns {Item}
+     * @protected
+     * @abstract
+     */
+    createItemProtected: function( location ) {
+      throw new Error( 'createItemProtected must be implemented by subtypes' );
+    },
+
+    /**
+     * Gets the Item's weight
+     * @returns {number}
+     * @public
+     * @abstract
+     */
+    get weight() {
+      throw new Error( 'weight getter must be implemented by subtype' );
+    },
+
     // @public
     reset: function() {
       this.disposeAllItems();
-      this.itemWeightProperty.reset();
     },
 
     /**
@@ -106,18 +112,22 @@ define( function( require ) {
      */
     createItem: function( location ) {
 
-      var item = new Item( this.name, this.icon, this.iconShadow, {
-        location: location,
-        constantTerm: this.constantTerm,
-        variableTerm: this.variableTerm,
-        dragBounds: this.dragBounds
-      } );
+      var item = this.createItemProtected( location );
       this.allItems.add( item );
 
       // Clean up when the item is disposed. Item.dispose handles removal of this listener.
       item.disposedEmitter.addListener( this.itemWasDisposedBound );
 
       return item;
+    },
+
+    /**
+     * Gets an array of all Items managed by this ItemCreator.
+     * @returns {Item[]}
+     * @public
+     */
+    getItems: function() {
+      return this.allItems.getArray().slice();
     },
 
     /**
