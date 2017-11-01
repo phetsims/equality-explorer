@@ -90,11 +90,13 @@ define( function( require ) {
       },
 
       drag: function( event, trail ) {
+
+        // move the item
         var location = self.globalToParentPoint( event.pointer.point ).minus( startDragOffset );
         var boundedLocation = item.dragBounds.closestPointTo( location );
         item.moveTo( boundedLocation );
 
-        //TODO put a yellow halo around items that would sum to zero
+        //TODO if the item overlaps an item that sums to zero, put a halo around both items
       },
 
       end: function( event, trail ) {
