@@ -109,11 +109,6 @@ define( function( require ) {
           // item was released below the plate, animate back to panel and dispose
           self.animateToPanel( item );
         }
-        else if ( item instanceof MysteryItem ) {
-
-          // item was released above the plate, animate to closest empty cell
-          self.animateToClosestEmptyCell( item, plate );
-        }
         else if ( ( item instanceof ConstantItem ) || ( item instanceof XItem ) ) {
 
           // if we overlap with a similar item that sums to zero, make both items go away
@@ -131,7 +126,9 @@ define( function( require ) {
           }
         }
         else {
-          throw new Error( 'unexpected subtype of AbstractItem' );
+
+          // item was released above the plate, animate to closest empty cell
+          self.animateToClosestEmptyCell( item, plate );
         }
       }
     } );
