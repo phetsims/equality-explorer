@@ -2,6 +2,7 @@
 
 /**
  * Visual representation of an item.
+ * Origin is in the center of the item's icon.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -53,7 +54,7 @@ define( function( require ) {
     // synchronize location with model
     var locationObserver = function( location ) {
       
-      // compensate for the shadow, so that position is in the center of the icon
+      // compensate for the shadow, so that origin is in the center of the icon
       self.centerX = location.x + ( options.shadowOffset.width / 2 );
       self.centerY = location.y + ( options.shadowOffset.height / 2 );
     };
