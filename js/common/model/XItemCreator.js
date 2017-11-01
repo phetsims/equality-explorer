@@ -55,9 +55,9 @@ define( function( require ) {
   return inherit( ItemCreator, XItemCreator, {
 
     /**
-     * Instantiates an Item.
+     * Instantiates an XItem.
      * @param {Vector2} location
-     * @returns {Item}
+     * @returns {XItem}
      * @protected
      * @override
      */

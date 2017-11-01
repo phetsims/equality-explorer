@@ -34,9 +34,9 @@ define( function( require ) {
   return inherit( ItemCreator, MysteryItemCreator, {
 
     /**
-     * Instantiates an Item.
+     * Instantiates a MysteryItem.
      * @param {Vector2} location
-     * @returns {Item}
+     * @returns {MysteryItem}
      * @protected
      * @override
      */
