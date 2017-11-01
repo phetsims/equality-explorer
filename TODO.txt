@@ -39,7 +39,7 @@ How to associate inverses? ItemCreator.setInverse?
 
 While dragging put a halo (ala EE) around overlapping items that would sum to zero.
 
-Sum items to zero: set items visible:false, display '0' or '0x', fade out, dispose items.
+Sum items to zero: dispose items, display '0' with round halo, or '0x' with square halo, fade out
 
 Snapshots
 - save and restore the user's arrangement of items on the scale
