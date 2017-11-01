@@ -33,11 +33,11 @@ IMPLEMENTATION
 
 Fix organizeButton.enabled in BalanceScaleNode (see TODO)
 
-Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
-
 While dragging put a halo (ala EE) around overlapping items that would sum to zero.
 
-Sum items to zero: dispose items, display '0' with round halo, or '0x' with square halo, fade out
+Sum items to zero: dispose items (done), display '0' with round halo, or '0x' with square halo, fade out
+
+Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
 
 Snapshots
 - save and restore the user's arrangement of items on the scale
