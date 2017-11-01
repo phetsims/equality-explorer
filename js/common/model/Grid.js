@@ -173,6 +173,21 @@ define( function( require ) {
     },
 
     /**
+     * Gets the item at a specified location in the grid.
+     * @param {Vector2} location
+     * @returns {AbstractItem|null} null if location is outside the grid, or the cell at location is empty
+     * @public
+     */
+    getItemAtLocation: function( location ) {
+      var item = null;
+      var index = this.getCellAtLocation( location );
+      if ( index !== -1 ) {
+        item = this.getItemForCell( index );
+      }
+      return item;
+    },
+
+    /**
      * Does the grid contain the specified item?
      * @param {AbstractItem} item
      * @returns {boolean}
