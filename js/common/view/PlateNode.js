@@ -45,7 +45,7 @@ define( function( require ) {
       lineWidth: 1
     } );
 
-    // Inside bottom surface of the plate, were Items will sit.
+    // Inside bottom surface of the plate, were items will sit.
     // Path description (d= field) from assets/scale/inside.svg
     // See assets/README.md for more details.
     var insideSVG = 'M243.527,69.984c0,2.25-64.234,8.75-143,8.75c-78.764,0-142.25-5.988-142.25-9.25c0-5.25,63.836-10.462,142.602-10.462S243.527,64.484,243.527,69.984';
@@ -99,7 +99,7 @@ define( function( require ) {
     assert && assert( !options.children, 'this type defines its children' );
     options.children = [ supportNode, pivotNode, plateNode ];
 
-    // Grid where Items appear
+    // Grid where items appear
     if ( EqualityExplorerQueryParameters.showGrid ) {
       options.children.push( new GridNode( {
         rows: plate.gridRows,

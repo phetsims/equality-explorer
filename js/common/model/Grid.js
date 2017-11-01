@@ -102,9 +102,9 @@ define( function( require ) {
     },
 
     /**
-     * Gets the index for the cell that an Item occupies.
+     * Gets the index for the cell that an item occupies.
      * @param {AbstractItem} item
-     * @returns {number} the cell's index, -1 if the Item doesn't occupy a cell
+     * @returns {number} the cell's index, -1 if the item doesn't occupy a cell
      * @pubic
      */
     getCellForItem: function( item ) {
@@ -133,7 +133,7 @@ define( function( require ) {
     },
 
     /**
-     * Puts an Item in the specified cell. The cell must be empty.
+     * Puts an item in the specified cell. The cell must be empty.
      * @param {AbstractItem} item
      * @param {number} index - the cell's index
      */

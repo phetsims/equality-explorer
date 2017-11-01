@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Node that creates Items.
+ * Node that creates items.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -16,7 +16,7 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
-   * @param {ItemCreator} itemCreator
+   * @param {AbstractItemCreator} itemCreator
    * @param {Plate} plate
    * @param {Node} itemsLayer
    * @param {Object} [options]
@@ -44,10 +44,10 @@ define( function( require ) {
 
     this.addInputListener( SimpleDragHandler.createForwardingListener(
 
-      // down function, creates model and view for an Item
+      // down function, creates model and view for an item
       function( event ) {
 
-        // create an Item
+        // create an item
         var location = itemsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
         var item = itemCreator.createItem( location );
 
@@ -55,7 +55,7 @@ define( function( require ) {
         var itemNode = new ItemNode( item, itemCreator, plate );
         itemsLayer.addChild( itemNode );
 
-        // Clean up when the Item is disposed. Item.dispose handles removal of this listener.
+        // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
         item.disposedEmitter.addListener( function( item ) {
           itemNode.dispose();
         } );
@@ -88,9 +88,9 @@ define( function( require ) {
   return inherit( Node, ItemCreatorNode, {
 
     /**
-     * Populates the scale with a specified number of Items.
+     * Populates the scale with a specified number of items.
      * This is intended to be used for debugging and testing, not in production situations.
-     * ItemCreatorNode uses its location to initialize the location of Items that it creates.
+     * ItemCreatorNode uses its location to initialize the location of items that it creates.
      * So this function must be called after the ItemCreatorNode has been added to the scene graph,
      * so that it has a valid location.
      * See https://github.com/phetsims/equality-explorer/issues/8.
@@ -102,7 +102,7 @@ define( function( require ) {
 
       for ( var i = 0; i < numberOfItems; i++ ) {
 
-        // create an Item
+        // create an item
         var location = this.itemsLayer.globalToLocalPoint( this.parentToGlobalPoint( this.center ) );
         var item = this.itemCreator.createItem( location );
 
@@ -110,13 +110,13 @@ define( function( require ) {
         var itemNode = new ItemNode( item, this.itemCreator, this.plate );
         this.itemsLayer.addChild( itemNode );
 
-        // put the Item on the scale
+        // put the item on the scale
         this.itemCreator.addItemToScale( item );
         var cellIndex = this.plate.getFirstEmptyCell();
         assert && assert( cellIndex !== -1, 'plate is full, numberOfItems is too large: ' + numberOfItems );
         this.plate.addItem( item, cellIndex );
 
-        // Clean up when the Item is disposed. Item.dispose handles removal of this listener.
+        // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
         // IFEE creates a closure for itemNode.
         (function( itemNode ) {
           item.disposedEmitter.addListener( function( item ) {

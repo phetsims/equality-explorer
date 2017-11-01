@@ -37,7 +37,7 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0 ], // in the order that Items appear in the panel below the scale
+      defaultValue: [ 0, 0, 0 ], // in the order that items appear in the panel below the scale
       isValidValue: function( value ) {
         return isValidItemsArray( value, 3 );
       }
@@ -61,7 +61,7 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0 ], // in the order that Items appear in the panel below the scale
+      defaultValue: [ 0, 0 ], // in the order that items appear in the panel below the scale
       isValidValue: function( value ) {
         return isValidItemsArray( value, 2 );
       }
@@ -85,7 +85,7 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0, 0 ], // in the order that Items appear in the panel below the scale
+      defaultValue: [ 0, 0, 0, 0 ], // in the order that items appear in the panel below the scale
       isValidValue: function( value ) {
         return isValidItemsArray( value, 4 );
       }
@@ -107,7 +107,7 @@ define( function( require ) {
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
 
   /**
-   * Validates an array that indicates the number of Items on a plate.
+   * Validates an array that indicates the number of items on a plate.
    * @param {[]} array
    * @param {number} length - required length of array
    * @returns {boolean}

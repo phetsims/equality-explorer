@@ -44,8 +44,8 @@ define( function( require ) {
       // options related to the plate's 2D grid
       gridRows: 6, // {number} rows in the grid
       gridColumns: 6, // {number} columns in grid
-      gridXMargin: 2, // horizontal space between stacks of Items
-      gridYMargin: 0  // vertical space between Items in each stack
+      gridXMargin: 2, // horizontal space between stacks of items
+      gridYMargin: 0  // vertical space between items in each stack
 
     }, options );
 
@@ -65,7 +65,7 @@ define( function( require ) {
     // {ItemCreator[]} all ItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
-    // Find the maximum width and height of all Item icons
+    // Find the maximum width and height of all item icons
     var maxIconWidth = 0;
     var maxIconHeight = 0;
     itemCreators.forEach( function( itemCreator ) {
@@ -147,7 +147,7 @@ define( function( require ) {
   return inherit( Object, BalanceScale, {
 
     /**
-     * Organizes Items on the scale, grouping like items together.
+     * Organizes items on the scale, grouping like items together.
      * @public
      */
     organize: function() {
@@ -156,7 +156,7 @@ define( function( require ) {
     },
 
     /**
-     * Disposes of all Items that are on the scale.
+     * Disposes of all items that are on the scale.
      * @public
      */
     disposeAllItems: function() {

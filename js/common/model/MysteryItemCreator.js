@@ -34,7 +34,7 @@ define( function( require ) {
   return inherit( AbstractItemCreator, MysteryItemCreator, {
 
     /**
-     * Instantiates aItem.
+     * Instantiates a MysteryItem.
      * @param {Vector2} location
      * @returns {MysteryItem}
      * @protected
@@ -48,7 +48,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the Item's weight.
+     * Gets the item's weight.
      * @returns {number}
      * @public
      * @override

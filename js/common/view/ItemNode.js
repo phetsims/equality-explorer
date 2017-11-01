@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Visual representation of an Item.
+ * Visual representation of an item.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -16,8 +16,8 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
-   * @param {Item} item
-   * @param {ItemCreator} itemCreator
+   * @param {AbstractItem} item
+   * @param {AbstractItemCreator} itemCreator
    * @param {Plate} plate
    * @param {Object} [options]
    * @constructor
@@ -74,7 +74,7 @@ define( function( require ) {
 
         self.moveToFront();
 
-        // move up and left, same amount as shadow offset so the shadow appears where the Item was
+        // move up and left, same amount as shadow offset so the shadow appears where the item was
         self.item.locationProperty.value =
           self.item.locationProperty.value.plusXY( -options.shadowOffset.width, -options.shadowOffset.height );
 
@@ -98,12 +98,12 @@ define( function( require ) {
 
         if ( item.locationProperty.value.y > plate.locationProperty.value.y ) {
 
-          // Item was released below the plate, animate back to panel and dispose
+          // item was released below the plate, animate back to panel and dispose
           self.animateToPanel( item );
         }
         else {
 
-          // Item was released above the plate, animate to closest available cell
+          // item was released above the plate, animate to closest available cell
           self.animateToClosestCell( item, plate );
         }
       }
@@ -131,7 +131,7 @@ define( function( require ) {
 
     /**
      * Returns an Item to the panel where it was created.
-     * @param {Item} item
+     * @param {AbstractItem} item
      * @private
      */
     animateToPanel: function( item ) {
@@ -143,8 +143,8 @@ define( function( require ) {
     },
 
     /**
-     * Animates an Item to an empty cell on the plate.
-     * @param {Item} item
+     * Animates an item to an empty cell on the plate.
+     * @param {AbstractItem} item
      * @param {Plate} plate
      * @private
      */
@@ -172,7 +172,7 @@ define( function( require ) {
             }
           },
 
-          // When the Item reaches the cell, put it in the cell.
+          // When the item reaches the cell, put it in the cell.
           animationCompletedCallback: function() {
             plate.addItem( item, cellIndex );
             self.itemCreator.addItemToScale( item );

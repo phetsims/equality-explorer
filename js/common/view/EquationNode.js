@@ -142,7 +142,7 @@ define( function( require ) {
   /**
    * Creates one side of the equation
    * @param {ItemCreator[]} itemCreators
-   * @param {number} iconScale - scale for Item icons
+   * @param {number} iconScale - scale for item icons
    * @param {Font} plusFont - font for plus operators
    * @param {Font} numberFont - font for coefficients and constants
    * @param {Font} variableFont - font for variables, like 'x'
@@ -165,17 +165,17 @@ define( function( require ) {
 
         if ( itemCreator instanceof XItemCreator ) {
 
-          // these Items contribute to the coefficient for 'x'
+          // these items contribute to the coefficient for 'x'
           xCoefficient += ( itemCreator.coefficient * numberOfItemsOnScale );
         }
         else if ( itemCreator instanceof ConstantItemCreator ) {
 
-          // these Items contribute their weight to the constant term
+          // these items contribute their weight to the constant term
           constantValue += ( itemCreator.weight * numberOfItemsOnScale );
         }
         else {
 
-          // these Items are displayed as a coefficient and icon
+          // these items are displayed as a coefficient and icon
           if ( children.length > 0 ) {
             children.push( new Text( EqualityExplorerConstants.PLUS, { font: plusFont } ) );
           }

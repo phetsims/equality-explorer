@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Abstract base type for creating and managing Items.
+ * Abstract base type for creating and managing items.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -39,26 +39,26 @@ define( function( require ) {
     this.iconShadow = iconShadow;
     this.numberOfItemsOnScale = options.numberOfItemsOnScale;
 
-    // @public {Bounds2} drag bounds for Items created
+    // @public {Bounds2} drag bounds for items created
     this.dragBounds = options.dragBounds;
 
-    // @protected {ObservableArray.<Item>} all Items that currently exist
+    // @protected {ObservableArray.<AbstractItem>} all items that currently exist
     this.allItems = new ObservableArray();
 
     // @public (read-only) so we don't need to expose allItems
     this.numberOfItemsProperty = this.allItems.lengthProperty;
 
-    // @private {ObservableArray.<Item>} Items that are on the scale, a subset of allItems
+    // @private {ObservableArray.<AbstractItem>} items that are on the scale, a subset of allItems
     this.itemsOnScale = new ObservableArray();
 
     // @public (read-only) so we don't need to expose itemsOnScale
     this.numberOfItemsOnScaleProperty = this.itemsOnScale.lengthProperty;
 
-    //TODO remove enabledProperty if we ultimately decide not to disable ItemCreators
+    //TODO remove enabledProperty if we ultimately decide not to disable item creators
     // @public is this creator enabled?
     this.enabledProperty = new BooleanProperty( true );
 
-    // @private called when Item.dispose is called
+    // @private called when AbstractItem.dispose is called
     this.itemWasDisposedBound = this.itemWasDisposed.bind( this );
   }
 
@@ -67,9 +67,9 @@ define( function( require ) {
   return inherit( Object, AbstractItemCreator, {
 
     /**
-     * Instantiates an Item.
+     * Instantiates an item.
      * @param {Vector2} location
-     * @returns {Item}
+     * @returns {AbstractItem}
      * @protected
      * @abstract
      */
@@ -78,7 +78,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the Item's weight
+     * Gets the item's weight
      * @returns {number}
      * @public
      * @abstract
@@ -93,7 +93,7 @@ define( function( require ) {
     },
 
     /**
-     * Animates Items.
+     * Animates items.
      * @param {number} dt - time since the previous step, in seconds
      * @public
      */
@@ -104,9 +104,9 @@ define( function( require ) {
     },
 
     /**
-     * Creates an Item.
+     * Creates an item.
      * @param {Vector2} location
-     * @returns {Item}
+     * @returns {AbstractItem}
      * @public
      */
     createItem: function( location ) {
@@ -114,14 +114,14 @@ define( function( require ) {
       var item = this.createItemProtected( location );
       this.allItems.add( item );
 
-      // Clean up when the item is disposed. Item.dispose handles removal of this listener.
+      // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
       item.disposedEmitter.addListener( this.itemWasDisposedBound );
 
       return item;
     },
 
     /**
-     * Gets an array of all Items managed.
+     * Gets an array of all items managed.
      * @returns {Item[]}
      * @public
      */
@@ -130,8 +130,8 @@ define( function( require ) {
     },
 
     /**
-     * Records the fact that an Item is on the scale.
-     * @param {Item} item
+     * Records the fact that an item is on the scale.
+     * @param {AbstractItem} item
      * @public
      */
     addItemToScale: function( item ) {
@@ -141,8 +141,8 @@ define( function( require ) {
     },
 
     /**
-     * Records the fact that an Item is no longer on the scale.
-     * @param {Item} item
+     * Records the fact that an item is no longer on the scale.
+     * @param {AbstractItem} item
      * @public
      */
     removeItemFromScale: function( item ) {
@@ -152,7 +152,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the set of Items that are on the scale.
+     * Gets the items that are on the scale.
      * @returns {Item[]}
      * @public
      */
@@ -161,7 +161,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the number of Items on the scale.
+     * Gets the number of items on the scale.
      * @returns {number}
      */
     getNumberOfItemsOnScale: function() {
@@ -169,7 +169,7 @@ define( function( require ) {
     },
 
     /**
-     * Disposes of all Items that were created.
+     * Disposes of all items that were created.
      * @private
      */
     disposeAllItems: function() {
@@ -179,7 +179,7 @@ define( function( require ) {
     },
 
     /**
-     * Disposes of all Items that are on the scale.
+     * Disposes of all items that are on the scale.
      * @public
      */
     disposeItemsOnScale: function() {
@@ -189,8 +189,8 @@ define( function( require ) {
     },
 
     /**
-     * Called when Item.dispose is called.
-     * @param {Item} item
+     * Called when AbstractItem.dispose is called.
+     * @param {AbstractItem} item
      * @private
      */
     itemWasDisposed: function( item ) {

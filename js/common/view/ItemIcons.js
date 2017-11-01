@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Items icons and their shadows.
+ * Item icons and their shadows.
  * Caution! These Nodes are reused via scenery's DAG feature.
  * Do not attempt to transform them direct. Wrap them in a parent Node and transform the parent.
  *

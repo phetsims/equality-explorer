@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Pressing this button clears all Items from the scale.
+ * Pressing this button clears all items from the scale.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

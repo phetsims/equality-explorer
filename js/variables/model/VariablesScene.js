@@ -46,7 +46,7 @@ define( function( require ) {
   equalityExplorer.register( 'VariablesScene', VariablesScene );
 
   /**
-   * Creates the set of ItemCreators for this scene.
+   * Creates the item creators for this scene.
    * @param {Property.<number>} xProperty
    * @param {number} numberOfItemsOnScale
    * @returns {ItemCreator[]}

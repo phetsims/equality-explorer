@@ -30,9 +30,9 @@ define( function( require ) {
   return inherit( MysteryItemCreator, ConstantItemCreator, {
 
     /**
-     * Instantiates an Item.
+     * Instantiates a ConstantItem.
      * @param {Vector2} location
-     * @returns {Item}
+     * @returns {ConstantItem}
      * @protected
      * @override
      */

@@ -33,7 +33,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      itemsPanelSpacing: 50, // spacing of Items in the panels that appear below the scale
+      itemsPanelSpacing: 50, // spacing of items in the panels that appear below the scale
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
       sceneProperty: null, // {Property.<Scene>|null} the selected Scene
       coupledSwitchVisible: true,
@@ -44,7 +44,7 @@ define( function( require ) {
     this.equationAccordionBoxExpandedProperty = new BooleanProperty( true );
     this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( true );
 
-    // Items live in this layer
+    // items live in this layer
     var itemsLayer = new Node();
 
     var scaleNode = new BalanceScaleNode( scene.scale, {
@@ -96,7 +96,7 @@ define( function( require ) {
         rightItemsPanel,
         equationAccordionBox,
         snapshotsAccordionBox,
-        itemsLayer // on top, so that Items are in front of everything else
+        itemsLayer // on top, so that items are in front of everything else
       ]
     } );
 

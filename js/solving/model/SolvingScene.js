@@ -76,7 +76,7 @@ define( function( require ) {
   equalityExplorer.register( 'SolvingScene', SolvingScene );
 
   /**
-   * Creates the set of ItemCreators for this scene.
+   * Creates the item creators for this scene.
    * @param {Property.<number>} xProperty
    * @returns {ItemCreator[]}
    */

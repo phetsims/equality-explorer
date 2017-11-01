@@ -69,7 +69,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the Item's weight.
+     * Gets the item's weight.
      * @returns {number}
      * @public
      * @override

@@ -30,7 +30,7 @@ define( function( require ) {
   equalityExplorer.register( 'ShapesScene', ShapesScene );
 
   /**
-   * Creates the set of ItemCreators for this scene.
+   * Creates the item creators for this scene.
    * @param {number[]} numberOfItemsOnScale
    * @returns {ItemCreator[]}
    */

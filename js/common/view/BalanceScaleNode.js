@@ -132,10 +132,10 @@ define( function( require ) {
       center: beamNode.center // correct location will be set later in constructor
     } );
 
-    // pressing this button clears all Items from the scale
+    // pressing this button clears all items from the scale
     var clearScaleButton = new ClearScaleButton( scale );
 
-    // pressing this button organizes Items on the scale, grouping like Items together
+    // pressing this button organizes items on the scale, grouping like Items together
     var organizeButton = new OrganizeButton( scale, {
       visible: options.organizeButtonVisible
     } );
