@@ -9,9 +9,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AbstractItemCreator = require( 'EQUALITY_EXPLORER/common/model/AbstractItemCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var MysteryItem = require( 'EQUALITY_EXPLORER/common/model/MysteryItem' );
 
   /**
@@ -26,15 +26,15 @@ define( function( require ) {
     // @private
     this._weight = weight;
 
-    ItemCreator.call( this, icon, iconShadow, options );
+    AbstractItemCreator.call( this, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'MysteryItemCreator', MysteryItemCreator );
 
-  return inherit( ItemCreator, MysteryItemCreator, {
+  return inherit( AbstractItemCreator, MysteryItemCreator, {
 
     /**
-     * Instantiates a MysteryItem.
+     * Instantiates aItem.
      * @param {Vector2} location
      * @returns {MysteryItem}
      * @protected

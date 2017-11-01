@@ -9,9 +9,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AbstractItem = require( 'EQUALITY_EXPLORER/common/model/AbstractItem' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
 
   /**
    * @param {NumberProperty} weightProperty
@@ -31,15 +31,15 @@ define( function( require ) {
     // @public (read-only) 
     this.coefficient = coefficient;
 
-    Item.call( this, icon, iconShadow, options );
+    AbstractItem.call( this, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'XItem', XItem );
 
-  return inherit( Item, XItem, {
+  return inherit( AbstractItem, XItem, {
 
     /**
-     * Gets the Item's weight.
+     * Gets the item's weight.
      * @returns {number}
      * @public
      * @override

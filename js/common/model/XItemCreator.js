@@ -9,9 +9,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AbstractItemCreator = require( 'EQUALITY_EXPLORER/common/model/AbstractItemCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemCreator = require( 'EQUALITY_EXPLORER/common/model/ItemCreator' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Util = require( 'DOT/Util' );
   var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
@@ -38,7 +38,7 @@ define( function( require ) {
     // @public (read-only)
     this.coefficient = coefficient;
 
-    ItemCreator.call( this, icon, iconShadow, options );
+    AbstractItemCreator.call( this, icon, iconShadow, options );
 
     // Update the weight of all XItems. unlink not required.
     this.weightProperty.link( function( weight ) {
@@ -52,7 +52,7 @@ define( function( require ) {
 
   equalityExplorer.register( 'XItemCreator', XItemCreator );
 
-  return inherit( ItemCreator, XItemCreator, {
+  return inherit( AbstractItemCreator, XItemCreator, {
 
     /**
      * Instantiates an XItem.

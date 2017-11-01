@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A grid that contains Items.
+ * A grid that contains items.
  * The grid is filled from the bottom up, so that there are no empty cells below an occupied cell.
  *
  * A cell in the grid is identified by an integer index. The client doesn't need to know how to interpret
@@ -13,9 +13,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AbstractItem = require( 'EQUALITY_EXPLORER/common/model/AbstractItem' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -50,13 +50,13 @@ define( function( require ) {
     this.cellWidth = options.cellWidth;
     this.cellHeight = options.cellHeight;
 
-    // @private Items are stored in a 1-D array, in row-major order (left-to-right, top-to-bottom)
+    // @private items are stored in a 1-D array, in row-major order (left-to-right, top-to-bottom)
     this.cells = [];
     for ( var index = 0; index < this.numberOfCells; index++ ) {
       this.cells[ index ] = NO_ITEM;
     }
 
-    // When the grid moves, move all Items that are in the grid. unlink not needed.
+    // When the grid moves, move all items that are in the grid. unlink not needed.
     this.locationProperty.link( function( location ) {
       for ( var index = 0; index < self.cells.length; index++ ) {
         if ( self.cells[ index ] !== NO_ITEM ) {
@@ -103,19 +103,19 @@ define( function( require ) {
 
     /**
      * Gets the index for the cell that an Item occupies.
-     * @param {Item} item
+     * @param {AbstractItem} item
      * @returns {number} the cell's index, -1 if the Item doesn't occupy a cell
      * @pubic
      */
     getCellForItem: function( item ) {
-      assert && assert( item instanceof Item, 'invalid item' );
+      assert && assert( item instanceof AbstractItem, 'invalid item' );
       return this.cells.indexOf( item );
     },
 
     /**
-     * Gets the Item that occupies a specified cell.
+     * Gets the item that occupies a specified cell.
      * @param {number} index - the cell's index
-     * @returns {Item|null} - null if the cell is empty
+     * @returns {AbstractItem|null} - null if the cell is empty
      */
     getItemForCell: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
@@ -123,8 +123,8 @@ define( function( require ) {
     },
 
     /**
-     * Does the grid contain the specified Item?
-     * @param {Item} item
+     * Does the grid contain the specified item?
+     * @param {AbstractItem} item
      * @returns {boolean}
      * @public
      */
@@ -134,11 +134,11 @@ define( function( require ) {
 
     /**
      * Puts an Item in the specified cell. The cell must be empty.
-     * @param {Item} item
+     * @param {AbstractItem} item
      * @param {number} index - the cell's index
      */
     putItem: function( item, index ) {
-      assert && assert( item instanceof Item, 'invalid item' );
+      assert && assert( item instanceof AbstractItem, 'invalid item' );
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
       assert && assert( this.isEmptyCell( index ), 'cell is occupied, index: ' + index );
       this.cells[ index ] = item;
@@ -146,11 +146,11 @@ define( function( require ) {
     },
 
     /**
-     * Removes an Item from the grid. Any Items above it move down to fill the empty cell.
-     * @param {Item} item
+     * Removes an item from the grid. Any items above it move down to fill the empty cell.
+     * @param {AbstractItem} item
      */
     removeItem: function( item ) {
-      assert && assert( item instanceof Item, 'invalid item' );
+      assert && assert( item instanceof AbstractItem, 'invalid item' );
       var index = this.getCellForItem( item );
       assert && assert( index !== -1, 'item not found: ' + item.toString() );
       this.clearCell( index );
@@ -158,14 +158,14 @@ define( function( require ) {
     },
 
     /**
-     * Shifts all Items that are above a cell down 1 cell, to fill the empty cell caused by removing an Item.
-     * @param {index} index - index of the cell that was occupied by the removed Item
+     * Shifts all items that are above a cell down 1 cell, to fill the empty cell caused by removing an item.
+     * @param {index} index - index of the cell that was occupied by the removed item
      * @private
      */
     shiftDown: function( index ) {
       assert && assert( this.isEmptyCell( index ), 'cell is not empty: ' + index );
 
-      // row and column of the removed Item
+      // row and column of the removed item
       var removedRow = this.indexToRow( index );
       var removedColumn = this.indexToColumn( index );
 
@@ -175,7 +175,7 @@ define( function( require ) {
 
         if ( !this.isEmptyCell( currentIndex ) ) {
 
-          // remove Item from it's current cell
+          // remove item from it's current cell
           var item = this.cells[ currentIndex ];
           this.clearCell( currentIndex );
 
@@ -242,7 +242,7 @@ define( function( require ) {
         }
 
         // Now look below the closest cell to see if there are any empty cells in the same column.
-        // This makes Items "fall" to the cell that is closest to the bottom of the grid.
+        // This makes items "fall" to the cell that is closest to the bottom of the grid.
         var closestRow = this.indexToRow( closestIndex );
         var closestColumn = this.indexToColumn( closestIndex );
         for ( var row = this.rows - 1; row > closestRow; row-- ) {

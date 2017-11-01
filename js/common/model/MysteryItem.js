@@ -11,9 +11,9 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AbstractItem = require( 'EQUALITY_EXPLORER/common/model/AbstractItem' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Item = require( 'EQUALITY_EXPLORER/common/model/Item' );
 
   /**
    * @param {number} weight
@@ -27,16 +27,18 @@ define( function( require ) {
     // @private
     this._weight = weight;
 
-    Item.call( this, icon, iconShadow, options );
+    AbstractItem.call( this, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'MysteryItem', MysteryItem );
 
-  return inherit( Item, MysteryItem, {
+  return inherit( AbstractItem, MysteryItem, {
 
     /**
-     * Gets the Item's weight.
+     * Gets the item's weight.
      * @returns {number}
+     * @public
+     * @override
      */
     get weight() {
       return this._weight;

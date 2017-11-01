@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Base type for items that can be placed on the scale.
+ * Abstract base type for items that can be placed on the scale.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,22 +20,22 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function Item( icon, iconShadow, options ) {
+  function AbstractItem( icon, iconShadow, options ) {
 
     // @public (read-only)
     this.icon = icon;
     this.iconShadow = iconShadow;
-    this.disposedEmitter = new Emitter(); // emit1 when Item.dispose has completed
+    this.disposedEmitter = new Emitter(); // emit1 when dispose has completed
 
     EqualityExplorerMovable.call( this, options );
   }
 
-  equalityExplorer.register( 'Item', Item );
+  equalityExplorer.register( 'AbstractItem', AbstractItem );
 
-  return inherit( EqualityExplorerMovable, Item, {
+  return inherit( EqualityExplorerMovable, AbstractItem, {
 
     /**
-     * Gets the Item's weight
+     * Gets the item's weight
      * @returns {number}
      * @public
      * @abstract

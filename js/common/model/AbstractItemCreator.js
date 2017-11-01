@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ItemCreator( icon, iconShadow, options ) {
+  function AbstractItemCreator( icon, iconShadow, options ) {
 
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
@@ -55,16 +55,16 @@ define( function( require ) {
     this.numberOfItemsOnScaleProperty = this.itemsOnScale.lengthProperty;
 
     //TODO remove enabledProperty if we ultimately decide not to disable ItemCreators
-    // @public is this ItemCreator enabled?
+    // @public is this creator enabled?
     this.enabledProperty = new BooleanProperty( true );
 
     // @private called when Item.dispose is called
     this.itemWasDisposedBound = this.itemWasDisposed.bind( this );
   }
 
-  equalityExplorer.register( 'ItemCreator', ItemCreator );
+  equalityExplorer.register( 'AbstractItemCreator', AbstractItemCreator );
 
-  return inherit( Object, ItemCreator, {
+  return inherit( Object, AbstractItemCreator, {
 
     /**
      * Instantiates an Item.
@@ -121,7 +121,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets an array of all Items managed by this ItemCreator.
+     * Gets an array of all Items managed.
      * @returns {Item[]}
      * @public
      */
@@ -169,7 +169,7 @@ define( function( require ) {
     },
 
     /**
-     * Disposes of all Items that were created by this ItemCreator.
+     * Disposes of all Items that were created.
      * @private
      */
     disposeAllItems: function() {
