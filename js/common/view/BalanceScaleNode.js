@@ -24,7 +24,6 @@ define( function( require ) {
   var OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PlateNode = require( 'EQUALITY_EXPLORER/common/view/PlateNode' );
-  var Property = require( 'AXON/Property' );
   var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -140,14 +139,12 @@ define( function( require ) {
       visible: options.organizeButtonVisible
     } );
 
-    // disable ClearScaleButton and OrganizeButton when scale is empty. unlink is unnecessary.
-    Property.multilink( [ scale.leftPlate.weightProperty, scale.rightPlate.weightProperty ],
-      function( leftWeight, rightWeight ) {
-        //TODO this doesn't work for constants and variables, should be based on number of items on scale
-        var enabled = ( leftWeight > 0 || rightWeight > 0 );
-        clearScaleButton.enabled = enabled;
-        organizeButton.enabled = enabled;
-      } );
+    // disable ClearScaleButton and/or OrganizeButton. unlink is unnecessary.
+    scale.numberOfItemsProperty.link( function( numberOfItems ) {
+      var enabled = ( numberOfItems !== 0 );
+      clearScaleButton.enabled = enabled;
+      organizeButton.enabled = enabled;
+    } );
 
     // buttons on the front face of the base
     var buttonsParent = new HBox( {

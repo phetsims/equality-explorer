@@ -140,6 +140,25 @@ define( function( require ) {
       self.leftPlate.locationProperty.value =
         new Vector2( self.location.x - dx, self.location.y - dy - options.plateSupportHeight );
     } );
+
+    // dependencies for numberOfItemsProperty
+    var numberOfItemsDependencies = [];
+    leftItemCreators.forEach( function( leftItemCreator ) {
+      numberOfItemsDependencies.push( leftItemCreator.numberOfItemsOnScaleProperty );
+    } );
+    rightItemCreators.forEach( function( leftItemCreator ) {
+      numberOfItemsDependencies.push( leftItemCreator.numberOfItemsOnScaleProperty );
+    } );
+
+    // @public {DerivedProperty.<number>} total number of items on the scale (both plates)
+    this.numberOfItemsProperty = new DerivedProperty( numberOfItemsDependencies,
+      function() {
+        var sum = 0;
+        for ( var i = 0; i < numberOfItemsDependencies.length; i++ ) {
+          sum += numberOfItemsDependencies[ i ].value;
+        }
+        return sum;
+      } );
   }
 
   equalityExplorer.register( 'BalanceScale', BalanceScale );
