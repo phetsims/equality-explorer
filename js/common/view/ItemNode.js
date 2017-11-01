@@ -14,7 +14,6 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MysteryItem = require( 'EQUALITY_EXPLORER/common/model/MysteryItem' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
