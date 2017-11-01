@@ -37,9 +37,9 @@ Reconsider model architecture. State is spread across ItemCreator and Plate, dup
 
 How to associate inverses? ItemCreator.setInverse?
 
-Combine inverses to create '0', halo, fade out.
-if ( item1.constantTerm && item2.constantTerm && item1.weight === -item2.weight ) { combine }
-if ( item1.variableTerm && item2.variableTerm && item1.weight === -item2.weight ) { combine }
+While dragging put a halo (ala EE) around overlapping items that would sum to zero.
+
+Sum items to zero: set items visible:false, display '0' or '0x', fade out, dispose items.
 
 Snapshots
 - save and restore the user's arrangement of items on the scale

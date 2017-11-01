@@ -151,8 +151,32 @@ define( function( require ) {
      * @returns {Vector2}
      * @public
      */
-    getCellLocation: function( cellIndex ) {
-      return this.grid.getCellLocation( cellIndex );
+    getLocationForCell: function( cellIndex ) {
+      return this.grid.getLocationForCell( cellIndex );
+    },
+
+    /**
+     * Gets the index of the cell that corresponds to a location.
+     * @param {Vector2} location
+     * @returns {number} -1 if the location is outside the grid
+     * @public
+     */
+    getCellForLocation: function( location ) {
+      return this.grid.getCellForLocation( location );
+    },
+
+    /**
+     * Gets the item at a specified location in the grid.
+     * @param {Vector2} location
+     * @returns {AbstractItem|null} - null if the the cell at location is empty
+     */
+    getItemAtLocation: function( location ) {
+      var item = null;
+      var index = this.getCellForLocation( location );
+      if ( index !== -1 ) {
+        item = this.grid.getItemForCell( index );
+      }
+      return item;
     },
 
     /**

@@ -3,6 +3,7 @@
 /**
  * A grid that contains items.
  * The grid is filled from the bottom up, so that there are no empty cells below an occupied cell.
+ * Origin is at the bottom center.
  *
  * A cell in the grid is identified by an integer index. The client doesn't need to know how to interpret
  * this index. It gets an index from the grid, and uses the index to refer to the cell.
@@ -14,6 +15,7 @@ define( function( require ) {
 
   // modules
   var AbstractItem = require( 'EQUALITY_EXPLORER/common/model/AbstractItem' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Util = require( 'DOT/Util' );
@@ -60,7 +62,7 @@ define( function( require ) {
     this.locationProperty.link( function( location ) {
       for ( var index = 0; index < self.cells.length; index++ ) {
         if ( self.cells[ index ] !== NO_ITEM ) {
-          self.cells[ index ].moveTo( self.getCellLocation( index ) );
+          self.cells[ index ].moveTo( self.getLocationForCell( index ) );
         }
       }
     } );
@@ -102,6 +104,53 @@ define( function( require ) {
     },
 
     /**
+     * Gets the index of the cell that corresponds to a location.
+     * @param {Vector2} location
+     * @returns {number} -1 if the location is outside the grid
+     * @public
+     */
+    getCellForLocation: function( location ) {
+      var index = -1;
+      if ( this.getGridBounds( index ).containsPoint( location ) ) {
+        for ( index = 0; index < this.cells.length; index++ ) {
+           if ( this.getCellBounds( index ).containsPoint( location ) ) {
+             break;
+           }
+        }
+      }
+      return index;
+    },
+
+    /**
+     * Gets the bounds of a cell.
+     * @param index
+     * @returns {Bounds2}
+     * @private
+     */
+    getCellBounds: function( index ) {
+      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
+      var cellLocation = this.getLocationForCell( index );
+      var minX = cellLocation.x - this.cellWidth / 2;
+      var maxX = cellLocation.x + this.cellWidth / 2 ;
+      var minY = cellLocation.y - this.cellHeight / 2;
+      var maxY = cellLocation.y + this.cellHeight / 2;
+      return new Bounds2( minX, minY, maxX, maxY );
+    },
+
+    /**
+     * Gets the bounds of the grid.
+     * @returns {Bounds2}
+     * @private
+     */
+    getGridBounds: function() {
+      var minX = this.locationProperty.value.x - ( this.columns * this.cellWidth ) / 2;
+      var maxX = minX + ( this.columns * this.cellWidth );
+      var maxY = this.locationProperty.value.y;
+      var minY = maxY - ( this.rows * this.cellHeight);
+      return new Bounds2( minX, minY, maxX, maxY );
+    },
+
+    /**
      * Gets the index for the cell that an item occupies.
      * @param {AbstractItem} item
      * @returns {number} the cell's index, -1 if the item doesn't occupy a cell
@@ -116,6 +165,7 @@ define( function( require ) {
      * Gets the item that occupies a specified cell.
      * @param {number} index - the cell's index
      * @returns {AbstractItem|null} - null if the cell is empty
+     * @public
      */
     getItemForCell: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
@@ -142,7 +192,7 @@ define( function( require ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
       assert && assert( this.isEmptyCell( index ), 'cell is occupied, index: ' + index );
       this.cells[ index ] = item;
-      item.moveTo( this.getCellLocation( index ) );
+      item.moveTo( this.getLocationForCell( index ) );
     },
 
     /**
@@ -192,7 +242,7 @@ define( function( require ) {
      * @returns {Vector2}
      * @public
      */
-    getCellLocation: function( index ) {
+    getLocationForCell: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
 
       // left top corner of the grid
@@ -228,12 +278,12 @@ define( function( require ) {
 
       if ( closestIndex !== -1 ) {
 
-        var closestDistance = this.getCellLocation( closestIndex ).distance( location );
+        var closestDistance = this.getLocationForCell( closestIndex ).distance( location );
 
         // Find the closest cell based on distance
         for ( var index = 0; index < this.cells.length; index++ ) {
           if ( this.isEmptyCell( index ) ) {
-            var currentDistance = this.getCellLocation( index ).distance( location );
+            var currentDistance = this.getLocationForCell( index ).distance( location );
             if ( currentDistance < closestDistance ) {
               closestDistance = currentDistance;
               closestIndex = index;

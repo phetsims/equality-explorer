@@ -10,11 +10,14 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantItem = require( 'EQUALITY_EXPLORER/common/model/ConstantItem' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MysteryItem = require( 'EQUALITY_EXPLORER/common/model/MysteryItem' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
 
   /**
    * @param {AbstractItem} item
@@ -53,7 +56,7 @@ define( function( require ) {
 
     // synchronize location with model
     var locationObserver = function( location ) {
-      
+
       // compensate for the shadow, so that origin is in the center of the icon
       self.centerX = location.x + ( options.shadowOffset.width / 2 );
       self.centerY = location.y + ( options.shadowOffset.height / 2 );
@@ -90,6 +93,8 @@ define( function( require ) {
         var location = self.globalToParentPoint( event.pointer.point ).minus( startDragOffset );
         var boundedLocation = item.dragBounds.closestPointTo( location );
         item.moveTo( boundedLocation );
+
+        //TODO put a yellow halo around items that would sum to zero
       },
 
       end: function( event, trail ) {
@@ -102,10 +107,29 @@ define( function( require ) {
           // item was released below the plate, animate back to panel and dispose
           self.animateToPanel( item );
         }
-        else {
+        else if ( item instanceof MysteryItem ) {
 
-          // item was released above the plate, animate to closest available cell
-          self.animateToClosestCell( item, plate );
+          // item was released above the plate, animate to closest empty cell
+          self.animateToClosestEmptyCell( item, plate );
+        }
+        else if ( ( item instanceof ConstantItem ) || ( item instanceof XItem ) ) {
+
+          // if we overlap with a similar item that sums to zero, make both items go away
+          var itemOnPlate = plate.getItemAtLocation( item.locationProperty.value );
+          if ( itemOnPlate && ( item.constructor === itemOnPlate.constructor ) && ( item.weight + itemOnPlate.weight === 0 ) ) {
+
+            item.dispose();
+            itemOnPlate.dispose();
+            //TODO show '0' or '0x' in yellow halo, fade out
+          }
+          else {
+
+            // item was released above the plate, animate to closest empty cell
+            self.animateToClosestEmptyCell( item, plate );
+          }
+        }
+        else {
+          throw new Error( 'unexpected subtype of AbstractItem' );
         }
       }
     } );
@@ -149,7 +173,7 @@ define( function( require ) {
      * @param {Plate} plate
      * @private
      */
-    animateToClosestCell: function( item, plate ) {
+    animateToClosestEmptyCell: function( item, plate ) {
 
       var self = this;
 
@@ -162,14 +186,14 @@ define( function( require ) {
       }
       else {
 
-        var cellLocation = plate.getCellLocation( cellIndex );
+        var cellLocation = plate.getLocationForCell( cellIndex );
 
         item.animateTo( cellLocation, {
 
           // If the target cell has become occupied, choose another cell.
           animationStepCallback: function() {
             if ( !plate.isEmptyCell( cellIndex ) ) {
-              self.animateToClosestCell( item, plate );
+              self.animateToClosestEmptyCell( item, plate );
             }
           },
 
