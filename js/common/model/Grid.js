@@ -109,7 +109,7 @@ define( function( require ) {
      * @returns {number} -1 if the location is outside the grid
      * @public
      */
-    getCellForLocation: function( location ) {
+    getCellAtLocation: function( location ) {
       var index = -1;
       if ( this.getGridBounds( index ).containsPoint( location ) ) {
         for ( index = 0; index < this.cells.length; index++ ) {
@@ -186,6 +186,7 @@ define( function( require ) {
      * Puts an item in the specified cell. The cell must be empty.
      * @param {AbstractItem} item
      * @param {number} index - the cell's index
+     * @public
      */
     putItem: function( item, index ) {
       assert && assert( item instanceof AbstractItem, 'invalid item' );
@@ -198,6 +199,7 @@ define( function( require ) {
     /**
      * Removes an item from the grid. Any items above it move down to fill the empty cell.
      * @param {AbstractItem} item
+     * @public
      */
     removeItem: function( item ) {
       assert && assert( item instanceof AbstractItem, 'invalid item' );

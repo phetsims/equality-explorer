@@ -161,18 +161,19 @@ define( function( require ) {
      * @returns {number} -1 if the location is outside the grid
      * @public
      */
-    getCellForLocation: function( location ) {
-      return this.grid.getCellForLocation( location );
+    getCellAtLocation: function( location ) {
+      return this.grid.getCellAtLocation( location );
     },
 
     /**
      * Gets the item at a specified location in the grid.
      * @param {Vector2} location
      * @returns {AbstractItem|null} - null if the the cell at location is empty
+     * @public
      */
     getItemAtLocation: function( location ) {
       var item = null;
-      var index = this.getCellForLocation( location );
+      var index = this.getCellAtLocation( location );
       if ( index !== -1 ) {
         item = this.grid.getItemForCell( index );
       }
