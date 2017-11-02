@@ -58,8 +58,21 @@ define( function( require ) {
       this.cells[ index ] = NO_ITEM;
     }
 
+    // @private bounds of the grid, initialized in locationProperty listener
+    this.bounds = new Bounds2( 0, 1, 0, 1 );
+
     // When the grid moves, move all items that are in the grid. unlink not needed.
     this.locationProperty.link( function( location ) {
+
+      // recompute the grid's bounds, origin (x,y) is at bottom center
+      self.bounds.setMinMax(
+        location.x - ( self.columns * self.cellWidth / 2 ), // minX
+        location.y - ( self.rows * self.cellHeight ), // minY
+        location.x + ( self.columns * self.cellWidth / 2 ), // maxX
+        location.y // maxY
+      );
+
+      // move the items
       for ( var index = 0; index < self.cells.length; index++ ) {
         if ( self.cells[ index ] !== NO_ITEM ) {
           self.cells[ index ].moveTo( self.getLocationForCell( index ) );
@@ -103,7 +116,6 @@ define( function( require ) {
       }
     },
 
-    //TODO speed this up, since it will be called during drag
     /**
      * Gets the index of the cell that corresponds to a location.
      * @param {Vector2} location
@@ -114,15 +126,9 @@ define( function( require ) {
       var index = -1;
       if ( this.containsLocation( location ) ) {
 
-        //TODO make these ES5 getters, use elsewhere
-        // upper-left corner of the grid
-        var minX = this.locationProperty.value.x - ( this.columns * this.cellWidth / 2 );
-        var minY = this.locationProperty.value.y - ( this.rows * this.cellHeight );
-
         // row and column of the cell that contains location
-        var row = Math.floor( ( location.y - minY  ) / this.cellHeight );
-        var column = Math.floor( ( location.x - minX ) / this.cellWidth );
-        console.log( 'row=' + row + ' column=' + column );//XXX
+        var row = Math.floor( ( location.y - this.bounds.minY  ) / this.cellHeight );
+        var column = Math.floor( ( location.x - this.bounds.minX ) / this.cellWidth );
 
         index = this.rowColumnToIndex( row, column );
       }
@@ -136,27 +142,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     containsLocation: function( location ) {
-      var minX = this.locationProperty.value.x - ( this.columns * this.cellWidth / 2 );
-      var maxX = minX + ( this.columns * this.cellWidth );
-      var maxY = this.locationProperty.value.y;
-      var minY = maxY - ( this.rows * this.cellHeight );
-      return ( location.x >= minX && location.x <= maxX && location.y >= minY && location.y <= maxY );
-    },
-
-    /**
-     * Gets the bounds of a cell.
-     * @param index
-     * @returns {Bounds2}
-     * @private
-     */
-    getCellBounds: function( index ) {
-      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      var cellLocation = this.getLocationForCell( index );
-      var minX = cellLocation.x - this.cellWidth / 2;
-      var maxX = cellLocation.x + this.cellWidth / 2 ;
-      var minY = cellLocation.y - this.cellHeight / 2;
-      var maxY = cellLocation.y + this.cellHeight / 2;
-      return new Bounds2( minX, minY, maxX, maxY );
+      return this.bounds.containsPoint( location );
     },
 
     /**
@@ -271,15 +257,11 @@ define( function( require ) {
     getLocationForCell: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
 
-      // upper-left corner of the grid
-      var minX = this.locationProperty.value.x - ( this.columns * this.cellWidth ) / 2;
-      var minY = this.locationProperty.value.y - ( this.rows * this.cellHeight);
-
       var row = this.indexToRow( index );
       var column = this.indexToColumn( index );
 
-      var x = minX + ( column * this.cellWidth ) + ( 0.5 * this.cellWidth );
-      var y = minY + ( row * this.cellHeight ) + ( 0.5 * this.cellHeight );
+      var x = this.bounds.minX + ( column * this.cellWidth ) + ( 0.5 * this.cellWidth );
+      var y = this.bounds.minY + ( row * this.cellHeight ) + ( 0.5 * this.cellHeight );
       return new Vector2( x, y );
     },
 
