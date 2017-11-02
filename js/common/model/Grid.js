@@ -225,6 +225,7 @@ define( function( require ) {
      * @private
      */
     shiftDown: function( index ) {
+      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
       assert && assert( this.isEmptyCell( index ), 'cell is not empty: ' + index );
 
       // row and column of the removed item
