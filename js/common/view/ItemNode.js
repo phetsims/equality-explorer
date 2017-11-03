@@ -65,6 +65,9 @@ define( function( require ) {
     // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
     var startDragOffset;
 
+    // {Node} item the is the inverse of the item being dragged. E.g. 1 and -1, x and -x
+    var inverseItem = null;
+
     // @public (read-only)
     this.dragListener = new SimpleDragHandler( {
 
@@ -95,7 +98,29 @@ define( function( require ) {
         var boundedLocation = item.dragBounds.closestPointTo( location );
         item.moveTo( boundedLocation );
 
-        //TODO if the item overlaps an item that sums to zero, put a halo around both items
+        // identify inverse item
+        var previousInverseItem = inverseItem;
+        inverseItem = null;
+        if ( ( item instanceof ConstantItem ) || ( item instanceof XItem ) ) {
+          var itemOnPlate = plate.getItemAtLocation( item.locationProperty.value );
+          if ( itemOnPlate && itemOnPlate.isInverseOf( item ) ) {
+            inverseItem = itemOnPlate;
+          }
+        }
+
+        // clean up previous inverse item
+        if ( previousInverseItem && ( previousInverseItem !== inverseItem ) ) {
+          //TODO hide halo around previous inverseItem
+        }
+
+        // handle new inverse item
+        if ( !inverseItem ) {
+          shadowNode.visible = true;
+        }
+        else if ( previousInverseItem !== inverseItem ) {
+          //TODO show halo around item and inverseItem
+          shadowNode.visible = false;
+        }
       },
 
       end: function( event, trail ) {
@@ -110,12 +135,11 @@ define( function( require ) {
         }
         else if ( ( item instanceof ConstantItem ) || ( item instanceof XItem ) ) {
 
-          // if we overlap with a similar item that sums to zero, make both items go away
-          var itemOnPlate = plate.getItemAtLocation( item.locationProperty.value );
-          if ( itemOnPlate && ( item.constructor === itemOnPlate.constructor ) && ( item.weight + itemOnPlate.weight === 0 ) ) {
+          // sum to zero, delete item and its inverse
+          if ( inverseItem && inverseItem.isInverseOf( item ) ) {
 
             item.dispose();
-            itemOnPlate.dispose();
+            inverseItem.dispose();
             //TODO show '0' or '0x' in yellow halo, fade out
           }
           else {

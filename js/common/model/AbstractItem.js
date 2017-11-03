@@ -52,6 +52,16 @@ define( function( require ) {
       this.disposedEmitter.emit1( this );
       this.disposedEmitter.removeAllListeners();
       EqualityExplorerMovable.prototype.dispose.call( this );
+    },
+
+    /**
+     * Is this item the inverse of a specified item?
+     * Two items are inverses if they are of the same type, and their weights sum to zero.
+     * @param {AbstractItem} item
+     * @returns {boolean}
+     */
+    isInverseOf: function( item ) {
+      return ( this.constructor === item.constructor ) && ( this.weight + item.weight === 0 );
     }
   } );
 } );
