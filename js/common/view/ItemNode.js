@@ -110,7 +110,7 @@ define( function( require ) {
 
         // clean up previous inverse item
         if ( previousInverseItem && ( previousInverseItem !== inverseItem ) ) {
-          //TODO hide halo around previous inverseItem
+          //TODO #17 hide halo around previous inverseItem
         }
 
         // handle new inverse item
@@ -118,7 +118,7 @@ define( function( require ) {
           shadowNode.visible = true;
         }
         else if ( previousInverseItem !== inverseItem ) {
-          //TODO show halo around item and inverseItem
+          //TODO #17 show halo around item and inverseItem
           shadowNode.visible = false;
         }
       },
@@ -140,7 +140,7 @@ define( function( require ) {
 
             item.dispose();
             inverseItem.dispose();
-            //TODO show '0' or '0x' in yellow halo, fade out
+            //TODO #17 show '0' or '0x' in yellow halo, fade out
           }
           else {
 
