@@ -38,6 +38,8 @@ Sum items to zero: dispose items (done), '0' or '0x' with halo, fade out
 
 Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
 
+Consider subtypes instead of instanceof, especially in ItemNode drag listener
+
 Snapshots
 - save and restore the user's arrangement of items on the scale
 - save and restore 'x' value
