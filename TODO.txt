@@ -32,6 +32,7 @@ Be sure to consider scenarios where inverses sum to zero while coupling is enabl
 IMPLEMENTATION
 
 While dragging put a halo (ala EE) around overlapping items that would sum to zero.
+See node.trailUnderPoint and node.hitTest to identify overlap.
 
 Sum items to zero: dispose items (done), '0' or '0x' with halo, fade out
 
