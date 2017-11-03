@@ -15,7 +15,7 @@ define( function( require ) {
 
   /**
    * @param {NumberProperty} weightProperty
-   * @param {number} coefficient
+   * @param {number} coefficient TODO multiplier would be a better name
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
