@@ -166,7 +166,7 @@ define( function( require ) {
         if ( itemCreator instanceof XItemCreator ) {
 
           // these items contribute to the coefficient for 'x'
-          xCoefficient += ( itemCreator.coefficient * numberOfItemsOnScale );
+          xCoefficient += ( itemCreator.multiplier * numberOfItemsOnScale );
         }
         else if ( itemCreator instanceof ConstantItemCreator ) {
 

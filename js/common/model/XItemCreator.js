@@ -18,15 +18,15 @@ define( function( require ) {
 
   /**
    * @param {number} weight - initial weight
-   * @param {number} coefficient TODO multiplier would be a better name
+   * @param {number} multiplier
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function XItemCreator( weight, coefficient, icon, iconShadow, options ) {
+  function XItemCreator( weight, multiplier, icon, iconShadow, options ) {
 
-    assert && assert( coefficient === 1 || coefficient === -1, 'invalid coefficient: ' + coefficient );
+    assert && assert( multiplier === 1 || multiplier === -1, 'invalid multiplier: ' + multiplier );
     
     var self = this;
 
@@ -36,7 +36,7 @@ define( function( require ) {
     } );
 
     // @public (read-only)
-    this.coefficient = coefficient;
+    this.multiplier = multiplier;
 
     AbstractItemCreator.call( this, icon, iconShadow, options );
 
@@ -62,7 +62,7 @@ define( function( require ) {
      * @override
      */
     createItemProtected: function( location ) {
-      return new XItem( this.weightProperty, this.coefficient, this.icon, this.iconShadow, {
+      return new XItem( this.weightProperty, this.multiplier, this.icon, this.iconShadow, {
         location: location,
         dragBounds: this.dragBounds
       } );

@@ -15,21 +15,21 @@ define( function( require ) {
 
   /**
    * @param {NumberProperty} weightProperty
-   * @param {number} coefficient TODO multiplier would be a better name
+   * @param {number} multiplier
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function XItem( weightProperty, coefficient, icon, iconShadow, options ) {
+  function XItem( weightProperty, multiplier, icon, iconShadow, options ) {
 
-    assert && assert( coefficient === 1 || coefficient === -1, 'invalid coefficient: ' + coefficient );
+    assert && assert( multiplier === 1 || multiplier === -1, 'invalid multiplier: ' + multiplier );
 
     // @public
     this.weightProperty = weightProperty;
 
     // @public (read-only) 
-    this.coefficient = coefficient;
+    this.multiplier = multiplier;
 
     AbstractItem.call( this, icon, iconShadow, options );
   }
