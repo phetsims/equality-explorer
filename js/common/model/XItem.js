@@ -15,7 +15,7 @@ define( function( require ) {
 
   /**
    * @param {NumberProperty} weightProperty
-   * @param {number} multiplier
+   * @param {number} multiplier - determines the sign of 'x' (1 positive,-1 negative)
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
