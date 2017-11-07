@@ -29,7 +29,7 @@ define( function( require ) {
 
     assert && assert( !options.fill, 'this type defines its fill' );
     options.fill = new RadialGradient( 0, 0, 0, 0, 0, radius )
-      .addColorStop( 0.25, options.centerColor )
+      .addColorStop( 0.5, options.centerColor )
       .addColorStop( 1, options.edgeColor );
 
     Circle.call( this, radius, options );
