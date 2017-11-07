@@ -35,7 +35,7 @@ Handle special cases in #17 for halo.
 
 Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
 
-Consider subtypes instead of instanceof and constructor comparison, especially in ItemNode.
+Consider subtypes instead of constructor comparison, especially in ItemNode (search for ".constructor")
 
 Snapshots
 - save and restore the user's arrangement of items on the scale
