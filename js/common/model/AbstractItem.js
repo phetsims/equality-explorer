@@ -30,7 +30,6 @@ define( function( require ) {
 
     // @public
     this.shadowVisibleProperty = new BooleanProperty( false );
-    this.haloVisibleProperty = new BooleanProperty( false );
 
     EqualityExplorerMovable.call( this, options );
   }

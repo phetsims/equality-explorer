@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryItem = require( 'EQUALITY_EXPLORER/common/model/MysteryItem' );
@@ -23,6 +24,10 @@ define( function( require ) {
    * @constructor
    */
   function ConstantItem( weight, icon, iconShadow, options ) {
+
+    // @public
+    this.haloVisibleProperty = new BooleanProperty( false );
+
     MysteryItem.call( this, weight, icon, iconShadow, options );
   }
 

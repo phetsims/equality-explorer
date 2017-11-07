@@ -30,8 +30,6 @@ define( function( require ) {
    */
   function ItemDragHandler( itemNode, item, itemCreator, plate, options ) {
 
-    var self = this;
-
     options = _.extend( {
       offset: new Dimension2( -4, -4 ), // offset to move when drag starts, up and left
       haloRadius: 10 // radius of the halo on SumToZeroNode
@@ -82,30 +80,32 @@ define( function( require ) {
         var boundedLocation = item.dragBounds.closestPointTo( location );
         item.moveTo( boundedLocation );
 
-        // identify inverse item
-        var previousInverseItem = inverseItem;
-        inverseItem = null;
+        // handle overlap with inverse item
         if ( ( item instanceof ConstantItem ) || ( item instanceof XItem ) ) {
+
+          var previousInverseItem = inverseItem;
+          inverseItem = null;
+
           var itemOnPlate = plate.getItemAtLocation( item.locationProperty.value );
           if ( itemOnPlate && itemOnPlate.isInverseOf( item ) ) {
             inverseItem = itemOnPlate;
           }
-        }
 
-        // clean up previous inverse item
-        if ( previousInverseItem && ( previousInverseItem !== inverseItem ) ) {
-          previousInverseItem.haloVisibleProperty.value = false;
-        }
+          // clean up previous inverse item
+          if ( previousInverseItem && ( previousInverseItem !== inverseItem ) ) {
+            previousInverseItem.haloVisibleProperty.value = false;
+          }
 
-        // handle new inverse item
-        if ( !inverseItem ) {
-          item.shadowVisibleProperty.value = true;
-          item.haloVisibleProperty.value = false;
-        }
-        else if ( previousInverseItem !== inverseItem ) {
-          item.shadowVisibleProperty.value = false;
-          item.haloVisibleProperty.value = true;
-          inverseItem.haloVisibleProperty.value = true;
+          // handle new inverse item
+          if ( !inverseItem ) {
+            item.shadowVisibleProperty.value = true;
+            item.haloVisibleProperty.value = false;
+          }
+          else if ( previousInverseItem !== inverseItem ) {
+            item.shadowVisibleProperty.value = false;
+            item.haloVisibleProperty.value = true;
+            inverseItem.haloVisibleProperty.value = true;
+          }
         }
       },
 
@@ -124,33 +124,26 @@ define( function( require ) {
           // item was released below the plate, animate back to panel and dispose
           animateToPanel( item );
         }
-        else if ( ( item instanceof ConstantItem ) || ( item instanceof XItem ) ) {
+        else if ( inverseItem && inverseItem.isInverseOf( item ) ) {
 
-          // sum to zero, delete item and its inverse
-          if ( inverseItem && inverseItem.isInverseOf( item ) ) {
+          // handle 'sum to zero' of item and its inverse
 
-            // determine where the '0' appears
-            var inverseItemLocation = inverseItem.locationProperty.value;
-            var parent = itemNode.getParent();
-            var itemConstructor = item.constructor;
+          // determine where the '0' or '0x' appears
+          var inverseItemLocation = inverseItem.locationProperty.value;
+          var parent = itemNode.getParent();
+          var itemConstructor = item.constructor;
 
-            // delete the 2 items that sum to zero
-            item.dispose();
-            inverseItem.dispose();
+          // delete the 2 items that sum to zero
+          item.dispose();
+          inverseItem.dispose();
 
-            // show '0' or '0x' in yellow halo, fade out
-            var sumToZeroNode = new SumToZeroNode( itemConstructor, {
-              haloRadius: options.haloRadius,
-              center: inverseItemLocation
-            } );
-            parent.addChild( sumToZeroNode );
-            sumToZeroNode.startAnimation();
-          }
-          else {
-
-            // the item doesn't sum to zero with another item, animate to closest empty cell
-            animateToClosestEmptyCell( item, itemCreator, plate );
-          }
+          // show '0' or '0x' in yellow halo, fade out
+          var sumToZeroNode = new SumToZeroNode( itemConstructor, {
+            haloRadius: options.haloRadius,
+            center: inverseItemLocation
+          } );
+          parent.addChild( sumToZeroNode );
+          sumToZeroNode.startAnimation();
         }
         else {
 

@@ -11,7 +11,6 @@ define( function( require ) {
 
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var ConstantItem = require( 'EQUALITY_EXPLORER/common/model/ConstantItem' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
@@ -19,7 +18,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemDragHandler = require( 'EQUALITY_EXPLORER/common/view/ItemDragHandler' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
 
   /**
    * @param {AbstractItem} item
@@ -60,6 +58,11 @@ define( function( require ) {
       visible: false
     } );
 
+    // model controls visibility of shadow
+    item.shadowVisibleProperty.link( function( shadowVisible ) {
+      shadowNode.visible = shadowVisible;
+    } );
+
     assert && assert( !options.children, 'this type defines its children' );
     options.children = [ shadowNode, iconNode ];
 
@@ -67,12 +70,20 @@ define( function( require ) {
 
     // @private {Node|null} halo around the icon
     this.haloNode = null;
-    if ( item.constructor === ConstantItem || item.constructor === XItem ) {
+    if ( item.haloVisibleProperty ) {
+
       this.haloNode = new HaloNode( haloRadius, {
         center: iconNode.center,
         visible: false
       } );
       options.children.unshift( this.haloNode );
+
+      // model controls visibility of halo
+      item.haloVisibleProperty.link( function( haloVisible ) {
+        if ( self.haloNode ) {
+          self.haloNode.visible = haloVisible;
+        }
+      } );
     }
 
     // Red dot at the origin
@@ -87,18 +98,6 @@ define( function( require ) {
       self.translation = location;
     };
     item.locationProperty.link( locationObserver ); // unlink in dispose
-
-    // model controls visibility of shadow
-    item.shadowVisibleProperty.link( function( shadowVisible ) {
-      shadowNode.visible = shadowVisible;
-    } );
-
-    // model controls visibility of halo
-    item.haloVisibleProperty.link( function( haloVisible ) {
-      if ( self.haloNode ) {
-        self.haloNode.visible = haloVisible;
-      }
-    } );
 
     // @public so that ItemCreatorNode can forward events
     this.dragListener = new ItemDragHandler( this, item, itemCreator, plate, {

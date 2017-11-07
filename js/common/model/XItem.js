@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var AbstractItem = require( 'EQUALITY_EXPLORER/common/model/AbstractItem' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
 
@@ -30,6 +31,9 @@ define( function( require ) {
 
     // @public (read-only) 
     this.multiplier = multiplier;
+
+    // @public
+    this.haloVisibleProperty = new BooleanProperty( false );
 
     AbstractItem.call( this, icon, iconShadow, options );
   }
