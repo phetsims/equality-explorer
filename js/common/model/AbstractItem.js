@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
@@ -26,6 +27,10 @@ define( function( require ) {
     this.icon = icon;
     this.iconShadow = iconShadow;
     this.disposedEmitter = new Emitter(); // emit1 when dispose has completed
+
+    // @public
+    this.shadowVisibleProperty = new BooleanProperty( false );
+    this.haloVisibleProperty = new BooleanProperty( false );
 
     EqualityExplorerMovable.call( this, options );
   }

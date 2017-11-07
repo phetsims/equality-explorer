@@ -2,7 +2,7 @@
 
 /**
  * Visual representation of an item.
- * Origin is in the center of the item's icon.
+ * Origin is at the center of the item's icon.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -75,11 +75,23 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    // synchronize location with model
+    // model controls location
     var locationObserver = function( location ) {
       self.translation = location;
     };
     item.locationProperty.link( locationObserver ); // unlink in dispose
+
+    // model controls visibility of shadow
+    item.shadowVisibleProperty.link( function( shadowVisible ) {
+      shadowNode.visible = shadowVisible;
+    } );
+
+    // model controls visibility of halo
+    item.haloVisibleProperty.link( function( haloVisible ) {
+      if ( self.haloNode ) {
+        self.haloNode.visible = haloVisible;
+      }
+    } );
 
     // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
     var startDragOffset;
@@ -95,7 +107,7 @@ define( function( require ) {
       start: function( event, trail ) {
 
         item.dragging = true;
-        shadowNode.visible = true;
+        item.shadowVisibleProperty.value = true;
 
         self.moveToFront();
 
@@ -129,23 +141,25 @@ define( function( require ) {
 
         // clean up previous inverse item
         if ( previousInverseItem && ( previousInverseItem !== inverseItem ) ) {
-          //TODO #17 hide halo around previous inverseItem
+          previousInverseItem.haloVisibleProperty.value = false;
         }
 
         // handle new inverse item
         if ( !inverseItem ) {
-          shadowNode.visible = true;
+          item.shadowVisibleProperty.value = true;
+          item.haloVisibleProperty.value = false;
         }
         else if ( previousInverseItem !== inverseItem ) {
-          //TODO #17 show halo around item and inverseItem
-          shadowNode.visible = false;
+          item.shadowVisibleProperty.value = false;
+          item.haloVisibleProperty.value = true;
+          inverseItem.haloVisibleProperty.value = true;
         }
       },
 
       end: function( event, trail ) {
 
         item.dragging = false;
-        shadowNode.visible = false;
+        item.shadowVisibleProperty.value = false;
 
         if ( item.locationProperty.value.y > plate.locationProperty.value.y ) {
 
