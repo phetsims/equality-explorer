@@ -34,8 +34,6 @@ IMPLEMENTATION
 While dragging put a halo (ala EE) around overlapping items that would sum to zero.
 See node.trailUnderPoint and node.hitTest to identify overlap.
 
-Sum items to zero: dispose items (done), '0' or '0x' with halo, fade out
-
 Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
 
 Consider subtypes instead of instanceof, especially in ItemNode drag listener
