@@ -16,10 +16,10 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var OpacityTo = require( 'TWIXT/OpacityTo' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var OpacityTo = require( 'TWIXT/OpacityTo' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
   var Text = require( 'SCENERY/nodes/Text' );
   var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
