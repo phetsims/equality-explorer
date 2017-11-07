@@ -16,6 +16,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
 
   /**
@@ -138,9 +139,23 @@ define( function( require ) {
           // sum to zero, delete item and its inverse
           if ( inverseItem && inverseItem.isInverseOf( item ) ) {
 
+            // determine where the '0' appears
+            var inverseItemLocation = inverseItem.locationProperty.value;
+            var parent = self.getParent();
+            var itemConstructor = item.constructor;
+
+            // delete the 2 items that sum to zero
             item.dispose();
             inverseItem.dispose();
-            //TODO #17 show '0' or '0x' in yellow halo, fade out
+
+            // show '0' or '0x' in yellow halo, fade out
+            var sumToZeroNode = new SumToZeroNode( itemConstructor, {
+              haloRadius: 0.65 * Math.max( plate.cellSize.width, plate.cellSize.height ),
+              centerX: inverseItemLocation.x,
+              centerY: inverseItemLocation.y
+            } );
+            parent.addChild( sumToZeroNode );
+            sumToZeroNode.startAnimation();
           }
           else {
 
