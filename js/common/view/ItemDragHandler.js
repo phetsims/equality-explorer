@@ -3,6 +3,9 @@
 /**
  * Drag handler for items.
  *
+ * Note that event.currentTarget should *not* be used herein. Because of event forwarding from ItemCreatorNode,
+ * event.currentTarget may not be what you expect it to be.
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
@@ -18,7 +21,7 @@ define( function( require ) {
   var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
 
   /**
-   * @param {Node} itemNode - Node that the listener is attached to, can't use event.currentTarget due to forwarding
+   * @param {Node} itemNode - Node that the listener is attached to
    * @param {AbstractItem} item
    * @param {AbstractItemCreator} itemCreator
    * @param {Plate} plate
