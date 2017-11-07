@@ -41,25 +41,31 @@ define( function( require ) {
     // @private
     this.itemCreator = itemCreator;
 
+    var iconNode = new Node( {
+      children: [ item.icon ], // wrap the icon since we're using scenery DAG feature and need to offset it
+
+      // put origin at the center of the icon
+      centerX: 0,
+      centerY: 0
+    } );
+
+    // shadow, offset from the icon
     var shadowNode = new Node( {
-      children: [ item.iconShadow ], // wrap the icon since we're using scenery DAG feature and need to offset it
+      children: [ item.iconShadow ], // wrap the shadow since we're using scenery DAG feature and need to offset it
       opacity: 0.4,
-      left: item.icon.left + options.shadowOffset.width,
-      top: item.icon.top + options.shadowOffset.height,
+      right: iconNode.right + options.shadowOffset.width,
+      bottom: iconNode.bottom + options.shadowOffset.height,
       visible: false
     } );
 
     assert && assert( !options.children, 'this type defines its children' );
-    options.children = [ shadowNode, item.icon ]; // wrap the icon since we're using scenery DAG feature
+    options.children = [ shadowNode, iconNode ]; // wrap the icon since we're using scenery DAG feature
 
     Node.call( this, options );
 
     // synchronize location with model
     var locationObserver = function( location ) {
-
-      // compensate for the shadow, so that origin is in the center of the icon
-      self.centerX = location.x + ( options.shadowOffset.width / 2 );
-      self.centerY = location.y + ( options.shadowOffset.height / 2 );
+      self.translation = location;
     };
     item.locationProperty.link( locationObserver ); // unlink in dispose
 
