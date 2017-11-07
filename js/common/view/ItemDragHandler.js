@@ -3,7 +3,7 @@
 /**
  * Drag handler for items.
  *
- * Note that event.currentTarget should *not* be used herein. Because of event forwarding from ItemCreatorNode,
+ * Note that event.currentTarget should NOT be used herein. Because of event forwarding from ItemCreatorNode,
  * event.currentTarget may not be what you expect it to be.
  *
  * @author Chris Malley (PixelZoom, Inc.)
