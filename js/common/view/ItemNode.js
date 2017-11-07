@@ -75,6 +75,7 @@ define( function( require ) {
       options.children.unshift( this.haloNode );
     }
 
+    // Red dot at the origin
     if ( EqualityExplorerQueryParameters.showOrigin ) {
       options.children.push( new Circle( 4, { fill: 'red' } ) );
     }
