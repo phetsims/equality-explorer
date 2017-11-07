@@ -15,8 +15,8 @@ define( function( require ) {
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
-    // Makes all animation run slowly, so that things are easier to grab while they're animating.
-    // Useful for testing multi-touch.
+    // Makes all animation run slowly, including motion, fades, etc.
+    // Useful for testing multi-touch, so that things are easier to grab while they're moving.
     slowMotion: { type: 'flag' },
 
     // Shows the origin of various objects, rendered as a red dot.
