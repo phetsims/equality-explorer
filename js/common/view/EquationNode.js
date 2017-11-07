@@ -67,7 +67,7 @@ define( function( require ) {
     var updateDependencies = [];
     itemCreators.forEach( function( itemCreator ) {
       updateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
-      if ( itemCreator instanceof XItemCreator ) {
+      if ( itemCreator.constructor ===  XItemCreator ) {
         updateDependencies.push( itemCreator.weightProperty );
       }
     } );
@@ -163,12 +163,12 @@ define( function( require ) {
       var numberOfItemsOnScale = itemCreator.numberOfItemsOnScaleProperty.value;
       if ( numberOfItemsOnScale > 0 ) {
 
-        if ( itemCreator instanceof XItemCreator ) {
+        if ( itemCreator.constructor === XItemCreator ) {
 
           // these items contribute to the coefficient for 'x'
           xCoefficient += ( itemCreator.multiplier * numberOfItemsOnScale );
         }
-        else if ( itemCreator instanceof ConstantItemCreator ) {
+        else if ( itemCreator.constructor === ConstantItemCreator ) {
 
           // these items contribute their weight to the constant term
           constantValue += ( itemCreator.weight * numberOfItemsOnScale );

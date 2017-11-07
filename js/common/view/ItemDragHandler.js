@@ -81,7 +81,7 @@ define( function( require ) {
         item.moveTo( boundedLocation );
 
         // handle overlap with inverse item
-        if ( ( item instanceof ConstantItem ) || ( item instanceof XItem ) ) {
+        if ( item.constructor === ConstantItem || item.constructor === XItem ) {
 
           var previousInverseItem = inverseItem;
           inverseItem = null;

@@ -59,7 +59,7 @@ define( function( require ) {
     var weightDependencies = [];
     itemCreators.forEach( function( itemCreator ) {
       weightDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
-      if ( itemCreator instanceof XItemCreator ) {
+      if ( itemCreator.constructor === XItemCreator ) {
         weightDependencies.push( itemCreator.weightProperty );
       }
     } );
