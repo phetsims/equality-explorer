@@ -10,9 +10,11 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Circle = require( 'SCENERY/nodes/Circle' );
   var ConstantItem = require( 'EQUALITY_EXPLORER/common/model/ConstantItem' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -71,6 +73,10 @@ define( function( require ) {
         visible: false
       } );
       options.children.unshift( this.haloNode );
+    }
+
+    if ( EqualityExplorerQueryParameters.showOrigin ) {
+      options.children.push( new Circle( 4, { fill: 'red' } ) );
     }
 
     Node.call( this, options );
