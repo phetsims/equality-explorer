@@ -14,6 +14,10 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
 
+  // constants
+  var CENTER_COLOR = 'rgba( 255, 255, 0, 1 )'; // opaque yellow
+  var EDGE_COLOR = 'rgba( 255, 255, 0, 0 )'; // transparent yellow
+
   /**
    * @param {number} radius
    * @param {Object} [options]
@@ -25,8 +29,8 @@ define( function( require ) {
 
     assert && assert( !options.fill, 'this type defines its fill' );
     options.fill = new RadialGradient( 0, 0, 0, 0, 0, radius )
-      .addColorStop( 0.5, 'rgba( 255, 255, 0, 1 )' )
-      .addColorStop( 1, 'rgba( 255, 255, 0, 0 )' );
+      .addColorStop( 0.25, CENTER_COLOR )
+      .addColorStop( 1, EDGE_COLOR );
 
     Circle.call( this, radius, options );
   }
