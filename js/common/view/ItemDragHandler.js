@@ -122,7 +122,7 @@ define( function( require ) {
         if ( item.locationProperty.value.y > plate.locationProperty.value.y ) {
 
           // item was released below the plate, animate back to panel and dispose
-          self.animateToPanel( item );
+          animateToPanel( item );
         }
         else if ( ( item instanceof ConstantItem ) || ( item instanceof XItem ) ) {
 
@@ -149,13 +149,13 @@ define( function( require ) {
           else {
 
             // the item doesn't sum to zero with another item, animate to closest empty cell
-            self.animateToClosestEmptyCell( item, itemCreator, plate );
+            animateToClosestEmptyCell( item, itemCreator, plate );
           }
         }
         else {
 
           // item was released above the plate, animate to closest empty cell
-          self.animateToClosestEmptyCell( item, itemCreator, plate );
+          animateToClosestEmptyCell( item, itemCreator, plate );
         }
       }
     } );
@@ -163,60 +163,57 @@ define( function( require ) {
 
   equalityExplorer.register( 'ItemDragHandler', ItemDragHandler );
 
-  return inherit( SimpleDragHandler, ItemDragHandler, {
+  /**
+   * Returns an Item to the panel where it was created.
+   * @param {AbstractItem} item
+   * @private
+   */
+  function animateToPanel( item ) {
+    item.animateTo( item.locationProperty.initialValue, {
+      animationCompletedCallback: function() {
+        item.dispose();
+      }
+    } );
+  }
 
-    /**
-     * Returns an Item to the panel where it was created.
-     * @param {AbstractItem} item
-     * @private
-     */
-    animateToPanel: function( item ) {
-      item.animateTo( item.locationProperty.initialValue, {
+  /**
+   * Animates an item to an empty cell on the plate.
+   * @param {AbstractItem} item
+   * @param {AbstractItemCreator} itemCreator
+   * @param {Plate} plate
+   * @private
+   */
+  function animateToClosestEmptyCell( item, itemCreator, plate ) {
+
+    var cellIndex = plate.getClosestEmptyCell( item.locationProperty.value );
+    if ( cellIndex === -1 ) {
+
+      // Plate has become full, or there is no available cell above the item's location.
+      // Return the item to panel.
+      animateToPanel( item );
+    }
+    else {
+
+      var cellLocation = plate.getLocationForCell( cellIndex );
+
+      item.animateTo( cellLocation, {
+
+        // If the target cell has become occupied, choose another cell.
+        animationStepCallback: function() {
+          if ( !plate.isEmptyCell( cellIndex ) ) {
+            animateToClosestEmptyCell( item, itemCreator, plate );
+          }
+        },
+
+        // When the item reaches the cell, put it in the cell.
         animationCompletedCallback: function() {
-          item.dispose();
+          plate.addItem( item, cellIndex );
+          itemCreator.addItemToScale( item );
         }
       } );
-    },
-
-    /**
-     * Animates an item to an empty cell on the plate.
-     * @param {AbstractItem} item
-     * @param {AbstractItemCreator} itemCreator
-     * @param {Plate} plate
-     * @private
-     */
-    animateToClosestEmptyCell: function( item, itemCreator, plate ) {
-
-      var self = this;
-
-      var cellIndex = plate.getClosestEmptyCell( item.locationProperty.value );
-      if ( cellIndex === -1 ) {
-
-        // Plate has become full, or there is no available cell above the item's location.
-        // Return the item to panel.
-        this.animateToPanel( item );
-      }
-      else {
-
-        var cellLocation = plate.getLocationForCell( cellIndex );
-
-        item.animateTo( cellLocation, {
-
-          // If the target cell has become occupied, choose another cell.
-          animationStepCallback: function() {
-            if ( !plate.isEmptyCell( cellIndex ) ) {
-              self.animateToClosestEmptyCell( item, itemCreator, plate );
-            }
-          },
-
-          // When the item reaches the cell, put it in the cell.
-          animationCompletedCallback: function() {
-            plate.addItem( item, cellIndex );
-            itemCreator.addItemToScale( item );
-          }
-        } );
-      }
     }
-  } );
+  }
+
+  return inherit( SimpleDragHandler, ItemDragHandler );
 } );
  
