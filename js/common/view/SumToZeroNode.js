@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A '0' or '0x' with a yellow halo around it that fades out. 
+ * A '0' or '0x' with a yellow halo around it that fades out.
  * Used to indicate that 1 and -1, or x and -x, have summed to zero.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -80,12 +80,10 @@ define( function( require ) {
      */
     startAnimation: function() {
 
-      // start animation, gradually fade out by modulating opacity
-      var self = this;
-      this.animation = new OpacityTo( this, {
+      var options = {
         startOpacity: 0.85,
         endOpacity: 0,
-        duration: ( EqualityExplorerQueryParameters.slowMotion ? 2000 : 500 ), // fade out time, ms
+        duration: 500, // fade out time, ms
         easing: TWEEN.Easing.Quintic.In, // most of opacity change happens at end of duration
         onStart: function() {
           self.visible = true;
@@ -94,7 +92,14 @@ define( function( require ) {
           self.visible = false;
           self.dispose();
         }
-      } );
+      };
+
+      // scale the duration based on 'speed' query parameter
+      options.duration = options.duration / EqualityExplorerQueryParameters.speed;
+
+      // start animation, gradually fade out by modulating opacity
+      var self = this;
+      this.animation = new OpacityTo( this, options );
       this.animation.start( phet.joist.elapsedTime );
     }
   } );

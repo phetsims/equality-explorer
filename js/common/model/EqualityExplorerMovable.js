@@ -30,8 +30,11 @@ define( function( require ) {
       location: new Vector2( 0, 0 ), // {Vector2} initial location
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} bounds that constrain dragging
       dragging: false, // {boolean} is this instance being dragged by the user?
-      animationSpeed: EqualityExplorerQueryParameters.slowMotion ? 100 : 400 // {number} distance/second when animating
+      animationSpeed: 400 // {number} distance/second when animating
     }, options );
+
+    // scale the animation speed based on 'speed' query parameter
+    options.animationSpeed = options.animationSpeed * EqualityExplorerQueryParameters.speed;
 
     // @public (read-only) {Property.<Vector2>} DO NOT set this directly! Use moveTo or animateTo.
     this.locationProperty = new Property( options.location );

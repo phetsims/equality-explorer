@@ -15,9 +15,14 @@ define( function( require ) {
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
-    // Makes all animation run slowly, including motion, fades, etc.
-    // Useful for testing multi-touch, so that things are easier to grab while they're moving.
-    slowMotion: { type: 'flag' },
+    // Speed multiplier for all animations, including motion, fades, etc.
+    // Normal speed is 1. Larger values make animations run faster, smaller values make animations run slower.
+    // For example, ?speed=0.5 will make animations run at half the normal speed.
+    // Useful for testing multi-touch, so that items are easier to grab while they're moving.
+    speed: {
+      type: 'number',
+      defaultValue: 1
+    },
 
     // Shows the origin of various objects, rendered as a red dot.
     showOrigin: { type: 'flag' },
