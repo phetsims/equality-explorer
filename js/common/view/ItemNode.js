@@ -13,6 +13,7 @@ define( function( require ) {
   var ConstantItem = require( 'EQUALITY_EXPLORER/common/model/ConstantItem' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
@@ -59,7 +60,18 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'this type defines its children' );
-    options.children = [ shadowNode, iconNode ]; // wrap the icon since we're using scenery DAG feature
+    options.children = [ shadowNode, iconNode ];
+
+    // @private {Node|null} halo around the icon
+    this.haloNode = null;
+    if ( item.constructor === ConstantItem || item.constructor === XItem ) {
+      var haloRadius = 0.85 * Math.max( plate.cellSize.width, plate.cellSize.height );
+      this.haloNode = new HaloNode( haloRadius, {
+        center: iconNode.center,
+        visible: false
+      } );
+      options.children.unshift( this.haloNode );
+    }
 
     Node.call( this, options );
 
@@ -156,7 +168,7 @@ define( function( require ) {
 
             // show '0' or '0x' in yellow halo, fade out
             var sumToZeroNode = new SumToZeroNode( itemConstructor, {
-              haloRadius: 0.65 * Math.max( plate.cellSize.width, plate.cellSize.height ),
+              haloRadius: haloRadius,
               centerX: inverseItemLocation.x,
               centerY: inverseItemLocation.y
             } );

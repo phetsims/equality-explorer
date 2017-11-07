@@ -36,7 +36,7 @@ See node.trailUnderPoint and node.hitTest to identify overlap.
 
 Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
 
-Consider subtypes instead of instanceof, especially in ItemNode drag listener
+Consider subtypes instead of instanceof and constructor comparison, especially in ItemNode.
 
 Snapshots
 - save and restore the user's arrangement of items on the scale

@@ -10,17 +10,16 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Circle = require( 'SCENERY/nodes/Circle' );
   var ConstantItem = require( 'EQUALITY_EXPLORER/common/model/ConstantItem' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
+  var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var OpacityTo = require( 'TWIXT/OpacityTo' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RadialGradient = require( 'SCENERY/util/RadialGradient' );
   var Text = require( 'SCENERY/nodes/Text' );
   var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
 
@@ -60,11 +59,7 @@ define( function( require ) {
       } );
     }
 
-    var haloFill = new RadialGradient( 0, 0, 0, 0, 0, options.haloRadius )
-      .addColorStop( 0.5, 'rgba( 255, 255, 0, 1 )' )
-      .addColorStop( 1, 'rgba( 255, 255, 0, 0 )' );
-    var haloNode = new Circle( options.haloRadius, {
-      fill: haloFill,
+    var haloNode = new HaloNode( options.haloRadius, {
       center: symbolNode.center
     } );
 
