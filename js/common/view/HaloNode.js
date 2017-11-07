@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Halo that appears around overlapping items that will sum to zero.
+ * Circular halo that appears around a Node.
+ * Used to indicate that two overlapping items will sum to zero.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
