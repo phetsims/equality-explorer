@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Dimension2 = require( 'DOT/Dimension2' );
+  var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Grid = require( 'EQUALITY_EXPLORER/common/model/Grid' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -20,11 +21,13 @@ define( function( require ) {
   var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
 
   /**
-   * @param {ItemCreator[]} itemCreators
+   * @param {AbstractItemCreator[]} itemCreators
    * @param {Object} [options]
    * @constructor
    */
   function Plate( itemCreators, options ) {
+
+    var self = this;
 
     options = _.extend( {
       supportHeight: 10, // height of the vertical support that connects the plate to the scale
@@ -73,6 +76,12 @@ define( function( require ) {
       return weight;
     } );
 
+    // @public emit is called when any aspect of the Plate changes
+    this.changedEmitter = new Emitter();
+    this.locationProperty.link( function( location ) {
+      self.changedEmitter.emit();
+    } );
+
     // @private
     this.removeItemBound = this.removeItem.bind( this );
   }
@@ -90,6 +99,7 @@ define( function( require ) {
     addItem: function( item, cellIndex ) {
       this.grid.putItem( item, cellIndex );
       item.disposedEmitter.addListener( this.removeItemBound );
+      this.changedEmitter.emit();
     },
 
     /**
@@ -103,6 +113,7 @@ define( function( require ) {
       item.disposedEmitter.removeListener( this.removeItemBound );
       this.grid.clearCell( cellIndex );
       this.grid.shiftDown( cellIndex );
+      this.changedEmitter.emit();
     },
 
     /**
@@ -271,6 +282,8 @@ define( function( require ) {
             }
           }
         }
+
+        this.changedEmitter.emit();
       }
     }
   } );

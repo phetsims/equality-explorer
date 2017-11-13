@@ -29,14 +29,21 @@ define( function( require ) {
    */
   function ItemDragHandler( itemNode, item, itemCreator, plate, options ) {
 
+    var self = this;
+
     options = _.extend( {
       haloRadius: 10,
       mouseXOffset: -4,
       touchXOffset: -4
     }, options );
 
-    // {Node} item the is the inverse of the item being dragged. E.g. 1 and -1, x and -x
-    var inverseItem = null;
+    // @private
+    this.item = item;
+    this.itemNode = itemNode;
+    this.plate = plate;
+
+    // @private {Node} item the is the inverse of the item being dragged. E.g. 1 and -1, x and -x
+    this.inverseItem = null;
 
     SimpleDragHandler.call( this, {
 
@@ -72,33 +79,8 @@ define( function( require ) {
         // move the item
         item.moveTo( eventToLocation( event, itemNode, item, options.mouseXOffset, options.touchXOffset ) );
 
-        // handle overlap with inverse item
-        if ( item.constructor === ConstantItem || item.constructor === XItem ) {
-
-          var previousInverseItem = inverseItem;
-          inverseItem = null;
-
-          var itemOnPlate = plate.getItemAtLocation( item.locationProperty.value );
-          if ( itemOnPlate && itemOnPlate.isInverseOf( item ) ) {
-            inverseItem = itemOnPlate;
-          }
-
-          // clean up previous inverse item
-          if ( previousInverseItem && ( previousInverseItem !== inverseItem ) ) {
-            previousInverseItem.haloVisibleProperty.value = false;
-          }
-
-          // handle new inverse item
-          if ( !inverseItem ) {
-            item.shadowVisibleProperty.value = true;
-            item.haloVisibleProperty.value = false;
-          }
-          else if ( previousInverseItem !== inverseItem ) {
-            item.shadowVisibleProperty.value = false;
-            item.haloVisibleProperty.value = true;
-            inverseItem.haloVisibleProperty.value = true;
-          }
-        }
+        // refresh the halos that appear over overlapping inverse items
+        self.refreshHalos();
       },
 
       /**
@@ -116,18 +98,18 @@ define( function( require ) {
           // item was released below the plate, animate back to panel and dispose
           animateToPanel( item );
         }
-        else if ( inverseItem && inverseItem.isInverseOf( item ) ) {
+        else if ( self.inverseItem && self.inverseItem.isInverseOf( item ) ) {
 
           // handle 'sum to zero' of item and its inverse
 
           // determine where the '0' or '0x' appears
-          var inverseItemLocation = inverseItem.locationProperty.value;
+          var inverseItemLocation = self.inverseItem.locationProperty.value;
           var parent = itemNode.getParent();
           var itemConstructor = item.constructor;
 
           // delete the 2 items that sum to zero
           item.dispose();
-          inverseItem.dispose();
+          self.inverseItem.dispose();
 
           // show '0' or '0x' in yellow halo, fade out
           var sumToZeroNode = new SumToZeroNode( itemConstructor, {
@@ -144,6 +126,15 @@ define( function( require ) {
         }
       }
     } );
+
+    // @private When the plate changes, refresh the halos around inverse items.
+    var refreshHalosBound = this.refreshHalos.bind( this );
+    plate.changedEmitter.addListener( refreshHalosBound );
+
+    // @private called by dispose
+    this.disposeItemDragHandler = function() {
+      plate.changedEmitter.removeListener( refreshHalosBound );
+    };
   }
 
   equalityExplorer.register( 'ItemDragHandler', ItemDragHandler );
@@ -159,7 +150,7 @@ define( function( require ) {
    * @returns {Vector2}
    * @private
    */
-   function eventToLocation( event, itemNode, item, mouseXOffset, touchXOffset ) {
+  function eventToLocation( event, itemNode, item, mouseXOffset, touchXOffset ) {
 
     // touch: move icon above finger
     // mouse: move bottom center of icon to pointer location
@@ -220,6 +211,53 @@ define( function( require ) {
     }
   }
 
-  return inherit( SimpleDragHandler, ItemDragHandler );
+  return inherit( SimpleDragHandler, ItemDragHandler, {
+
+    /**
+     * @public
+     * @override
+     */
+    dispose: function() {
+      this.disposeItemDragHandler();
+      SimpleDragHandler.prototype.dispose.call( this );
+    },
+
+    /**
+     * Refreshes the visual feedback (yellow halos) that is provided when a dragged item
+     * overlaps its inverse on the scale. See equality-explorer#17
+     * @private
+     */
+    refreshHalos: function() {
+
+      if ( this.item.dragging && ( this.item.constructor === ConstantItem || this.item.constructor === XItem ) ) {
+
+        var previousInverseItem = this.inverseItem;
+        this.inverseItem = null;
+
+        var itemOnPlate = this.plate.getItemAtLocation( this.item.locationProperty.value );
+        if ( itemOnPlate && itemOnPlate.isInverseOf( this.item ) ) {
+          this.inverseItem = itemOnPlate;
+        }
+
+        // clean up previous inverse item
+        if ( previousInverseItem && ( previousInverseItem !== this.inverseItem ) ) {
+          previousInverseItem.haloVisibleProperty.value = false;
+        }
+
+        // handle new inverse item
+        if ( !this.inverseItem ) {
+          this.item.shadowVisibleProperty.value = true;
+          this.item.haloVisibleProperty.value = false;
+        }
+        else if ( previousInverseItem !== this.inverseItem ) {
+          this.itemNode.moveToFront();
+          this.item.shadowVisibleProperty.value = false;
+          this.item.haloVisibleProperty.value = true;
+          this.inverseItem.haloVisibleProperty.value = true;
+
+        }
+      }
+    }
+  } );
 } );
  
