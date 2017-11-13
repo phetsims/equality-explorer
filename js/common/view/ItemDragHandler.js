@@ -13,7 +13,6 @@ define( function( require ) {
 
   // modules
   var ConstantItem = require( 'EQUALITY_EXPLORER/common/model/ConstantItem' );
-  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
@@ -31,19 +30,10 @@ define( function( require ) {
   function ItemDragHandler( itemNode, item, itemCreator, plate, options ) {
 
     options = _.extend( {
-
-      haloRadius: 10, // radius of the halo on SumToZeroNode
-
-      // for mouse drag, move item up and left
-      mouseOffset: new Dimension2( -4, -4 ),
-
-      // for touch drag, move item up so that it's visible above finger
-      touchOffset: new Dimension2( 0, -0.7 * itemNode.height )
-
+      haloRadius: 10,
+      mouseXOffset: -4,
+      touchXOffset: -4
     }, options );
-
-    // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
-    var startDragOffset = null;
 
     // {Node} item the is the inverse of the item being dragged. E.g. 1 and -1, x and -x
     var inverseItem = null;
@@ -64,15 +54,12 @@ define( function( require ) {
 
         itemNode.moveToFront();
 
-        // adjust item offset
-        var offset = ( event.pointer.isTouch ) ? options.touchOffset : options.mouseOffset;
-        item.locationProperty.value = item.locationProperty.value.plusXY( offset.width, offset.height );
+        item.moveTo( eventToLocation( event, itemNode, item, options.mouseXOffset, options.touchXOffset ) );
 
         if ( plate.containsItem( item ) ) {
           plate.removeItem( item );
           itemCreator.removeItemFromScale( item );
         }
-        startDragOffset = itemNode.globalToParentPoint( event.pointer.point ).minus( item.locationProperty.value );
       },
 
       /**
@@ -83,9 +70,7 @@ define( function( require ) {
       drag: function( event, trail ) {
 
         // move the item
-        var location = itemNode.globalToParentPoint( event.pointer.point ).minus( startDragOffset );
-        var boundedLocation = item.dragBounds.closestPointTo( location );
-        item.moveTo( boundedLocation );
+        item.moveTo( eventToLocation( event, itemNode, item, options.mouseXOffset, options.touchXOffset ) );
 
         // handle overlap with inverse item
         if ( item.constructor === ConstantItem || item.constructor === XItem ) {
@@ -162,6 +147,27 @@ define( function( require ) {
   }
 
   equalityExplorer.register( 'ItemDragHandler', ItemDragHandler );
+
+  /**
+   * Converts an event to a model location.
+   * Enforces relationship of the item to the pointer, and constrains the drag bounds.
+   * @param {Event} event
+   * @param {Node} itemNode
+   * @param {AbstractItem} item
+   * @param {number} mouseXOffset
+   * @param {number} touchXOffset
+   * @returns {Vector2}
+   * @private
+   */
+   function eventToLocation( event, itemNode, item, mouseXOffset, touchXOffset ) {
+
+    // touch: move icon above finger
+    // mouse: move bottom center of icon to pointer location
+    var xOffset = ( event.pointer.isTouch ) ? touchXOffset : mouseXOffset;
+    var yOffset = ( event.pointer.isTouch ) ? -( 1.5 * item.icon.height ) : -( 0.5 * item.icon.height );
+    var location = itemNode.globalToParentPoint( event.pointer.point ).plusXY( xOffset, yOffset );
+    return item.dragBounds.closestPointTo( location );
+  }
 
   /**
    * Returns an Item to the panel where it was created.
