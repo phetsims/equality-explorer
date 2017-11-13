@@ -34,7 +34,7 @@ Be sure to consider scenarios where inverses sum to zero while coupling is enabl
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Handle special cases in #17 for halo.
+Handle remaining cases in https://github.com/phetsims/equality-explorer/issues/17#issuecomment-341774489
 
 Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
 
