@@ -29,8 +29,6 @@ If left plate is full, can still drag out of right panel, but items will always 
 Item limits: 36 on either plate, any combination, show dialog "left plate full" or "right plate full" in any
 situation where need to create a zero-pair and a plate is full
 
-Be sure to consider scenarios where inverses sum to zero while coupling is enabled.
-
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
