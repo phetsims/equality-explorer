@@ -31,8 +31,15 @@ define( function( require ) {
   function ItemDragHandler( itemNode, item, itemCreator, plate, options ) {
 
     options = _.extend( {
-      offset: new Dimension2( -4, -4 ), // offset to move when drag starts, up and left
-      haloRadius: 10 // radius of the halo on SumToZeroNode
+
+      haloRadius: 10, // radius of the halo on SumToZeroNode
+
+      // for mouse drag, move item up and left
+      mouseOffset: new Dimension2( -4, -4 ),
+
+      // for touch drag, move item up so that it's visible above finger
+      touchOffset: new Dimension2( 0, -0.7 * itemNode.height )
+
     }, options );
 
     // {Vector2} where the drag started relative to locationProperty, in parent view coordinates
@@ -57,9 +64,9 @@ define( function( require ) {
 
         itemNode.moveToFront();
 
-        // move up and left
-        item.locationProperty.value =
-          item.locationProperty.value.plusXY( options.offset.width, options.offset.height );
+        // adjust item offset
+        var offset = ( event.pointer.isTouch ) ? options.touchOffset : options.mouseOffset;
+        item.locationProperty.value = item.locationProperty.value.plusXY( offset.width, offset.height );
 
         if ( plate.containsItem( item ) ) {
           plate.removeItem( item );
