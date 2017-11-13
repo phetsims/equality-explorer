@@ -138,7 +138,8 @@ define( function( require ) {
   }
 
   /**
-   * Animates an item to an empty cell on the plate.
+   * Animates an item to an empty cell on a plate.
+   * If there are no empty cells on the plate, the item is returned to the panel where it was created.
    * @param {AbstractItem} item
    * @param {AbstractItemCreator} itemCreator
    * @param {Plate} plate
