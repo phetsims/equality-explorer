@@ -41,6 +41,7 @@ define( function( require ) {
     this.item = item;
     this.itemNode = itemNode;
     this.plate = plate;
+    this.haloRadius = options.haloRadius;
 
     // @private {Node} item the is the inverse of the item being dragged. E.g. 1 and -1, x and -x
     this.inverseItem = null;
@@ -79,7 +80,7 @@ define( function( require ) {
         // move the item
         item.moveTo( eventToLocation( event, itemNode, item, options.mouseXOffset, options.touchXOffset ) );
 
-        // refresh the halos that appear over overlapping inverse items
+        // refresh the halos that appear when dragged item overlaps its inverse
         self.refreshHalos();
       },
 
@@ -93,31 +94,15 @@ define( function( require ) {
         item.dragging = false;
         item.shadowVisibleProperty.value = false;
 
-        if ( item.locationProperty.value.y > plate.locationProperty.value.y ) {
+        if ( self.inverseItem ) {
+
+          // we identified an inverse for this item, sum to zero
+          self.sumToZero();
+        }
+        else if ( item.locationProperty.value.y > plate.locationProperty.value.y ) {
 
           // item was released below the plate, animate back to panel and dispose
           animateToPanel( item );
-        }
-        else if ( self.inverseItem && self.inverseItem.isInverseOf( item ) ) {
-
-          // handle 'sum to zero' of item and its inverse
-
-          // determine where the '0' or '0x' appears
-          var inverseItemLocation = self.inverseItem.locationProperty.value;
-          var parent = itemNode.getParent();
-          var itemConstructor = item.constructor;
-
-          // delete the 2 items that sum to zero
-          item.dispose();
-          self.inverseItem.dispose();
-
-          // show '0' or '0x' in yellow halo, fade out
-          var sumToZeroNode = new SumToZeroNode( itemConstructor, {
-            haloRadius: options.haloRadius,
-            center: inverseItemLocation
-          } );
-          parent.addChild( sumToZeroNode );
-          sumToZeroNode.startAnimation();
         }
         else {
 
@@ -257,6 +242,31 @@ define( function( require ) {
 
         }
       }
+    },
+
+    /**
+     * Sums an item and its inverse to zero, and performs the associated animation. See equality-explorer#17
+     * @private
+     */
+    sumToZero: function() {
+      assert && assert( this.inverseItem, 'no inverse' );
+
+      // determine where the '0' or '0x' appears
+      var inverseItemLocation = this.inverseItem.locationProperty.value;
+      var parent = this.itemNode.getParent();
+      var itemConstructor = this.item.constructor;
+
+      // delete the 2 items that sum to zero
+      this.item.dispose();
+      this.inverseItem.dispose();
+
+      // show '0' or '0x' in yellow halo, fade out
+      var sumToZeroNode = new SumToZeroNode( itemConstructor, {
+        haloRadius: this.haloRadius,
+        center: inverseItemLocation
+      } );
+      parent.addChild( sumToZeroNode );
+      sumToZeroNode.startAnimation();
     }
   } );
 } );
