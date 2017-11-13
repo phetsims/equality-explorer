@@ -14,6 +14,9 @@ Should we put a fontawesome lock icon on the scale when coupling is on?
 
 Snapshots UI has usability issues
 
+Solving: When I drop x on a plate, does it turn into a big x? This seems odd (especially if "sum to zero" works here),
+but design doc indicates that size of term on the plate does not scale.
+
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
 
