@@ -113,16 +113,12 @@ define( function( require ) {
       // left
       this.addChild( new Rectangle(
         scene.leftDragBounds.minX, scene.leftDragBounds.minY,
-        scene.leftDragBounds.width, scene.leftDragBounds.height, {
-          lineDash: [ 2, 6 ]
-        } ) );
+        scene.leftDragBounds.width, scene.leftDragBounds.height, { stroke: 'red' } ) );
 
       // right
       this.addChild( new Rectangle(
         scene.rightDragBounds.minX, scene.rightDragBounds.minY,
-        scene.rightDragBounds.width, scene.rightDragBounds.height, {
-          lineDash: [ 2, 6 ]
-        } ) );
+        scene.rightDragBounds.width, scene.rightDragBounds.height, { stroke: 'red' } ) );
     }
 
     // @public (read-only) for layout only
