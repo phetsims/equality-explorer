@@ -20,21 +20,11 @@ Solving screen:
 - multi-touch: What happens when x value is changed while an x item is being dragged?
 
 ------------------------------------------------------------------------------------------------------------------------
-REQUIREMENTS
-
-Ghost moves y-proportionally below the plate. Above the plate tracks exactly. x-axis movement is tracked exactly.
-
-Animation of ghost and dragged item occurs such that they arrive at their cells at same time.
-
-If left plate is full, can still drag out of right panel, but items will always fly back to panels.
-
-Item limits: 36 on either plate, any combination, show dialog "left plate full" or "right plate full" in any
-situation where need to create a zero-pair and a plate is full
-
-------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
 Handle remaining cases in https://github.com/phetsims/equality-explorer/issues/17#issuecomment-341774489
+
+Coupled mode, https://github.com/phetsims/equality-explorer/issues/19
 
 Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
 
@@ -44,8 +34,6 @@ Snapshots
 - save and restore the user's arrangement of items on the scale
 - save and restore 'x' value
 - show 'x=N' in snapshots, based on a new toggle control in the button group
-
-Coupled mode
 
 Solving screen - generalize other screens? different implementation?
 
