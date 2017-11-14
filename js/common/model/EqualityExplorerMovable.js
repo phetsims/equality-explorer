@@ -68,6 +68,7 @@ define( function( require ) {
     // @public
     dispose: function() {
       assert && assert( !this.disposed, 'dispose called again' );
+      this.locationProperty.unlinkAll();
       this.disposed = true;
     },
 
@@ -119,6 +120,8 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
+      
+      assert && assert( !this.disposed, 'attempt to step disposed moveable' );
 
       var doStep = !this.disposed && !this.dragging &&
                    ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
