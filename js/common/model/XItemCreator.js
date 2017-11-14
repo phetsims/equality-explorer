@@ -40,7 +40,7 @@ define( function( require ) {
 
     AbstractItemCreator.call( this, icon, iconShadow, options );
 
-    // Update the weight of all XItems. unlink not required.
+    // Update the weight of all XItems. unlink unnecessary
     this.weightProperty.link( function( weight ) {
       var items = self.getItems();
       for ( var i = 0; i < items.length; i++ ) {

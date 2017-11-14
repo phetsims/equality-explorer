@@ -78,7 +78,7 @@ define( function( require ) {
       } );
       options.children.unshift( this.haloNode );
 
-      // model controls visibility of halo
+      // model controls visibility of halo, unlink unnecessary
       item.haloVisibleProperty.link( function( haloVisible ) {
         if ( self.haloNode ) {
           self.haloNode.visible = haloVisible;

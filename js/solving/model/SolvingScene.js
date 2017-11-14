@@ -34,7 +34,7 @@ define( function( require ) {
     // @public (read-only) the value of the variable 'x'
     this.xProperty = new NumberProperty( this.xRange.defaultValue );
 
-    // valid xProperty
+    // validate xProperty, unlink unnecessary
     this.xProperty.link( function( x ) {
       assert && assert( self.xRange.contains( x ), 'x out of range: ' + x );
     } );
@@ -52,7 +52,7 @@ define( function( require ) {
       validValues: this.operators
     } );
 
-    // validate operator
+    // validate operator, unlink unnecessary
     this.operatorProperty.link( function( operator ) {
       assert && assert( _.includes( self.operators, operator ), 'invalid operator: ' + operator );
     } );
@@ -65,7 +65,7 @@ define( function( require ) {
       range: this.operandRange
     } );
 
-    // validate operand
+    // validate operand, unlink unnecessary
     this.operandProperty.link( function( operand ) {
       assert && assert( self.operandRange.contains( operand ), 'operand out of range: ' + operand );
     } );
@@ -85,7 +85,7 @@ define( function( require ) {
     var positiveXCreator = new XItemCreator( xProperty.value, 1, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE );
     var negativeXCreator = new XItemCreator( -xProperty.value, -1, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE );
 
-    // unlink not needed
+    // unlink unnecessary
     xProperty.lazyLink( function( x ) {
       positiveXCreator.weightProperty.value = x;
       negativeXCreator.weightProperty.value = -x;

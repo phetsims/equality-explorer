@@ -241,8 +241,7 @@ define( function( require ) {
     } );
     downParent.addInputListener( downListener );
 
-    //TODO unlink?
-    // enable/disable
+    // enable/disable, unlink unnecessary
     upEnabledProperty.link( function( enabled ) { upListener.enabled = enabled; } );
     downEnabledProperty.link( function( enabled ) { downListener.enabled = enabled; } );
 
@@ -261,8 +260,9 @@ define( function( require ) {
       // synchronize the index
       indexProperty.value = index;
     };
-    valueProperty.link( valueObserver ); // must be unlinked in dispose
+    valueProperty.link( valueObserver ); // unlink required
 
+    // unlink unnecessary
     indexProperty.link( function( index ) {
        assert && assert( index >= 0 && index < items.length, 'index out of range: ' + index );
        valueProperty.value = items[ index ].value;

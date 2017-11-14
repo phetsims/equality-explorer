@@ -32,7 +32,7 @@ define( function( require ) {
     // @public (read-only) the value of the variable 'x'
     this.xProperty = new NumberProperty( this.xRange.defaultValue );
 
-    // valid xProperty
+    // validate xProperty, unlink unnecessary
     this.xProperty.link( function( x ) {
       assert && assert( self.xRange.contains( x ), 'x out of range: ' + x );
     } );
@@ -63,7 +63,7 @@ define( function( require ) {
       numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
     } );
 
-    // unlink not needed
+    // unlink unnecessary
     xProperty.lazyLink( function( x ) {
       positiveXCreator.weightProperty.value = x;
       negativeXCreator.weightProperty.value = -x;

@@ -35,7 +35,7 @@ define( function( require ) {
     // @public the selected scene
     this.sceneProperty = new Property( this.scenes[ 0 ] );
 
-    // validate scene, unlink not needed
+    // validate scene, unlink unnecessary
     this.sceneProperty.link( function( scene ) {
       assert && assert( _.includes( self.scenes, scene ), 'invalid scene' );
     } );

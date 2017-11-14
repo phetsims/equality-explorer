@@ -72,7 +72,7 @@ define( function( require ) {
       }
     } );
 
-    // update the equation, dispose of this Multilink in dispose
+    // updates the equation, dispose required
     var updateMultilink = new Multilink( updateDependencies, function() {
 
       relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
