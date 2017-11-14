@@ -30,8 +30,7 @@ define( function( require ) {
     // Shows the grid on each of the plates.
     showGrid: { type: 'flag' },
 
-    // Shows the drag bounds for Items.
-    // Rendered as a dotted rectangle, color coded to the associated plate.
+    // Shows the drag bounds for items, rendered as a red rectangle.
     showDragBounds: { type: 'flag' },
 
     // Number of items that are initially on the left plate in the Basics screen.
