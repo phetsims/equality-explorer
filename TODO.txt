@@ -26,15 +26,16 @@ Handle remaining cases in https://github.com/phetsims/equality-explorer/issues/1
 
 Coupled mode, https://github.com/phetsims/equality-explorer/issues/19
 
-Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
-
-Consider subtypes instead of constructor comparison, especially in ItemNode (search for ".constructor")
-
 Snapshots
 - save and restore the user's arrangement of items on the scale
 - save and restore 'x' value
 - show 'x=N' in snapshots, based on a new toggle control in the button group
 
 Solving screen - generalize other screens? different implementation?
+
+Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
+
+Consider subtypes instead of constructor comparison, especially in ItemNode (search for ".constructor")
+
 
 
