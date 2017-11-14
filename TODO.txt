@@ -5,17 +5,19 @@ DESIGN QUESTIONS
 
 Reconsider "white box" feature
 
-Solving screen, multi-touch:
-- When you start dragging something on one plate, does the corresponding thing on the other plate become non-interactive?
-- What happens when universal operation is applied while an item is being dragged?
-- What happens when the variable value is changed while the "composite x" item is being dragged?
-
 Should we put a fontawesome lock icon on the scale when coupling is on?
 
 Snapshots UI has usability issues
 
-Solving: When I drop x on a plate, does it turn into a big x? This seems odd (especially if "sum to zero" works here),
-but design doc indicates that size of term on the plate does not scale.
+Solving screen:
+- is the organize button relevant? (it's shown in mockups)
+- is universal operator visible only when coupled?
+- is the "sum to zero" feature present? what does it look like with big terms on scale?
+- do terms on plate get bigger/smaller depending on their value? or are they always big?
+- if terms on plate are always big, does dragging item 'x' onto term 'x' look/feel odd?
+- multi-touch: When you start dragging something on one plate, does the corresponding thing on the other plate become non-interactive?
+- multi-touch: What happens when universal operation is applied while an item is being dragged?
+- multi-touch: What happens when x value is changed while an x item is being dragged?
 
 ------------------------------------------------------------------------------------------------------------------------
 REQUIREMENTS
