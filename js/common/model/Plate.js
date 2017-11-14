@@ -27,8 +27,6 @@ define( function( require ) {
    */
   function Plate( itemCreators, options ) {
 
-    var self = this;
-
     options = _.extend( {
       supportHeight: 10, // height of the vertical support that connects the plate to the scale
       diameter: 20, // diameter of the plate
@@ -76,11 +74,8 @@ define( function( require ) {
       return weight;
     } );
 
-    // @public emit is called when any aspect of the Plate changes
-    this.changedEmitter = new Emitter();
-    this.locationProperty.link( function( location ) {
-      self.changedEmitter.emit();
-    } );
+    // @public emit is called when the contents of the grid changes (items added, removed, organized)
+    this.contentsChangedEmitter = new Emitter();
 
     // @private
     this.removeItemBound = this.removeItem.bind( this );
@@ -99,7 +94,7 @@ define( function( require ) {
     addItem: function( item, cellIndex ) {
       this.grid.putItem( item, cellIndex );
       item.disposedEmitter.addListener( this.removeItemBound );
-      this.changedEmitter.emit();
+      this.contentsChangedEmitter.emit();
     },
 
     /**
@@ -113,7 +108,7 @@ define( function( require ) {
       item.disposedEmitter.removeListener( this.removeItemBound );
       this.grid.clearCell( cellIndex );
       this.grid.shiftDown( cellIndex );
-      this.changedEmitter.emit();
+      this.contentsChangedEmitter.emit();
     },
 
     /**
@@ -283,7 +278,7 @@ define( function( require ) {
           }
         }
 
-        this.changedEmitter.emit();
+        this.contentsChangedEmitter.emit();
       }
     }
   } );

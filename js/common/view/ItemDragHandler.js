@@ -112,13 +112,15 @@ define( function( require ) {
       }
     } );
 
-    // @private When the plate changes, refresh the halos around inverse items.
+    // @private When the plate moves, or it contents change, refresh the halos around inverse items.
     var refreshHalosBound = this.refreshHalos.bind( this );
-    plate.changedEmitter.addListener( refreshHalosBound );
+    plate.locationProperty.link( refreshHalosBound );
+    plate.contentsChangedEmitter.addListener( refreshHalosBound );
 
     // @private called by dispose
     this.disposeItemDragHandler = function() {
-      plate.changedEmitter.removeListener( refreshHalosBound );
+      plate.locationProperty.unlink( refreshHalosBound );
+      plate.contentsChangedEmitter.removeListener( refreshHalosBound );
     };
   }
 
