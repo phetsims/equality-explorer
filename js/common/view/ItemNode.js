@@ -97,13 +97,13 @@ define( function( require ) {
     var locationObserver = function( location ) {
       self.translation = location;
     };
-    item.locationProperty.link( locationObserver ); // unlink in dispose
+    item.locationProperty.link( locationObserver ); // unlink required
 
-    // @public to be used only by ItemCreatorNode, for forwarding events
+    // @public to be used only by ItemCreatorNode, for forwarding events. dispose required.
     this.dragListener = new ItemDragHandler( this, item, itemCreator, plate, {
       haloRadius: haloRadius
     } );
-    this.addInputListener( this.dragListener );
+    this.addInputListener( this.dragListener ); // removeListener required
 
     // @private
     this.disposeItemNode = function() {

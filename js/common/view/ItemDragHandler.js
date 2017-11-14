@@ -114,8 +114,8 @@ define( function( require ) {
 
     // @private When the plate moves, or it contents change, refresh the halos around inverse items.
     var refreshHalosBound = this.refreshHalos.bind( this );
-    plate.locationProperty.link( refreshHalosBound );
-    plate.contentsChangedEmitter.addListener( refreshHalosBound );
+    plate.locationProperty.link( refreshHalosBound ); // unlink required
+    plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required
 
     // @private called by dispose
     this.disposeItemDragHandler = function() {
