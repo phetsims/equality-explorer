@@ -62,7 +62,7 @@ define( function( require ) {
 
         itemNode.moveToFront();
 
-        item.moveTo( self.eventToLocation( event, options.mouseXOffset, options.touchXOffset ) );
+        item.moveTo( self.eventToLocation( event ) );
 
         if ( plate.containsItem( item ) ) {
           plate.removeItem( item );
@@ -78,7 +78,7 @@ define( function( require ) {
       drag: function( event, trail ) {
 
         // move the item
-        item.moveTo( self.eventToLocation( event, options.mouseXOffset, options.touchXOffset ) );
+        item.moveTo( self.eventToLocation( event ) );
 
         // refresh the halos that appear when dragged item overlaps its inverse
         self.refreshHalos();
@@ -191,18 +191,18 @@ define( function( require ) {
      * Converts an event to a model location.
      * Enforces relationship of the item to the pointer, and constrains the drag bounds.
      * @param {Event} event
-     * @param {number} mouseXOffset
-     * @param {number} touchXOffset
      * @returns {Vector2}
      * @private
      */
-    eventToLocation: function( event, mouseXOffset, touchXOffset ) {
+    eventToLocation: function( event ) {
 
-      // touch: move icon above finger
+      // touch: center icon above finger, so that most of icon is clearly visible
       // mouse: move bottom center of icon to pointer location
-      var xOffset = ( event.pointer.isTouch ) ? touchXOffset : mouseXOffset;
+      var xOffset = 0;
       var yOffset = ( event.pointer.isTouch ) ? -( 1.5 * this.item.icon.height ) : -( 0.5 * this.item.icon.height );
       var location = this.itemNode.globalToParentPoint( event.pointer.point ).plusXY( xOffset, yOffset );
+
+      // constrain to drag bounds
       return this.item.dragBounds.closestPointTo( location );
     },
 
