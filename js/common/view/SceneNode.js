@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var CoupledSwitch = require( 'EQUALITY_EXPLORER/common/view/CoupledSwitch' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
