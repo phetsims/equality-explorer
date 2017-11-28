@@ -3,8 +3,6 @@ TODO items for equality-explorer
 ------------------------------------------------------------------------------------------------------------------------
 DESIGN QUESTIONS
 
-Should we put a fontawesome lock icon on the scale when coupling is on?
-
 Solving screen:
 - is the organize button relevant? (it's shown in mockups)
 - is universal operator visible only when coupled?
