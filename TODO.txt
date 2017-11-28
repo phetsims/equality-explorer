@@ -7,8 +7,6 @@ Reconsider "white box" feature
 
 Should we put a fontawesome lock icon on the scale when coupling is on?
 
-Snapshots UI has usability issues
-
 Solving screen:
 - is the organize button relevant? (it's shown in mockups)
 - is universal operator visible only when coupled?
@@ -28,6 +26,7 @@ Snapshots
 - save and restore the user's arrangement of items on the scale
 - save and restore 'x' value
 - show 'x=N' in snapshots, based on a new toggle control in the button group
+- clear selection when user clicks anywhere outside Snapshots accordion box
 
 Solving screen - generalize other screens? different implementation?
 
