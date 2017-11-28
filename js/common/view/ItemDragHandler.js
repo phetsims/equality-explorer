@@ -33,8 +33,8 @@ define( function( require ) {
 
     options = _.extend( {
       haloRadius: 10,
-      mouseXOffset: -4,
-      touchXOffset: -4
+      mouseXOffset: -4,//TODO delete?
+      touchXOffset: -4 //TODO delete?
     }, options );
 
     // @private
