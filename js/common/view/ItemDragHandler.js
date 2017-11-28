@@ -250,8 +250,10 @@ define( function( require ) {
     sumToZero: function() {
       assert && assert( this.inverseItem, 'no inverse' );
 
-      // determine where the '0' or '0x' appears
-      var inverseItemLocation = this.inverseItem.locationProperty.value;
+      // determine which cell the inverse item appears in
+      var cellIndex = this.plate.getCellForItem( this.inverseItem );
+
+      // some things we need before the items are deleted
       var parent = this.itemNode.getParent();
       var itemConstructor = this.item.constructor;
 
@@ -259,10 +261,14 @@ define( function( require ) {
       this.item.dispose();
       this.inverseItem.dispose();
 
+      // after the items have been deleted and the scale has moved,
+      // determine the new location of the inverse item's cell
+      var sumToZeroLocation = this.plate.getLocationForCell( cellIndex );
+
       // show '0' or '0x' in yellow halo, fade out
       var sumToZeroNode = new SumToZeroNode( itemConstructor, {
         haloRadius: this.haloRadius,
-        center: inverseItemLocation
+        center: sumToZeroLocation
       } );
       parent.addChild( sumToZeroNode );
       sumToZeroNode.startAnimation();

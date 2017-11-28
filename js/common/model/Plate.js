@@ -182,6 +182,16 @@ define( function( require ) {
     },
 
     /**
+     * Gets the index for the cell that an item occupies.
+     * @param {AbstractItem} item
+     * @returns {number} the cell's index, -1 if the item doesn't occupy a cell
+     * @pubic
+     */
+    getCellForItem: function( item ) {
+      return this.grid.getCellForItem( item );
+    },
+
+    /**
      * Gets the number of Cells in the grid. This is the capacity of the plate.
      * @returns {number}
      * @public

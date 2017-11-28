@@ -22,8 +22,6 @@ Solving screen:
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Show "sum to zero" animation at location of cell after scale has moved, #17
-
 Coupled mode, #19
 
 Snapshots
