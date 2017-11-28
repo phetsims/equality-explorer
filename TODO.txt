@@ -22,7 +22,7 @@ Solving screen:
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Coupled mode, #19
+Locked mode, #19
 
 Snapshots
 - save and restore the user's arrangement of items on the scale
