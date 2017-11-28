@@ -22,9 +22,9 @@ Solving screen:
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Handle remaining cases in https://github.com/phetsims/equality-explorer/issues/17#issuecomment-341774489
+Show "sum to zero" animation at location of cell after scale has moved, #17
 
-Coupled mode, https://github.com/phetsims/equality-explorer/issues/19
+Coupled mode, #19
 
 Snapshots
 - save and restore the user's arrangement of items on the scale
