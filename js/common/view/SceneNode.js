@@ -11,13 +11,13 @@ define( function( require ) {
   // modules
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var CoupledSwitch = require( 'EQUALITY_EXPLORER/common/view/CoupledSwitch' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemsPanel = require( 'EQUALITY_EXPLORER/common/view/ItemsPanel' );
+  var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
@@ -36,7 +36,7 @@ define( function( require ) {
       itemsPanelSpacing: 50, // spacing of items in the panels that appear below the scale
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
       sceneProperty: null, // {Property.<Scene>|null} the selected Scene
-      coupledSwitchVisible: true,
+      lockVisible: true,
       organizeButtonVisible: true
     }, options );
 
@@ -63,8 +63,8 @@ define( function( require ) {
       bottom: leftItemsPanel.bottom
     } );
 
-    var coupledSwitch = new CoupledSwitch( scene.coupledProperty, {
-      visible: options.coupledSwitchVisible,
+    var lockControl = new LockControl( scene.lockedProperty, {
+      visible: options.lockVisible,
       x: scene.scale.location.x,
       y: leftItemsPanel.centerY - 5 // offset determined empirically
     } );
@@ -91,7 +91,7 @@ define( function( require ) {
     Node.call( this, {          
       children: [
         scaleNode,
-        coupledSwitch,
+        lockControl,
         leftItemsPanel,
         rightItemsPanel,
         equationAccordionBox,

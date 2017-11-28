@@ -74,8 +74,8 @@ define( function( require ) {
       itemCreator.dragBounds = self.rightDragBounds;
     } );
 
-    // @public whether the 2 sides of the equation are coupled
-    this.coupledProperty = new BooleanProperty( false );
+    // @public whether the 2 sides of the equation are locked
+    this.lockedProperty = new BooleanProperty( false );
   }
 
   equalityExplorer.register( 'Scene', Scene );
@@ -85,7 +85,7 @@ define( function( require ) {
     // @public
     reset: function() {
       this.deleteAllItems();
-      this.coupledProperty.reset();
+      this.lockedProperty.reset();
     },
 
     // @private deletes all items

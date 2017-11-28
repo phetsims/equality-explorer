@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Padlock used to turning coupling on/off.
+ * Padlock used to lock/unlock the 2 sides of the scale.
  * Origin is at the center of the 'closed' padlock image. Use x,y options for layout.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -22,11 +22,11 @@ define( function( require ) {
   var lockOpenedImage = require( 'image!EQUALITY_EXPLORER/lockOpened.png' );
 
   /**
-   * @param {Property.<boolean>} coupledProperty
+   * @param {Property.<boolean>} lockedProperty
    * @param {Object} [options]
    * @constructor
    */
-  function CoupledSwitch( coupledProperty, options ) {
+  function LockControl( lockedProperty, options ) {
 
     options = _.extend( {
       cursor: 'pointer',
@@ -37,7 +37,7 @@ define( function( require ) {
     var lockClosedNode = new Image( lockClosedImage );
     var lockOpenedNode = new Image( lockOpenedImage );
 
-    var toggleNode = new ToggleNode( lockClosedNode, lockOpenedNode, coupledProperty, {
+    var toggleNode = new ToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
 
       // This is dependent on the specific image files, and aligns the body of the lock in both images.
       alignIcons: function( trueNode, falseNode ) {
@@ -58,14 +58,14 @@ define( function( require ) {
     // toggle the state when the user clicks on this Node
     this.addInputListener( new DownUpListener( {
       up: function( event ) {
-        coupledProperty.value = !coupledProperty.value;
+        lockedProperty.value = !lockedProperty.value;
       }
     } ) );
 
     this.touchArea = this.localBounds.dilatedXY( 20, 10 );
   }
 
-  equalityExplorer.register( 'CoupledSwitch', CoupledSwitch );
+  equalityExplorer.register( 'LockControl', LockControl );
 
-  return inherit( Node, CoupledSwitch );
+  return inherit( Node, LockControl );
 } );
