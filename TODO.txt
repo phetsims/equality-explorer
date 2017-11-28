@@ -3,8 +3,6 @@ TODO items for equality-explorer
 ------------------------------------------------------------------------------------------------------------------------
 DESIGN QUESTIONS
 
-Reconsider "white box" feature
-
 Should we put a fontawesome lock icon on the scale when coupling is on?
 
 Solving screen:
