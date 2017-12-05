@@ -18,6 +18,7 @@ define( function( require ) {
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var SnapshotControl = require( 'EQUALITY_EXPLORER/common/view/SnapshotControl' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var XCheckBox = require( 'EQUALITY_EXPLORER/common/view/XCheckBox' );
@@ -78,27 +79,18 @@ define( function( require ) {
     snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
 
     // Create a row for each snapshot
-    var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
     for ( var i = 0; i < scene.snapshots.snapshotProperties.length; i++ ) {
-
-      var snapshotButton = new RectangularPushButton( {
-        //TODO snapshotButton listener
-        content: snapshotIcon,
-        baseColor: PhetColorScheme.BUTTON_YELLOW,
-        xMargin: 8,
-        yMargin: 4,
-        touchAreaXDilation: 5,
-        touchAreaYDilation: 5
-      } );
-
-      snapshotsVBoxChildren.push( snapshotButton );
+      snapshotsVBoxChildren.push( new SnapshotControl(
+        scene, scene.snapshots.snapshotProperties[ i ], scene.snapshots.selectedSnapshotProperty, {
+          controlWidth: options.fixedWidth
+        } ) );
     }
 
     // separator between snapshots and buttons
     snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
 
     var snapshotsVBox = new VBox( {
-      spacing: 35,
+      spacing: 5,
       children: snapshotsVBoxChildren
     } );
 

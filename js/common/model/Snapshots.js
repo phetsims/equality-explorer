@@ -52,8 +52,10 @@ define( function( require ) {
 
       // delete all snapshots
       for ( var i = 0; i < this.snapshotProperties.length; i++ ) {
-        this.snapshotProperties[ i ].value.dispose();
-        this.snapshotProperties[ i ].value = null;
+        if ( this.snapshotProperties[ i ].value !== null ) {
+          this.snapshotProperties[ i ].value.dispose();
+          this.snapshotProperties[ i ].value = null;
+        }
       }
     },
 
