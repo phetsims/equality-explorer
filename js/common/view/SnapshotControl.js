@@ -1,6 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
+ * Control for taking, displaying and selecting a snapshot.
+ * The Snapshots accordion box has a vertical column of these.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
