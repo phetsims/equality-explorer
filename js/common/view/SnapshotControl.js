@@ -13,6 +13,7 @@ define( function( require ) {
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
@@ -20,9 +21,7 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
-
-  // strings
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+  var XValueNode = require( 'EQUALITY_EXPLORER/common/view/XValueNode' );
 
   // constants
   var SELECTED_STROKE = 'red';
@@ -51,12 +50,13 @@ define( function( require ) {
       stroke: UNSELECTED_STROKE
     } );
 
-    //TODO placeholder for equation that corresponds to snapshotProperty.value
-    var equationNode = new Text( '', {
-      font: new PhetFont( 20 ),
-      center: backgroundNode.center,
-      maxWidth: options.controlWidth,
-      maxHeight: options.controlHeight
+    // placeholder when we don't have an equation, so that equationParent has valid bounds
+    var noEquationNode = new Text( '' );
+
+    var equationParent = new HBox( {
+      children: [ noEquationNode ],
+      spacing: 8,
+      center: backgroundNode.center
     } );
 
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
@@ -78,7 +78,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'this type sets its own children' );
-    options.children = [ backgroundNode, equationNode, snapshotButton ];
+    options.children = [ backgroundNode, equationParent, snapshotButton ];
 
     var upListener = new DownUpListener( {
       upInside: function( event, trail ) {
@@ -90,23 +90,25 @@ define( function( require ) {
 
     var updateEquation = function() {
       if ( snapshotProperty.value === null ) {
-        equationNode.text = '';
-      }
-      else if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
-        assert && assert( snapshotProperty.value.x !== null, 'expected x value in snapshot' );
-        //TODO display xString in MathFont
-        equationNode.text = '{{equation}} (' + xString +  ' = ' + snapshotProperty.value.x + ')';
+        equationParent.children = [ noEquationNode ];
       }
       else {
-        equationNode.text = '{{equation}}';
+        var equationNode = new Text( '{{equation}', { font: new PhetFont( 20 ) } );
+        if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
+          assert && assert( snapshotProperty.value.x !== null, 'expected x value in snapshot' );
+          equationParent.children = [ equationNode, new XValueNode( snapshotProperty.value.x ) ];
+        }
+        else {
+          equationParent.children = [ equationNode ];
+        }
       }
-      equationNode.center = backgroundNode.center;
+      equationParent.center = backgroundNode.center;
     };
 
     snapshotProperty.link( function( snapshot ) {
 
       snapshotButton.visible = ( snapshot === null );
-      equationNode.visible = ( snapshot !== null );
+      equationParent.visible = ( snapshot !== null );
 
       updateEquation();
 
