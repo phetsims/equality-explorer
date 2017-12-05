@@ -42,7 +42,7 @@ define( function( require ) {
     options = _.extend( {
 
       fixedWidth: 100, // this accordion box is designed to be a fixed width, regardless of its content
-      numberOfSnapshots: 5,
+      numberOfSnapshots: 5, // max number of snapshots that can be taken
       xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
 
       // supertype options
