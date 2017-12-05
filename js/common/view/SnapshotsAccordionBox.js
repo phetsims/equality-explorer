@@ -31,18 +31,15 @@ define( function( require ) {
   };
 
   /**
-   * @param {AbstractItemCreator[]} leftItemCreators
-   * @param {AbstractItemCreator[]} rightItemCreators
-   * @param {BalanceScale} scale
+   * @param {Snapshots} snapshots
    * @param {Object} [options]
    * @constructor
    */
-  function SnapshotsAccordionBox( leftItemCreators, rightItemCreators, scale, options ) {
+  function SnapshotsAccordionBox( snapshots, options ) {
 
     options = _.extend( {
 
       fixedWidth: 100, // this accordion box is designed to be a fixed width, regardless of its content
-      numberOfSnapshots: 5, // max number of snapshots that can be taken
 
       // {BooleanProperty|null} whether 'x' value is visible in snapshots
       // null indicates that showing 'x' value is not supported.
@@ -82,7 +79,7 @@ define( function( require ) {
 
     // Create a row for each snapshot
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
-    for ( var i = 0; i < options.numberOfSnapshots; i++ ) {
+    for ( var i = 0; i < snapshots.maxSnapshots; i++ ) {
 
       var snapshotButton = new RectangularPushButton( {
         content: snapshotIcon,
@@ -110,6 +107,7 @@ define( function( require ) {
       //TODO add loadButton listener
       content: loadIcon,
       baseColor: PhetColorScheme.BUTTON_YELLOW,
+      enabled: false,
       xMargin: 8,
       yMargin: 4,
       touchAreaXDilation: 5,
@@ -122,6 +120,7 @@ define( function( require ) {
       //TODO add trashButton listener
       content: trashIcon,
       baseColor: 'white',
+      enabled: false,
       xMargin: 12,
       yMargin: 5,
       touchAreaXDilation: 5,

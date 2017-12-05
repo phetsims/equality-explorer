@@ -84,7 +84,7 @@ define( function( require ) {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
-    var snapshotsAccordionBox = new SnapshotsAccordionBox( leftItemCreators, rightItemCreators, scale, {
+    var snapshotsAccordionBox = new SnapshotsAccordionBox( scene.snapshots, {
       xVisibleProperty: options.xVisibleProperty,
       fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,

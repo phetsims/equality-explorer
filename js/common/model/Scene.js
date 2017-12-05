@@ -15,6 +15,8 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
+  var Snapshots = require( 'EQUALITY_EXPLORER/common/model/Snapshots' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -76,6 +78,9 @@ define( function( require ) {
 
     // @public whether the 2 sides of the equation are locked
     this.lockedProperty = new BooleanProperty( false );
+
+    // @public collection of snapshots, for saving/restoring the state of a Scene
+    this.snapshots = new Snapshots( this );
   }
 
   equalityExplorer.register( 'Scene', Scene );
@@ -86,6 +91,7 @@ define( function( require ) {
     reset: function() {
       this.deleteAllItems();
       this.lockedProperty.reset();
+      this.snapshots.reset();
     },
 
     // @private deletes all items
@@ -111,6 +117,23 @@ define( function( require ) {
       this.rightItemCreators.forEach( function( itemCreator ) {
         itemCreator.step( dt );
       } );
+    },
+
+    /**
+     * Saves a snapshot of the scene.
+     * @returns {Snapshot}
+     * @public
+     */
+    save: function() {
+      return new Snapshot( this );
+    },
+
+    /**
+     * Restores a snapshot of the scene.
+     * @param {Snapshot} snapshot
+     */
+    restore: function( snapshot ) {
+      //TODO
     }
   } );
 } );
