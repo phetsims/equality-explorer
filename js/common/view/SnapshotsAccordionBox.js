@@ -45,7 +45,7 @@ define( function( require ) {
       numberOfSnapshots: 5, // max number of snapshots that can be taken
 
       // {BooleanProperty|null} whether 'x' value is visible in snapshots
-      // null indicates that showing 'x' is not supported.
+      // null indicates that showing 'x' value is not supported.
       xVisibleProperty: null,
 
       // supertype options
