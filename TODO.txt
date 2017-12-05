@@ -5,10 +5,7 @@ DESIGN QUESTIONS
 
 Solving screen:
 - is the organize button relevant? (it's shown in mockups)
-- is universal operator visible only when coupled?
-- is the "sum to zero" feature present? what does it look like with big terms on scale?
-- do terms on plate get bigger/smaller depending on their value? or are they always big?
-- if terms on plate are always big, does dragging item 'x' onto term 'x' look/feel odd?
+- is universal operator visible only when locked?
 - multi-touch: When you start dragging something on one plate, does the corresponding thing on the other plate become non-interactive?
 - multi-touch: What happens when universal operation is applied while an item is being dragged?
 - multi-touch: What happens when x value is changed while an x item is being dragged?
