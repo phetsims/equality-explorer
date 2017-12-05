@@ -12,12 +12,12 @@ define( function( require ) {
   // modules
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -26,6 +26,8 @@ define( function( require ) {
   // constants
   var SELECTED_STROKE = 'red';
   var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
+  var NO_EQUATION_NODE = new Text( '' );
+  var NO_X_VALUE_NODE = new Text( '' );
 
   /**
    * @param {Scene} scene
@@ -51,12 +53,15 @@ define( function( require ) {
     } );
 
     // placeholder when we don't have an equation, so that equationParent has valid bounds
-    var noEquationNode = new Text( '' );
+    var equationNode = NO_EQUATION_NODE;
+    var xValueNode = NO_X_VALUE_NODE;
 
     var equationParent = new HBox( {
-      children: [ noEquationNode ],
-      spacing: 8,
-      center: backgroundNode.center
+      children: [ equationNode ],
+      spacing: 10,
+      center: backgroundNode.center,
+      maxWidth: options.controlWidth,
+      maxHeight: options.controlHeight
     } );
 
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
@@ -88,19 +93,12 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    var updateEquation = function() {
-      if ( snapshotProperty.value === null ) {
-        equationParent.children = [ noEquationNode ];
+    var updateSnapshotView = function() {
+      if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
+        equationParent.children = [ equationNode, xValueNode ];
       }
       else {
-        var equationNode = new Text( '{{equation}', { font: new PhetFont( 20 ) } );
-        if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
-          assert && assert( snapshotProperty.value.x !== null, 'expected x value in snapshot' );
-          equationParent.children = [ equationNode, new XValueNode( snapshotProperty.value.x ) ];
-        }
-        else {
-          equationParent.children = [ equationNode ];
-        }
+        equationParent.children = [ equationNode ];
       }
       equationParent.center = backgroundNode.center;
     };
@@ -110,14 +108,25 @@ define( function( require ) {
       snapshotButton.visible = ( snapshot === null );
       equationParent.visible = ( snapshot !== null );
 
-      updateEquation();
-
       if ( snapshot ) {
+        
+        equationNode = new EquationNode( scene.leftItemCreators, scene.rightItemCreators, {
+          updateEnabled: false // equation is static
+        } );
+
+        if ( options.xVisibleProperty ) {
+          assert && assert( snapshotProperty.value.x !== null, 'expected x value in snapshot' );
+          xValueNode = new XValueNode( snapshotProperty.value.x );
+        }
+
         self.addInputListener( upListener );
       }
       else if ( self.hasInputListener( upListener ) ) {
+        equationNode = NO_EQUATION_NODE;
+        xValueNode = NO_X_VALUE_NODE;
         self.removeInputListener( upListener );
       }
+      updateSnapshotView();
     } );
 
     selectedSnapshotProperty.link( function( selectedSnapshot ) {
@@ -131,7 +140,7 @@ define( function( require ) {
 
     if ( options.xVisibleProperty ) {
       options.xVisibleProperty.link( function( xVisible ) {
-        updateEquation();
+        updateSnapshotView();
       } );
     }
   }
