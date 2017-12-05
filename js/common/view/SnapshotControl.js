@@ -19,6 +19,9 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
 
+  // strings
+  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+
   // constants
   var SELECTED_STROKE = 'red';
   var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
@@ -89,7 +92,8 @@ define( function( require ) {
       }
       else if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
         assert && assert( snapshotProperty.value.x !== null, 'expected x value in snapshot' );
-        equationNode.text = '{{equation}}, x = ' + snapshotProperty.value.x;
+        //TODO display xString in MathFont
+        equationNode.text = '{{equation}}, ' + xString +  ' = ' + snapshotProperty.value.x;
       }
       else {
         equationNode.text = '{{equation}}';
