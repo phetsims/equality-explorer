@@ -37,6 +37,9 @@ define( function( require ) {
 
     options = _.extend( {
 
+      // update the view when the model changes?
+      updateEnabled: true,
+
       // icons
       iconScale: 0.75,
 
@@ -72,8 +75,8 @@ define( function( require ) {
       }
     } );
 
-    // updates the equation, dispose required
-    var updateMultilink = new Multilink( updateDependencies, function() {
+    // updates the equation
+    var update = function() {
 
       relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
 
@@ -92,11 +95,22 @@ define( function( require ) {
       leftSideNode.centerY = relationalOperatorNode.centerY;
       rightSideNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
       rightSideNode.centerY = relationalOperatorNode.centerY;
-    } );
+    };
+
+    if ( options.updateEnabled ) {
+
+      // dynamic equation, dispose required
+      var updateMultilink = new Multilink( updateDependencies, update );
+    }
+    else {
+
+      // static equation
+      update();
+    }
 
     // @private
     this.disposeEquationNode = function() {
-      updateMultilink.dispose();
+      updateMultilink && updateMultilink.dispose();
     };
 
     this.mutate( options );
