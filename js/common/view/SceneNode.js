@@ -44,44 +44,47 @@ define( function( require ) {
     this.equationAccordionBoxExpandedProperty = new BooleanProperty( true );
     this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( true );
 
+    // locals vars to improve readability
+    var scale = scene.scale;
+    var leftItemCreators = scene.leftItemCreators;
+    var rightItemCreators = scene.rightItemCreators;
+
     // items live in this layer
     var itemsLayer = new Node();
 
-    var scaleNode = new BalanceScaleNode( scene.scale, {
+    var scaleNode = new BalanceScaleNode( scale, {
       organizeButtonVisible: options.organizeButtonVisible
     } );
 
-    var leftItemsPanel = new ItemsPanel( scene.leftItemCreators, scene.scale.leftPlate, itemsLayer, {
+    var leftItemsPanel = new ItemsPanel( leftItemCreators, scale.leftPlate, itemsLayer, {
       spacing: options.itemsPanelSpacing,
-      centerX: scene.scale.leftPlate.locationProperty.value.x,
+      centerX: scale.leftPlate.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var rightItemsPanel = new ItemsPanel( scene.rightItemCreators, scene.scale.rightPlate, itemsLayer, {
+    var rightItemsPanel = new ItemsPanel( rightItemCreators, scale.rightPlate, itemsLayer, {
       spacing: options.itemsPanelSpacing,
-      centerX: scene.scale.rightPlate.locationProperty.value.x,
+      centerX: scale.rightPlate.locationProperty.value.x,
       bottom: leftItemsPanel.bottom
     } );
 
     var lockControl = new LockControl( scene.lockedProperty, {
       visible: options.lockVisible,
-      x: scene.scale.location.x,
+      x: scale.location.x,
       y: leftItemsPanel.centerY - 5 // offset determined empirically
     } );
 
-    var equationAccordionBox = new EquationAccordionBox(
-      scene.leftItemCreators, scene.rightItemCreators, {
-        fixedWidth: rightItemsPanel.right - leftItemsPanel.left,
-        expandedProperty: this.equationAccordionBoxExpandedProperty,
+    var equationAccordionBox = new EquationAccordionBox( leftItemCreators, rightItemCreators, {
+      fixedWidth: rightItemsPanel.right - leftItemsPanel.left,
+      expandedProperty: this.equationAccordionBoxExpandedProperty,
 
-        // Slightly off center, so that the equation's relational operator is horizontally centered
-        // above the scale's arrow. The offset was determined empirically.
-        centerX: scene.scale.location.x - 15,
-        top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
-      } );
+      // Slightly off center, so that the equation's relational operator is horizontally centered
+      // above the scale's arrow. The offset was determined empirically.
+      centerX: scale.location.x - 15,
+      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
+    } );
 
-    var snapshotsAccordionBox = new SnapshotsAccordionBox(
-      scene.leftItemCreators, scene.rightItemCreators, scene.scale, {
+    var snapshotsAccordionBox = new SnapshotsAccordionBox( leftItemCreators, rightItemCreators, scale, {
       xVisibleProperty: options.xVisibleProperty,
       fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
@@ -89,7 +92,7 @@ define( function( require ) {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
-    Node.call( this, {          
+    Node.call( this, {
       children: [
         scaleNode,
         lockControl,
@@ -110,16 +113,8 @@ define( function( require ) {
 
     // Render the drag bounds for the left and right plates
     if ( EqualityExplorerQueryParameters.showDragBounds ) {
-
-      // left
-      this.addChild( new Rectangle(
-        scene.leftDragBounds.minX, scene.leftDragBounds.minY,
-        scene.leftDragBounds.width, scene.leftDragBounds.height, { stroke: 'red' } ) );
-
-      // right
-      this.addChild( new Rectangle(
-        scene.rightDragBounds.minX, scene.rightDragBounds.minY,
-        scene.rightDragBounds.width, scene.rightDragBounds.height, { stroke: 'red' } ) );
+      this.addChild( new Rectangle( scene.leftDragBounds, { stroke: 'red' } ) );
+      this.addChild( new Rectangle( scene.rightDragBounds, { stroke: 'red' } ) );
     }
 
     // @public (read-only) for layout only
