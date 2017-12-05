@@ -46,8 +46,8 @@ define( function( require ) {
       stroke: UNSELECTED_STROKE
     } );
 
-    //TODO show equation that corresponds to snapshotProperty.value
-    var equationNode = new Text( 'left = right', {
+    //TODO placeholder for equation that corresponds to snapshotProperty.value
+    var equationNode = new Text( '', {
       font: new PhetFont( 20 ),
       center: backgroundNode.center,
       maxWidth: options.controlWidth,
@@ -89,10 +89,10 @@ define( function( require ) {
       }
       else if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
         assert && assert( snapshotProperty.value.x !== null, 'expected x value in snapshot' );
-        equationNode.text = 'left > right, x = ' + snapshotProperty.value.x;
+        equationNode.text = '{{equation}}, x = ' + snapshotProperty.value.x;
       }
       else {
-        equationNode.text = 'left > right';
+        equationNode.text = '{{equation}}';
       }
       equationNode.center = backgroundNode.center;
     };
