@@ -20,13 +20,19 @@ define( function( require ) {
 
   /**
    * @param {number} value - the value of variable 'x'
+   * @param {Object} [options]
    * @constructor
    */
-  function XValueNode( value ) {
+  function XValueNode( value, options ) {
 
-    var leftSideNode = new Text( '(', { font: new PhetFont( 20 ) } );
-    var xNode = new Text( xString, { font: new MathSymbolFont( 20 ) } );
-    var rightSideNode = new Text( ' = ' + value + ')', { font: new PhetFont( 20 ) } );
+    options = _.extend( {
+      font: new PhetFont( 28 ),
+      mathFont: new MathSymbolFont( 28 )
+    }, options );
+
+    var leftSideNode = new Text( '(', { font: options.font } );
+    var xNode = new Text( xString, { font: options.mathFont } );
+    var rightSideNode = new Text( ' = ' + value + ')', { font: options.font } );
 
     HBox.call( this, {
       children: [ leftSideNode, xNode, rightSideNode ],
