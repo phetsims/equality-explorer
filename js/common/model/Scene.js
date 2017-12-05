@@ -133,6 +133,7 @@ define( function( require ) {
      * @param {Snapshot} snapshot
      */
     restore: function( snapshot ) {
+      assert && assert( snapshot instanceof Snapshot, 'oops, not a Snapshot' );
       //TODO
     }
   } );
