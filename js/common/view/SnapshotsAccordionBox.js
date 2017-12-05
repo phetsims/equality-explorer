@@ -38,6 +38,8 @@ define( function( require ) {
    */
   function SnapshotsAccordionBox( scene, options ) {
 
+    var self = this;
+
     options = _.extend( {
 
       fixedWidth: 100, // this accordion box is designed to be a fixed width, regardless of its content
@@ -154,6 +156,30 @@ define( function( require ) {
     } );
 
     AccordionBox.call( this, contentVBox, options );
+
+    // click outside this accordion box to clear the selected snapshot
+    var clickToDeselectListener = {
+      down: function( event ) {
+
+        var trails = event.target.getTrails( function( node ) {
+          return node === self;
+        } );
+
+        if ( trails.length === 0 ) {
+          scene.snapshots.selectedSnapshotProperty.value = null;
+        }
+      }
+    };
+
+    // register input listener with the Display only when needed
+    scene.snapshots.selectedSnapshotProperty.link( function( selectedSnapshot, oldSelectedSnapshot ) {
+      if ( selectedSnapshot && !oldSelectedSnapshot ) {
+        phet.joist.sim.display.addInputListener( clickToDeselectListener );
+      }
+      else if ( !selectedSnapshot && phet.joist.sim.display.hasInputListener( clickToDeselectListener ) ) {
+        phet.joist.sim.display.removeInputListener( clickToDeselectListener );
+      }
+    } );
   }
 
   equalityExplorer.register( 'SnapshotsAccordionBox', SnapshotsAccordionBox );
