@@ -23,6 +23,7 @@ Snapshots
 - save and restore 'x' value
 - show 'x=N' in snapshots, based on a new toggle control in the button group
 - clear selection when user clicks anywhere outside Snapshots accordion box
+  (ala CCK, see CircuitElementNode.js line 237)
 
 Solving screen - generalize other screens? different implementation?
 
