@@ -95,7 +95,7 @@ define( function( require ) {
       else if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
         assert && assert( snapshotProperty.value.x !== null, 'expected x value in snapshot' );
         //TODO display xString in MathFont
-        equationNode.text = '{{equation}}, ' + xString +  ' = ' + snapshotProperty.value.x;
+        equationNode.text = '{{equation}} (' + xString +  ' = ' + snapshotProperty.value.x + ')';
       }
       else {
         equationNode.text = '{{equation}}';
