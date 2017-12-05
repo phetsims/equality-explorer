@@ -82,6 +82,7 @@ define( function( require ) {
     for ( var i = 0; i < snapshots.maxSnapshots; i++ ) {
 
       var snapshotButton = new RectangularPushButton( {
+        //TODO snapshotButton listener
         content: snapshotIcon,
         baseColor: PhetColorScheme.BUTTON_YELLOW,
         xMargin: 8,
@@ -101,33 +102,42 @@ define( function( require ) {
       children: snapshotsVBoxChildren
     } );
 
-    // Button to load a snapshot
-    var loadIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
-    var loadButton = new RectangularPushButton( {
-      //TODO add loadButton listener
-      content: loadIcon,
+    // Button to restore the selected snapshot
+    var restoreIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
+    var restoreButton = new RectangularPushButton( {
+      content: restoreIcon,
       baseColor: PhetColorScheme.BUTTON_YELLOW,
-      enabled: false,
       xMargin: 8,
       yMargin: 4,
       touchAreaXDilation: 5,
-      touchAreaYDilation: 5
+      touchAreaYDilation: 5,
+      listener: function() {
+        snapshots.restoreSelectedSnapshot();
+      }
     } );
 
-    // Button to trash (delete) a snapshot
+    // Button to delete (trash) the selected snapshot
     var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.45 } );
     var trashButton = new RectangularPushButton( {
-      //TODO add trashButton listener
       content: trashIcon,
       baseColor: 'white',
-      enabled: false,
       xMargin: 12,
       yMargin: 5,
       touchAreaXDilation: 5,
-      touchAreaYDilation: 5
+      touchAreaYDilation: 5,
+      listener: function() {
+        snapshots.deleteSelectedSnapshot();
+      }
     } );
 
-    var buttonGroupChildren = [ loadButton, trashButton ];
+    // disable restore and trash buttons when there is no selection
+    snapshots.selectedSnapshotProperty.link( function( snapshot ) {
+      var enabled = ( snapshot !== null );
+      restoreButton.enabled = enabled;
+      trashButton.enabled = enabled;
+    } );
+
+    var buttonGroupChildren = [ restoreButton, trashButton ];
 
     // Check box for making 'x' visible
     if ( options.xVisibleProperty ) {
@@ -151,8 +161,6 @@ define( function( require ) {
     } );
 
     AccordionBox.call( this, contentVBox, options );
-
-    //TODO disable load and trash buttons when there is no selection
   }
 
   equalityExplorer.register( 'SnapshotsAccordionBox', SnapshotsAccordionBox );
