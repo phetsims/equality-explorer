@@ -18,8 +18,6 @@ Locked mode, #19
 Snapshots
 - save and restore the user's arrangement of items on the scale
 - save and restore 'x' value
-- replace {{equation}} placeholder with equation
-- show 'x=N' with MathFont for 'x'
 
 Solving screen - generalize other screens? different implementation?
 
