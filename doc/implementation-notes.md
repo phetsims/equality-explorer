@@ -13,7 +13,18 @@ In alphabetical order:
 
 * inequality - a mathematical relation in which two _expressions_ are joined by a 
 relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different
+* item
+* dragged item
 * equation - a mathematical relation in which two _expressions_ are joined by an equal sign (=)
+* equivalent item
 * expression - a combination of symbols that is well-formed according to rules that depend on the context
+* ghost item
+* inverse item
+* locked
+* plate
+* organize
+* sum to zero
+* universal operation
+* zero pair
 
 
