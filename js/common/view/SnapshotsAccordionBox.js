@@ -157,7 +157,8 @@ define( function( require ) {
 
     AccordionBox.call( this, contentVBox, options );
 
-    // click outside this accordion box to clear the selected snapshot
+    // Click outside this accordion box to clear the selected snapshot.
+    // This technique was borrowed from circuit-construction-kit-common.CircuitElementNode
     var clickToDeselectListener = {
       down: function( event ) {
 
