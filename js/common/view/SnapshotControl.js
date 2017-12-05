@@ -35,6 +35,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+      xVisibleProperty: null, // whether value of 'x' is displayed with the equation
       controlWidth: 100,
       controlHeight: 65
     }, options );
@@ -82,10 +83,26 @@ define( function( require ) {
 
     Node.call( this, options );
 
+    var updateEquation = function() {
+      if ( snapshotProperty.value === null ) {
+        equationNode.text = '';
+      }
+      else if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
+        assert && assert( snapshotProperty.value.x !== null, 'expected x value in snapshot' );
+        equationNode.text = 'left > right, x = ' + snapshotProperty.value.x;
+      }
+      else {
+        equationNode.text = 'left > right';
+      }
+      equationNode.center = backgroundNode.center;
+    };
+
     snapshotProperty.link( function( snapshot ) {
 
       snapshotButton.visible = ( snapshot === null );
       equationNode.visible = ( snapshot !== null );
+
+      updateEquation();
 
       if ( snapshot ) {
         self.addInputListener( upListener );
@@ -103,6 +120,12 @@ define( function( require ) {
         backgroundNode.stroke = UNSELECTED_STROKE;
       }
     } );
+
+    if ( options.xVisibleProperty ) {
+      options.xVisibleProperty.link( function( xVisible ) {
+        updateEquation();
+      } );
+    }
   }
 
   equalityExplorer.register( 'SnapshotControl', SnapshotControl );

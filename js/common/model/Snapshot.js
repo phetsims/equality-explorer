@@ -17,6 +17,10 @@ define( function( require ) {
    * @constructor
    */
   function Snapshot( scene ) {
+
+    // @public
+    this.x = ( scene.xProperty ) ? scene.xProperty.value : null;
+
     //TODO
   }
 

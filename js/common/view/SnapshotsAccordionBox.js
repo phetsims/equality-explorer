@@ -82,6 +82,7 @@ define( function( require ) {
     for ( var i = 0; i < scene.snapshots.snapshotProperties.length; i++ ) {
       snapshotsVBoxChildren.push( new SnapshotControl(
         scene, scene.snapshots.snapshotProperties[ i ], scene.snapshots.selectedSnapshotProperty, {
+          xVisibleProperty: options.xVisibleProperty,
           controlWidth: options.fixedWidth
         } ) );
     }
