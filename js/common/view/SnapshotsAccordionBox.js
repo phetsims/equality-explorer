@@ -33,10 +33,11 @@ define( function( require ) {
   /**
    * @param {ItemCreator[]} leftItemCreators
    * @param {ItemCreator[]} rightItemCreators
+   * @param {BalanceScale} scale
    * @param {Object} [options]
    * @constructor
    */
-  function SnapshotsAccordionBox( leftItemCreators, rightItemCreators, options ) {
+  function SnapshotsAccordionBox( leftItemCreators, rightItemCreators, scale, options ) {
 
     options = _.extend( {
 
