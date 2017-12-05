@@ -48,7 +48,7 @@ define( function( require ) {
     reset: function() {
 
       // reset the selected snapshot
-      this.selectedSnapshotProperty.reset()
+      this.selectedSnapshotProperty.reset();
 
       // delete all snapshots
       for ( var i = 0; i < this.snapshotProperties.length; i++ ) {
