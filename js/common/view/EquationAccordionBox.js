@@ -22,8 +22,8 @@ define( function( require ) {
   var equationOrInequalityString = require( 'string!EQUALITY_EXPLORER/equationOrInequality' );
 
   /**
-   * @param {ItemCreator[]} leftItemCreators
-   * @param {ItemCreator[]} rightItemCreators
+   * @param {AbstractItemCreator[]} leftItemCreators
+   * @param {AbstractItemCreator[]} rightItemCreators
    * @param {Object} [options]
    * @constructor
    */

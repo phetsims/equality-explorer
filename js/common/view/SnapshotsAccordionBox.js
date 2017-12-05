@@ -31,8 +31,8 @@ define( function( require ) {
   };
 
   /**
-   * @param {ItemCreator[]} leftItemCreators
-   * @param {ItemCreator[]} rightItemCreators
+   * @param {AbstractItemCreator[]} leftItemCreators
+   * @param {AbstractItemCreator[]} rightItemCreators
    * @param {BalanceScale} scale
    * @param {Object} [options]
    * @constructor

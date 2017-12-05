@@ -26,8 +26,8 @@ define( function( require ) {
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
-   * @param {ItemCreator[]} leftItemCreators
-   * @param {ItemCreator[]} rightItemCreators
+   * @param {AbstractItemCreator[]} leftItemCreators
+   * @param {AbstractItemCreator[]} rightItemCreators
    * @param {Object} [options]
    * @constructor
    */
@@ -60,7 +60,7 @@ define( function( require ) {
       font: options.relationalOperatorFont
     } );
 
-    // {ItemCreator[]} all ItemCreator instances
+    // {AbstractItemCreator[]} all AbstractItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
     // {Property} dependencies that require the equation to be updated
@@ -106,8 +106,8 @@ define( function( require ) {
 
   /**
    * Gets the operator that describes the relationship between the left and right sides.
-   * @param {ItemCreator[]} leftItemCreators
-   * @param {ItemCreator[]} rightItemCreators
+   * @param {AbstractItemCreator[]} leftItemCreators
+   * @param {AbstractItemCreator[]} rightItemCreators
    * @returns {string}
    */
   function getRelationalOperator( leftItemCreators, rightItemCreators ) {
@@ -141,7 +141,7 @@ define( function( require ) {
 
   /**
    * Creates one side of the equation
-   * @param {ItemCreator[]} itemCreators
+   * @param {AbstractItemCreator[]} itemCreators
    * @param {number} iconScale - scale for item icons
    * @param {Font} plusFont - font for plus operators
    * @param {Font} numberFont - font for coefficients and constants

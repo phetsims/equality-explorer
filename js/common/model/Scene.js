@@ -25,8 +25,8 @@ define( function( require ) {
 
   /**
    * @param {string} debugName - internal name, not displayed to the user
-   * @param {ItemCreator[]} leftItemCreators - in the order that they appear in the left panel and left side of equations
-   * @param {ItemCreator[]} rightItemCreators - in the order that they appear in the right panel and right side of equations
+   * @param {AbstractItemCreator[]} leftItemCreators - in the order that they appear in the left panel and left side of equations
+   * @param {AbstractItemCreator[]} rightItemCreators - in the order that they appear in the right panel and right side of equations
    * @param {Object} [options]
    * @constructor
    */
@@ -48,10 +48,10 @@ define( function( require ) {
     // @public (read-only) {Node} used to represent the scene
     this.icon = options.icon;
 
-    // @public (read-only) {ItemCreator[]} creators for items on left side of scale
+    // @public (read-only) {AbstractItemCreator[]} creators for items on left side of scale
     this.leftItemCreators = leftItemCreators;
 
-    // @public (read-only) {ItemCreator[]} creators for items on right side of scale
+    // @public (read-only) {AbstractItemCreator[]} creators for items on right side of scale
     this.rightItemCreators = rightItemCreators;
 
     // @public (read-only)

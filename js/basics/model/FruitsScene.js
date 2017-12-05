@@ -31,7 +31,7 @@ define( function( require ) {
   /**
    * Creates the item creators for this scene.
    * @param {number[]} numberOfItemsOnScale
-   * @returns {ItemCreator[]}
+   * @returns {AbstractItemCreator[]}
    */
   function createItemCreators( numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 3 );

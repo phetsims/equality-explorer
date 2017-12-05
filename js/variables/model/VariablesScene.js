@@ -49,7 +49,7 @@ define( function( require ) {
    * Creates the item creators for this scene.
    * @param {Property.<number>} xProperty
    * @param {number} numberOfItemsOnScale
-   * @returns {ItemCreator[]}
+   * @returns {AbstractItemCreator[]}
    */
   function createItemCreators( xProperty, numberOfItemsOnScale ) {
     assert && assert( numberOfItemsOnScale.length === 4 );

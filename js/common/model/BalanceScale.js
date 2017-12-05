@@ -21,8 +21,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {ItemCreator[]} leftItemCreators
-   * @param {ItemCreator[]} rightItemCreators
+   * @param {AbstractItemCreator[]} leftItemCreators
+   * @param {AbstractItemCreator[]} rightItemCreators
    * @param {Object} [options]
    * @constructor
    */
@@ -62,7 +62,7 @@ define( function( require ) {
     this.leftItemCreators = leftItemCreators;
     this.rightItemCreators = rightItemCreators;
 
-    // {ItemCreator[]} all ItemCreator instances
+    // {AbstractItemCreator[]} all AbstractItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
     // Find the maximum width and height of all item icons
