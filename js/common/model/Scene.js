@@ -80,7 +80,7 @@ define( function( require ) {
     this.lockedProperty = new BooleanProperty( false );
 
     // @public collection of snapshots, for saving/restoring the state of a Scene
-    this.snapshots = new Snapshots( this );
+    this.snapshots = new Snapshots();
   }
 
   equalityExplorer.register( 'Scene', Scene );

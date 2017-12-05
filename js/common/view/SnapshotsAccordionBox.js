@@ -31,11 +31,11 @@ define( function( require ) {
   };
 
   /**
-   * @param {Snapshots} snapshots
+   * @param {Scene} scene
    * @param {Object} [options]
    * @constructor
    */
-  function SnapshotsAccordionBox( snapshots, options ) {
+  function SnapshotsAccordionBox( scene, options ) {
 
     options = _.extend( {
 
@@ -79,7 +79,7 @@ define( function( require ) {
 
     // Create a row for each snapshot
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
-    for ( var i = 0; i < snapshots.maxSnapshots; i++ ) {
+    for ( var i = 0; i < scene.snapshots.snapshotProperties.length; i++ ) {
 
       var snapshotButton = new RectangularPushButton( {
         //TODO snapshotButton listener
@@ -112,7 +112,7 @@ define( function( require ) {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
       listener: function() {
-        snapshots.restoreSelectedSnapshot();
+        scene.restore( scene.snapshots.selectedSnapshotProperty.value );
       }
     } );
 
@@ -126,12 +126,12 @@ define( function( require ) {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
       listener: function() {
-        snapshots.deleteSelectedSnapshot();
+        scene.snapshots.deleteSelectedSnapshot();
       }
     } );
 
     // disable restore and trash buttons when there is no selection
-    snapshots.selectedSnapshotProperty.link( function( snapshot ) {
+    scene.snapshots.selectedSnapshotProperty.link( function( snapshot ) {
       var enabled = ( snapshot !== null );
       restoreButton.enabled = enabled;
       trashButton.enabled = enabled;

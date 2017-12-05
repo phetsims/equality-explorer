@@ -14,26 +14,22 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   /**
-   * @param {Scene} scene
    * @param {Object} [options]
    * @constructor
    */
-  function Snapshots( scene, options ) {
+  function Snapshots( options ) {
 
     var self = this;
 
     options = _.extend( {
-      maxSnapshots: 5
+      numberOfSnapshots: 5
     }, options );
 
-    // @private
-    this.scene = scene;
-
-    // @public
-    this.maxSnapshots = options.maxSnapshots;
-
-    // @public {Snapshot[]}
-    this.snapshots = [];
+    // @public {Property.<Snapshot|null>[]} null means no snapshot
+    this.snapshotProperties = [];
+    for ( var i = 0; i < options.numberOfSnapshots; i++ ) {
+      this.snapshotProperties.push( new Property( null ) );
+    }
 
     // @public {Property.<Snapshot|null>} null means no selection
     this.selectedSnapshotProperty = new Property( null );
@@ -51,37 +47,14 @@ define( function( require ) {
     // @public
     reset: function() {
 
-      // delete all snapshots
-      for ( var i = 0; i < this.snapshots.length; i++ ) {
-        this.snapshots[ i ].dispose();
-      }
-      this.snapshots = [];
-
       // reset the selected snapshot
-      this.selectedSnapshotProperty.reset();
-    },
+      this.selectedSnapshotProperty.reset()
 
-    /**
-     * Saves a snapshot of the current configuration.
-     * @returns {Snapshot}
-     * @public
-     */
-    saveSnapshot: function() {
-      assert && assert( this.snapshots.length < this.maxSnapshots, 'collection is full' );
-      var snapshot = this.scene.save();
-      assert && assert( !this.containsSnapshot( snapshot ), 'snapshot is already in this collection' );
-      this.snapshots.push( snapshot );
-      return snapshot;
-    },
-
-    /**
-     * Restores the selected snapshot.
-     * @public
-     */
-    restoreSelectedSnapshot: function() {
-      var snapshot = this.selectedSnapshotProperty.value;
-      assert && assert( snapshot, 'no selected snapshot' );
-      this.scene.restore( snapshot );
+      // delete all snapshots
+      for ( var i = 0; i < this.snapshotProperties.length; i++ ) {
+        this.snapshotProperties[ i ].value.dispose();
+        this.snapshotProperties[ i ].value = null;
+      }
     },
 
     /**
@@ -89,12 +62,15 @@ define( function( require ) {
      * @public
      */
     deleteSelectedSnapshot: function() {
-      var snapshot = this.selectedSnapshotProperty.value;
-      assert && assert( snapshot, 'no selected snapshot' );
-      snapshot.dispose();
-      this.snapshots.splice( this.snapshots.indexOf( snapshot ), 1 );
-      if ( this.selectedSnapshotProperty.value === snapshot ) {
-        this.selectedSnapshotProperty.value = null;
+      var selectedSnapshot = this.selectedSnapshotProperty.value;
+      assert && assert( selectedSnapshot, 'no selected snapshot' );
+      selectedSnapshot.dispose();
+      this.selectedSnapshotProperty.value = null;
+      for ( var i = 0; i < this.snapshotProperties.length; i++ ) {
+        if ( this.snapshotProperties[ i ].value === selectedSnapshot ) {
+          this.snapshotProperties[ i ].value = null;
+          break;
+        }
       }
     },
 
@@ -105,7 +81,11 @@ define( function( require ) {
      * @private
      */
     containsSnapshot: function( snapshot ) {
-      return ( this.snapshots.indexOf( snapshot ) !== -1 );
+      var found = false;
+      for ( var i = 0; i < this.snapshotProperties.length && !found; i++ ) {
+        found = ( this.snapshotProperties[ i ].value === snapshot );
+      }
+      return found;
     }
   } );
 } );
