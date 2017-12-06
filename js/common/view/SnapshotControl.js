@@ -25,7 +25,7 @@ define( function( require ) {
   var XValueNode = require( 'EQUALITY_EXPLORER/common/view/XValueNode' );
 
   // constants
-  var SELECTED_STROKE = 'red';
+  var SELECTED_STROKE = 'rgb( 128, 128, 128 )';
   var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
   var NO_EQUATION_NODE = new Text( '' );
   var NO_X_VALUE_NODE = new Text( '' );
@@ -49,7 +49,7 @@ define( function( require ) {
     }, options );
 
     var backgroundNode = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
-      cornerRadius: 10,
+      cornerRadius: 0, //TODO remove this if we really decide on 0
       lineWidth: 2,
       stroke: UNSELECTED_STROKE
     } );
