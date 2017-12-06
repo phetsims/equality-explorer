@@ -21,14 +21,13 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var XValueNode = require( 'EQUALITY_EXPLORER/common/view/XValueNode' );
 
   // constants
-  var SELECTED_STROKE = 'rgb( 128, 128, 128 )';
+  var SELECTED_STROKE = 'rgb( 128, 128, 128 )'; // stroke for selection rectangle
   var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
-  var NO_EQUATION_NODE = new Text( '' );
-  var NO_X_VALUE_NODE = new Text( '' );
+  var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an equation, so bounds are valid
+  var NO_X_VALUE_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an x value, so bounds are valid
   var RELATIONAL_OPERATOR_FONT = new PhetFont( 28 );
   var SELECTION_X_MARGIN = 20;
   var SELECTION_Y_MARGIN = 5;
@@ -50,7 +49,8 @@ define( function( require ) {
       controlHeight: 50
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
+    // rectangle that appears around the snapshot when it's selected
+    var selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
       cornerRadius: 0, //TODO remove this if we really decide on 0, see #23
       lineWidth: 2,
       stroke: UNSELECTED_STROKE
@@ -63,11 +63,12 @@ define( function( require ) {
     var equationParent = new HBox( {
       children: [ equationNode ],
       spacing: 10,
-      center: backgroundNode.center,
+      center: selectionRectangle.center,
       maxWidth: options.controlWidth - SELECTION_X_MARGIN,
       maxHeight: options.controlHeight - SELECTION_Y_MARGIN
     } );
 
+    // snapshot (camera) button
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
     var snapshotButton = new RectangularPushButton( {
       content: snapshotIcon,
@@ -76,7 +77,7 @@ define( function( require ) {
       yMargin: 4,
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
-      center: backgroundNode.center,
+      center: selectionRectangle.center,
       maxWidth: options.controlWidth,
       maxHeight: options.controlHeight,
       listener: function() {
@@ -87,26 +88,30 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'this type sets its own children' );
-    options.children = [ backgroundNode, equationParent, snapshotButton ];
+    options.children = [ selectionRectangle, equationParent, snapshotButton ];
 
+    // clicking on this control selects the associated snapshot
     var upListener = new DownUpListener( {
       upInside: function( event, trail ) {
+        assert && assert( snapshotProperty.value !== null, 'expected a snapshot' );
         selectedSnapshotProperty.value = snapshotProperty.value;
       }
     } );
 
     Node.call( this, options );
 
-    var updateSnapshotView = function() {
+    // updates the layout of the snapshot, and centers it in the control
+    var updateSnapshotLayout = function() {
       if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
         equationParent.children = [ equationNode, xValueNode ];
       }
       else {
         equationParent.children = [ equationNode ];
       }
-      equationParent.center = backgroundNode.center;
+      equationParent.center = selectionRectangle.center;
     };
 
+    // updates the view when the model changes
     snapshotProperty.link( function( snapshot ) {
 
       snapshotButton.visible = ( snapshot === null );
@@ -120,8 +125,8 @@ define( function( require ) {
         } );
 
         if ( options.xVisibleProperty ) {
-          assert && assert( snapshotProperty.value.x !== null, 'expected x value in snapshot' );
-          xValueNode = new XValueNode( snapshotProperty.value.x );
+          assert && assert( snapshot.x !== null, 'expected x value in snapshot' );
+          xValueNode = new XValueNode( snapshot.x );
         }
 
         self.addInputListener( upListener );
@@ -131,21 +136,23 @@ define( function( require ) {
         xValueNode = NO_X_VALUE_NODE;
         self.removeInputListener( upListener );
       }
-      updateSnapshotView();
+      updateSnapshotLayout();
     } );
 
+    // shows that the associated snapshot has been selected
     selectedSnapshotProperty.link( function( selectedSnapshot ) {
       if ( selectedSnapshot !== null && selectedSnapshot === snapshotProperty.value ) {
-        backgroundNode.stroke = SELECTED_STROKE;
+        selectionRectangle.stroke = SELECTED_STROKE;
       }
       else {
-        backgroundNode.stroke = UNSELECTED_STROKE;
+        selectionRectangle.stroke = UNSELECTED_STROKE;
       }
     } );
 
+    // shows/hides the value of 'x'
     if ( options.xVisibleProperty ) {
       options.xVisibleProperty.link( function( xVisible ) {
-        updateSnapshotView();
+        updateSnapshotLayout();
       } );
     }
   }
