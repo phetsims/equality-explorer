@@ -18,6 +18,7 @@ define( function( require ) {
    */
   function Snapshot( scene ) {
 
+    //TODO this may indicate the need for a subtype
     // @public
     this.x = ( scene.xProperty ) ? scene.xProperty.value : null;
 
