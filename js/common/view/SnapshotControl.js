@@ -17,14 +17,13 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var XValueNode = require( 'EQUALITY_EXPLORER/common/view/XValueNode' );
 
   // constants
-  var SELECTED_STROKE = 'rgb( 128, 128, 128 )'; // stroke for selection rectangle
+  var SELECTED_STROKE = 'rgb( 85, 169, 223 )'; // stroke for selection rectangle
   var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
   var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an equation, so bounds are valid
   var NO_X_VALUE_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an x value, so bounds are valid
@@ -51,8 +50,8 @@ define( function( require ) {
 
     // rectangle that appears around the snapshot when it's selected
     var selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
-      cornerRadius: 0, //TODO remove this if we really decide on 0, see #23
-      lineWidth: 2,
+      cornerRadius: 3,
+      lineWidth: 3,
       stroke: UNSELECTED_STROKE
     } );
 
@@ -72,7 +71,7 @@ define( function( require ) {
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
     var snapshotButton = new RectangularPushButton( {
       content: snapshotIcon,
-      baseColor: PhetColorScheme.BUTTON_YELLOW,
+      baseColor: 'white',
       xMargin: 8,
       yMargin: 4,
       touchAreaXDilation: 5,

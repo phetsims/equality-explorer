@@ -15,7 +15,6 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSeparator = require( 'SUN/HSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var SnapshotControl = require( 'EQUALITY_EXPLORER/common/view/SnapshotControl' );
@@ -101,7 +100,7 @@ define( function( require ) {
     var restoreIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
     var restoreButton = new RectangularPushButton( {
       content: restoreIcon,
-      baseColor: PhetColorScheme.BUTTON_YELLOW,
+      baseColor: 'rgb( 85, 169, 223 )',
       xMargin: 8,
       yMargin: 4,
       touchAreaXDilation: 5,
