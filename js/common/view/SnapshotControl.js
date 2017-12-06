@@ -30,6 +30,8 @@ define( function( require ) {
   var NO_EQUATION_NODE = new Text( '' );
   var NO_X_VALUE_NODE = new Text( '' );
   var RELATIONAL_OPERATOR_FONT = new PhetFont( 28 );
+  var SELECTION_X_MARGIN = 20;
+  var SELECTION_Y_MARGIN = 5;
 
   /**
    * @param {Scene} scene
@@ -45,7 +47,7 @@ define( function( require ) {
     options = _.extend( {
       xVisibleProperty: null, // whether value of 'x' is displayed with the equation
       controlWidth: 100,
-      controlHeight: 65
+      controlHeight: 50
     }, options );
 
     var backgroundNode = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
@@ -62,8 +64,8 @@ define( function( require ) {
       children: [ equationNode ],
       spacing: 10,
       center: backgroundNode.center,
-      maxWidth: options.controlWidth,
-      maxHeight: options.controlHeight
+      maxWidth: options.controlWidth - SELECTION_X_MARGIN,
+      maxHeight: options.controlHeight - SELECTION_Y_MARGIN
     } );
 
     var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
