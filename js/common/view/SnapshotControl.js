@@ -51,7 +51,7 @@ define( function( require ) {
     }, options );
 
     var backgroundNode = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
-      cornerRadius: 0, //TODO remove this if we really decide on 0
+      cornerRadius: 0, //TODO remove this if we really decide on 0, see #23
       lineWidth: 2,
       stroke: UNSELECTED_STROKE
     } );
