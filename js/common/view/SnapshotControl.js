@@ -18,6 +18,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -28,6 +29,7 @@ define( function( require ) {
   var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
   var NO_EQUATION_NODE = new Text( '' );
   var NO_X_VALUE_NODE = new Text( '' );
+  var RELATIONAL_OPERATOR_FONT = new PhetFont( 28 );
 
   /**
    * @param {Scene} scene
@@ -111,6 +113,7 @@ define( function( require ) {
       if ( snapshot ) {
         
         equationNode = new EquationNode( scene.leftItemCreators, scene.rightItemCreators, {
+          relationalOperatorFont: RELATIONAL_OPERATOR_FONT,
           updateEnabled: false // equation is static
         } );
 
