@@ -20,6 +20,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var XValueNode = require( 'EQUALITY_EXPLORER/common/view/XValueNode' );
 
   // constants
@@ -124,7 +125,7 @@ define( function( require ) {
         } );
 
         if ( options.xVisibleProperty ) {
-          assert && assert( snapshot.x !== null, 'expected x value in snapshot' );
+          assert && assert( snapshot instanceof SnapshotWithVariable, 'expected a snapshot with variable support' );
           xValueNode = new XValueNode( snapshot.x );
         }
 

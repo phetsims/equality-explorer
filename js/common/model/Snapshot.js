@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Snapshot of a scene, saves all of the state needed to restore the scene.
+ * Base type for snapshot of a scene, saves state needed to restore the scene.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -17,12 +17,7 @@ define( function( require ) {
    * @constructor
    */
   function Snapshot( scene ) {
-
-    //TODO this may indicate the need for a subtype
-    // @public
-    this.x = ( scene.xProperty ) ? scene.xProperty.value : null;
-
-    //TODO
+    //TODO implement constructor
   }
 
   equalityExplorer.register( 'Snapshot', Snapshot );
@@ -31,7 +26,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      //TODO
+      //TODO implement dispose
     }
   } );
 } );

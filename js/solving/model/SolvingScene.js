@@ -19,6 +19,7 @@ define( function( require ) {
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var StringProperty = require( 'AXON/StringProperty' );
+  var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
 
   /**
@@ -110,6 +111,27 @@ define( function( require ) {
       this.operatorProperty.reset();
       this.operandProperty.reset();
       Scene.prototype.reset.call( this );
+    },
+
+    /**
+     * Saves a snapshot of the scene.
+     * @returns {SnapshotWithVariable}
+     * @public
+     * @override
+     */
+    save: function() {
+      return new SnapshotWithVariable( this );
+    },
+
+    /**
+     * Restores a snapshot of the scene.
+     * @param {SnapshotWithVariable} snapshot
+     * @override
+     */
+    restore: function( snapshot ) {
+      assert && assert( snapshot instanceof SnapshotWithVariable, 'oops, not a SnapshotWithVariable' );
+      Scene.prototype.restore.call( this, snapshot );
+      this.xProperty.value = snapshot.x;
     }
   } );
 } );

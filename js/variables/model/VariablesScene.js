@@ -17,6 +17,7 @@ define( function( require ) {
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
+  var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
 
   /**
@@ -90,6 +91,27 @@ define( function( require ) {
     reset: function() {
       this.xProperty.reset();
       Scene.prototype.reset.call( this );
+    },
+
+    /**
+     * Saves a snapshot of the scene.
+     * @returns {SnapshotWithVariable}
+     * @public
+     * @override
+     */
+    save: function() {
+      return new SnapshotWithVariable( this );
+    },
+
+    /**
+     * Restores a snapshot of the scene.
+     * @param {SnapshotWithVariable} snapshot
+     * @override
+     */
+    restore: function( snapshot ) {
+      assert && assert( snapshot instanceof SnapshotWithVariable, 'oops, not a SnapshotWithVariable' );
+      Scene.prototype.restore.call( this, snapshot );
+      this.xProperty.value = snapshot.x;
     }
   } );
 } );
