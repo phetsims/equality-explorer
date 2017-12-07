@@ -18,7 +18,6 @@ Locked mode, #19
 Snapshots
 - save and restore the user's arrangement of items on the scale
 - save and restore 'x' value
-- horizontally center relational operator, so they align?
 
 Solving screen - generalize other screens? different implementation?
 
