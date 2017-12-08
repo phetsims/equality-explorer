@@ -63,7 +63,8 @@ define( function( require ) {
     var equationNode = NO_EQUATION_NODE;
     var xValueNode = NO_X_VALUE_NODE;
 
-    var equationParent = new HBox( {
+    // parent for the equation and option x value display
+    var snapshotNode = new HBox( {
       children: [ equationNode ],
       spacing: 10,
       center: selectionRectangle.center,
@@ -91,7 +92,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'this type sets its own children' );
-    options.children = [ selectionRectangle, equationParent, snapshotButton ];
+    options.children = [ selectionRectangle, snapshotNode, snapshotButton ];
 
     // clicking on this control selects the associated snapshot
     var upListener = new DownUpListener( {
@@ -106,19 +107,19 @@ define( function( require ) {
     // updates the layout of the snapshot, and centers it in the control
     var updateSnapshotLayout = function() {
       if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
-        equationParent.children = [ equationNode, xValueNode ];
+        snapshotNode.children = [ equationNode, xValueNode ];
       }
       else {
-        equationParent.children = [ equationNode ];
+        snapshotNode.children = [ equationNode ];
       }
-      equationParent.center = selectionRectangle.center;
+      snapshotNode.center = selectionRectangle.center;
     };
 
     // updates the view when the model changes
     snapshotProperty.link( function( snapshot ) {
 
       snapshotButton.visible = ( snapshot === null );
-      equationParent.visible = ( snapshot !== null );
+      snapshotNode.visible = ( snapshot !== null );
 
       if ( snapshot ) {
         
