@@ -59,7 +59,7 @@ define( function( require ) {
       stroke: UNSELECTED_STROKE
     } );
 
-    // placeholder when we don't have an equation, so that equationParent has valid bounds
+    // placeholder when we don't have an equation, so that snapshotNode has valid bounds
     var equationNode = NO_EQUATION_NODE;
     var xValueNode = NO_X_VALUE_NODE;
 
