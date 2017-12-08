@@ -94,7 +94,7 @@ define( function( require ) {
     assert && assert( !options.children, 'this type sets its own children' );
     options.children = [ selectionRectangle, snapshotNode, snapshotButton ];
 
-    // clicking on this control selects the associated snapshot
+    // selects the snapshot associated with this control
     var upListener = new DownUpListener( {
       upInside: function( event, trail ) {
         assert && assert( snapshotProperty.value !== null, 'expected a snapshot' );
@@ -118,11 +118,13 @@ define( function( require ) {
     // updates the view when the model changes
     snapshotProperty.link( function( snapshot ) {
 
+      // either the button or the snapshot is visible
       snapshotButton.visible = ( snapshot === null );
       snapshotNode.visible = ( snapshot !== null );
 
       if ( snapshot ) {
-        
+
+        // create the equation for the snapshot
         equationNode = new EquationNode( scene.leftItemCreators, scene.rightItemCreators, {
           updateEnabled: false, // equation is static
           variableFont: VARIABLE_FONT,
@@ -131,6 +133,7 @@ define( function( require ) {
           numberFont: EQUATION_FONT
         } );
 
+        // optionally show the value of 'x'
         if ( options.xVisibleProperty ) {
           assert && assert( snapshot instanceof SnapshotWithVariable, 'expected a snapshot with variable support' );
           xValueNode = new XValueNode( snapshot.x, {
@@ -139,24 +142,24 @@ define( function( require ) {
           } );
         }
 
+        // add listener that selects the snapshot
         self.addInputListener( upListener );
       }
       else if ( self.hasInputListener( upListener ) ) {
+
+        // no associated snapshot
         equationNode = NO_EQUATION_NODE;
         xValueNode = NO_X_VALUE_NODE;
         self.removeInputListener( upListener );
       }
+
       updateSnapshotLayout();
     } );
 
     // shows that the associated snapshot has been selected
     selectedSnapshotProperty.link( function( selectedSnapshot ) {
-      if ( selectedSnapshot !== null && selectedSnapshot === snapshotProperty.value ) {
-        selectionRectangle.stroke = SELECTED_STROKE;
-      }
-      else {
-        selectionRectangle.stroke = UNSELECTED_STROKE;
-      }
+      var isSelected = (selectedSnapshot !== null && selectedSnapshot === snapshotProperty.value);
+      selectionRectangle.stroke = isSelected ? SELECTED_STROKE : UNSELECTED_STROKE;
     } );
 
     // shows/hides the value of 'x'
