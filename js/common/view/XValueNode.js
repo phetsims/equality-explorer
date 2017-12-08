@@ -26,12 +26,12 @@ define( function( require ) {
   function XValueNode( value, options ) {
 
     options = _.extend( {
-      font: new PhetFont( 28 ),
-      mathFont: new MathSymbolFont( 28 )
+      variableFont: new MathSymbolFont( 28 ), // for variables, like 'x'
+      font: new PhetFont( 28 ) // for everything except variable
     }, options );
 
     var leftSideNode = new Text( '(', { font: options.font } );
-    var xNode = new Text( xString, { font: options.mathFont } );
+    var xNode = new Text( xString, { font: options.variableFont } );
     var rightSideNode = new Text( ' = ' + value + ')', { font: options.font } );
 
     HBox.call( this, {

@@ -44,10 +44,10 @@ define( function( require ) {
       iconScale: 0.75,
 
       // fonts
+      variableFont: new MathSymbolFont( 28 ), // for variables, like 'x'
       relationalOperatorFont: new PhetFont( { size: 40, weight: 'bold' } ), // for relational operator
       plusFont: new PhetFont( 28 ), // for plus operator
       numberFont: new PhetFont( 28 ), // for coefficients and constants
-      variableFont: new MathSymbolFont( 28 ), // for variables, like 'x'
 
       // horizontal spacing
       relationalOperatorSpacing: 20, // space around the relational operator

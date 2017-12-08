@@ -16,6 +16,7 @@ define( function( require ) {
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -28,9 +29,10 @@ define( function( require ) {
   var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
   var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an equation, so bounds are valid
   var NO_X_VALUE_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an x value, so bounds are valid
-  var RELATIONAL_OPERATOR_FONT = new PhetFont( 28 );
-  var SELECTION_X_MARGIN = 20;
-  var SELECTION_Y_MARGIN = 5;
+  var VARIABLE_FONT = new MathSymbolFont( 28 ); // for variable 'x'
+  var EQUATION_FONT = new PhetFont( 28 ); // for all parts of equation except variable 'x'
+  var SELECTION_RECTANGLE_X_MARGIN = 20;
+  var SELECTION_RECTANGLE_Y_MARGIN = 5;
 
   /**
    * @param {Scene} scene
@@ -64,8 +66,8 @@ define( function( require ) {
       children: [ equationNode ],
       spacing: 10,
       center: selectionRectangle.center,
-      maxWidth: options.controlWidth - SELECTION_X_MARGIN,
-      maxHeight: options.controlHeight - SELECTION_Y_MARGIN
+      maxWidth: options.controlWidth - SELECTION_RECTANGLE_X_MARGIN,
+      maxHeight: options.controlHeight - SELECTION_RECTANGLE_Y_MARGIN
     } );
 
     // snapshot (camera) button
@@ -120,13 +122,19 @@ define( function( require ) {
       if ( snapshot ) {
         
         equationNode = new EquationNode( scene.leftItemCreators, scene.rightItemCreators, {
-          relationalOperatorFont: RELATIONAL_OPERATOR_FONT,
-          updateEnabled: false // equation is static
+          updateEnabled: false, // equation is static
+          variableFont: new MathSymbolFont( 28 ),
+          relationalOperatorFont: EQUATION_FONT,
+          plusFont: EQUATION_FONT,
+          numberFont: EQUATION_FONT
         } );
 
         if ( options.xVisibleProperty ) {
           assert && assert( snapshot instanceof SnapshotWithVariable, 'expected a snapshot with variable support' );
-          xValueNode = new XValueNode( snapshot.x );
+          xValueNode = new XValueNode( snapshot.x, {
+            variableFont: new MathSymbolFont( 28 ),
+            font: EQUATION_FONT
+          } );
         }
 
         self.addInputListener( upListener );
