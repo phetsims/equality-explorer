@@ -29,8 +29,9 @@ define( function( require ) {
   var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
   var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an equation, so bounds are valid
   var NO_X_VALUE_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an x value, so bounds are valid
-  var VARIABLE_FONT = new MathSymbolFont( 28 ); // for variable 'x'
-  var EQUATION_FONT = new PhetFont( 28 ); // for all parts of equation except variable 'x'
+  var FONT_SIZE = 28; // uniform font size for all parts of the equation
+  var VARIABLE_FONT = new MathSymbolFont( FONT_SIZE ); // for variable 'x'
+  var EQUATION_FONT = new PhetFont( FONT_SIZE ); // for all parts of equation except variable 'x'
   var SELECTION_RECTANGLE_X_MARGIN = 20;
   var SELECTION_RECTANGLE_Y_MARGIN = 5;
 
