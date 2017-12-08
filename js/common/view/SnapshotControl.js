@@ -123,7 +123,7 @@ define( function( require ) {
         
         equationNode = new EquationNode( scene.leftItemCreators, scene.rightItemCreators, {
           updateEnabled: false, // equation is static
-          variableFont: new MathSymbolFont( 28 ),
+          variableFont: VARIABLE_FONT,
           relationalOperatorFont: EQUATION_FONT,
           plusFont: EQUATION_FONT,
           numberFont: EQUATION_FONT
@@ -132,7 +132,7 @@ define( function( require ) {
         if ( options.xVisibleProperty ) {
           assert && assert( snapshot instanceof SnapshotWithVariable, 'expected a snapshot with variable support' );
           xValueNode = new XValueNode( snapshot.x, {
-            variableFont: new MathSymbolFont( 28 ),
+            variableFont: VARIABLE_FONT,
             font: EQUATION_FONT
           } );
         }
