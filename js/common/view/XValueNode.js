@@ -9,10 +9,12 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
@@ -37,7 +39,12 @@ define( function( require ) {
       font: new MathSymbolFont( options.fontSize )
     } );
 
-    var rightSideNode = new Text( ' = ' + value + ')', {
+    // i18n not required
+    var rightSideString = StringUtils.fillIn( ' {{equals}} {{value}})', {
+      equals: EqualityExplorerConstants.EQUALS,
+      value: value
+    } );
+    var rightSideNode = new Text( rightSideString, {
       font: new PhetFont( options.fontSize )
     } );
 

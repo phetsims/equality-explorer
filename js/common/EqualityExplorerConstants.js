@@ -20,10 +20,14 @@ define( function( require ) {
     SCREEN_VIEW_X_MARGIN: 20,
     SCREEN_VIEW_Y_MARGIN: 20,
 
+    // Unicode math symbols, i18n not required
     PLUS: '\u002b',
     MINUS: '\u2212',
     TIMES: '\u00d7',
     DIVIDE: '\u00f7',
+    EQUALS: '\u003d',
+    GREATER_THAN: '\u003e',
+    LESS_THAN: '\u003c',
 
     X_RANGE: new RangeWithValue( -40, 40, 1 ),
 

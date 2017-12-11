@@ -74,7 +74,7 @@ define( function( require ) {
       maxWidth: 0.5 * options.fixedWidth
     } );
 
-    var equalsText = new Text( '=', {
+    var equalsText = new Text( EqualityExplorerConstants.EQUALS, {
       font: new PhetFont( CONTENT_FONT_SIZE )
     } );
 

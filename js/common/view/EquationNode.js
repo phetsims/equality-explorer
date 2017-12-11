@@ -145,13 +145,13 @@ define( function( require ) {
     // determine the operator that describes the relationship between left and right sides
     var relationalOperator = null;
     if ( leftWeight < rightWeight ) {
-      relationalOperator = '<';
+      relationalOperator = EqualityExplorerConstants.LESS_THAN;
     }
     else if ( leftWeight > rightWeight ) {
-      relationalOperator = '>';
+      relationalOperator = EqualityExplorerConstants.GREATER_THAN;
     }
     else {
-      relationalOperator = '=';
+      relationalOperator = EqualityExplorerConstants.EQUALS;
     }
 
     return relationalOperator;
