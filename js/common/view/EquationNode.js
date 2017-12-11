@@ -142,18 +142,18 @@ define( function( require ) {
     }
 
     // determine the operator that describes the relationship between left and right sides
-    var relationalSymbol = null;
+    var relationalOperator = null;
     if ( leftWeight < rightWeight ) {
-      relationalSymbol = '<';
+      relationalOperator = '<';
     }
     else if ( leftWeight > rightWeight ) {
-      relationalSymbol = '>';
+      relationalOperator = '>';
     }
     else {
-      relationalSymbol = '=';
+      relationalOperator = '=';
     }
 
-    return relationalSymbol;
+    return relationalOperator;
   }
 
   /**
