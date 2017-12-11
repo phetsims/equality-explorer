@@ -25,5 +25,8 @@
   },
   "x": {
     "value": "x"
+  },
+  "questionMark": {
+    "value": "?"
   }
 }

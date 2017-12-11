@@ -145,7 +145,7 @@ define( function( require ) {
     }
 
     var buttonGroup = new HBox( {
-      spacing: 50,
+      spacing: 40,
       children: buttonGroupChildren
     } );
 

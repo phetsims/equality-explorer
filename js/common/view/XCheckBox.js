@@ -11,12 +11,15 @@ define( function( require ) {
   // modules
   var CheckBox = require( 'SUN/CheckBox' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
+  var questionMarkString = require( 'string!EQUALITY_EXPLORER/questionMark' );
 
   /**
    * @param {Property.<boolean>} xVisibleProperty
@@ -25,8 +28,17 @@ define( function( require ) {
    */
   function XCheckBox( xVisibleProperty, options ) {
 
-    var contentNode = new Text( xString, {
+    var xNode = new Text( xString, {
       font: new MathSymbolFont( 24 )
+    } );
+
+    var equalsNode = new Text( ' = ' + questionMarkString, {
+      font: new PhetFont( 24 )
+    } );
+
+    var contentNode = new HBox( {
+      children: [ xNode, equalsNode ],
+      maxWidth: 100
     } );
 
     CheckBox.call( this, contentNode, xVisibleProperty, options );
