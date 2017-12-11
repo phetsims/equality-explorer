@@ -42,17 +42,18 @@ define( function( require ) {
   function UniversalOperationNode( operatorProperty, operators, operandProperty, operandRange, options ) {
 
     options = _.extend( {
-      operatorFont: new PhetFont( 24 ),
-      operandFont: new PhetFont( 24 ),
+      fontSize: 24,
       spacing: 15
     }, options );
+
+    var font = new PhetFont( options.fontSize );
 
     // picker for choosing operator
     var operatorItems = [];
     for ( var i = 0; i < operators.length; i++ ) {
       operatorItems.push( {
         value: OPERATORS[ i ],
-        node: new Text( operators[ i ], { font: options.operatorFont } )
+        node: new Text( operators[ i ], { font: font } )
       } );
     }
     var operatorPicker = new ObjectPicker( operatorProperty, operatorItems, {
@@ -63,7 +64,7 @@ define( function( require ) {
     // picker for choosing operand
     var operandPicker = new NumberPicker( operandProperty, new Property( operandRange ), {
       color: 'black',
-      font: options.operandFont,
+      font: font,
       xMargin: 6,
       upFunction: function( value ) {
         if ( value === -1 && operatorProperty.value === EqualityExplorerConstants.DIVIDE ) {
