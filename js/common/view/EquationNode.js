@@ -37,7 +37,8 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // update the view when the model changes?
+      // Update the view when the model changes?
+      // Set this to false to create a static equation.
       updateEnabled: true,
 
       // icons
