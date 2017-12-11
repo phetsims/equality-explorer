@@ -134,7 +134,7 @@ define( function( require ) {
      */
     restore: function( snapshot ) {
       assert && assert( snapshot instanceof Snapshot, 'oops, not a Snapshot' );
-      //TODO
+      //TODO implement restore
     }
   } );
 } );
