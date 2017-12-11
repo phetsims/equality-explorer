@@ -86,7 +86,7 @@ define( function( require ) {
 
     // Go button to apply the operation
     var goButtonIcon = new FontAwesomeNode( 'level_down', {
-      scale: 0.65
+      scale: 0.65 * operandPicker.height / operandPicker.height // scale relative to the pickers
     } );
     var goButton = new RoundPushButton( {
       //TODO add goButton listener
