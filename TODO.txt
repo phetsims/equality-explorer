@@ -17,6 +17,7 @@ Locked mode, #19
 
 Snapshots
 - save and restore the user's arrangement of items on the scale
+- label checkbox with "x =" ?
 
 Solving screen - generalize other screens? different implementation?
 
