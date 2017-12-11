@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSeparator = require( 'SUN/HSeparator' );
@@ -68,7 +69,7 @@ define( function( require ) {
     // title
     assert && assert( !options.titleNode, 'this type defines its titleNode' );
     options.titleNode = new Text( snapshotsString, {
-      font: new PhetFont( 18 ),
+      font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
       maxWidth: 0.85 * options.fixedWidth
     } );
 

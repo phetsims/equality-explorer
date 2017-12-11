@@ -25,7 +25,9 @@ define( function( require ) {
     TIMES: '\u00d7',
     DIVIDE: '\u00f7',
 
-    X_RANGE: new RangeWithValue( -40, 40, 1 )
+    X_RANGE: new RangeWithValue( -40, 40, 1 ),
+
+    ACCORDION_BOX_TITLE_FONT_SIZE: 18
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

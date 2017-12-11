@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -36,9 +37,7 @@ define( function( require ) {
     options = _.extend( {
 
       fixedWidth: 100, // this accordion box is designed to be a fixed width, regardless of its content
-      titleFont: new PhetFont( 18 ),
-      equationFont: new PhetFont( 24 ),
-      variableFont: new MathSymbolFont( 24 ),
+      contentFontSize: 24,
 
       // supertype options
       resize: false,
@@ -60,7 +59,7 @@ define( function( require ) {
 
     assert && assert( !options.titleNode, 'this type defines its titleNode' );
     options.titleNode = new Text( variableString, {
-      font: options.titleFont,
+      font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
       maxWidth: 0.75 * options.fixedWidth
     } );
 
@@ -68,18 +67,18 @@ define( function( require ) {
     var strut = new HStrut( contentWidth );
 
     var xText = new Text( xString, {
-      font: options.variableFont,
+      font: new MathSymbolFont( options.contentFontSize ),
       maxWidth: 0.5 * options.fixedWidth
     } );
 
     var equalsText = new Text( '=', {
-      font: options.equationFont
+      font: new PhetFont( options.contentFontSize )
     } );
 
     // NumberPicker.dispose not needed, VariableAccordionBox exists for lifetime of the sim
     var valuePicker = new NumberPicker( valueProperty, new Property( valueRange ), {
       color: 'black',
-      font: options.equationFont,
+      font: new PhetFont( options.contentFontSize ),
       xMargin: 6
     } );
 
