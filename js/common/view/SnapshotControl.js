@@ -137,10 +137,7 @@ define( function( require ) {
         // optionally show the value of 'x'
         if ( options.xVisibleProperty ) {
           assert && assert( snapshot instanceof SnapshotWithVariable, 'expected a snapshot with variable support' );
-          xValueNode = new XValueNode( snapshot.x, {
-            variableFont: VARIABLE_FONT,
-            font: EQUATION_FONT
-          } );
+          xValueNode = new XValueNode( snapshot.x, { fontSize: FONT_SIZE } );
         }
 
         // add listener that selects the snapshot
