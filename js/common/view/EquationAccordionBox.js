@@ -32,7 +32,8 @@ define( function( require ) {
 
     options = _.extend( {
 
-      fixedWidth: 100, // this accordion box is designed to be a fixed width, regardless of its content
+      // this accordion box is designed to be a fixed width, regardless of its content
+      fixedWidth: 100,
 
       // supertype options
       resize: false,
