@@ -17,7 +17,6 @@ Locked mode, #19
 
 Snapshots
 - save and restore the user's arrangement of items on the scale
-- save and restore 'x' value
 
 Solving screen - generalize other screens? different implementation?
 
