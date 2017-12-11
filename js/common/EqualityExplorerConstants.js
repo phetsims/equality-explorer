@@ -15,8 +15,8 @@ define( function( require ) {
 
   var EqualityExplorerConstants = {
 
+    // ScreenView
     SCREEN_VIEW_LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
-
     SCREEN_VIEW_X_MARGIN: 20,
     SCREEN_VIEW_Y_MARGIN: 20,
 
@@ -29,15 +29,17 @@ define( function( require ) {
     GREATER_THAN: '\u003e',
     LESS_THAN: '\u003c',
 
-    X_RANGE: new RangeWithValue( -40, 40, 1 ),
-
     // font sizes for things that required iterative tweaking
     ACCORDION_BOX_TITLE_FONT_SIZE: 18,
     EQUATION_ACCORDING_BOX_FONT_SIZE: 28,
     EQUATION_ACCORDING_BOX_RELATIONAL_OPERATOR_FONT_SIZE: 40,
     SNAPSHOTS_ACCORDING_BOX_FONT_SIZE: 20,
     VARIABLE_ACCORDION_BOX_FONT_SIZE: 24,
-    ITEM_FONT_SIZE: 24
+    ITEM_FONT_SIZE: 24,
+
+    // model
+    X_RANGE: new RangeWithValue( -40, 40, 1 ),
+    NUMBER_OF_SNAPSHOTS: 5
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

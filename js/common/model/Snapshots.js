@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
 
@@ -21,13 +22,9 @@ define( function( require ) {
 
     var self = this;
 
-    options = _.extend( {
-      numberOfSnapshots: 5
-    }, options );
-
     // @public {Property.<Snapshot|null>[]} null means no snapshot
     this.snapshotProperties = [];
-    for ( var i = 0; i < options.numberOfSnapshots; i++ ) {
+    for ( var i = 0; i < EqualityExplorerConstants.NUMBER_OF_SNAPSHOTS; i++ ) {
       this.snapshotProperties.push( new Property( null ) );
     }
 
