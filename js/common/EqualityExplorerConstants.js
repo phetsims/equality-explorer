@@ -31,7 +31,13 @@ define( function( require ) {
 
     X_RANGE: new RangeWithValue( -40, 40, 1 ),
 
-    ACCORDION_BOX_TITLE_FONT_SIZE: 18
+    // font sizes for things that required iterative tweaking
+    ACCORDION_BOX_TITLE_FONT_SIZE: 18,
+    EQUATION_ACCORDING_BOX_FONT_SIZE: 28,
+    EQUATION_ACCORDING_BOX_RELATIONAL_OPERATOR_FONT_SIZE: 40,
+    SNAPSHOTS_ACCORDING_BOX_FONT_SIZE: 20,
+    VARIABLE_ACCORDION_BOX_FONT_SIZE: 24,
+    ITEM_FONT_SIZE: 24
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

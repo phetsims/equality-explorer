@@ -45,8 +45,8 @@ define( function( require ) {
       iconScale: 0.75,
 
       // fonts sizes
-      fontSize: 28,
-      relationalOperatorFontSize: 40,
+      fontSize: 14,
+      relationalOperatorFontSize: 14,
 
       // horizontal spacing
       coefficientSpacing: 2, // space between coefficient and icon

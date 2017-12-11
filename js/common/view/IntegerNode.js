@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -33,7 +34,7 @@ define( function( require ) {
       stroke: 'black',
       lineDash: [],
       textFill: 'black',
-      font: new PhetFont( 20 )
+      font: new PhetFont( EqualityExplorerConstants.ITEM_FONT_SIZE )
     }, options );
 
     var circleNode = new Circle( options.radius, {

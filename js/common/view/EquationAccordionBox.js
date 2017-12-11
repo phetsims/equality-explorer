@@ -61,7 +61,10 @@ define( function( require ) {
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
     var strut = new HStrut( contentWidth );
 
-    var equationNode = new EquationNode( leftItemCreators, rightItemCreators );
+    var equationNode = new EquationNode( leftItemCreators, rightItemCreators, {
+      fontSize: EqualityExplorerConstants.EQUATION_ACCORDING_BOX_FONT_SIZE,
+      relationalOperatorFontSize: EqualityExplorerConstants.EQUATION_ACCORDING_BOX_RELATIONAL_OPERATOR_FONT_SIZE
+    } );
 
     // wrapper to avoid exceeding stack size when bounds of equationNode changes
     var equationParent = new Node( {

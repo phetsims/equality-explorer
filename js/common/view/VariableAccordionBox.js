@@ -26,9 +26,6 @@ define( function( require ) {
   var variableString = require( 'string!EQUALITY_EXPLORER/variable' );
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
-  // constants
-  var CONTENT_FONT_SIZE = 24;
-
   /**
    * @param {Property.<number>} valueProperty
    * @param {Range} valueRange
@@ -70,18 +67,18 @@ define( function( require ) {
     var strut = new HStrut( contentWidth );
 
     var xText = new Text( xString, {
-      font: new MathSymbolFont( CONTENT_FONT_SIZE ),
+      font: new MathSymbolFont( EqualityExplorerConstants.VARIABLE_ACCORDION_BOX_FONT_SIZE ),
       maxWidth: 0.5 * options.fixedWidth
     } );
 
     var equalsText = new Text( EqualityExplorerConstants.EQUALS, {
-      font: new PhetFont( CONTENT_FONT_SIZE )
+      font: new PhetFont( EqualityExplorerConstants.VARIABLE_ACCORDION_BOX_FONT_SIZE )
     } );
 
     // NumberPicker.dispose not needed, VariableAccordionBox exists for lifetime of the sim
     var valuePicker = new NumberPicker( valueProperty, new Property( valueRange ), {
       color: 'black',
-      font: new PhetFont( CONTENT_FONT_SIZE ),
+      font: new PhetFont( EqualityExplorerConstants.VARIABLE_ACCORDION_BOX_FONT_SIZE ),
       xMargin: 6
     } );
 
