@@ -55,6 +55,8 @@ define( function( require ) {
 
   /**
    * Snapshot data for a plate.
+   * This is essentially a map: itemCreatorConstructor -> occupiedCells
+   *
    * @param {Plate} plate
    * @constructor
    * @private
@@ -63,8 +65,7 @@ define( function( require ) {
 
     // @private 
     this.itemCreatorConstructors = []; // {constructor[]} the item types, identified by their constructors
-    this.counts = []; // {number[]} the number of items for each item type
-    this.cells = []; // {number[][]} the occupied cells for each item type
+    this.occupiedCells = []; // {number[][]} the occupied cells for each item type
 
     var itemCreators = plate.itemCreators;
     
@@ -74,16 +75,15 @@ define( function( require ) {
       var items = itemCreator.getItemsOnScale();
 
       this.itemCreatorConstructors[ i ] = itemCreator.constructor;
-      this.counts[ i ] = itemCreator.getNumberOfItemsOnScale();
 
-      var indices = []; // {number[]}
+      var indices = []; // {number[]} cell indices
       for ( var j = 0; j < items.length; j++ ) {
         indices.push( plate.getCellForItem( items[ j ] ) );
       }
-      this.cells.push( indices );
+      this.occupiedCells.push( indices );
     }
-    assert && assert( this.itemCreatorConstructors.length === this.counts.length && this.counts.length === this.cells.length,
-      'all arrays must have the same length' );
+    assert && assert( this.itemCreatorConstructors.length === this.occupiedCells.length,
+      'arrays must have the same length' );
   }
 
   equalityExplorer.register( 'Snapshot.PlateSnapshot', PlateSnapshot );
@@ -91,27 +91,25 @@ define( function( require ) {
   inherit( Object, PlateSnapshot, {
 
     /**
-     * Gets the number of items for a specified type of item creator.
+     * Gets indices of the occupied cells (in the plate's 2D grid) for a specified type of item creator.
+     * @param {AbstractItemCreator} itemCreatorConstructor
+     * @returns {number[]}
+     * @private
+     */
+    getOccupiedCells: function( itemCreatorConstructor ) {
+      var index = this.itemCreatorConstructors.indexOf( itemCreatorConstructor );
+      assert && assert( index !== -1, 'item creator type not found' );
+      return this.occupiedCells[ index ];
+    },
+
+    /**
+     * Convenience function, gets the number of items for a specified type of item creator.
      * @param {AbstractItemCreator} itemCreatorConstructor
      * @returns {number}
      * @private
      */
     getNumberOfItems: function( itemCreatorConstructor ) {
-      var index = this.itemCreatorConstructors.indexOf( itemCreatorConstructor );
-      assert && assert( index !== -1, 'item creator type not found' );
-      return this.counts[ index ];
-    },
-
-    /**
-     * Gets the occupied cell indices for a specified type of item creator.
-     * @param {AbstractItemCreator} itemCreatorConstructor
-     * @returns {number[]}
-     * @private
-     */
-    getCells: function( itemCreatorConstructor ) {
-      var index = this.itemCreatorConstructors.indexOf( itemCreatorConstructor );
-      assert && assert( index !== -1, 'item creator type not found' );
-      return this.cells[ index ];
+      return this.getOccupiedCells( itemCreatorConstructor ).length;
     }
   } );
 
