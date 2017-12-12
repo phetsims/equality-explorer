@@ -19,8 +19,8 @@ define( function( require ) {
   function Snapshot( scene ) {
 
     // @private
-    this.leftData = new PlateSnapshot( scene.scale.leftPlate );
-    this.rightData = new PlateSnapshot( scene.scale.rightPlate );
+    this.leftPlateSnapshot = new PlateSnapshot( scene.scale.leftPlate );
+    this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate );
   }
 
   equalityExplorer.register( 'Snapshot', Snapshot );
@@ -34,22 +34,22 @@ define( function( require ) {
 
     // @public
     getLeftNumberOfItems: function( itemCreatorConstructor ) {
-      return this.leftData.getNumberOfItems( itemCreatorConstructor );
+      return this.leftPlateSnapshot.getNumberOfItems( itemCreatorConstructor );
     },
 
     // @public
     getRightNumberOfItems: function( itemCreatorConstructor ) {
-      return this.rightData.getNumberOfItems( itemCreatorConstructor );
+      return this.rightPlateSnapshot.getNumberOfItems( itemCreatorConstructor );
     },
 
     // @public
     getLeftCells: function( itemCreatorConstructor ) {
-      return this.leftData.getCells( itemCreatorConstructor );
+      return this.leftPlateSnapshot.getCells( itemCreatorConstructor );
     },
 
     // @public
     getRightCells: function( itemCreatorConstructor ) {
-      return this.rightData.getCells( itemCreatorConstructor );
+      return this.rightPlateSnapshot.getCells( itemCreatorConstructor );
     }
   } );
 
@@ -62,7 +62,7 @@ define( function( require ) {
   function PlateSnapshot( plate ) {
 
     // @private 
-    this.itemCreatorConstructors = []; // {constructor[]} the item types
+    this.itemCreatorConstructors = []; // {constructor[]} the item types, identified by their constructors
     this.counts = []; // {number[]} the number of items for each item type
     this.cells = []; // {number[][]} the occupied cells for each item type
 
