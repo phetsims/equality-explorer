@@ -13,9 +13,11 @@ Solving screen:
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Locked mode, #19
+Move responsibility for item creation and "population" from view (ItemCreatorNode) to model (AbstractItemCreator)
 
 Restore snapshot
+
+Locked mode, #19
 
 Solving screen - generalize other screens? different implementation?
 
