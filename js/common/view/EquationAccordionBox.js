@@ -46,19 +46,20 @@ define( function( require ) {
       buttonYMargin: 8,
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5,
-      contentXMargin: 0,
+      contentXMargin: 5,
       contentYMargin: 8
     }, options );
 
     assert && assert( options.maxWidth === undefined, 'subtype defines its maxWidth' );
     options.maxWidth = options.fixedWidth;
 
+    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
+
     options.titleNode = options.titleNode || new Text( equationOrInequalityString, {
         font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
-        maxWidth: 0.85 * options.fixedWidth
+        maxWidth: 0.85 * contentWidth
       } );
 
-    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
     var strut = new HStrut( contentWidth );
 
     var equationNode = new EquationNode( leftItemCreators, rightItemCreators, {

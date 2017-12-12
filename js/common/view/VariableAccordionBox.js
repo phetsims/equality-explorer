@@ -57,18 +57,19 @@ define( function( require ) {
     assert && assert( options.maxWidth === undefined, 'subtype defines its maxWidth' );
     options.maxWidth = options.fixedWidth;
 
+    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
+
     assert && assert( !options.titleNode, 'this type defines its titleNode' );
     options.titleNode = new Text( variableString, {
       font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
-      maxWidth: 0.75 * options.fixedWidth
+      maxWidth: 0.85 * contentWidth
     } );
 
-    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
     var strut = new HStrut( contentWidth );
 
     var xText = new Text( xString, {
       font: new MathSymbolFont( EqualityExplorerConstants.VARIABLE_ACCORDION_BOX_FONT_SIZE ),
-      maxWidth: 0.5 * options.fixedWidth
+      maxWidth: 0.5 * contentWidth
     } );
 
     var equalsText = new Text( EqualityExplorerConstants.EQUALS, {
