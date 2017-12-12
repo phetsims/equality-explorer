@@ -67,31 +67,31 @@ define( function( require ) {
     assert && assert( options.maxWidth === undefined, 'subtype defines its maxWidth' );
     options.maxWidth = options.fixedWidth;
 
+    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
+
     // title
     assert && assert( !options.titleNode, 'this type defines its titleNode' );
     options.titleNode = new Text( snapshotsString, {
       font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
-      maxWidth: 0.85 * options.fixedWidth
+      maxWidth: 0.85 * contentWidth
     } );
 
     var snapshotsVBoxChildren = [];
 
-    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
-
     // separator between title and snapshots
-    snapshotsVBoxChildren.push( new HSeparator( options.fixedWidth, SEPARATOR_OPTIONS ) );
+    snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
 
     // Create a row for each snapshot
     for ( var i = 0; i < scene.snapshots.snapshotProperties.length; i++ ) {
       snapshotsVBoxChildren.push( new SnapshotControl(
         scene, scene.snapshots.snapshotProperties[ i ], scene.snapshots.selectedSnapshotProperty, {
           xVisibleProperty: options.xVisibleProperty,
-          controlWidth: options.fixedWidth
+          controlWidth: contentWidth
         } ) );
     }
 
     // separator between snapshots and buttons
-    snapshotsVBoxChildren.push( new HSeparator( options.fixedWidth, SEPARATOR_OPTIONS ) );
+    snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
 
     var snapshotsVBox = new VBox( {
       spacing: 15,
@@ -146,7 +146,8 @@ define( function( require ) {
 
     var buttonGroup = new HBox( {
       spacing: 40,
-      children: buttonGroupChildren
+      children: buttonGroupChildren,
+      maxWidth: contentWidth
     } );
 
     snapshotsVBoxChildren.push( buttonGroup );
