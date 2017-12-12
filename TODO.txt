@@ -19,7 +19,7 @@ Restore snapshot
 
 Solving screen - generalize other screens? different implementation?
 
-Reconsider model architecture. State is spread across ItemCreator and Plate, duplicate info about what is on the Plate.
+Reconsider model architecture. State is spread across AbstratctItemCreator and Plate, duplicate info about what is on the Plate.
 
 Consider subtypes instead of constructor comparison, especially in ItemNode (search for ".constructor")
 
