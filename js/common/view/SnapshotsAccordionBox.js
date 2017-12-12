@@ -79,7 +79,7 @@ define( function( require ) {
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
     // separator between title and snapshots
-    snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
+    snapshotsVBoxChildren.push( new HSeparator( options.fixedWidth, SEPARATOR_OPTIONS ) );
 
     // Create a row for each snapshot
     for ( var i = 0; i < scene.snapshots.snapshotProperties.length; i++ ) {
@@ -91,7 +91,7 @@ define( function( require ) {
     }
 
     // separator between snapshots and buttons
-    snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
+    snapshotsVBoxChildren.push( new HSeparator( options.fixedWidth, SEPARATOR_OPTIONS ) );
 
     var snapshotsVBox = new VBox( {
       spacing: 15,
