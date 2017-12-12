@@ -29,7 +29,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      //TODO implement dispose
+      //TODO implement dispose, if needed
     },
 
     /**
