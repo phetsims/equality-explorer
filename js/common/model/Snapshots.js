@@ -50,7 +50,6 @@ define( function( require ) {
       // delete all snapshots
       for ( var i = 0; i < this.snapshotProperties.length; i++ ) {
         if ( this.snapshotProperties[ i ].value !== null ) {
-          this.snapshotProperties[ i ].value.dispose();
           this.snapshotProperties[ i ].value = null;
         }
       }
@@ -63,7 +62,6 @@ define( function( require ) {
     deleteSelectedSnapshot: function() {
       var selectedSnapshot = this.selectedSnapshotProperty.value;
       assert && assert( selectedSnapshot, 'no selected snapshot' );
-      selectedSnapshot.dispose();
       this.selectedSnapshotProperty.value = null;
       for ( var i = 0; i < this.snapshotProperties.length; i++ ) {
         if ( this.snapshotProperties[ i ].value === selectedSnapshot ) {

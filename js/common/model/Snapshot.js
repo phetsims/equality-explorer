@@ -27,11 +27,6 @@ define( function( require ) {
 
   inherit( Object, Snapshot, {
 
-    // @public
-    dispose: function() {
-      //TODO implement dispose, if needed
-    },
-
     /**
      * Gets the indices of occupied cells for the left plate.
      * @param {constructor} itemCreatorConstructor - the item creator type, identified by its constructor
