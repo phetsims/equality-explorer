@@ -38,7 +38,7 @@ define( function( require ) {
     // @public
     this.locationProperty = new Property( new Vector2( 0, 0 ) );
 
-    // @private
+    // @public (read-only)
     this.itemCreators = itemCreators;
 
     // @public (read-only)
