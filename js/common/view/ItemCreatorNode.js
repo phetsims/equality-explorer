@@ -42,26 +42,30 @@ define( function( require ) {
 
     Node.call( this, options );
 
+    // When an item is created, create its view.
+    itemCreator.itemCreatedEmitter.addListener( function( item, event ) {
+
+      // create an ItemNode
+      var itemNode = new ItemNode( item, itemCreator, plate );
+      itemsLayer.addChild( itemNode );
+
+      // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
+      item.disposedEmitter.addListener( function( item ) {
+        itemNode.dispose();
+      } );
+
+      // If the item was created via user interaction, propagate drag to the ItemNode
+      if ( event ) {
+        itemNode.dragListener.startDrag( event );
+      }
+    } );
+
     this.addInputListener( SimpleDragHandler.createForwardingListener(
 
-      // down function, creates model and view for an item
+      // down function, creates item model
       function( event ) {
-
-        // create an item
         var location = itemsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
-        var item = itemCreator.createItem( location );
-
-        // create an ItemNode
-        var itemNode = new ItemNode( item, itemCreator, plate );
-        itemsLayer.addChild( itemNode );
-
-        // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
-        item.disposedEmitter.addListener( function( item ) {
-          itemNode.dispose();
-        } );
-
-        // Propagate drag to the ItemNode
-        itemNode.dragListener.startDrag( event );
+        itemCreator.createItem( location, event );
       }, {
         allowTouchSnag: true
       }
@@ -96,7 +100,7 @@ define( function( require ) {
      * See https://github.com/phetsims/equality-explorer/issues/8.
      *
      * @param {number} numberOfItems
-     * @public
+     * @private
      */
     populateScale: function( numberOfItems ) {
 
@@ -107,23 +111,11 @@ define( function( require ) {
 
         // create an item
         var location = this.itemsLayer.globalToLocalPoint( this.parentToGlobalPoint( this.center ) );
-        var item = this.itemCreator.createItem( location );
-
-        // create an ItemNode
-        var itemNode = new ItemNode( item, this.itemCreator, this.plate );
-        this.itemsLayer.addChild( itemNode );
+        var item = this.itemCreator.createItem( location, null );
 
         // put the item on the scale
         this.plate.addItem( item, cellIndex );
         this.itemCreator.addItemToScale( item );
-
-        // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
-        // IFEE creates a closure for itemNode.
-        (function( itemNode ) {
-          item.disposedEmitter.addListener( function( item ) {
-            itemNode.dispose();
-          } );
-        }( itemNode ));
       }
     }
   } );

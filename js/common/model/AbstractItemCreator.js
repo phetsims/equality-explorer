@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
@@ -57,6 +58,9 @@ define( function( require ) {
     //TODO remove enabledProperty if we ultimately decide not to disable item creators
     // @public is this creator enabled?
     this.enabledProperty = new BooleanProperty( true );
+
+    // @public emit2 called when item is created, {function(AbstractItem,[Event])}
+    this.itemCreatedEmitter = new Emitter();
 
     // @private called when AbstractItem.dispose is called
     this.itemWasDisposedBound = this.itemWasDisposed.bind( this );
@@ -106,16 +110,20 @@ define( function( require ) {
     /**
      * Creates an item.
      * @param {Vector2} location
+     * @param {Event} [event] - provided if the item was created via user interaction
      * @returns {AbstractItem}
      * @public
      */
-    createItem: function( location ) {
+    createItem: function( location, event ) {
 
-      var item = this.createItemProtected( location );
+      var item = this.createItemProtected( location, event );
       this.allItems.add( item );
 
       // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
       item.disposedEmitter.addListener( this.itemWasDisposedBound );
+
+      // Notify that an item was created
+      this.itemCreatedEmitter.emit2( item, event );
 
       return item;
     },
