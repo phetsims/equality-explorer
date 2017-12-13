@@ -15,6 +15,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
+  var Property = require( 'AXON/Property' );
   var Util = require( 'DOT/Util' );
 
   /**
@@ -39,6 +40,11 @@ define( function( require ) {
     this.icon = icon;
     this.iconShadow = iconShadow;
     this.numberOfItemsOnScale = options.numberOfItemsOnScale;
+
+    // @public {Property.<Vector2>} (read-only)
+    // Initialized after the sim has loaded, since the value depends on the view. See ItemCreatorNode.
+    // Should not be reset!
+    this.locationProperty = new Property( null );
 
     // @public {Bounds2} drag bounds for items created
     this.dragBounds = options.dragBounds;
@@ -109,14 +115,13 @@ define( function( require ) {
 
     /**
      * Creates an item.
-     * @param {Vector2} location
      * @param {Event} [event] - provided if the item was created via user interaction
      * @returns {AbstractItem}
      * @public
      */
-    createItem: function( location, event ) {
+    createItem: function( event ) {
 
-      var item = this.createItemProtected( location, event );
+      var item = this.createItemProtected( this.locationProperty.value, event );
       this.allItems.add( item );
 
       // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.

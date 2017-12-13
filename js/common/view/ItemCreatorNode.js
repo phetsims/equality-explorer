@@ -65,8 +65,7 @@ define( function( require ) {
 
       // down
       function( event ) {
-        var location = itemsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
-        itemCreator.createItem( location, event );
+        itemCreator.createItem( event );
       }, {
         allowTouchSnag: true
       }
@@ -78,11 +77,15 @@ define( function( require ) {
       self.opacity = ( enabled ? 1 : 0.5 );
     } );
 
-    // Populate the scale after the sim is loaded, so that ItemCreatorNodes have valid locations.
-    // This feature is for debugging and testing, not intended for production.
-    // See https://github.com/phetsims/equality-explorer/issues/8.
+
     var frameStartedCallback = function() {
+
+      // Initialize the itemCreator's location after the sim is loaded, so that that ItemCreatorNodes have valid locations.
+      itemCreator.locationProperty.value = itemsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
+
+      // Populate the scale after the sim is loaded, so that ItemCreatorNodes have valid locations.
       self.populateScale( itemCreator.numberOfItemsOnScale );
+
       phet.joist.sim.frameStartedEmitter.removeListener( frameStartedCallback );
     };
     phet.joist.sim.frameStartedEmitter.addListener( frameStartedCallback );
@@ -111,8 +114,7 @@ define( function( require ) {
         assert && assert( cellIndex !== -1, 'plate is full, numberOfItems is too large: ' + numberOfItems );
 
         // create an item
-        var location = this.itemsLayer.globalToLocalPoint( this.parentToGlobalPoint( this.center ) );
-        var item = this.itemCreator.createItem( location, null );
+        var item = this.itemCreator.createItem();
 
         // put the item on the scale
         this.plate.addItem( item, cellIndex );
