@@ -42,7 +42,7 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    // When an item is created, create its view.
+    // When an item is created in the model, create the corresponding view.
     itemCreator.itemCreatedEmitter.addListener( function( item, event ) {
 
       // create an ItemNode
@@ -54,15 +54,16 @@ define( function( require ) {
         itemNode.dispose();
       } );
 
-      // If the item was created via user interaction, propagate drag to the ItemNode
+      // If the item was created via user interaction, start a drag cycle by propagating the event to the ItemNode
       if ( event ) {
         itemNode.dragListener.startDrag( event );
       }
     } );
 
+    // On down event, create an item and start a drag cycle
     this.addInputListener( SimpleDragHandler.createForwardingListener(
 
-      // down function, creates item model
+      // down
       function( event ) {
         var location = itemsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
         itemCreator.createItem( location, event );
