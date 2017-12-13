@@ -32,7 +32,7 @@ define( function( require ) {
     /**
      * Instantiates a ConstantItem.
      * @param {Vector2} location
-     * @returns {ConstantItem}
+     * @returns {AbstractItem}
      * @protected
      * @override
      */

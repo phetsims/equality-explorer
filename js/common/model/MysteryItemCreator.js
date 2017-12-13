@@ -36,7 +36,7 @@ define( function( require ) {
     /**
      * Instantiates a MysteryItem.
      * @param {Vector2} location
-     * @returns {MysteryItem}
+     * @returns {AbstractItem}
      * @protected
      * @override
      */

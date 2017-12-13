@@ -57,7 +57,7 @@ define( function( require ) {
     /**
      * Instantiates an XItem.
      * @param {Vector2} location
-     * @returns {XItem}
+     * @returns {AbstractItem}
      * @protected
      * @override
      */
