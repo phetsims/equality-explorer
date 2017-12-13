@@ -43,7 +43,17 @@ define( function( require ) {
     Node.call( this, options );
 
     // When an item is created in the model, create the corresponding view.
-    itemCreator.itemCreatedEmitter.addListener( function( item, event ) {
+    itemCreator.itemCreatedEmitter.addListener( function( item, options ) {
+
+      //TODO duplicated in AbstractItemCreator
+      options = _.extend( {
+        event: undefined,
+        cellIndex: undefined
+      }, options );
+      assert && assert( !( options.event && options.cellIndex !== undefined ),
+        'options event and cellIndex are mutually exclusive' );
+      assert && assert( options.event || options.cellIndex !== undefined,
+        'event or cellIndex must be specified' );
 
       // create an ItemNode
       var itemNode = new ItemNode( item, itemCreator, plate );
@@ -54,10 +64,12 @@ define( function( require ) {
         itemNode.dispose();
       } );
 
-      // If the item was created via user interaction, start a drag cycle by propagating the event to the ItemNode
-      if ( event ) {
-        itemNode.dragListener.startDrag( event );
-      }
+      // The item was created via user interaction, start a drag cycle by propagating the event to the ItemNode.
+      options.event && itemNode.dragListener.startDrag( options.event );
+
+      //TODO the other half of this is handled way over in AbstractItemCreator, see this.addItemToScale
+      // put the item on the scale
+      ( options.cellIndex !== undefined ) && plate.addItem( item, options.cellIndex );
     } );
 
     // On down event, create an item and start a drag cycle
@@ -65,7 +77,7 @@ define( function( require ) {
 
       // down
       function( event ) {
-        itemCreator.createItem( event );
+        itemCreator.createItem( { event: event } );
       }, {
         allowTouchSnag: true
       }
@@ -78,14 +90,16 @@ define( function( require ) {
     } );
 
 
+    // Things to do after the sim has loaded, when this Node has a valid location.
     var frameStartedCallback = function() {
 
-      // Initialize the itemCreator's location after the sim is loaded, so that that ItemCreatorNodes have valid locations.
+      // Initialize the itemCreator's location
       itemCreator.locationProperty.value = itemsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
 
-      // Populate the scale after the sim is loaded, so that ItemCreatorNodes have valid locations.
+      // Pre-populate the scale with items. Do this *after* initializing itemCreator.locationProperty.
       self.populateScale( itemCreator.numberOfItemsOnScale );
 
+      // Remove this function, so that it's called only once.
       phet.joist.sim.frameStartedEmitter.removeListener( frameStartedCallback );
     };
     phet.joist.sim.frameStartedEmitter.addListener( frameStartedCallback );
@@ -107,18 +121,10 @@ define( function( require ) {
      * @private
      */
     populateScale: function( numberOfItems ) {
-
       for ( var i = 0; i < numberOfItems; i++ ) {
-
         var cellIndex = this.plate.getFirstEmptyCell();
         assert && assert( cellIndex !== -1, 'plate is full, numberOfItems is too large: ' + numberOfItems );
-
-        // create an item
-        var item = this.itemCreator.createItem();
-
-        // put the item on the scale
-        this.plate.addItem( item, cellIndex );
-        this.itemCreator.addItemToScale( item );
+        this.itemCreator.createItem( { cellIndex: cellIndex });
       }
     }
   } );

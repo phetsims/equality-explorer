@@ -65,7 +65,8 @@ define( function( require ) {
     // @public is this creator enabled?
     this.enabledProperty = new BooleanProperty( true );
 
-    // @public emit2 called when item is created, {function(AbstractItem,[Event])}
+    //TODO document signature of listener callback
+    // @public emit2 called when item is created
     this.itemCreatedEmitter = new Emitter();
 
     // @private called when AbstractItem.dispose is called
@@ -115,20 +116,35 @@ define( function( require ) {
 
     /**
      * Creates an item.
-     * @param {Event} [event] - provided if the item was created via user interaction
+     * @param {Object} [options]
      * @returns {AbstractItem}
      * @public
      */
-    createItem: function( event ) {
+    createItem: function( options ) {
 
-      var item = this.createItemProtected( this.locationProperty.value, event );
+      //TODO duplicated in ItemCreatorNode
+      options = _.extend( {
+        event: undefined,
+        cellIndex: undefined
+      }, options );
+      assert && assert( !( options.event && options.cellIndex !== undefined ),
+        'event and cellIndex are mutually exclusive' );
+      assert && assert( options.event || options.cellIndex !== undefined,
+        'event or cellIndex must be specified' );
+
+      var item = this.createItemProtected( this.locationProperty.value );
       this.allItems.add( item );
+
+      //TODO the other half of this is handled way over in ItemCreatorNode, see plate.addItem
+      if ( options.cellIndex ) {
+        this.addItemToScale( item );
+      }
 
       // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
       item.disposedEmitter.addListener( this.itemWasDisposedBound );
 
       // Notify that an item was created
-      this.itemCreatedEmitter.emit2( item, event );
+      this.itemCreatedEmitter.emit2( item, options );
 
       return item;
     },
