@@ -60,7 +60,6 @@ define( function( require ) {
     var equationNode = NO_EQUATION_NODE;
     var xValueNode = NO_X_VALUE_NODE;
 
-    //TODO: factor out SnapshotNode, responsible for equationNode and xValueNode?
     // parent for the equation and option x value display
     var snapshotNode = new HBox( {
       children: [ equationNode ],
