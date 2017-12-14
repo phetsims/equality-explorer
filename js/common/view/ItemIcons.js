@@ -46,11 +46,12 @@ define( function( require ) {
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
-  var ITEM_HEIGHT = 32;
-  var COMMON_OPTIONS = { maxHeight: ITEM_HEIGHT };
+  var ICON_HEIGHT = 32;
+  var COMMON_OPTIONS = { maxHeight: ICON_HEIGHT };
 
   var ItemIcons = {
 
+    // image-based icons and their shadows
     APPLE_NODE: new Image( appleImage, COMMON_OPTIONS ),
     APPLE_SHADOW_NODE: new Image( appleShadowImage, COMMON_OPTIONS ),
 
@@ -86,15 +87,15 @@ define( function( require ) {
 
     // 1, -1 and their shadow
     POSITIVE_ONE_NODE: new IntegerNode( 1, _.extend( {}, {
-      radius: ITEM_HEIGHT / 2,
+      radius: ICON_HEIGHT / 2,
       fill: 'rgb( 246, 228, 213 )'
     }, COMMON_OPTIONS ) ),
     NEGATIVE_ONE_NODE: new IntegerNode( -1, _.extend( {}, {
-      radius: ITEM_HEIGHT / 2,
+      radius: ICON_HEIGHT / 2,
       fill: 'rgb( 248, 238, 229 )',
       lineDash: [ 3, 3 ]
     }, COMMON_OPTIONS ) ),
-    ONE_SHADOW_NODE: new Circle( ITEM_HEIGHT / 2, _.extend( {}, {
+    ONE_SHADOW_NODE: new Circle( ICON_HEIGHT / 2, _.extend( {}, {
       fill: 'black'
     }, COMMON_OPTIONS ) ),
 
@@ -106,7 +107,7 @@ define( function( require ) {
       fill: 'rgb( 99, 212, 238 )',
       lineDash: [ 4, 4 ]
     }, COMMON_OPTIONS ) ),
-    X_SHADOW_NODE: new Rectangle( 0, 0, ITEM_HEIGHT, ITEM_HEIGHT, _.extend( {}, {
+    X_SHADOW_NODE: new Rectangle( 0, 0, ICON_HEIGHT, ICON_HEIGHT, _.extend( {}, {
       fill: 'black'
     }, COMMON_OPTIONS ) )
   };
