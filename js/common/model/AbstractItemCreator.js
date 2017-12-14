@@ -131,15 +131,6 @@ define( function( require ) {
       throw new Error( 'weight getter must be implemented by subtype' );
     },
 
-    // @public
-    reset: function() {
-
-      // Dispose of all items that were created.
-      while ( this.allItems.length > 0 ) {
-        this.allItems.get( 0 ).dispose(); // results in call to itemWasDisposed
-      }
-    },
-
     /**
      * Animates items.
      * @param {number} dt - time since the previous step, in seconds
@@ -258,6 +249,16 @@ define( function( require ) {
      */
     getNumberOfItemsOnScale: function() {
       return this.itemsOnScale.length;
+    },
+
+    /**
+     * Disposes of all items.
+     * @public
+     */
+    disposeAllItems: function() {
+      while ( this.allItems.length > 0 ) {
+        this.allItems.get( 0 ).dispose(); // results in call to itemWasDisposed
+      }
     },
 
     /**

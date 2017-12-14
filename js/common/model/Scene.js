@@ -89,19 +89,17 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.deleteAllItems();
-      this.lockedProperty.reset();
-      this.snapshots.reset();
-    },
 
-    // @private deletes all items
-    deleteAllItems: function() {
+      // delete all items
       this.leftItemCreators.forEach( function( itemCreator ) {
-        itemCreator.reset();
+        itemCreator.disposeAllItems();
       } );
       this.rightItemCreators.forEach( function( itemCreator ) {
-        itemCreator.reset();
+        itemCreator.disposeAllItems();
       } );
+
+      this.lockedProperty.reset();
+      this.snapshots.reset();
     },
 
     /**
