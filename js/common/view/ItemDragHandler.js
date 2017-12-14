@@ -216,22 +216,26 @@ define( function( require ) {
         var previousInverseItem = this.inverseItem;
         this.inverseItem = null;
 
+        // does this item overlap an inverse item on the plate?
         var itemOnPlate = this.plate.getItemAtLocation( this.item.locationProperty.value );
         if ( itemOnPlate && itemOnPlate.isInverseOf( this.item ) ) {
           this.inverseItem = itemOnPlate;
         }
 
-        // clean up previous inverse item
+        // if the inverse item is new, then clean up previous inverse item
         if ( previousInverseItem && ( previousInverseItem !== this.inverseItem ) ) {
           previousInverseItem.haloVisibleProperty.value = false;
         }
 
-        // handle new inverse item
         if ( !this.inverseItem ) {
+
+          // no inverse item
           this.item.shadowVisibleProperty.value = true;
           this.item.haloVisibleProperty.value = false;
         }
-        else if ( previousInverseItem !== this.inverseItem ) {
+        else if ( this.inverseItem !== previousInverseItem ) {
+
+          // new inverse item
           this.itemNode.moveToFront();
           this.item.shadowVisibleProperty.value = false;
           this.item.haloVisibleProperty.value = true;
