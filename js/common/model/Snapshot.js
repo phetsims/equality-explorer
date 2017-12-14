@@ -86,7 +86,7 @@ define( function( require ) {
 
     /**
      * Gets indices of the occupied cells (in the plate's 2D grid) for a specified type of item creator.
-     * @param {AbstractItemCreator} itemCreatorConstructor - the item creator type, identified by its constructor
+     * @param {constructor} itemCreatorConstructor - the item creator type, identified by its constructor
      * @returns {number[]}
      * @private
      */
