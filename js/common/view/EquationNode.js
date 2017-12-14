@@ -236,7 +236,7 @@ define( function( require ) {
    * @param {Node} icon
    * @param {number} iconScale - scale for icon
    * @param {Font} font - font for coefficient or constant
-   * @param {spacing} coefficientSpacing - horizontal space between coefficient and icon
+   * @param {number} coefficientSpacing - horizontal space between coefficient and icon
    * @param {boolean} hideOne - whether to hide 1 and -1
    * @returns {Node}
    */
