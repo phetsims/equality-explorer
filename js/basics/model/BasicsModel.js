@@ -64,12 +64,7 @@ define( function( require ) {
     step: function( dt ) {
 
       // step the selected scene
-      for ( var i = 0; i < this.scenes.length; i++ ) {
-        if ( this.scenes[ i ] === this.sceneProperty.value ) {
-          this.scenes[ i ].step( dt );
-          break;
-        }
-      }
+      this.sceneProperty.value.step( dt );
     }
   } );
 } );
