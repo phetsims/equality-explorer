@@ -30,11 +30,6 @@ define( function( require ) {
 
     // @public {Property.<Snapshot|null>} the selected snapshot, null means no selection
     this.selectedSnapshotProperty = new Property( null );
-
-    // verify that the selected snapshot is in the collection, unlink not needed
-    this.selectedSnapshotProperty.link( function( snapshot ) {
-      assert && assert( snapshot === null || self.containsSnapshot( snapshot ), 'snapshot is not in this collection' );
-    } );
   }
 
   equalityExplorer.register( 'Snapshots', Snapshots );
@@ -69,20 +64,6 @@ define( function( require ) {
           break;
         }
       }
-    },
-
-    /**
-     * Is the specified Snapshot part of this collection?
-     * @param {Snapshot} snapshot
-     * @returns {boolean}
-     * @private
-     */
-    containsSnapshot: function( snapshot ) {
-      var found = false;
-      for ( var i = 0; i < this.snapshotProperties.length && !found; i++ ) {
-        found = ( this.snapshotProperties[ i ].value === snapshot );
-      }
-      return found;
     }
   } );
 } );
