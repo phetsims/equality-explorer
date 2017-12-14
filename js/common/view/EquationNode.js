@@ -70,7 +70,7 @@ define( function( require ) {
     // {AbstractItemCreator[]} all AbstractItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
-    // {Property} dependencies that require the equation to be updated
+    // {Property[]} dependencies that require the equation to be updated
     var updateDependencies = [];
     itemCreators.forEach( function( itemCreator ) {
       updateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );

@@ -141,7 +141,7 @@ define( function( require ) {
         new Vector2( self.location.x - dx, self.location.y - dy - options.plateSupportHeight );
     } );
 
-    // dependencies for numberOfItemsProperty
+    // {Property.<number>} dependencies for deriving numberOfItemsProperty
     var numberOfItemsDependencies = [];
     leftItemCreators.forEach( function( leftItemCreator ) {
       numberOfItemsDependencies.push( leftItemCreator.numberOfItemsOnScaleProperty );
