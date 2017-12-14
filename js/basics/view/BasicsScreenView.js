@@ -54,13 +54,11 @@ define( function( require ) {
     /**
      * Resets things that are specific to the view.
      * @public
-     * @override
      */
     reset: function() {
       this.sceneNodes.forEach( function( sceneNode ) {
         sceneNode.reset();
       } );
-      EqualityExplorerScreenView.prototype.reset.call( this );
     }
   } );
 } );

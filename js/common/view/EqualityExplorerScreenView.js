@@ -39,12 +39,5 @@ define( function( require ) {
 
   equalityExplorer.register( 'EqualityExplorerScreenView', EqualityExplorerScreenView );
 
-  return inherit( ScreenView, EqualityExplorerScreenView, {
-
-    /**
-     * Resets things that are specific to the view.
-     * @public
-     */
-    reset: function() {}
-  } );
+  return inherit( ScreenView, EqualityExplorerScreenView );
 } );

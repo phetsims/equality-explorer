@@ -34,11 +34,9 @@ define( function( require ) {
     /**
      * Resets things that are specific to the view.
      * @public
-     * @override
      */
     reset: function() {
       this.sceneNode.reset();
-      EqualityExplorerScreenView.prototype.reset.call( this );
     }
   } );
 } );
