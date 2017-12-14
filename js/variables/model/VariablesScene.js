@@ -106,6 +106,7 @@ define( function( require ) {
     /**
      * Restores a snapshot of the scene.
      * @param {SnapshotWithVariable} snapshot
+     * @public
      * @override
      */
     restore: function( snapshot ) {
