@@ -175,10 +175,10 @@ define( function( require ) {
     },
 
     /**
-     * Disposes of all items that are on the scale.
+     * Clears the scale, by disposing of all items that are on the scale.
      * @public
      */
-    disposeAllItems: function() {
+    clear: function() {
       this.leftItemCreators.forEach( function( itemCreator ) {
         itemCreator.disposeItemsOnScale();
       } );

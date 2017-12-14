@@ -29,26 +29,26 @@ define( function( require ) {
 
     /**
      * Gets the indices of occupied cells for the left plate.
-     * @param {constructor} itemCreatorConstructor - the item creator type, identified by its constructor
+     * @param {AbstractItemCreator} itemCreator
      * @returns {number[]}
      */
-    getLeftCells: function( itemCreatorConstructor ) {
-      return this.leftPlateSnapshot.getOccupiedCells( itemCreatorConstructor );
+    getLeftCells: function( itemCreator ) {
+      return this.leftPlateSnapshot.getOccupiedCells( itemCreator );
     },
 
     /**
      * Gets the indices of occupied cells for the right plate.
-     * @param {constructor} itemCreatorConstructor - the item creator type, identified by its constructor
+     * @param {AbstractItemCreator} itemCreator
      * @returns {number[]}
      */
-    getRightCells: function( itemCreatorConstructor ) {
-      return this.rightPlateSnapshot.getOccupiedCells( itemCreatorConstructor );
+    getRightCells: function( itemCreator ) {
+      return this.rightPlateSnapshot.getOccupiedCells( itemCreator );
     }
   } );
 
   /**
    * Snapshot of a plate's state.
-   * This is an ad hoc map: itemCreatorConstructor -> occupiedCells
+   * This is an ad hoc map: itemCreator -> occupiedCells
    *
    * @param {Plate} plate
    * @constructor
@@ -57,8 +57,8 @@ define( function( require ) {
   function PlateSnapshot( plate ) {
 
     // @private 
-    this.itemCreatorConstructors = []; // {constructor[]} the item creator types, identified by their constructors
-    this.occupiedCells = []; // {number[][]} the occupied cells (in the plate's 2D grid) for each item creator type
+    this.itemCreators = []; // {AbstractItemCreator[]}
+    this.occupiedCells = []; // {number[][]} the occupied cells (in the plate's 2D grid) for each item creator
 
     var itemCreators = plate.itemCreators;
 
@@ -68,7 +68,7 @@ define( function( require ) {
       var itemCreator = itemCreators[ i ];
       var items = itemCreator.getItemsOnScale();
 
-      this.itemCreatorConstructors[ i ] = itemCreator.constructor;
+      this.itemCreators[ i ] = itemCreator;
 
       var indices = []; // {number[]} cell indices
       for ( var j = 0; j < items.length; j++ ) {
@@ -76,7 +76,7 @@ define( function( require ) {
       }
       this.occupiedCells.push( indices );
     }
-    assert && assert( this.itemCreatorConstructors.length === this.occupiedCells.length,
+    assert && assert( this.itemCreators.length === this.occupiedCells.length,
       'arrays must have the same length' );
   }
 
@@ -86,12 +86,12 @@ define( function( require ) {
 
     /**
      * Gets indices of the occupied cells (in the plate's 2D grid) for a specified type of item creator.
-     * @param {constructor} itemCreatorConstructor - the item creator type, identified by its constructor
+     * @param {AbstractItemCreator} itemCreator
      * @returns {number[]}
      * @private
      */
-    getOccupiedCells: function( itemCreatorConstructor ) {
-      var index = this.itemCreatorConstructors.indexOf( itemCreatorConstructor );
+    getOccupiedCells: function( itemCreator ) {
+      var index = this.itemCreators.indexOf( itemCreator );
       assert && assert( index !== -1, 'item creator type not found' );
       return this.occupiedCells[ index ];
     }

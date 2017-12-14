@@ -100,7 +100,11 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.disposeAllItems();
+
+      // Dispose of all items that were created.
+      while ( this.allItems.length > 0 ) {
+        this.allItems.get( 0 ).dispose(); // results in call to itemWasDisposed
+      }
     },
 
     /**
@@ -195,16 +199,6 @@ define( function( require ) {
      */
     getNumberOfItemsOnScale: function() {
       return this.itemsOnScale.length;
-    },
-
-    /**
-     * Disposes of all items that were created.
-     * @private
-     */
-    disposeAllItems: function() {
-      while ( this.allItems.length > 0 ) {
-        this.allItems.get( 0 ).dispose(); // results in call to itemWasDisposed
-      }
     },
 
     /**

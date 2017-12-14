@@ -134,7 +134,25 @@ define( function( require ) {
      */
     restore: function( snapshot ) {
       assert && assert( snapshot instanceof Snapshot, 'oops, not a Snapshot' );
-      //TODO implement restore
+
+      // clear the scale
+      this.scale.clear();
+
+      // restore the left plate
+      this.leftItemCreators.forEach( function( itemCreator ) {
+        var cells = snapshot.getLeftCells( itemCreator );
+        cells.forEach( function( cell ) {
+          itemCreator.createItem( { cellIndex: cell } );
+        } );
+      } );
+
+      // restore the right plate
+      this.rightItemCreators.forEach( function( itemCreator ) {
+        var cells = snapshot.getRightCells( itemCreator );
+        cells.forEach( function( cell ) {
+          itemCreator.createItem( { cellIndex: cell } );
+        } );
+      } );
     }
   } );
 } );

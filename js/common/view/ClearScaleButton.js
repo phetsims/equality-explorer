@@ -31,7 +31,7 @@ define( function( require ) {
 
     assert && assert( !options.listener, 'this type defines its listener' );
     options.listener = function() {
-      scale.disposeAllItems();
+      scale.clear();
     };
 
     ResetButton.call( this, options );
