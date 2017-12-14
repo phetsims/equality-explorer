@@ -50,9 +50,9 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      for ( var i = 0; i < this.scenes.length; i++ ) {
-        this.scenes[ i ].reset();
-      }
+      this.scenes.forEach( function( scene ) {
+        scene.reset();
+      } );
       this.sceneProperty.reset();
     },
 
