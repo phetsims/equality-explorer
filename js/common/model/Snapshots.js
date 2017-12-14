@@ -20,8 +20,6 @@ define( function( require ) {
    */
   function Snapshots( options ) {
 
-    var self = this;
-
     // @public {Property.<Snapshot|null>[]} a Property for each possible snapshot, null means no snapshot
     this.snapshotProperties = [];
     for ( var i = 0; i < EqualityExplorerConstants.NUMBER_OF_SNAPSHOTS; i++ ) {
