@@ -47,9 +47,13 @@ define( function( require ) {
 
     var symbolNode = null;
     if ( itemConstructor === ConstantItem ) {
+
+      // 1 and -1 sum to '0'
       symbolNode = zeroNode;
     }
     else {
+
+      // x and -x sum to '0x'
       var xNode = new Text( xString, {
         font: new MathSymbolFont( options.fontSize )
       } );
