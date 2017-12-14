@@ -32,6 +32,11 @@ define( function( require ) {
 
   return inherit( Snapshot, SnapshotWithVariable, {
 
+    /**
+     * Restores this snapshot.
+     * @public
+     * @override
+     */
     restore: function() {
       this.scene.xProperty.value = this.x;
       Snapshot.prototype.restore.call( this );
