@@ -98,7 +98,7 @@ define( function( require ) {
       var updateDependencies = [];
       itemCreators.forEach( function( itemCreator ) {
         updateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
-        if ( itemCreator.constructor === XItemCreator ) {
+        if ( itemCreator.weightProperty ) {
           updateDependencies.push( itemCreator.weightProperty );
         }
       } );
