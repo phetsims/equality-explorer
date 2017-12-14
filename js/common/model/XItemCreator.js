@@ -44,7 +44,6 @@ define( function( require ) {
     this.weightProperty.link( function( weight ) {
       var items = self.getItems();
       for ( var i = 0; i < items.length; i++ ) {
-        assert && assert( items[ i ].constructor === XItem, 'unexpected item type' );
         items[ i ].weightProperty.value = weight;
       }
     } );
