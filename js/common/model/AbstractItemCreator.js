@@ -2,6 +2,7 @@
 
 /**
  * Abstract base type for creating and managing items.
+ * Items are created either by dragging then out of panels below the scale, or by restoring a snapshot.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
