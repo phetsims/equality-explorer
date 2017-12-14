@@ -82,7 +82,7 @@ define( function( require ) {
       maxWidth: options.controlWidth,
       maxHeight: options.controlHeight,
       listener: function() {
-        assert && assert( snapshotProperty.value === null, 'snapshot should be null' );
+        assert && assert( !snapshotProperty.value, 'snapshot is already occupied' );
         snapshotProperty.value = scene.save();
         selectedSnapshotProperty.value = null;
       }
@@ -94,7 +94,7 @@ define( function( require ) {
     // selects the snapshot associated with this control
     var upListener = new DownUpListener( {
       upInside: function( event, trail ) {
-        assert && assert( snapshotProperty.value !== null, 'expected a snapshot' );
+        assert && assert( snapshotProperty.value, 'expected a snapshot' );
         selectedSnapshotProperty.value = snapshotProperty.value;
       }
     } );
@@ -116,8 +116,8 @@ define( function( require ) {
     snapshotProperty.link( function( snapshot ) {
 
       // either the button or the snapshot is visible
-      snapshotButton.visible = ( snapshot === null );
-      snapshotNode.visible = ( snapshot !== null );
+      snapshotButton.visible = !snapshot;
+      snapshotNode.visible = !!snapshot;
 
       if ( snapshot ) {
 
@@ -150,7 +150,7 @@ define( function( require ) {
 
     // shows that the associated snapshot has been selected
     selectedSnapshotProperty.link( function( selectedSnapshot ) {
-      var isSelected = (selectedSnapshot !== null && selectedSnapshot === snapshotProperty.value);
+      var isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
       selectionRectangle.stroke = isSelected ? SELECTED_STROKE : UNSELECTED_STROKE;
     } );
 
