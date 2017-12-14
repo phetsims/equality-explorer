@@ -142,7 +142,7 @@ define( function( require ) {
       this.leftItemCreators.forEach( function( itemCreator ) {
         var cells = snapshot.getLeftCells( itemCreator ); // {number[]}
         cells.forEach( function( cellIndex ) {
-          itemCreator.createItemInCell( cellIndex );
+          itemCreator.createItemOnScale( cellIndex );
         } );
       } );
 
@@ -150,7 +150,7 @@ define( function( require ) {
       this.rightItemCreators.forEach( function( itemCreator ) {
         var cells = snapshot.getRightCells( itemCreator ); // {number[]}
         cells.forEach( function( cellIndex ) {
-          itemCreator.createItemInCell( cellIndex );
+          itemCreator.createItemOnScale( cellIndex );
         } );
       } );
     }

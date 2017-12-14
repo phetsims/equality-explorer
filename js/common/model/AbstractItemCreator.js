@@ -105,7 +105,7 @@ define( function( require ) {
       for ( var i = 0; i < this.initialNumberOfItemsOnScale; i++ ) {
         var cellIndex = this.plate.getFirstEmptyCell();
         assert && assert( cellIndex !== -1, 'oops, plate is full' );
-        this.createItemInCell( cellIndex );
+        this.createItemOnScale( cellIndex );
       }
     },
 
@@ -156,38 +156,45 @@ define( function( require ) {
      * @public
      */
     createItemDragging: function( event ) {
-
-      // create item
-      var item = this.createItemProtected( this.locationProperty.value );
-      this.allItems.add( item );
-
-      // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
-      item.disposedEmitter.addListener( this.itemWasDisposedBound );
-
-      // Notify that an item was created
-      this.itemCreatedEmitter.emit2( item, event );
+      this.createItemPrivate( event, null /* cellIndex */ );
     },
 
-    //TODO duplication with createItemDragging
     /**
      * Creates an item and puts it in a specified cell in the associate plate's 2D grid.
      * @param {number} cellIndex
      * @public
      */
-    createItemInCell: function( cellIndex ) {
+    createItemOnScale: function( cellIndex ) {
+      this.createItemPrivate( null /* event */, cellIndex );
+    },
+
+    /**
+     * Consolidates code that is common to createItemDragging and createItemOnScale.
+     * Parameters are mutually exclusive!
+     * @param {Event|null} event - the event for an item to be created via user interaction
+     * @param {number|null} cellIndex - the cell of an item to be created on the scale
+     * @private
+     */
+    createItemPrivate: function( event, cellIndex ) {
+
+      assert && assert( event !== undefined && cellIndex !== undefined, 'undefined args not allowed' );
+      assert && assert( event || cellIndex !== null, 'event or cellIndex must be provided' );
+      assert && assert( !( event && cellIndex !== null ), 'event and cellIndex are mutually exclusive' );
 
       // create item
       var item = this.createItemProtected( this.locationProperty.value );
       this.allItems.add( item );
 
       // put item on the scale
-      this.putItemOnScale( item, cellIndex );
+      if ( cellIndex !== null ) {
+        this.putItemOnScale( item, cellIndex );
+      }
 
       // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
       item.disposedEmitter.addListener( this.itemWasDisposedBound );
 
       // Notify that an item was created
-      this.itemCreatedEmitter.emit2( item, null /* no event */ );
+      this.itemCreatedEmitter.emit2( item, event );
     },
 
     /**
@@ -228,6 +235,7 @@ define( function( require ) {
      * Is the specified item on the scale?
      * @param {AbstractItem} item
      * @returns {boolean}
+     * @public
      */
     isItemOnScale: function( item ) {
       return this.itemsOnScale.contains( item );
@@ -245,6 +253,7 @@ define( function( require ) {
     /**
      * Gets the number of items on the scale.
      * @returns {number}
+     * @public
      */
     getNumberOfItemsOnScale: function() {
       return this.itemsOnScale.length;
