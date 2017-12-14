@@ -94,7 +94,7 @@ define( function( require ) {
     snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
 
     var snapshotsVBox = new VBox( {
-      spacing: 15,
+      spacing: 13,
       children: snapshotsVBoxChildren
     } );
 
