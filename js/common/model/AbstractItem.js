@@ -60,7 +60,7 @@ define( function( require ) {
 
     /**
      * Is this item the inverse of a specified item?
-     * Two items are inverses if they are of the same type, and their weights sum to zero.
+     * Two items are inverses if they have identical types, and their weights sum to zero.
      * @param {AbstractItem} item
      * @returns {boolean}
      * @public
