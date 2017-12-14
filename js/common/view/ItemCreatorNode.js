@@ -112,10 +112,9 @@ define( function( require ) {
     /**
      * Populates the scale with a specified number of items.
      * This is intended to be used for debugging and testing, not in production situations.
-     * ItemCreatorNode uses its location to initialize the location of items that it creates.
+     * ItemCreatorNode uses its location to initialize the location of its associated model element.
      * So this function must be called after the ItemCreatorNode has been added to the scene graph,
-     * so that it has a valid location.
-     * See https://github.com/phetsims/equality-explorer/issues/8.
+     * so that it has a valid location. See https://github.com/phetsims/equality-explorer/issues/8.
      *
      * @param {number} numberOfItems
      * @private
