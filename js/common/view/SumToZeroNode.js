@@ -27,7 +27,7 @@ define( function( require ) {
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
-   * @param {constructor} itemConstructor
+   * @param {constructor} itemConstructor - constructor that identifies the type of item that has disappeared
    * @param {Object} [options]
    * @constructor
    */
