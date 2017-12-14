@@ -183,16 +183,6 @@ define( function( require ) {
     },
 
     /**
-     * Does the grid contain the specified item?
-     * @param {AbstractItem} item
-     * @returns {boolean}
-     * @public
-     */
-    containsItem: function( item ) {
-      return ( this.getCellForItem( item ) !== -1 );
-    },
-
-    /**
      * Puts an item in the specified cell. The cell must be empty.
      * @param {AbstractItem} item
      * @param {number} index - the cell's index

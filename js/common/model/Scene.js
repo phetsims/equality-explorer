@@ -140,17 +140,17 @@ define( function( require ) {
 
       // restore the left plate
       this.leftItemCreators.forEach( function( itemCreator ) {
-        var cells = snapshot.getLeftCells( itemCreator );
-        cells.forEach( function( cell ) {
-          itemCreator.createItem( { cellIndex: cell } );
+        var cells = snapshot.getLeftCells( itemCreator ); // {number[]}
+        cells.forEach( function( cellIndex ) {
+          itemCreator.createItemInCell( cellIndex );
         } );
       } );
 
       // restore the right plate
       this.rightItemCreators.forEach( function( itemCreator ) {
-        var cells = snapshot.getRightCells( itemCreator );
-        cells.forEach( function( cell ) {
-          itemCreator.createItem( { cellIndex: cell } );
+        var cells = snapshot.getRightCells( itemCreator ); // {number[]}
+        cells.forEach( function( cellIndex ) {
+          itemCreator.createItemInCell( cellIndex );
         } );
       } );
     }

@@ -13,8 +13,6 @@ Solving screen:
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Snapshot cleanup
-
 Locked mode, #19
 
 Solving screen - generalize other screens? different implementation?

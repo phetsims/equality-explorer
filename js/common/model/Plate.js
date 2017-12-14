@@ -27,6 +27,8 @@ define( function( require ) {
    */
   function Plate( itemCreators, options ) {
 
+    var self = this;
+
     options = _.extend( {
       supportHeight: 10, // height of the vertical support that connects the plate to the scale
       diameter: 20, // diameter of the plate
@@ -77,8 +79,11 @@ define( function( require ) {
     // @public emit is called when the contents of the grid changes (items added, removed, organized)
     this.contentsChangedEmitter = new Emitter();
 
-    // @private
-    this.removeItemBound = this.removeItem.bind( this );
+    // associate this plate with its item creators
+    itemCreators.forEach( function( itemCreator ) {
+      assert && assert( !itemCreator.plate, 'item creator already has an associated plate' );
+      itemCreator.plate = self;
+    } );
   }
 
   equalityExplorer.register( 'Plate', Plate );
@@ -93,7 +98,6 @@ define( function( require ) {
      */
     addItem: function( item, cellIndex ) {
       this.grid.putItem( item, cellIndex );
-      item.disposedEmitter.addListener( this.removeItemBound );
       this.contentsChangedEmitter.emit();
     },
 
@@ -105,7 +109,6 @@ define( function( require ) {
     removeItem: function( item ) {
       var cellIndex = this.grid.getCellForItem( item );
       assert && assert( cellIndex !== -1, 'item not found: ' + item.toString() );
-      item.disposedEmitter.removeListener( this.removeItemBound );
       this.grid.clearCell( cellIndex );
       this.grid.shiftDown( cellIndex );
       this.contentsChangedEmitter.emit();
@@ -119,16 +122,6 @@ define( function( require ) {
      */
     isEmptyCell: function( cellIndex ) {
       return this.grid.isEmptyCell( cellIndex );
-    },
-
-    /**
-     * Does the grid contain the specified item?
-     * @param {AbstractItem} item
-     * @returns {boolean}
-     * @public
-     */
-    containsItem: function( item ) {
-      return this.grid.containsItem( item );
     },
 
     /**

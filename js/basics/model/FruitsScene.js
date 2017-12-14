@@ -30,21 +30,21 @@ define( function( require ) {
 
   /**
    * Creates the item creators for this scene.
-   * @param {number[]} numberOfItemsOnScale
+   * @param {number[]} initialNumberOfItemsOnScale
    * @returns {AbstractItemCreator[]}
    */
-  function createItemCreators( numberOfItemsOnScale ) {
-    assert && assert( numberOfItemsOnScale.length === 3 );
+  function createItemCreators( initialNumberOfItemsOnScale ) {
+    assert && assert( initialNumberOfItemsOnScale.length === 3 );
     var index = 0;
     return [
       new MysteryItemCreator( 4, ItemIcons.APPLE_NODE, ItemIcons.APPLE_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } ),
       new MysteryItemCreator( 5, ItemIcons.LEMON_NODE, ItemIcons.LEMON_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } ),
       new MysteryItemCreator( 2, ItemIcons.ORANGE_NODE, ItemIcons.ORANGE_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } )
     ];
   }

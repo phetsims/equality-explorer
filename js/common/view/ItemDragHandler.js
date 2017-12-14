@@ -62,8 +62,7 @@ define( function( require ) {
 
         item.moveTo( self.eventToLocation( event ) );
 
-        if ( plate.containsItem( item ) ) {
-          plate.removeItem( item );
+        if ( itemCreator.isItemOnScale( item ) ) {
           itemCreator.removeItemFromScale( item );
         }
       },
@@ -169,8 +168,7 @@ define( function( require ) {
 
         // When the item reaches the cell, put it in the cell.
         animationCompletedCallback: function() {
-          plate.addItem( item, cellIndex );
-          itemCreator.addItemToScale( item );
+          itemCreator.putItemOnScale( item, cellIndex );
         }
       } );
     }

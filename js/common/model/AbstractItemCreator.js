@@ -28,23 +28,28 @@ define( function( require ) {
 
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
-
-      //TODO this type doesn't do anything with this, move elsewhere?
-      numberOfItemsOnScale: 0 // number of items initially on the scale
+      initialNumberOfItemsOnScale: 0 // number of items initially on the scale
     }, options );
 
-    assert && assert( ( options.numberOfItemsOnScale >= 0 ) && Util.isInteger( options.numberOfItemsOnScale ),
-      'numberOfItemsOnScale is invalid: ' + options.numberOfItemsOnScale );
+    assert && assert( ( options.initialNumberOfItemsOnScale >= 0 ) && Util.isInteger( options.initialNumberOfItemsOnScale ),
+      'initialNumberOfItemsOnScale is invalid: ' + options.initialNumberOfItemsOnScale );
 
     // @public (read-only)
     this.icon = icon;
     this.iconShadow = iconShadow;
-    this.numberOfItemsOnScale = options.numberOfItemsOnScale;
 
     // @public {Property.<Vector2>} (read-only)
-    // Initialized after the sim has loaded, since the value depends on the view. See ItemCreatorNode.
-    // Should not be reset!
+    // Location is dependent on the view and is unknowable until the sim has loaded.
+    // See initialize. Do not reset!
     this.locationProperty = new Property( null );
+
+    // @private Number of items to put on the scale initially.
+    // Items cannot be put on the scale until locationProperty is initialized.
+    this.initialNumberOfItemsOnScale = options.initialNumberOfItemsOnScale;
+
+    // @public {Plate} the plate that this item creator is associated with.
+    // This association necessarily occurs after instantiation.
+    this.plate = null;
 
     // @public {Bounds2} drag bounds for items created
     this.dragBounds = options.dragBounds;
@@ -65,17 +70,44 @@ define( function( require ) {
     // @public is this creator enabled?
     this.enabledProperty = new BooleanProperty( true );
 
-    //TODO document signature of listener callback
-    // @public emit2 called when item is created
+    // @public emit2 is called when an item is created.
+    // Callback signature is function( {AbstractItem} item, {Event} [event] )
     this.itemCreatedEmitter = new Emitter();
 
     // @private called when AbstractItem.dispose is called
     this.itemWasDisposedBound = this.itemWasDisposed.bind( this );
+
+    // @private has this instance been fully initialized?
+    this.isInitialized = false;
   }
 
   equalityExplorer.register( 'AbstractItemCreator', AbstractItemCreator );
 
   return inherit( Object, AbstractItemCreator, {
+
+    /**
+     * Completes initialization. This model element's location is dependent on the location of
+     * its associated view element (ItemCreatorNode).  So initialization cannot be completed
+     * until the sim has fully loaded. See frameStartedCallback in ItemCreatorNode.
+     * @param {Vector2} location
+     * @private
+     */
+    initialize: function( location ) {
+
+      assert && assert( !this.isInitialized, 'initialize has already been called' );
+      this.isInitialized = true;
+
+      // initialize location
+      this.locationProperty.value = location;
+
+      // populate the scale, see https://github.com/phetsims/equality-explorer/issues/8
+      assert && assert( this.plate, 'plate has not been initialized' );
+      for ( var i = 0; i < this.initialNumberOfItemsOnScale; i++ ) {
+        var cellIndex = this.plate.getFirstEmptyCell();
+        assert && assert( cellIndex !== -1, 'oops, plate is full' );
+        this.createItemInCell( cellIndex );
+      }
+    },
 
     /**
      * Instantiates an item.
@@ -114,43 +146,48 @@ define( function( require ) {
      */
     step: function( dt ) {
       this.allItems.forEach( function( item ) {
-         item.step( dt );
+        item.step( dt );
       } );
     },
 
     /**
-     * Creates an item.
-     * @param {Object} [options]
-     * @returns {AbstractItem}
+     * Creates an item that will immediately be involved in a drag cycle.
+     * @param {Event} event
      * @public
      */
-    createItem: function( options ) {
+    createItemDragging: function( event ) {
 
-      //TODO duplicated in ItemCreatorNode
-      options = _.extend( {
-        event: undefined,
-        cellIndex: undefined
-      }, options );
-      assert && assert( !( options.event && options.cellIndex !== undefined ),
-        'event and cellIndex are mutually exclusive' );
-      assert && assert( options.event || options.cellIndex !== undefined,
-        'event or cellIndex must be specified' );
-
+      // create item
       var item = this.createItemProtected( this.locationProperty.value );
       this.allItems.add( item );
-
-      //TODO the other half of this is handled way over in ItemCreatorNode, see plate.addItem
-      if ( options.cellIndex ) {
-        this.addItemToScale( item );
-      }
 
       // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
       item.disposedEmitter.addListener( this.itemWasDisposedBound );
 
       // Notify that an item was created
-      this.itemCreatedEmitter.emit2( item, options );
+      this.itemCreatedEmitter.emit2( item, event );
+    },
 
-      return item;
+    //TODO duplication with createItemDragging
+    /**
+     * Creates an item and puts it in a specified cell in the associate plate's 2D grid.
+     * @param {number} cellIndex
+     * @public
+     */
+    createItemInCell: function( cellIndex ) {
+
+      // create item
+      var item = this.createItemProtected( this.locationProperty.value );
+      this.allItems.add( item );
+
+      // put item on the scale
+      this.putItemOnScale( item, cellIndex );
+
+      // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
+      item.disposedEmitter.addListener( this.itemWasDisposedBound );
+
+      // Notify that an item was created
+      this.itemCreatedEmitter.emit2( item, null /* no event */ );
     },
 
     /**
@@ -163,25 +200,37 @@ define( function( require ) {
     },
 
     /**
-     * Records the fact that an item is on the scale.
+     * Puts an item on the scale, in a specified cell in the associated plate's 2D grid.
      * @param {AbstractItem} item
+     * @param {number} cellIndex
      * @public
      */
-    addItemToScale: function( item ) {
+    putItemOnScale: function( item, cellIndex ) {
       assert && assert( this.allItems.contains( item ), 'item not found: ' + item.toString() );
       assert && assert( !this.itemsOnScale.contains( item ), 'item already on scale: ' + item.toString() );
       this.itemsOnScale.push( item );
+      this.plate.addItem( item, cellIndex );
     },
 
     /**
-     * Records the fact that an item is no longer on the scale.
+     * Removes an item from the scale.
      * @param {AbstractItem} item
      * @public
      */
     removeItemFromScale: function( item ) {
       assert && assert( this.allItems.contains( item ), 'item not found: ' + item.toString() );
       assert && assert( this.itemsOnScale.contains( item ), 'item not on scale: ' + item.toString() );
+      this.plate.removeItem( item );
       this.itemsOnScale.remove( item );
+    },
+
+    /**
+     * Is the specified item on the scale?
+     * @param {AbstractItem} item
+     * @returns {boolean}
+     */
+    isItemOnScale: function( item ) {
+      return this.itemsOnScale.contains( item );
     },
 
     /**
@@ -218,7 +267,7 @@ define( function( require ) {
      */
     itemWasDisposed: function( item ) {
       assert && assert( this.allItems.contains( item ), 'item not found: ' + item.toString() );
-      if ( this.itemsOnScale.contains( item ) ) {
+      if ( this.isItemOnScale( item ) ) {
         this.removeItemFromScale( item );
       }
       this.allItems.remove( item );

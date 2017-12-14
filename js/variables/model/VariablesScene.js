@@ -49,19 +49,19 @@ define( function( require ) {
   /**
    * Creates the item creators for this scene.
    * @param {Property.<number>} xProperty
-   * @param {number} numberOfItemsOnScale
+   * @param {number} initialNumberOfItemsOnScale
    * @returns {AbstractItemCreator[]}
    */
-  function createItemCreators( xProperty, numberOfItemsOnScale ) {
-    assert && assert( numberOfItemsOnScale.length === 4 );
+  function createItemCreators( xProperty, initialNumberOfItemsOnScale ) {
+    assert && assert( initialNumberOfItemsOnScale.length === 4 );
     var index = 0;
 
     var positiveXCreator = new XItemCreator( xProperty.value, 1, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
-      numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+      initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
     } );
 
     var negativeXCreator = new XItemCreator( -xProperty.value, -1, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
-      numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+      initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
     } );
 
     // unlink unnecessary
@@ -74,10 +74,10 @@ define( function( require ) {
       positiveXCreator,
       negativeXCreator,
       new ConstantItemCreator( 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } ),
       new ConstantItemCreator( -1, ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } )
     ];
   }

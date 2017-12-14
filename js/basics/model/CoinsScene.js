@@ -30,21 +30,21 @@ define( function( require ) {
 
   /**
    * Creates the item creators for this scene.
-   * @param {number[]} numberOfItemsOnScale
+   * @param {number[]} initialNumberOfItemsOnScale
    * @returns {AbstractItemCreator[]}
    */
-  function createItemCreators( numberOfItemsOnScale ) {
-    assert && assert( numberOfItemsOnScale.length === 3 );
+  function createItemCreators( initialNumberOfItemsOnScale ) {
+    assert && assert( initialNumberOfItemsOnScale.length === 3 );
     var index = 0;
     return [
       new MysteryItemCreator( 3, ItemIcons.COIN1_NODE, ItemIcons.COIN1_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } ),
       new MysteryItemCreator( 2, ItemIcons.COIN2_NODE, ItemIcons.COIN2_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } ),
       new MysteryItemCreator( 5, ItemIcons.COIN3_NODE, ItemIcons.COIN3_SHADOW_NODE, {
-        numberOfItemsOnScale: numberOfItemsOnScale[ index++ ]
+        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } )
     ];
   }
