@@ -121,40 +121,12 @@ define( function( require ) {
     },
 
     /**
-     * Saves a snapshot of the scene.
+     * Saves a snapshot of the scene. Restore is handled by the snapshot.
      * @returns {Snapshot}
      * @public
      */
     save: function() {
       return new Snapshot( this );
-    },
-
-    /**
-     * Restores a snapshot of the scene.
-     * @param {Snapshot} snapshot
-     * @public
-     */
-    restore: function( snapshot ) {
-      assert && assert( snapshot instanceof Snapshot, 'oops, not a Snapshot' );
-
-      // clear the scale
-      this.scale.clear();
-
-      // restore the left plate
-      this.leftItemCreators.forEach( function( itemCreator ) {
-        var cells = snapshot.getLeftCells( itemCreator ); // {number[]}
-        cells.forEach( function( cellIndex ) {
-          itemCreator.createItemOnScale( cellIndex );
-        } );
-      } );
-
-      // restore the right plate
-      this.rightItemCreators.forEach( function( itemCreator ) {
-        var cells = snapshot.getRightCells( itemCreator ); // {number[]}
-        cells.forEach( function( cellIndex ) {
-          itemCreator.createItemOnScale( cellIndex );
-        } );
-      } );
     }
   } );
 } );

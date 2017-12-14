@@ -94,25 +94,13 @@ define( function( require ) {
     },
 
     /**
-     * Saves a snapshot of the scene.
+     * Saves a snapshot of the scene. Restore is handled by the snapshot.
      * @returns {SnapshotWithVariable}
      * @public
      * @override
      */
     save: function() {
       return new SnapshotWithVariable( this );
-    },
-
-    /**
-     * Restores a snapshot of the scene.
-     * @param {SnapshotWithVariable} snapshot
-     * @public
-     * @override
-     */
-    restore: function( snapshot ) {
-      assert && assert( snapshot instanceof SnapshotWithVariable, 'oops, not a SnapshotWithVariable' );
-      Scene.prototype.restore.call( this, snapshot );
-      this.xProperty.value = snapshot.x;
     }
   } );
 } );

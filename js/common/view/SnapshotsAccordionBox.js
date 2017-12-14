@@ -108,7 +108,7 @@ define( function( require ) {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
       listener: function() {
-        scene.restore( scene.snapshots.selectedSnapshotProperty.value );
+        scene.snapshots.selectedSnapshotProperty.value.restore();
       }
     } );
 

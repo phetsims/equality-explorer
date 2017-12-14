@@ -20,6 +20,9 @@ define( function( require ) {
   function SnapshotWithVariable( scene ) {
 
     assert && assert( scene.xProperty, 'scene must have a variable' );
+
+    // @private
+    this.scene = scene;
     this.x = scene.xProperty.value;
 
     Snapshot.call( this, scene );
@@ -27,6 +30,12 @@ define( function( require ) {
 
   equalityExplorer.register( 'SnapshotWithVariable', SnapshotWithVariable );
 
-  return inherit( Snapshot, SnapshotWithVariable );
+  return inherit( Snapshot, SnapshotWithVariable, {
+
+    restore: function() {
+      this.scene.xProperty.value = this.x;
+      Snapshot.prototype.restore.call( this );
+    }
+  } );
 } );
  

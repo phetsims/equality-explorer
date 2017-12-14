@@ -19,6 +19,7 @@ define( function( require ) {
   function Snapshot( scene ) {
 
     // @private
+    this.scale = scene.scale;
     this.leftPlateSnapshot = new PlateSnapshot( scene.scale.leftPlate );
     this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate );
   }
@@ -28,23 +29,13 @@ define( function( require ) {
   inherit( Object, Snapshot, {
 
     /**
-     * Gets the indices of occupied cells for the left plate.
-     * @param {AbstractItemCreator} itemCreator
-     * @returns {number[]}
+     * Restores this snapshot.
      * @public
      */
-    getLeftCells: function( itemCreator ) {
-      return this.leftPlateSnapshot.getOccupiedCells( itemCreator );
-    },
-
-    /**
-     * Gets the indices of occupied cells for the right plate.
-     * @param {AbstractItemCreator} itemCreator
-     * @returns {number[]}
-     * @public
-     */
-    getRightCells: function( itemCreator ) {
-      return this.rightPlateSnapshot.getOccupiedCells( itemCreator );
+    restore: function() {
+      this.scale.clear();
+      this.leftPlateSnapshot.restore();
+      this.rightPlateSnapshot.restore();
     }
   } );
 
@@ -58,7 +49,8 @@ define( function( require ) {
    */
   function PlateSnapshot( plate ) {
 
-    // @private 
+    // @private
+    this.plate = plate;
     this.itemCreators = []; // {AbstractItemCreator[]}
     this.occupiedCells = []; // {number[][]} the occupied cells (in the plate's 2D grid) for each item creator
 
@@ -87,15 +79,16 @@ define( function( require ) {
   inherit( Object, PlateSnapshot, {
 
     /**
-     * Gets indices of the occupied cells (in the plate's 2D grid) for a specified type of item creator.
-     * @param {AbstractItemCreator} itemCreator
-     * @returns {number[]}
-     * @private
+     * Restores the snapshot for this plate.
+     * @public
      */
-    getOccupiedCells: function( itemCreator ) {
-      var index = this.itemCreators.indexOf( itemCreator );
-      assert && assert( index !== -1, 'item creator type not found' );
-      return this.occupiedCells[ index ];
+    restore: function() {
+      for ( var i = 0; i < this.itemCreators.length; i++ ) {
+        var occupiedCells = this.occupiedCells[ i ];
+        for ( var j = 0; j < occupiedCells.length; j++ ) {
+          this.itemCreators[ i ].createItemOnScale( occupiedCells[ j ] );
+        }
+      }
     }
   } );
 
