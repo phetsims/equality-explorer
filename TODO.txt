@@ -17,8 +17,6 @@ Locked mode, #19
 
 Solving screen - generalize other screens? different implementation?
 
-Reconsider model architecture. State is spread across AbstractItemCreator and Plate, duplicate info about what is on the Plate.
-
 Consider subtypes instead of constructor comparison, especially in ItemNode (search for ".constructor")
 
 Reset All takes awhile to complete, even with nothing on scale
