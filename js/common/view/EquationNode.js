@@ -56,38 +56,24 @@ define( function( require ) {
     }, options );
 
     // fonts for various parts of the equation
-    var numberFont = new PhetFont( options.fontSize );
     var variableFont = new MathSymbolFont( options.fontSize );
-    var plusFont = new PhetFont( options.fontSize );
+    var relationalOperatorFont = new PhetFont( { size: options.relationalOperatorFontSize, weight: 'bold' } );
+    var font = new PhetFont( options.fontSize ); // font for everything else
 
     Node.call( this );
 
     // Correct initial operator will be set in multilink below
-    var relationalOperatorNode = new Text( '=', {
-      font: new PhetFont( { size: options.relationalOperatorFontSize, weight: 'bold' } )
-    } );
-
-    // {AbstractItemCreator[]} all AbstractItemCreator instances
-    var itemCreators = leftItemCreators.concat( rightItemCreators );
-
-    // {Property[]} dependencies that require the equation to be updated
-    var updateDependencies = [];
-    itemCreators.forEach( function( itemCreator ) {
-      updateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
-      if ( itemCreator.constructor === XItemCreator ) {
-        updateDependencies.push( itemCreator.weightProperty );
-      }
-    } );
+    var relationalOperatorNode = new Text( '=', { font: relationalOperatorFont } );
 
     // updates the equation
     var update = function() {
 
       relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
 
-      var leftSideNode = createSideNode( leftItemCreators, numberFont, variableFont, plusFont,
+      var leftSideNode = createSideNode( leftItemCreators, variableFont, font,
         options.iconScale, options.coefficientSpacing, options.plusSpacing );
 
-      var rightSideNode = createSideNode( rightItemCreators, numberFont, variableFont, plusFont,
+      var rightSideNode = createSideNode( rightItemCreators, variableFont, font,
         options.iconScale, options.coefficientSpacing, options.plusSpacing );
 
       self.children = [ leftSideNode, relationalOperatorNode, rightSideNode ];
@@ -103,7 +89,21 @@ define( function( require ) {
 
     if ( options.updateEnabled ) {
 
-      // dynamic equation, dispose required
+      // dynamic equation
+
+      // {AbstractItemCreator[]} all AbstractItemCreator instances
+      var itemCreators = leftItemCreators.concat( rightItemCreators );
+
+      // {Property[]} dependencies that require the equation to be updated
+      var updateDependencies = [];
+      itemCreators.forEach( function( itemCreator ) {
+        updateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
+        if ( itemCreator.constructor === XItemCreator ) {
+          updateDependencies.push( itemCreator.weightProperty );
+        }
+      } );
+
+      // dispose required
       var updateMultilink = new Multilink( updateDependencies, update );
     }
     else {
@@ -160,15 +160,14 @@ define( function( require ) {
   /**
    * Creates one side of the equation
    * @param {AbstractItemCreator[]} itemCreators
-   * @param {Font} numberFont - font for coefficients and constants
    * @param {Font} variableFont - font for variables, like 'x'
-   * @param {Font} plusFont - font for plus operators
+   * @param {Font} font - font for everything except variables
    * @param {number} iconScale - scale for item icons
    * @param {number} coefficientSpacing - space between coefficients and icons
    * @param {number} plusSpacing - space around plus operators
    * @returns {Node}
    */
-  function createSideNode( itemCreators, numberFont, variableFont, plusFont, iconScale, coefficientSpacing, plusSpacing ) {
+  function createSideNode( itemCreators, variableFont, font, iconScale, coefficientSpacing, plusSpacing ) {
 
     var constantValue = 0;
     var xCoefficient = 0;
@@ -195,9 +194,9 @@ define( function( require ) {
 
           // these items are displayed as a coefficient and icon
           if ( children.length > 0 ) {
-            children.push( new Text( EqualityExplorerConstants.PLUS, { font: plusFont } ) );
+            children.push( new Text( EqualityExplorerConstants.PLUS, { font: font } ) );
           }
-          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, numberFont, coefficientSpacing, false ) );
+          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, font, coefficientSpacing, false ) );
         }
       }
     }
@@ -205,7 +204,7 @@ define( function( require ) {
     if ( xCoefficient !== 0 ) {
       assert && assert( children.length === 0, 'equation with a variable should have no terms so far' );
       var xIcon = new Text( xString, { font: variableFont } );
-      children.push( createTermNode( xCoefficient, xIcon, 1, numberFont, coefficientSpacing, true ) );
+      children.push( createTermNode( xCoefficient, xIcon, 1, font, coefficientSpacing, true ) );
     }
 
     if ( constantValue !== 0 ) {
@@ -213,16 +212,16 @@ define( function( require ) {
       // put the constant term last
       if ( children.length > 0 ) {
         var operator = ( constantValue > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
-        children.push( new Text( operator, { font: plusFont } ) );
-        children.push( createConstantNode( Math.abs( constantValue ), numberFont ) );
+        children.push( new Text( operator, { font: font } ) );
+        children.push( createConstantNode( Math.abs( constantValue ), font ) );
       }
       else {
-        children.push( createConstantNode( constantValue, numberFont ) );
+        children.push( createConstantNode( constantValue, font ) );
       }
     }
 
     if ( children.length === 0 ) {
-      children.push( new Text( '0', { font: numberFont } ) );
+      children.push( new Text( '0', { font: font } ) );
     }
 
     return new HBox( {
