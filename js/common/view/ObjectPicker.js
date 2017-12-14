@@ -204,13 +204,13 @@ define( function( require ) {
     var upStateProperty = new Property( 'up' );
     var downStateProperty = new Property( 'up' );
 
-    // {Property.<boolean>} whether the up button is enabled
+    // {DerivedProperty.<boolean>} whether the up button is enabled
     var upEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
         return index < items.length - 1;
       } );
 
-    // {Property.<boolean>} whether the down button is enabled
+    // {DerivedProperty.<boolean>} whether the down button is enabled
     var downEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
         return index > 0;
