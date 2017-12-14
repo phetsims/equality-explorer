@@ -13,7 +13,8 @@ Solving screen:
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Clicking on items (on scale or in panels) doesn't deselect snapshot
+Clicking on items (on scale or in panels) doesn't deselect snapshot, presumably because of DAG item icons.
+See SnapshotAccordionBox clickToDeselectListener.
 
 Locked mode, #19
 

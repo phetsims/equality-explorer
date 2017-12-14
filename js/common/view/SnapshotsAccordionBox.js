@@ -16,6 +16,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSeparator = require( 'SUN/HSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var ItemNode = require( 'EQUALITY_EXPLORER/common/view/ItemNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var SnapshotControl = require( 'EQUALITY_EXPLORER/common/view/SnapshotControl' );
@@ -167,6 +168,7 @@ define( function( require ) {
         var trails = event.target.getTrails( function( node ) {
           return node === self;
         } );
+        console.log( 'clickToDeselectListener.down, trails.length=' + trails.length );//TODO delete this
 
         if ( trails.length === 0 ) {
           scene.snapshots.selectedSnapshotProperty.value = null;
