@@ -13,9 +13,7 @@ Solving screen:
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
-Move responsibility for item creation and "population" from view (ItemCreatorNode) to model (AbstractItemCreator)
-
-Restore snapshot
+Snapshot cleanup
 
 Locked mode, #19
 
