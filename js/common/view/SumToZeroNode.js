@@ -75,7 +75,6 @@ define( function( require ) {
 
     /**
      * Starts animation.
-     *
      * @public
      */
     startAnimation: function() {

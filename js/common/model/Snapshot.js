@@ -31,6 +31,7 @@ define( function( require ) {
      * Gets the indices of occupied cells for the left plate.
      * @param {AbstractItemCreator} itemCreator
      * @returns {number[]}
+     * @public
      */
     getLeftCells: function( itemCreator ) {
       return this.leftPlateSnapshot.getOccupiedCells( itemCreator );
@@ -40,6 +41,7 @@ define( function( require ) {
      * Gets the indices of occupied cells for the right plate.
      * @param {AbstractItemCreator} itemCreator
      * @returns {number[]}
+     * @public
      */
     getRightCells: function( itemCreator ) {
       return this.rightPlateSnapshot.getOccupiedCells( itemCreator );

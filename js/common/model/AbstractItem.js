@@ -63,6 +63,7 @@ define( function( require ) {
      * Two items are inverses if they are of the same type, and their weights sum to zero.
      * @param {AbstractItem} item
      * @returns {boolean}
+     * @public
      */
     isInverseOf: function( item ) {
       return ( this.constructor === item.constructor ) && ( this.weight + item.weight === 0 );

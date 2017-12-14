@@ -236,7 +236,6 @@ define( function( require ) {
           this.item.shadowVisibleProperty.value = false;
           this.item.haloVisibleProperty.value = true;
           this.inverseItem.haloVisibleProperty.value = true;
-
         }
       }
     },

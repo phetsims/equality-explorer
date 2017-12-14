@@ -107,6 +107,7 @@ define( function( require ) {
     /**
      * Updates time-dependent parts of the scene.
      * @param {number} dt - time since the previous step, in seconds
+     * @public
      */
     step: function( dt ) {
 
@@ -131,6 +132,7 @@ define( function( require ) {
     /**
      * Restores a snapshot of the scene.
      * @param {Snapshot} snapshot
+     * @public
      */
     restore: function( snapshot ) {
       assert && assert( snapshot instanceof Snapshot, 'oops, not a Snapshot' );
