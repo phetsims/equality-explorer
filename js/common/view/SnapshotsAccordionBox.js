@@ -168,13 +168,14 @@ define( function( require ) {
       }
     };
 
-    // register input listener with the Display only when needed
+    // Register input listener with the Display only when we have a selected snapshot.
+    // This technique was borrowed from circuit-construction-kit-common.CircuitElementNode
     scene.snapshots.selectedSnapshotProperty.link( function( selectedSnapshot, oldSelectedSnapshot ) {
-      if ( selectedSnapshot && !oldSelectedSnapshot ) {
-        phet.joist.sim.display.addInputListener( clickToDeselectListener );
-      }
-      else if ( !selectedSnapshot && phet.joist.sim.display.hasInputListener( clickToDeselectListener ) ) {
+      if ( oldSelectedSnapshot ) {
         phet.joist.sim.display.removeInputListener( clickToDeselectListener );
+      }
+      if ( selectedSnapshot ) {
+        phet.joist.sim.display.addInputListener( clickToDeselectListener );
       }
     } );
   }
