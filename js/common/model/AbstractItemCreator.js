@@ -200,11 +200,11 @@ define( function( require ) {
 
     /**
      * Gets an array of all items managed.
-     * @returns {Item[]}
+     * @returns {AbstractItem[]}
      * @public
      */
     getItems: function() {
-      return this.allItems.getArray().slice();
+      return this.allItems.getArray().slice(); // defensive copy
     },
 
     /**
@@ -244,11 +244,11 @@ define( function( require ) {
 
     /**
      * Gets the items that are on the scale.
-     * @returns {Item[]}
+     * @returns {AbstractItem[]}
      * @public
      */
     getItemsOnScale: function() {
-      return this.itemsOnScale.getArray().slice(); // defensive shallow copy
+      return this.itemsOnScale.getArray().slice(); // defensive copy
     },
 
     /**

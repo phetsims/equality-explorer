@@ -216,7 +216,7 @@ define( function( require ) {
 
         this.itemCreators.forEach( function( itemCreator ) {
 
-          var items = itemCreator.getItemsOnScale();
+          var items = itemCreator.getItemsOnScale(); // {AbstractItem[]}
 
           if ( items.length > 0 ) {
 
