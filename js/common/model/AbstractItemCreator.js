@@ -146,9 +146,9 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
-      this.allItems.forEach( function( item ) {
-        item.step( dt );
-      } );
+      for ( var i = 0; i < this.allItems.length; i++ ) {
+        this.allItems.get( i ).step( dt );
+      }
     },
 
     /**
