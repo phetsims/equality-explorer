@@ -160,18 +160,9 @@ define( function( require ) {
     AccordionBox.call( this, contentVBox, options );
 
     // Click outside this accordion box to clear the selected snapshot.
-    // This technique was borrowed from circuit-construction-kit-common.CircuitElementNode
     var clickToDeselectListener = {
       down: function( event ) {
-
-        var trails = event.target.getTrails( function( node ) {
-          return node === self;
-        } );
-        
-        console.log( 'clickToDeselectListener.down, trails.length=' + trails.length );//TODO delete this
-        ( trails.length > 0 ) && trails.forEach( function( trail ) { console.log( trail.toString() ); } ); //TODO delete this
-        
-        if ( trails.length === 0 ) {
+        if ( !self.parentToGlobalBounds( self.visibleBounds ).containsPoint( event.pointer.point ) ) {
           scene.snapshots.selectedSnapshotProperty.value = null;
         }
       }
