@@ -22,7 +22,7 @@ define( function( require ) {
   var lockOpenedImage = require( 'image!EQUALITY_EXPLORER/lockOpened.png' );
 
   /**
-   * @param {Property.<boolean>} lockedProperty
+   * @param {BooleanProperty} lockedProperty
    * @param {Object} [options]
    * @constructor
    */

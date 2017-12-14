@@ -27,7 +27,7 @@ define( function( require ) {
   var FONT_SIZE = 24;
 
   /**
-   * @param {Property.<boolean>} xVisibleProperty
+   * @param {BooleanProperty} xVisibleProperty
    * @param {Object} [options]
    * @constructor
    */

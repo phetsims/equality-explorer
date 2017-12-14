@@ -34,7 +34,7 @@ define( function( require ) {
 
     options = _.extend( {
       itemsPanelSpacing: 50, // spacing of items in the panels that appear below the scale
-      xVisibleProperty: null, // {Property.<boolean>|null} whether 'x' value is visible in snapshots
+      xVisibleProperty: null, // {BooleanProperty|null} whether 'x' value is visible in snapshots
       sceneProperty: null, // {Property.<Scene>|null} the selected Scene
       lockVisible: true,
       organizeButtonVisible: true
