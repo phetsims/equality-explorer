@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Creates and manages a collection of Snapshots.
+ * Manages a collection of Snapshots.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -22,13 +22,13 @@ define( function( require ) {
 
     var self = this;
 
-    // @public {Property.<Snapshot|null>[]} null means no snapshot
+    // @public {Property.<Snapshot|null>[]} a Property for each possible snapshot, null means no snapshot
     this.snapshotProperties = [];
     for ( var i = 0; i < EqualityExplorerConstants.NUMBER_OF_SNAPSHOTS; i++ ) {
       this.snapshotProperties.push( new Property( null ) );
     }
 
-    // @public {Property.<Snapshot|null>} null means no selection
+    // @public {Property.<Snapshot|null>} the selected snapshot, null means no selection
     this.selectedSnapshotProperty = new Property( null );
 
     // verify that the selected snapshot is in the collection, unlink not needed
