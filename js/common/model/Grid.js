@@ -222,6 +222,7 @@ define( function( require ) {
       var removedRow = this.indexToRow( index );
       var removedColumn = this.indexToColumn( index );
 
+      // start with the row above the removed item, and work up
       for ( var row = removedRow - 1; row >= 0; row-- ) {
 
         var currentIndex = this.rowColumnToIndex( row, removedColumn );
