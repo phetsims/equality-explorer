@@ -89,11 +89,10 @@ define( function( require ) {
         duration: 500, // fade out time, ms
         easing: TWEEN.Easing.Quintic.In, // most of opacity change happens at end of duration
         onStart: function() {
-          self.visible = true;
+          self.visible = true; // in case a client has set this Node invisible
         },
         onComplete: function() {
-          self.visible = false;
-          self.dispose();
+          self.dispose(); // removes this Node from the scenegraph
         }
       };
 
