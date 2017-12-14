@@ -167,8 +167,10 @@ define( function( require ) {
         var trails = event.target.getTrails( function( node ) {
           return node === self;
         } );
+        
         console.log( 'clickToDeselectListener.down, trails.length=' + trails.length );//TODO delete this
-
+        ( trails.length > 0 ) && trails.forEach( function( trail ) { console.log( trail.toString() ); } ); //TODO delete this
+        
         if ( trails.length === 0 ) {
           scene.snapshots.selectedSnapshotProperty.value = null;
         }
