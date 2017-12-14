@@ -57,9 +57,9 @@ define( function( require ) {
      * @override
      */
     reset: function() {
-      for ( var i = 0; i < this.sceneNodes.length; i++ ) {
-        this.sceneNodes[ i ].reset();
-      }
+      this.sceneNodes.forEach( function( sceneNode ) {
+        sceneNode.reset();
+      } );
       EqualityExplorerScreenView.prototype.reset.call( this );
     }
   } );
