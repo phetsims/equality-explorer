@@ -13,6 +13,8 @@ Solving screen:
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
 
+Clicking on items (on scale or in panels) doesn't deselect snapshot
+
 Locked mode, #19
 
 Solving screen - generalize other screens? different implementation?
