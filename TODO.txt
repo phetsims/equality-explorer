@@ -1,15 +1,5 @@
 TODO items for equality-explorer
 
-------------------------------------------------------------------------------------------------------------------------
-DESIGN QUESTIONS
-
-Solving screen:
-- is the organize button relevant? (it's shown in mockups) -- no organize button
-- is universal operator visible only when locked?  -- always there 
-
-------------------------------------------------------------------------------------------------------------------------
-IMPLEMENTATION
-
 Locked mode, #19
 
 Solving screen - generalize other screens? different implementation?
