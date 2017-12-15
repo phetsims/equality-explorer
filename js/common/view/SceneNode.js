@@ -17,7 +17,7 @@ define( function( require ) {
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemsPanel = require( 'EQUALITY_EXPLORER/common/view/ItemsPanel' );
-  // var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
+  var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
@@ -68,11 +68,11 @@ define( function( require ) {
       bottom: leftItemsPanel.bottom
     } );
 
-    // var lockControl = new LockControl( scene.lockedProperty, {
-    //   visible: options.lockVisible,
-    //   x: scale.location.x,
-    //   y: leftItemsPanel.centerY - 5 // offset determined empirically
-    // } );
+    var lockControl = new LockControl( scene.lockedProperty, {
+      visible: options.lockVisible,
+      x: scale.location.x,
+      y: leftItemsPanel.centerY - 5 // offset determined empirically
+    } );
 
     var equationAccordionBox = new EquationAccordionBox( leftItemCreators, rightItemCreators, {
       fixedWidth: rightItemsPanel.right - leftItemsPanel.left,
@@ -95,7 +95,7 @@ define( function( require ) {
     Node.call( this, {
       children: [
         scaleNode,
-        // lockControl,
+        lockControl,
         leftItemsPanel,
         rightItemsPanel,
         equationAccordionBox,
