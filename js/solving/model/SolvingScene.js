@@ -78,7 +78,7 @@ define( function( require ) {
 
   /**
    * Creates the item creators for this scene.
-   * @param {Property.<number>} xProperty
+   * @param {NumberProperty} xProperty
    * @returns {AbstractItemCreator[]}
    */
   function createItemCreators( xProperty ) {

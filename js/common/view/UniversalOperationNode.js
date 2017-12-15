@@ -32,9 +32,9 @@ define( function( require ) {
   ];
 
   /**
-   * @param {Property.<string>} operatorProperty
+   * @param {StringProperty} operatorProperty
    * @param {string[]} operators
-   * @param {Property.<number>} operandProperty
+   * @param {NumberProperty} operandProperty
    * @param {RangeWithValue} operandRange
    * @param {Object} [options]
    * @constructor
