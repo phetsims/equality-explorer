@@ -6,9 +6,6 @@ DESIGN QUESTIONS
 Solving screen:
 - is the organize button relevant? (it's shown in mockups)
 - is universal operator visible only when locked?
-- multi-touch: When you start dragging something on one plate, does the corresponding thing on the other plate become non-interactive?
-- multi-touch: What happens when universal operation is applied while an item is being dragged?
-- multi-touch: What happens when x value is changed while an x item is being dragged?
 
 ------------------------------------------------------------------------------------------------------------------------
 IMPLEMENTATION
