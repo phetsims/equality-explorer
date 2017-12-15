@@ -71,12 +71,6 @@ define( function( require ) {
       }
     ) );
 
-    // Enable and disable, unlink unnecessary
-    itemCreator.enabledProperty.link( function( enabled ) {
-      self.pickable = enabled;
-      self.opacity = ( enabled ? 1 : 0.5 );
-    } );
-
     // Things to do after the sim has loaded, when this Node has a valid location.
     var frameStartedCallback = function() {
 

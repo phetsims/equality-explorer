@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
@@ -66,10 +65,6 @@ define( function( require ) {
 
     // @public (read-only) so we don't need to expose itemsOnScale
     this.numberOfItemsOnScaleProperty = this.itemsOnScale.lengthProperty;
-
-    //TODO remove enabledProperty if we ultimately decide not to disable item creators
-    // @public is this creator enabled?
-    this.enabledProperty = new BooleanProperty( true );
 
     // @public emit2 is called when an item is created.
     // Callback signature is function( {AbstractItem} item, {Event} [event] )
