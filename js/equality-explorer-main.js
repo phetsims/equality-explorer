@@ -13,7 +13,7 @@ define( function( require ) {
   var NumbersScreen = require( 'EQUALITY_EXPLORER/numbers/NumbersScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
-  var SolvingScreen = require( 'EQUALITY_EXPLORER/solving/SolvingScreen' );
+  // var SolvingScreen = require( 'EQUALITY_EXPLORER/solving/SolvingScreen' );
   var VariablesScreen = require( 'EQUALITY_EXPLORER/variables/VariablesScreen' );
 
   // strings
@@ -36,8 +36,8 @@ define( function( require ) {
     var screens = [
       new BasicsScreen(),
       new NumbersScreen(),
-      new VariablesScreen(),
-      new SolvingScreen()
+      new VariablesScreen()
+      // new SolvingScreen()
     ];
 
     var sim = new Sim( equalityExplorerTitleString, screens, options );
