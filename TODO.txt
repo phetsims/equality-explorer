@@ -2,5 +2,9 @@ TODO items for equality-explorer
 
 Locked mode, #19
 
-Solving screen - generalize other screens? different implementation?
+Solving screen
+- generalize other screens, or different implementation?
+- fractional coefficients and constants
+- different representation of things on scale
+- universal operation animation
 
