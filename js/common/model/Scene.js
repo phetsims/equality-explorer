@@ -109,10 +109,10 @@ define( function( require ) {
      */
     step: function( dt ) {
 
+      // step all items
       this.leftItemCreators.forEach( function( itemCreator ) {
         itemCreator.step( dt );
       } );
-
       this.rightItemCreators.forEach( function( itemCreator ) {
         itemCreator.step( dt );
       } );
