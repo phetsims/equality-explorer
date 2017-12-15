@@ -251,6 +251,8 @@ define( function( require ) {
      * @public
      */
     disposeAllItems: function() {
+
+      // use a while loop because disposing of an item modifies this.allItems
       while ( this.allItems.length > 0 ) {
         this.allItems.get( 0 ).dispose(); // results in call to itemWasDisposed
       }
@@ -261,6 +263,8 @@ define( function( require ) {
      * @public
      */
     disposeItemsOnScale: function() {
+
+      // use a while loop because disposing of an item modifies this.itemsOnScale
       while ( this.itemsOnScale.length > 0 ) {
         this.itemsOnScale.get( 0 ).dispose(); // results in call to itemWasDisposed
       }
