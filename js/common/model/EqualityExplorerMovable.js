@@ -123,7 +123,7 @@ define( function( require ) {
       
       assert && assert( !this.disposed, 'attempt to step disposed moveable' );
 
-      var doStep = !this.disposed && !this.dragging &&
+      var doStep = !this.dragging &&
                    ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
 
       if ( doStep ) {
