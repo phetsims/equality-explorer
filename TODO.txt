@@ -1,6 +1,8 @@
 TODO items for equality-explorer
 
 Locked mode, #19
+- drag from panels
+- drag from scale
 
 Solving screen
 - generalize other screens, or different implementation?
