@@ -2,7 +2,7 @@
   "name": "equality-explorer",
   "version": "1.0.0-dev.49",
   "license": "GPL-3.0",
-  "repository": {                        k
+  "repository": {                        
     "type": "git",
     "url": "https://github.com/phetsims/equality-explorer.git"
   },
