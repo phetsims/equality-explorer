@@ -1,6 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO lots of duplication with SolvingSceneNode
+//TODO lots of duplication with VariablesSceneNode
 /**
  * A scene in the Solving screen.
  *
