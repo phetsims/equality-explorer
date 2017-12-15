@@ -21,10 +21,12 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LinearGradient = require( 'SCENERY/util/LinearGradient' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
+  var StringProperty = require( 'AXON/StringProperty' );
 
   // constants
   var BUTTON_STATES = [ 'up', 'down', 'over', 'out' ];
@@ -197,12 +199,17 @@ define( function( require ) {
     //------------------------------------------------------------
     // Properties
 
-    // {Property.<number>} index of the item that's currently selected
-    var indexProperty = new Property( indexOfItemWithValue( items, valueProperty.value ) );
+    // index of the item that's currently selected
+    var indexProperty = new NumberProperty( indexOfItemWithValue( items, valueProperty.value ), {
+      valueType: 'Integer',
+      isValidValue: function( value ) {
+        return ( value >= 0 && value < items.length );
+      }
+    } );
 
-    // {Property.<string>} state of the up and down button, see BUTTON_STATES
-    var upStateProperty = new Property( 'up' );
-    var downStateProperty = new Property( 'up' );
+    // state of the up and down button
+    var upStateProperty = new StringProperty( 'up', { validValues: BUTTON_STATES } );
+    var downStateProperty = new StringProperty( 'up', { validValues: BUTTON_STATES } );
 
     // {DerivedProperty.<boolean>} whether the up button is enabled
     var upEnabledProperty = new DerivedProperty( [ indexProperty ],
@@ -264,19 +271,16 @@ define( function( require ) {
 
     // unlink unnecessary
     indexProperty.link( function( index ) {
-       assert && assert( index >= 0 && index < items.length, 'index out of range: ' + index );
        valueProperty.value = items[ index ].value;
     } );
 
     // @private update colors for 'up' components, unmultilink unnecessary
     Property.multilink( [ upStateProperty, upEnabledProperty ], function( buttonState, enabled ) {
-      assert && assert( _.includes( BUTTON_STATES, buttonState ) );
       updateColors( buttonState, enabled, upBackground, upArrow, backgroundColors, arrowColors );
     } );
 
     // @private update colors for 'down' components, unmultilink unnecessary
     Property.multilink( [ downStateProperty, downEnabledProperty ], function( buttonState, enabled ) {
-      assert && assert( _.includes( BUTTON_STATES, buttonState ) );
       updateColors( buttonState, enabled, downBackground, downArrow, backgroundColors, arrowColors );
     } );
 
@@ -302,7 +306,7 @@ define( function( require ) {
   /**
    * Converts ButtonListener events to state changes.
    *
-   * @param {Property.<string>} stateProperty - see BUTTON_STATES
+   * @param {StringProperty} stateProperty - see BUTTON_STATES
    * @constructor
    */
   function ButtonStateListener( stateProperty ) {
@@ -346,7 +350,6 @@ define( function( require ) {
 
   // Update arrow and background colors
   var updateColors = function( buttonState, enabled, background, arrow, backgroundColors, arrowColors ) {
-    assert && assert( _.includes( BUTTON_STATES, buttonState ) );
     if ( enabled ) {
       arrow.stroke = 'black';
       if ( buttonState === 'up' ) {
