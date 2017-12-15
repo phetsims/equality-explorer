@@ -17,7 +17,3 @@ Locked mode, #19
 
 Solving screen - generalize other screens? different implementation?
 
-Reset All takes awhile to complete in "Basics" screen, even with nothing on scale (4 scenes)
-
-
-
