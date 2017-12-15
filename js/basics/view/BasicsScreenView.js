@@ -21,21 +21,23 @@ define( function( require ) {
    */
   function BasicsScreenView( model ) {
 
+    var self = this;
+
     EqualityExplorerScreenView.call( this, model );
 
     // @private create the view for each scene
     this.sceneNodes = [];
-    var sceneNode;
-    for ( var i = 0; i < model.scenes.length; i++ ) {
-      sceneNode = new SceneNode( model.scenes[ i ], this.layoutBounds, {
+    model.scenes.forEach( function( scene ) {
+      var sceneNode = new SceneNode( scene, self.layoutBounds, {
         sceneProperty: model.sceneProperty,
         lockVisible: false
       } );
-      this.sceneNodes.push( sceneNode );
-      this.addChild( sceneNode );
-    }
+      self.sceneNodes.push( sceneNode );
+      self.addChild( sceneNode );
+    } );
 
     // Get the bounds of the Snapshot accordion box, relative to this ScreenView
+    var sceneNode = this.sceneNodes[ 0 ];
     var globalBounds = sceneNode.snapshotsAccordionBox.parentToGlobalBounds( sceneNode.snapshotsAccordionBox.bounds );
     var localBounds = this.globalToLocalBounds( globalBounds );
 
