@@ -15,10 +15,9 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   /**
-   * @param {Object} [options]
    * @constructor
    */
-  function Snapshots( options ) {
+  function Snapshots() {
 
     // @public {Property.<Snapshot|null>[]} a Property for each possible snapshot, null means no snapshot
     this.snapshotProperties = [];
