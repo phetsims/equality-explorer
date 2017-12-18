@@ -15,16 +15,19 @@ define( function( require ) {
   var MysteryItem = require( 'EQUALITY_EXPLORER/common/model/MysteryItem' );
 
   /**
-   * @param {number} weight
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryItemCreator( weight, icon, iconShadow, options ) {
+  function MysteryItemCreator( icon, iconShadow, options ) {
+
+    options = _.extend( {
+      weight: 1  // weight of each item that is created
+    }, options );
 
     // @private
-    this._weight = weight;
+    this._weight = options.weight;
 
     AbstractItemCreator.call( this, icon, iconShadow, options );
   }

@@ -83,8 +83,14 @@ define( function( require ) {
    */
   function createItemCreators( xProperty ) {
 
-    var positiveXCreator = new XItemCreator( xProperty.value, 1, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE );
-    var negativeXCreator = new XItemCreator( -xProperty.value, -1, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE );
+    var positiveXCreator = new XItemCreator( ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      weight: xProperty.value
+    } );
+
+    var negativeXCreator = new XItemCreator( ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      weight: -positiveXCreator.weight,
+      multiplier: -positiveXCreator.multiplier
+    } );
 
     // unlink unnecessary
     xProperty.lazyLink( function( x ) {
@@ -95,8 +101,12 @@ define( function( require ) {
     return [
       positiveXCreator,
       negativeXCreator,
-      new ConstantItemCreator( 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE ),
-      new ConstantItemCreator( -1, ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE )
+      new ConstantItemCreator( ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+        weight: 1
+      } ),
+      new ConstantItemCreator( ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+        weight: -1
+      } )
     ];
   }
 

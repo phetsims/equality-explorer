@@ -17,26 +17,30 @@ define( function( require ) {
   var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
 
   /**
-   * @param {number} weight - initial weight
-   * @param {number} multiplier - determines the sign of 'x' (1 positive,-1 negative)
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function XItemCreator( weight, multiplier, icon, iconShadow, options ) {
+  function XItemCreator( icon, iconShadow, options ) {
 
-    assert && assert( multiplier === 1 || multiplier === -1, 'invalid multiplier: ' + multiplier );
-    
     var self = this;
 
+    options = _.extend( {
+      weight: 1,
+      multiplier: 1 // determines the sign of 'x' (1 positive, -1 negative)
+    }, options );
+
+    assert && assert( options.multiplier === 1 || options.multiplier === -1,
+      'invalid multiplier: ' + options.multiplier );
+
     // @public
-    this.weightProperty = new NumberProperty( weight, {
+    this.weightProperty = new NumberProperty( options.weight, {
       isValidValue: function( value ) { return Util.isInteger( value ); } // integer values
     } );
 
     // @public (read-only)
-    this.multiplier = multiplier;
+    this.multiplier = options.multiplier;
 
     AbstractItemCreator.call( this, icon, iconShadow, options );
 

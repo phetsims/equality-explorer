@@ -15,14 +15,13 @@ define( function( require ) {
   var MysteryItemCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryItemCreator' );
 
   /**
-   * @param {number} weight
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantItemCreator( weight, icon, iconShadow, options ) {
-    MysteryItemCreator.call( this, weight, icon, iconShadow, options );
+  function ConstantItemCreator( icon, iconShadow, options ) {
+    MysteryItemCreator.call( this, icon, iconShadow, options );
   }
 
   equalityExplorer.register( 'ConstantItemCreator', ConstantItemCreator );

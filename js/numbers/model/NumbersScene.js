@@ -37,10 +37,12 @@ define( function( require ) {
     assert && assert( initialNumberOfItemsOnScale.length === 2 );
     var index = 0;
     return [
-      new ConstantItemCreator( 1, ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      new ConstantItemCreator( ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+        weight: 1,
         initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } ),
-      new ConstantItemCreator( -1, ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      new ConstantItemCreator( ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+        weight: -1,
         initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } )
     ];

@@ -37,13 +37,16 @@ define( function( require ) {
     assert && assert( initialNumberOfItemsOnScale.length === 3 );
     var index = 0;
     return [
-      new MysteryItemCreator( 4, ItemIcons.APPLE_NODE, ItemIcons.APPLE_SHADOW_NODE, {
+      new MysteryItemCreator( ItemIcons.APPLE_NODE, ItemIcons.APPLE_SHADOW_NODE, {
+        weight: 4,
         initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( 5, ItemIcons.LEMON_NODE, ItemIcons.LEMON_SHADOW_NODE, {
+      new MysteryItemCreator( ItemIcons.LEMON_NODE, ItemIcons.LEMON_SHADOW_NODE, {
+        weight: 5,
         initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( 2, ItemIcons.ORANGE_NODE, ItemIcons.ORANGE_SHADOW_NODE, {
+      new MysteryItemCreator( ItemIcons.ORANGE_NODE, ItemIcons.ORANGE_SHADOW_NODE, {
+        weight: 2,
         initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
       } )
     ];
