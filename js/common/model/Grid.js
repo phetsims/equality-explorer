@@ -1,9 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A grid that contains items.
- * The grid is filled from the bottom up, so that there are no empty cells below an occupied cell.
- * Origin is at the bottom center.
+ * A grid that contains items. The grid is filled from the bottom up, so that there are no empty cells
+ * below an occupied cell. Origin is at the bottom center.
  *
  * A cell in the grid is identified by an integer index. The client doesn't need to know how to interpret
  * this index. It gets an index from the grid, and uses the index to refer to the cell.
