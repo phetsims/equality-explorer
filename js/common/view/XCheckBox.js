@@ -33,11 +33,12 @@ define( function( require ) {
    */
   function XCheckBox( xVisibleProperty, options ) {
 
+    // 'x' in math font
     var xNode = new Text( xString, {
       font: new MathSymbolFont( FONT_SIZE )
     } );
 
-    // i18n not required
+    // '= ?' in normal font, i18n not required
     var rightString = StringUtils.fillIn( ' {{equals}} {{questionMark}}', {
       equals: EqualityExplorerConstants.EQUALS,
       questionMark: questionMarkString
