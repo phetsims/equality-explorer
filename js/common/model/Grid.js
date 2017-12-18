@@ -52,7 +52,8 @@ define( function( require ) {
     this.cellWidth = options.cellWidth;
     this.cellHeight = options.cellHeight;
 
-    // @private items are stored in a 1-D array, in row-major order (left-to-right, top-to-bottom)
+    // @private The 2D grid is stored as a 1-D array, in row-major order (left-to-right, top-to-bottom).
+    // Each entry in this array is a cell in the grid.  Empty cells contain NO_ITEM.
     this.cells = [];
     for ( var index = 0; index < this.numberOfCells; index++ ) {
       this.cells[ index ] = NO_ITEM;
