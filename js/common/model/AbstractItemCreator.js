@@ -86,7 +86,7 @@ define( function( require ) {
      * its associated view element (ItemCreatorNode).  So initialization cannot be completed
      * until the sim has fully loaded. See frameStartedCallback in ItemCreatorNode.
      * @param {Vector2} location
-     * @private
+     * @public
      */
     initialize: function( location ) {
 
