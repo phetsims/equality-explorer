@@ -83,8 +83,9 @@ define( function( require ) {
       maxHeight: options.controlHeight,
       listener: function() {
         assert && assert( !snapshotProperty.value, 'snapshot is already occupied' );
-        snapshotProperty.value = scene.save();
-        selectedSnapshotProperty.value = null;
+        var snapshot = scene.save();
+        snapshotProperty.value = snapshot;
+        selectedSnapshotProperty.value = snapshot; // select the created snapshot
       }
     } );
 
