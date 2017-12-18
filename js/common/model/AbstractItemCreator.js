@@ -70,6 +70,10 @@ define( function( require ) {
     // Callback signature is function( {AbstractItem} item, {Event} [event] )
     this.itemCreatedEmitter = new Emitter();
 
+    // @public the equivalent item creator on the other side of the equation, needed for lock feature
+    // This must necessarily be initialized after instantiation.
+    this.equivalentItemCreator = null; // {AbstractItemCreator}
+
     // @private called when AbstractItem.dispose is called
     this.itemWasDisposedBound = this.itemWasDisposed.bind( this );
 
@@ -89,6 +93,8 @@ define( function( require ) {
      * @public
      */
     initialize: function( location ) {
+
+      assert && assert( this.equivalentItemCreator, 'equivalentItemCreator should have been initialized by now' );
 
       assert && assert( !this.isInitialized, 'initialize has already been called' );
       this.isInitialized = true;
