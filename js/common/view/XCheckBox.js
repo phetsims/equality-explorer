@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Check box used to show the value of the variable (x) in the Snapshots accordion box.
+ * Check box used to show/hide the value of the variable 'x' in the Snapshots accordion box.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
