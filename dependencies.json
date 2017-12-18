@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.0.0-dev.49 Fri Dec 15 2017 14:20:12 GMT-0700 (MST)",
+  "comment": "# equality-explorer 1.0.0-dev.50 Mon Dec 18 2017 14:17:07 GMT-0700 (MST)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
@@ -21,11 +21,11 @@
     "branch": "master"
   },
   "equality-explorer": {
-    "sha": "49f338eb75780a5d23eab14c4e97de410a85ab86",
+    "sha": "ce456d7b23c50d9ba3cda1035dac43674fcd66a0",
     "branch": "master"
   },
   "joist": {
-    "sha": "aa783b16499a420c041b7f77d62e9a1c99013a93",
+    "sha": "788ee0a83695d358863db6f0d2ba3d75721ca9a0",
     "branch": "master"
   },
   "kite": {
@@ -37,7 +37,7 @@
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "f0288123d92aefd4c04387fabbed3ebb8ebbfc0a",
+    "sha": "030bdbfd9c05755c9c6183d795b5ed8eb6caf523",
     "branch": "master"
   },
   "query-string-machine": {
@@ -45,11 +45,11 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "b1c4ce02df8642bc9e0513c7dc0fa4745c0e718d",
+    "sha": "7582a7dadc59e7ee3f30eed6af236cf6f7ce5d70",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "d6af03659dfaa37f3c8e1a51539996d542907be4",
+    "sha": "82205535f7e2be4a8789ccd5f579691248b307e5",
     "branch": "master"
   },
   "sherpa": {
@@ -61,7 +61,7 @@
     "branch": "master"
   },
   "tandem": {
-    "sha": "61585121c2066f49b60e16a0c30a9c09a6e45479",
+    "sha": "d582bd0a832eb1191d841a5d2612b346c8880b0f",
     "branch": "master"
   },
   "twixt": {
