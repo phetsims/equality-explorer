@@ -15,7 +15,7 @@ define( function( require ) {
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
-   * @param {string} debugName - internal name, not displayed to the user
+   * @param {string} debugName - internal name, not displayed to the user, no i18n required
    * @param {Node} icon - icon used to represent the scene
    * @param {AbstractItemCreator[]} leftItemCreators
    * @param {AbstractItemCreator[]} rightItemCreators
