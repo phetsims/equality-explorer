@@ -84,7 +84,7 @@ define( function( require ) {
       listener: function() {
         assert && assert( !snapshotProperty.value, 'snapshot is already occupied' );
         var snapshot = scene.save();
-        snapshotProperty.value = snapshot;
+        snapshotProperty.value = snapshot; // associate the snapshot with this control
         selectedSnapshotProperty.value = snapshot; // select the created snapshot
       }
     } );
