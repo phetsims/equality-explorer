@@ -349,8 +349,8 @@ define( function( require ) {
      * @public
      */
     rowColumnToIndex: function( row, column ) {
-      assert && assert( row >= 0 && row < this.rows, 'invalid row: ' + row );
-      assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
+      assert && assert( row >= 0 && row < this.rows, 'row out of range: ' + row );
+      assert && assert( column >= 0 && column < this.columns, 'column out of range: ' + column );
       return ( row * this.columns ) + column;
     }
   } );
