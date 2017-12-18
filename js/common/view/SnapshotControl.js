@@ -92,6 +92,8 @@ define( function( require ) {
     assert && assert( !options.children, 'this type sets its own children' );
     options.children = [ selectionRectangle, snapshotNode, snapshotButton ];
 
+    Node.call( this, options );
+
     // selects the snapshot associated with this control
     var upListener = new DownUpListener( {
       upInside: function( event, trail ) {
@@ -99,8 +101,6 @@ define( function( require ) {
         selectedSnapshotProperty.value = snapshotProperty.value;
       }
     } );
-
-    Node.call( this, options );
 
     // updates the layout of the snapshot, and centers it in the control
     var updateSnapshotLayout = function() {
