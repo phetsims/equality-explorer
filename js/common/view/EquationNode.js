@@ -183,7 +183,7 @@ define( function( require ) {
         if ( itemCreator.constructor === XItemCreator ) {
 
           // these items contribute to the coefficient for 'x'
-          xCoefficient += ( itemCreator.multiplier * numberOfItemsOnScale );
+          xCoefficient += ( itemCreator.sign * numberOfItemsOnScale );
         }
         else if ( itemCreator.constructor === ConstantItemCreator ) {
 

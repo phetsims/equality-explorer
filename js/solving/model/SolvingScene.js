@@ -89,7 +89,7 @@ define( function( require ) {
 
     var negativeXCreator = new XItemCreator( ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
       weight: -positiveXCreator.weight,
-      multiplier: -positiveXCreator.multiplier
+      sign: -positiveXCreator.sign
     } );
 
     // unlink unnecessary

@@ -28,11 +28,11 @@ define( function( require ) {
 
     options = _.extend( {
       weight: 1,
-      multiplier: 1 // determines the sign of 'x' (1 positive, -1 negative)
+      sign: 1 // determines the sign of 'x' (1 positive, -1 negative)
     }, options );
 
-    assert && assert( options.multiplier === 1 || options.multiplier === -1,
-      'invalid multiplier: ' + options.multiplier );
+    assert && assert( options.sign === 1 || options.sign === -1,
+      'invalid sign: ' + options.sign );
 
     // @public
     this.weightProperty = new NumberProperty( options.weight, {
@@ -40,7 +40,7 @@ define( function( require ) {
     } );
 
     // @public (read-only)
-    this.multiplier = options.multiplier;
+    this.sign = options.sign;
 
     AbstractItemCreator.call( this, icon, iconShadow, options );
 
@@ -65,7 +65,7 @@ define( function( require ) {
      * @override
      */
     createItemProtected: function( location ) {
-      return new XItem( this.weightProperty, this.multiplier, this.icon, this.iconShadow, {
+      return new XItem( this.weightProperty, this.sign, this.icon, this.iconShadow, {
         location: location,
         dragBounds: this.dragBounds
       } );

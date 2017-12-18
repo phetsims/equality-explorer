@@ -16,21 +16,21 @@ define( function( require ) {
 
   /**
    * @param {NumberProperty} weightProperty
-   * @param {number} multiplier - determines the sign of 'x' (1 positive, -1 negative)
+   * @param {number} sign - determines the sign of 'x' (1 positive, -1 negative)
    * @param {Node} icon
    * @param {Node} iconShadow
    * @param {Object} [options]
    * @constructor
    */
-  function XItem( weightProperty, multiplier, icon, iconShadow, options ) {
+  function XItem( weightProperty, sign, icon, iconShadow, options ) {
 
-    assert && assert( multiplier === 1 || multiplier === -1, 'invalid multiplier: ' + multiplier );
+    assert && assert( sign === 1 || sign === -1, 'invalid sign: ' + sign );
 
     // @public
     this.weightProperty = weightProperty;
 
     // @public (read-only) 
-    this.multiplier = multiplier;
+    this.sign = sign;
 
     // @public
     this.haloVisibleProperty = new BooleanProperty( false );
