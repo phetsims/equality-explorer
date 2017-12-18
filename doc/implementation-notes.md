@@ -25,8 +25,10 @@ relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are diffe
 * inverse item
 * locked
 * plate
-* organize
+* organize button
+* restore snapshot button
 * sum to zero
+* trash snapshot button
 * universal operation
 * zero pair
 
