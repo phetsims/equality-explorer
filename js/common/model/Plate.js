@@ -106,10 +106,7 @@ define( function( require ) {
      * @public
      */
     removeItem: function( item ) {
-      var cellIndex = this.grid.getCellForItem( item );
-      assert && assert( cellIndex !== -1, 'item not found: ' + item.toString() );
-      this.grid.clearCell( cellIndex );
-      this.grid.shiftDown( cellIndex );
+      this.grid.removeItem( item );
       this.contentsChangedEmitter.emit();
     },
 
@@ -151,16 +148,6 @@ define( function( require ) {
      */
     getLocationForCell: function( cellIndex ) {
       return this.grid.getLocationForCell( cellIndex );
-    },
-
-    /**
-     * Gets the index of the cell that corresponds to a location.
-     * @param {Vector2} location
-     * @returns {number} -1 if the location is outside the grid
-     * @public
-     */
-    getCellAtLocation: function( location ) {
-      return this.grid.getCellAtLocation( location );
     },
 
     /**

@@ -120,7 +120,7 @@ define( function( require ) {
      * Gets the index of the cell that corresponds to a location.
      * @param {Vector2} location
      * @returns {number} -1 if the location is outside the grid
-     * @public
+     * @private
      */
     getCellAtLocation: function( location ) {
       var index = -1;
@@ -140,6 +140,7 @@ define( function( require ) {
      * This needs to be fast, since it's called during a drag cycle.
      * @param {Vector2} location
      * @returns {boolean}
+     * @private
      */
     containsLocation: function( location ) {
       return this.bounds.containsPoint( location );
