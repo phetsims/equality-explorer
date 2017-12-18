@@ -194,8 +194,8 @@ define( function( require ) {
      */
     eventToLocation: function( event ) {
 
-      // touch: center icon above finger, so that most of icon is clearly visible
-      // mouse: move bottom center of icon to pointer location
+      // mouse & touch: Move bottom center of icon to pointer location.
+      // On touch devices, this ensures that most of icon is clearly visible above the pointer.
       var xOffset = 0;
       var yOffset = ( event.pointer.isTouch ) ? -( 1.5 * this.item.icon.height ) : -( 0.5 * this.item.icon.height );
       var location = this.itemNode.globalToParentPoint( event.pointer.point ).plusXY( xOffset, yOffset );
