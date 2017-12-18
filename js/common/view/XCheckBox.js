@@ -48,7 +48,7 @@ define( function( require ) {
     } );
 
     var contentNode = new HBox( {
-      children: [ xNode, rightNode ],
+      children: [ xNode, rightNode ], // x = ?
       maxWidth: 100
     } );
 

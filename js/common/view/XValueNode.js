@@ -31,15 +31,17 @@ define( function( require ) {
       fontSize: 28
     }, options );
 
+    // '(' with normal font
     var leftSideNode = new Text( '(', {
       font: new PhetFont( options.fontSize )
     } );
 
+    // 'x' in math font
     var xNode = new Text( xString, {
       font: new MathSymbolFont( options.fontSize )
     } );
 
-    // i18n not required
+    // ' = N' in normal font, i18n not required
     var rightSideString = StringUtils.fillIn( ' {{equals}} {{value}})', {
       equals: EqualityExplorerConstants.EQUALS,
       value: value
@@ -49,7 +51,7 @@ define( function( require ) {
     } );
 
     HBox.call( this, {
-      children: [ leftSideNode, xNode, rightSideNode ],
+      children: [ leftSideNode, xNode, rightSideNode ], // (x = N)
       spacing: 0
     } );
   }
