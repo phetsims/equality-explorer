@@ -28,11 +28,11 @@ define( function( require ) {
   // constants
   // y, -y and their shadow. These nodes are reused using scenery's DAG feature.
   var POSITIVE_Y_NODE = new VariableNode( yString, {
-    fill: 'magenta',
+    fill: 'rgb( 250, 100, 255 )',
     maxHeight: ItemIcons.ICON_HEIGHT
   } );
   var NEGATIVE_Y_NODE = new VariableNode( '-' + yString, {
-    fill: 'magenta',
+    fill: 'rgb( 240, 140, 255 )',
     lineDash: [ 4, 4 ],
     maxHeight: ItemIcons.ICON_HEIGHT
   } );
