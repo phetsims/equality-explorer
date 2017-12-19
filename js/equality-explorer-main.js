@@ -10,11 +10,13 @@ define( function( require ) {
 
   // modules
   var BasicsScreen = require( 'EQUALITY_EXPLORER/basics/BasicsScreen' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var NumbersScreen = require( 'EQUALITY_EXPLORER/numbers/NumbersScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
   var SolvingScreen = require( 'EQUALITY_EXPLORER/solving/SolvingScreen' );
   var VariablesScreen = require( 'EQUALITY_EXPLORER/variables/VariablesScreen' );
+  var XYScreen = require( 'EQUALITY_EXPLORER/xy/XYScreen' );
 
   // strings
   var equalityExplorerTitleString = require( 'string!EQUALITY_EXPLORER/equality-explorer.title' );
@@ -33,12 +35,18 @@ define( function( require ) {
 
   SimLauncher.launch( function() {
 
+    // production screens
     var screens = [
       new BasicsScreen(),
       new NumbersScreen(),
       new VariablesScreen(),
       new SolvingScreen()
     ];
+
+    // non-production screen for testing multi-variable support in equations
+    if ( EqualityExplorerQueryParameters.xy ) {
+      screens.push( new XYScreen() );
+    }
 
     var sim = new Sim( equalityExplorerTitleString, screens, options );
     sim.start();

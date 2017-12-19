@@ -51,6 +51,8 @@ define( function( require ) {
 
   var ItemIcons = {
 
+    ICON_HEIGHT: ICON_HEIGHT,
+
     // image-based icons and their shadows
     APPLE_NODE: new Image( appleImage, COMMON_OPTIONS ),
     APPLE_SHADOW_NODE: new Image( appleShadowImage, COMMON_OPTIONS ),

@@ -16,7 +16,7 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemDragHandler = require( 'EQUALITY_EXPLORER/common/view/ItemDragHandler' );
+  var ItemDragListener = require( 'EQUALITY_EXPLORER/common/view/ItemDragListener' );
   var Node = require( 'SCENERY/nodes/Node' );
 
   /**
@@ -100,7 +100,7 @@ define( function( require ) {
     item.locationProperty.link( locationObserver ); // unlink required
 
     // @public to be used only by ItemCreatorNode, for forwarding events. dispose required.
-    this.dragListener = new ItemDragHandler( this, item, itemCreator, plate, {
+    this.dragListener = new ItemDragListener( this, item, itemCreator, plate, {
       haloRadius: haloRadius
     } );
     this.addInputListener( this.dragListener ); // removeListener required

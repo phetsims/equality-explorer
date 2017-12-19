@@ -33,6 +33,9 @@ define( function( require ) {
     // Shows the drag bounds for items, rendered as a red rectangle.
     showDragBounds: { type: 'flag' },
 
+    // Add the 'x & y' screen, for testing multi-variable support in equations and 'sum to zero' feature.
+    xy: { type: 'flag' },
+
     // Number of items that are initially on the left plate in the Basics screen.
     // This is intended to be used for debugging and testing, not in production situations.
     // See https://github.com/phetsims/equality-explorer/issues/8

@@ -1,7 +1,10 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * The 'Variables' screen.
+ * The 'x & y' screen.
+ * This is a non-production screen, used to test multi-variable support.
+ * The view for this screen is identical to the 'Variables' screen, but the model contains 2 variables (x & y).
+ * See EqualityExplorerQueryParameters.xy for details.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -13,17 +16,17 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
-  var VariablesModel = require( 'EQUALITY_EXPLORER/variables/model/VariablesModel' );
+  var XYModel = require( 'EQUALITY_EXPLORER/xy/model/XYModel' );
   var VariablesScreenView = require( 'EQUALITY_EXPLORER/variables/view/VariablesScreenView' );
 
   // strings
-  var screenVariablesString = require( 'string!EQUALITY_EXPLORER/screen.variables' );
+  var screenVariablesString = 'x & y'; // i18n not required, this is a test string
 
   /**
    * @param {Object} [options]
    * @constructor
    */
-  function VariablesScreen( options ) {
+  function XYScreen( options ) {
 
     options = _.extend( {
       name: screenVariablesString,
@@ -31,13 +34,13 @@ define( function( require ) {
     }, options );
 
     Screen.call( this,
-      function() { return new VariablesModel(); },
+      function() { return new XYModel(); },
       function( model ) { return new VariablesScreenView( model ); },
       options
     );
   }
 
-  equalityExplorer.register( 'VariablesScreen', VariablesScreen );
+  equalityExplorer.register( 'XYScreen', XYScreen );
 
-  return inherit( Screen, VariablesScreen );
+  return inherit( Screen, XYScreen );
 } );

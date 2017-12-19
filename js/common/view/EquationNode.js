@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Displays an equation or inequality with at most 1 variable.
+ * Displays an equation or inequality.
+ * Designed to support multiple variables, but has only been tested extensively with 1 variable.
  * Origin is at the center of the relational operator.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -21,9 +22,6 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
-
-  // strings
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
    * @param {AbstractItemCreator[]} leftItemCreators - left side of equation, terms appear in this order
@@ -170,7 +168,7 @@ define( function( require ) {
   function createSideNode( itemCreators, variableFont, font, iconScale, coefficientSpacing, plusSpacing ) {
 
     var constantValue = 0;
-    var xCoefficient = 0;
+    var coefficients = {}; // map from variable symbol to coefficient value, e.g. { x: 5 }
 
     var children = [];
     for ( var i = 0; i < itemCreators.length; i++ ) {
@@ -180,13 +178,16 @@ define( function( require ) {
       var numberOfItemsOnScale = itemCreator.numberOfItemsOnScaleProperty.value;
       if ( numberOfItemsOnScale > 0 ) {
 
-        //TODO support multiple variables
-        if ( itemCreator.constructor === VariableItemCreator ) {
+        if ( itemCreator instanceof VariableItemCreator ) {
 
-          // these items contribute to the coefficient for 'x'
-          xCoefficient += ( itemCreator.sign * numberOfItemsOnScale );
+          // these items contribute to the coefficient for their associated variable
+          if ( !coefficients.hasOwnProperty( itemCreator.symbol ) ) {
+            coefficients[ itemCreator.symbol ] = 0;
+          }
+
+          coefficients[ itemCreator.symbol ] += ( itemCreator.sign * numberOfItemsOnScale );
         }
-        else if ( itemCreator.constructor === ConstantItemCreator ) {
+        else if ( itemCreator instanceof ConstantItemCreator ) {
 
           // these items contribute their weight to the constant term
           constantValue += ( itemCreator.weight * numberOfItemsOnScale );
@@ -202,25 +203,50 @@ define( function( require ) {
       }
     }
 
-    if ( xCoefficient !== 0 ) {
-      assert && assert( children.length === 0, 'equation with a variable should have no terms so far' );
-      var xIcon = new Text( xString, { font: variableFont } );
-      children.push( createTermNode( xCoefficient, xIcon, 1, font, coefficientSpacing, true ) );
+    // Create a term for each variable that has a non-zero coefficient.
+    for ( var property in coefficients ) {
+      if ( coefficients.hasOwnProperty( property ) ) {
+
+        var coefficient = coefficients[ property ];
+
+        if ( coefficient !== 0 ) {
+          var variableNode = new Text( property, { font: variableFont } );
+
+          if ( children.length > 0 ) {
+
+            // if there were previous terms, replace the coefficient's sign with an operator
+            var operator = ( coefficient > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
+            children.push( new Text( operator, { font: font } ) );
+            children.push( createTermNode( Math.abs( coefficient ), variableNode, 1, font, coefficientSpacing, true ) );
+          }
+          else {
+
+            // if there were no variable terms, keep the constant's sign
+            children.push( createTermNode( coefficient, variableNode, 1, font, coefficientSpacing, true ) );
+          }
+        }
+      }
     }
 
+    // put the non-zero constant term last
     if ( constantValue !== 0 ) {
 
       // put the constant term last
       if ( children.length > 0 ) {
-        var operator = ( constantValue > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
+
+        // if there were previous terms, replace the constant's sign with an operator
+        operator = ( constantValue > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
         children.push( new Text( operator, { font: font } ) );
         children.push( createConstantNode( Math.abs( constantValue ), font ) );
       }
       else {
+
+        // if there were no previous terms, keep the constant's sign
         children.push( createConstantNode( constantValue, font ) );
       }
     }
 
+    // if there were no terms, then this side of the equation evaluated to zero
     if ( children.length === 0 ) {
       children.push( new Text( '0', { font: font } ) );
     }
