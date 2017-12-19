@@ -33,7 +33,7 @@ define( function( require ) {
     // Shows the drag bounds for items, rendered as a red rectangle.
     showDragBounds: { type: 'flag' },
 
-    // Add the 'x & y' screen, for testing multi-variable support in equations.
+    // Add the 'x & y' screen, for testing multi-variable support in equations and 'sum to zero' feature.
     xy: { type: 'flag' },
 
     // Number of items that are initially on the left plate in the Basics screen.
