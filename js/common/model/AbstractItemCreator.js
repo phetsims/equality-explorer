@@ -19,8 +19,8 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {Node} icon
-   * @param {Node} shadow
+   * @param {Node} icon - the icon used to represent the item
+   * @param {Node} shadow - the shadow displayed behind the icon when the item is being dragged
    * @param {Object} [options]
    * @constructor
    */

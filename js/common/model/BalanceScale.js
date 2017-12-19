@@ -21,8 +21,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {AbstractItemCreator[]} leftItemCreators
-   * @param {AbstractItemCreator[]} rightItemCreators
+   * @param {AbstractItemCreator[]} leftItemCreators - creators for items on left plate
+   * @param {AbstractItemCreator[]} rightItemCreators - creators for item on right plate
    * @param {Object} [options]
    * @constructor
    */

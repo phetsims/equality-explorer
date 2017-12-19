@@ -20,7 +20,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {AbstractItemCreator[]} itemCreators
+   * @param {AbstractItemCreator[]} itemCreators - creators associated with item on this plate
    * @param {Object} [options]
    * @constructor
    */
