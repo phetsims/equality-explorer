@@ -17,7 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
-  var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
+  var VariableItem = require( 'EQUALITY_EXPLORER/common/model/VariableItem' );
 
   /**
    * @param {Node} itemNode - Node that the listener is attached to
@@ -211,7 +211,7 @@ define( function( require ) {
      */
     refreshHalos: function() {
 
-      if ( this.item.dragging && ( this.item.constructor === ConstantItem || this.item.constructor === XItem ) ) {
+      if ( this.item.dragging && ( this.item.constructor === ConstantItem || this.item.constructor === VariableItem ) ) {
 
         var previousInverseItem = this.inverseItem;
         this.inverseItem = null;
@@ -255,6 +255,7 @@ define( function( require ) {
       var cellIndex = this.plate.getCellForItem( this.inverseItem );
 
       // some things we need before the items are deleted
+      var symbol = this.item.symbol;
       var parent = this.itemNode.getParent();
       var itemConstructor = this.item.constructor;
 
@@ -267,7 +268,7 @@ define( function( require ) {
       var sumToZeroLocation = this.plate.getLocationForCell( cellIndex );
 
       // show '0' or '0x' in yellow halo, fade out
-      var sumToZeroNode = new SumToZeroNode( itemConstructor, {
+      var sumToZeroNode = new SumToZeroNode( itemConstructor, symbol, {
         haloRadius: this.haloRadius,
         center: sumToZeroLocation
       } );

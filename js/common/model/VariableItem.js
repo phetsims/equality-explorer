@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * XItem is an item associated with the variable 'x' and can be summed with other XItems.
+ * VariableItem is an item associated with the variable 'x' and can be summed with other VariableItems.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -15,6 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
+   * @param {string} symbol
    * @param {NumberProperty} weightProperty
    * @param {number} sign - determines the sign of 'x' (1 positive, -1 negative)
    * @param {Node} icon
@@ -22,25 +23,28 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function XItem( weightProperty, sign, icon, shadow, options ) {
+  function VariableItem( symbol, weightProperty, sign, icon, shadow, options ) {
 
     assert && assert( sign === 1 || sign === -1, 'invalid sign: ' + sign );
-
+    
     // @public
+    this.symbol = symbol;
+
+    // @public dynamic weight, since 'x' is a variable
     this.weightProperty = weightProperty;
 
-    // @public (read-only) 
+    // @public (read-only) the sign of 'x' (1 positive, -1 negative)  
     this.sign = sign;
 
-    // @public
+    // @public whether the item's halo is visible
     this.haloVisibleProperty = new BooleanProperty( false );
 
     AbstractItem.call( this, icon, shadow, options );
   }
 
-  equalityExplorer.register( 'XItem', XItem );
+  equalityExplorer.register( 'VariableItem', VariableItem );
 
-  return inherit( AbstractItem, XItem, {
+  return inherit( AbstractItem, VariableItem, {
 
     /**
      * Gets the item's weight.

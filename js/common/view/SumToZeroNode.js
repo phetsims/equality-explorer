@@ -21,19 +21,17 @@ define( function( require ) {
   var OpacityTo = require( 'TWIXT/OpacityTo' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
-
-  // strings
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+  var VariableItem = require( 'EQUALITY_EXPLORER/common/model/VariableItem' );
 
   /**
    * @param {constructor} itemConstructor - constructor that identifies the type of item that has disappeared
+   * @param {string|null} symbol - the symbol for a variable
    * @param {Object} [options]
    * @constructor
    */
-  function SumToZeroNode( itemConstructor, options ) {
+  function SumToZeroNode( itemConstructor, symbol, options ) {
 
-    assert && assert( itemConstructor === ConstantItem || itemConstructor === XItem,
+    assert && assert( itemConstructor === ConstantItem || itemConstructor === VariableItem,
       'unsupported item type' );
 
     options = _.extend( {
@@ -54,7 +52,8 @@ define( function( require ) {
     else {
 
       // x and -x sum to '0x'
-      var xNode = new Text( xString, {
+      assert && assert( symbol, 'expected a symbol' );
+      var xNode = new Text( symbol, {
         font: new MathSymbolFont( options.fontSize )
       } );
       symbolNode = new HBox( {

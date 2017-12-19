@@ -20,7 +20,10 @@ define( function( require ) {
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var StringProperty = require( 'AXON/StringProperty' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
-  var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
+  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
+
+  // string
+  var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
    * @constructor
@@ -70,11 +73,11 @@ define( function( require ) {
    */
   function createItemCreators( xProperty ) {
 
-    var positiveXCreator = new XItemCreator( ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var positiveXCreator = new VariableItemCreator( xString, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
       weight: xProperty.value
     } );
 
-    var negativeXCreator = new XItemCreator( ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var negativeXCreator = new VariableItemCreator( xString, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
       weight: -positiveXCreator.weight,
       sign: -positiveXCreator.sign
     } );

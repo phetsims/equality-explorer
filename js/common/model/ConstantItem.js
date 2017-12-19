@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * ConstantItem is a marker type, it includes no new functionality.
+ * ConstantItem represents a constant value, and can 'sum to zero' with an inverse ConstantItem.
  * Like MysteryItems, it has a constant weight.
  * Unlike MysteryWeight, it's weight is revealed to the user, and it contributes to the constant term in equations.
  *
@@ -25,7 +25,7 @@ define( function( require ) {
    */
   function ConstantItem( weight, icon, shadow, options ) {
 
-    // @public
+    // @public whether the item's halo is visible
     this.haloVisibleProperty = new BooleanProperty( false );
 
     MysteryItem.call( this, weight, icon, shadow, options );

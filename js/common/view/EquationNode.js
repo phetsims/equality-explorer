@@ -20,7 +20,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
+  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
 
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -180,7 +180,8 @@ define( function( require ) {
       var numberOfItemsOnScale = itemCreator.numberOfItemsOnScaleProperty.value;
       if ( numberOfItemsOnScale > 0 ) {
 
-        if ( itemCreator.constructor === XItemCreator ) {
+        //TODO support multiple variables
+        if ( itemCreator.constructor === VariableItemCreator ) {
 
           // these items contribute to the coefficient for 'x'
           xCoefficient += ( itemCreator.sign * numberOfItemsOnScale );
