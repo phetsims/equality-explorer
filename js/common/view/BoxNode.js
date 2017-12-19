@@ -17,6 +17,7 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   /**
+   * @param {Object} [options]
    * @constructor
    */
   function BoxNode( options ) {

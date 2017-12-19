@@ -20,9 +20,9 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
 
   /**
-   * @param {AbstractItem} item
-   * @param {AbstractItemCreator} itemCreator
-   * @param {Plate} plate
+   * @param {AbstractItem} item - associated model element
+   * @param {AbstractItemCreator} itemCreator - the creator of item
+   * @param {Plate} plate - the plate that item is associated with
    * @param {Object} [options]
    * @constructor
    */

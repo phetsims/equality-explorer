@@ -16,7 +16,7 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
 
   /**
-   * @param {NumbersModel} model
+   * @param {Object} model - any Object that has a reset function
    * @constructor
    */
   function EqualityExplorerScreenView( model ) {

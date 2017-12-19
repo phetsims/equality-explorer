@@ -29,7 +29,7 @@ define( function( require ) {
     this.sceneNodes = [];
     model.scenes.forEach( function( scene ) {
       var sceneNode = new SceneNode( scene, self.layoutBounds, {
-        sceneProperty: model.sceneProperty,
+        selectedSceneProperty: model.selectedSceneProperty,
         lockVisible: false
       } );
       self.sceneNodes.push( sceneNode );
@@ -42,7 +42,7 @@ define( function( require ) {
     var localBounds = this.globalToLocalBounds( globalBounds );
 
     // Center the scene control in the space below the Snapshots accordion box  
-    var sceneControl = new SceneControl( model.scenes, model.sceneProperty, {
+    var sceneControl = new SceneControl( model.scenes, model.selectedSceneProperty, {
       centerX: localBounds.centerX,
       centerY: localBounds.bottom + ( this.resetAllButton.top - localBounds.bottom ) / 2
     } );

@@ -24,7 +24,7 @@ define( function( require ) {
   var SUPPORT_STROKE = 'black';
 
   /**
-   * @param {Plate} plate
+   * @param {Plate} plate - associated model element
    * @param {Object} [options]
    * @constructor
    */

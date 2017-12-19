@@ -21,9 +21,9 @@ define( function( require ) {
 
   /**
    * @param {Node} itemNode - Node that the listener is attached to
-   * @param {AbstractItem} item
-   * @param {AbstractItemCreator} itemCreator
-   * @param {Plate} plate
+   * @param {AbstractItem} item - the item being dragged
+   * @param {AbstractItemCreator} itemCreator - the creator of item
+   * @param {Plate} plate - the plate on the scale that the item is associated with
    * @param {Object} [options]
    * @constructor
    */

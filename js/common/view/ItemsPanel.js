@@ -22,9 +22,9 @@ define( function( require ) {
   var CONTENT_SIZE = new Dimension2( 250, 50 );
 
   /**
-   * @param {AbstractItemCreator[]} itemCreators
-   * @param {Plate} plate
-   * @param {Node} itemsLayer
+   * @param {AbstractItemCreator[]} itemCreators - creators for items, appear in this order left-to-right
+   * @param {Plate} plate - associated plate on the scale
+   * @param {Node} itemsLayer - parent for ItemNodes that will be created
    * @param {Object} [options]
    * @constructor
    */

@@ -16,9 +16,9 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
-   * @param {AbstractItemCreator} itemCreator
-   * @param {Plate} plate
-   * @param {Node} itemsLayer
+   * @param {AbstractItemCreator} itemCreator - model element associated with this Node
+   * @param {Plate} plate - associated plate on the scale
+   * @param {Node} itemsLayer - parent for ItemNodes that will be created
    * @param {Object} [options]
    * @constructor
    */

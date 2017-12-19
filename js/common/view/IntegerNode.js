@@ -19,7 +19,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {number} value
+   * @param {number} value - integer value displayed on the Node
    * @param {Object} {options}
    * @constructor
    */

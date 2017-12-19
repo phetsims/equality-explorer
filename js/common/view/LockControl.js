@@ -2,6 +2,7 @@
 
 /**
  * Padlock used to lock/unlock the 2 sides of the scale.
+ * When locked, every action on one side is balanced by an equivalent action on the opposite side.
  * Origin is at the center of the 'closed' padlock image. Use x,y options for layout.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -22,7 +23,7 @@ define( function( require ) {
   var lockOpenedImage = require( 'image!EQUALITY_EXPLORER/lockOpened.png' );
 
   /**
-   * @param {BooleanProperty} lockedProperty
+   * @param {BooleanProperty} lockedProperty - indicates whether left and right sides are "locked"
    * @param {Object} [options]
    * @constructor
    */

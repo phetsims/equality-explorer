@@ -35,7 +35,7 @@ define( function( require ) {
     options = _.extend( {
       itemsPanelSpacing: 50, // spacing of items in the panels that appear below the scale
       xVisibleProperty: null, // {BooleanProperty|null} whether 'x' value is visible in snapshots
-      sceneProperty: null, // {Property.<Scene>|null} the selected Scene
+      selectedSceneProperty: null, // {Property.<Scene>|null} the selected Scene
       lockVisible: true,
       organizeButtonVisible: true
     }, options );
@@ -109,8 +109,8 @@ define( function( require ) {
     } );
 
     // Make this scene visible when it's selected, unlink unnecessary
-    if ( options.sceneProperty ) {
-      options.sceneProperty.link( function( newScene ) {
+    if ( options.selectedSceneProperty ) {
+      options.selectedSceneProperty.link( function( newScene ) {
         self.visible = ( newScene === scene );
       } );
     }

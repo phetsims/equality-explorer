@@ -15,12 +15,12 @@ define( function( require ) {
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
 
   /**
-   * @param {Scene[]} scenes
-   * @param {Property.<Scene>} sceneProperty
+   * @param {Scene[]} scenes - the scene choices
+   * @param {Property.<Scene>} selectedSceneProperty - the scene that is currently selected
    * @param {Object} [options]
    * @constructor
    */
-  function SceneControl( scenes, sceneProperty, options ) {
+  function SceneControl( scenes, selectedSceneProperty, options ) {
 
     options = _.extend( {
 
@@ -42,7 +42,7 @@ define( function( require ) {
       } );
     } );
 
-    RadioButtonGroup.call( this, sceneProperty, contentArray, options );
+    RadioButtonGroup.call( this, selectedSceneProperty, contentArray, options );
   }
 
   equalityExplorer.register( 'SceneControl', SceneControl );

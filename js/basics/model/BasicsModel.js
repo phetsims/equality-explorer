@@ -33,10 +33,10 @@ define( function( require ) {
     ];
 
     // @public the selected scene
-    this.sceneProperty = new Property( this.scenes[ 0 ] );
+    this.selectedSceneProperty = new Property( this.scenes[ 0 ] );
 
     // validate scene, unlink unnecessary
-    this.sceneProperty.link( function( scene ) {
+    this.selectedSceneProperty.link( function( scene ) {
       assert && assert( _.includes( self.scenes, scene ), 'invalid scene' );
     } );
   }
@@ -53,7 +53,7 @@ define( function( require ) {
       this.scenes.forEach( function( scene ) {
         scene.reset();
       } );
-      this.sceneProperty.reset();
+      this.selectedSceneProperty.reset();
     },
 
     /**
@@ -64,7 +64,7 @@ define( function( require ) {
     step: function( dt ) {
 
       // step the selected scene
-      this.sceneProperty.value.step( dt );
+      this.selectedSceneProperty.value.step( dt );
     }
   } );
 } );

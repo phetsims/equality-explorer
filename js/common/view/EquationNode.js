@@ -26,8 +26,8 @@ define( function( require ) {
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
-   * @param {AbstractItemCreator[]} leftItemCreators
-   * @param {AbstractItemCreator[]} rightItemCreators
+   * @param {AbstractItemCreator[]} leftItemCreators - left side of equation, terms appear in this order
+   * @param {AbstractItemCreator[]} rightItemCreators - right side of equation, terms appear in this order
    * @param {Object} [options]
    * @constructor
    */
