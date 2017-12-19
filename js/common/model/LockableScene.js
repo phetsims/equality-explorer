@@ -3,7 +3,7 @@
 /**
  * Base type for a "lockable" scene.
  * A lockable scene is one in which the left and right sides can be locked together,
- * so that an action on one side is balanced by an equivalent action on the other side.
+ * so that an action on one side is balanced by an equivalent action on the opposite side.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -35,7 +35,7 @@ define( function( require ) {
     assert && assert( leftItemCreators.length === rightItemCreators.length,
       'must have same number of item creators on left and right' );
 
-    // Associate each item creator with its equivalent item creator on the other side of the equation.
+    // Associate each item creator with its equivalent item creator on the opposite side of the equation.
     for ( i = 0; i < leftItemCreators.length; i++ ) {
       assert && assert( leftItemCreators[ i ].isEquivalentTo( rightItemCreators[ i ] ),
         'equivalent item creators must have the same indices on both sides' );
@@ -43,7 +43,7 @@ define( function( require ) {
       rightItemCreators[ i ].equivalentItemCreator = leftItemCreators[ i ];
     }
 
-    // Associate each item creator with its inverse creator on the other side of the equation.
+    // Associate each item creator with its inverse creator on the opposite side of the equation.
     assert && assert( leftItemCreators.length % 2 === 0,
       'scene must have an even number of item creators per side' );
     for ( i = 0; i < leftItemCreators.length; i = i + 2 ) {
