@@ -70,9 +70,13 @@ define( function( require ) {
     // Callback signature is function( {AbstractItem} item, {Event} [event] )
     this.itemCreatedEmitter = new Emitter();
 
-    // @public the equivalent item creator on the other side of the equation, needed for lock feature
-    // This must necessarily be initialized after instantiation.
+    // @public optional equivalent item creator on the other side of the equation, needed for lock feature
+    // For example, -x and -x are equivalent.
     this.equivalentItemCreator = null; // {AbstractItemCreator}
+
+    // @public optional inverse item creator on the other side of the equation, needed for lock feature.
+    // For example, x and -x are inverses.
+    this.inverseItemCreator = null; // {AbstractItemCreator}
 
     // @private called when AbstractItem.dispose is called
     this.itemWasDisposedBound = this.itemWasDisposed.bind( this );
@@ -93,8 +97,6 @@ define( function( require ) {
      * @public
      */
     initialize: function( location ) {
-
-      assert && assert( this.equivalentItemCreator, 'equivalentItemCreator should have been initialized by now' );
 
       assert && assert( !this.isInitialized, 'initialize has already been called' );
       this.isInitialized = true;
@@ -287,6 +289,28 @@ define( function( require ) {
         this.removeItemFromScale( item );
       }
       this.allItems.remove( item );
+    },
+
+    /**
+     * Is this item creator equivalent to a specified item creator?
+     * Two item creators are equivalent if they have identical types, and their weights are the same.
+     * @param {AbstractItemCreator} itemCreator
+     * @returns {boolean}
+     * @public
+     */
+    isEquivalentTo: function( itemCreator ) {
+      return ( this.constructor === itemCreator.constructor ) && ( this.weight === itemCreator.weight );
+    },
+
+    /**
+     * Is this item creator the inverse of a specified item creator?
+     * Two item creators are inverses if they have identical types, and their weights sum to zero.
+     * @param {AbstractItemCreator} itemCreator
+     * @returns {boolean}
+     * @public
+     */
+    isInverseOf: function( itemCreator ) {
+      return ( this.constructor === itemCreator.constructor ) && ( this.weight + itemCreator.weight === 0 );
     }
   } );
 } );

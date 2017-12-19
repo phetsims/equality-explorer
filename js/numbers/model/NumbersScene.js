@@ -14,13 +14,13 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
-  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
+  var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
 
   /**
    * @constructor
    */
   function NumbersScene() {
-    Scene.call( this, 'numbers',
+    LockableScene.call( this, 'numbers',
       createItemCreators( EqualityExplorerQueryParameters.leftNumbers ),
       createItemCreators( EqualityExplorerQueryParameters.rightNumbers )
     );
@@ -48,5 +48,5 @@ define( function( require ) {
     ];
   }
 
-  return inherit( Scene, NumbersScene );
+  return inherit( LockableScene, NumbersScene );
 } );

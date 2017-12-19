@@ -68,12 +68,6 @@ define( function( require ) {
       bottom: leftItemsPanel.bottom
     } );
 
-    var lockControl = new LockControl( scene.lockedProperty, {
-      visible: options.lockVisible,
-      x: scale.location.x,
-      y: leftItemsPanel.centerY - 5 // offset determined empirically
-    } );
-
     var equationAccordionBox = new EquationAccordionBox( leftItemCreators, rightItemCreators, {
       fixedWidth: rightItemsPanel.right - leftItemsPanel.left,
       expandedProperty: this.equationAccordionBoxExpandedProperty,
@@ -92,16 +86,26 @@ define( function( require ) {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
+    var children = [
+      scaleNode,
+      leftItemsPanel,
+      rightItemsPanel,
+      equationAccordionBox,
+      snapshotsAccordionBox,
+      itemsLayer // on top, so that items are in front of everything else
+    ];
+
+    if ( scene.lockedProperty ) {
+      var lockControl = new LockControl( scene.lockedProperty, {
+        visible: options.lockVisible,
+        x: scale.location.x,
+        y: leftItemsPanel.centerY - 5 // offset determined empirically
+      } );
+      children.unshift( lockControl ); // add to beginning
+    }
+
     Node.call( this, {
-      children: [
-        scaleNode,
-        lockControl,
-        leftItemsPanel,
-        rightItemsPanel,
-        equationAccordionBox,
-        snapshotsAccordionBox,
-        itemsLayer // on top, so that items are in front of everything else
-      ]
+      children: children
     } );
 
     // Make this scene visible when it's selected, unlink unnecessary

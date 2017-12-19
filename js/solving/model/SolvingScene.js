@@ -15,9 +15,9 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
+  var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
-  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var StringProperty = require( 'AXON/StringProperty' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
@@ -71,7 +71,7 @@ define( function( require ) {
       assert && assert( self.operandRange.contains( operand ), 'operand out of range: ' + operand );
     } );
 
-    Scene.call( this, 'solving', createItemCreators( this.xProperty ), createItemCreators( this.xProperty ) );
+    LockableScene.call( this, 'solving', createItemCreators( this.xProperty ), createItemCreators( this.xProperty ) );
   }
 
   equalityExplorer.register( 'SolvingScene', SolvingScene );
@@ -110,7 +110,7 @@ define( function( require ) {
     ];
   }
 
-  return inherit( Scene, SolvingScene, {
+  return inherit( LockableScene, SolvingScene, {
 
     /**
      * @public
@@ -120,7 +120,7 @@ define( function( require ) {
       this.xProperty.reset();
       this.operatorProperty.reset();
       this.operandProperty.reset();
-      Scene.prototype.reset.call( this );
+      LockableScene.prototype.reset.call( this );
     },
 
     /**

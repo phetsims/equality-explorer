@@ -30,10 +30,6 @@ define( function( require ) {
     options.icon = new Node( { children: [ icon ] } ); // wrap the icon, since we're using scenery's DAG feature
 
     Scene.call( this, debugName, leftItemCreators, rightItemCreators, options );
-
-    this.lockedProperty.link( function( locked ) {
-      assert && assert( !locked, 'locking is not supported in the Basics screen' );
-    } );
   }
 
   equalityExplorer.register( 'BasicsScene', BasicsScene );

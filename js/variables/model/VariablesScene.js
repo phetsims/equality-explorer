@@ -15,8 +15,8 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
+  var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var XItemCreator = require( 'EQUALITY_EXPLORER/common/model/XItemCreator' );
 
@@ -38,7 +38,7 @@ define( function( require ) {
       assert && assert( self.xRange.contains( x ), 'x out of range: ' + x );
     } );
 
-    Scene.call( this, 'variables',
+    LockableScene.call( this, 'variables',
       createItemCreators( this.xProperty, EqualityExplorerQueryParameters.leftVariables ),
       createItemCreators( this.xProperty, EqualityExplorerQueryParameters.rightVariables )
     );
@@ -87,7 +87,7 @@ define( function( require ) {
     ];
   }
 
-  return inherit( Scene, VariablesScene, {
+  return inherit( LockableScene, VariablesScene, {
 
     /**
      * @public
@@ -95,7 +95,7 @@ define( function( require ) {
      */
     reset: function() {
       this.xProperty.reset();
-      Scene.prototype.reset.call( this );
+      LockableScene.prototype.reset.call( this );
     },
 
     /**
