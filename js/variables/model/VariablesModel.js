@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerModel = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerModel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var VariablesScene = require( 'EQUALITY_EXPLORER/variables/model/VariablesScene' );
 
@@ -17,23 +18,10 @@ define( function( require ) {
    * @constructor
    */
   function VariablesModel() {
-
-    // @public (read-only)
-    this.scene = new VariablesScene();
+    EqualityExplorerModel.call( this, [ new VariablesScene() ] );
   }
 
   equalityExplorer.register( 'VariablesModel', VariablesModel );
 
-  return inherit( Object, VariablesModel, {
-
-    // @public
-    reset: function() {
-      this.scene.reset();
-    },
-
-    // @public
-    step: function( dt ) {
-      this.scene.step( dt );
-    }
-  } );
+  return inherit( EqualityExplorerModel, VariablesModel );
 } );

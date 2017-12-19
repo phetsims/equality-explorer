@@ -1,6 +1,5 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO lots of duplication with VariablesModel
 /**
  * Model for the 'Solving' screen.
  *
@@ -11,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerModel = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerModel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SolvingScene = require( 'EQUALITY_EXPLORER/solving/model/SolvingScene' );
 
@@ -18,23 +18,10 @@ define( function( require ) {
    * @constructor
    */
   function SolvingModel() {
-
-    // @public (read-only)
-    this.scene = new SolvingScene();
+    EqualityExplorerModel.call( this, [ new SolvingScene() ] );
   }
 
   equalityExplorer.register( 'SolvingModel', SolvingModel );
 
-  return inherit( Object, SolvingModel, {
-
-    // @public
-    reset: function() {
-      this.scene.reset();
-    },
-
-    // @public
-    step: function( dt ) {
-      this.scene.step( dt );
-    }
-  } );
+  return inherit( EqualityExplorerModel, SolvingModel );
 } );

@@ -12,32 +12,16 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerScreenView = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
 
   /**
    * @param {NumbersModel} model
    * @constructor
    */
   function NumbersScreenView( model ) {
-
     EqualityExplorerScreenView.call( this, model );
-
-    // @private
-    this.sceneNode = new SceneNode( model.scene, new Property( model.scene ), this.layoutBounds );
-    this.addChild( this.sceneNode );
   }
 
   equalityExplorer.register( 'NumbersScreenView', NumbersScreenView );
 
-  return inherit( EqualityExplorerScreenView, NumbersScreenView, {
-
-    /**
-     * Resets things that are specific to the view.
-     * @public
-     */
-    reset: function() {
-      this.sceneNode.reset();
-    }
-  } );
+  return inherit( EqualityExplorerScreenView, NumbersScreenView );
 } );
