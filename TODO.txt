@@ -1,5 +1,7 @@
 TODO items for equality-explorer
 
+"Multiple Variables" screen for testing multiple variables in equations
+
 Locked mode, #19
 - drag from panel
 - drag from scale
