@@ -20,11 +20,11 @@ define( function( require ) {
 
   /**
    * @param {Node} icon
-   * @param {Node} iconShadow
+   * @param {Node} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function AbstractItemCreator( icon, iconShadow, options ) {
+  function AbstractItemCreator( icon, shadow, options ) {
 
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
@@ -36,7 +36,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.icon = icon;
-    this.iconShadow = iconShadow;
+    this.shadow = shadow;
 
     // @public {Property.<Vector2>} (read-only)
     // Location is dependent on the view and is unknowable until the sim has loaded.

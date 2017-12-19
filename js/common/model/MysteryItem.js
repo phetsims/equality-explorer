@@ -18,16 +18,16 @@ define( function( require ) {
   /**
    * @param {number} weight
    * @param {Node} icon
-   * @param {Node} iconShadow
+   * @param {Node} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryItem( weight, icon, iconShadow, options ) {
+  function MysteryItem( weight, icon, shadow, options ) {
 
     // @private
     this._weight = weight;
 
-    AbstractItem.call( this, icon, iconShadow, options );
+    AbstractItem.call( this, icon, shadow, options );
   }
 
   equalityExplorer.register( 'MysteryItem', MysteryItem );

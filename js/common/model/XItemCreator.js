@@ -17,11 +17,11 @@ define( function( require ) {
 
   /**
    * @param {Node} icon
-   * @param {Node} iconShadow
+   * @param {Node} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function XItemCreator( icon, iconShadow, options ) {
+  function XItemCreator( icon, shadow, options ) {
 
     var self = this;
 
@@ -41,7 +41,7 @@ define( function( require ) {
     // @public (read-only)
     this.sign = options.sign;
 
-    AbstractItemCreator.call( this, icon, iconShadow, options );
+    AbstractItemCreator.call( this, icon, shadow, options );
 
     // Update the weight of all XItems. unlink unnecessary
     this.weightProperty.link( function( weight ) {
@@ -64,7 +64,7 @@ define( function( require ) {
      * @override
      */
     createItemProtected: function( location ) {
-      return new XItem( this.weightProperty, this.sign, this.icon, this.iconShadow, {
+      return new XItem( this.weightProperty, this.sign, this.icon, this.shadow, {
         location: location,
         dragBounds: this.dragBounds
       } );

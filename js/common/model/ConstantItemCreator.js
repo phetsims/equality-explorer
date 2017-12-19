@@ -16,12 +16,12 @@ define( function( require ) {
 
   /**
    * @param {Node} icon
-   * @param {Node} iconShadow
+   * @param {Node} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantItemCreator( icon, iconShadow, options ) {
-    MysteryItemCreator.call( this, icon, iconShadow, options );
+  function ConstantItemCreator( icon, shadow, options ) {
+    MysteryItemCreator.call( this, icon, shadow, options );
   }
 
   equalityExplorer.register( 'ConstantItemCreator', ConstantItemCreator );
@@ -36,7 +36,7 @@ define( function( require ) {
      * @override
      */
     createItemProtected: function( location ) {
-      return new ConstantItem( this._weight, this.icon, this.iconShadow, {
+      return new ConstantItem( this._weight, this.icon, this.shadow, {
         location: location,
         dragBounds: this.dragBounds
       } );

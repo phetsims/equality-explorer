@@ -18,11 +18,11 @@ define( function( require ) {
    * @param {NumberProperty} weightProperty
    * @param {number} sign - determines the sign of 'x' (1 positive, -1 negative)
    * @param {Node} icon
-   * @param {Node} iconShadow
+   * @param {Node} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function XItem( weightProperty, sign, icon, iconShadow, options ) {
+  function XItem( weightProperty, sign, icon, shadow, options ) {
 
     assert && assert( sign === 1 || sign === -1, 'invalid sign: ' + sign );
 
@@ -35,7 +35,7 @@ define( function( require ) {
     // @public
     this.haloVisibleProperty = new BooleanProperty( false );
 
-    AbstractItem.call( this, icon, iconShadow, options );
+    AbstractItem.call( this, icon, shadow, options );
   }
 
   equalityExplorer.register( 'XItem', XItem );

@@ -16,11 +16,11 @@ define( function( require ) {
 
   /**
    * @param {Node} icon
-   * @param {Node} iconShadow
+   * @param {Node} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryItemCreator( icon, iconShadow, options ) {
+  function MysteryItemCreator( icon, shadow, options ) {
 
     options = _.extend( {
       weight: 1  // weight of each item that is created
@@ -29,7 +29,7 @@ define( function( require ) {
     // @private
     this._weight = options.weight;
 
-    AbstractItemCreator.call( this, icon, iconShadow, options );
+    AbstractItemCreator.call( this, icon, shadow, options );
   }
 
   equalityExplorer.register( 'MysteryItemCreator', MysteryItemCreator );
@@ -44,7 +44,7 @@ define( function( require ) {
      * @override
      */
     createItemProtected: function( location ) {
-      return new MysteryItem( this._weight, this.icon, this.iconShadow, {
+      return new MysteryItem( this._weight, this.icon, this.shadow, {
         location: location,
         dragBounds: this.dragBounds
       } );

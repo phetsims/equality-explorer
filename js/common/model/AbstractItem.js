@@ -17,15 +17,15 @@ define( function( require ) {
 
   /**
    * @param {Node} icon
-   * @param {Node} iconShadow
+   * @param {Node} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function AbstractItem( icon, iconShadow, options ) {
+  function AbstractItem( icon, shadow, options ) {
 
     // @public (read-only)
     this.icon = icon;
-    this.iconShadow = iconShadow;
+    this.shadow = shadow;
     this.disposedEmitter = new Emitter(); // emit1 when dispose has completed
 
     // @public

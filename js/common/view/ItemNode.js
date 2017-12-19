@@ -51,7 +51,7 @@ define( function( require ) {
 
     // shadow, offset from the icon
     var shadowNode = new Node( {
-      children: [ item.iconShadow ], // wrap the shadow since we're using scenery DAG feature and need to offset it
+      children: [ item.shadow ], // wrap the shadow since we're using scenery DAG feature and need to offset it
       opacity: 0.4,
       right: iconNode.right + options.shadowOffset.width,
       bottom: iconNode.bottom + options.shadowOffset.height,

@@ -19,16 +19,16 @@ define( function( require ) {
   /**
    * @param {number} weight
    * @param {Node} icon
-   * @param {Node} iconShadow
+   * @param {Node} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantItem( weight, icon, iconShadow, options ) {
+  function ConstantItem( weight, icon, shadow, options ) {
 
     // @public
     this.haloVisibleProperty = new BooleanProperty( false );
 
-    MysteryItem.call( this, weight, icon, iconShadow, options );
+    MysteryItem.call( this, weight, icon, shadow, options );
   }
 
   equalityExplorer.register( 'ConstantItem', ConstantItem );
