@@ -178,7 +178,7 @@ define( function( require ) {
       var numberOfItemsOnScale = itemCreator.numberOfItemsOnScaleProperty.value;
       if ( numberOfItemsOnScale > 0 ) {
 
-        if ( itemCreator.constructor === VariableItemCreator ) {
+        if ( itemCreator instanceof VariableItemCreator ) {
 
           // these items contribute to the coefficient for their associated variable
           if ( !coefficients.hasOwnProperty( itemCreator.symbol ) ) {
@@ -187,7 +187,7 @@ define( function( require ) {
 
           coefficients[ itemCreator.symbol ] += ( itemCreator.sign * numberOfItemsOnScale );
         }
-        else if ( itemCreator.constructor === ConstantItemCreator ) {
+        else if ( itemCreator instanceof ConstantItemCreator ) {
 
           // these items contribute their weight to the constant term
           constantValue += ( itemCreator.weight * numberOfItemsOnScale );
