@@ -20,11 +20,12 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var SnapshotControl = require( 'EQUALITY_EXPLORER/common/view/SnapshotControl' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VariableCheckBox = require( 'EQUALITY_EXPLORER/common/view/VariableCheckBox' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var XCheckBox = require( 'EQUALITY_EXPLORER/common/view/XCheckBox' );
 
   // strings
   var snapshotsString = require( 'string!EQUALITY_EXPLORER/snapshots' );
+  var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
   var SEPARATOR_OPTIONS = {
@@ -137,7 +138,7 @@ define( function( require ) {
 
     // Check box for making 'x' visible
     if ( options.xVisibleProperty ) {
-      var xCheckBox = new XCheckBox( options.xVisibleProperty, {
+      var xCheckBox = new VariableCheckBox( xString, options.xVisibleProperty, {
         touchAreaXDilation: 5,
         touchAreaYDilation: 5
       } );
