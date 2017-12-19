@@ -16,8 +16,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
-   * @param {Node} icon
-   * @param {Node} shadow
+   * @param {Node} icon - the icon used to represent the item
+   * @param {Node} shadow - the shadow displayed behind the icon when the item is being dragged
    * @param {Object} [options]
    * @constructor
    */
