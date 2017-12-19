@@ -16,11 +16,11 @@ define( function( require ) {
 
   /**
    * @param {Scene[]} scenes - the scene choices
-   * @param {Property.<Scene>} selectedSceneProperty - the scene that is currently selected
+   * @param {Property.<Scene>} sceneProperty - the scene that is currently selected
    * @param {Object} [options]
    * @constructor
    */
-  function SceneControl( scenes, selectedSceneProperty, options ) {
+  function SceneControl( scenes, sceneProperty, options ) {
 
     options = _.extend( {
 
@@ -42,7 +42,7 @@ define( function( require ) {
       } );
     } );
 
-    RadioButtonGroup.call( this, selectedSceneProperty, contentArray, options );
+    RadioButtonGroup.call( this, sceneProperty, contentArray, options );
   }
 
   equalityExplorer.register( 'SceneControl', SceneControl );

@@ -1,6 +1,6 @@
 TODO items for equality-explorer
 
-Factor out EqualityExplorerModel with {Scene[]} scenes and {Property.<Scene>} selectedSceneProperty
+Factor out EqualityExplorerModel with {Scene[]} scenes and {Property.<Scene>} sceneProperty
 
 Locked mode, #19
 - drag from panel
