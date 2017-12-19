@@ -99,7 +99,7 @@ define( function( require ) {
     };
     item.locationProperty.link( locationObserver ); // unlink required
 
-    // @public to be used only by ItemCreatorNode, for forwarding events. dispose required.
+    // @private removeListener and dispose required
     this.dragListener = new ItemDragListener( this, item, itemCreator, plate, {
       haloRadius: haloRadius
     } );
@@ -116,6 +116,17 @@ define( function( require ) {
   equalityExplorer.register( 'ItemNode', ItemNode );
 
   return inherit( Node, ItemNode, {
+
+    /**
+     * Starts a drag cycle.
+     * The user drags a new item out of a panel below the scale by clicking on an ItemCreatorNode.
+     * That action causes ItemCreatorNode to instantiate an ItemNode.  This function allows
+     * ItemCreatorNode to forward the startDrag event to the ItemNode that it created.
+     * @param {Event} event
+     */
+    startDrag: function( event ) {
+      this.dragListener.startDrag( event );
+    },
 
     /**
      * @public

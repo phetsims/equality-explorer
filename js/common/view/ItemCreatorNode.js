@@ -54,9 +54,9 @@ define( function( require ) {
         itemNode.dispose();
       } );
 
-      // If the item was created via user interaction, start a drag cycle by propagating the event to itemNode.
+      // If the item was created via user interaction, start a drag cycle by forwarding the event to itemNode.
       if ( event ) {
-        itemNode.dragListener.startDrag( event );
+        itemNode.startDrag( event );
       }
     } );
 
