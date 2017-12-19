@@ -18,8 +18,8 @@ define( function( require ) {
   var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
-  var StringProperty = require( 'AXON/StringProperty' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
+  var StringProperty = require( 'AXON/StringProperty' );
   var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
 
   // string
