@@ -95,6 +95,8 @@ define( function( require ) {
       itemsLayer // on top, so that items are in front of everything else
     ];
 
+    // Some scenes support locking the left and right sides of the equation,
+    // such that an action on one side results in an equivalent action on the opposite side.
     if ( scene.lockedProperty ) {
       var lockControl = new LockControl( scene.lockedProperty, {
         visible: options.lockVisible,
