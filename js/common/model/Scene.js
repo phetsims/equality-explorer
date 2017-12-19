@@ -56,18 +56,6 @@ define( function( require ) {
     // @public (read-only) {AbstractItemCreator[]} creators for items on right side of scale
     this.rightItemCreators = rightItemCreators;
 
-    // Associate each item creator with its equivalent item creator on the other side of the equation.
-    // This association is needed for the lock feature, where an action on one side results in an
-    // equivalent action on the other side.
-    assert && assert( leftItemCreators.length === rightItemCreators.length,
-      'must have same number of item creators on left and right' );
-    for ( var i = 0; i < leftItemCreators.length; i++ ) {
-      assert && assert( leftItemCreators[ i ].constructor === rightItemCreators[ i ].constructor,
-        'must have the same type of item creators on left and right' );
-      leftItemCreators[ i ].equivalentItemCreator = rightItemCreators[ i ];
-      rightItemCreators[ i ].equivalentItemCreator = leftItemCreators[ i ];
-    }
-
     // @public (read-only)
     this.scale = new BalanceScale( this.leftItemCreators, this.rightItemCreators, {
       location: new Vector2( 355, 420 ),
