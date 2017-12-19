@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var BalanceScale = require( 'EQUALITY_EXPLORER/common/model/BalanceScale' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -76,9 +75,6 @@ define( function( require ) {
       itemCreator.dragBounds = self.rightDragBounds;
     } );
 
-    // @public whether the 2 sides of the equation are locked
-    this.lockedProperty = new BooleanProperty( false );
-
     // @public collection of snapshots, for saving/restoring the state of a Scene
     this.snapshots = new Snapshots();
   }
@@ -98,7 +94,6 @@ define( function( require ) {
         itemCreator.disposeAllItems();
       } );
 
-      this.lockedProperty.reset();
       this.snapshots.reset();
     },
 
