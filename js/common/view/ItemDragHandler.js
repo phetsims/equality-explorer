@@ -211,7 +211,7 @@ define( function( require ) {
      */
     refreshHalos: function() {
 
-      if ( this.item.dragging && ( this.item.constructor === ConstantItem || this.item.constructor === VariableItem ) ) {
+      if ( this.item.dragging && this.item.haloVisibleProperty ) {
 
         var previousInverseItem = this.inverseItem;
         this.inverseItem = null;
