@@ -19,6 +19,8 @@ define( function( require ) {
    */
   function Snapshots() {
 
+    var self = this;
+
     // @public {Property.<Snapshot|null>[]} a Property for each possible snapshot, null means no snapshot
     this.snapshotProperties = [];
     for ( var i = 0; i < EqualityExplorerConstants.NUMBER_OF_SNAPSHOTS; i++ ) {
@@ -26,7 +28,14 @@ define( function( require ) {
     }
 
     // @public {Property.<Snapshot|null>} the selected snapshot, null means no selection
-    this.selectedSnapshotProperty = new Property( null );
+    this.selectedSnapshotProperty = new Property( null, {
+      isValidValue: function( snapshot ) {
+        return ( snapshot === null ) ||
+               _.some( self.snapshotProperties, function( snapshotProperty ) {
+                 return snapshotProperty.value === snapshot;
+               } );
+      }
+    } );
   }
 
   equalityExplorer.register( 'Snapshots', Snapshots );

@@ -13,7 +13,6 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var Util = require( 'DOT/Util' );
   var XItem = require( 'EQUALITY_EXPLORER/common/model/XItem' );
 
   /**
@@ -36,9 +35,7 @@ define( function( require ) {
 
     // @public
     this.weightProperty = new NumberProperty( options.weight, {
-      isValidValue: function( value ) {
-        return Util.isInteger( value );
-      }
+      valueType: 'Integer'
     } );
 
     // @public (read-only)
