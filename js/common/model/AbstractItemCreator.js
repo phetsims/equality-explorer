@@ -71,11 +71,13 @@ define( function( require ) {
     this.itemCreatedEmitter = new Emitter();
 
     // @public optional equivalent item creator on the opposite side of the scale, needed for lock feature
-    // For example, -x and -x are equivalent.
+    // Example: When locked, if I drag -x out of the left panel, -x needs to also drag out of the right panel.
     this.equivalentItemCreator = null; // {AbstractItemCreator}
 
     // @public optional inverse item creator on the opposite side of the scale, needed for lock feature.
-    // For example, x and -x are inverses.
+    // Example: When locked, if I remove x from the left plate, and the right plate is empty, then x needs
+    // to be created and dragged on the right side (by equivalentItemCreator) and -x needs to be created on
+    // the right plate (by inverseItemCreator).
     this.inverseItemCreator = null; // {AbstractItemCreator}
 
     // @private called when AbstractItem.dispose is called
