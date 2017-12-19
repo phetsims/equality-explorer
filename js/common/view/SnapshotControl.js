@@ -21,7 +21,7 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
-  var XValueNode = require( 'EQUALITY_EXPLORER/common/view/XValueNode' );
+  var VariableValueNode = require( 'EQUALITY_EXPLORER/common/view/VariableValueNode' );
 
   // constants
   var SELECTED_STROKE = 'rgb( 85, 169, 223 )'; // stroke for selection rectangle
@@ -31,6 +31,9 @@ define( function( require ) {
   var FONT_SIZE = EqualityExplorerConstants.SNAPSHOTS_ACCORDING_BOX_FONT_SIZE;
   var SELECTION_RECTANGLE_X_MARGIN = 20;
   var SELECTION_RECTANGLE_Y_MARGIN = 5;
+
+  // strings
+  var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
    * @param {Scene} scene - the scene that we'll be taking a snapshot of
@@ -132,7 +135,7 @@ define( function( require ) {
         // optionally show the value of 'x'
         if ( options.xVisibleProperty ) {
           assert && assert( snapshot instanceof SnapshotWithVariable, 'expected a snapshot with variable support' );
-          xValueNode = new XValueNode( snapshot.x, { fontSize: FONT_SIZE } );
+          xValueNode = new VariableValueNode( xString, snapshot.x, { fontSize: FONT_SIZE } );
         }
 
         // add listener that selects the snapshot

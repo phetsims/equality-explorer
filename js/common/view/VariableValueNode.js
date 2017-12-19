@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Displays "(x = {{value}})", e.g. "(x = 2)".  Used in Snapshots.
+ * Displays "({{symbol}} = {{value}})", e.g. "(x = 2)".  Used in Snapshots.
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
@@ -17,15 +18,13 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  // strings
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
-
   /**
-   * @param {number} value - the value of variable 'x'
+   * @param {string} symbol - variable symbol, e.g. 'x'
+   * @param {number} value - the value of variable
    * @param {Object} [options]
    * @constructor
    */
-  function XValueNode( value, options ) {
+  function VariableValueNode( symbol, value, options ) {
 
     options = _.extend( {
       fontSize: 28
@@ -36,8 +35,8 @@ define( function( require ) {
       font: new PhetFont( options.fontSize )
     } );
 
-    // 'x' in math font
-    var xNode = new Text( xString, {
+    // the symbol, in math font
+    var symbolNode = new Text( symbol, {
       font: new MathSymbolFont( options.fontSize )
     } );
 
@@ -51,12 +50,12 @@ define( function( require ) {
     } );
 
     HBox.call( this, {
-      children: [ leftSideNode, xNode, rightSideNode ], // (x = N)
+      children: [ leftSideNode, symbolNode, rightSideNode ], // (x = N)
       spacing: 0
     } );
   }
 
-  equalityExplorer.register( 'XValueNode', XValueNode );
+  equalityExplorer.register( 'VariableValueNode', VariableValueNode );
 
-  return inherit( HBox, XValueNode );
+  return inherit( HBox, VariableValueNode );
 } );
