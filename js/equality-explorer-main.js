@@ -35,6 +35,7 @@ define( function( require ) {
 
   SimLauncher.launch( function() {
 
+    // production screens
     var screens = [
       new BasicsScreen(),
       new NumbersScreen(),
@@ -42,6 +43,7 @@ define( function( require ) {
       new SolvingScreen()
     ];
 
+    // non-production screen for testing multi-variable support in equations
     if ( EqualityExplorerQueryParameters.xy ) {
       screens.push( new XYScreen() );
     }
