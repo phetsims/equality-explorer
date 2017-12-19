@@ -25,17 +25,13 @@ define( function( require ) {
    */
   function VariablesScene() {
 
-    var self = this;
-
     // @public (read-only) range of variable 'x'
     this.xRange = EqualityExplorerConstants.X_RANGE;
 
     // @public (read-only) the value of the variable 'x'
-    this.xProperty = new NumberProperty( this.xRange.defaultValue );
-
-    // validate xProperty, unlink unnecessary
-    this.xProperty.link( function( x ) {
-      assert && assert( self.xRange.contains( x ), 'x out of range: ' + x );
+    this.xProperty = new NumberProperty( this.xRange.defaultValue, {
+      range: this.xRange,
+      valueType: 'Integer'
     } );
 
     LockableScene.call( this, 'variables',

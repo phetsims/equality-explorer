@@ -36,7 +36,9 @@ define( function( require ) {
 
     // @public
     this.weightProperty = new NumberProperty( options.weight, {
-      isValidValue: function( value ) { return Util.isInteger( value ); } // integer values
+      isValidValue: function( value ) {
+        return Util.isInteger( value );
+      }
     } );
 
     // @public (read-only)

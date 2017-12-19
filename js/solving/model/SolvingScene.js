@@ -27,17 +27,13 @@ define( function( require ) {
    */
   function SolvingScene() {
 
-    var self = this;
-
     // @public (read-only) range of variable 'x'
     this.xRange = EqualityExplorerConstants.X_RANGE;
 
     // @public (read-only) the value of the variable 'x'
-    this.xProperty = new NumberProperty( this.xRange.defaultValue );
-
-    // validate xProperty, unlink unnecessary
-    this.xProperty.link( function( x ) {
-      assert && assert( self.xRange.contains( x ), 'x out of range: ' + x );
+    this.xProperty = new NumberProperty( this.xRange.defaultValue, {
+      range: this.xRange,
+      valueType: 'Integer'
     } );
 
     // @public (read-only) set of operators for universal operation
@@ -53,22 +49,13 @@ define( function( require ) {
       validValues: this.operators
     } );
 
-    // validate operator, unlink unnecessary
-    this.operatorProperty.link( function( operator ) {
-      assert && assert( _.includes( self.operators, operator ), 'invalid operator: ' + operator );
-    } );
-
     // @public (read-only) range for universal operand
     this.operandRange = new RangeWithValue( -10, 10, 1 );
 
     // @public (read-only) universal operand
     this.operandProperty = new NumberProperty( this.operandRange.defaultValue, {
-      range: this.operandRange
-    } );
-
-    // validate operand, unlink unnecessary
-    this.operandProperty.link( function( operand ) {
-      assert && assert( self.operandRange.contains( operand ), 'operand out of range: ' + operand );
+      range: this.operandRange,
+      valueType: 'Integer'
     } );
 
     LockableScene.call( this, 'solving', createItemCreators( this.xProperty ), createItemCreators( this.xProperty ) );
