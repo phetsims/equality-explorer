@@ -70,11 +70,11 @@ define( function( require ) {
     // Callback signature is function( {AbstractItem} item, {Event} [event] )
     this.itemCreatedEmitter = new Emitter();
 
-    // @public optional equivalent item creator on the opposite side of the equation, needed for lock feature
+    // @public optional equivalent item creator on the opposite side of the scale, needed for lock feature
     // For example, -x and -x are equivalent.
     this.equivalentItemCreator = null; // {AbstractItemCreator}
 
-    // @public optional inverse item creator on the opposite side of the equation, needed for lock feature.
+    // @public optional inverse item creator on the opposite side of the scale, needed for lock feature.
     // For example, x and -x are inverses.
     this.inverseItemCreator = null; // {AbstractItemCreator}
 
