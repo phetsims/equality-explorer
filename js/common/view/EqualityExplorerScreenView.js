@@ -28,8 +28,8 @@ define( function( require ) {
     // @public (read-only) for layout only
     this.resetAllButton = new ResetAllButton( {
       listener: function() {
-        model.reset();
-        self.reset();
+        model.reset && model.reset(); // reset model
+        self.reset && self.reset(); // reset view
       },
       right: this.layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN

@@ -33,9 +33,9 @@ define( function( require ) {
   var SELECTION_RECTANGLE_Y_MARGIN = 5;
 
   /**
-   * @param {Scene} scene
-   * @param {Property.<Snapshot|null>} snapshotProperty - null if there is no snapshot
-   * @param {Property.<Snapshot|null>} selectedSnapshotProperty
+   * @param {Scene} scene - the scene that we'll be taking a snapshot of
+   * @param {Property.<Snapshot|null>} snapshotProperty - snapshot associated with this control, null if no snapshot
+   * @param {Property.<Snapshot|null>} selectedSnapshotProperty - the selected snapshot, null if no selection
    * @param {Object} [options]
    * @constructor
    */

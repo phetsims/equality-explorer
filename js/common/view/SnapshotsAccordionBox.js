@@ -32,7 +32,7 @@ define( function( require ) {
   };
 
   /**
-   * @param {Scene} scene
+   * @param {Scene} scene - the scene that we'll be taking snapshots of
    * @param {Object} [options]
    * @constructor
    */

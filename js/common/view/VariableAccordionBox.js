@@ -27,8 +27,8 @@ define( function( require ) {
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
-   * @param {NumberProperty} valueProperty
-   * @param {Range} valueRange
+   * @param {NumberProperty} valueProperty - the value of the variable 'x'
+   * @param {Range} valueRange - the range of x's value
    * @param {Object} [options]
    * @constructor
    */
