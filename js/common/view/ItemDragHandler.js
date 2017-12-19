@@ -12,12 +12,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantItem = require( 'EQUALITY_EXPLORER/common/model/ConstantItem' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
-  var VariableItem = require( 'EQUALITY_EXPLORER/common/model/VariableItem' );
 
   /**
    * @param {Node} itemNode - Node that the listener is attached to
