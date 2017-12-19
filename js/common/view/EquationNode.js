@@ -205,27 +205,43 @@ define( function( require ) {
 
     // Create a term for each variable that has a non-zero coefficient.
     for ( var property in coefficients ) {
-      if ( coefficients.hasOwnProperty( property ) && coefficients[ property ] > 0 ) {
+      if ( coefficients.hasOwnProperty( property ) ) {
+
         var coefficient = coefficients[ property ];
-        assert && assert( coefficient > 0, 'expected coefficient > 0' );
-        var variableNode = new Text( property, { font: variableFont } );
-        children.push( createTermNode( coefficient, variableNode, 1, font, coefficientSpacing, true ) );
+
+        if ( coefficient !== 0 ) {
+          var variableNode = new Text( property, { font: variableFont } );
+
+          if ( children.length > 0 ) {
+
+            // if there were previous terms, replace the coefficient's sign with an operator
+            var operator = ( coefficient > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
+            children.push( new Text( operator, { font: font } ) );
+            children.push( createTermNode( Math.abs( coefficient ), variableNode, 1, font, coefficientSpacing, true ) );
+          }
+          else {
+
+            // if there were no variable terms, keep the constant's sign
+            children.push( createTermNode( coefficient, variableNode, 1, font, coefficientSpacing, true ) );
+          }
+        }
       }
     }
 
+    // put the non-zero constant term last
     if ( constantValue !== 0 ) {
 
       // put the constant term last
       if ( children.length > 0 ) {
 
-        // if there were variable terms, replace the constant's sign with an operator
-        var operator = ( constantValue > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
+        // if there were previous terms, replace the constant's sign with an operator
+        operator = ( constantValue > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
         children.push( new Text( operator, { font: font } ) );
         children.push( createConstantNode( Math.abs( constantValue ), font ) );
       }
       else {
 
-        // if there were no variable terms, keep the constant's sign
+        // if there were no previous terms, keep the constant's sign
         children.push( createConstantNode( constantValue, font ) );
       }
     }
