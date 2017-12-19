@@ -82,6 +82,17 @@ define( function( require ) {
      */
     get weight() {
       return this.weightProperty.value;
+    },
+
+    /**
+     * Is this item creator the inverse of a specified item creator?
+     * @param {AbstractItemCreator} itemCreator
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isInverseOf: function( itemCreator ) {
+      return ( this.symbol === itemCreator.symbol ) && AbstractItemCreator.prototype.isInverseOf.call( this, itemCreator );
     }
   } );
 } );

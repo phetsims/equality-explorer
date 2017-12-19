@@ -54,6 +54,17 @@ define( function( require ) {
      */
     get weight() {
       return this.weightProperty.value;
+    },
+
+    /**
+     * Is this item the inverse of a specified item?
+     * @param {AbstractItem} item
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isInverseOf: function( item ) {
+      return ( this.symbol === item.symbol ) && AbstractItem.prototype.isInverseOf.call( this, item );
     }
   } );
 } );
