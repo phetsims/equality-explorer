@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Drag handler for items.
+ * Drag listener for items.
  *
  * Note that event.currentTarget should NOT be used herein. Because of event forwarding from ItemCreatorNode,
  * event.currentTarget may not be what you expect it to be.
@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function ItemDragHandler( itemNode, item, itemCreator, plate, options ) {
+  function ItemDragListener( itemNode, item, itemCreator, plate, options ) {
 
     var self = this;
 
@@ -113,13 +113,13 @@ define( function( require ) {
     plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required
 
     // @private called by dispose
-    this.disposeItemDragHandler = function() {
+    this.disposeItemDragListener = function() {
       plate.locationProperty.unlink( refreshHalosBound );
       plate.contentsChangedEmitter.removeListener( refreshHalosBound );
     };
   }
 
-  equalityExplorer.register( 'ItemDragHandler', ItemDragHandler );
+  equalityExplorer.register( 'ItemDragListener', ItemDragListener );
 
   /**
    * Returns an Item to the panel where it was created.
@@ -172,14 +172,14 @@ define( function( require ) {
     }
   }
 
-  return inherit( SimpleDragHandler, ItemDragHandler, {
+  return inherit( SimpleDragHandler, ItemDragListener, {
 
     /**
      * @public
      * @override
      */
     dispose: function() {
-      this.disposeItemDragHandler();
+      this.disposeItemDragListener();
       SimpleDragHandler.prototype.dispose.call( this );
     },
 
