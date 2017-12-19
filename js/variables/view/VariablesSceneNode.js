@@ -17,11 +17,12 @@ define( function( require ) {
 
   /**
    * @param {Scene} scene
+   * @param {Property.<Scene>} sceneProperty - the selected scene
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor
    */
-  function VariablesSceneNode( scene, layoutBounds, options ) {
+  function VariablesSceneNode( scene, sceneProperty, layoutBounds, options ) {
 
     options = _.extend( {
       itemsPanelSpacing: 30
@@ -40,7 +41,7 @@ define( function( require ) {
     assert && assert( !options.xVisibleProperty, 'this type defines its xVisibleProperty' );
     options.xVisibleProperty = this.viewProperties.xVisibleProperty;
 
-    SceneNode.call( this, scene, layoutBounds, options );
+    SceneNode.call( this, scene, sceneProperty, layoutBounds, options );
 
     // Get the bounds of the Snapshot accordion box, relative to this ScreenView
     var globalBounds = this.snapshotsAccordionBox.parentToGlobalBounds( this.snapshotsAccordionBox.bounds );

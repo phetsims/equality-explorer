@@ -12,6 +12,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerScreenView = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
   var SolvingSceneNode = require( 'EQUALITY_EXPLORER/solving/view/SolvingSceneNode' );
 
   /**
@@ -23,7 +24,7 @@ define( function( require ) {
     EqualityExplorerScreenView.call( this, model );
 
     // @private
-    this.sceneNode = new SolvingSceneNode( model.scene, this.layoutBounds );
+    this.sceneNode = new SolvingSceneNode( model.scene, new Property( model.scene ), this.layoutBounds );
     this.addChild( this.sceneNode );
   }
 

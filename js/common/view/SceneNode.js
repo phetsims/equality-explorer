@@ -24,19 +24,18 @@ define( function( require ) {
 
   /**
    * @param {Scene} scene
+   * @param {Property.<Scene>} sceneProperty - the selected scene
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor
    */
-  function SceneNode( scene, layoutBounds, options ) {
+  function SceneNode( scene, sceneProperty, layoutBounds, options ) {
 
     var self = this;
 
     options = _.extend( {
       itemsPanelSpacing: 50, // spacing of items in the panels that appear below the scale
       xVisibleProperty: null, // {BooleanProperty|null} whether 'x' value is visible in snapshots
-      sceneProperty: null, // {Property.<Scene>|null} the selected Scene
-      lockVisible: true,
       organizeButtonVisible: true
     }, options );
 
@@ -99,7 +98,6 @@ define( function( require ) {
     // such that an action on one side results in an equivalent action on the opposite side.
     if ( scene.lockedProperty ) {
       var lockControl = new LockControl( scene.lockedProperty, {
-        visible: options.lockVisible,
         x: scale.location.x,
         y: leftItemsPanel.centerY - 5 // offset determined empirically
       } );
@@ -111,11 +109,9 @@ define( function( require ) {
     } );
 
     // Make this scene visible when it's selected, unlink unnecessary
-    if ( options.sceneProperty ) {
-      options.sceneProperty.link( function( newScene ) {
-        self.visible = ( newScene === scene );
-      } );
-    }
+    sceneProperty.link( function( newScene ) {
+      self.visible = ( newScene === scene );
+    } );
 
     // Render the drag bounds for the left and right plates
     if ( EqualityExplorerQueryParameters.showDragBounds ) {

@@ -28,10 +28,7 @@ define( function( require ) {
     // @private create the view for each scene
     this.sceneNodes = [];
     model.scenes.forEach( function( scene ) {
-      var sceneNode = new SceneNode( scene, self.layoutBounds, {
-        sceneProperty: model.sceneProperty,
-        lockVisible: false
-      } );
+      var sceneNode = new SceneNode( scene, model.sceneProperty, self.layoutBounds );
       self.sceneNodes.push( sceneNode );
       self.addChild( sceneNode );
     } );
