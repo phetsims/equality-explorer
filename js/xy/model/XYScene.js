@@ -27,6 +27,7 @@ define( function( require ) {
 
   // constants
   // y, -y and their shadow. These nodes are reused using scenery's DAG feature.
+  // If y were ever added to a production screen, these should be moved to ItemIcons.
   var POSITIVE_Y_NODE = new VariableNode( yString, {
     fill: 'rgb( 250, 100, 255 )',
     maxHeight: ItemIcons.ICON_HEIGHT
@@ -46,19 +47,15 @@ define( function( require ) {
    */
   function XYScene() {
 
-    // @public (read-only) range of variable 'x'
-    this.xRange = EqualityExplorerConstants.X_RANGE;
+    // @public (read-only) range of variables
+    this.xRange = EqualityExplorerConstants.VARIABLE_RANGE;
+    this.yRange = EqualityExplorerConstants.VARIABLE_RANGE;
 
-    // @public (read-only) the value of the variable 'x'
+    // @public values of the variables
     this.xProperty = new NumberProperty( this.xRange.defaultValue, {
       range: this.xRange,
       valueType: 'Integer'
     } );
-
-    // @public (read-only) range of variable 'x'
-    this.yRange = EqualityExplorerConstants.X_RANGE; // same as 'x'
-
-    // @public (read-only) the value of the variable 'x'
     this.yProperty = new NumberProperty( this.yRange.defaultValue, {
       range: this.yRange,
       valueType: 'Integer'

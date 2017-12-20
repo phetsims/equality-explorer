@@ -29,7 +29,7 @@ define( function( require ) {
   function VariablesScene() {
 
     // @public (read-only) range of variable 'x'
-    this.xRange = EqualityExplorerConstants.X_RANGE;
+    this.xRange = EqualityExplorerConstants.VARIABLE_RANGE;
 
     // @public (read-only) the value of the variable 'x'
     this.xProperty = new NumberProperty( this.xRange.defaultValue, {

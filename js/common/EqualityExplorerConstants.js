@@ -38,7 +38,7 @@ define( function( require ) {
     ITEM_FONT_SIZE: 24,
 
     // model
-    X_RANGE: new RangeWithValue( -40, 40, 1 ),
+    VARIABLE_RANGE: new RangeWithValue( -40, 40, 1 ),
     NUMBER_OF_SNAPSHOTS: 5
   };
 
