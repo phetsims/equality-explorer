@@ -17,3 +17,7 @@ Universal operation
 - time, divide affect constant and coefficient
 - prevent divide-by-zero (already implemented)
 
+Demo 'x & y' screen for AM, if there's a need for this:
+- localize 'y' and 'Variables'
+- add multi-variable support to VariableAccordionBox, VariableValueNode
+- show/hide x and y independently in snapshots?
