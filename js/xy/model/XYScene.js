@@ -55,10 +55,19 @@ define( function( require ) {
       valueType: 'Integer'
     } );
 
+    // @public (read-only) range of variable 'x'
+    this.yRange = EqualityExplorerConstants.X_RANGE; // same as 'x'
+
+    // @public (read-only) the value of the variable 'x'
+    this.yProperty = new NumberProperty( this.yRange.defaultValue, {
+      range: this.yRange,
+      valueType: 'Integer'
+    } );
+
     // Use the same query parameters as 'Variables' screen to pre-populate the scale
     LockableScene.call( this, 'xy',
-      createItemCreators( this.xProperty, EqualityExplorerQueryParameters.leftVariables ),
-      createItemCreators( this.xProperty, EqualityExplorerQueryParameters.rightVariables )
+      createItemCreators( this.xProperty, this.yProperty, EqualityExplorerQueryParameters.leftVariables ),
+      createItemCreators( this.xProperty, this.yProperty, EqualityExplorerQueryParameters.rightVariables )
     );
   }
 
@@ -67,10 +76,11 @@ define( function( require ) {
   /**
    * Creates the item creators for this scene.
    * @param {NumberProperty} xProperty
+   * @param {NumberProperty} yProperty
    * @param {number} initialNumberOfItemsOnScale
    * @returns {AbstractItemCreator[]}
    */
-  function createItemCreators( xProperty, initialNumberOfItemsOnScale ) {
+  function createItemCreators( xProperty, yProperty, initialNumberOfItemsOnScale ) {
     assert && assert( initialNumberOfItemsOnScale.length === 4 );
     var index = 0;
 
@@ -86,7 +96,7 @@ define( function( require ) {
     } );
 
     var positiveYCreator = new VariableItemCreator( yString, POSITIVE_Y_NODE, Y_SHADOW_NODE, {
-      weight: xProperty.value,
+      weight: yProperty.value,
       initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
     } );
 
@@ -100,6 +110,12 @@ define( function( require ) {
     xProperty.lazyLink( function( x ) {
       positiveXCreator.weightProperty.value = x;
       negativeXCreator.weightProperty.value = -x;
+    } );
+
+    // unlink unnecessary
+    yProperty.lazyLink( function( y ) {
+      positiveYCreator.weightProperty.value = y;
+      negativeYCreator.weightProperty.value = -y;
     } );
 
     return [
@@ -118,6 +134,7 @@ define( function( require ) {
      */
     reset: function() {
       this.xProperty.reset();
+      this.yProperty.reset();
       LockableScene.prototype.reset.call( this );
     },
 
