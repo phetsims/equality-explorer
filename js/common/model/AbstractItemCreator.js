@@ -66,6 +66,10 @@ define( function( require ) {
     // @public (read-only) so we don't need to expose itemsOnScale
     this.numberOfItemsOnScaleProperty = this.itemsOnScale.lengthProperty;
 
+    // @public {BooleanProperty} initialized by client after instantiation, if this item creator is lockable.
+    // Resetting this is the responsibility of the client.
+    this.lockedProperty = null;
+
     // @public emit2 is called when an item is created.
     // Callback signature is function( {AbstractItem} item, {Event} [event] )
     this.itemCreatedEmitter = new Emitter();
