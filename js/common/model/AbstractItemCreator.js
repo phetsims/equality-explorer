@@ -66,7 +66,8 @@ define( function( require ) {
     // @public (read-only) so we don't need to expose itemsOnScale
     this.numberOfItemsOnScaleProperty = this.itemsOnScale.lengthProperty;
 
-    // @public {BooleanProperty} initialized by client after instantiation, if this item creator is lockable.
+    // @public {BooleanProperty|null} optional Property that indicates whether the item creator is locked.
+    // Initialized by client after instantiation, if the item creator is lockable.
     // Resetting this is the responsibility of the client.
     this.lockedProperty = null;
 
@@ -74,15 +75,17 @@ define( function( require ) {
     // Callback signature is function( {AbstractItem} item, {Event} [event] )
     this.itemCreatedEmitter = new Emitter();
 
-    // @public optional equivalent item creator on the opposite side of the scale, needed for lock feature
+    // @public {AbstractItemCreator|null} optional equivalent item creator on the opposite side of the scale.
+    // This is needed for the lock feature, so that an equivalent item on the opposite side can be created.
     // Example: When locked, if I drag -x out of the left panel, -x needs to also drag out of the right panel.
-    this.equivalentItemCreator = null; // {AbstractItemCreator}
+    this.equivalentItemCreator = null;
 
-    // @public optional inverse item creator on the opposite side of the scale, needed for lock feature.
+    // @public {AbstractItemCreator} optional inverse item creator on the opposite side of the scale.
+    // This is needed for lock feature, for the case where an inverse item must be created.
     // Example: When locked, if I remove x from the left plate, and the right plate is empty, then x needs
     // to be created and dragged on the right side (by equivalentItemCreator) and -x needs to be created on
     // the right plate (by inverseItemCreator).
-    this.inverseItemCreator = null; // {AbstractItemCreator}
+    this.inverseItemCreator = null;
 
     // @private called when AbstractItem.dispose is called
     this.itemWasDisposedBound = this.itemWasDisposed.bind( this );
