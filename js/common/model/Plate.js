@@ -2,6 +2,7 @@
 
 /**
  * Plate where items are placed to be weighed on a balance scale.
+ * (The correct term is 'weighing platform', but 'plate' was used throughout the design.)
  * Items are arranged in a 2D grid of cells, where each cell can be occupied by at most one item.
  *
  * @author Chris Malley (PixelZoom, Inc)
