@@ -83,10 +83,16 @@ define( function( require ) {
      * @public
      */
     restore: function() {
+
+      // for each type of item ...
       for ( var i = 0; i < this.itemCreators.length; i++ ) {
+
+        var itemCreator = this.itemCreators[ i ];
         var occupiedCells = this.occupiedCells[ i ];
+
+        // for each cell that was occupied by this type of item, create an item and put it on the scale in the cell
         for ( var j = 0; j < occupiedCells.length; j++ ) {
-          this.itemCreators[ i ].createItemOnScale( occupiedCells[ j ] );
+          itemCreator.createItemOnScale( occupiedCells[ j ] );
         }
       }
     }

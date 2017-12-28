@@ -54,7 +54,8 @@ define( function( require ) {
         itemNode.dispose();
       } );
 
-      // If the item was created via user interaction, start a drag cycle by forwarding the event to itemNode.
+      // event is non-null when the item was created via user interaction with itemCreator.
+      // start a drag cycle by forwarding the event to itemNode.
       if ( event ) {
         itemNode.startDrag( event );
       }
@@ -65,7 +66,7 @@ define( function( require ) {
 
       // down
       function( event ) {
-        itemCreator.createItemDragging( event );
+        itemCreator.createItem( event );
       }, {
         allowTouchSnag: true
       }
