@@ -92,7 +92,8 @@ define( function( require ) {
      * @override
      */
     isInverseOf: function( itemCreator ) {
-      return ( this.symbol === itemCreator.symbol ) && AbstractItemCreator.prototype.isInverseOf.call( this, itemCreator );
+      return ( this.symbol === itemCreator.symbol ) &&
+             AbstractItemCreator.prototype.isInverseOf.call( this, itemCreator );
     }
   } );
 } );
