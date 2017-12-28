@@ -71,7 +71,8 @@ define( function( require ) {
     this.lockedProperty = null;
 
     // @public emit2 is called when an item is created.
-    // Callback signature is function( {AbstractItem} item, {Event} [event] )
+    // Callback signature is function( {AbstractItem} item, {Event|null} [event] )
+    // event arg will be non-null if the item was created as the result of a user interaction.
     this.itemCreatedEmitter = new Emitter();
 
     // @public {AbstractItemCreator|null} optional equivalent item creator on the opposite side of the scale.
@@ -153,13 +154,24 @@ define( function( require ) {
     },
 
     /**
-     * Creates an item that will immediately be involved in a drag cycle.
-     * @param {Event} event
+     * Creates an item.
+     * @param {Event|null} event - event is provided if a user interaction is creating the item
      * @returns {AbstractItem}
      * @public
      */
-    createItemDragging: function( event ) {
-      return this.createItemPrivate( event, null /* cellIndex */ );
+    createItem: function( event ) {
+
+      // create item
+      var item = this.createItemProtected( this.location );
+      this.allItems.add( item );
+
+      // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
+      item.disposedEmitter.addListener( this.itemWasDisposedBound );
+
+      // Notify that an item was created
+      this.itemCreatedEmitter.emit2( item, event );
+
+      return item;
     },
 
     /**
@@ -169,38 +181,8 @@ define( function( require ) {
      * @public
      */
     createItemOnScale: function( cellIndex ) {
-      return this.createItemPrivate( null /* event */, cellIndex );
-    },
-
-    /**
-     * Consolidates code that is common to createItemDragging and createItemOnScale.
-     * Parameters are mutually exclusive!
-     * @param {Event|null} event - the event for an item to be created via user interaction
-     * @param {number|null} cellIndex - the cell of an item to be created on the scale
-     * @returns {AbstractItem}
-     * @private
-     */
-    createItemPrivate: function( event, cellIndex ) {
-
-      assert && assert( event !== undefined && cellIndex !== undefined, 'undefined args not allowed' );
-      assert && assert( event || cellIndex !== null, 'event or cellIndex must be provided' );
-      assert && assert( !( event && cellIndex !== null ), 'event and cellIndex are mutually exclusive' );
-
-      // create item
-      var item = this.createItemProtected( this.location );
-      this.allItems.add( item );
-
-      // put item on the scale
-      if ( cellIndex !== null ) {
-        this.putItemOnScale( item, cellIndex );
-      }
-
-      // Clean up when the item is disposed. AbstractItem.dispose handles removal of this listener.
-      item.disposedEmitter.addListener( this.itemWasDisposedBound );
-
-      // Notify that an item was created
-      this.itemCreatedEmitter.emit2( item, event );
-
+      var item = this.createItem( null /* event */ );
+      this.putItemOnScale( item, cellIndex );
       return item;
     },
 
