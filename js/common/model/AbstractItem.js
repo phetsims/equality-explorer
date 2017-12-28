@@ -26,9 +26,12 @@ define( function( require ) {
     // @public (read-only)
     this.icon = icon;
     this.shadow = shadow;
-    this.disposedEmitter = new Emitter(); // emit1 when dispose has completed
 
-    // @public
+    // @public (read-only) emit1 when dispose has completed.
+    // Callback signature is function( {AbstractItem} item ), where item is the item that was disposed.
+    this.disposedEmitter = new Emitter();
+
+    // @public controls whether the item's shadow is visible
     this.shadowVisibleProperty = new BooleanProperty( false );
 
     EqualityExplorerMovable.call( this, options );
