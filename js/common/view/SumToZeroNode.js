@@ -83,9 +83,9 @@ define( function( require ) {
     startAnimation: function() {
 
       var options = {
-        startOpacity: 0.85,
+        startOpacity: 1,
         endOpacity: 0,
-        duration: 500, // fade out time, ms
+        duration: 750, // fade out time, ms
         easing: TWEEN.Easing.Quintic.In, // most of opacity change happens at end of duration
         onStart: function() {
           self.visible = true; // in case a client has set this Node invisible
