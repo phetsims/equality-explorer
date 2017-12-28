@@ -69,7 +69,8 @@ define( function( require ) {
 
     // wrapper to avoid exceeding stack size when bounds of equationNode changes
     var equationParent = new Node( {
-      children: [ equationNode ]
+      children: [ equationNode ],
+      maxWidth: contentWidth
     } );
 
     // Center the equation when it changes
