@@ -29,6 +29,8 @@ define( function( require ) {
 
     // @public {Property.<Snapshot|null>} the selected snapshot, null means no selection
     this.selectedSnapshotProperty = new Property( null, {
+
+      // a valid snapshot is null or the value of one of the snapshotProperties
       isValidValue: function( snapshot ) {
         return ( snapshot === null ) ||
                _.some( self.snapshotProperties, function( snapshotProperty ) {

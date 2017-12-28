@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * VariableItem is an item associated with the variable 'x' and can be summed with other VariableItems.
+ * VariableItem is an item associated with a variable (e.g. 'x' ).
+ * It can be summed with other VariableItems that have the same symbol.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

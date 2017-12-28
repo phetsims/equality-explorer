@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Base type for a scene in Equality Explorer sim.  A scene is a collection of items.
+ * Base type for a scene in Equality Explorer sim.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -94,6 +94,7 @@ define( function( require ) {
         itemCreator.disposeAllItems();
       } );
 
+      // clears all snapshots
       this.snapshots.reset();
     },
 
