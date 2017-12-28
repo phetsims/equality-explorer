@@ -15,7 +15,6 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  var Property = require( 'AXON/Property' );
   var Util = require( 'DOT/Util' );
 
   /**
@@ -38,13 +37,13 @@ define( function( require ) {
     this.icon = icon;
     this.shadow = shadow;
 
-    // @public {Property.<Vector2>} (read-only)
+    // @public {Vector2} (read-only after initialization)
     // Location is dependent on the view and is unknowable until the sim has loaded.
-    // See initialize. Do not reset!
-    this.locationProperty = new Property( null );
+    // See initialize.
+    this.location = null;
 
     // @private Number of items to put on the scale initially.
-    // Items cannot be put on the scale until locationProperty is initialized.
+    // Items cannot be put on the scale until this.location is initialized.
     this.initialNumberOfItemsOnScale = options.initialNumberOfItemsOnScale;
 
     // @public {Plate} the plate that this item creator is associated with.
@@ -110,8 +109,7 @@ define( function( require ) {
       assert && assert( !this.isInitialized, 'initialize has already been called' );
       this.isInitialized = true;
 
-      // initialize location
-      this.locationProperty.value = location;
+      this.location = location;
 
       // populate the scale, see https://github.com/phetsims/equality-explorer/issues/8
       assert && assert( this.plate, 'plate has not been initialized' );
@@ -189,7 +187,7 @@ define( function( require ) {
       assert && assert( !( event && cellIndex !== null ), 'event and cellIndex are mutually exclusive' );
 
       // create item
-      var item = this.createItemProtected( this.locationProperty.value );
+      var item = this.createItemProtected( this.location );
       this.allItems.add( item );
 
       // put item on the scale
