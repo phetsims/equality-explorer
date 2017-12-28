@@ -139,7 +139,7 @@ define( function( require ) {
       visible: options.organizeButtonVisible
     } );
 
-    // disable ClearScaleButton and/or OrganizeButton. unlink unnecessary
+    // disable ClearScaleButton and OrganizeButton when the scale is empty. unlink unnecessary
     scale.numberOfItemsProperty.link( function( numberOfItems ) {
       var enabled = ( numberOfItems !== 0 );
       clearScaleButton.enabled = enabled;
