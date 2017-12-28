@@ -2,7 +2,7 @@
 
 /**
  * MysteryItem is an item that has a constant weight, but that weight is not revealed to the user.
- * MysteryItems to not contribute to the constant term in an equation.  They are represented as
+ * MysteryItems do not contribute to the constant term in an equation.  They are represented as
  * a coefficient and an icon.
  *
  * @author Chris Malley (PixelZoom, Inc.)
