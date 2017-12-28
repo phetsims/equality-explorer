@@ -157,19 +157,21 @@ define( function( require ) {
     /**
      * Creates an item that will immediately be involved in a drag cycle.
      * @param {Event} event
+     * @returns {AbstractItem}
      * @public
      */
     createItemDragging: function( event ) {
-      this.createItemPrivate( event, null /* cellIndex */ );
+      return this.createItemPrivate( event, null /* cellIndex */ );
     },
 
     /**
      * Creates an item and puts it in a specified cell in the associate plate's 2D grid.
      * @param {number} cellIndex
+     * @returns {AbstractItem}
      * @public
      */
     createItemOnScale: function( cellIndex ) {
-      this.createItemPrivate( null /* event */, cellIndex );
+      return this.createItemPrivate( null /* event */, cellIndex );
     },
 
     /**
@@ -177,6 +179,7 @@ define( function( require ) {
      * Parameters are mutually exclusive!
      * @param {Event|null} event - the event for an item to be created via user interaction
      * @param {number|null} cellIndex - the cell of an item to be created on the scale
+     * @returns {AbstractItem}
      * @private
      */
     createItemPrivate: function( event, cellIndex ) {
@@ -199,6 +202,8 @@ define( function( require ) {
 
       // Notify that an item was created
       this.itemCreatedEmitter.emit2( item, event );
+
+      return item;
     },
 
     /**
