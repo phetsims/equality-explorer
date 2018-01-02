@@ -15,6 +15,7 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var GridNode = require( 'EQUALITY_EXPLORER/common/view/GridNode' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -113,6 +114,15 @@ define( function( require ) {
     // Red dot at the origin
     if ( EqualityExplorerQueryParameters.showOrigin ) {
       options.children.push( new Circle( 4, { fill: 'red' } ) );
+    }
+
+    if ( phet.chipper.queryParameters.dev ) {
+      options.children.push( new Line( 0, 0, plateNode.width, 0, {
+        centerX: plateNode.centerX,
+        centerY: plateNode.centerY + EqualityExplorerQueryParameters.plateYOffset,
+        stroke: 'red',
+        lineDash: [ 4, 4 ]
+      } ) );
     }
 
     Node.call( this, options );

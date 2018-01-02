@@ -108,6 +108,12 @@ define( function( require ) {
       isValidValue: function( value ) {
         return isValidItemsArray( value, 4 );
       }
+    },
+
+    // Offset, relative to center of plate, for when an item is considered 'above' the plate.
+    plateYOffset: {
+      type: 'number',
+      defaultValue: 0
     }
   } );
 

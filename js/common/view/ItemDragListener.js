@@ -13,6 +13,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
@@ -94,7 +95,7 @@ define( function( require ) {
           // we identified an inverse for this item, sum to zero
           self.sumToZero();
         }
-        else if ( item.locationProperty.value.y > plate.locationProperty.value.y ) {
+        else if ( item.locationProperty.value.y > plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
           // item was released below the plate, animate back to panel and dispose
           animateToPanel( item );
