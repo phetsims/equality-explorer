@@ -110,10 +110,11 @@ define( function( require ) {
       }
     },
 
+    //TODO delete plateYOffset when #29 is resolved
     // Offset, relative to center of plate, for when an item is considered 'above' the plate.
     plateYOffset: {
       type: 'number',
-      defaultValue: 0
+      defaultValue: 18
     }
   } );
 
