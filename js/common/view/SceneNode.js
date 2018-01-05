@@ -98,7 +98,6 @@ define( function( require ) {
     // such that an action on one side results in an equivalent action on the opposite side.
     if ( scene.lockedProperty ) {
       var lockControl = new LockControl( scene.lockedProperty, {
-        visible: false, //TODO delete after deploying interview version
         x: scale.location.x,
         y: leftItemsPanel.centerY - 5 // offset determined empirically
       } );
