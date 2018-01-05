@@ -23,8 +23,8 @@ define( function( require ) {
   function HaloNode( radius, options ) {
 
     options = _.extend( {
-      centerColor: 'rgba( 255, 255, 0, 1 )', // opaque yellow
-      edgeColor: 'rgba( 255, 255, 0, 0 )' // transparent yellow
+      centerColor: 'rgba( 255, 255, 0, 0.85 )', // slightly transparent yellow
+      edgeColor: 'rgba( 255, 255, 0, 0 )' // fully transparent yellow
     }, options );
 
     assert && assert( !options.fill, 'this type defines its fill' );
