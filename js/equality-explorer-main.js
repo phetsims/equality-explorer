@@ -43,6 +43,8 @@ define( function( require ) {
       new SolvingScreen()
     ];
 
+    screens.splice( 3, 1 ); //TODO delete after deploying interview version
+
     // non-production screen for testing multi-variable support in equations
     if ( EqualityExplorerQueryParameters.xy ) {
       screens.push( new XYScreen() );
