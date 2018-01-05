@@ -43,7 +43,7 @@ define( function( require ) {
       new SolvingScreen()
     ];
 
-    // non-production screen for testing multi-variable support in equations
+    // non-production screen for testing multi-variable support
     if ( EqualityExplorerQueryParameters.xy ) {
       screens.push( new XYScreen() );
     }
