@@ -165,7 +165,7 @@ define( function( require ) {
      * Gets the index for the cell that an item occupies.
      * @param {AbstractItem} item
      * @returns {number} the cell's index, -1 if the item doesn't occupy a cell
-     * @pubic
+     * @public
      */
     getCellForItem: function( item ) {
       return this.grid.getCellForItem( item );
