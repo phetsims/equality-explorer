@@ -1,10 +1,5 @@
 TODO items for equality-explorer
 
-Locked mode, #19
-- drag from panel
-- drag from scale
-- drag in progress
-
 Solving screen
 - generalize other screens, or different implementation?
 - fractional coefficients and constants
@@ -16,3 +11,8 @@ Universal operation
 - plus, minus affect constant
 - time, divide affect constant and coefficient
 - prevent divide-by-zero (already implemented)
+
+Locked mode, #19
+- drag from panel
+- drag from scale
+- drag in progress
