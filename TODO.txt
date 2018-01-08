@@ -1,7 +1,6 @@
 TODO items for equality-explorer
 
 Solving screen
-- generalize other screens, or different implementation?
 - fractional coefficients and constants
 - different representation of things on scale
 - universal operation
