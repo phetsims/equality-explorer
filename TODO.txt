@@ -1,8 +1,10 @@
 TODO items for equality-explorer
 
 Solving screen
+- show "big item" on scale instead of individual items
+- drag items to scale to add to "big item"
+- drag "big item" to panel
 - fractional coefficients and constants
-- different representation of things on scale
 - universal operation
 
 Universal operation
