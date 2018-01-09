@@ -1,6 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO lots of duplication with VariablesScene
+//TODO some duplication with VariablesScene. Should this be a subtype of VariablesScene?
 /**
  * The sole scene in the 'Solving' screen.
  *
@@ -10,6 +10,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BigConstantItem = require( 'EQUALITY_EXPLORER/common/model/BigConstantItem' );
+  var BigVariableItem = require( 'EQUALITY_EXPLORER/common/model/BigVariableItem' );
   var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -24,6 +26,9 @@ define( function( require ) {
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
+
+  // constants
+  var CONSTANT_ITEM_WEIGHT = 1;
 
   /**
    * @constructor
@@ -61,44 +66,56 @@ define( function( require ) {
       valueType: 'Integer'
     } );
 
-    LockableScene.call( this, 'solving', createItemCreators( this.xProperty ), createItemCreators( this.xProperty ) );
+    // item creators for left side of scale
+    var leftPositiveXCreator = new VariableItemCreator( xString, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      weight: this.xProperty.value
+    } );
+    var leftNegativeXCreator = new VariableItemCreator( xString, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      weight: -leftPositiveXCreator.weight,
+      sign: -leftPositiveXCreator.sign
+    } );
+    var leftPositiveOneCreator = new ConstantItemCreator( ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      weight: CONSTANT_ITEM_WEIGHT
+    } );
+    var leftNegativeOneCreator = new ConstantItemCreator( ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      weight: -CONSTANT_ITEM_WEIGHT
+    } );
+
+    // item creators for right side of scale
+    var rightPositiveXCreator = new VariableItemCreator( xString, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      weight: this.xProperty.value
+    } );
+    var rightNegativeXCreator = new VariableItemCreator( xString, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+      weight: -rightPositiveXCreator.weight,
+      sign: -rightPositiveXCreator.sign
+    } );
+    var rightPositiveOneCreator = new ConstantItemCreator( ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      weight: CONSTANT_ITEM_WEIGHT
+    } );
+    var rightNegativeOneCreator = new ConstantItemCreator( ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      weight: -CONSTANT_ITEM_WEIGHT
+    } );
+
+    // update item creator weights when the value of 'x' changes. unlink unnecessary
+    this.xProperty.lazyLink( function( x ) {
+      leftPositiveXCreator.weightProperty.value = x;
+      rightPositiveXCreator.weightProperty.value = x;
+      leftNegativeXCreator.weightProperty.value = -x;
+      rightNegativeXCreator.weightProperty.value = -x;
+    } );
+
+    // @public big items on the left and right sides of the scale
+    this.leftVariableItem = new BigVariableItem( xString, this.xProperty, leftPositiveXCreator, leftNegativeXCreator );
+    this.rightVariableItem = new BigVariableItem( xString, this.xProperty, rightPositiveXCreator, rightNegativeXCreator );
+    this.leftConstantItem = new BigConstantItem( leftPositiveOneCreator, leftNegativeOneCreator );
+    this.rightConstantItem = new BigConstantItem( rightPositiveOneCreator, rightNegativeOneCreator );
+
+    LockableScene.call( this, 'solving',
+      [ leftPositiveXCreator, leftNegativeXCreator, leftPositiveOneCreator, leftNegativeOneCreator ],
+      [ rightPositiveXCreator, rightNegativeXCreator, rightPositiveOneCreator, rightNegativeOneCreator ] );
   }
 
   equalityExplorer.register( 'SolvingScene', SolvingScene );
-
-  /**
-   * Creates the item creators for this scene.
-   * @param {NumberProperty} xProperty
-   * @returns {AbstractItemCreator[]}
-   */
-  function createItemCreators( xProperty ) {
-
-    var positiveXCreator = new VariableItemCreator( xString, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
-      weight: xProperty.value
-    } );
-
-    var negativeXCreator = new VariableItemCreator( xString, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
-      weight: -positiveXCreator.weight,
-      sign: -positiveXCreator.sign
-    } );
-
-    // unlink unnecessary
-    xProperty.lazyLink( function( x ) {
-      positiveXCreator.weightProperty.value = x;
-      negativeXCreator.weightProperty.value = -x;
-    } );
-
-    return [
-      positiveXCreator,
-      negativeXCreator,
-      new ConstantItemCreator( ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
-        weight: 1
-      } ),
-      new ConstantItemCreator( ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
-        weight: -1
-      } )
-    ];
-  }
 
   return inherit( LockableScene, SolvingScene, {
 
