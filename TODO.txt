@@ -1,6 +1,7 @@
 TODO items for equality-explorer
 
 Solving screen
+- terminology for "big item" on scale?
 - show "big item" on scale instead of individual items
 - drag items to scale to add to "big item"
 - drag "big item" to panel
