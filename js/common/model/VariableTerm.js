@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * The big variable ('x') item that appears on the scale in the Solving screen.
+ * The variable ('x') term that appears on the scale in the Solving screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {AbstractItemCreator} negativeItemCreator
    * @constructor
    */
-  function BigVariableItem( symbol, variableValueProperty, positiveItemCreator, negativeItemCreator ) {
+  function VariableTerm( symbol, variableValueProperty, positiveItemCreator, negativeItemCreator ) {
 
     // @public (read-only)
     this.symbol = symbol;
@@ -39,9 +39,9 @@ define( function( require ) {
       } );
   }
 
-  equalityExplorer.register( 'BigVariableItem', BigVariableItem );
+  equalityExplorer.register( 'VariableTerm', VariableTerm );
 
-  return inherit( Object, BigVariableItem, {
+  return inherit( Object, VariableTerm, {
 
     /**
      * Multiplies the coefficient by an integer value.

@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * The big constant item that appears on the scale in the Solving screen.
+ * The constant term that appears on the scale in the Solving screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -19,7 +19,7 @@ define( function( require ) {
    * @param {AbstractItemCreator} negativeItemCreator
    * @constructor
    */
-  function BigConstantItem( positiveItemCreator, negativeItemCreator ) {
+  function ConstantTerm( positiveItemCreator, negativeItemCreator ) {
 
     // @public (read-only)
     this.positiveItemCreator = positiveItemCreator;
@@ -29,9 +29,9 @@ define( function( require ) {
     this.constantProperty = new Property( ReducedFraction.ZERO );
   }
 
-  equalityExplorer.register( 'BigConstantItem', BigConstantItem );
+  equalityExplorer.register( 'ConstantTerm', ConstantTerm );
 
-  return inherit( Object, BigConstantItem, {
+  return inherit( Object, ConstantTerm, {
 
     /**
      * Adds an integer value to the constant.

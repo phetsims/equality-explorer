@@ -10,9 +10,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var BigConstantItem = require( 'EQUALITY_EXPLORER/common/model/BigConstantItem' );
-  var BigVariableItem = require( 'EQUALITY_EXPLORER/common/model/BigVariableItem' );
   var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
+  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -24,6 +23,7 @@ define( function( require ) {
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var StringProperty = require( 'AXON/StringProperty' );
   var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -105,11 +105,11 @@ define( function( require ) {
       rightNegativeXCreator.weightProperty.value = -x;
     } );
 
-    // @public big items on the left and right sides of the scale
-    this.leftVariableItem = new BigVariableItem( xString, this.xProperty, leftPositiveXCreator, leftNegativeXCreator );
-    this.rightVariableItem = new BigVariableItem( xString, this.xProperty, rightPositiveXCreator, rightNegativeXCreator );
-    this.leftConstantItem = new BigConstantItem( leftPositiveOneCreator, leftNegativeOneCreator );
-    this.rightConstantItem = new BigConstantItem( rightPositiveOneCreator, rightNegativeOneCreator );
+    // @public terms on the left and right sides of the scale
+    this.leftVariableTerm = new VariableTerm( xString, this.xProperty, leftPositiveXCreator, leftNegativeXCreator );
+    this.rightVariableTerm = new VariableTerm( xString, this.xProperty, rightPositiveXCreator, rightNegativeXCreator );
+    this.leftConstantTerm = new ConstantTerm( leftPositiveOneCreator, leftNegativeOneCreator );
+    this.rightConstantTerm = new ConstantTerm( rightPositiveOneCreator, rightNegativeOneCreator );
 
     LockableScene.call( this, 'solving',
       [ leftPositiveXCreator, leftNegativeXCreator, leftPositiveOneCreator, leftNegativeOneCreator ],
