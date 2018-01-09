@@ -13,6 +13,7 @@ define( function( require ) {
   var BigConstantItem = require( 'EQUALITY_EXPLORER/common/model/BigConstantItem' );
   var BigVariableItem = require( 'EQUALITY_EXPLORER/common/model/BigVariableItem' );
   var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
+  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -112,7 +113,11 @@ define( function( require ) {
 
     LockableScene.call( this, 'solving',
       [ leftPositiveXCreator, leftNegativeXCreator, leftPositiveOneCreator, leftNegativeOneCreator ],
-      [ rightPositiveXCreator, rightNegativeXCreator, rightPositiveOneCreator, rightNegativeOneCreator ] );
+      [ rightPositiveXCreator, rightNegativeXCreator, rightPositiveOneCreator, rightNegativeOneCreator ], {
+        gridRows: 1,
+        gridColumns: 2,
+        iconSize: new Dimension2( 120, 120 )
+      } );
   }
 
   equalityExplorer.register( 'SolvingScene', SolvingScene );

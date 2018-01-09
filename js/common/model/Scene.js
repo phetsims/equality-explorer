@@ -38,7 +38,10 @@ define( function( require ) {
     options = _.extend( {
       debugName: null,
       icon: null, // {Node|null} optional icon used to represent the scene
-      maxWeight: 30 // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it
+      maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
+      gridRows: 6, // {number} rows in the grid on the scale
+      gridColumns: 6, // {number} columns in the grid on the scale
+      iconSize: null // {Dimension2|null} size of icons, computed if null
     }, options );
 
     phet.log && phet.log( debugName + ': maxWeight=' + options.maxWeight );
@@ -58,6 +61,9 @@ define( function( require ) {
     // @public (read-only)
     this.scale = new BalanceScale( this.leftItemCreators, this.rightItemCreators, {
       location: new Vector2( 355, 420 ),
+      gridRows: options.gridRows,
+      gridColumns: options.gridColumns,
+      iconSize: options.iconSize,
       maxWeight: options.maxWeight
     } );
 

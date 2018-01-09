@@ -31,6 +31,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+
       location: new Vector2( 0, 0 ), // location of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
       maxAngle: 22 * ( Math.PI / 180 ), // degrees to radians
@@ -43,9 +44,10 @@ define( function( require ) {
 
       // options related to the plate's 2D grid
       gridRows: 6, // {number} rows in the grid
-      gridColumns: 6, // {number} columns in grid
+      gridColumns: 6, // {number} columns in the grid
       gridXMargin: 2, // horizontal space between stacks of items
-      gridYMargin: 0  // vertical space between items in each stack
+      gridYMargin: 0,  // vertical space between items in each stack
+      iconSize: null // {Dimension2|null} size of icons, computed if null
 
     }, options );
 
@@ -65,18 +67,21 @@ define( function( require ) {
     // {AbstractItemCreator[]} all AbstractItemCreator instances
     var itemCreators = leftItemCreators.concat( rightItemCreators );
 
-    // Find the maximum width and height of all item icons
-    var maxIconWidth = 0;
-    var maxIconHeight = 0;
-    itemCreators.forEach( function( itemCreator ) {
-      maxIconWidth = Math.max( maxIconWidth, itemCreator.icon.width );
-      maxIconHeight = Math.max( maxIconHeight, itemCreator.icon.height );
-    } );
+    // Compute the maximum width and height of all item icons
+    if ( !options.iconSize ) {
+      var maxIconWidth = 0;
+      var maxIconHeight = 0;
+      itemCreators.forEach( function( itemCreator ) {
+        maxIconWidth = Math.max( maxIconWidth, itemCreator.icon.width );
+        maxIconHeight = Math.max( maxIconHeight, itemCreator.icon.height );
+      } );
+      options.iconSize = new Dimension2( maxIconWidth, maxIconHeight );
+    }
 
     // size of each cell in the grid
     var cellSize = new Dimension2(
-      maxIconWidth + ( 2 * options.gridXMargin ),
-      maxIconHeight + ( 2 * options.gridYMargin ) );
+      options.iconSize.width + ( 2 * options.gridXMargin ),
+      options.iconSize.height + ( 2 * options.gridYMargin ) );
     assert && assert( options.gridColumns * cellSize.width <= options.plateDiameter, 'grid is wider than plate' );
 
     // options that apply to both plates
