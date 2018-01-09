@@ -326,7 +326,9 @@ define( function( require ) {
      */
     indexToRow: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      return Math.floor( index / this.rows );
+      var row = Math.ceil( ( index + 1 ) / this.columns ) - 1;
+      assert && assert( row >= 0 && row < this.rows );
+      return row;
     },
 
     /**
@@ -337,7 +339,9 @@ define( function( require ) {
      */
     indexToColumn: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      return index % this.columns;
+      var column = index % this.columns;
+      assert && assert( column >= 0 && column < this.columns );
+      return column;
     },
 
     /**
@@ -350,7 +354,9 @@ define( function( require ) {
     rowColumnToIndex: function( row, column ) {
       assert && assert( row >= 0 && row < this.rows, 'row out of range: ' + row );
       assert && assert( column >= 0 && column < this.columns, 'column out of range: ' + column );
-      return ( row * this.columns ) + column;
+      var index = ( row * this.columns ) + column;
+      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
+      return index;
     }
   } );
 } );
