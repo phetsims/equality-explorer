@@ -99,8 +99,8 @@ define( function( require ) {
     // update item creator weights when the value of 'x' changes. unlink unnecessary
     this.xProperty.lazyLink( function( x ) {
       leftPositiveXCreator.weightProperty.value = x;
+      leftNegativeXCreator.weightProperty.value = -x
       rightPositiveXCreator.weightProperty.value = x;
-      leftNegativeXCreator.weightProperty.value = -x;
       rightNegativeXCreator.weightProperty.value = -x;
     } );
 
