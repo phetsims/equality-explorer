@@ -34,6 +34,7 @@ define( function( require ) {
       defaultValue: 1
     },
 
+    //TODO if we decide not to show grid in production version, replace this with phet.chipper.queryParameters.dev
     // Shows the grid on each of the plates.
     showGrid: { type: 'flag' },
 
