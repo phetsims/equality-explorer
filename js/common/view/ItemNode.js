@@ -13,7 +13,6 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemDragListener = require( 'EQUALITY_EXPLORER/common/view/ItemDragListener' );
@@ -87,8 +86,8 @@ define( function( require ) {
     }
 
     // Red dot at the origin
-    if ( EqualityExplorerQueryParameters.showOrigin ) {
-      options.children.push( new Circle( 4, { fill: 'red' } ) );
+    if ( phet.chipper.queryParameters.dev ) {
+      options.children.push( new Circle( 2, { fill: 'red' } ) );
     }
 
     Node.call( this, options );

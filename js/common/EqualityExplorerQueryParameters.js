@@ -2,7 +2,16 @@
 
 /**
  * Query parameters that are specific to the Equality Explorer sim.
+ *
  * Running with ?log will print these query parameters and their values to the console.
+ *
+ * Running with ?dev shows the following things:
+ * - layout bounds for the screen (the safe zone)
+ * - red dot at the origin of each item
+ * - red dot at the origin of each plate
+ * - red dot at the origin of the scale
+ * - red rectangle for drag bounds on each side of the scale
+ * - red horizontal line that denotes the cutoff of on vs off the scale, when dragging items
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -19,20 +28,14 @@ define( function( require ) {
     // Normal speed is 1. Larger values make animations run faster, smaller values make animations run slower.
     // For example, ?speed=0.5 will make animations run at half the normal speed.
     // Useful for testing multi-touch, so that items are easier to grab while they're moving.
+    // For internal use only, not public facing.
     speed: {
       type: 'number',
       defaultValue: 1
     },
 
-    // Shows the origin of various objects, rendered as a red dot.
-    // Shows the cutoff line for when dragged items are considered on or off the plates.
-    showOrigin: { type: 'flag' },
-
     // Shows the grid on each of the plates.
     showGrid: { type: 'flag' },
-
-    // Shows the drag bounds for items, rendered as a red rectangle.
-    showDragBounds: { type: 'flag' },
 
     // Add the 'x & y' screen, for testing multi-variable support.
     xy: { type: 'flag' },
@@ -40,6 +43,7 @@ define( function( require ) {
     // Number of items that are initially on the left plate in the Basics screen.
     // This is intended to be used for debugging and testing, not in production situations.
     // See https://github.com/phetsims/equality-explorer/issues/8
+    // For internal use only, not public facing.
     leftBasics: {
       type: 'array',
       elementSchema: {
@@ -52,6 +56,7 @@ define( function( require ) {
     },
 
     // Similar to leftBasics, but for the right plate in the Basics screen.
+    // For internal use only, not public facing.
     rightBasics: {
       type: 'array',
       elementSchema: {
@@ -64,6 +69,7 @@ define( function( require ) {
     },
 
     // Similar to leftBasics, but for the Numbers screen.
+    // For internal use only, not public facing.
     leftNumbers: {
       type: 'array',
       elementSchema: {
@@ -76,6 +82,7 @@ define( function( require ) {
     },
 
     // Similar to rightBasics, but for the Numbers screen.
+    // For internal use only, not public facing.
     rightNumbers: {
       type: 'array',
       elementSchema: {
@@ -88,6 +95,7 @@ define( function( require ) {
     },
 
     // Similar to leftBasics, but for the Variables screen.
+    // For internal use only, not public facing.
     leftVariables: {
       type: 'array',
       elementSchema: {
@@ -100,6 +108,7 @@ define( function( require ) {
     },
 
     // Similar to rightBasics, but for the Variables screen.
+    // For internal use only, not public facing.
     rightVariables: {
       type: 'array',
       elementSchema: {
@@ -111,8 +120,8 @@ define( function( require ) {
       }
     },
 
-    //TODO delete plateYOffset when #29 is resolved
     // Offset, relative to center of plate, for when an item is considered 'above' the plate.
+    // For internal use only, not public facing.
     plateYOffset: {
       type: 'number',
       defaultValue: 18

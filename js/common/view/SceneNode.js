@@ -13,7 +13,6 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ItemsPanel = require( 'EQUALITY_EXPLORER/common/view/ItemsPanel' );
@@ -114,9 +113,10 @@ define( function( require ) {
     } );
 
     // Render the drag bounds for the left and right plates
-    if ( EqualityExplorerQueryParameters.showDragBounds ) {
-      this.addChild( new Rectangle( scene.leftDragBounds, { stroke: 'red' } ) );
-      this.addChild( new Rectangle( scene.rightDragBounds, { stroke: 'red' } ) );
+    if ( phet.chipper.queryParameters.dev ) {
+      var dragBoundsOption = { stroke: 'red', lineWidth: 0.25 };
+      this.addChild( new Rectangle( scene.leftDragBounds, dragBoundsOption ) );
+      this.addChild( new Rectangle( scene.rightDragBounds, dragBoundsOption ) );
     }
 
     // @public (read-only) for layout only
