@@ -20,7 +20,7 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var SnapshotControl = require( 'EQUALITY_EXPLORER/common/view/SnapshotControl' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VariableCheckBox = require( 'EQUALITY_EXPLORER/common/view/VariableCheckBox' );
+  var VariableCheckbox = require( 'EQUALITY_EXPLORER/common/view/VariableCheckbox' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
@@ -138,11 +138,11 @@ define( function( require ) {
 
     // Check box for making 'x' visible
     if ( options.xVisibleProperty ) {
-      var xCheckBox = new VariableCheckBox( xString, options.xVisibleProperty, {
+      var xCheckbox = new VariableCheckbox( xString, options.xVisibleProperty, {
         touchAreaXDilation: 5,
         touchAreaYDilation: 5
       } );
-      buttonGroupChildren.push( xCheckBox );
+      buttonGroupChildren.push( xCheckbox );
     }
 
     var buttonGroup = new HBox( {

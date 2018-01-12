@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var CheckBox = require( 'SUN/CheckBox' );
+  var Checkbox = require( 'SUN/Checkbox' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -31,7 +31,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function VariableCheckBox( symbol, variableVisibleProperty, options ) {
+  function VariableCheckbox( symbol, variableVisibleProperty, options ) {
 
     // the variable's symbol, in math font
     var symbolNode = new Text( symbol, {
@@ -52,10 +52,10 @@ define( function( require ) {
       maxWidth: 100
     } );
 
-    CheckBox.call( this, contentNode, variableVisibleProperty, options );
+    Checkbox.call( this, contentNode, variableVisibleProperty, options );
   }
 
-  equalityExplorer.register( 'VariableCheckBox', VariableCheckBox );
+  equalityExplorer.register( 'VariableCheckbox', VariableCheckbox );
 
-  return inherit( CheckBox, VariableCheckBox );
+  return inherit( Checkbox, VariableCheckbox );
 } );
