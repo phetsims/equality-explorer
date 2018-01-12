@@ -116,7 +116,7 @@ define( function( require ) {
       options.children.push( new Circle( 4, { fill: 'red' } ) );
     }
 
-    if ( phet.chipper.queryParameters.dev ) {
+    if ( EqualityExplorerQueryParameters.showOrigin ) {
       options.children.push( new Line( 0, 0, plateNode.width, 0, {
         centerX: plateNode.centerX,
         centerY: plateNode.centerY + EqualityExplorerQueryParameters.plateYOffset,

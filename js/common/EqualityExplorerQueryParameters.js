@@ -25,6 +25,7 @@ define( function( require ) {
     },
 
     // Shows the origin of various objects, rendered as a red dot.
+    // Shows the cutoff line for when dragged items are considered on or off the plates.
     showOrigin: { type: 'flag' },
 
     // Shows the grid on each of the plates.
