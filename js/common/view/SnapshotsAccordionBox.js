@@ -136,7 +136,7 @@ define( function( require ) {
 
     var buttonGroupChildren = [ restoreButton, trashButton ];
 
-    // Check box for making 'x' visible
+    // Checkbox for making 'x' visible
     if ( options.xVisibleProperty ) {
       var xCheckbox = new VariableCheckbox( xString, options.xVisibleProperty, {
         touchAreaXDilation: 5,
