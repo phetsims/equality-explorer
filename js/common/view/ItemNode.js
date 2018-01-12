@@ -66,7 +66,7 @@ define( function( require ) {
     assert && assert( !options.children, 'this type defines its children' );
     options.children = [ shadowNode, iconNode ];
 
-    var haloRadius = 0.85 * Math.max( plate.cellSize.width, plate.cellSize.height );
+    var haloRadius = Math.max( item.icon.width, item.icon.height );
 
     // @private {Node|null} halo around the icon
     this.haloNode = null;
