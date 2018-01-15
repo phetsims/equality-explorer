@@ -31,7 +31,7 @@ define( function( require ) {
 
     options = _.extend( {
       cursor: 'pointer',
-      scale: 0.4
+      maxHeight: 45
     }, options );
 
     // icons

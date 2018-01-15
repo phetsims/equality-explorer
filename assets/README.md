@@ -11,7 +11,7 @@ Images for the items in the "Basics" screen are found in `basics-artwork-without
 3. save as PNG with height 200 (File > Save For Web)
 4. open the PNG in Photoshop
 5. trim transparent pixels around the image (Image > Trim)
-6. size the image to height 100 (Image > Image Size)
+6. size the image to height 50 (Image > Image Size)
 7. save the PNG (File > Save)
 
 ## Balance Scale
