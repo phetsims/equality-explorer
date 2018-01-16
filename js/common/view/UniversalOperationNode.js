@@ -23,14 +23,6 @@ define( function( require ) {
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  // constants
-  var OPERATORS = [
-    EqualityExplorerConstants.PLUS,
-    EqualityExplorerConstants.MINUS,
-    EqualityExplorerConstants.TIMES,
-    EqualityExplorerConstants.DIVIDE
-  ];
-
   /**
    * @param {StringProperty} operatorProperty - the selected operator
    * @param {string[]} operators - the choice of operators
@@ -52,7 +44,7 @@ define( function( require ) {
     var operatorItems = [];
     for ( var i = 0; i < operators.length; i++ ) {
       operatorItems.push( {
-        value: OPERATORS[ i ],
+        value: operators[ i ],
         node: new Text( operators[ i ], { font: font } )
       } );
     }
