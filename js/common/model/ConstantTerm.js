@@ -33,7 +33,7 @@ define( function( require ) {
 
   return inherit( Object, ConstantTerm, {
 
-``    /**
+    /**
      * @public
      */
     reset: function() {
