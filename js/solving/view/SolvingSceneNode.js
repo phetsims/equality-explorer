@@ -11,6 +11,7 @@ define( function( require ) {
 
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var ConstantTermNode = require( 'EQUALITY_EXPLORER/solving/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
@@ -71,6 +72,22 @@ define( function( require ) {
         top: localBounds.bottom + 10
       } );
     this.addChild( operationNode );
+
+    var leftConstantTermNode = new ConstantTermNode( scene.leftConstantTerm, {
+
+      //TODO ConstantTermNode needs to move with ConstantTerm, which needs to move with Plate
+      left: scene.scale.leftPlate.locationProperty.value.x,
+      bottom: scene.scale.leftPlate.locationProperty.value.y
+    } );
+    this.addChild( leftConstantTermNode );
+
+    var rightConstantTermNode = new ConstantTermNode( scene.rightConstantTerm, {
+
+      //TODO ConstantTermNode needs to move with ConstantTerm, which needs to move with Plate
+      left: scene.scale.rightPlate.locationProperty.value.x,
+      bottom: scene.scale.rightPlate.locationProperty.value.y
+    } );
+    this.addChild( rightConstantTermNode );
   }
 
   equalityExplorer.register( 'SolvingSceneNode', SolvingSceneNode );
