@@ -18,6 +18,7 @@ define( function( require ) {
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
+  var VariableTermNode = require( 'EQUALITY_EXPLORER/solving/view/VariableTermNode' );
 
   /**
    * @param {Scene} scene
@@ -77,7 +78,7 @@ define( function( require ) {
     var leftConstantTermNode = new ConstantTermNode( scene.leftConstantTerm, {
 
       //TODO ConstantTermNode needs to move with ConstantTerm, which needs to move with Plate
-      left: scene.scale.leftPlate.locationProperty.value.x,
+      left: scene.scale.leftPlate.locationProperty.value.x + 10,
       bottom: scene.scale.leftPlate.locationProperty.value.y
     } );
     this.addChild( leftConstantTermNode );
@@ -85,10 +86,26 @@ define( function( require ) {
     var rightConstantTermNode = new ConstantTermNode( scene.rightConstantTerm, {
 
       //TODO ConstantTermNode needs to move with ConstantTerm, which needs to move with Plate
-      left: scene.scale.rightPlate.locationProperty.value.x,
+      left: scene.scale.rightPlate.locationProperty.value.x + 10,
       bottom: scene.scale.rightPlate.locationProperty.value.y
     } );
     this.addChild( rightConstantTermNode );
+
+    var leftVariableTermNode = new VariableTermNode( scene.leftVariableTerm, {
+
+      //TODO VariableTermNode needs to move with VariableTerm, which needs to move with Plate
+      right: scene.scale.leftPlate.locationProperty.value.x - 10,
+      bottom: scene.scale.leftPlate.locationProperty.value.y
+    } );
+    this.addChild( leftVariableTermNode );
+
+    var rightVariableTermNode = new VariableTermNode( scene.rightVariableTerm, {
+
+      //TODO VariableTermNode needs to move with VariableTerm, which needs to move with Plate
+      right: scene.scale.rightPlate.locationProperty.value.x - 10,
+      bottom: scene.scale.rightPlate.locationProperty.value.y
+    } );
+    this.addChild( rightVariableTermNode );
 
     //TODO this is temporary
     operationNode.goEmitter.addListener( function() {

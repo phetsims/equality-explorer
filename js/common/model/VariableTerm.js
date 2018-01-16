@@ -30,7 +30,8 @@ define( function( require ) {
     this.negativeItemCreator = negativeItemCreator;
 
     // @public {Property.<ReducedFraction>} coefficient that appears in front of the symbol for this item in equations
-    this.coefficientProperty = new Property( ReducedFraction.ZERO );
+    // this.coefficientProperty = new Property( ReducedFraction.ZERO );
+    this.coefficientProperty = new Property( new ReducedFraction( 1, 1 ) ); //TODO replace with line above
 
     // @public {DerivedProperty.<number>} total weight of this item
     this.weightProperty = new DerivedProperty( [ this.coefficientProperty, variableValueProperty ],

@@ -43,21 +43,23 @@ define( function( require ) {
     } );
 
     var fractionNode = new ReducedFractionNode( constantTerm.constantProperty.value, {
-      font: FRACTION_FONT,
-      maxWidth: circleNode.width - ( 2 * options.margin ),
-      maxHeight: circleNode.height - ( 2 * options.margin ),
-      center: circleNode.center
+      font: FRACTION_FONT
     } );
 
     var integerNode = new Text( 0, {
       font: INTEGER_FONT,
+      center: fractionNode.center
+    } );
+
+    var contentNode = new Node( {
+      children: [ fractionNode, integerNode ],
       maxWidth: circleNode.width - ( 2 * options.margin ),
       maxHeight: circleNode.height - ( 2 * options.margin ),
       center: circleNode.center
     } );
 
     assert && assert( !options.children, 'subtype defines its own children' );
-    options.children = [ circleNode, fractionNode, integerNode ];
+    options.children = [ circleNode, contentNode ];
 
     Node.call( this );
 
@@ -69,7 +71,7 @@ define( function( require ) {
       if ( fraction.isInteger() ) {
 
         // update the integer
-        assert && assert( fraction.denominator === 1, 'expected fraction to be reduced' );
+        assert && assert( Math.abs( fraction.denominator ) === 1, 'expected fraction to be reduced' );
         integerNode.text = fraction.numerator;
         integerNode.visible = true;
         fractionNode.visible = false;
@@ -93,11 +95,11 @@ define( function( require ) {
         circleNode.lineDash = [ 3, 3 ];
       }
 
-      // center both so that the invisible one can't mess up layout
-      integerNode.center = circleNode.center;
-      fractionNode.center = circleNode.center;
+      // center in the circle
+      fractionNode.center = integerNode.center;
+      contentNode.center = circleNode.center;
 
-      // we don't want to see zero
+      // hide this node when value is zero
       self.visible = ( fraction.getValue() !== 0 );
     } );
 
