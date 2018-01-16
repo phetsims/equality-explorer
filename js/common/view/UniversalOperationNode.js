@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
@@ -32,6 +33,8 @@ define( function( require ) {
    * @constructor
    */
   function UniversalOperationNode( operatorProperty, operators, operandProperty, operandRange, options ) {
+
+    var self = this;
 
     options = _.extend( {
       fontSize: 24,
@@ -76,12 +79,15 @@ define( function( require ) {
       }
     } );
 
+    // @public
+    this.goEmitter = new Emitter(); // emit is called when goButton is pressed
+
     // Go button to apply the operation
     var goButtonIcon = new FontAwesomeNode( 'level_down', {
       scale: 0.65 * operandPicker.height / operandPicker.height // scale relative to the pickers
     } );
     var goButton = new RoundPushButton( {
-      //TODO add goButton listener
+      listener: function() { self.goEmitter.emit(); },
       content: goButtonIcon,
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       minXMargin: 10,

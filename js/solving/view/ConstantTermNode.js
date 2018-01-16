@@ -29,6 +29,8 @@ define( function( require ) {
    */
   function ConstantTermNode( constantTerm, options ) {
 
+    var self = this;
+    
     options = _.extend( {
       radius: 50,
       margin: 18,
@@ -57,6 +59,8 @@ define( function( require ) {
     assert && assert( !options.children, 'subtype defines its own children' );
     options.children = [ circleNode, fractionNode, integerNode ];
 
+    Node.call( this );
+
     // synchronize with the model value
     constantTerm.constantProperty.link( function( fraction ) {
       assert && assert( fraction instanceof ReducedFraction );
@@ -74,7 +78,7 @@ define( function( require ) {
         
         // update the fraction
         fractionNode.setFraction( fraction );
-        fractionNode.visibile = true;
+        fractionNode.visible = true;
         integerNode.visible = false;
       }
 
@@ -94,10 +98,10 @@ define( function( require ) {
       fractionNode.center = circleNode.center;
 
       // we don't want to see zero
-      // self.visible = ( fraction.getValue() !== 0 ); //TODO hide term when value is zero
+      self.visible = ( fraction.getValue() !== 0 );
     } );
 
-    Node.call( this, options );
+    this.mutate( options );
   }
 
   equalityExplorer.register( 'ConstantTermNode', ConstantTermNode );

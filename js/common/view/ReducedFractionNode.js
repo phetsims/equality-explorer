@@ -81,6 +81,7 @@ define( function( require ) {
     setFraction: function( fraction ) {
 
       assert && assert( fraction instanceof ReducedFraction );
+      phet.log && phet.log( 'ReducedFractionNode.setFraction ' + fraction.toString() );
 
       // add or remove sign, so it doesn't contribute to bounds and thus affect layout
       if ( fraction.getValue() >= 0 ) {

@@ -13,6 +13,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/solving/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
@@ -88,6 +89,34 @@ define( function( require ) {
       bottom: scene.scale.rightPlate.locationProperty.value.y
     } );
     this.addChild( rightConstantTermNode );
+
+    //TODO this is temporary
+    operationNode.goEmitter.addListener( function() {
+      var operand = scene.operandProperty.value;
+      if ( scene.operatorProperty.value === EqualityExplorerConstants.PLUS ) {
+        scene.leftConstantTerm.plus( operand );
+        scene.rightConstantTerm.plus( operand );
+      }
+      else if ( scene.operatorProperty.value === EqualityExplorerConstants.MINUS ) {
+        scene.leftConstantTerm.minus( operand );
+        scene.rightConstantTerm.minus( operand );
+      }
+      else if ( scene.operatorProperty.value === EqualityExplorerConstants.TIMES ) {
+        scene.leftConstantTerm.times( operand );
+        scene.rightConstantTerm.times( operand );
+        scene.leftVariableTerm.times( operand );
+        scene.rightVariableTerm.times( operand );
+      }
+      else if ( scene.operatorProperty.value === EqualityExplorerConstants.DIVIDE ) {
+        scene.leftConstantTerm.divide( operand );
+        scene.rightConstantTerm.divide( operand );
+        scene.leftVariableTerm.divide( operand );
+        scene.rightVariableTerm.divide( operand );
+      }
+      else {
+        throw new Error( 'unsupported operator: ' + scene.operatorProperty.value );
+      }
+    } );
   }
 
   equalityExplorer.register( 'SolvingSceneNode', SolvingSceneNode );
