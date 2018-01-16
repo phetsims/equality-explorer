@@ -129,9 +129,15 @@ define( function( require ) {
      * @override
      */
     reset: function() {
+
       this.xProperty.reset();
       this.operatorProperty.reset();
       this.operandProperty.reset();
+      this.leftVariableTerm.reset();
+      this.rightVariableTerm.reset();
+      this.leftConstantTerm.reset();
+      this.rightConstantTerm.reset();
+
       LockableScene.prototype.reset.call( this );
     },
 
