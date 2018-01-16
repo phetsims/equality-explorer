@@ -69,6 +69,7 @@ define( function( require ) {
      */
     divide: function( value ) {
       assert && assert( Util.isInteger( value ), 'value is not an integer: ' + value );
+      assert && assert( value !== 0, 'division by zero' );
       return new ReducedFraction( this.numerator, this.denominator * value );
     }
   } );
