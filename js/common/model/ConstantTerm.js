@@ -33,6 +33,13 @@ define( function( require ) {
 
   return inherit( Object, ConstantTerm, {
 
+``    /**
+     * @public
+     */
+    reset: function() {
+      this.constantProperty.reset();
+    },
+
     /**
      * Adds an integer value to the constant.
      * @param {number} value

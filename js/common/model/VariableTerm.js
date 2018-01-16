@@ -44,6 +44,13 @@ define( function( require ) {
   return inherit( Object, VariableTerm, {
 
     /**
+     * @public
+     */
+    reset: function() {
+      this.coefficientProperty.reset();
+    },
+
+    /**
      * Multiplies the coefficient by an integer value.
      * @param {number} value
      * @public
