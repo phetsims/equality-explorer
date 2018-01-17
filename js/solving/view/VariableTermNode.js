@@ -76,6 +76,7 @@ define( function( require ) {
     variableTerm.coefficientProperty.link( function( fraction ) {
       assert && assert( fraction instanceof ReducedFraction );
 
+      // restore the symbol to its default, since some conditions below may have modified it
       symbolNode.text = variableTerm.symbol;
 
       // update the value displayed
