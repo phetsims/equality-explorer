@@ -30,7 +30,7 @@ define( function( require ) {
   function ConstantTermNode( constantTerm, options ) {
 
     var self = this;
-    
+
     options = _.extend( {
       radius: 50,
       margin: 18,
@@ -70,18 +70,30 @@ define( function( require ) {
       // update the value displayed
       if ( fraction.isInteger() ) {
 
+        // hide the fraction
+        if ( contentNode.hasChild( fractionNode ) ) {
+          contentNode.removeChild( fractionNode );
+        }
+
         // update the integer
         assert && assert( Math.abs( fraction.denominator ) === 1, 'expected fraction to be reduced' );
         integerNode.text = fraction.numerator;
-        integerNode.visible = true;
-        fractionNode.visible = false;
+        if ( !contentNode.hasChild( integerNode ) ) {
+          contentNode.addChild( integerNode );
+        }
       }
       else {
-        
+
+        // hide the integer
+        if ( contentNode.hasChild( integerNode ) ) {
+          contentNode.removeChild( integerNode );
+        }
+
         // update the fraction
         fractionNode.setFraction( fraction );
-        fractionNode.visible = true;
-        integerNode.visible = false;
+        if ( !contentNode.hasChild( fractionNode ) ) {
+          contentNode.addChild( fractionNode );
+        }
       }
 
       //TODO factor out fill and lineDash, copied from ItemIcons
@@ -96,7 +108,6 @@ define( function( require ) {
       }
 
       // center in the circle
-      fractionNode.center = integerNode.center;
       contentNode.center = circleNode.center;
 
       // hide this node when value is zero

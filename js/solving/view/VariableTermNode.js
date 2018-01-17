@@ -78,42 +78,49 @@ define( function( require ) {
       // update the value displayed
       if ( fraction.isInteger() ) {
 
+        // hide fraction
+        if ( contentNode.hasChild( fractionNode ) ) {
+          contentNode.removeChild( fractionNode );
+        }
+
         // update the integer
         assert && assert( Math.abs( fraction.denominator ) === 1, 'expected fraction to be reduced' );
         if ( Math.abs( fraction.getValue() ) === 1 ) {
 
           // hide coefficient of 1 or -1
-          integerNode.visible = false;
+          if ( contentNode.hasChild( integerNode ) ) {
+            contentNode.removeChild( integerNode );
+          }
 
           // show -x, not -1x
           if ( fraction.getValue() === -1 ) {
             symbolNode.text = '-' + variableTerm.symbol;
           }
-
-          integerNode.center = symbolNode.center;
         }
         else {
+
           integerNode.text = fraction.numerator;
-          integerNode.visible = true;
           integerNode.right = symbolNode.left - options.xSpacing;
           integerNode.centerY = symbolNode.centerY;
+          if ( !contentNode.hasChild( integerNode ) ) {
+            contentNode.addChild( integerNode );
+          }
         }
-
-        // hide the fraction
-        fractionNode.visible = false;
-        fractionNode.center = integerNode.center;
       }
       else {
 
+        // hide the integer
+        if ( contentNode.hasChild( integerNode ) ) {
+          contentNode.removeChild( integerNode );
+        }
+
         // update the fraction
         fractionNode.setFraction( fraction );
-        fractionNode.visible = true;
         fractionNode.right = symbolNode.left - options.xSpacing;
         fractionNode.centerY = symbolNode.centerY;
-
-        // hide the integer
-        integerNode.visible = false;
-        integerNode.center = symbolNode.center;
+        if ( !contentNode.hasChild( fractionNode ) ) {
+          contentNode.addChild( fractionNode );
+        }
       }
 
       //TODO factor out fill and lineDash, copied from ItemIcons
