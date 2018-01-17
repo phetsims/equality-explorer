@@ -30,11 +30,12 @@ define( function( require ) {
   // If y were ever added to a production screen, these should be moved to ItemIcons.
   var POSITIVE_Y_NODE = new VariableNode( yString, {
     fill: 'rgb( 250, 100, 255 )',
+    lineDash: EqualityExplorerConstants.POSITIVE_VARIABLE_LINE_DASH,
     maxHeight: ItemIcons.ICON_HEIGHT
   } );
   var NEGATIVE_Y_NODE = new VariableNode( '-' + yString, {
     fill: 'rgb( 240, 140, 255 )',
-    lineDash: [ 4, 4 ],
+    lineDash: EqualityExplorerConstants.NEGATIVE_VARIABLE_LINE_DASH,
     maxHeight: ItemIcons.ICON_HEIGHT
   } );
   var Y_SHADOW_NODE = new Rectangle( 0, 0, ItemIcons.ICON_HEIGHT, ItemIcons.ICON_HEIGHT, {

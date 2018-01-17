@@ -13,6 +13,7 @@ define( function( require ) {
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var IntegerNode = require( 'EQUALITY_EXPLORER/common/view/IntegerNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -90,12 +91,13 @@ define( function( require ) {
     // 1, -1 and their shadow
     POSITIVE_ONE_NODE: new IntegerNode( 1, _.extend( {}, {
       radius: ICON_HEIGHT / 2,
-      fill: 'rgb( 246, 228, 213 )'
+      fill: EqualityExplorerConstants.POSITIVE_CONSTANT_FILL,
+      lineDash: EqualityExplorerConstants.POSITIVE_CONSTANT_LINE_DASH
     }, COMMON_OPTIONS ) ),
     NEGATIVE_ONE_NODE: new IntegerNode( -1, _.extend( {}, {
       radius: ICON_HEIGHT / 2,
-      fill: 'rgb( 248, 238, 229 )',
-      lineDash: [ 3, 3 ]
+      fill: EqualityExplorerConstants.NEGATIVE_CONSTANT_FILL,
+      lineDash: EqualityExplorerConstants.NEGATIVE_CONSTANT_LINE_DASH
     }, COMMON_OPTIONS ) ),
     ONE_SHADOW_NODE: new Circle( ICON_HEIGHT / 2, _.extend( {}, {
       fill: 'black'
@@ -103,11 +105,12 @@ define( function( require ) {
 
     // x, -x and their shadow
     POSITIVE_X_NODE: new VariableNode( xString, _.extend( {}, {
-      fill: 'rgb( 49, 193, 238 )'
+      fill: EqualityExplorerConstants.POSITIVE_X_FILL,
+      lineDash: EqualityExplorerConstants.POSITIVE_VARIABLE_LINE_DASH
     }, COMMON_OPTIONS ) ),
     NEGATIVE_X_NODE: new VariableNode( '-' + xString, _.extend( {}, {
-      fill: 'rgb( 99, 212, 238 )',
-      lineDash: [ 4, 4 ]
+      fill: EqualityExplorerConstants.NEGATIVE_X_FILL,
+      lineDash: EqualityExplorerConstants.NEGATIVE_VARIABLE_LINE_DASH
     }, COMMON_OPTIONS ) ),
     X_SHADOW_NODE: new Rectangle( 0, 0, ICON_HEIGHT, ICON_HEIGHT, _.extend( {}, {
       fill: 'black'

@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -96,15 +97,14 @@ define( function( require ) {
         }
       }
 
-      //TODO factor out fill and lineDash, copied from ItemIcons
       // update properties based on sign
       if ( fraction.getValue() >= 0 ) {
-        circleNode.fill = 'rgb( 246, 228, 213 )';
-        circleNode.lineDash = []; // solid line
+        circleNode.fill = EqualityExplorerConstants.POSITIVE_CONSTANT_FILL;
+        circleNode.lineDash = EqualityExplorerConstants.POSITIVE_CONSTANT_LINE_DASH;
       }
       else {
-        circleNode.fill = 'rgb( 248, 238, 229 )';
-        circleNode.lineDash = [ 3, 3 ];
+        circleNode.fill = EqualityExplorerConstants.NEGATIVE_CONSTANT_FILL;
+        circleNode.lineDash = EqualityExplorerConstants.NEGATIVE_CONSTANT_LINE_DASH;
       }
 
       // center in the circle

@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -123,15 +124,14 @@ define( function( require ) {
         }
       }
 
-      //TODO factor out fill and lineDash, copied from ItemIcons
       // update properties based on sign
       if ( fraction.getValue() >= 0 ) {
-        squareNode.fill = 'rgb( 49, 193, 238 )';
-        squareNode.lineDash = []; // solid line
+        squareNode.fill = EqualityExplorerConstants.POSITIVE_X_FILL;
+        squareNode.lineDash = EqualityExplorerConstants.POSITIVE_VARIABLE_LINE_DASH;
       }
       else {
-        squareNode.fill = 'rgb( 99, 212, 238 )';
-        squareNode.lineDash = [ 3, 3 ];
+        squareNode.fill = EqualityExplorerConstants.NEGATIVE_X_FILL;
+        squareNode.lineDash = EqualityExplorerConstants.NEGATIVE_VARIABLE_LINE_DASH;
       }
 
       // center in the square
