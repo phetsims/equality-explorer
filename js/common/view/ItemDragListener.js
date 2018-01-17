@@ -17,6 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
+  var Touch = require( 'SCENERY/input/Touch' );
 
   /**
    * @param {Node} itemNode - Node that the listener is attached to
@@ -196,7 +197,7 @@ define( function( require ) {
       // touch: center icon above finger, so that most of icon is clearly visible
       // mouse: move bottom center of icon to pointer location
       var xOffset = 0;
-      var yOffset = ( event.pointer.isTouch ) ? -( 1.5 * this.item.icon.height ) : -( 0.5 * this.item.icon.height );
+      var yOffset = ( event.pointer instanceof Touch ) ? -( 1.5 * this.item.icon.height ) : -( 0.5 * this.item.icon.height );
       var location = this.itemNode.globalToParentPoint( event.pointer.point ).plusXY( xOffset, yOffset );
 
       // constrain to drag bounds
