@@ -32,6 +32,8 @@ define( function( require ) {
    */
   function VariableTermNode( variableTerm, options ) {
 
+    var self = this;
+
     options = _.extend( {
       radius: 50,
       margin: 18,
@@ -138,7 +140,7 @@ define( function( require ) {
       contentNode.center = squareNode.center;
 
       // hide this node when coefficient is zero
-      // self.visible = ( fraction.getValue() !== 0 );
+      self.visible = ( fraction.getValue() !== 0 );
     } );
 
     this.mutate( options );
