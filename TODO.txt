@@ -10,7 +10,7 @@ Solving screen
 Universal operation
 - animation
 - plus, minus affect constant
-- time, divide affect constant and coefficient
+- times, divide affect constant and coefficient
 - prevent divide-by-zero (already implemented)
 
 Locked mode, #19
