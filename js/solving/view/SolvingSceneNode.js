@@ -16,7 +16,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
-  var UniversalOperationNode = require( 'EQUALITY_EXPLORER/solving/view/UniversalOperationNode' );
+  var UniversalOperationControl = require( 'EQUALITY_EXPLORER/solving/view/UniversalOperationControl' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/solving/view/VariableTermNode' );
 
@@ -70,7 +70,7 @@ define( function( require ) {
     var operationAnimationLayer = new Node();
 
     // Universal Operation, below Equation accordion box
-    var operationNode = new UniversalOperationNode( scene, operationAnimationLayer, {
+    var operationNode = new UniversalOperationControl( scene, operationAnimationLayer, {
       centerX: scene.scale.location.x,
       top: localBounds.bottom + 10
     } );

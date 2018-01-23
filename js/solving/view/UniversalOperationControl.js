@@ -40,7 +40,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function UniversalOperationNode( scene, animationLayer, options ) {
+  function UniversalOperationControl( scene, animationLayer, options ) {
 
     var self = this;
 
@@ -173,7 +173,7 @@ define( function( require ) {
             self.removeAnimation( opacityTo );
           },
           onStop: function() {
-            phet.log && phet.log( 'UniversalOperationNode opacityTo.onStop' );
+            phet.log && phet.log( 'UniversalOperationControl opacityTo.onStop' );
             if ( animationLayer.hasChild( parentNode ) ) {
               animationLayer.removeChild( parentNode );
             }
@@ -196,7 +196,7 @@ define( function( require ) {
             self.removeAnimation( moveTo );
           },
           onStop: function() {
-            phet.log && phet.log( 'UniversalOperationNode moveTo.onStop' );
+            phet.log && phet.log( 'UniversalOperationControl moveTo.onStop' );
             opacityTo.stop();
             if ( animationLayer.hasChild( parentNode ) ) {
               animationLayer.removeChild( parentNode );
@@ -236,9 +236,9 @@ define( function( require ) {
     } );
   }
 
-  equalityExplorer.register( 'UniversalOperationNode', UniversalOperationNode );
+  equalityExplorer.register( 'UniversalOperationControl', UniversalOperationControl );
 
-  return inherit( HBox, UniversalOperationNode, {
+  return inherit( HBox, UniversalOperationControl, {
 
     // @public
     reset: function() {
