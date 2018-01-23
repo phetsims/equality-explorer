@@ -16,7 +16,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
-  var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
+  var UniversalOperationNode = require( 'EQUALITY_EXPLORER/solving/view/UniversalOperationNode' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/solving/view/VariableTermNode' );
 
