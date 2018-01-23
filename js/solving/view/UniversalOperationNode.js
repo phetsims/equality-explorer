@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * The 'universal operation' control (as it's referred to in the design document)
@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
@@ -25,30 +24,29 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
-   * @param {StringProperty} operatorProperty - the selected operator
-   * @param {string[]} operators - the choice of operators
-   * @param {NumberProperty} operandProperty - the selected integer operand
-   * @param {RangeWithValue} operandRange - the choice of integer operands
+   * @param {SolvingScene} scene
    * @param {Object} [options]
    * @constructor
    */
-  function UniversalOperationNode( operatorProperty, operators, operandProperty, operandRange, options ) {
-
-    var self = this;
+  function UniversalOperationNode( scene, options ) {
 
     options = _.extend( {
-      fontSize: 24,
+      font: new PhetFont( 24 ),
       spacing: 15
     }, options );
 
-    var font = new PhetFont( options.fontSize );
+    // to improve readability
+    var operatorProperty = scene.operatorProperty;
+    var operators = scene.operators;
+    var operandProperty = scene.operandProperty;
+    var operandRange = scene.operandRange;
 
     // picker for choosing operator
     var operatorItems = [];
-    for ( var i = 0; i < operators.length; i++ ) {
+    for ( var i = 0; i < scene.operators.length; i++ ) {
       operatorItems.push( {
         value: operators[ i ],
-        node: new Text( operators[ i ], { font: font } )
+        node: new Text( operators[ i ], { font: options.font } )
       } );
     }
     var operatorPicker = new ObjectPicker( operatorProperty, operatorItems, {
@@ -59,7 +57,7 @@ define( function( require ) {
     // picker for choosing operand
     var operandPicker = new NumberPicker( operandProperty, new Property( operandRange ), {
       color: 'black',
-      font: font,
+      font: options.font,
       xMargin: 6,
       upFunction: function( value ) {
         if ( value === -1 && operatorProperty.value === EqualityExplorerConstants.DIVIDE ) {
@@ -79,15 +77,40 @@ define( function( require ) {
       }
     } );
 
-    // @public
-    this.goEmitter = new Emitter(); // emit is called when goButton is pressed
+    // When the 'go' button is pressed, apply the operation to terms.
+    var goButtonListener = function() {
+      var operand = scene.operandProperty.value;
+      if ( operatorProperty.value === EqualityExplorerConstants.PLUS ) {
+        scene.leftConstantTerm.plus( operand );
+        scene.rightConstantTerm.plus( operand );
+      }
+      else if ( operatorProperty.value === EqualityExplorerConstants.MINUS ) {
+        scene.leftConstantTerm.minus( operand );
+        scene.rightConstantTerm.minus( operand );
+      }
+      else if ( operatorProperty.value === EqualityExplorerConstants.TIMES ) {
+        scene.leftConstantTerm.times( operand );
+        scene.rightConstantTerm.times( operand );
+        scene.leftVariableTerm.times( operand );
+        scene.rightVariableTerm.times( operand );
+      }
+      else if ( operatorProperty.value === EqualityExplorerConstants.DIVIDE ) {
+        scene.leftConstantTerm.divide( operand );
+        scene.rightConstantTerm.divide( operand );
+        scene.leftVariableTerm.divide( operand );
+        scene.rightVariableTerm.divide( operand );
+      }
+      else {
+        throw new Error( 'unsupported operator: ' + operatorProperty.value );
+      }
+    };
 
-    // Go button to apply the operation
+    // 'go' button, applies the operation
     var goButtonIcon = new FontAwesomeNode( 'level_down', {
       scale: 0.65 * operandPicker.height / operandPicker.height // scale relative to the pickers
     } );
     var goButton = new RoundPushButton( {
-      listener: function() { self.goEmitter.emit(); },
+      listener: goButtonListener,
       content: goButtonIcon,
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       minXMargin: 10,
