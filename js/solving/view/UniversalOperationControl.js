@@ -159,7 +159,7 @@ define( function( require ) {
           children: [ leftOperationNode, rightOperationNode ]
         } );
 
-        // opacity animation
+        // opacity animation (fade out), started when the operations arrive at their destination
         var opacityTo = new OpacityTo( parentNode, {
           duration: OPACITY_DURATION,
           endOpacity: 0,
