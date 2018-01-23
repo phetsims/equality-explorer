@@ -14,6 +14,7 @@ define( function( require ) {
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/solving/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var UniversalOperationNode = require( 'EQUALITY_EXPLORER/solving/view/UniversalOperationNode' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
@@ -65,8 +66,11 @@ define( function( require ) {
     globalBounds = this.equationAccordionBox.parentToGlobalBounds( this.equationAccordionBox.bounds );
     localBounds = this.globalToLocalBounds( globalBounds );
 
+    // Layer when universal operation animation occurs
+    var operationAnimationLayer = new Node();
+
     // Universal Operation, below Equation accordion box
-    var operationNode = new UniversalOperationNode( scene, {
+    var operationNode = new UniversalOperationNode( scene, operationAnimationLayer, {
       centerX: scene.scale.location.x,
       top: localBounds.bottom + 10
     } );
@@ -103,6 +107,12 @@ define( function( require ) {
       bottom: scene.scale.rightPlate.locationProperty.value.y
     } );
     this.addChild( rightVariableTermNode );
+
+    // Put animation layer on top of everything
+    this.addChild( operationAnimationLayer );
+
+    // @private fields needed by prototype functions
+    this.operationNode = operationNode;
   }
 
   equalityExplorer.register( 'SolvingSceneNode', SolvingSceneNode );
@@ -121,6 +131,9 @@ define( function( require ) {
           this.viewProperties[ property ].reset();
         }
       }
+
+      // reset the universal operator, to cancel any operation animations that are in progress
+      this.operationNode.reset();
 
       SceneNode.prototype.reset.call( this );
     }
