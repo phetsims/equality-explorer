@@ -75,11 +75,13 @@ define( function( require ) {
     // event arg will be non-null if the item was created as the result of a user interaction.
     this.itemCreatedEmitter = new Emitter();
 
+    //TODO delete equivalentItemCreator if not used for lock feature
     // @public {AbstractItemCreator|null} optional equivalent item creator on the opposite side of the scale.
     // This is needed for the lock feature, so that an equivalent item on the opposite side can be created.
     // Example: When locked, if I drag -x out of the left panel, -x needs to also drag out of the right panel.
     this.equivalentItemCreator = null;
 
+    //TODO delete inverseItemCreator if not used for lock feature
     // @public {AbstractItemCreator} optional inverse item creator on the opposite side of the scale.
     // This is needed for lock feature, for the case where an inverse item must be created.
     // Example: When locked, if I remove x from the left plate, and the right plate is empty, then x needs
