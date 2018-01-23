@@ -246,9 +246,11 @@ define( function( require ) {
     // @public
     reset: function() {
 
-      // Stop all animations. Animations remove themselves from the list when stopped.
-      while ( this.animations.length > 0 ) {
-        this.animations[ 0 ].stop();
+      // Stop all animations.
+      // Operate on a copy of the array, since animations remove themselves when stopped.
+      var arrayCopy = this.animations.slice( 0 );
+      for ( var i = 0; i < arrayCopy.length; i++ ) {
+        arrayCopy[ i ].stop();
       }
     },
 
