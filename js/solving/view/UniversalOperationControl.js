@@ -59,7 +59,7 @@ define( function( require ) {
 
     // picker for choosing operator
     var operatorItems = [];
-    for ( var i = 0; i < scene.operators.length; i++ ) {
+    for ( var i = 0; i < operators.length; i++ ) {
       operatorItems.push( {
         value: operators[ i ],
         node: new Text( operators[ i ], { font: options.font } )
@@ -93,7 +93,7 @@ define( function( require ) {
       }
     } );
 
-    // @private Tween animations that are running
+    // @private Tween animations that exist
     this.animations = [];
 
     // When the 'go' button is pressed, animate operations, then apply operations to terms.
@@ -103,7 +103,7 @@ define( function( require ) {
       ( function() {
 
         var operator = operatorProperty.value;
-        var operand = scene.operandProperty.value;
+        var operand = operandProperty.value;
 
         // Function that applies the operation to terms
         var applyOperation = null;
@@ -165,15 +165,17 @@ define( function( require ) {
           endOpacity: 0,
           easing: TWEEN.Easing.Linear.None,
           onStart: function() {
+            phet.log && phet.log( 'opacityTo.onStart' );
             self.addAnimation( opacityTo );
           },
           onComplete: function() {
+            phet.log && phet.log( 'opacityTo.onComplete' );
             animationLayer.removeChild( parentNode );
             applyOperation();
             self.removeAnimation( opacityTo );
           },
           onStop: function() {
-            phet.log && phet.log( 'UniversalOperationControl opacityTo.onStop' );
+            phet.log && phet.log( 'opacityTo.onStop' );
             if ( animationLayer.hasChild( parentNode ) ) {
               animationLayer.removeChild( parentNode );
             }
@@ -188,16 +190,17 @@ define( function( require ) {
           constantSpeed: false,
           easing: TWEEN.Easing.Quadratic.In,
           onStart: function() {
+            phet.log && phet.log( 'moveTo.onStart' );
             self.addAnimation( moveTo );
             animationLayer.addChild( parentNode );
           },
           onComplete: function() {
+            phet.log && phet.log( 'moveTo.onComplete' );
             opacityTo.start();
             self.removeAnimation( moveTo );
           },
           onStop: function() {
-            phet.log && phet.log( 'UniversalOperationControl moveTo.onStop' );
-            opacityTo.stop();
+            phet.log && phet.log( 'moveTo.onStop' );
             if ( animationLayer.hasChild( parentNode ) ) {
               animationLayer.removeChild( parentNode );
             }
@@ -243,11 +246,10 @@ define( function( require ) {
     // @public
     reset: function() {
 
-      // stop all animations and clear the list
-      for ( var i = 0; i < this.animations.length; i++ ) {
-        this.animations[ i ].stop();
+      // Stop all animations. Animations remove themselves from the list when stopped.
+      while ( this.animations.length > 0 ) {
+        this.animations[ 0 ].stop();
       }
-      this.animations = [];
     },
 
     /**
@@ -255,9 +257,8 @@ define( function( require ) {
      * @param {Object} animation - wrapper for a Tween animation, see twixt
      */
     addAnimation: function( animation ) {
-      if ( this.animations.indexOf( animation ) === -1 ) {
-        this.animations.push( animation );
-      }
+      assert && assert( this.animations.indexOf( animation ) === -1, 'attempted to add animation twice' );
+      this.animations.push( animation );
     },
 
     /**
@@ -266,9 +267,8 @@ define( function( require ) {
      */
     removeAnimation: function( animation ) {
       var index = this.animations.indexOf( animation );
-      if ( index !== -1 ) {
-        this.animations.splice( index, 1 );
-      }
+      assert && assert( index !== -1, 'attempted to remove animation twice' );
+      this.animations.splice( index, 1 );
     }
   } );
 } );
