@@ -13,9 +13,10 @@ Solving screen
 - sum term + term to zero
 
 Locked mode, #19
-- drag from panel
-- drag from scale
-- drag in progress
+- item dragged from panel
+- item dragged from scale
+- term dragged from scale
+- mode change while drag is in progress (ignore mode change?)
 
 Cleanup
 - grunt update-copyright-dates
