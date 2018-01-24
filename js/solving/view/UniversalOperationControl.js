@@ -188,7 +188,7 @@ define( function( require ) {
         var moveTo = new MoveTo( parentNode, endPoint, {
           duration: MOTION_DURATION,
           constantSpeed: false,
-          easing: TWEEN.Easing.Quadratic.In,
+          easing: TWEEN.Easing.Quadratic.Out,
           onStart: function() {
             phet.log && phet.log( 'moveTo.onStart' );
             self.addAnimation( moveTo );
