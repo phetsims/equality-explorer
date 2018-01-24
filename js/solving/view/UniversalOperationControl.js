@@ -93,7 +93,7 @@ define( function( require ) {
       }
     } );
 
-    // @private Tween animations that exist
+    // @private Tween animations that are running
     this.animations = [];
 
     // When the 'go' button is pressed, animate operations, then apply operations to terms.
