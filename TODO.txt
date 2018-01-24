@@ -1,17 +1,16 @@
 TODO items for equality-explorer
 
+Universal operation
+- sum-to-zero animation as the result of applying an operation
+
 Solving screen
 - show terms on scale instead of individual items
 - drag items to scale to add to terms
 - drag terms to panel
 - fractional coefficients and constants
 - universal operation
-
-Universal operation
-- animation
-- plus, minus affect constant
-- times, divide affect constant and coefficient
-- prevent divide-by-zero (already implemented)
+- sum item + term to zero
+- sum term + term to zero
 
 Locked mode, #19
 - drag from panel
