@@ -31,7 +31,7 @@ define( function( require ) {
 
   // constants
   var MOTION_Y_OFFSET = 65;
-  var MOTION_DURATION = 500 / EqualityExplorerQueryParameters.speed;
+  var MOTION_DURATION = 700 / EqualityExplorerQueryParameters.speed;
   var OPACITY_DURATION = 250 / EqualityExplorerQueryParameters.speed;
 
   /**
@@ -188,7 +188,7 @@ define( function( require ) {
         var moveTo = new MoveTo( parentNode, endPoint, {
           duration: MOTION_DURATION,
           constantSpeed: false,
-          easing: TWEEN.Easing.Quadratic.Out,
+          easing: TWEEN.Easing.Quintic.In,
           onStart: function() {
             phet.log && phet.log( 'moveTo.onStart' );
             self.addAnimation( moveTo );
