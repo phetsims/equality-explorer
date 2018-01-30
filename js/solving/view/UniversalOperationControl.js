@@ -115,7 +115,7 @@ define( function( require ) {
         }
         else if ( operator === EqualityExplorerConstants.MINUS ) {
           applyOperation = function() {
-            scene.rightConstantTerm.minus( operand );
+            scene.leftConstantTerm.minus( operand );
             scene.rightConstantTerm.minus( operand );
           };
         }
