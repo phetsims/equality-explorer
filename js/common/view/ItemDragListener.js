@@ -255,9 +255,8 @@ define( function( require ) {
       var cellIndex = this.plate.getCellForItem( this.inverseItem );
 
       // some things we need before the items are deleted
-      var symbol = this.item.symbol;
+      var symbol = this.item.symbol || null;
       var parent = this.itemNode.getParent();
-      var itemConstructor = this.item.constructor;
 
       // delete the 2 items that sum to zero
       this.item.dispose();
@@ -268,7 +267,8 @@ define( function( require ) {
       var sumToZeroLocation = this.plate.getLocationForCell( cellIndex );
 
       // show '0' or '0x' in yellow halo, fade out
-      var sumToZeroNode = new SumToZeroNode( itemConstructor, symbol, {
+      var sumToZeroNode = new SumToZeroNode( {
+        symbol: symbol,
         haloRadius: this.haloRadius,
         center: sumToZeroLocation
       } );

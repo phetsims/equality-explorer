@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantItem = require( 'EQUALITY_EXPLORER/common/model/ConstantItem' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
@@ -21,20 +20,15 @@ define( function( require ) {
   var OpacityTo = require( 'TWIXT/OpacityTo' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VariableItem = require( 'EQUALITY_EXPLORER/common/model/VariableItem' );
 
   /**
-   * @param {constructor} itemConstructor - constructor that identifies the type of item that has disappeared
-   * @param {string|null} symbol - the symbol for a variable
    * @param {Object} [options]
    * @constructor
    */
-  function SumToZeroNode( itemConstructor, symbol, options ) {
-
-    assert && assert( itemConstructor === ConstantItem || itemConstructor === VariableItem,
-      'unsupported item type' );
+  function SumToZeroNode( options ) {
 
     options = _.extend( {
+      symbol: null, // optional symbol that appears after the '0', e.g. '0x'
       haloRadius: 20,
       fontSize: 18
     }, options );
@@ -43,31 +37,29 @@ define( function( require ) {
       font: new PhetFont( options.fontSize )
     } );
 
-    var symbolNode = null;
-    if ( itemConstructor === ConstantItem ) {
+    var contentNode = null;
+    if ( options.symbol ) {
 
-      // 1 and -1 sum to '0'
-      symbolNode = zeroNode;
-    }
-    else {
-
-      // x and -x sum to '0x'
-      assert && assert( symbol, 'expected a symbol' );
-      var xNode = new Text( symbol, {
+      var xNode = new Text( options.symbol, {
         font: new MathSymbolFont( options.fontSize )
       } );
-      symbolNode = new HBox( {
+      
+      contentNode = new HBox( {
         spacing: 0,
         children: [ zeroNode, xNode ]
       } );
     }
+    else {
+
+      contentNode = zeroNode;
+    }
 
     var haloNode = new HaloNode( options.haloRadius, {
-      center: symbolNode.center
+      center: contentNode.center
     } );
 
     assert && assert( !options.children, 'this type defines its children' );
-    options.children = [ haloNode, symbolNode ];
+    options.children = [ haloNode, contentNode ];
 
     Node.call( this, options );
   }
