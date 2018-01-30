@@ -149,7 +149,7 @@ define( function( require ) {
         var sumToZeroNode = new SumToZeroNode( {
           symbol: variableTerm.symbol,
           haloBaseColor: 'transparent', // no halo
-          fontSize: 40,
+          fontSize: INTEGER_FONT.size,
           center: self.center
         } );
         self.parent.addChild( sumToZeroNode );

@@ -118,7 +118,7 @@ define( function( require ) {
       if ( oldFraction && oldFraction.getValue() !== 0 && fraction.getValue() === 0 ) {
         var sumToZeroNode = new SumToZeroNode( {
           haloBaseColor: 'transparent', // no halo
-          fontSize: 40,
+          fontSize: INTEGER_FONT.size,
           center: self.center
         } );
         self.parent.addChild( sumToZeroNode );
