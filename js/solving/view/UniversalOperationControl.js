@@ -165,17 +165,14 @@ define( function( require ) {
           endOpacity: 0,
           easing: TWEEN.Easing.Linear.None,
           onStart: function() {
-            phet.log && phet.log( 'opacityTo.onStart' );
             self.addAnimation( opacityTo );
           },
           onComplete: function() {
-            phet.log && phet.log( 'opacityTo.onComplete' );
             animationLayer.removeChild( parentNode );
             applyOperation();
             self.removeAnimation( opacityTo );
           },
           onStop: function() {
-            phet.log && phet.log( 'opacityTo.onStop' );
             if ( animationLayer.hasChild( parentNode ) ) {
               animationLayer.removeChild( parentNode );
             }
@@ -190,17 +187,14 @@ define( function( require ) {
           constantSpeed: false,
           easing: TWEEN.Easing.Quintic.In,
           onStart: function() {
-            phet.log && phet.log( 'moveTo.onStart' );
             self.addAnimation( moveTo );
             animationLayer.addChild( parentNode );
           },
           onComplete: function() {
-            phet.log && phet.log( 'moveTo.onComplete' );
             opacityTo.start();
             self.removeAnimation( moveTo );
           },
           onStop: function() {
-            phet.log && phet.log( 'moveTo.onStop' );
             if ( animationLayer.hasChild( parentNode ) ) {
               animationLayer.removeChild( parentNode );
             }
