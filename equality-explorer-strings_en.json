@@ -14,6 +14,9 @@
   "screen.solving": {
     "value": "Solving"
   },
+  "screen.mystery": {
+    "value": "Mystery"
+  },
   "snapshots": {
     "value": "Snapshots"
   },
