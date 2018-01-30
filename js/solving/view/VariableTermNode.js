@@ -18,6 +18,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
+  var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // constants
@@ -73,7 +74,7 @@ define( function( require ) {
     Node.call( this );
 
     // synchronize with the model value
-    variableTerm.coefficientProperty.link( function( fraction ) {
+    variableTerm.coefficientProperty.link( function( fraction, oldFraction ) {
       assert && assert( fraction instanceof ReducedFraction );
 
       // restore the symbol to its default, since some conditions below may have modified it
@@ -142,6 +143,18 @@ define( function( require ) {
 
       // hide this node when coefficient is zero
       self.visible = ( fraction.getValue() !== 0 );
+
+      // sum-to-zero animation when the coefficient value transitions to zero
+      if ( oldFraction && oldFraction.getValue() !== 0 && fraction.getValue() === 0 ) {
+        var sumToZeroNode = new SumToZeroNode( {
+          symbol: variableTerm.symbol,
+          haloBaseColor: 'transparent', // no halo
+          fontSize: 40,
+          center: self.center
+        } );
+        self.parent.addChild( sumToZeroNode );
+        sumToZeroNode.startAnimation();
+      }
     } );
 
     this.mutate( options );
