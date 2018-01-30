@@ -11,6 +11,7 @@ define( function( require ) {
 
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var Color = require( 'SCENERY/util/Color' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var RadialGradient = require( 'SCENERY/util/RadialGradient' );
@@ -23,14 +24,16 @@ define( function( require ) {
   function HaloNode( radius, options ) {
 
     options = _.extend( {
-      centerColor: 'rgba( 255, 255, 0, 0.85 )', // slightly transparent yellow
-      edgeColor: 'rgba( 255, 255, 0, 0 )' // fully transparent yellow
+      baseColor: 'rgba( 255, 255, 0, 0.85 )' // slightly transparent yellow
     }, options );
+
+    // halo is fully transparent at the edges
+    var edgeColor = Color.toColor( options.baseColor ).withAlpha( 0 );
 
     assert && assert( !options.fill, 'this type defines its fill' );
     options.fill = new RadialGradient( 0, 0, 0, 0, 0, radius )
-      .addColorStop( 0.5, options.centerColor )
-      .addColorStop( 1, options.edgeColor );
+      .addColorStop( 0.5, options.baseColor )
+      .addColorStop( 1, edgeColor );
 
     Circle.call( this, radius, options );
   }
