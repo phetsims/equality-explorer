@@ -41,6 +41,7 @@ define( function( require ) {
     var contentNode = null;
     if ( options.symbol ) {
 
+      // e.g. '0x'
       var xNode = new Text( options.symbol, {
         font: new MathSymbolFont( options.fontSize )
       } );
@@ -52,6 +53,7 @@ define( function( require ) {
     }
     else {
 
+      // no symbol, just show '0'
       contentNode = zeroNode;
     }
 
