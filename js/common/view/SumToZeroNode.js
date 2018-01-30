@@ -76,6 +76,8 @@ define( function( require ) {
      */
     startAnimation: function() {
 
+      var self = this;
+
       var options = {
         startOpacity: 1,
         endOpacity: 0,
@@ -93,9 +95,8 @@ define( function( require ) {
       options.duration = options.duration / EqualityExplorerQueryParameters.speed;
 
       // start animation, gradually fade out by modulating opacity
-      var self = this;
-      this.animation = new OpacityTo( this, options );
-      this.animation.start( phet.joist.elapsedTime );
+      var animation = new OpacityTo( this, options );
+      animation.start( phet.joist.elapsedTime );
     }
   } );
 } );
