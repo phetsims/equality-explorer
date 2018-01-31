@@ -1,7 +1,7 @@
 TODO items for equality-explorer
 
 Universal operation
-- separate control from stuff that responds to control
+- sum-to-zero animation should not be shown on Reset or Reset All
 
 Solving screen
 - show terms on scale instead of individual items

@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {string} operator
@@ -19,7 +20,10 @@ define( function( require ) {
    */
   function UniversalOperation( operator, operand ) {
 
-    // @private
+    assert && assert( typeof operator === 'string', 'invalid operator: ' + operator );
+    assert && assert( typeof operand === 'number' && Util.isInteger( operand ), 'invalid operand: ' + operand );
+
+    // @public (read-only)
     this.operator = operator;
     this.operand = operand;
   }
@@ -30,7 +34,7 @@ define( function( require ) {
 
     /**
      * Applies the operation to terms.
-     * @param {*[]} terms
+     * @param {Term[]} terms
      * @public
      */
     applyTo: function( terms ) {

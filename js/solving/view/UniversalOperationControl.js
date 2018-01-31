@@ -12,28 +12,18 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MoveTo = require( 'TWIXT/MoveTo' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
-  var OpacityTo = require( 'TWIXT/OpacityTo' );
-  var OperationNode = require( 'EQUALITY_EXPLORER/solving/view/OperationNode' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/solving/model/UniversalOperation' );
-  var Vector2 = require( 'DOT/Vector2' );
-
-  // constants
-  var MOTION_Y_OFFSET = 65;
-  var MOTION_DURATION = 700 / EqualityExplorerQueryParameters.speed;
-  var OPACITY_DURATION = 250 / EqualityExplorerQueryParameters.speed;
+  var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/solving/view/UniversalOperationAnimation' );
 
   /**
    * @param {SolvingScene} scene TODO too much information?
@@ -100,80 +90,29 @@ define( function( require ) {
     // When the 'go' button is pressed, animate operations, then apply operations to terms.
     var goButtonListener = function() {
 
-      // IIFE so that the 'go' button can be pressed repeatedly, before the current operation has completed.
-      ( function() {
+      var operation = new UniversalOperation( operatorProperty.value, operandProperty.value );
 
-        var operator = operatorProperty.value;
-        var operand = operandProperty.value;
-        var operation = new UniversalOperation( operator, operand );
+      // start vertically aligned with the operator picker
+      var startY = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
 
-        // start the animation vertically centered on the pickers
-        var yStart = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
+      var animation = new UniversalOperationAnimation( operation, {
+        font: options.font,
+        leftX: leftPlate.locationProperty.value.x,
+        rightX: rightPlate.locationProperty.value.x,
+        startY: startY,
+        onComplete: function() {
+          operation.applyTo( scene.terms );
+          self.animations.splice( self.animations.indexOf( animation ), 1 );
+        },
+        onStop: function() {
+          self.animations.splice( self.animations.indexOf( animation ), 1 );
+        }
+      } );
+      self.animations.push( animation );
 
-        // Nodes for the operation
-        var leftOperationNode = new OperationNode( operator, operand, {
-          font: options.font,
-          centerX: leftPlate.locationProperty.value.x,
-          centerY: yStart
-        } );
-        var rightOperationNode = new OperationNode( operator, operand, {
-          font: options.font,
-          centerX: rightPlate.locationProperty.value.x,
-          centerY: yStart
-        } );
-
-        // Animate both operation nodes together, so that the operation is applied to both sides simultaneously.
-        var parentNode = new Node( {
-          children: [ leftOperationNode, rightOperationNode ]
-        } );
-
-        // opacity animation (fade out), started when the operations arrive at their destination
-        var opacityTo = new OpacityTo( parentNode, {
-          duration: OPACITY_DURATION,
-          endOpacity: 0,
-          easing: TWEEN.Easing.Linear.None,
-          onStart: function() {
-            self.addAnimation( opacityTo );
-          },
-          onComplete: function() {
-            animationLayer.removeChild( parentNode );
-            operation.applyTo( scene.terms );
-            self.removeAnimation( opacityTo );
-          },
-          onStop: function() {
-            if ( animationLayer.hasChild( parentNode ) ) {
-              animationLayer.removeChild( parentNode );
-            }
-            self.removeAnimation( opacityTo );
-          }
-        } );
-
-        // motion animation
-        var endPoint = new Vector2( parentNode.x, parentNode.y + MOTION_Y_OFFSET );
-        var moveTo = new MoveTo( parentNode, endPoint, {
-          duration: MOTION_DURATION,
-          constantSpeed: false,
-          easing: TWEEN.Easing.Quintic.In,
-          onStart: function() {
-            self.addAnimation( moveTo );
-            animationLayer.addChild( parentNode );
-          },
-          onComplete: function() {
-            opacityTo.start();
-            self.removeAnimation( moveTo );
-          },
-          onStop: function() {
-            if ( animationLayer.hasChild( parentNode ) ) {
-              animationLayer.removeChild( parentNode );
-            }
-            self.removeAnimation( moveTo );
-          }
-        } );
-
-        // start the animation
-        moveTo.start();
-
-      } )();
+      // start the animation
+      animationLayer.addChild( animation );
+      animation.start();
     };
 
     // 'go' button, applies the operation
@@ -214,27 +153,6 @@ define( function( require ) {
       for ( var i = 0; i < arrayCopy.length; i++ ) {
         arrayCopy[ i ].stop();
       }
-    },
-
-    /**
-     * Adds an animation if it hasn't already been added.
-     * @param {Object} animation - wrapper for a Tween animation, see twixt
-     * @private
-     */
-    addAnimation: function( animation ) {
-      assert && assert( this.animations.indexOf( animation ) === -1, 'attempted to add animation twice' );
-      this.animations.push( animation );
-    },
-
-    /**
-     * Removes an animation if it hasn't already been removed.
-     * @param {Object} animation - wrapper for a Tween animation, see twixt
-     * @private
-     */
-    removeAnimation: function( animation ) {
-      var index = this.animations.indexOf( animation );
-      assert && assert( index !== -1, 'attempted to remove animation twice' );
-      this.animations.splice( index, 1 );
     }
   } );
 } );
