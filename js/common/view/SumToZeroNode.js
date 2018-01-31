@@ -41,14 +41,13 @@ define( function( require ) {
     var contentNode = null;
     if ( options.symbol ) {
 
-      // e.g. '0x'
-      var xNode = new Text( options.symbol, {
+      var symbolNode = new Text( options.symbol, {
         font: new MathSymbolFont( options.fontSize )
       } );
       
       contentNode = new HBox( {
         spacing: 0,
-        children: [ zeroNode, xNode ]
+        children: [ zeroNode, symbolNode ] // e.g. '0x'
       } );
     }
     else {
