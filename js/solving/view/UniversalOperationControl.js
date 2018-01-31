@@ -27,6 +27,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var UniversalOperation = require( 'EQUALITY_EXPLORER/solving/model/UniversalOperation' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -104,40 +105,7 @@ define( function( require ) {
 
         var operator = operatorProperty.value;
         var operand = operandProperty.value;
-
-        // Function that applies the operation to terms
-        var applyOperation = null;
-        if ( operator === EqualityExplorerConstants.PLUS ) {
-          applyOperation = function() {
-            scene.leftConstantTerm.plus( operand );
-            scene.rightConstantTerm.plus( operand );
-          };
-        }
-        else if ( operator === EqualityExplorerConstants.MINUS ) {
-          applyOperation = function() {
-            scene.leftConstantTerm.minus( operand );
-            scene.rightConstantTerm.minus( operand );
-          };
-        }
-        else if ( operator === EqualityExplorerConstants.TIMES ) {
-          applyOperation = function() {
-            scene.leftConstantTerm.times( operand );
-            scene.leftVariableTerm.times( operand );
-            scene.rightConstantTerm.times( operand );
-            scene.rightVariableTerm.times( operand );
-          };
-        }
-        else if ( operator === EqualityExplorerConstants.DIVIDE ) {
-          applyOperation = function() {
-            scene.leftConstantTerm.divide( operand );
-            scene.leftVariableTerm.divide( operand );
-            scene.rightConstantTerm.divide( operand );
-            scene.rightVariableTerm.divide( operand );
-          };
-        }
-        else {
-          throw new Error( 'unsupported operator: ' + operator );
-        }
+        var operation = new UniversalOperation( operator, operand );
 
         // start the animation vertically centered on the pickers
         var yStart = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
@@ -169,7 +137,7 @@ define( function( require ) {
           },
           onComplete: function() {
             animationLayer.removeChild( parentNode );
-            applyOperation();
+            operation.applyTo( scene.terms );
             self.removeAnimation( opacityTo );
           },
           onStop: function() {

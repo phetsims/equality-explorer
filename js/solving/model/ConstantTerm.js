@@ -13,6 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
+  var Term = require( 'EQUALITY_EXPLORER/solving/model/Term' );
 
   /**
    * @param {AbstractItemCreator} positiveItemCreator
@@ -21,9 +22,7 @@ define( function( require ) {
    */
   function ConstantTerm( positiveItemCreator, negativeItemCreator ) {
 
-    // @public (read-only)
-    this.positiveItemCreator = positiveItemCreator;
-    this.negativeItemCreator = negativeItemCreator;
+    Term.call( this, positiveItemCreator, negativeItemCreator );
 
     // @public {Property.<ReducedFraction>} the constant value
     this.constantProperty = new Property( ReducedFraction.ZERO );
@@ -31,7 +30,17 @@ define( function( require ) {
 
   equalityExplorer.register( 'ConstantTerm', ConstantTerm );
 
-  return inherit( Object, ConstantTerm, {
+  return inherit( Term, ConstantTerm, {
+
+    /**
+     * Gets the value of this term.
+     * @returns {number}
+     * @public
+     * @override
+     */
+    getValue: function() {
+      return this.constantProperty.value;
+    },
 
     /**
      * @public
@@ -44,6 +53,7 @@ define( function( require ) {
      * Adds an integer value to the constant.
      * @param {number} value
      * @public
+     * @override
      */
     plus: function( value ) {
       this.constantProperty.value = this.constantProperty.value.plus( value );
@@ -53,6 +63,7 @@ define( function( require ) {
      * Subtracts an integer value from the constant.
      * @param {number} value
      * @public
+     * @override
      */
     minus: function( value ) {
       this.constantProperty.value = this.constantProperty.value.minus( value );
@@ -62,6 +73,7 @@ define( function( require ) {
      * Multiplies the constant by an integer value.
      * @param {number} value
      * @public
+     * @override
      */
     times: function( value ) {
       this.constantProperty.value = this.constantProperty.value.times( value );
@@ -71,6 +83,7 @@ define( function( require ) {
      * Divides the constant by an integer value.
      * @param {number} value
      * @public
+     * @override
      */
     divide: function( value ) {
       this.constantProperty.value = this.constantProperty.value.divide( value );

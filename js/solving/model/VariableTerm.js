@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
+  var Term = require( 'EQUALITY_EXPLORER/solving/model/Term' );
 
   /**
    * @param {string} symbol
@@ -24,10 +25,10 @@ define( function( require ) {
    */
   function VariableTerm( symbol, variableValueProperty, positiveItemCreator, negativeItemCreator ) {
 
+    Term.call( this, positiveItemCreator, negativeItemCreator );
+
     // @public (read-only)
     this.symbol = symbol;
-    this.positiveItemCreator = positiveItemCreator;
-    this.negativeItemCreator = negativeItemCreator;
 
     // @public {Property.<ReducedFraction>} coefficient that appears in front of the symbol for this item in equations
     // this.coefficientProperty = new Property( ReducedFraction.ZERO );
@@ -42,7 +43,17 @@ define( function( require ) {
 
   equalityExplorer.register( 'VariableTerm', VariableTerm );
 
-  return inherit( Object, VariableTerm, {
+  return inherit( Term, VariableTerm, {
+
+    /**
+     * Gets the value of this term.
+     * @returns {number}
+     * @public
+     * @override
+     */
+    getValue: function() {
+      return this.weightProperty.value;
+    },
 
     /**
      * @public
@@ -55,6 +66,7 @@ define( function( require ) {
      * Multiplies the coefficient by an integer value.
      * @param {number} value
      * @public
+     * @override
      */
     times: function( value ) {
       this.coefficientProperty.value = this.coefficientProperty.value.times( value );
@@ -64,6 +76,7 @@ define( function( require ) {
      * Divides the coefficient by an integer value.
      * @param {number} value
      * @public
+     * @override
      */
     divide: function( value ) {
       this.coefficientProperty.value = this.coefficientProperty.value.divide( value );

@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
+  var ConstantTerm = require( 'EQUALITY_EXPLORER/solving/model/ConstantTerm' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -23,7 +23,7 @@ define( function( require ) {
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var StringProperty = require( 'AXON/StringProperty' );
   var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/solving/model/VariableTerm' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -110,6 +110,14 @@ define( function( require ) {
     this.rightVariableTerm = new VariableTerm( xString, this.xProperty, rightPositiveXCreator, rightNegativeXCreator );
     this.leftConstantTerm = new ConstantTerm( leftPositiveOneCreator, leftNegativeOneCreator );
     this.rightConstantTerm = new ConstantTerm( rightPositiveOneCreator, rightNegativeOneCreator );
+
+    // @public (read-only)
+    this.terms = [
+      this.leftVariableTerm,
+      this.rightVariableTerm,
+      this.leftConstantTerm,
+      this.rightConstantTerm
+    ];
 
     LockableScene.call( this, 'solving',
       [ leftPositiveXCreator, leftNegativeXCreator, leftPositiveOneCreator, leftNegativeOneCreator ],
