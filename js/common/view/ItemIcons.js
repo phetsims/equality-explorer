@@ -12,12 +12,12 @@ define( function( require ) {
 
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var ConstantItemNode = require( 'EQUALITY_EXPLORER/common/view/ConstantItemNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
-  var IntegerNode = require( 'EQUALITY_EXPLORER/common/view/IntegerNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var VariableNode = require( 'EQUALITY_EXPLORER/common/view/VariableNode' );
+  var VariableItemNode = require( 'EQUALITY_EXPLORER/common/view/VariableItemNode' );
 
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
@@ -89,12 +89,12 @@ define( function( require ) {
     TURTLE_SHADOW_NODE: new Image( turtleShadowImage, COMMON_OPTIONS ),
 
     // 1, -1 and their shadow
-    POSITIVE_ONE_NODE: new IntegerNode( 1, _.extend( {}, {
+    POSITIVE_ONE_NODE: new ConstantItemNode( 1, _.extend( {}, {
       radius: ICON_HEIGHT / 2,
       fill: EqualityExplorerConstants.POSITIVE_CONSTANT_FILL,
       lineDash: EqualityExplorerConstants.POSITIVE_CONSTANT_LINE_DASH
     }, COMMON_OPTIONS ) ),
-    NEGATIVE_ONE_NODE: new IntegerNode( -1, _.extend( {}, {
+    NEGATIVE_ONE_NODE: new ConstantItemNode( -1, _.extend( {}, {
       radius: ICON_HEIGHT / 2,
       fill: EqualityExplorerConstants.NEGATIVE_CONSTANT_FILL,
       lineDash: EqualityExplorerConstants.NEGATIVE_CONSTANT_LINE_DASH
@@ -104,11 +104,11 @@ define( function( require ) {
     }, COMMON_OPTIONS ) ),
 
     // x, -x and their shadow
-    POSITIVE_X_NODE: new VariableNode( xString, _.extend( {}, {
+    POSITIVE_X_NODE: new VariableItemNode( xString, _.extend( {}, {
       fill: EqualityExplorerConstants.POSITIVE_X_FILL,
       lineDash: EqualityExplorerConstants.POSITIVE_VARIABLE_LINE_DASH
     }, COMMON_OPTIONS ) ),
-    NEGATIVE_X_NODE: new VariableNode( '-' + xString, _.extend( {}, {
+    NEGATIVE_X_NODE: new VariableItemNode( '-' + xString, _.extend( {}, {
       fill: EqualityExplorerConstants.NEGATIVE_X_FILL,
       lineDash: EqualityExplorerConstants.NEGATIVE_VARIABLE_LINE_DASH
     }, COMMON_OPTIONS ) ),

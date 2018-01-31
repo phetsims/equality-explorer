@@ -1,8 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO rename VariableItemNode? or reuse in VariableTermNode?
+//TODO reuse in VariableTermNode?
 /**
- * Displays a variable in a square.
+ * Displays an item that has a variable value.  The variable's symbol (e.g. 'x') is displayed in a square.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -23,7 +23,7 @@ define( function( require ) {
    * @param {Object} {options}
    * @constructor
    */
-  function VariableNode( symbol, options ) {
+  function VariableItemNode( symbol, options ) {
 
     options = _.extend( {
       squareLength: 40,
@@ -55,7 +55,7 @@ define( function( require ) {
     Node.call( this, options );
   }
 
-  equalityExplorer.register( 'VariableNode', VariableNode );
+  equalityExplorer.register( 'VariableItemNode', VariableItemNode );
 
-  return inherit( Node, VariableNode );
+  return inherit( Node, VariableItemNode );
 } );

@@ -19,7 +19,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
-  var VariableNode = require( 'EQUALITY_EXPLORER/common/view/VariableNode' );
+  var VariableItemNode = require( 'EQUALITY_EXPLORER/common/view/VariableItemNode' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -28,12 +28,12 @@ define( function( require ) {
   // constants
   // y, -y and their shadow. These nodes are reused using scenery's DAG feature.
   // If y were ever added to a production screen, these should be moved to ItemIcons.
-  var POSITIVE_Y_NODE = new VariableNode( yString, {
+  var POSITIVE_Y_NODE = new VariableItemNode( yString, {
     fill: 'rgb( 250, 100, 255 )',
     lineDash: EqualityExplorerConstants.POSITIVE_VARIABLE_LINE_DASH,
     maxHeight: ItemIcons.ICON_HEIGHT
   } );
-  var NEGATIVE_Y_NODE = new VariableNode( '-' + yString, {
+  var NEGATIVE_Y_NODE = new VariableItemNode( '-' + yString, {
     fill: 'rgb( 240, 140, 255 )',
     lineDash: EqualityExplorerConstants.NEGATIVE_VARIABLE_LINE_DASH,
     maxHeight: ItemIcons.ICON_HEIGHT

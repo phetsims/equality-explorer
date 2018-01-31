@@ -1,8 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO rename ConstantItemNode? or reuse in ConstantTermNode?
+//TODO reuse in ConstantTermNode?
 /**
- * Displays an integer in a circle.
+ * Displays an item that has a constant (integer) value.  The value is displayed in a circle.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -24,7 +24,7 @@ define( function( require ) {
    * @param {Object} {options}
    * @constructor
    */
-  function IntegerNode( value, options ) {
+  function ConstantItemNode( value, options ) {
 
     assert && assert( Util.isInteger( value ), 'value must be an integer: ' + value );
 
@@ -58,7 +58,7 @@ define( function( require ) {
     Node.call( this, options );
   }
 
-  equalityExplorer.register( 'IntegerNode', IntegerNode );
+  equalityExplorer.register( 'ConstantItemNode', ConstantItemNode );
 
-  return inherit( Node, IntegerNode );
+  return inherit( Node, ConstantItemNode );
 } );
