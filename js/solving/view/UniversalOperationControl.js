@@ -251,6 +251,7 @@ define( function( require ) {
     /**
      * Adds an animation if it hasn't already been added.
      * @param {Object} animation - wrapper for a Tween animation, see twixt
+     * @private
      */
     addAnimation: function( animation ) {
       assert && assert( this.animations.indexOf( animation ) === -1, 'attempted to add animation twice' );
@@ -260,6 +261,7 @@ define( function( require ) {
     /**
      * Removes an animation if it hasn't already been removed.
      * @param {Object} animation - wrapper for a Tween animation, see twixt
+     * @private
      */
     removeAnimation: function( animation ) {
       var index = this.animations.indexOf( animation );
