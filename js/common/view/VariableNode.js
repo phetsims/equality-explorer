@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO rename VariableItemNode? or reuse in VariableTermNode?
 /**
  * Displays a variable in a square.
  *

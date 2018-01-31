@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO rename ConstantItemNode? or reuse in ConstantTermNode?
 /**
  * Displays an integer in a circle.
  *
