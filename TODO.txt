@@ -1,9 +1,7 @@
 TODO items for equality-explorer
 
 Universal operation
-- sum-to-zero animation as the result of applying an operation
 - separate control from stuff that responds to control
-- refactor SumToZeroNode into building blocks that can be reused here
 
 Solving screen
 - show terms on scale instead of individual items
