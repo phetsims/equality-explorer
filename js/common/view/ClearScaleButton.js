@@ -10,8 +10,8 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ResetButton = require( 'SCENERY_PHET/buttons/ResetButton' );
 
   /**
    * @param {BalanceScale} scale
@@ -21,12 +21,8 @@ define( function( require ) {
   function ClearScaleButton( scale, options ) {
 
     options = _.extend( {
-
-      // supertype options
-      baseColor: 'rgb( 242, 242, 242 )',
-      scale: 0.65,
-      touchAreaDilation: 5
-
+      touchAreaDilation: 5,
+      iconWidth: 22
     }, options );
 
     assert && assert( !options.listener, 'this type defines its listener' );
@@ -34,10 +30,10 @@ define( function( require ) {
       scale.clear();
     };
 
-    ResetButton.call( this, options );
+    EraserButton.call( this, options );
   }
 
   equalityExplorer.register( 'ClearScaleButton', ClearScaleButton );
 
-  return inherit( ResetButton, ClearScaleButton );
+  return inherit( EraserButton, ClearScaleButton );
 } );

@@ -132,11 +132,13 @@ define( function( require ) {
 
     // pressing this button clears all items from the scale
     var clearScaleButton = new ClearScaleButton( scale );
+    console.log( 'clearScaleButton.height=' + clearScaleButton.height );//XXX
 
     // pressing this button organizes items on the scale, grouping like Items together
     var organizeButton = new OrganizeButton( scale, {
       visible: options.organizeButtonVisible
     } );
+    console.log( 'organizeButton.height=' + organizeButton.height );//XXX
 
     // disable ClearScaleButton and OrganizeButton when the scale is empty. unlink unnecessary
     scale.numberOfItemsProperty.link( function( numberOfItems ) {
