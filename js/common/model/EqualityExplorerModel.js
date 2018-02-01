@@ -23,10 +23,8 @@ define( function( require ) {
     this.scenes = scenes;
 
     // @public the selected scene
-    this.sceneProperty = new Property( this.scenes[ 0 ], {
-      isValidValue: function( scene ) {
-        return _.includes( scenes, scene );
-      }
+    this.sceneProperty = new Property( scenes[ 0 ], {
+      validValues: scenes
     } );
   }
 
