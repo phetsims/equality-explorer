@@ -31,7 +31,10 @@ define( function( require ) {
     // For internal use only, not public facing.
     speed: {
       type: 'number',
-      defaultValue: 1
+      defaultValue: 1,
+      isValidValue: function( value ) {
+        return value > 0;
+      }
     },
 
     //TODO if we decide not to show grid in production version, replace this with phet.chipper.queryParameters.dev
