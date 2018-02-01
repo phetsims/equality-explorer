@@ -86,9 +86,6 @@ define( function( require ) {
       duration: options.motionDuration,
       constantSpeed: false,
       easing: TWEEN.Easing.Quintic.In,
-      onStart: function() {
-        self.started = true;
-      },
       onComplete: function() {
         self.opacityTo.start();
       },
@@ -110,6 +107,7 @@ define( function( require ) {
     start: function() {
       assert && assert( !this.started, 'attempted to start animation twice' );
       this.moveTo.start();
+      this.started = true;
     },
 
     /**
@@ -121,6 +119,7 @@ define( function( require ) {
       assert && assert( !this.stopped, 'attempted to stop animation twice' );
       this.moveTo.stop();
       this.opacityTo.stop();
+      this.stopped = true;
     }
   } );
 } );
