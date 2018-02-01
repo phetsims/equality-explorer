@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Model for the 'Mystery' screen.
+ * Model for the 'Solve It!' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -15,11 +15,11 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function MysteryModel() {
+  function SolveItModel() {
     //TODO
   }
 
-  equalityExplorer.register( 'MysteryModel', MysteryModel );
+  equalityExplorer.register( 'SolveItModel', SolveItModel );
 
-  return inherit( Object, MysteryModel );
+  return inherit( Object, SolveItModel );
 } );

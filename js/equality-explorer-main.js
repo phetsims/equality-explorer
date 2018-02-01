@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var BasicsScreen = require( 'EQUALITY_EXPLORER/basics/BasicsScreen' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  var MysteryScreen = require( 'EQUALITY_EXPLORER/mystery/MysteryScreen' );
+  var SolveItScreen = require( 'EQUALITY_EXPLORER/solveit/SolveItScreen' );
   var NumbersScreen = require( 'EQUALITY_EXPLORER/numbers/NumbersScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
@@ -42,7 +42,7 @@ define( function( require ) {
       new NumbersScreen(),
       new VariablesScreen(),
       new SolvingScreen(),
-      new MysteryScreen()
+      new SolveItScreen()
     ];
 
     // non-production screen for testing multi-variable support

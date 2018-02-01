@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * View for the 'Mystery' screen.
+ * View for the 'Solve It!' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,15 +14,15 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
 
   /**
-   * @param {MysteryModel} model
+   * @param {SolveItModel} model
    * @constructor
    */
-  function MysteryScreenView( model ) {
+  function SolveItScreenView( model ) {
     ScreenView.call( this, model );
     //TODO
   }
 
-  equalityExplorer.register( 'MysteryScreenView', MysteryScreenView );
+  equalityExplorer.register( 'SolveItScreenView', SolveItScreenView );
 
-  return inherit( ScreenView, MysteryScreenView );
+  return inherit( ScreenView, SolveItScreenView );
 } );

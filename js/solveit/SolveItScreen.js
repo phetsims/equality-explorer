@@ -11,33 +11,33 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MysteryModel = require( 'EQUALITY_EXPLORER/mystery/model/MysteryModel' );
-  var MysteryScreenView = require( 'EQUALITY_EXPLORER/mystery/view/MysteryScreenView' );
+  var SolveItModel = require( 'EQUALITY_EXPLORER/solveit/model/SolveItModel' );
+  var SolveItScreenView = require( 'EQUALITY_EXPLORER/solveit/view/SolveItScreenView' );
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
 
   // strings
-  var screenMysteryString = require( 'string!EQUALITY_EXPLORER/screen.mystery' );
+  var screenSolveItString = require( 'string!EQUALITY_EXPLORER/screen.solveIt' );
 
   /**
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryScreen( options ) {
+  function SolveItScreen( options ) {
 
     options = _.extend( {
-      name: screenMysteryString,
+      name: screenSolveItString,
       backgroundColorProperty: new Property( 'white' )
     }, options );
 
     Screen.call( this,
-      function() { return new MysteryModel(); },
-      function( model ) { return new MysteryScreenView( model ); },
+      function() { return new SolveItModel(); },
+      function( model ) { return new SolveItScreenView( model ); },
       options
     );
   }
 
-  equalityExplorer.register( 'MysteryScreen', MysteryScreen );
+  equalityExplorer.register( 'SolveItScreen', SolveItScreen );
 
-  return inherit( Screen, MysteryScreen );
+  return inherit( Screen, SolveItScreen );
 } );
