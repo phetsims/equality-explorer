@@ -17,7 +17,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
@@ -122,7 +121,7 @@ define( function( require ) {
     var goButton = new RoundPushButton( {
       listener: goButtonListener,
       content: goButtonIcon,
-      baseColor: PhetColorScheme.BUTTON_YELLOW,
+      baseColor: 'white',
       minXMargin: 10,
       minYMargin: 10
     } );
