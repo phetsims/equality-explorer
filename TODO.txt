@@ -1,5 +1,12 @@
 TODO items for equality-explorer
 
+Ideas
+- Always have terms in the model, use these for equations (and snapshots?)
+- Indicate which representation to use on scale: items or terms
+- Grid depends on which representation (items, terms) is shown on the scale
+- TermManager that handles positive items, (optional) negative items, term, other related stuff?
+- Grid allowed to contain any type of EqualityExplorerMovable (items or terms)
+
 Universal operation
 - sum-to-zero animation should not be shown on Reset or Reset All
 
