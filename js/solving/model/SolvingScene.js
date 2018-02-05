@@ -20,6 +20,7 @@ define( function( require ) {
   var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var StringProperty = require( 'AXON/StringProperty' );
   var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
@@ -105,11 +106,16 @@ define( function( require ) {
       rightNegativeXCreator.weightProperty.value = -x;
     } );
 
+    //TODO temporary option, to be deleted
+    var termOptions = {
+      numberOfItems: ReducedFraction.ONE
+    };
+
     // @public terms on the left and right sides of the scale
-    this.leftVariableTerm = new VariableTerm( xString, this.xProperty, leftPositiveXCreator, leftNegativeXCreator );
-    this.rightVariableTerm = new VariableTerm( xString, this.xProperty, rightPositiveXCreator, rightNegativeXCreator );
-    this.leftConstantTerm = new ConstantTerm( leftPositiveOneCreator, leftNegativeOneCreator );
-    this.rightConstantTerm = new ConstantTerm( rightPositiveOneCreator, rightNegativeOneCreator );
+    this.leftVariableTerm = new VariableTerm( xString, this.xProperty, leftPositiveXCreator, leftNegativeXCreator, termOptions );
+    this.rightVariableTerm = new VariableTerm( xString, this.xProperty, rightPositiveXCreator, rightNegativeXCreator, termOptions );
+    this.leftConstantTerm = new ConstantTerm( leftPositiveOneCreator, leftNegativeOneCreator, termOptions );
+    this.rightConstantTerm = new ConstantTerm( rightPositiveOneCreator, rightNegativeOneCreator, termOptions );
 
     // @public (read-only)
     this.terms = [

@@ -74,7 +74,9 @@ define( function( require ) {
     }
   } );
 
+  // Common values
   ReducedFraction.ZERO = new ReducedFraction( 0, 1 );
+  ReducedFraction.ONE = new ReducedFraction( 1, 1 );
 
   return ReducedFraction;
 } );
