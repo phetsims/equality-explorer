@@ -76,37 +76,17 @@ define( function( require ) {
     } );
     this.addChild( operationNode );
 
-    var leftConstantTermNode = new ConstantTermNode( scene.leftConstantTerm, {
-
-      //TODO ConstantTermNode needs to move with ConstantTerm, which needs to move with Plate
-      left: scene.scale.leftPlate.locationProperty.value.x + 10,
-      bottom: scene.scale.leftPlate.locationProperty.value.y
-    } );
+    // Terms on left side of the scale
+    var leftVariableTermNode = new VariableTermNode( scene.leftVariableTerm );
+    this.addChild( leftVariableTermNode );
+    var leftConstantTermNode = new ConstantTermNode( scene.leftConstantTerm );
     this.addChild( leftConstantTermNode );
 
-    var rightConstantTermNode = new ConstantTermNode( scene.rightConstantTerm, {
-
-      //TODO ConstantTermNode needs to move with ConstantTerm, which needs to move with Plate
-      left: scene.scale.rightPlate.locationProperty.value.x + 10,
-      bottom: scene.scale.rightPlate.locationProperty.value.y
-    } );
-    this.addChild( rightConstantTermNode );
-
-    var leftVariableTermNode = new VariableTermNode( scene.leftVariableTerm, {
-
-      //TODO VariableTermNode needs to move with VariableTerm, which needs to move with Plate
-      right: scene.scale.leftPlate.locationProperty.value.x - 10,
-      bottom: scene.scale.leftPlate.locationProperty.value.y
-    } );
-    this.addChild( leftVariableTermNode );
-
-    var rightVariableTermNode = new VariableTermNode( scene.rightVariableTerm, {
-
-      //TODO VariableTermNode needs to move with VariableTerm, which needs to move with Plate
-      right: scene.scale.rightPlate.locationProperty.value.x - 10,
-      bottom: scene.scale.rightPlate.locationProperty.value.y
-    } );
+    // Terms on right side of the scale
+    var rightVariableTermNode = new VariableTermNode( scene.rightVariableTerm );
     this.addChild( rightVariableTermNode );
+    var rightConstantTermNode = new ConstantTermNode( scene.rightConstantTerm );
+    this.addChild( rightConstantTermNode );
 
     // Put animation layer on top of everything
     this.addChild( operationAnimationLayer );
