@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * The variable ('x') term that appears on the scale in the Solving screen.
+ * Term whose value a coefficient times some variable value.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -12,8 +12,6 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Term = require( 'EQUALITY_EXPLORER/solving/model/Term' );
 
   /**
@@ -21,66 +19,31 @@ define( function( require ) {
    * @param {Property.<number>} variableValueProperty
    * @param {AbstractItemCreator} positiveItemCreator
    * @param {AbstractItemCreator} negativeItemCreator
+   * @param {Object} [options]
    * @constructor
    */
-  function VariableTerm( symbol, variableValueProperty, positiveItemCreator, negativeItemCreator ) {
+  function VariableTerm( symbol, variableValueProperty, positiveItemCreator, negativeItemCreator, options ) {
 
-    Term.call( this, positiveItemCreator, negativeItemCreator );
+    /**
+     * Creates a DerivedProperty whose value is the weight of this term.
+     * @param {Property.<ReducedFraction>} numberOfItemsProperty
+     * @returns {DerivedProperty.<ReducedFraction>}
+     */
+    var createWeightProperty = function( numberOfItemsProperty ) {
+      return new DerivedProperty( [ numberOfItemsProperty, variableValueProperty ],
+        function( numberOfItems, variableValue ) {
+          return numberOfItems.times( variableValue );
+        } );
+    };
+
+    Term.call( this, positiveItemCreator, negativeItemCreator, createWeightProperty, options );
 
     // @public (read-only)
     this.symbol = symbol;
-
-    // @public {Property.<ReducedFraction>} coefficient that appears in front of the symbol for this item in equations
-    // this.coefficientProperty = new Property( ReducedFraction.ZERO );
-    this.coefficientProperty = new Property( new ReducedFraction( 1, 1 ) ); //TODO replace with line above
-
-    // @public {DerivedProperty.<number>} total weight of this item
-    this.weightProperty = new DerivedProperty( [ this.coefficientProperty, variableValueProperty ],
-      function( coefficient, variableValue ) {
-        return coefficient * variableValue;
-      } );
   }
 
   equalityExplorer.register( 'VariableTerm', VariableTerm );
 
-  return inherit( Term, VariableTerm, {
-
-    /**
-     * Gets the value of this term.
-     * @returns {number}
-     * @public
-     * @override
-     */
-    getValue: function() {
-      return this.weightProperty.value;
-    },
-
-    /**
-     * @public
-     */
-    reset: function() {
-      this.coefficientProperty.reset();
-    },
-
-    /**
-     * Multiplies the coefficient by an integer value.
-     * @param {number} value
-     * @public
-     * @override
-     */
-    times: function( value ) {
-      this.coefficientProperty.value = this.coefficientProperty.value.times( value );
-    },
-
-    /**
-     * Divides the coefficient by an integer value.
-     * @param {number} value
-     * @public
-     * @override
-     */
-    divide: function( value ) {
-      this.coefficientProperty.value = this.coefficientProperty.value.divide( value );
-    }
-  } );
+  return inherit( Term, VariableTerm );
 } );
  

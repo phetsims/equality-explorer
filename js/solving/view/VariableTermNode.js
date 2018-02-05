@@ -52,7 +52,7 @@ define( function( require ) {
       center: squareNode.center
     } );
 
-    var fractionNode = new ReducedFractionNode( variableTerm.coefficientProperty.value, {
+    var fractionNode = new ReducedFractionNode( variableTerm.numberOfItemsProperty.value, {
       font: FRACTION_FONT,
       center: symbolNode.center
     } );
@@ -74,7 +74,7 @@ define( function( require ) {
     Node.call( this );
 
     // synchronize with the model value
-    variableTerm.coefficientProperty.link( function( fraction, oldFraction ) {
+    variableTerm.numberOfItemsProperty.link( function( fraction, oldFraction ) {
       assert && assert( fraction instanceof ReducedFraction );
 
       // restore the symbol to its default, since some conditions below may have modified it

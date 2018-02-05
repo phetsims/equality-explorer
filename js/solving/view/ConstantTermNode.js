@@ -44,7 +44,7 @@ define( function( require ) {
       stroke: 'black'
     } );
 
-    var fractionNode = new ReducedFractionNode( constantTerm.constantProperty.value, {
+    var fractionNode = new ReducedFractionNode( constantTerm.numberOfItemsProperty.value, {
       font: FRACTION_FONT
     } );
 
@@ -66,7 +66,7 @@ define( function( require ) {
     Node.call( this );
 
     // synchronize with the model value
-    constantTerm.constantProperty.link( function( fraction, oldFraction ) {
+    constantTerm.numberOfItemsProperty.link( function( fraction, oldFraction ) {
       assert && assert( fraction instanceof ReducedFraction );
 
       // update the value displayed

@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * The constant term that appears on the scale in the Solving screen.
+ * Term whose value is a constant.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -9,23 +9,32 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Term = require( 'EQUALITY_EXPLORER/solving/model/Term' );
 
   /**
    * @param {AbstractItemCreator} positiveItemCreator
    * @param {AbstractItemCreator} negativeItemCreator
+   * @param {Object} [options]
    * @constructor
    */
-  function ConstantTerm( positiveItemCreator, negativeItemCreator ) {
+  function ConstantTerm( positiveItemCreator, negativeItemCreator, options ) {
 
-    Term.call( this, positiveItemCreator, negativeItemCreator );
+    /**
+     * Creates a DerivedProperty whose value is the weight of this term.
+     * @param {Property.<ReducedFraction>} numberOfItemsProperty
+     * @returns {DerivedProperty.<ReducedFraction>}
+     */
+    var createWeightProperty = function( numberOfItemsProperty ) {
+      return new DerivedProperty( [ numberOfItemsProperty ],
+        function( numberOfItems ) {
+          return numberOfItems;
+        } );
+    };
 
-    // @public {Property.<ReducedFraction>} the constant value
-    this.constantProperty = new Property( ReducedFraction.ZERO );
+    Term.call( this, positiveItemCreator, negativeItemCreator, createWeightProperty, options );
   }
 
   equalityExplorer.register( 'ConstantTerm', ConstantTerm );
@@ -33,60 +42,21 @@ define( function( require ) {
   return inherit( Term, ConstantTerm, {
 
     /**
-     * Gets the value of this term.
-     * @returns {number}
-     * @public
-     * @override
-     */
-    getValue: function() {
-      return this.constantProperty.value;
-    },
-
-    /**
-     * @public
-     */
-    reset: function() {
-      this.constantProperty.reset();
-    },
-
-    /**
      * Adds an integer value to the constant.
      * @param {number} value
      * @public
-     * @override
      */
     plus: function( value ) {
-      this.constantProperty.value = this.constantProperty.value.plus( value );
+      this.numberOfItemsProperty.value = this.numberOfItemsProperty.value.plus( value );
     },
 
     /**
      * Subtracts an integer value from the constant.
      * @param {number} value
      * @public
-     * @override
      */
     minus: function( value ) {
-      this.constantProperty.value = this.constantProperty.value.minus( value );
-    },
-
-    /**
-     * Multiplies the constant by an integer value.
-     * @param {number} value
-     * @public
-     * @override
-     */
-    times: function( value ) {
-      this.constantProperty.value = this.constantProperty.value.times( value );
-    },
-
-    /**
-     * Divides the constant by an integer value.
-     * @param {number} value
-     * @public
-     * @override
-     */
-    divide: function( value ) {
-      this.constantProperty.value = this.constantProperty.value.divide( value );
+      this.numberOfItemsProperty.value = this.numberOfItemsProperty.value.minus( value );
     }
   } );
 } );

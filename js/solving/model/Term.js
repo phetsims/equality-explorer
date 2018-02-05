@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Abstract base type for terms on the scale.
+ * Base type for terms.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -12,17 +12,31 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
 
   /**
    * @param {AbstractItemCreator} positiveItemCreator
    * @param {AbstractItemCreator} negativeItemCreator
+   * @param {function} createWeightProperty - creates a DerivedProperty whose value is the weight of this term
+   * @param {Object} [options]
    * @constructor
    */
-  function Term( positiveItemCreator, negativeItemCreator ) {
+  function Term( positiveItemCreator, negativeItemCreator, createWeightProperty, options ) {
+
+    options = _.extend( {
+      numberOfItems: ReducedFraction.ZERO // {ReducedFraction} initial number of items
+    }, options );
 
     // @public (read-only)
     this.positiveItemCreator = positiveItemCreator;
     this.negativeItemCreator = negativeItemCreator;
+
+    // @public {Property.<ReducedFraction>} number of items that make up this term
+    this.numberOfItemsProperty = new Property( options.numberOfItems );
+
+    // @public (read-only) {DerivedProperty.<ReducedFraction>} weight of the term
+    this.weightProperty = createWeightProperty( this.numberOfItemsProperty );
   }
 
   equalityExplorer.register( 'Term', Term );
@@ -30,20 +44,33 @@ define( function( require ) {
   return inherit( Object, Term, {
 
     /**
-     * Functions for the operations that a term may support.
-     * Subtypes provide implementations for the operations that are relevant to them.
-     * Unimplemented operations will be ignored.
      * @public
      */
-    plus: null,
-    minus: null,
-    times: null,
-    divide: null,
+    reset: function() {
+      this.numberOfItemsProperty.reset();
+    },
+
+    /**
+     * Multiplies the number of items by an integer value.
+     * @param {number} value
+     * @public
+     */
+    times: function( value ) {
+      this.numberOfItemsProperty.value = this.numberOfItemsProperty.value.times( value );
+    },
+
+    /**
+     * Divides the number of items by an integer value.
+     * @param {number} value
+     * @public
+     */
+    divide: function( value ) {
+      this.numberOfItemsProperty.value = this.numberOfItemsProperty.value.divide( value );
+    },
 
     /**
      * Applies a universal operation to this term.
      * If this term does not support the operator, the operation is ignored.
-     *
      * @param {UniversalOperation} operation
      * @public
      */
@@ -55,25 +82,14 @@ define( function( require ) {
         this.minus && this.minus( operation.operand );
       }
       else if ( operation.operator === EqualityExplorerConstants.TIMES ) {
-        this.times && this.times( operation.operand );
+        this.times( operation.operand );
       }
       else if ( operation.operator === EqualityExplorerConstants.DIVIDE ) {
-        this.divide && this.divide( operation.operand );
+        this.divide( operation.operand );
       }
       else {
         throw new Error( 'invalid operator: ' + operation.operator );
       }
-    },
-
-    /**
-     * Gets the value of this term.
-     * @returns {number}
-     * @abstract
-     * @public
-     */
-    getValue: function() {
-      throw new Error( 'must be implemented by subtype' );
-    },
-    get value() { return this.getValue(); }
+    }
   } );
 } );
