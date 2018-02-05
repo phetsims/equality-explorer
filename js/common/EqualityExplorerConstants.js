@@ -51,7 +51,10 @@ define( function( require ) {
     POSITIVE_X_FILL: 'rgb( 49, 193, 238 )',
     NEGATIVE_X_FILL: 'rgb( 99, 212, 238 )',
     POSITIVE_VARIABLE_LINE_DASH: [], // solid
-    NEGATIVE_VARIABLE_LINE_DASH: [ 4, 4 ]
+    NEGATIVE_VARIABLE_LINE_DASH: [ 4, 4 ],
+
+    // terms
+    TERM_DIAMETER: 100
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

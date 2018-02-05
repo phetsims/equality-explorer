@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
@@ -37,17 +38,21 @@ define( function( require ) {
 
     // @public (read-only) {DerivedProperty.<ReducedFraction>} weight of the term
     this.weightProperty = createWeightProperty( this.numberOfItemsProperty );
+
+    EqualityExplorerMovable.call( this, options );
   }
 
   equalityExplorer.register( 'Term', Term );
 
-  return inherit( Object, Term, {
+  return inherit( EqualityExplorerMovable, Term, {
 
     /**
      * @public
+     * @override
      */
     reset: function() {
       this.numberOfItemsProperty.reset();
+      EqualityExplorerMovable.prototype.reset.call( this );
     },
 
     /**

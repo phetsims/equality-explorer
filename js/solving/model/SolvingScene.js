@@ -98,6 +98,14 @@ define( function( require ) {
       weight: -CONSTANT_ITEM_WEIGHT
     } );
 
+    LockableScene.call( this, 'solving',
+      [ leftPositiveXCreator, leftNegativeXCreator, leftPositiveOneCreator, leftNegativeOneCreator ],
+      [ rightPositiveXCreator, rightNegativeXCreator, rightPositiveOneCreator, rightNegativeOneCreator ], {
+        gridRows: 1,
+        gridColumns: 2,
+        iconSize: new Dimension2( EqualityExplorerConstants.TERM_DIAMETER + 10, EqualityExplorerConstants.TERM_DIAMETER )
+      } );
+
     // update item creator weights when the value of 'x' changes. unlink unnecessary
     this.xProperty.lazyLink( function( x ) {
       leftPositiveXCreator.weightProperty.value = x;
@@ -106,16 +114,25 @@ define( function( require ) {
       rightNegativeXCreator.weightProperty.value = -x;
     } );
 
-    //TODO temporary option, to be deleted
-    var termOptions = {
-      numberOfItems: ReducedFraction.ONE
-    };
+    // @public terms on the left side of the scale
+    this.leftVariableTerm = new VariableTerm( xString, this.xProperty, leftPositiveXCreator, leftNegativeXCreator, {
+      numberOfItems: ReducedFraction.ONE,
+      location: this.scale.leftPlate.getLocationForCell( 0 )
+    } );
+    this.leftConstantTerm = new ConstantTerm( leftPositiveOneCreator, leftNegativeOneCreator, {
+      numberOfItems: ReducedFraction.ONE,
+      location: this.scale.leftPlate.getLocationForCell( 1 )
+    } );
 
-    // @public terms on the left and right sides of the scale
-    this.leftVariableTerm = new VariableTerm( xString, this.xProperty, leftPositiveXCreator, leftNegativeXCreator, termOptions );
-    this.rightVariableTerm = new VariableTerm( xString, this.xProperty, rightPositiveXCreator, rightNegativeXCreator, termOptions );
-    this.leftConstantTerm = new ConstantTerm( leftPositiveOneCreator, leftNegativeOneCreator, termOptions );
-    this.rightConstantTerm = new ConstantTerm( rightPositiveOneCreator, rightNegativeOneCreator, termOptions );
+    // @public terms on the right side of the scale
+    this.rightVariableTerm = new VariableTerm( xString, this.xProperty, rightPositiveXCreator, rightNegativeXCreator, {
+      numberOfItems: ReducedFraction.ONE,
+      location: this.scale.rightPlate.getLocationForCell( 0 )
+    } );
+    this.rightConstantTerm = new ConstantTerm( rightPositiveOneCreator, rightNegativeOneCreator, {
+      numberOfItems: ReducedFraction.ONE,
+      location: this.scale.rightPlate.getLocationForCell( 1 )
+    } );
 
     // @public (read-only)
     this.terms = [
@@ -124,14 +141,6 @@ define( function( require ) {
       this.leftConstantTerm,
       this.rightConstantTerm
     ];
-
-    LockableScene.call( this, 'solving',
-      [ leftPositiveXCreator, leftNegativeXCreator, leftPositiveOneCreator, leftNegativeOneCreator ],
-      [ rightPositiveXCreator, rightNegativeXCreator, rightPositiveOneCreator, rightNegativeOneCreator ], {
-        gridRows: 1,
-        gridColumns: 2,
-        iconSize: new Dimension2( 120, 120 )
-      } );
   }
 
   equalityExplorer.register( 'SolvingScene', SolvingScene );

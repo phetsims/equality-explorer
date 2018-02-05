@@ -19,6 +19,7 @@ define( function( require ) {
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
+  var TermNode = require( 'EQUALITY_EXPLORER/solving/view/TermNode' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/solving/model/VariableTerm' );
 
@@ -39,14 +40,14 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      radius: 50,
+      diameter: EqualityExplorerConstants.TERM_DIAMETER,
       margin: 18,
       fractionFontSize: 12,
       integerFontSize: 22,
       xSpacing: 8
     }, options );
 
-    var squareNode = new Rectangle( 0, 0, 2 * options.radius, 2 * options.radius, {
+    var squareNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
       stroke: 'black'
     } );
 
@@ -74,7 +75,7 @@ define( function( require ) {
     assert && assert( !options.children, 'subtype defines its own children' );
     options.children = [ squareNode, contentNode ];
 
-    Node.call( this );
+    TermNode.call( this, term, options );
 
     // synchronize with the model value
     term.numberOfItemsProperty.link( function( fraction, oldFraction ) {
@@ -159,11 +160,9 @@ define( function( require ) {
         sumToZeroNode.startAnimation();
       }
     } );
-
-    this.mutate( options );
   }
 
   equalityExplorer.register( 'VariableTermNode', VariableTermNode );
 
-  return inherit( Node, VariableTermNode );
+  return inherit( TermNode, VariableTermNode );
 } );
