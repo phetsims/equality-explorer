@@ -20,6 +20,7 @@ define( function( require ) {
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/solving/model/VariableTerm' );
 
   // constants
   var FRACTION_FONT = new PhetFont( 28 );
@@ -27,11 +28,13 @@ define( function( require ) {
   var SYMBOL_FONT = new MathSymbolFont( 40 );
 
   /**
-   * @param {VariableTerm} variableTerm
+   * @param {VariableTerm} term
    * @param {Object} [options]
    * @constructor
    */
-  function VariableTermNode( variableTerm, options ) {
+  function VariableTermNode( term, options ) {
+
+    assert && assert( term instanceof VariableTerm, 'term has wrong type' );
 
     var self = this;
 
@@ -47,12 +50,12 @@ define( function( require ) {
       stroke: 'black'
     } );
 
-    var symbolNode = new Text( variableTerm.symbol, {
+    var symbolNode = new Text( term.symbol, {
       font: SYMBOL_FONT,
       center: squareNode.center
     } );
 
-    var fractionNode = new ReducedFractionNode( variableTerm.numberOfItemsProperty.value, {
+    var fractionNode = new ReducedFractionNode( term.numberOfItemsProperty.value, {
       font: FRACTION_FONT,
       center: symbolNode.center
     } );
@@ -74,11 +77,11 @@ define( function( require ) {
     Node.call( this );
 
     // synchronize with the model value
-    variableTerm.numberOfItemsProperty.link( function( fraction, oldFraction ) {
+    term.numberOfItemsProperty.link( function( fraction, oldFraction ) {
       assert && assert( fraction instanceof ReducedFraction );
 
       // restore the symbol to its default, since some conditions below may have modified it
-      symbolNode.text = variableTerm.symbol;
+      symbolNode.text = term.symbol;
 
       // update the value displayed
       if ( fraction.isInteger() ) {
@@ -99,7 +102,7 @@ define( function( require ) {
 
           // show -x, not -1x
           if ( fraction.getValue() === -1 ) {
-            symbolNode.text = '-' + variableTerm.symbol;
+            symbolNode.text = '-' + term.symbol;
           }
         }
         else {
@@ -147,7 +150,7 @@ define( function( require ) {
       // sum-to-zero animation when the coefficient value transitions to zero
       if ( oldFraction && oldFraction.getValue() !== 0 && fraction.getValue() === 0 ) {
         var sumToZeroNode = new SumToZeroNode( {
-          symbol: variableTerm.symbol,
+          symbol: term.symbol,
           haloBaseColor: 'transparent', // no halo
           fontSize: INTEGER_FONT.size,
           center: self.center

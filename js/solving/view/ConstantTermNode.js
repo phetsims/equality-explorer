@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var ConstantTerm = require( 'EQUALITY_EXPLORER/solving/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -25,11 +26,13 @@ define( function( require ) {
   var INTEGER_FONT = new PhetFont( 40 );
 
   /**
-   * @param {ConstantTerm} constantTerm
+   * @param {ConstantTerm} term
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantTermNode( constantTerm, options ) {
+  function ConstantTermNode( term, options ) {
+
+    assert && assert( term instanceof ConstantTerm, 'term has wrong type' );
 
     var self = this;
 
@@ -44,7 +47,7 @@ define( function( require ) {
       stroke: 'black'
     } );
 
-    var fractionNode = new ReducedFractionNode( constantTerm.numberOfItemsProperty.value, {
+    var fractionNode = new ReducedFractionNode( term.numberOfItemsProperty.value, {
       font: FRACTION_FONT
     } );
 
@@ -66,7 +69,7 @@ define( function( require ) {
     Node.call( this );
 
     // synchronize with the model value
-    constantTerm.numberOfItemsProperty.link( function( fraction, oldFraction ) {
+    term.numberOfItemsProperty.link( function( fraction, oldFraction ) {
       assert && assert( fraction instanceof ReducedFraction );
 
       // update the value displayed
