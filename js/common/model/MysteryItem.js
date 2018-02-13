@@ -1,5 +1,6 @@
 // Copyright 2017, University of Colorado Boulder
 
+//TODO This is really a VariableItem whose variable value is not exposed.
 /**
  * MysteryItem is an item that has a constant weight, but that weight is not revealed to the user.
  * MysteryItems do not contribute to the constant term in an equation.  They are represented as
