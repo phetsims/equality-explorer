@@ -11,14 +11,14 @@ define( function( require ) {
 
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var ConstantTermNode = require( 'EQUALITY_EXPLORER/solving/view/ConstantTermNode' );
+  var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
-  var UniversalOperationControl = require( 'EQUALITY_EXPLORER/solving/view/UniversalOperationControl' );
+  var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
-  var VariableTermNode = require( 'EQUALITY_EXPLORER/solving/view/VariableTermNode' );
+  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   /**
    * @param {Scene} scene

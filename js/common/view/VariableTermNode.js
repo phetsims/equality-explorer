@@ -19,7 +19,7 @@ define( function( require ) {
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
-  var TermNode = require( 'EQUALITY_EXPLORER/solving/view/TermNode' );
+  var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 

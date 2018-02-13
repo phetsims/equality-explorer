@@ -17,7 +17,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var OpacityTo = require( 'TWIXT/OpacityTo' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var UniversalOperationNode = require( 'EQUALITY_EXPLORER/solving/view/UniversalOperationNode' );
+  var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**

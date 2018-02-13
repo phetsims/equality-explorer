@@ -22,7 +22,7 @@ define( function( require ) {
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
-  var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/solving/view/UniversalOperationAnimation' );
+  var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
 
   /**
    * @param {SolvingScene} scene TODO too much information?
