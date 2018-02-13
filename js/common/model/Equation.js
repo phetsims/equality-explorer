@@ -1,5 +1,6 @@
 // Copyright 2018, University of Colorado Boulder
 
+//TODO delete if unused
 /**
  * Model of an equation.
  *
