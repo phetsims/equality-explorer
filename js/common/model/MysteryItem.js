@@ -43,6 +43,8 @@ define( function( require ) {
     get weight() {
       return this._weight;
     }
+
+    //TODO isInverseOf is not used for MysteryItem, but it's incorrect. Returns true for different items with inverse weight.
   } );
 } );
  
