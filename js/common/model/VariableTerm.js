@@ -69,7 +69,7 @@ define( function( require ) {
      */
     divide: function( value ) {
       this.coefficientProperty.value = this.coefficientProperty.value.divide( value );
-    },
+    }
   } );
 } );
  
