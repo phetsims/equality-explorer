@@ -256,7 +256,7 @@ define( function( require ) {
      */
     disposeAllItems: function() {
 
-      // use a while loop because disposing of an item modifies this.allItems
+      // use a while loop because disposing of an item removes it from this.allItems
       while ( this.allItems.length > 0 ) {
         this.allItems.get( 0 ).dispose(); // results in call to itemWasDisposed
       }
