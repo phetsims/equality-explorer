@@ -61,7 +61,7 @@ define( function( require ) {
   return inherit( AbstractItemCreator, VariableItemCreator, {
 
     /**
-     * Instantiates an VariableItem.
+     * Instantiates a VariableItem.
      * @param {Vector2} location
      * @returns {AbstractItem}
      * @protected
