@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Displays a constant term (fraction or integer value) on the scale in the 'Solving' screen.
+ * Displays a constant term, with fraction or integer value.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Displays a variable term (with fraction or integer coefficient) on the scale in the 'Solving' screen.
+ * Displays a variable term, with fraction or integer coefficient and variable symbol.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
