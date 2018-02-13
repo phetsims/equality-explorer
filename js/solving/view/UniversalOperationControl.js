@@ -21,7 +21,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var UniversalOperation = require( 'EQUALITY_EXPLORER/solving/model/UniversalOperation' );
+  var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
   var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/solving/view/UniversalOperationAnimation' );
 
   /**

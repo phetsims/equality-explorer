@@ -14,7 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
-  var Term = require( 'EQUALITY_EXPLORER/solving/model/Term' );
+  var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
    * @param {string} symbol

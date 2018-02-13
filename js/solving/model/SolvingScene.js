@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/solving/model/ConstantTerm' );
+  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -24,7 +24,7 @@ define( function( require ) {
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var StringProperty = require( 'AXON/StringProperty' );
   var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/solving/model/VariableTerm' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );

@@ -21,7 +21,7 @@ define( function( require ) {
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var TermNode = require( 'EQUALITY_EXPLORER/solving/view/TermNode' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/solving/model/VariableTerm' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   // constants
   var FRACTION_FONT = new PhetFont( 28 );
