@@ -115,21 +115,21 @@ define( function( require ) {
     } );
 
     // @public terms on the left side of the scale
-    this.leftVariableTerm = new VariableTerm( xString, this.xProperty, leftPositiveXCreator, leftNegativeXCreator, {
+    this.leftVariableTerm = new VariableTerm( xString, this.xProperty, {
       numberOfItems: ReducedFraction.ONE,
       location: this.scale.leftPlate.getLocationForCell( 0 )
     } );
-    this.leftConstantTerm = new ConstantTerm( leftPositiveOneCreator, leftNegativeOneCreator, {
+    this.leftConstantTerm = new ConstantTerm( {
       numberOfItems: ReducedFraction.ONE,
       location: this.scale.leftPlate.getLocationForCell( 1 )
     } );
 
     // @public terms on the right side of the scale
-    this.rightVariableTerm = new VariableTerm( xString, this.xProperty, rightPositiveXCreator, rightNegativeXCreator, {
+    this.rightVariableTerm = new VariableTerm( xString, this.xProperty, {
       numberOfItems: ReducedFraction.ONE,
       location: this.scale.rightPlate.getLocationForCell( 0 )
     } );
-    this.rightConstantTerm = new ConstantTerm( rightPositiveOneCreator, rightNegativeOneCreator, {
+    this.rightConstantTerm = new ConstantTerm( {
       numberOfItems: ReducedFraction.ONE,
       location: this.scale.rightPlate.getLocationForCell( 1 )
     } );

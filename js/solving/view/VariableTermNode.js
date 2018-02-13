@@ -56,11 +56,13 @@ define( function( require ) {
       center: squareNode.center
     } );
 
-    var fractionNode = new ReducedFractionNode( term.numberOfItemsProperty.value, {
+    // for fractional coefficient
+    var fractionNode = new ReducedFractionNode( term.coefficientProperty.value, {
       font: FRACTION_FONT,
       center: symbolNode.center
     } );
 
+    // for integer coefficient
     var integerNode = new Text( 0, {
       font: INTEGER_FONT,
       center: symbolNode.center
@@ -78,14 +80,14 @@ define( function( require ) {
     TermNode.call( this, term, options );
 
     // synchronize with the model value
-    term.numberOfItemsProperty.link( function( fraction, oldFraction ) {
-      assert && assert( fraction instanceof ReducedFraction );
+    term.coefficientProperty.link( function( newCoefficient, oldCoefficient ) {
+      assert && assert( newCoefficient instanceof ReducedFraction );
 
       // restore the symbol to its default, since some conditions below may have modified it
       symbolNode.text = term.symbol;
 
       // update the value displayed
-      if ( fraction.isInteger() ) {
+      if ( newCoefficient.isInteger() ) {
 
         // hide fraction
         if ( contentNode.hasChild( fractionNode ) ) {
@@ -93,8 +95,8 @@ define( function( require ) {
         }
 
         // update the integer
-        assert && assert( Math.abs( fraction.denominator ) === 1, 'expected fraction to be reduced' );
-        if ( Math.abs( fraction.getValue() ) === 1 ) {
+        assert && assert( Math.abs( newCoefficient.denominator ) === 1, 'expected newCoefficient to be reduced' );
+        if ( Math.abs( newCoefficient.getValue() ) === 1 ) {
 
           // hide coefficient of 1 or -1
           if ( contentNode.hasChild( integerNode ) ) {
@@ -102,13 +104,13 @@ define( function( require ) {
           }
 
           // show -x, not -1x
-          if ( fraction.getValue() === -1 ) {
+          if ( newCoefficient.getValue() === -1 ) {
             symbolNode.text = '-' + term.symbol;
           }
         }
         else {
 
-          integerNode.text = fraction.numerator;
+          integerNode.text = newCoefficient.numerator;
           integerNode.right = symbolNode.left - options.xSpacing;
           integerNode.centerY = symbolNode.centerY;
           if ( !contentNode.hasChild( integerNode ) ) {
@@ -124,7 +126,7 @@ define( function( require ) {
         }
 
         // update the fraction
-        fractionNode.setFraction( fraction );
+        fractionNode.setFraction( newCoefficient );
         fractionNode.right = symbolNode.left - options.xSpacing;
         fractionNode.centerY = symbolNode.centerY;
         if ( !contentNode.hasChild( fractionNode ) ) {
@@ -133,7 +135,7 @@ define( function( require ) {
       }
 
       // update properties based on sign
-      if ( fraction.getValue() >= 0 ) {
+      if ( newCoefficient.getValue() >= 0 ) {
         squareNode.fill = EqualityExplorerConstants.POSITIVE_X_FILL;
         squareNode.lineDash = EqualityExplorerConstants.POSITIVE_VARIABLE_LINE_DASH;
       }
@@ -146,10 +148,10 @@ define( function( require ) {
       contentNode.center = squareNode.center;
 
       // hide this node when coefficient is zero
-      self.visible = ( fraction.getValue() !== 0 );
+      self.visible = ( newCoefficient.getValue() !== 0 );
 
       // sum-to-zero animation when the coefficient value transitions to zero
-      if ( oldFraction && oldFraction.getValue() !== 0 && fraction.getValue() === 0 ) {
+      if ( oldCoefficient && oldCoefficient.getValue() !== 0 && newCoefficient.getValue() === 0 ) {
         var sumToZeroNode = new SumToZeroNode( {
           symbol: term.symbol,
           haloBaseColor: 'transparent', // no halo

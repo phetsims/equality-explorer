@@ -48,10 +48,12 @@ define( function( require ) {
       stroke: 'black'
     } );
 
-    var fractionNode = new ReducedFractionNode( term.numberOfItemsProperty.value, {
+    // for fractional value
+    var fractionNode = new ReducedFractionNode( term.valueProperty.value, {
       font: FRACTION_FONT
     } );
 
+    // for integer value
     var integerNode = new Text( 0, {
       font: INTEGER_FONT,
       center: fractionNode.center
@@ -70,7 +72,7 @@ define( function( require ) {
     TermNode.call( this, term, options );
 
     // synchronize with the model value
-    term.numberOfItemsProperty.link( function( fraction, oldFraction ) {
+    term.valueProperty.link( function( fraction, oldFraction ) {
       assert && assert( fraction instanceof ReducedFraction );
 
       // update the value displayed

@@ -9,37 +9,37 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Term = require( 'EQUALITY_EXPLORER/solving/model/Term' );
 
   /**
-   * @param {AbstractItemCreator} positiveItemCreator
-   * @param {AbstractItemCreator} negativeItemCreator
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantTerm( positiveItemCreator, negativeItemCreator, options ) {
+  function ConstantTerm( options ) {
 
-    /**
-     * Creates a DerivedProperty whose value is the weight of this term.
-     * @param {Property.<ReducedFraction>} numberOfItemsProperty
-     * @returns {DerivedProperty.<ReducedFraction>}
-     */
-    var createWeightProperty = function( numberOfItemsProperty ) {
-      return new DerivedProperty( [ numberOfItemsProperty ],
-        function( numberOfItems ) {
-          return numberOfItems;
-        } );
-    };
+    options = _.extend( {
+      value: ReducedFraction.ZERO // {ReducedFraction} initial value
+    }, options );
 
-    Term.call( this, positiveItemCreator, negativeItemCreator, createWeightProperty, options );
+    // @public {Property.<ReducedFraction>}
+    this.valueProperty = new Property( options.value );
+
+    Term.call( this, options );
   }
 
   equalityExplorer.register( 'ConstantTerm', ConstantTerm );
 
   return inherit( Term, ConstantTerm, {
+
+    // @public
+    reset: function() {
+      this.valueProperty.reset();
+      Term.prototype.reset.call( this );
+    },
 
     /**
      * Adds an integer value to the constant.
@@ -47,7 +47,7 @@ define( function( require ) {
      * @public
      */
     plus: function( value ) {
-      this.numberOfItemsProperty.value = this.numberOfItemsProperty.value.plus( value );
+      this.valueProperty.value = this.valueProperty.value.plus( value );
     },
 
     /**
@@ -56,7 +56,25 @@ define( function( require ) {
      * @public
      */
     minus: function( value ) {
-      this.numberOfItemsProperty.value = this.numberOfItemsProperty.value.minus( value );
+      this.valueProperty.value = this.valueProperty.value.minus( value );
+    },
+
+    /**
+     * Multiplies the number of items by an integer value.
+     * @param {number} value
+     * @public
+     */
+    times: function( value ) {
+      this.valueProperty.value = this.valueProperty.value.times( value );
+    },
+
+    /**
+     * Divides the number of items by an integer value.
+     * @param {number} value
+     * @public
+     */
+    divide: function( value ) {
+      this.valueProperty.value = this.valueProperty.value.divide( value );
     }
   } );
 } );
