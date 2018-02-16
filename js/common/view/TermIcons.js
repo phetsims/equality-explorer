@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Item icons and their shadows.
+ * Term icons and their shadows.
  * Caution! These Nodes are reused via scenery's DAG feature.
  * Do not attempt to transform them direct. Wrap them in a parent Node and transform the parent.
  *
@@ -12,12 +12,12 @@ define( function( require ) {
 
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var ConstantItemNode = require( 'EQUALITY_EXPLORER/common/view/ConstantItemNode' );
+  var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var VariableItemNode = require( 'EQUALITY_EXPLORER/common/view/VariableItemNode' );
+  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
@@ -50,7 +50,7 @@ define( function( require ) {
   var ICON_HEIGHT = 32;
   var COMMON_OPTIONS = { maxHeight: ICON_HEIGHT };
 
-  var ItemIcons = {
+  var TermIcons = {
 
     ICON_HEIGHT: ICON_HEIGHT,
 
@@ -89,12 +89,12 @@ define( function( require ) {
     TURTLE_SHADOW_NODE: new Image( turtleShadowImage, COMMON_OPTIONS ),
 
     // 1, -1 and their shadow
-    POSITIVE_ONE_NODE: new ConstantItemNode( 1, _.extend( {}, {
+    POSITIVE_ONE_NODE: new ConstantTermNode( 1, _.extend( {}, {
       radius: ICON_HEIGHT / 2,
       fill: EqualityExplorerConstants.POSITIVE_CONSTANT_FILL,
       lineDash: EqualityExplorerConstants.POSITIVE_CONSTANT_LINE_DASH
     }, COMMON_OPTIONS ) ),
-    NEGATIVE_ONE_NODE: new ConstantItemNode( -1, _.extend( {}, {
+    NEGATIVE_ONE_NODE: new ConstantTermNode( -1, _.extend( {}, {
       radius: ICON_HEIGHT / 2,
       fill: EqualityExplorerConstants.NEGATIVE_CONSTANT_FILL,
       lineDash: EqualityExplorerConstants.NEGATIVE_CONSTANT_LINE_DASH
@@ -104,11 +104,11 @@ define( function( require ) {
     }, COMMON_OPTIONS ) ),
 
     // x, -x and their shadow
-    POSITIVE_X_NODE: new VariableItemNode( xString, _.extend( {}, {
+    POSITIVE_X_NODE: new VariableTermNode( xString, _.extend( {}, {
       fill: EqualityExplorerConstants.POSITIVE_X_FILL,
       lineDash: EqualityExplorerConstants.POSITIVE_VARIABLE_LINE_DASH
     }, COMMON_OPTIONS ) ),
-    NEGATIVE_X_NODE: new VariableItemNode( '-' + xString, _.extend( {}, {
+    NEGATIVE_X_NODE: new VariableTermNode( '-' + xString, _.extend( {}, {
       fill: EqualityExplorerConstants.NEGATIVE_X_FILL,
       lineDash: EqualityExplorerConstants.NEGATIVE_VARIABLE_LINE_DASH
     }, COMMON_OPTIONS ) ),
@@ -117,7 +117,7 @@ define( function( require ) {
     }, COMMON_OPTIONS ) )
   };
 
-  equalityExplorer.register( 'ItemIcons', ItemIcons );
+  equalityExplorer.register( 'TermIcons', TermIcons );
 
-  return ItemIcons;
+  return TermIcons;
 } );

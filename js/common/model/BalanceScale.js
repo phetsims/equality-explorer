@@ -5,7 +5,7 @@
  * Consists of 2 plates that sit on either ends of a beam.
  * The center of the beam is balanced on a fulcrum.
  * Origin is at the point where the beam is balanced on the fulcrum.
- * Items are arranged in a 2D (xy) grid on each plate.
+ * Terms are arranged in a 2D (xy) grid on each plate.
  *
  * @author Chris Malley (PixelZoom, Inc)
  */
@@ -21,12 +21,12 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {AbstractItemCreator[]} leftItemCreators - creators for items on left plate
-   * @param {AbstractItemCreator[]} rightItemCreators - creators for item on right plate
+   * @param {AbstractTermCreator[]} leftTermCreators - creators for terms on left plate
+   * @param {AbstractTermCreator[]} rightTermCreators - creators for term on right plate
    * @param {Object} [options]
    * @constructor
    */
-  function BalanceScale( leftItemCreators, rightItemCreators, options ) {
+  function BalanceScale( leftTermCreators, rightTermCreators, options ) {
 
     var self = this;
 
@@ -45,8 +45,8 @@ define( function( require ) {
       // options related to the plate's 2D grid
       gridRows: 6, // {number} rows in the grid
       gridColumns: 6, // {number} columns in the grid
-      gridXMargin: 2, // horizontal space between stacks of items
-      gridYMargin: 0,  // vertical space between items in each stack
+      gridXMargin: 2, // horizontal space between stacks of terms
+      gridYMargin: 0,  // vertical space between terms in each stack
       iconSize: null // {Dimension2|null} size of icons, computed if null
 
     }, options );
@@ -61,19 +61,19 @@ define( function( require ) {
     this.maxAngle = options.maxAngle;
 
     // @private
-    this.leftItemCreators = leftItemCreators;
-    this.rightItemCreators = rightItemCreators;
+    this.leftTermCreators = leftTermCreators;
+    this.rightTermCreators = rightTermCreators;
 
-    // {AbstractItemCreator[]} all AbstractItemCreator instances
-    var itemCreators = leftItemCreators.concat( rightItemCreators );
+    // {AbstractTermCreator[]} all AbstractTermCreator instances
+    var termCreators = leftTermCreators.concat( rightTermCreators );
 
-    // Compute the maximum width and height of all item icons
+    // Compute the maximum width and height of all term icons
     if ( !options.iconSize ) {
       var maxIconWidth = 0;
       var maxIconHeight = 0;
-      itemCreators.forEach( function( itemCreator ) {
-        maxIconWidth = Math.max( maxIconWidth, itemCreator.icon.width );
-        maxIconHeight = Math.max( maxIconHeight, itemCreator.icon.height );
+      termCreators.forEach( function( termCreator ) {
+        maxIconWidth = Math.max( maxIconWidth, termCreator.icon.width );
+        maxIconHeight = Math.max( maxIconHeight, termCreator.icon.height );
       } );
       options.iconSize = new Dimension2( maxIconWidth, maxIconHeight );
     }
@@ -94,8 +94,8 @@ define( function( require ) {
     };
 
     // @public (read-only)
-    this.leftPlate = new Plate( leftItemCreators, plateOptions );
-    this.rightPlate = new Plate( rightItemCreators, plateOptions );
+    this.leftPlate = new Plate( leftTermCreators, plateOptions );
+    this.rightPlate = new Plate( rightTermCreators, plateOptions );
 
     // @public {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
     this.angleProperty = new DerivedProperty( [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
@@ -146,21 +146,21 @@ define( function( require ) {
         new Vector2( self.location.x - dx, self.location.y - dy - options.plateSupportHeight );
     } );
 
-    // {Property.<number>} dependencies for deriving numberOfItemsProperty
-    var numberOfItemsDependencies = [];
-    leftItemCreators.forEach( function( leftItemCreator ) {
-      numberOfItemsDependencies.push( leftItemCreator.numberOfItemsOnScaleProperty );
+    // {Property.<number>} dependencies for deriving numberOfTermsProperty
+    var numberOfTermsDependencies = [];
+    leftTermCreators.forEach( function( leftTermCreator ) {
+      numberOfTermsDependencies.push( leftTermCreator.numberOfTermsOnScaleProperty );
     } );
-    rightItemCreators.forEach( function( leftItemCreator ) {
-      numberOfItemsDependencies.push( leftItemCreator.numberOfItemsOnScaleProperty );
+    rightTermCreators.forEach( function( leftTermCreator ) {
+      numberOfTermsDependencies.push( leftTermCreator.numberOfTermsOnScaleProperty );
     } );
 
-    // @public {DerivedProperty.<number>} total number of items on the scale (both plates)
-    this.numberOfItemsProperty = new DerivedProperty( numberOfItemsDependencies,
+    // @public {DerivedProperty.<number>} total number of terms on the scale (both plates)
+    this.numberOfTermsProperty = new DerivedProperty( numberOfTermsDependencies,
       function() {
         var sum = 0;
-        for ( var i = 0; i < numberOfItemsDependencies.length; i++ ) {
-          sum += numberOfItemsDependencies[ i ].value;
+        for ( var i = 0; i < numberOfTermsDependencies.length; i++ ) {
+          sum += numberOfTermsDependencies[ i ].value;
         }
         return sum;
       } );
@@ -171,7 +171,7 @@ define( function( require ) {
   return inherit( Object, BalanceScale, {
 
     /**
-     * Organizes items on the scale, grouping like items together.
+     * Organizes terms on the scale, grouping like terms together.
      * @public
      */
     organize: function() {
@@ -180,15 +180,15 @@ define( function( require ) {
     },
 
     /**
-     * Clears the scale, by disposing of all items that are on the scale.
+     * Clears the scale, by disposing of all terms that are on the scale.
      * @public
      */
     clear: function() {
-      this.leftItemCreators.forEach( function( itemCreator ) {
-        itemCreator.disposeItemsOnScale();
+      this.leftTermCreators.forEach( function( termCreator ) {
+        termCreator.disposeTermsOnScale();
       } );
-      this.rightItemCreators.forEach( function( itemCreator ) {
-        itemCreator.disposeItemsOnScale();
+      this.rightTermCreators.forEach( function( termCreator ) {
+        termCreator.disposeTermsOnScale();
       } );
     }
   } );

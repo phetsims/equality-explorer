@@ -18,49 +18,49 @@ define( function( require ) {
 
   /**
    * @param {string} debugName - internal name, not displayed to the user
-   * @param {AbstractItemCreator[]} leftItemCreators - in the order that they appear in the left panel and left side of equations
-   * @param {AbstractItemCreator[]} rightItemCreators - in the order that they appear in the right panel and right side of equations
+   * @param {AbstractTermCreator[]} leftTermCreators - in the order that they appear in the left panel and left side of equations
+   * @param {AbstractTermCreator[]} rightTermCreators - in the order that they appear in the right panel and right side of equations
    * @param {Object} [options]
    * @constructor
    */
-  function LockableScene( debugName, leftItemCreators, rightItemCreators, options ) {
+  function LockableScene( debugName, leftTermCreators, rightTermCreators, options ) {
 
-    Scene.call( this, debugName, leftItemCreators, rightItemCreators, options );
+    Scene.call( this, debugName, leftTermCreators, rightTermCreators, options );
 
     // @public whether the 2 sides of the equation are locked
     this.lockedProperty = new BooleanProperty( false );
 
     var i; // hoist loop variable explicitly
 
-    assert && assert( leftItemCreators.length === rightItemCreators.length,
-      'must have same number of item creators on left and right' );
-    assert && assert( leftItemCreators.length % 2 === 0,
-      'scene must have an even number of item creators per side' );
+    assert && assert( leftTermCreators.length === rightTermCreators.length,
+      'must have same number of term creators on left and right' );
+    assert && assert( leftTermCreators.length % 2 === 0,
+      'scene must have an even number of term creators per side' );
 
-    for ( i = 0; i < leftItemCreators.length; i++ ) {
+    for ( i = 0; i < leftTermCreators.length; i++ ) {
 
-      // These item creators are lockable, so initialize lockedProperty
-      leftItemCreators[ i ].lockedProperty = this.lockedProperty;
-      rightItemCreators[ i ].lockedProperty = this.lockedProperty;
+      // These term creators are lockable, so initialize lockedProperty
+      leftTermCreators[ i ].lockedProperty = this.lockedProperty;
+      rightTermCreators[ i ].lockedProperty = this.lockedProperty;
 
-      // Associate item creator with its equivalent item creator on the opposite side of the scale.
-      assert && assert( leftItemCreators[ i ].isEquivalentTo( rightItemCreators[ i ] ),
-        'equivalent item creators must have the same indices on both sides' );
-      leftItemCreators[ i ].equivalentItemCreator = rightItemCreators[ i ];
-      rightItemCreators[ i ].equivalentItemCreator = leftItemCreators[ i ];
+      // Associate term creator with its equivalent term creator on the opposite side of the scale.
+      assert && assert( leftTermCreators[ i ].isEquivalentTo( rightTermCreators[ i ] ),
+        'equivalent term creators must have the same indices on both sides' );
+      leftTermCreators[ i ].equivalentTermCreator = rightTermCreators[ i ];
+      rightTermCreators[ i ].equivalentTermCreator = leftTermCreators[ i ];
 
-      // Associate item creators with their inverse creators on the opposite side of the scale.
+      // Associate term creators with their inverse creators on the opposite side of the scale.
       if ( i % 2 === 0 ) {
 
-        assert && assert( leftItemCreators[ i ].isInverseOf( rightItemCreators[ i + 1 ] ),
-          'equivalent item creators must have specific indices' );
-        leftItemCreators[ i ].inverseItemCreator = rightItemCreators[ i + 1 ];
-        rightItemCreators[ i + 1 ].inverseItemCreator = leftItemCreators[ i ];
+        assert && assert( leftTermCreators[ i ].isInverseOf( rightTermCreators[ i + 1 ] ),
+          'equivalent term creators must have specific indices' );
+        leftTermCreators[ i ].inverseTermCreator = rightTermCreators[ i + 1 ];
+        rightTermCreators[ i + 1 ].inverseTermCreator = leftTermCreators[ i ];
 
-        assert && assert( leftItemCreators[ i + 1 ].isInverseOf( rightItemCreators[ i ] ),
-          'equivalent item creators must have specific indices' );
-        leftItemCreators[ i + 1 ].inverseItemCreator = rightItemCreators[ i ];
-        rightItemCreators[ i ].inverseItemCreator = leftItemCreators[ 1 + 1 ];
+        assert && assert( leftTermCreators[ i + 1 ].isInverseOf( rightTermCreators[ i ] ),
+          'equivalent term creators must have specific indices' );
+        leftTermCreators[ i + 1 ].inverseTermCreator = rightTermCreators[ i ];
+        rightTermCreators[ i ].inverseTermCreator = leftTermCreators[ 1 + 1 ];
       }
     }
   }

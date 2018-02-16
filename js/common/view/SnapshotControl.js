@@ -126,7 +126,7 @@ define( function( require ) {
       if ( snapshot ) {
 
         // create the equation for the snapshot
-        equationNode = new EquationNode( scene.leftItemCreators, scene.rightItemCreators, {
+        equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, {
           updateEnabled: false, // equation is static
           fontSize: FONT_SIZE,
           relationalOperatorFontSize: FONT_SIZE

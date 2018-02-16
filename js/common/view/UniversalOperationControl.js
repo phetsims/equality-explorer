@@ -48,14 +48,14 @@ define( function( require ) {
     var rightPlate = scene.scale.rightPlate;
 
     // picker for choosing operator
-    var operatorItems = [];
+    var operatorTerms = [];
     for ( var i = 0; i < operators.length; i++ ) {
-      operatorItems.push( {
+      operatorTerms.push( {
         value: operators[ i ],
         node: new Text( operators[ i ], { font: options.font } )
       } );
     }
-    var operatorPicker = new ObjectPicker( operatorProperty, operatorItems, {
+    var operatorPicker = new ObjectPicker( operatorProperty, operatorTerms, {
       color: 'black',
       xMargin: 12
     } );

@@ -7,11 +7,11 @@
  *
  * Running with ?dev shows the following things:
  * - layout bounds for the screen (the safe zone)
- * - red dot at the origin of each item
+ * - red dot at the origin of each term
  * - red dot at the origin of each plate
  * - red dot at the origin of the scale
  * - red rectangle for drag bounds on each side of the scale
- * - red horizontal line that denotes the cutoff of on vs off the scale, when dragging items
+ * - red horizontal line that denotes the cutoff of on vs off the scale, when dragging terms
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -27,7 +27,7 @@ define( function( require ) {
     // Speed multiplier for all animations, including motion, fades, etc.
     // Normal speed is 1. Larger values make animations run faster, smaller values make animations run slower.
     // For example, ?speed=0.5 will make animations run at half the normal speed.
-    // Useful for testing multi-touch, so that items are easier to grab while they're moving.
+    // Useful for testing multi-touch, so that terms are easier to grab while they're moving.
     // For internal use only, not public facing.
     speed: {
       type: 'number',
@@ -44,7 +44,7 @@ define( function( require ) {
     // Add the 'x & y' screen, for testing multi-variable support.
     xy: { type: 'flag' },
 
-    // Number of items that are initially on the left plate in the Basics screen.
+    // Number of terms that are initially on the left plate in the Basics screen.
     // This is intended to be used for debugging and testing, not in production situations.
     // See https://github.com/phetsims/equality-explorer/issues/8
     // For internal use only, not public facing.
@@ -53,9 +53,9 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0 ], // in the order that items appear in the panel below the scale
+      defaultValue: [ 0, 0, 0 ], // in the order that terms appear in the panel below the scale
       isValidValue: function( value ) {
-        return isValidItemsArray( value, 3 );
+        return isValidTermsArray( value, 3 );
       }
     },
 
@@ -68,7 +68,7 @@ define( function( require ) {
       },
       defaultValue: [ 0, 0, 0 ],
       isValidValue: function( value ) {
-        return isValidItemsArray( value, 3 );
+        return isValidTermsArray( value, 3 );
       }
     },
 
@@ -79,9 +79,9 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0 ], // in the order that items appear in the panel below the scale
+      defaultValue: [ 0, 0 ], // in the order that terms appear in the panel below the scale
       isValidValue: function( value ) {
-        return isValidItemsArray( value, 2 );
+        return isValidTermsArray( value, 2 );
       }
     },
 
@@ -94,7 +94,7 @@ define( function( require ) {
       },
       defaultValue: [ 0, 0 ],
       isValidValue: function( value ) {
-        return isValidItemsArray( value, 2 );
+        return isValidTermsArray( value, 2 );
       }
     },
 
@@ -105,9 +105,9 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0, 0 ], // in the order that items appear in the panel below the scale
+      defaultValue: [ 0, 0, 0, 0 ], // in the order that terms appear in the panel below the scale
       isValidValue: function( value ) {
-        return isValidItemsArray( value, 4 );
+        return isValidTermsArray( value, 4 );
       }
     },
 
@@ -120,11 +120,11 @@ define( function( require ) {
       },
       defaultValue: [ 0, 0, 0, 0 ],
       isValidValue: function( value ) {
-        return isValidItemsArray( value, 4 );
+        return isValidTermsArray( value, 4 );
       }
     },
 
-    // Offset, relative to center of plate, for when an item is considered 'above' the plate.
+    // Offset, relative to center of plate, for when a term is considered 'above' the plate.
     // For internal use only, not public facing.
     plateYOffset: {
       type: 'number',
@@ -135,12 +135,12 @@ define( function( require ) {
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
 
   /**
-   * Validates an array that indicates the number of items on a plate.
+   * Validates an array that indicates the number of terms on a plate.
    * @param {[]} array
    * @param {number} length - required length of array
    * @returns {boolean}
    */
-  function isValidItemsArray( array, length ) {
+  function isValidTermsArray( array, length ) {
     return ( array.length === length ) &&
            // every value in the array is an integer
            ( _.every( array, function( value ) { return value >= 0 && Util.isInteger( value ); } ) ) &&

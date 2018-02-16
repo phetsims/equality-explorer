@@ -15,11 +15,11 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemsPanel = require( 'EQUALITY_EXPLORER/common/view/ItemsPanel' );
   var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
+  var TermsPanel = require( 'EQUALITY_EXPLORER/common/view/TermsPanel' );
 
   /**
    * @param {Scene} scene
@@ -33,7 +33,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      itemsPanelSpacing: 50, // spacing of items in the panels that appear below the scale
+      termsPanelSpacing: 50, // spacing of terms in the panels that appear below the scale
       xVisibleProperty: null, // {BooleanProperty|null} whether 'x' value is visible in snapshots
       organizeButtonVisible: true
     }, options );
@@ -44,30 +44,30 @@ define( function( require ) {
 
     // locals vars to improve readability
     var scale = scene.scale;
-    var leftItemCreators = scene.leftItemCreators;
-    var rightItemCreators = scene.rightItemCreators;
+    var leftTermCreators = scene.leftTermCreators;
+    var rightTermCreators = scene.rightTermCreators;
 
-    // items live in this layer
-    var itemsLayer = new Node();
+    // terms live in this layer
+    var termsLayer = new Node();
 
     var scaleNode = new BalanceScaleNode( scale, {
       organizeButtonVisible: options.organizeButtonVisible
     } );
 
-    var leftItemsPanel = new ItemsPanel( leftItemCreators, scale.leftPlate, itemsLayer, {
-      spacing: options.itemsPanelSpacing,
+    var leftTermsPanel = new TermsPanel( leftTermCreators, scale.leftPlate, termsLayer, {
+      spacing: options.termsPanelSpacing,
       centerX: scale.leftPlate.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var rightItemsPanel = new ItemsPanel( rightItemCreators, scale.rightPlate, itemsLayer, {
-      spacing: options.itemsPanelSpacing,
+    var rightTermsPanel = new TermsPanel( rightTermCreators, scale.rightPlate, termsLayer, {
+      spacing: options.termsPanelSpacing,
       centerX: scale.rightPlate.locationProperty.value.x,
-      bottom: leftItemsPanel.bottom
+      bottom: leftTermsPanel.bottom
     } );
 
-    var equationAccordionBox = new EquationAccordionBox( leftItemCreators, rightItemCreators, {
-      fixedWidth: rightItemsPanel.right - leftItemsPanel.left,
+    var equationAccordionBox = new EquationAccordionBox( leftTermCreators, rightTermCreators, {
+      fixedWidth: rightTermsPanel.right - leftTermsPanel.left,
       expandedProperty: this.equationAccordionBoxExpandedProperty,
 
       // Slightly off center, so that the equation's relational operator is horizontally centered
@@ -86,11 +86,11 @@ define( function( require ) {
 
     var children = [
       scaleNode,
-      leftItemsPanel,
-      rightItemsPanel,
+      leftTermsPanel,
+      rightTermsPanel,
       equationAccordionBox,
       snapshotsAccordionBox,
-      itemsLayer // on top, so that items are in front of everything else
+      termsLayer // on top, so that terms are in front of everything else
     ];
 
     // Some scenes support locking the left and right sides of the equation,
@@ -98,7 +98,7 @@ define( function( require ) {
     if ( scene.lockedProperty ) {
       var lockControl = new LockControl( scene.lockedProperty, {
         x: scale.location.x,
-        y: leftItemsPanel.centerY - 5 // offset determined empirically
+        y: leftTermsPanel.centerY - 5 // offset determined empirically
       } );
       children.unshift( lockControl ); // add to beginning
     }

@@ -2,7 +2,7 @@
 
 /**
  * Circular halo that appears around a Node.
- * Used to indicate that two overlapping items will sum to zero.
+ * Used to indicate that two overlapping terms will sum to zero.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

@@ -1,7 +1,7 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
 /**
- * Displays a constant term, with fraction or integer value.
+ * Displays a term that has a constant (integer) value.  The value is displayed in a circle.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -10,130 +10,54 @@ define( function( require ) {
 
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
-  var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
-  var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
-  var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
   var Text = require( 'SCENERY/nodes/Text' );
-
-  // constants
-  var FRACTION_FONT = new PhetFont( 28 );
-  var INTEGER_FONT = new PhetFont( 40 );
+  var Util = require( 'DOT/Util' );
 
   /**
-   * @param {ConstantTerm} term
-   * @param {Object} [options]
+   * @param {number} value - integer value displayed on the Node
+   * @param {Object} {options}
    * @constructor
    */
-  function ConstantTermNode( term, options ) {
+  function ConstantTermNode( value, options ) {
 
-    assert && assert( term instanceof ConstantTerm, 'term has wrong type' );
-
-    var self = this;
+    assert && assert( Util.isInteger( value ), 'value must be an integer: ' + value );
 
     options = _.extend( {
-      diameter: EqualityExplorerConstants.TERM_DIAMETER,
-      margin: 18,
-      fractionFontSize: 12,
-      integerFontSize: 22
+      radius: 20,
+      margin: 8,
+      fill: 'white',
+      stroke: 'black',
+      lineDash: [],
+      textFill: 'black',
+      font: new PhetFont( EqualityExplorerConstants.ITEM_FONT_SIZE )
     }, options );
 
-    var circleNode = new Circle( options.diameter / 2, {
-      stroke: 'black'
+    var circleNode = new Circle( options.radius, {
+      fill: options.fill,
+      stroke: options.stroke,
+      lineDash: options.lineDash
     } );
 
-    // for fractional value
-    var fractionNode = new ReducedFractionNode( term.valueProperty.value, {
-      font: FRACTION_FONT
-    } );
-
-    // for integer value
-    var integerNode = new Text( 0, {
-      font: INTEGER_FONT,
-      center: fractionNode.center
-    } );
-
-    var contentNode = new Node( {
-      children: [ fractionNode, integerNode ],
+    var textNode = new Text( value, {
+      font: options.font,
+      fill: options.textFill,
       maxWidth: circleNode.width - ( 2 * options.margin ),
       maxHeight: circleNode.height - ( 2 * options.margin ),
       center: circleNode.center
     } );
 
-    assert && assert( !options.children, 'subtype defines its own children' );
-    options.children = [ circleNode, contentNode ];
+    assert && assert( !options.children, 'this type defines its children' );
+    options.children = [ circleNode, textNode ];
 
-    TermNode.call( this, term, options );
-
-    // synchronize with the model value
-    term.valueProperty.link( function( fraction, oldFraction ) {
-      assert && assert( fraction instanceof ReducedFraction );
-
-      // update the value displayed
-      if ( fraction.isInteger() ) {
-
-        // hide the fraction
-        if ( contentNode.hasChild( fractionNode ) ) {
-          contentNode.removeChild( fractionNode );
-        }
-
-        // update the integer
-        assert && assert( Math.abs( fraction.denominator ) === 1, 'expected fraction to be reduced' );
-        integerNode.text = fraction.numerator;
-        if ( !contentNode.hasChild( integerNode ) ) {
-          contentNode.addChild( integerNode );
-        }
-      }
-      else {
-
-        // hide the integer
-        if ( contentNode.hasChild( integerNode ) ) {
-          contentNode.removeChild( integerNode );
-        }
-
-        // update the fraction
-        fractionNode.setFraction( fraction );
-        if ( !contentNode.hasChild( fractionNode ) ) {
-          contentNode.addChild( fractionNode );
-        }
-      }
-
-      // update properties based on sign
-      if ( fraction.getValue() >= 0 ) {
-        circleNode.fill = EqualityExplorerConstants.POSITIVE_CONSTANT_FILL;
-        circleNode.lineDash = EqualityExplorerConstants.POSITIVE_CONSTANT_LINE_DASH;
-      }
-      else {
-        circleNode.fill = EqualityExplorerConstants.NEGATIVE_CONSTANT_FILL;
-        circleNode.lineDash = EqualityExplorerConstants.NEGATIVE_CONSTANT_LINE_DASH;
-      }
-
-      // center in the circle
-      contentNode.center = circleNode.center;
-
-      // hide this node when value is zero
-      self.visible = ( fraction.getValue() !== 0 );
-
-      // sum-to-zero animation when the value transitions to zero
-      if ( oldFraction && oldFraction.getValue() !== 0 && fraction.getValue() === 0 ) {
-        var sumToZeroNode = new SumToZeroNode( {
-          haloBaseColor: 'transparent', // no halo
-          fontSize: INTEGER_FONT.size,
-          center: self.center
-        } );
-        self.parent.addChild( sumToZeroNode );
-        sumToZeroNode.startAnimation();
-      }
-    } );
+    Node.call( this, options );
   }
 
   equalityExplorer.register( 'ConstantTermNode', ConstantTermNode );
 
-  return inherit( TermNode, ConstantTermNode );
+  return inherit( Node, ConstantTermNode );
 } );

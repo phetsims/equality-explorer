@@ -1,9 +1,9 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Plate where items are placed to be weighed on a balance scale.
+ * Plate where terms are placed to be weighed on a balance scale.
  * (The correct term is 'weighing platform', but 'plate' was used throughout the design.)
- * Items are arranged in a 2D grid of cells, where each cell can be occupied by at most one item.
+ * Terms are arranged in a 2D grid of cells, where each cell can be occupied by at most one term.
  *
  * @author Chris Malley (PixelZoom, Inc)
  */
@@ -21,11 +21,11 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {AbstractItemCreator[]} itemCreators - creators associated with item on this plate
+   * @param {AbstractTermCreator[]} termCreators - creators associated with term on this plate
    * @param {Object} [options]
    * @constructor
    */
-  function Plate( itemCreators, options ) {
+  function Plate( termCreators, options ) {
 
     var self = this;
 
@@ -41,7 +41,7 @@ define( function( require ) {
     this.locationProperty = new Property( new Vector2( 0, 0 ) );
 
     // @public (read-only)
-    this.itemCreators = itemCreators;
+    this.termCreators = termCreators;
 
     // @public (read-only)
     this.supportHeight = options.supportHeight;
@@ -60,29 +60,29 @@ define( function( require ) {
 
     // {Property[]} dependencies for deriving weightProperty
     var weightDependencies = [];
-    itemCreators.forEach( function( itemCreator ) {
-      weightDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
-      if ( itemCreator.weightProperty ) {
-        weightDependencies.push( itemCreator.weightProperty );
+    termCreators.forEach( function( termCreator ) {
+      weightDependencies.push( termCreator.numberOfTermsOnScaleProperty );
+      if ( termCreator.weightProperty ) {
+        weightDependencies.push( termCreator.weightProperty );
       }
     } );
 
-    // @public {DerivedProperty.<number>} total weight of the items that are on the plate
+    // @public {DerivedProperty.<number>} total weight of the terms that are on the plate
     this.weightProperty = new DerivedProperty( weightDependencies, function() {
       var weight = 0;
-      itemCreators.forEach( function( itemCreator ) {
-        weight += ( itemCreator.numberOfItemsOnScaleProperty.value * itemCreator.weight );
+      termCreators.forEach( function( termCreator ) {
+        weight += ( termCreator.numberOfTermsOnScaleProperty.value * termCreator.weight );
       } );
       return weight;
     } );
 
-    // @public emit is called when the contents of the grid changes (items added, removed, organized)
+    // @public emit is called when the contents of the grid changes (terms added, removed, organized)
     this.contentsChangedEmitter = new Emitter();
 
-    // associate this plate with its item creators
-    itemCreators.forEach( function( itemCreator ) {
-      assert && assert( !itemCreator.plate, 'item creator already has an associated plate' );
-      itemCreator.plate = self;
+    // associate this plate with its term creators
+    termCreators.forEach( function( termCreator ) {
+      assert && assert( !termCreator.plate, 'term creator already has an associated plate' );
+      termCreator.plate = self;
     } );
   }
 
@@ -91,23 +91,23 @@ define( function( require ) {
   return inherit( Object, Plate, {
 
     /**
-     * Adds an item to the plate, in a specific cell in the grid.
-     * @param {AbstractItem} item
+     * Adds a term to the plate, in a specific cell in the grid.
+     * @param {AbstractTerm} term
      * @param {number} cellIndex
      * @public
      */
-    addItem: function( item, cellIndex ) {
-      this.grid.putItem( item, cellIndex );
+    addTerm: function( term, cellIndex ) {
+      this.grid.putTerm( term, cellIndex );
       this.contentsChangedEmitter.emit();
     },
 
     /**
-     * Removes an item from the plate. Items above the removed item move down.
-     * @param {AbstractItem} item
+     * Removes a term from the plate. Terms above the removed term move down.
+     * @param {AbstractTerm} term
      * @public
      */
-    removeItem: function( item ) {
-      this.grid.removeItem( item );
+    removeTerm: function( term ) {
+      this.grid.removeTerm( term );
       this.contentsChangedEmitter.emit();
     },
 
@@ -152,23 +152,23 @@ define( function( require ) {
     },
 
     /**
-     * Gets the item at a specified location in the grid.
+     * Gets the term at a specified location in the grid.
      * @param {Vector2} location
-     * @returns {AbstractItem|null} null if location is outside the grid, or the cell at location is empty
+     * @returns {AbstractTerm|null} null if location is outside the grid, or the cell at location is empty
      * @public
      */
-    getItemAtLocation: function( location ) {
-      return this.grid.getItemAtLocation( location );
+    getTermAtLocation: function( location ) {
+      return this.grid.getTermAtLocation( location );
     },
 
     /**
-     * Gets the index for the cell that an item occupies.
-     * @param {AbstractItem} item
-     * @returns {number} the cell's index, -1 if the item doesn't occupy a cell
+     * Gets the index for the cell that a term occupies.
+     * @param {AbstractTerm} term
+     * @returns {number} the cell's index, -1 if the term doesn't occupy a cell
      * @public
      */
-    getCellForItem: function( item ) {
-      return this.grid.getCellForItem( item );
+    getCellForTerm: function( term ) {
+      return this.grid.getCellForTerm( term );
     },
 
     /**
@@ -181,17 +181,17 @@ define( function( require ) {
     },
 
     /**
-     * Organizes items on the plate, as specified in https://github.com/phetsims/equality-explorer/issues/4
+     * Organizes terms on the plate, as specified in https://github.com/phetsims/equality-explorer/issues/4
      * @public
      */
     organize: function() {
 
-      var numberOfItemsToOrganize = 0;
-      this.itemCreators.forEach( function( itemCreator ) {
-        numberOfItemsToOrganize += itemCreator.numberOfItemsOnScaleProperty.value;
+      var numberOfTermsToOrganize = 0;
+      this.termCreators.forEach( function( termCreator ) {
+        numberOfTermsToOrganize += termCreator.numberOfTermsOnScaleProperty.value;
       } );
 
-      if ( numberOfItemsToOrganize > 0 ) {
+      if ( numberOfTermsToOrganize > 0 ) {
 
         var grid = this.grid;
 
@@ -201,23 +201,23 @@ define( function( require ) {
         var row = grid.rows - 1;
         var column = 0;
 
-        this.itemCreators.forEach( function( itemCreator ) {
+        this.termCreators.forEach( function( termCreator ) {
 
-          var items = itemCreator.getItemsOnScale(); // {AbstractItem[]}
+          var terms = termCreator.getTermsOnScale(); // {AbstractTerm[]}
 
-          if ( items.length > 0 ) {
+          if ( terms.length > 0 ) {
 
-            // stack the items in columns, from left to right
-            for ( var i = 0; i < items.length; i++ ) {
+            // stack the terms in columns, from left to right
+            for ( var i = 0; i < terms.length; i++ ) {
 
-              var item = items[ i ];
+              var term = terms[ i ];
               var cellIndex = grid.rowColumnToIndex( row, column );
-              grid.putItem( item, cellIndex );
+              grid.putTerm( term, cellIndex );
 
-              numberOfItemsToOrganize--;
+              numberOfTermsToOrganize--;
 
               // advance to the next cell
-              if ( i < items.length - 1 ) {
+              if ( i < terms.length - 1 ) {
                 if ( row > 0 ) {
 
                   // next cell in the current column
@@ -232,12 +232,12 @@ define( function( require ) {
               }
             }
 
-            if ( numberOfItemsToOrganize > 0 ) {
+            if ( numberOfTermsToOrganize > 0 ) {
 
               // Start a new column if we have enough cells to the right of the current column.
               // Otherwise continue to fill the current column.
               var numberOfCellsToRight = ( grid.columns - column - 1 ) * grid.rows;
-              if ( numberOfCellsToRight >= numberOfItemsToOrganize ) {
+              if ( numberOfCellsToRight >= numberOfTermsToOrganize ) {
                 row = grid.rows - 1;
                 column++;
               }
@@ -247,22 +247,22 @@ define( function( require ) {
             }
           }
         } );
-        assert && assert( numberOfItemsToOrganize === 0 );
+        assert && assert( numberOfTermsToOrganize === 0 );
 
-        // Center the stacks on the plate by shifting items to the right.
+        // Center the stacks on the plate by shifting terms to the right.
         var numberOfEmptyColumns = grid.columns - column - 1;
         var gridColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
         if ( gridColumnsToShiftRight > 0 ) {
           for ( row = grid.rows - 1; row >= 0; row-- ) {
             for ( column = grid.columns - 1; column >= 0; column-- ) {
               var cellIndex = grid.rowColumnToIndex( row, column );
-              var item = grid.getItemForCell( cellIndex );
-              if ( item ) {
+              var term = grid.getTermForCell( cellIndex );
+              if ( term ) {
 
-                // move item 1 column to the right
+                // move term 1 column to the right
                 grid.clearCell( cellIndex );
                 var rightIndex = grid.rowColumnToIndex( row, column + gridColumnsToShiftRight );
-                grid.putItem( item, rightIndex );
+                grid.putTerm( term, rightIndex );
               }
             }
           }

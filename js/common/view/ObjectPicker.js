@@ -32,12 +32,12 @@ define( function( require ) {
   var BUTTON_STATES = [ 'up', 'down', 'over', 'out' ];
 
   /**
-   * @param {Property.<Object>} valueProperty - value of the current item that is displayed
-   * @param {{value:Object, node:Node}[]} items - the set of items that you can select from
+   * @param {Property.<Object>} valueProperty - value of the current term that is displayed
+   * @param {{value:Object, node:Node}[]} terms - the set of terms that you can select from
    * @param {Object} [options]
    * @constructor
    */
-  function ObjectPicker( valueProperty, items, options ) {
+  function ObjectPicker( valueProperty, terms, options ) {
 
     options = _.extend( {
       cursor: 'pointer',
@@ -68,12 +68,12 @@ define( function( require ) {
     //------------------------------------------------------------
     // Nodes
 
-    // maximum dimensions of item Nodes
-    var maxWidth = _.maxBy( items, function( item ) {
-      return item.node.width;
+    // maximum dimensions of term Nodes
+    var maxWidth = _.maxBy( terms, function( term ) {
+      return term.node.width;
     } ).node.width;
-    var maxHeight = _.maxBy( items, function( item ) {
-      return item.node.height;
+    var maxHeight = _.maxBy( terms, function( term ) {
+      return term.node.height;
     } ).node.height;
 
     // compute shape of the background behind the value
@@ -199,11 +199,11 @@ define( function( require ) {
     //------------------------------------------------------------
     // Properties
 
-    // index of the item that's currently selected
-    var indexProperty = new NumberProperty( indexOfItemWithValue( items, valueProperty.value ), {
+    // index of the term that's currently selected
+    var indexProperty = new NumberProperty( indexOfItemWithValue( terms, valueProperty.value ), {
       valueType: 'Integer',
       isValidValue: function( value ) {
-        return ( value >= 0 && value < items.length );
+        return ( value >= 0 && value < terms.length );
       }
     } );
 
@@ -214,7 +214,7 @@ define( function( require ) {
     // {DerivedProperty.<boolean>} whether the up button is enabled
     var upEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
-        return index < items.length - 1;
+        return index < terms.length - 1;
       } );
 
     // {DerivedProperty.<boolean>} whether the down button is enabled
@@ -230,7 +230,7 @@ define( function( require ) {
     upParent.addInputListener( new ButtonStateListener( upStateProperty ) );
     var upListener = new FireOnHoldInputListener( {
       listener: function() {
-        indexProperty.value = Math.min( indexProperty.value + 1, items.length - 1 );
+        indexProperty.value = Math.min( indexProperty.value + 1, terms.length - 1 );
       },
       timerDelay: options.timerDelay,
       timerInterval: options.timerInterval
@@ -258,8 +258,8 @@ define( function( require ) {
       valueParentNode.removeAllChildren();
 
       // show the node associated with the value
-      var index = indexOfItemWithValue( items, value );
-      var valueNode = items[ index ].node;
+      var index = indexOfItemWithValue( terms, value );
+      var valueNode = terms[ index ].node;
       valueParentNode.addChild( valueNode );
       valueNode.centerX = backgroundWidth / 2;
       valueNode.centerY = backgroundHeight / 2;
@@ -271,7 +271,7 @@ define( function( require ) {
 
     // unlink unnecessary
     indexProperty.link( function( index ) {
-       valueProperty.value = items[ index ].value;
+       valueProperty.value = terms[ index ].value;
     } );
 
     // @private update colors for 'up' components, unmultilink unnecessary
@@ -323,15 +323,15 @@ define( function( require ) {
   inherit( ButtonListener, ButtonStateListener );
 
   /**
-   * Gets the index of the item that has a specified value.
-   * @param {{value:Object, node:Node}} items
+   * Gets the index of the term that has a specified value.
+   * @param {{value:Object, node:Node}} terms
    * @param {Object} value
    * @return {number}
    */
-  var indexOfItemWithValue = function( items, value ) {
+  var indexOfItemWithValue = function( terms, value ) {
     var index = -1;
-    for ( var i = 0; i < items.length; i++ ) {
-      if ( items[ i ].value === value ) {
+    for ( var i = 0; i < terms.length; i++ ) {
+      if ( terms[ i ].value === value ) {
         index = i;
         break;
       }

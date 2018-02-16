@@ -17,19 +17,19 @@ define( function( require ) {
   /**
    * @param {string} debugName - internal name, not displayed to the user, no i18n required
    * @param {Node} icon - icon used to represent the scene
-   * @param {AbstractItemCreator[]} leftItemCreators
-   * @param {AbstractItemCreator[]} rightItemCreators
+   * @param {AbstractTermCreator[]} leftTermCreators
+   * @param {AbstractTermCreator[]} rightTermCreators
    * @param {Object} [options]
    * @constructor
    */
-  function BasicsScene( debugName, icon, leftItemCreators, rightItemCreators, options ) {
+  function BasicsScene( debugName, icon, leftTermCreators, rightTermCreators, options ) {
 
     options = options || {};
 
     assert && assert( !options.icon, 'this type defines its icon' );
     options.icon = new Node( { children: [ icon ] } ); // wrap the icon, since we're using scenery's DAG feature
 
-    Scene.call( this, debugName, leftItemCreators, rightItemCreators, options );
+    Scene.call( this, debugName, leftTermCreators, rightTermCreators, options );
   }
 
   equalityExplorer.register( 'BasicsScene', BasicsScene );

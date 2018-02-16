@@ -16,19 +16,18 @@ In alphabetical order:
 
 * inequality - a mathematical relation in which two _expressions_ are joined by a 
 relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different
-* item
-* dragged item
+* dragged term
 * equation - a mathematical relation in which two _expressions_ are joined by an equal sign (=)
-* equivalent item
+* equivalent term
 * expression - a combination of symbols that is well-formed according to rules that depend on the context
-* ghost item
-* inverse item
+* ghost term
+* inverse term
 * locked
 * plate
 * organize button
 * restore snapshot button
 * sum to zero
-* term on scale
+* term
 * trash snapshot button
 * universal operation
 * zero pair

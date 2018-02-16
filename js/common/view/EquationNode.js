@@ -11,7 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
+  var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -21,15 +21,15 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
+  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   /**
-   * @param {AbstractItemCreator[]} leftItemCreators - left side of equation, terms appear in this order
-   * @param {AbstractItemCreator[]} rightItemCreators - right side of equation, terms appear in this order
+   * @param {AbstractTermCreator[]} leftTermCreators - left side of equation, terms appear in this order
+   * @param {AbstractTermCreator[]} rightTermCreators - right side of equation, terms appear in this order
    * @param {Object} [options]
    * @constructor
    */
-  function EquationNode( leftItemCreators, rightItemCreators, options ) {
+  function EquationNode( leftTermCreators, rightTermCreators, options ) {
 
     var self = this;
 
@@ -66,12 +66,12 @@ define( function( require ) {
     // updates the equation
     var update = function() {
 
-      relationalOperatorNode.text = getRelationalOperator( leftItemCreators, rightItemCreators );
+      relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
 
-      var leftSideNode = createSideNode( leftItemCreators, variableFont, font,
+      var leftSideNode = createSideNode( leftTermCreators, variableFont, font,
         options.iconScale, options.coefficientSpacing, options.plusSpacing );
 
-      var rightSideNode = createSideNode( rightItemCreators, variableFont, font,
+      var rightSideNode = createSideNode( rightTermCreators, variableFont, font,
         options.iconScale, options.coefficientSpacing, options.plusSpacing );
 
       self.children = [ leftSideNode, relationalOperatorNode, rightSideNode ];
@@ -89,15 +89,15 @@ define( function( require ) {
 
       // dynamic equation
 
-      // {AbstractItemCreator[]} all AbstractItemCreator instances
-      var itemCreators = leftItemCreators.concat( rightItemCreators );
+      // {AbstractTermCreator[]} all AbstractTermCreator instances
+      var termCreators = leftTermCreators.concat( rightTermCreators );
 
       // {Property[]} dependencies that require the equation to be updated
       var updateDependencies = [];
-      itemCreators.forEach( function( itemCreator ) {
-        updateDependencies.push( itemCreator.numberOfItemsOnScaleProperty );
-        if ( itemCreator.weightProperty ) {
-          updateDependencies.push( itemCreator.weightProperty );
+      termCreators.forEach( function( termCreator ) {
+        updateDependencies.push( termCreator.numberOfTermsOnScaleProperty );
+        if ( termCreator.weightProperty ) {
+          updateDependencies.push( termCreator.weightProperty );
         }
       } );
 
@@ -122,22 +122,22 @@ define( function( require ) {
 
   /**
    * Gets the operator that describes the relationship between the left and right sides.
-   * @param {AbstractItemCreator[]} leftItemCreators
-   * @param {AbstractItemCreator[]} rightItemCreators
+   * @param {AbstractTermCreator[]} leftTermCreators
+   * @param {AbstractTermCreator[]} rightTermCreators
    * @returns {string}
    */
-  function getRelationalOperator( leftItemCreators, rightItemCreators ) {
+  function getRelationalOperator( leftTermCreators, rightTermCreators ) {
 
     // evaluate the left side
     var leftWeight = 0;
-    for ( var i = 0; i < leftItemCreators.length; i++ ) {
-      leftWeight += leftItemCreators[ i ].numberOfItemsOnScaleProperty.value * leftItemCreators[ i ].weight;
+    for ( var i = 0; i < leftTermCreators.length; i++ ) {
+      leftWeight += leftTermCreators[ i ].numberOfTermsOnScaleProperty.value * leftTermCreators[ i ].weight;
     }
 
     // evaluate the right side
     var rightWeight = 0;
-    for ( i = 0; i < rightItemCreators.length; i++ ) {
-      rightWeight += rightItemCreators[ i ].numberOfItemsOnScaleProperty.value * rightItemCreators[ i ].weight;
+    for ( i = 0; i < rightTermCreators.length; i++ ) {
+      rightWeight += rightTermCreators[ i ].numberOfTermsOnScaleProperty.value * rightTermCreators[ i ].weight;
     }
 
     // determine the operator that describes the relationship between left and right sides
@@ -157,48 +157,48 @@ define( function( require ) {
 
   /**
    * Creates one side of the equation
-   * @param {AbstractItemCreator[]} itemCreators
+   * @param {AbstractTermCreator[]} termCreators
    * @param {Font} variableFont - font for variables, like 'x'
    * @param {Font} font - font for everything except variables
-   * @param {number} iconScale - scale for item icons
+   * @param {number} iconScale - scale for term icons
    * @param {number} coefficientSpacing - space between coefficients and icons
    * @param {number} plusSpacing - space around plus operators
    * @returns {Node}
    */
-  function createSideNode( itemCreators, variableFont, font, iconScale, coefficientSpacing, plusSpacing ) {
+  function createSideNode( termCreators, variableFont, font, iconScale, coefficientSpacing, plusSpacing ) {
 
     var constantValue = 0;
     var coefficients = {}; // map from variable symbol to coefficient value, e.g. { x: 5 }
 
     var children = [];
-    for ( var i = 0; i < itemCreators.length; i++ ) {
+    for ( var i = 0; i < termCreators.length; i++ ) {
 
-      var itemCreator = itemCreators[ i ];
+      var termCreator = termCreators[ i ];
 
-      var numberOfItemsOnScale = itemCreator.numberOfItemsOnScaleProperty.value;
-      if ( numberOfItemsOnScale > 0 ) {
+      var numberOfTermsOnScale = termCreator.numberOfTermsOnScaleProperty.value;
+      if ( numberOfTermsOnScale > 0 ) {
 
-        if ( itemCreator instanceof VariableItemCreator ) {
+        if ( termCreator instanceof VariableTermCreator ) {
 
-          // these items contribute to the coefficient for their associated variable
-          if ( !coefficients.hasOwnProperty( itemCreator.symbol ) ) {
-            coefficients[ itemCreator.symbol ] = 0;
+          // these terms contribute to the coefficient for their associated variable
+          if ( !coefficients.hasOwnProperty( termCreator.symbol ) ) {
+            coefficients[ termCreator.symbol ] = 0;
           }
 
-          coefficients[ itemCreator.symbol ] += ( itemCreator.sign * numberOfItemsOnScale );
+          coefficients[ termCreator.symbol ] += ( termCreator.sign * numberOfTermsOnScale );
         }
-        else if ( itemCreator instanceof ConstantItemCreator ) {
+        else if ( termCreator instanceof ConstantTermCreator ) {
 
-          // these items contribute their weight to the constant term
-          constantValue += ( itemCreator.weight * numberOfItemsOnScale );
+          // these terms contribute their weight to the constant term
+          constantValue += ( termCreator.weight * numberOfTermsOnScale );
         }
         else {
 
-          // these items are displayed as a coefficient and icon
+          // these terms are displayed as a coefficient and icon
           if ( children.length > 0 ) {
             children.push( new Text( EqualityExplorerConstants.PLUS, { font: font } ) );
           }
-          children.push( createTermNode( numberOfItemsOnScale, itemCreator.icon, iconScale, font, coefficientSpacing, false ) );
+          children.push( createTermNode( numberOfTermsOnScale, termCreator.icon, iconScale, font, coefficientSpacing, false ) );
         }
       }
     }

@@ -46,7 +46,7 @@ define( function( require ) {
       lineWidth: 1
     } );
 
-    // Inside bottom surface of the plate, were items will sit.
+    // Inside bottom surface of the plate, were terms will sit.
     // Path description (d= field) from assets/scale/inside.svg
     // See assets/README.md for more details.
     var insideSVG = 'M243.527,69.984c0,2.25-64.234,8.75-143,8.75c-78.764,0-142.25-5.988-142.25-9.25c0-5.25,63.836-10.462,142.602-10.462S243.527,64.484,243.527,69.984';
@@ -100,7 +100,7 @@ define( function( require ) {
     assert && assert( !options.children, 'this type defines its children' );
     options.children = [ supportNode, pivotNode, plateNode ];
 
-    // Grid where items appear
+    // Grid where terms appear
     if ( EqualityExplorerQueryParameters.showGrid ) {
       options.children.push( new GridNode( {
         rows: plate.gridRows,
@@ -116,7 +116,7 @@ define( function( require ) {
       // Red dot at the origin
       options.children.push( new Circle( 2, { fill: 'red' } ) );
 
-      // Cutoff line for determine on vs off the plate when dragging items
+      // Cutoff line for determine on vs off the plate when dragging terms
       options.children.push( new Line( 0, 0, plateNode.width, 0, {
         centerX: plateNode.centerX,
         centerY: plateNode.centerY + EqualityExplorerQueryParameters.plateYOffset,

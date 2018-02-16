@@ -13,13 +13,13 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
   var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
-  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
-  var VariableItemNode = require( 'EQUALITY_EXPLORER/common/view/VariableItemNode' );
+  var TermIcons = require( 'EQUALITY_EXPLORER/common/view/TermIcons' );
+  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
+  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -27,20 +27,20 @@ define( function( require ) {
 
   // constants
   // y, -y and their shadow. These nodes are reused using scenery's DAG feature.
-  // If y were ever added to a production screen, these should be moved to ItemIcons.
-  var POSITIVE_Y_NODE = new VariableItemNode( yString, {
+  // If y were ever added to a production screen, these should be moved to TermIcons.
+  var POSITIVE_Y_NODE = new VariableTermNode( yString, {
     fill: 'rgb( 250, 100, 255 )',
     lineDash: EqualityExplorerConstants.POSITIVE_VARIABLE_LINE_DASH,
-    maxHeight: ItemIcons.ICON_HEIGHT
+    maxHeight: TermIcons.ICON_HEIGHT
   } );
-  var NEGATIVE_Y_NODE = new VariableItemNode( '-' + yString, {
+  var NEGATIVE_Y_NODE = new VariableTermNode( '-' + yString, {
     fill: 'rgb( 240, 140, 255 )',
     lineDash: EqualityExplorerConstants.NEGATIVE_VARIABLE_LINE_DASH,
-    maxHeight: ItemIcons.ICON_HEIGHT
+    maxHeight: TermIcons.ICON_HEIGHT
   } );
-  var Y_SHADOW_NODE = new Rectangle( 0, 0, ItemIcons.ICON_HEIGHT, ItemIcons.ICON_HEIGHT, {
+  var Y_SHADOW_NODE = new Rectangle( 0, 0, TermIcons.ICON_HEIGHT, TermIcons.ICON_HEIGHT, {
     fill: 'black',
-    maxHeight: ItemIcons.ICON_HEIGHT
+    maxHeight: TermIcons.ICON_HEIGHT
   } );
   
   /**
@@ -64,44 +64,44 @@ define( function( require ) {
 
     // Use the same query parameters as 'Variables' screen to pre-populate the scale
     LockableScene.call( this, 'xy',
-      createItemCreators( this.xProperty, this.yProperty, EqualityExplorerQueryParameters.leftVariables ),
-      createItemCreators( this.xProperty, this.yProperty, EqualityExplorerQueryParameters.rightVariables )
+      createTermCreators( this.xProperty, this.yProperty, EqualityExplorerQueryParameters.leftVariables ),
+      createTermCreators( this.xProperty, this.yProperty, EqualityExplorerQueryParameters.rightVariables )
     );
   }
 
   equalityExplorer.register( 'XYScene', XYScene );
 
   /**
-   * Creates the item creators for this scene.
+   * Creates the term creators for this scene.
    * @param {NumberProperty} xProperty
    * @param {NumberProperty} yProperty
-   * @param {number} initialNumberOfItemsOnScale
-   * @returns {AbstractItemCreator[]}
+   * @param {number} initialNumberOfTermsOnScale
+   * @returns {AbstractTermCreator[]}
    */
-  function createItemCreators( xProperty, yProperty, initialNumberOfItemsOnScale ) {
-    assert && assert( initialNumberOfItemsOnScale.length === 4 );
+  function createTermCreators( xProperty, yProperty, initialNumberOfTermsOnScale ) {
+    assert && assert( initialNumberOfTermsOnScale.length === 4 );
     var index = 0;
 
-    var positiveXCreator = new VariableItemCreator( xString, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var positiveXCreator = new VariableTermCreator( xString, TermIcons.POSITIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
       weight: xProperty.value,
-      initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+      initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
     } );
 
-    var negativeXCreator = new VariableItemCreator( xString, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var negativeXCreator = new VariableTermCreator( xString, TermIcons.NEGATIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
       weight: -positiveXCreator.weight,
       sign: -positiveXCreator.sign,
-      initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+      initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
     } );
 
-    var positiveYCreator = new VariableItemCreator( yString, POSITIVE_Y_NODE, Y_SHADOW_NODE, {
+    var positiveYCreator = new VariableTermCreator( yString, POSITIVE_Y_NODE, Y_SHADOW_NODE, {
       weight: yProperty.value,
-      initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+      initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
     } );
 
-    var negativeYCreator = new VariableItemCreator( yString, NEGATIVE_Y_NODE, Y_SHADOW_NODE, {
+    var negativeYCreator = new VariableTermCreator( yString, NEGATIVE_Y_NODE, Y_SHADOW_NODE, {
       weight: -positiveXCreator.weight,
       sign: -positiveXCreator.sign,
-      initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+      initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
     } );
 
     // unlink unnecessary

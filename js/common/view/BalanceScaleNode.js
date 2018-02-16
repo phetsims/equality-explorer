@@ -130,17 +130,17 @@ define( function( require ) {
       center: beamNode.center // correct location will be set later in constructor
     } );
 
-    // pressing this button clears all items from the scale
+    // pressing this button clears all terms from the scale
     var clearScaleButton = new ClearScaleButton( scale );
 
-    // pressing this button organizes items on the scale, grouping like Items together
+    // pressing this button organizes terms on the scale, grouping like terms together
     var organizeButton = new OrganizeButton( scale, {
       visible: options.organizeButtonVisible
     } );
 
     // disable ClearScaleButton and OrganizeButton when the scale is empty. unlink unnecessary
-    scale.numberOfItemsProperty.link( function( numberOfItems ) {
-      var enabled = ( numberOfItems !== 0 );
+    scale.numberOfTermsProperty.link( function( numberOfTerms ) {
+      var enabled = ( numberOfTerms !== 0 );
       clearScaleButton.enabled = enabled;
       organizeButton.enabled = enabled;
     } );

@@ -41,7 +41,7 @@ define( function( require ) {
 
   /**
    * Snapshot of a plate's state.
-   * This is an ad hoc map: itemCreator -> occupiedCells
+   * This is an ad hoc map: termCreator -> occupiedCells
    *
    * @param {Plate} plate
    * @constructor
@@ -51,26 +51,26 @@ define( function( require ) {
 
     // @private
     this.plate = plate;
-    this.itemCreators = []; // {AbstractItemCreator[]}
-    this.occupiedCells = []; // {number[][]} the occupied cells (in the plate's 2D grid) for each item creator
+    this.termCreators = []; // {AbstractTermCreator[]}
+    this.occupiedCells = []; // {number[][]} the occupied cells (in the plate's 2D grid) for each term creator
 
-    var itemCreators = plate.itemCreators;
+    var termCreators = plate.termCreators;
 
     // ad hoc map, using parallel arrays
-    for ( var i = 0; i < itemCreators.length; i++ ) {
+    for ( var i = 0; i < termCreators.length; i++ ) {
 
-      var itemCreator = itemCreators[ i ];
-      var items = itemCreator.getItemsOnScale();
+      var termCreator = termCreators[ i ];
+      var terms = termCreator.getTermsOnScale();
 
-      this.itemCreators[ i ] = itemCreator;
+      this.termCreators[ i ] = termCreator;
 
       var indices = []; // {number[]} cell indices
-      for ( var j = 0; j < items.length; j++ ) {
-        indices.push( plate.getCellForItem( items[ j ] ) );
+      for ( var j = 0; j < terms.length; j++ ) {
+        indices.push( plate.getCellForTerm( terms[ j ] ) );
       }
       this.occupiedCells.push( indices );
     }
-    assert && assert( this.itemCreators.length === this.occupiedCells.length,
+    assert && assert( this.termCreators.length === this.occupiedCells.length,
       'arrays must have the same length' );
   }
 
@@ -84,15 +84,15 @@ define( function( require ) {
      */
     restore: function() {
 
-      // for each type of item ...
-      for ( var i = 0; i < this.itemCreators.length; i++ ) {
+      // for each type of term ...
+      for ( var i = 0; i < this.termCreators.length; i++ ) {
 
-        var itemCreator = this.itemCreators[ i ];
+        var termCreator = this.termCreators[ i ];
         var occupiedCells = this.occupiedCells[ i ];
 
-        // for each cell that was occupied by this type of item, create an item and put it on the scale in the cell
+        // for each cell that was occupied by this type of term, create a term and put it on the scale in the cell
         for ( var j = 0; j < occupiedCells.length; j++ ) {
-          itemCreator.createItemOnScale( occupiedCells[ j ] );
+          termCreator.createTermOnScale( occupiedCells[ j ] );
         }
       }
     }

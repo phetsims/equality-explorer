@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * VariableItemCreator creates and manages VariableItems (items that are associated with a variable, e.g. 'x').
+ * VariableTermCreator creates and manages variable terms (e.g. 'x').
  *
  * @author Chris Malley (PixelZoom, Inc.)     
  */
@@ -9,11 +9,11 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AbstractItemCreator = require( 'EQUALITY_EXPLORER/common/model/AbstractItemCreator' );
+  var AbstractTermCreator = require( 'EQUALITY_EXPLORER/common/model/AbstractTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var VariableItem = require( 'EQUALITY_EXPLORER/common/model/VariableItem' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   /**
    * @param {string} symbol
@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function VariableItemCreator( symbol, icon, shadow, options ) {
+  function VariableTermCreator( symbol, icon, shadow, options ) {
 
     var self = this;
 
@@ -45,37 +45,37 @@ define( function( require ) {
     // @public (read-only)
     this.sign = options.sign;
 
-    AbstractItemCreator.call( this, icon, shadow, options );
+    AbstractTermCreator.call( this, icon, shadow, options );
 
-    // Update the weight of all VariableItems. unlink unnecessary
+    // Update the weight of all VariableTerms. unlink unnecessary
     this.weightProperty.link( function( weight ) {
-      var items = self.getItems();
-      for ( var i = 0; i < items.length; i++ ) {
-        items[ i ].weightProperty.value = weight;
+      var terms = self.getTerms();
+      for ( var i = 0; i < terms.length; i++ ) {
+        terms[ i ].weightProperty.value = weight;
       }
     } );
   }
 
-  equalityExplorer.register( 'VariableItemCreator', VariableItemCreator );
+  equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );
 
-  return inherit( AbstractItemCreator, VariableItemCreator, {
+  return inherit( AbstractTermCreator, VariableTermCreator, {
 
     /**
-     * Instantiates a VariableItem.
+     * Instantiates a VariableTerm.
      * @param {Vector2} location
-     * @returns {AbstractItem}
+     * @returns {AbstractTerm}
      * @protected
      * @override
      */
-    createItemProtected: function( location ) {
-      return new VariableItem( this.symbol, this.weightProperty, this.sign, this.icon, this.shadow, {
+    createTermProtected: function( location ) {
+      return new VariableTerm( this.symbol, this.weightProperty, this.sign, this.icon, this.shadow, {
         location: location,
         dragBounds: this.dragBounds
       } );
     },
 
     /**
-     * Gets the item's weight.
+     * Gets the term's weight.
      * @returns {number}
      * @public
      * @override
@@ -85,15 +85,15 @@ define( function( require ) {
     },
 
     /**
-     * Is this item creator the inverse of a specified item creator?
-     * @param {AbstractItemCreator} itemCreator
+     * Is this term creator the inverse of a specified term creator?
+     * @param {AbstractTermCreator} termCreator
      * @returns {boolean}
      * @public
      * @override
      */
-    isInverseOf: function( itemCreator ) {
-      return ( this.symbol === itemCreator.symbol ) &&
-             AbstractItemCreator.prototype.isInverseOf.call( this, itemCreator );
+    isInverseOf: function( termCreator ) {
+      return ( this.symbol === termCreator.symbol ) &&
+             AbstractTermCreator.prototype.isInverseOf.call( this, termCreator );
     }
   } );
 } );

@@ -1,7 +1,9 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
 /**
- * Term whose value is a constant.
+ * ConstantTerm represents a constant term, and can 'sum to zero' with an inverse ConstantTerm.
+ * Like MysteryTerms, it has a constant weight.
+ * Unlike MysteryWeight, it's weight is revealed to the user, and it contributes to the constant term in equations.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -9,73 +11,27 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
-  var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
+  var MysteryTerm = require( 'EQUALITY_EXPLORER/common/model/MysteryTerm' );
 
   /**
+   * @param {number} weight
+   * @param {Node} icon
+   * @param {Node} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantTerm( options ) {
+  function ConstantTerm( weight, icon, shadow, options ) {
 
-    options = _.extend( {
-      value: ReducedFraction.ZERO // {ReducedFraction} initial value
-    }, options );
+    // @public whether the term's halo is visible
+    this.haloVisibleProperty = new BooleanProperty( false );
 
-    // @public {Property.<ReducedFraction>}
-    this.valueProperty = new Property( options.value );
-
-    Term.call( this, options );
+    MysteryTerm.call( this, weight, icon, shadow, options );
   }
 
   equalityExplorer.register( 'ConstantTerm', ConstantTerm );
 
-  return inherit( Term, ConstantTerm, {
-
-    // @public
-    reset: function() {
-      this.valueProperty.reset();
-      Term.prototype.reset.call( this );
-    },
-
-    /**
-     * Adds an integer value to the constant.
-     * @param {number} value
-     * @public
-     */
-    plus: function( value ) {
-      this.valueProperty.value = this.valueProperty.value.plus( value );
-    },
-
-    /**
-     * Subtracts an integer value from the constant.
-     * @param {number} value
-     * @public
-     */
-    minus: function( value ) {
-      this.valueProperty.value = this.valueProperty.value.minus( value );
-    },
-
-    /**
-     * Multiplies the number of items by an integer value.
-     * @param {number} value
-     * @public
-     */
-    times: function( value ) {
-      this.valueProperty.value = this.valueProperty.value.times( value );
-    },
-
-    /**
-     * Divides the number of items by an integer value.
-     * @param {number} value
-     * @public
-     */
-    divide: function( value ) {
-      this.valueProperty.value = this.valueProperty.value.divide( value );
-    }
-  } );
+  return inherit( MysteryTerm, ConstantTerm );
 } );
- 

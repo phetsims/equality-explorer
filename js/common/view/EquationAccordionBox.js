@@ -23,12 +23,12 @@ define( function( require ) {
   var equationOrInequalityString = require( 'string!EQUALITY_EXPLORER/equationOrInequality' );
 
   /**
-   * @param {AbstractItemCreator[]} leftItemCreators - left side of equation
-   * @param {AbstractItemCreator[]} rightItemCreators - right side of equation
+   * @param {AbstractTermCreator[]} leftTermCreators - left side of equation
+   * @param {AbstractTermCreator[]} rightTermCreators - right side of equation
    * @param {Object} [options]
    * @constructor
    */
-  function EquationAccordionBox( leftItemCreators, rightItemCreators, options ) {
+  function EquationAccordionBox( leftTermCreators, rightTermCreators, options ) {
 
     options = _.extend( {
 
@@ -62,7 +62,7 @@ define( function( require ) {
 
     var strut = new HStrut( contentWidth );
 
-    var equationNode = new EquationNode( leftItemCreators, rightItemCreators, {
+    var equationNode = new EquationNode( leftTermCreators, rightTermCreators, {
       fontSize: EqualityExplorerConstants.EQUATION_ACCORDING_BOX_FONT_SIZE,
       relationalOperatorFontSize: EqualityExplorerConstants.EQUATION_ACCORDING_BOX_RELATIONAL_OPERATOR_FONT_SIZE
     } );

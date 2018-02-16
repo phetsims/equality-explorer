@@ -41,13 +41,13 @@ define( function( require ) {
     VARIABLE_RANGE: new RangeWithValue( -40, 40, 1 ),
     NUMBER_OF_SNAPSHOTS: 5,
 
-    // constant items and terms
+    // constant terms
     POSITIVE_CONSTANT_FILL: 'rgb( 246, 228, 213 )',
     NEGATIVE_CONSTANT_FILL: 'rgb( 248, 238, 229 )',
     POSITIVE_CONSTANT_LINE_DASH: [], // solid
     NEGATIVE_CONSTANT_LINE_DASH: [ 3, 3 ],
     
-    // variable items and terms
+    // variable terms
     POSITIVE_X_FILL: 'rgb( 49, 193, 238 )',
     NEGATIVE_X_FILL: 'rgb( 99, 212, 238 )',
     POSITIVE_VARIABLE_LINE_DASH: [], // solid

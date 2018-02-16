@@ -10,21 +10,21 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
+  var ConstantTerm2 = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm2' );
+  var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
   var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var StringProperty = require( 'AXON/StringProperty' );
-  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
+  var TermIcons = require( 'EQUALITY_EXPLORER/common/view/TermIcons' );
+  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
+  var VariableTerm2 = require( 'EQUALITY_EXPLORER/common/model/VariableTerm2' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -68,33 +68,33 @@ define( function( require ) {
       valueType: 'Integer'
     } );
 
-    // item creators for left side of scale
-    var leftPositiveXCreator = new VariableItemCreator( xString, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    // term creators for left side of scale
+    var leftPositiveXCreator = new VariableTermCreator( xString, TermIcons.POSITIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
       weight: this.xProperty.value
     } );
-    var leftNegativeXCreator = new VariableItemCreator( xString, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var leftNegativeXCreator = new VariableTermCreator( xString, TermIcons.NEGATIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
       weight: -leftPositiveXCreator.weight,
       sign: -leftPositiveXCreator.sign
     } );
-    var leftPositiveOneCreator = new ConstantItemCreator( ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+    var leftPositiveOneCreator = new ConstantTermCreator( TermIcons.POSITIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
       weight: CONSTANT_ITEM_WEIGHT
     } );
-    var leftNegativeOneCreator = new ConstantItemCreator( ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+    var leftNegativeOneCreator = new ConstantTermCreator( TermIcons.NEGATIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
       weight: -CONSTANT_ITEM_WEIGHT
     } );
 
-    // item creators for right side of scale
-    var rightPositiveXCreator = new VariableItemCreator( xString, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    // term creators for right side of scale
+    var rightPositiveXCreator = new VariableTermCreator( xString, TermIcons.POSITIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
       weight: this.xProperty.value
     } );
-    var rightNegativeXCreator = new VariableItemCreator( xString, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var rightNegativeXCreator = new VariableTermCreator( xString, TermIcons.NEGATIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
       weight: -rightPositiveXCreator.weight,
       sign: -rightPositiveXCreator.sign
     } );
-    var rightPositiveOneCreator = new ConstantItemCreator( ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+    var rightPositiveOneCreator = new ConstantTermCreator( TermIcons.POSITIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
       weight: CONSTANT_ITEM_WEIGHT
     } );
-    var rightNegativeOneCreator = new ConstantItemCreator( ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+    var rightNegativeOneCreator = new ConstantTermCreator( TermIcons.NEGATIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
       weight: -CONSTANT_ITEM_WEIGHT
     } );
 
@@ -106,7 +106,7 @@ define( function( require ) {
         iconSize: new Dimension2( EqualityExplorerConstants.TERM_DIAMETER + 10, EqualityExplorerConstants.TERM_DIAMETER )
       } );
 
-    // update item creator weights when the value of 'x' changes. unlink unnecessary
+    // update term creator weights when the value of 'x' changes. unlink unnecessary
     this.xProperty.lazyLink( function( x ) {
       leftPositiveXCreator.weightProperty.value = x;
       leftNegativeXCreator.weightProperty.value = -x;
@@ -115,22 +115,22 @@ define( function( require ) {
     } );
 
     // @public terms on the left side of the scale
-    this.leftVariableTerm = new VariableTerm( xString, this.xProperty, {
-      numberOfItems: ReducedFraction.ONE,
+    this.leftVariableTerm = new VariableTerm2( xString, this.xProperty, {
+      coefficient: ReducedFraction.ONE,
       location: this.scale.leftPlate.getLocationForCell( 0 )
     } );
-    this.leftConstantTerm = new ConstantTerm( {
-      numberOfItems: ReducedFraction.ONE,
+    this.leftConstantTerm = new ConstantTerm2( {
+      value: ReducedFraction.ONE,
       location: this.scale.leftPlate.getLocationForCell( 1 )
     } );
 
     // @public terms on the right side of the scale
-    this.rightVariableTerm = new VariableTerm( xString, this.xProperty, {
-      numberOfItems: ReducedFraction.ONE,
+    this.rightVariableTerm = new VariableTerm2( xString, this.xProperty, {
+      coefficient: ReducedFraction.ONE,
       location: this.scale.rightPlate.getLocationForCell( 0 )
     } );
-    this.rightConstantTerm = new ConstantTerm( {
-      numberOfItems: ReducedFraction.ONE,
+    this.rightConstantTerm = new ConstantTerm2( {
+      value: ReducedFraction.ONE,
       location: this.scale.rightPlate.getLocationForCell( 1 )
     } );
 

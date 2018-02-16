@@ -11,14 +11,14 @@ define( function( require ) {
 
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
+  var ConstantTermNode2 = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
-  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
+  var VariableTermNode2 = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode2' );
 
   /**
    * @param {Scene} scene
@@ -30,7 +30,7 @@ define( function( require ) {
   function SolvingSceneNode( scene, sceneProperty, layoutBounds, options ) {
 
     options = _.extend( {
-      itemsPanelSpacing: 30,
+      termsPanelSpacing: 30,
       organizeButtonVisible: false
     }, options );
 
@@ -77,15 +77,15 @@ define( function( require ) {
     this.addChild( operationNode );
 
     // Terms on left side of the scale
-    var leftVariableTermNode = new VariableTermNode( scene.leftVariableTerm );
+    var leftVariableTermNode = new VariableTermNode2( scene.leftVariableTerm );
     this.addChild( leftVariableTermNode );
-    var leftConstantTermNode = new ConstantTermNode( scene.leftConstantTerm );
+    var leftConstantTermNode = new ConstantTermNode2( scene.leftConstantTerm );
     this.addChild( leftConstantTermNode );
 
     // Terms on right side of the scale
-    var rightVariableTermNode = new VariableTermNode( scene.rightVariableTerm );
+    var rightVariableTermNode = new VariableTermNode2( scene.rightVariableTerm );
     this.addChild( rightVariableTermNode );
-    var rightConstantTermNode = new ConstantTermNode( scene.rightConstantTerm );
+    var rightConstantTermNode = new ConstantTermNode2( scene.rightConstantTerm );
     this.addChild( rightConstantTermNode );
 
     // Put animation layer on top of everything

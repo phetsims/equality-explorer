@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Abstract base type for items that can be placed on the scale.
+ * Abstract base type for terms in an equation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -16,33 +16,33 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
-   * @param {Node} icon - the icon used to represent the item
-   * @param {Node} shadow - the shadow displayed behind the icon when the item is being dragged
+   * @param {Node} icon - the icon used to represent the term
+   * @param {Node} shadow - the shadow displayed behind the icon when the term is being dragged
    * @param {Object} [options]
    * @constructor
    */
-  function AbstractItem( icon, shadow, options ) {
+  function AbstractTerm( icon, shadow, options ) {
 
     // @public (read-only)
     this.icon = icon;
     this.shadow = shadow;
 
     // @public (read-only) emit1 when dispose has completed.
-    // Callback signature is function( {AbstractItem} item ), where item is the item that was disposed.
+    // Callback signature is function( {AbstractTerm} term ), where the parameter is the term that was disposed.
     this.disposedEmitter = new Emitter();
 
-    // @public controls whether the item's shadow is visible
+    // @public controls whether the term's shadow is visible
     this.shadowVisibleProperty = new BooleanProperty( false );
 
     EqualityExplorerMovable.call( this, options );
   }
 
-  equalityExplorer.register( 'AbstractItem', AbstractItem );
+  equalityExplorer.register( 'AbstractTerm', AbstractTerm );
 
-  return inherit( EqualityExplorerMovable, AbstractItem, {
+  return inherit( EqualityExplorerMovable, AbstractTerm, {
 
     /**
-     * Gets the item's weight
+     * Gets the term's weight
      * @returns {number}
      * @public
      * @abstract
@@ -62,14 +62,14 @@ define( function( require ) {
     },
 
     /**
-     * Is this item the inverse of a specified item?
-     * Two items are inverses if they have identical types, and their weights sum to zero.
-     * @param {AbstractItem} item
+     * Is this term the inverse of a specified term?
+     * Two terms are inverses if they have identical types, and their weights sum to zero.
+     * @param {AbstractTerm} term
      * @returns {boolean}
      * @public
      */
-    isInverseOf: function( item ) {
-      return ( this.constructor === item.constructor ) && ( this.weight + item.weight === 0 );
+    isInverseOf: function( term ) {
+      return ( this.constructor === term.constructor ) && ( this.weight + term.weight === 0 );
     }
   } );
 } );

@@ -1,7 +1,8 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2017, University of Colorado Boulder
 
 /**
- * Term whose value a coefficient times some variable value.
+ * VariableTerm is a term associated with a variable (e.g. 'x' ).
+ * It can be summed with other VariableTerms that have the same symbol.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -9,66 +10,62 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var AbstractTerm = require( 'EQUALITY_EXPLORER/common/model/AbstractTerm' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
-  var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
    * @param {string} symbol
-   * @param {Property.<number>} variableValueProperty
+   * @param {NumberProperty} weightProperty
+   * @param {number} sign - determines the sign of 'x' (1 positive, -1 negative)
+   * @param {Node} icon
+   * @param {Node} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function VariableTerm( symbol, variableValueProperty, options ) {
+  function VariableTerm( symbol, weightProperty, sign, icon, shadow, options ) {
 
-    options = _.extend( {
-      coefficient: ReducedFraction.ZERO // {ReducedFraction} initial coefficient
-    }, options );
-
-    // @public (read-only)
+    assert && assert( sign === 1 || sign === -1, 'invalid sign: ' + sign );
+    
+    // @public
     this.symbol = symbol;
 
-    // @public {Property.<ReducedFraction>}
-    this.coefficientProperty = new Property( options.numberOfItems );
+    // @public dynamic weight, since 'x' is a variable
+    this.weightProperty = weightProperty;
 
-    // @public (read-only) {DerivedProperty.<ReducedFraction>}
-    this.weightProperty = new DerivedProperty( [ this.coefficientProperty, variableValueProperty ],
-      function( coefficient, variableValue ) {
-        return coefficient.times( variableValue );
-      } );
+    // @public (read-only) the sign of 'x' (1 positive, -1 negative)  
+    this.sign = sign;
 
-    Term.call( this, options );
+    // @public whether the term's halo is visible
+    this.haloVisibleProperty = new BooleanProperty( false );
+
+    AbstractTerm.call( this, icon, shadow, options );
   }
 
   equalityExplorer.register( 'VariableTerm', VariableTerm );
 
-  return inherit( Term, VariableTerm, {
+  return inherit( AbstractTerm, VariableTerm, {
 
-    // @public
-    reset: function() {
-      this.coefficientProperty.reset();
-      Term.prototype.reset.call( this );
+    /**
+     * Gets the term's weight.
+     * @returns {number}
+     * @public
+     * @override
+     */
+    get weight() {
+      return this.weightProperty.value;
     },
 
     /**
-     * Multiplies the number of items by an integer value.
-     * @param {number} value
+     * Is this term the inverse of a specified term?
+     * @param {AbstractTerm} term
+     * @returns {boolean}
      * @public
+     * @override
      */
-    times: function( value ) {
-      this.coefficientProperty.value = this.coefficientProperty.value.times( value );
-    },
-
-    /**
-     * Divides the number of items by an integer value.
-     * @param {number} value
-     * @public
-     */
-    divide: function( value ) {
-      this.coefficientProperty.value = this.coefficientProperty.value.divide( value );
+    isInverseOf: function( term ) {
+      return ( this.symbol === term.symbol ) && AbstractTerm.prototype.isInverseOf.call( this, term );
     }
   } );
 } );

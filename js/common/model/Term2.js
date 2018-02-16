@@ -1,5 +1,6 @@
 // Copyright 2018, University of Colorado Boulder
 
+//TODO merge this into term hierarchy that was formerly item hierarchy
 /**
  * Abstract base type for terms.
  *
@@ -19,13 +20,13 @@ define( function( require ) {
    * @constructor
    * @abstract
    */
-  function Term( options ) {
+  function Term2( options ) {
     EqualityExplorerMovable.call( this, options );
   }
 
-  equalityExplorer.register( 'Term', Term );
+  equalityExplorer.register( 'Term2', Term2 );
 
-  return inherit( EqualityExplorerMovable, Term, {
+  return inherit( EqualityExplorerMovable, Term2, {
 
     /**
      * Applies a universal operation to this term.

@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * MysteryItemCreator creates and manages MysteryItems.
+ * MysteryTermCreator creates and manages mystery terms.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -9,10 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AbstractItemCreator = require( 'EQUALITY_EXPLORER/common/model/AbstractItemCreator' );
+  var AbstractTermCreator = require( 'EQUALITY_EXPLORER/common/model/AbstractTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MysteryItem = require( 'EQUALITY_EXPLORER/common/model/MysteryItem' );
+  var MysteryTerm = require( 'EQUALITY_EXPLORER/common/model/MysteryTerm' );
 
   /**
    * @param {Node} icon
@@ -20,38 +20,38 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryItemCreator( icon, shadow, options ) {
+  function MysteryTermCreator( icon, shadow, options ) {
 
     options = _.extend( {
-      weight: 1  // weight of each item that is created
+      weight: 1  // weight of each term that is created
     }, options );
 
     // @private
     this._weight = options.weight;
 
-    AbstractItemCreator.call( this, icon, shadow, options );
+    AbstractTermCreator.call( this, icon, shadow, options );
   }
 
-  equalityExplorer.register( 'MysteryItemCreator', MysteryItemCreator );
+  equalityExplorer.register( 'MysteryTermCreator', MysteryTermCreator );
 
-  return inherit( AbstractItemCreator, MysteryItemCreator, {
+  return inherit( AbstractTermCreator, MysteryTermCreator, {
 
     /**
-     * Instantiates a MysteryItem.
+     * Instantiates a MysteryTerm.
      * @param {Vector2} location
-     * @returns {AbstractItem}
+     * @returns {AbstractTerm}
      * @protected
      * @override
      */
-    createItemProtected: function( location ) {
-      return new MysteryItem( this._weight, this.icon, this.shadow, {
+    createTermProtected: function( location ) {
+      return new MysteryTerm( this._weight, this.icon, this.shadow, {
         location: location,
         dragBounds: this.dragBounds
       } );
     },
 
     /**
-     * Gets the item's weight.
+     * Gets the term's weight.
      * @returns {number}
      * @public
      * @override

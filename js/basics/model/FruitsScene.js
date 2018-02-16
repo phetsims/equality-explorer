@@ -13,41 +13,41 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
-  var MysteryItemCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryItemCreator' );
+  var MysteryTermCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryTermCreator' );
+  var TermIcons = require( 'EQUALITY_EXPLORER/common/view/TermIcons' );
 
   /**
    * @constructor
    */
   function FruitsScene() {
-    BasicsScene.call( this, 'fruits', ItemIcons.APPLE_NODE,
-      createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
-      createItemCreators( EqualityExplorerQueryParameters.rightBasics )
+    BasicsScene.call( this, 'fruits', TermIcons.APPLE_NODE,
+      createTermCreators( EqualityExplorerQueryParameters.leftBasics ),
+      createTermCreators( EqualityExplorerQueryParameters.rightBasics )
     );
   }
 
   equalityExplorer.register( 'FruitsScene', FruitsScene );
 
   /**
-   * Creates the item creators for this scene.
-   * @param {number[]} initialNumberOfItemsOnScale
-   * @returns {AbstractItemCreator[]}
+   * Creates the term creators for this scene.
+   * @param {number[]} initialNumberOfTermsOnScale
+   * @returns {AbstractTermCreator[]}
    */
-  function createItemCreators( initialNumberOfItemsOnScale ) {
-    assert && assert( initialNumberOfItemsOnScale.length === 3 );
+  function createTermCreators( initialNumberOfTermsOnScale ) {
+    assert && assert( initialNumberOfTermsOnScale.length === 3 );
     var index = 0;
     return [
-      new MysteryItemCreator( ItemIcons.APPLE_NODE, ItemIcons.APPLE_SHADOW_NODE, {
+      new MysteryTermCreator( TermIcons.APPLE_NODE, TermIcons.APPLE_SHADOW_NODE, {
         weight: 4,
-        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( ItemIcons.LEMON_NODE, ItemIcons.LEMON_SHADOW_NODE, {
+      new MysteryTermCreator( TermIcons.LEMON_NODE, TermIcons.LEMON_SHADOW_NODE, {
         weight: 5,
-        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( ItemIcons.ORANGE_NODE, ItemIcons.ORANGE_SHADOW_NODE, {
+      new MysteryTermCreator( TermIcons.ORANGE_NODE, TermIcons.ORANGE_SHADOW_NODE, {
         weight: 2,
-        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } )
     ];
   }

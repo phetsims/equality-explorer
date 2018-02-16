@@ -13,16 +13,16 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
-  var MysteryItemCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryItemCreator' );
+  var MysteryTermCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryTermCreator' );
+  var TermIcons = require( 'EQUALITY_EXPLORER/common/view/TermIcons' );
 
   /**
    * @constructor
    */
   function AnimalsScene() {
-    BasicsScene.call( this, 'animals', ItemIcons.TURTLE_NODE,
-      createItemCreators( EqualityExplorerQueryParameters.leftBasics ),
-      createItemCreators( EqualityExplorerQueryParameters.rightBasics ), {
+    BasicsScene.call( this, 'animals', TermIcons.TURTLE_NODE,
+      createTermCreators( EqualityExplorerQueryParameters.leftBasics ),
+      createTermCreators( EqualityExplorerQueryParameters.rightBasics ), {
         maxWeight: 50
       } );
   }
@@ -30,25 +30,25 @@ define( function( require ) {
   equalityExplorer.register( 'AnimalsScene', AnimalsScene );
 
   /**
-   * Creates the item creators for this scene.
-   * @param {number[]} initialNumberOfItemsOnScale
-   * @returns {AbstractItemCreator[]}
+   * Creates the term creators for this scene.
+   * @param {number[]} initialNumberOfTermsOnScale
+   * @returns {AbstractTermCreator[]}
    */
-  function createItemCreators( initialNumberOfItemsOnScale ) {
-    assert && assert( initialNumberOfItemsOnScale.length === 3 );
+  function createTermCreators( initialNumberOfTermsOnScale ) {
+    assert && assert( initialNumberOfTermsOnScale.length === 3 );
     var index = 0;
     return [
-      new MysteryItemCreator( ItemIcons.DOG_NODE, ItemIcons.DOG_SHADOW_NODE, {
+      new MysteryTermCreator( TermIcons.DOG_NODE, TermIcons.DOG_SHADOW_NODE, {
         weight: 11,
-        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( ItemIcons.TURTLE_NODE, ItemIcons.TURTLE_SHADOW_NODE, {
+      new MysteryTermCreator( TermIcons.TURTLE_NODE, TermIcons.TURTLE_SHADOW_NODE, {
         weight: 4,
-        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new MysteryItemCreator( ItemIcons.CAT_NODE, ItemIcons.CAT_SHADOW_NODE, {
+      new MysteryTermCreator( TermIcons.CAT_NODE, TermIcons.CAT_SHADOW_NODE, {
         weight: 6,
-        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } )
     ];
   }

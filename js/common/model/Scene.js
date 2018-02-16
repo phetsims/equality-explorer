@@ -26,12 +26,12 @@ define( function( require ) {
 
   /**
    * @param {string} debugName - internal name, not displayed to the user
-   * @param {AbstractItemCreator[]} leftItemCreators - in the order that they appear in the left panel and left side of equations
-   * @param {AbstractItemCreator[]} rightItemCreators - in the order that they appear in the right panel and right side of equations
+   * @param {AbstractTermCreator[]} leftTermCreators - in the order that they appear in the left panel and left side of equations
+   * @param {AbstractTermCreator[]} rightTermCreators - in the order that they appear in the right panel and right side of equations
    * @param {Object} [options]
    * @constructor
    */
-  function Scene( debugName, leftItemCreators, rightItemCreators, options ) {
+  function Scene( debugName, leftTermCreators, rightTermCreators, options ) {
 
     var self = this;
 
@@ -52,14 +52,14 @@ define( function( require ) {
     // @public (read-only) {Node} used to represent the scene
     this.icon = options.icon;
 
-    // @public (read-only) {AbstractItemCreator[]} creators for items on left side of scale
-    this.leftItemCreators = leftItemCreators;
+    // @public (read-only) {AbstractTermCreator[]} creators for terms on left side of scale
+    this.leftTermCreators = leftTermCreators;
 
-    // @public (read-only) {AbstractItemCreator[]} creators for items on right side of scale
-    this.rightItemCreators = rightItemCreators;
+    // @public (read-only) {AbstractTermCreator[]} creators for terms on right side of scale
+    this.rightTermCreators = rightTermCreators;
 
     // @public (read-only)
-    this.scale = new BalanceScale( this.leftItemCreators, this.rightItemCreators, {
+    this.scale = new BalanceScale( this.leftTermCreators, this.rightTermCreators, {
       location: new Vector2( 355, 420 ),
       gridRows: options.gridRows,
       gridColumns: options.gridColumns,
@@ -70,15 +70,15 @@ define( function( require ) {
     // @public (read-only, for debugging) drag bounds for left plate
     this.leftDragBounds = new Bounds2( DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
       this.scale.location.x - DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MAX_Y );
-    leftItemCreators.forEach( function( itemCreator ) {
-      itemCreator.dragBounds = self.leftDragBounds;
+    leftTermCreators.forEach( function( termCreator ) {
+      termCreator.dragBounds = self.leftDragBounds;
     } );
 
     // @public (read-only, for debugging) drag bounds for right plate
     this.rightDragBounds = new Bounds2( this.scale.location.x + DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
       this.scale.location.x + DRAG_BOUNDS_X_MARGIN + this.leftDragBounds.width, DRAG_BOUNDS_MAX_Y );
-    rightItemCreators.forEach( function( itemCreator ) {
-      itemCreator.dragBounds = self.rightDragBounds;
+    rightTermCreators.forEach( function( termCreator ) {
+      termCreator.dragBounds = self.rightDragBounds;
     } );
 
     // @public collection of snapshots, for saving/restoring the state of a Scene
@@ -92,12 +92,12 @@ define( function( require ) {
     // @public
     reset: function() {
 
-      // delete all items
-      this.leftItemCreators.forEach( function( itemCreator ) {
-        itemCreator.disposeAllItems();
+      // delete all terms
+      this.leftTermCreators.forEach( function( termCreator ) {
+        termCreator.disposeAllTerms();
       } );
-      this.rightItemCreators.forEach( function( itemCreator ) {
-        itemCreator.disposeAllItems();
+      this.rightTermCreators.forEach( function( termCreator ) {
+        termCreator.disposeAllTerms();
       } );
 
       // clears all snapshots
@@ -111,12 +111,12 @@ define( function( require ) {
      */
     step: function( dt ) {
 
-      // step all items
-      this.leftItemCreators.forEach( function( itemCreator ) {
-        itemCreator.step( dt );
+      // step all terms
+      this.leftTermCreators.forEach( function( termCreator ) {
+        termCreator.step( dt );
       } );
-      this.rightItemCreators.forEach( function( itemCreator ) {
-        itemCreator.step( dt );
+      this.rightTermCreators.forEach( function( termCreator ) {
+        termCreator.step( dt );
       } );
     },
 

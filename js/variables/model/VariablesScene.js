@@ -9,16 +9,16 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantItemCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantItemCreator' );
+  var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ItemIcons = require( 'EQUALITY_EXPLORER/common/view/ItemIcons' );
   var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
-  var VariableItemCreator = require( 'EQUALITY_EXPLORER/common/model/VariableItemCreator' );
+  var TermIcons = require( 'EQUALITY_EXPLORER/common/view/TermIcons' );
+  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -38,32 +38,32 @@ define( function( require ) {
     } );
 
     LockableScene.call( this, 'variables',
-      createItemCreators( this.xProperty, EqualityExplorerQueryParameters.leftVariables ),
-      createItemCreators( this.xProperty, EqualityExplorerQueryParameters.rightVariables )
+      createTermCreators( this.xProperty, EqualityExplorerQueryParameters.leftVariables ),
+      createTermCreators( this.xProperty, EqualityExplorerQueryParameters.rightVariables )
     );
   }
 
   equalityExplorer.register( 'VariablesScene', VariablesScene );
 
   /**
-   * Creates the item creators for this scene.
+   * Creates the term creators for this scene.
    * @param {NumberProperty} xProperty
-   * @param {number} initialNumberOfItemsOnScale
-   * @returns {AbstractItemCreator[]}
+   * @param {number} initialNumberOfTermsOnScale
+   * @returns {AbstractTermCreator[]}
    */
-  function createItemCreators( xProperty, initialNumberOfItemsOnScale ) {
-    assert && assert( initialNumberOfItemsOnScale.length === 4 );
+  function createTermCreators( xProperty, initialNumberOfTermsOnScale ) {
+    assert && assert( initialNumberOfTermsOnScale.length === 4 );
     var index = 0;
 
-    var positiveXCreator = new VariableItemCreator( xString, ItemIcons.POSITIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var positiveXCreator = new VariableTermCreator( xString, TermIcons.POSITIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
       weight: xProperty.value,
-      initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+      initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
     } );
 
-    var negativeXCreator = new VariableItemCreator( xString, ItemIcons.NEGATIVE_X_NODE, ItemIcons.X_SHADOW_NODE, {
+    var negativeXCreator = new VariableTermCreator( xString, TermIcons.NEGATIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
       weight: -positiveXCreator.weight,
       sign: -positiveXCreator.sign,
-      initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+      initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
     } );
 
     // unlink unnecessary
@@ -75,13 +75,13 @@ define( function( require ) {
     return [
       positiveXCreator,
       negativeXCreator,
-      new ConstantItemCreator( ItemIcons.POSITIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      new ConstantTermCreator( TermIcons.POSITIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
         weight: 1,
-        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new ConstantItemCreator( ItemIcons.NEGATIVE_ONE_NODE, ItemIcons.ONE_SHADOW_NODE, {
+      new ConstantTermCreator( TermIcons.NEGATIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
         weight: -1,
-        initialNumberOfItemsOnScale: initialNumberOfItemsOnScale[ index++ ]
+        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } )
     ];
   }
