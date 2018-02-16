@@ -19,7 +19,6 @@ define( function( require ) {
   var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var StringProperty = require( 'AXON/StringProperty' );
   var TermIcons = require( 'EQUALITY_EXPLORER/common/view/TermIcons' );
