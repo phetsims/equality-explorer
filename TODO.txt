@@ -5,6 +5,7 @@ Terms
 - Support for fractional coefficients and constants
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
+- Optionally associate term type with cells in the grid
 
 Universal operation
 - sum-to-zero animation should not be shown on Reset or Reset All
