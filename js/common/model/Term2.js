@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
@@ -21,6 +22,10 @@ define( function( require ) {
    * @abstract
    */
   function Term2( options ) {
+
+    // @public whether the term's halo is visible
+    this.haloVisibleProperty = new BooleanProperty( false );
+
     EqualityExplorerMovable.call( this, options );
   }
 
