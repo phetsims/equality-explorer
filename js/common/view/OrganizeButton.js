@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Pressing this button organizes terms on the scale, grouping like items together.
+ * Pressing this button organizes terms on the scale, grouping like terms together.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
