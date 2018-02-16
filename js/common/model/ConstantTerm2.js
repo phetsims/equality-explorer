@@ -47,8 +47,8 @@ define( function( require ) {
      * @param {number} value
      * @public
      */
-    plus: function( value ) {
-      this.valueProperty.value = this.valueProperty.value.plus( value );
+    plusInteger: function( value ) {
+      this.valueProperty.value = this.valueProperty.value.plusInteger( value );
     },
 
     /**
@@ -56,8 +56,8 @@ define( function( require ) {
      * @param {number} value
      * @public
      */
-    minus: function( value ) {
-      this.valueProperty.value = this.valueProperty.value.minus( value );
+    minusInteger: function( value ) {
+      this.valueProperty.value = this.valueProperty.value.minusInteger( value );
     },
 
     /**
@@ -65,8 +65,8 @@ define( function( require ) {
      * @param {number} value
      * @public
      */
-    times: function( value ) {
-      this.valueProperty.value = this.valueProperty.value.times( value );
+    timesInteger: function( value ) {
+      this.valueProperty.value = this.valueProperty.value.timesInteger( value );
     },
 
     /**
@@ -74,8 +74,8 @@ define( function( require ) {
      * @param {number} value
      * @public
      */
-    divide: function( value ) {
-      this.valueProperty.value = this.valueProperty.value.divide( value );
+    divideByInteger: function( value ) {
+      this.valueProperty.value = this.valueProperty.value.divideByInteger( value );
     }
   } );
 } );

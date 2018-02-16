@@ -41,16 +41,16 @@ define( function( require ) {
      */
     apply: function( operation ) {
       if ( operation.operator === EqualityExplorerConstants.PLUS ) {
-        this.plus && this.plus( operation.operand );
+        this.plusInteger && this.plusInteger( operation.operand );
       }
       else if ( operation.operator === EqualityExplorerConstants.MINUS ) {
-        this.minus && this.minus( operation.operand );
+        this.minusInteger && this.minusInteger( operation.operand );
       }
       else if ( operation.operator === EqualityExplorerConstants.TIMES ) {
-        this.times( operation.operand );
+        this.timesInteger( operation.operand );
       }
       else if ( operation.operator === EqualityExplorerConstants.DIVIDE ) {
-        this.divide( operation.operand );
+        this.divideByInteger( operation.operand );
       }
       else {
         throw new Error( 'invalid operator: ' + operation.operator );

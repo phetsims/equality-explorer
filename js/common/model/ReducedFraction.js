@@ -29,12 +29,23 @@ define( function( require ) {
   return inherit( Fraction, ReducedFraction, {
 
     /**
+     * Adds a fraction to this fraction.
+     * @param {Fraction} value
+     */
+    plusFraction: function( value ) {
+      assert && assert( value instanceof Fraction, 'value is not a Fraction' );
+      var numerator = ( this.numerator * value.denominator ) + ( value.numerator * this.denominator );
+      var denominator = this.denominator * value.denominator;
+      return new ReducedFraction( numerator, denominator );
+    },
+
+    /**
      * Adds an integer value to this fraction and returns a new fraction.
      * @param {number} value
      * @returns {ReducedFraction}
      * @public
      */
-    plus: function( value ) {
+    plusInteger: function( value ) {
       assert && assert( Util.isInteger( value ), 'value is not an integer: ' + value );
       return new ReducedFraction( this.numerator + ( value * this.denominator ), this.denominator );
     },
@@ -45,7 +56,7 @@ define( function( require ) {
      * @returns {ReducedFraction}
      * @public
      */
-    minus: function( value ) {
+    minusInteger: function( value ) {
       assert && assert( Util.isInteger( value ), 'value is not an integer: ' + value );
       return new ReducedFraction( this.numerator - ( value * this.denominator ), this.denominator );
     },
@@ -56,7 +67,7 @@ define( function( require ) {
      * @returns {ReducedFraction}
      * @public
      */
-    times: function( value ) {
+    timesInteger: function( value ) {
       assert && assert( Util.isInteger( value ), 'value is not an integer: ' + value );
       return new ReducedFraction( this.numerator * value, this.denominator );
     },
@@ -67,7 +78,7 @@ define( function( require ) {
      * @returns {ReducedFraction}
      * @public
      */
-    divide: function( value ) {
+    divideByInteger: function( value ) {
       assert && assert( Util.isInteger( value ), 'value is not an integer: ' + value );
       assert && assert( value !== 0, 'division by zero' );
       return new ReducedFraction( this.numerator, this.denominator * value );

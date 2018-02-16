@@ -38,7 +38,7 @@ define( function( require ) {
     // @public (read-only) {DerivedProperty.<ReducedFraction>}
     this.weightProperty = new DerivedProperty( [ this.coefficientProperty, variableValueProperty ],
       function( coefficient, variableValue ) {
-        return coefficient.times( variableValue );
+        return coefficient.timesInteger( variableValue );
       } );
 
     Term2.call( this, options );
@@ -59,8 +59,8 @@ define( function( require ) {
      * @param {number} value
      * @public
      */
-    times: function( value ) {
-      this.coefficientProperty.value = this.coefficientProperty.value.times( value );
+    timesInteger: function( value ) {
+      this.coefficientProperty.value = this.coefficientProperty.value.timesInteger( value );
     },
 
     /**
@@ -68,8 +68,8 @@ define( function( require ) {
      * @param {number} value
      * @public
      */
-    divide: function( value ) {
-      this.coefficientProperty.value = this.coefficientProperty.value.divide( value );
+    divideByInteger: function( value ) {
+      this.coefficientProperty.value = this.coefficientProperty.value.divideByInteger( value );
     }
   } );
 } );
