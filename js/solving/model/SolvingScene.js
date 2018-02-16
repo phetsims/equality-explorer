@@ -114,33 +114,32 @@ define( function( require ) {
       rightNegativeXCreator.weightProperty.value = -x;
     } );
 
-    // @public terms on the left side of the scale
-    this.leftVariableTerm = new VariableTerm2( xString, this.xProperty, {
-      coefficient: ReducedFraction.ONE,
-      location: this.scale.leftPlate.getLocationForCell( 0 )
-    } );
-    this.leftConstantTerm = new ConstantTerm2( {
-      value: ReducedFraction.ONE,
-      location: this.scale.leftPlate.getLocationForCell( 1 )
-    } );
+    //TODO this block is temporary, to get the universal operation working
+    {
+      // @public terms on the left side of the scale
+      this.leftVariableTerm = new VariableTerm2( xString, this.xProperty, {
+        location: this.scale.leftPlate.getLocationForCell( 0 )
+      } );
+      this.leftConstantTerm = new ConstantTerm2( {
+        location: this.scale.leftPlate.getLocationForCell( 1 )
+      } );
 
-    // @public terms on the right side of the scale
-    this.rightVariableTerm = new VariableTerm2( xString, this.xProperty, {
-      coefficient: ReducedFraction.ONE,
-      location: this.scale.rightPlate.getLocationForCell( 0 )
-    } );
-    this.rightConstantTerm = new ConstantTerm2( {
-      value: ReducedFraction.ONE,
-      location: this.scale.rightPlate.getLocationForCell( 1 )
-    } );
+      // @public terms on the right side of the scale
+      this.rightVariableTerm = new VariableTerm2( xString, this.xProperty, {
+        location: this.scale.rightPlate.getLocationForCell( 0 )
+      } );
+      this.rightConstantTerm = new ConstantTerm2( {
+        location: this.scale.rightPlate.getLocationForCell( 1 )
+      } );
 
-    // @public (read-only)
-    this.terms = [
-      this.leftVariableTerm,
-      this.rightVariableTerm,
-      this.leftConstantTerm,
-      this.rightConstantTerm
-    ];
+      // @public (read-only)
+      this.terms = [
+        this.leftVariableTerm,
+        this.rightVariableTerm,
+        this.leftConstantTerm,
+        this.rightConstantTerm
+      ];
+    }
   }
 
   equalityExplorer.register( 'SolvingScene', SolvingScene );
