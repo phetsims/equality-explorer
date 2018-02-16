@@ -1,27 +1,23 @@
 TODO items for equality-explorer
 
-Ideas
-- Treat items as specialized terms?
-- Always have terms in the model, use these for equations (and snapshots?)
-- Indicate which representation to use on scale: items or terms
-- Grid depends on which representation (items, terms) is shown on the scale
-- Grid allowed to contain any type of EqualityExplorerMovable (items or terms)
+Terms
+- Redo term hierarchy, eliminate: Term2, ConstantTerm2, VariableTerm2, TermNode2, ConstantTermNode2, VariableTermNode2
+- Support for fractional coefficients and constants
+- Indicate whether to combine like terms on the scale
 
 Universal operation
 - sum-to-zero animation should not be shown on Reset or Reset All
 
 Solving screen
-- show terms on scale instead of individual items
-- drag items to scale to add to terms
-- drag terms to panel
-- fractional coefficients and constants
+- combine like terms on the scale
+- drag terms from panel, combine with term on scale
+- drag term from scale back to scale
+- drag term from scale to panel
 - universal operation
-- sum item + term to zero
-- sum term + term to zero
+- sum terms to zero
 
 Locked mode, #19
-- item dragged from panel
-- item dragged from scale
+- term dragged from panel
 - term dragged from scale
 - mode change while drag is in progress (ignore mode change?)
 
