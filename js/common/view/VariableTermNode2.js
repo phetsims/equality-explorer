@@ -52,10 +52,23 @@ define( function( require ) {
       stroke: 'black'
     } );
 
-    var symbolNode = new Text( term.symbol, {
-      font: SYMBOL_FONT,
-      center: squareNode.center
-    } );
+    // variable's symbol may be either a string (e.g. 'x') or Node (e.g. apple image)
+    var symbolNode = null;
+    if ( typeof term.symbol === 'string' ) {
+      symbolNode = new Text( term.symbol, {
+        font: SYMBOL_FONT,
+        center: squareNode.center
+      } );
+    }
+    else if ( term.symbol instanceof Node ) {
+      symbolNode = new Node( {
+        children: [ term.symbol ], // wrap this Node, since we're using scenery's DAG feature
+        maxHeight: 0.85 * options.diameter
+      } );
+    }
+    else {
+      throw new Error( 'unsupported term.symbol type' );
+    }
 
     // for fractional coefficient
     var fractionNode = new ReducedFractionNode( term.coefficientProperty.value, {

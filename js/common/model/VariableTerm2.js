@@ -13,17 +13,20 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Term2 = require( 'EQUALITY_EXPLORER/common/model/Term2' );
 
   /**
-   * @param {string} symbol
+   * @param {string|Node} symbol
    * @param {Property.<number>} variableValueProperty
    * @param {Object} [options]
    * @constructor
    */
   function VariableTerm2( symbol, variableValueProperty, options ) {
+
+    assert && assert( typeof symbol === 'string' || symbol instanceof Node, 'invalid symbol type' );
 
     options = _.extend( {
       coefficient: ReducedFraction.withInteger( 1 ) // {ReducedFraction} initial coefficient
