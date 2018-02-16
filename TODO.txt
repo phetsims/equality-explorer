@@ -2,7 +2,9 @@ TODO items for equality-explorer
 
 Terms
 - Redo term hierarchy (model & view)
-- Support for fractional coefficients and constants
+    replace MysteryTerm extends VariableTerm, with icon & shadow, continue to use DAG
+    make view responsible for creating icon and shadow for VariableTerm and ConstantTerm
+- Support for fractional coefficients and constants in scale, equation and snapshots
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
 - Optionally associate term type with cells in the grid
