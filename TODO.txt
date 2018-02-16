@@ -1,7 +1,7 @@
 TODO items for equality-explorer
 
 Terms
-- Redo term hierarchy, eliminate: Term2, ConstantTerm2, VariableTerm2, TermNode2, ConstantTermNode2, VariableTermNode2
+- Redo term hierarchy (model & view)
 - Support for fractional coefficients and constants
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
