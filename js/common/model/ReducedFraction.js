@@ -26,7 +26,7 @@ define( function( require ) {
 
   equalityExplorer.register( 'ReducedFraction', ReducedFraction );
 
-  inherit( Fraction, ReducedFraction, {
+  return inherit( Fraction, ReducedFraction, {
 
     /**
      * Adds an integer value to this fraction and returns a new fraction.
@@ -72,11 +72,18 @@ define( function( require ) {
       assert && assert( value !== 0, 'division by zero' );
       return new ReducedFraction( this.numerator, this.denominator * value );
     }
+  }, {
+
+    /**
+     * Creates a reduced fraction using an integer value.
+     * @param value
+     * @returns {ReducedFraction}
+     * @public
+     * @static
+     */
+    withInteger: function( value ) {
+      assert && assert( Util.isInteger( value ), 'value is not an integer: ' + value );
+      return new ReducedFraction( value, 1 );
+    }
   } );
-
-  // Common values
-  ReducedFraction.ZERO = new ReducedFraction( 0, 1 );
-  ReducedFraction.ONE = new ReducedFraction( 1, 1 );
-
-  return ReducedFraction;
 } );

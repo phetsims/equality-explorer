@@ -23,7 +23,7 @@ define( function( require ) {
   function ConstantTerm2( options ) {
 
     options = _.extend( {
-      value: ReducedFraction.ONE // {ReducedFraction} initial value
+      value: ReducedFraction.withInteger( 1 ) // {ReducedFraction} initial value
     }, options );
 
     // @public {Property.<ReducedFraction>}

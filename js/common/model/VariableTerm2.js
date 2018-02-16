@@ -26,7 +26,7 @@ define( function( require ) {
   function VariableTerm2( symbol, variableValueProperty, options ) {
 
     options = _.extend( {
-      coefficient: ReducedFraction.ONE // {ReducedFraction} initial coefficient
+      coefficient: ReducedFraction.withInteger( 1 ) // {ReducedFraction} initial coefficient
     }, options );
 
     // @public (read-only)

@@ -35,7 +35,7 @@ define( function( require ) {
    * @returns {ReducedFraction}
    */
   function getWeightOfTerms( terms ) {
-    var weight = ReducedFraction.ZERO;
+    var weight = ReducedFraction.withInteger( 0 );
     for ( var i = 0; i < terms.length; i++ ) {
       weight = weight.plus( terms[ i ].weightProperty.value );
     }
