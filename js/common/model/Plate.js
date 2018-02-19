@@ -21,7 +21,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {AbstractTermCreator[]} termCreators - creators associated with term on this plate
+   * @param {TermCreator[]} termCreators - creators associated with term on this plate
    * @param {Object} [options]
    * @constructor
    */
@@ -92,7 +92,7 @@ define( function( require ) {
 
     /**
      * Adds a term to the plate, in a specific cell in the grid.
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @param {number} cellIndex
      * @public
      */
@@ -103,7 +103,7 @@ define( function( require ) {
 
     /**
      * Removes a term from the plate. Terms above the removed term move down.
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @public
      */
     removeTerm: function( term ) {
@@ -154,7 +154,7 @@ define( function( require ) {
     /**
      * Gets the term at a specified location in the grid.
      * @param {Vector2} location
-     * @returns {AbstractTerm|null} null if location is outside the grid, or the cell at location is empty
+     * @returns {Term|null} null if location is outside the grid, or the cell at location is empty
      * @public
      */
     getTermAtLocation: function( location ) {
@@ -163,7 +163,7 @@ define( function( require ) {
 
     /**
      * Gets the index for the cell that a term occupies.
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @returns {number} the cell's index, -1 if the term doesn't occupy a cell
      * @public
      */
@@ -203,7 +203,7 @@ define( function( require ) {
 
         this.termCreators.forEach( function( termCreator ) {
 
-          var terms = termCreator.getTermsOnScale(); // {AbstractTerm[]}
+          var terms = termCreator.getTermsOnScale(); // {Term[]}
 
           if ( terms.length > 0 ) {
 

@@ -23,7 +23,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function AbstractTermCreator( icon, shadow, options ) {
+  function TermCreator( icon, shadow, options ) {
 
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
@@ -53,13 +53,13 @@ define( function( require ) {
     // @public {Bounds2} drag bounds for terms created
     this.dragBounds = options.dragBounds;
 
-    // @protected {ObservableArray.<AbstractTerm>} all terms that currently exist
+    // @protected {ObservableArray.<Term>} all terms that currently exist
     this.allTerms = new ObservableArray();
 
     // @public (read-only) so we don't need to expose allTerms
     this.numberOfTermsProperty = this.allTerms.lengthProperty;
 
-    // @private {ObservableArray.<AbstractTerm>} terms that are on the scale, a subset of allTerms
+    // @private {ObservableArray.<Term>} terms that are on the scale, a subset of allTerms
     this.termsOnScale = new ObservableArray();
 
     // @public (read-only) so we don't need to expose termsOnScale
@@ -71,34 +71,34 @@ define( function( require ) {
     this.lockedProperty = null;
 
     // @public emit2 is called when a term is created.
-    // Callback signature is function( {AbstractTerm} term, {Event|null} [event] )
+    // Callback signature is function( {Term} term, {Event|null} [event] )
     // event arg will be non-null if the term was created as the result of a user interaction.
     this.termCreatedEmitter = new Emitter();
 
     //TODO delete equivalentTermCreator if not used for lock feature
-    // @public {AbstractTermCreator|null} optional equivalent term creator on the opposite side of the scale.
+    // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
     // This is needed for the lock feature, so that an equivalent term on the opposite side can be created.
     // Example: When locked, if I drag -x out of the left panel, -x needs to also drag out of the right panel.
     this.equivalentTermCreator = null;
 
     //TODO delete inverseTermCreator if not used for lock feature
-    // @public {AbstractTermCreator} optional inverse term creator on the opposite side of the scale.
+    // @public {TermCreator} optional inverse term creator on the opposite side of the scale.
     // This is needed for lock feature, for the case where an inverse term must be created.
     // Example: When locked, if I remove x from the left plate, and the right plate is empty, then x needs
     // to be created and dragged on the right side (by equivalentTermCreator) and -x needs to be created on
     // the right plate (by inverseTermCreator).
     this.inverseTermCreator = null;
 
-    // @private called when AbstractTerm.dispose is called
+    // @private called when Term.dispose is called
     this.termWasDisposedBound = this.termWasDisposed.bind( this );
 
     // @private has this instance been fully initialized?
     this.isInitialized = false;
   }
 
-  equalityExplorer.register( 'AbstractTermCreator', AbstractTermCreator );
+  equalityExplorer.register( 'TermCreator', TermCreator );
 
-  return inherit( Object, AbstractTermCreator, {
+  return inherit( Object, TermCreator, {
 
     /**
      * Completes initialization. This model element's location is dependent on the location of
@@ -126,7 +126,7 @@ define( function( require ) {
     /**
      * Instantiates a term.
      * @param {Vector2} location
-     * @returns {AbstractTerm}
+     * @returns {Term}
      * @protected
      * @abstract
      */
@@ -158,7 +158,7 @@ define( function( require ) {
     /**
      * Creates a term.
      * @param {Event|null} event - event is provided if a user interaction is creating the term
-     * @returns {AbstractTerm}
+     * @returns {Term}
      * @public
      */
     createTerm: function( event ) {
@@ -167,7 +167,7 @@ define( function( require ) {
       var term = this.createTermProtected( this.location );
       this.allTerms.add( term );
 
-      // Clean up when the term is disposed. AbstractTerm.dispose handles removal of this listener.
+      // Clean up when the term is disposed. Term.dispose handles removal of this listener.
       term.disposedEmitter.addListener( this.termWasDisposedBound );
 
       // Notify that a term was created
@@ -179,7 +179,7 @@ define( function( require ) {
     /**
      * Creates a term and puts it in a specified cell in the associate plate's 2D grid.
      * @param {number} cellIndex
-     * @returns {AbstractTerm}
+     * @returns {Term}
      * @public
      */
     createTermOnScale: function( cellIndex ) {
@@ -190,7 +190,7 @@ define( function( require ) {
 
     /**
      * Gets an array of all terms managed.
-     * @returns {AbstractTerm[]}
+     * @returns {Term[]}
      * @public
      */
     getTerms: function() {
@@ -199,7 +199,7 @@ define( function( require ) {
 
     /**
      * Puts a term on the scale, in a specified cell in the associated plate's 2D grid.
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @param {number} cellIndex
      * @public
      */
@@ -212,7 +212,7 @@ define( function( require ) {
 
     /**
      * Removes a term from the scale.
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @public
      */
     removeTermFromScale: function( term ) {
@@ -224,7 +224,7 @@ define( function( require ) {
 
     /**
      * Is the specified term on the scale?
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @returns {boolean}
      * @public
      */
@@ -234,7 +234,7 @@ define( function( require ) {
 
     /**
      * Gets the terms that are on the scale.
-     * @returns {AbstractTerm[]}
+     * @returns {Term[]}
      * @public
      */
     getTermsOnScale: function() {
@@ -275,8 +275,8 @@ define( function( require ) {
     },
 
     /**
-     * Called when AbstractTerm.dispose is called.
-     * @param {AbstractTerm} term
+     * Called when Term.dispose is called.
+     * @param {Term} term
      * @private
      */
     termWasDisposed: function( term ) {
@@ -290,7 +290,7 @@ define( function( require ) {
     /**
      * Is this term creator equivalent to a specified term creator?
      * Two term creators are equivalent if they have identical types, and their weights are the same.
-     * @param {AbstractTermCreator} termCreator
+     * @param {TermCreator} termCreator
      * @returns {boolean}
      * @public
      */
@@ -301,7 +301,7 @@ define( function( require ) {
     /**
      * Is this term creator the inverse of a specified term creator?
      * Two term creators are inverses if they have identical types, and their weights sum to zero.
-     * @param {AbstractTermCreator} termCreator
+     * @param {TermCreator} termCreator
      * @returns {boolean}
      * @public
      */

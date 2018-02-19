@@ -26,8 +26,8 @@ define( function( require ) {
 
   /**
    * @param {string} debugName - internal name, not displayed to the user
-   * @param {AbstractTermCreator[]} leftTermCreators - in the order that they appear in the left panel and left side of equations
-   * @param {AbstractTermCreator[]} rightTermCreators - in the order that they appear in the right panel and right side of equations
+   * @param {TermCreator[]} leftTermCreators - in the order that they appear in the left panel and left side of equations
+   * @param {TermCreator[]} rightTermCreators - in the order that they appear in the right panel and right side of equations
    * @param {Object} [options]
    * @constructor
    */
@@ -52,10 +52,10 @@ define( function( require ) {
     // @public (read-only) {Node} used to represent the scene
     this.icon = options.icon;
 
-    // @public (read-only) {AbstractTermCreator[]} creators for terms on left side of scale
+    // @public (read-only) {TermCreator[]} creators for terms on left side of scale
     this.leftTermCreators = leftTermCreators;
 
-    // @public (read-only) {AbstractTermCreator[]} creators for terms on right side of scale
+    // @public (read-only) {TermCreator[]} creators for terms on right side of scale
     this.rightTermCreators = rightTermCreators;
 
     // @public (read-only)

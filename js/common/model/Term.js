@@ -21,14 +21,14 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function AbstractTerm( icon, shadow, options ) {
+  function Term( icon, shadow, options ) {
 
     // @public (read-only)
     this.icon = icon;
     this.shadow = shadow;
 
     // @public (read-only) emit1 when dispose has completed.
-    // Callback signature is function( {AbstractTerm} term ), where the parameter is the term that was disposed.
+    // Callback signature is function( {Term} term ), where the parameter is the term that was disposed.
     this.disposedEmitter = new Emitter();
 
     // @public controls whether the term's shadow is visible
@@ -37,9 +37,9 @@ define( function( require ) {
     EqualityExplorerMovable.call( this, options );
   }
 
-  equalityExplorer.register( 'AbstractTerm', AbstractTerm );
+  equalityExplorer.register( 'Term', Term );
 
-  return inherit( EqualityExplorerMovable, AbstractTerm, {
+  return inherit( EqualityExplorerMovable, Term, {
 
     /**
      * Gets the term's weight
@@ -64,7 +64,7 @@ define( function( require ) {
     /**
      * Is this term the inverse of a specified term?
      * Two terms are inverses if they have identical types, and their weights sum to zero.
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @returns {boolean}
      * @public
      */

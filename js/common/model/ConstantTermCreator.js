@@ -31,7 +31,7 @@ define( function( require ) {
     /**
      * Instantiates a ConstantTerm.
      * @param {Vector2} location
-     * @returns {AbstractTerm}
+     * @returns {Term}
      * @protected
      * @override
      */

@@ -9,10 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AbstractTermCreator = require( 'EQUALITY_EXPLORER/common/model/AbstractTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
+  var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   /**
@@ -45,7 +45,7 @@ define( function( require ) {
     // @public (read-only)
     this.sign = options.sign;
 
-    AbstractTermCreator.call( this, icon, shadow, options );
+    TermCreator.call( this, icon, shadow, options );
 
     // Update the weight of all VariableTerms. unlink unnecessary
     this.weightProperty.link( function( weight ) {
@@ -58,12 +58,12 @@ define( function( require ) {
 
   equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );
 
-  return inherit( AbstractTermCreator, VariableTermCreator, {
+  return inherit( TermCreator, VariableTermCreator, {
 
     /**
      * Instantiates a VariableTerm.
      * @param {Vector2} location
-     * @returns {AbstractTerm}
+     * @returns {Term}
      * @protected
      * @override
      */
@@ -86,14 +86,14 @@ define( function( require ) {
 
     /**
      * Is this term creator the inverse of a specified term creator?
-     * @param {AbstractTermCreator} termCreator
+     * @param {TermCreator} termCreator
      * @returns {boolean}
      * @public
      * @override
      */
     isInverseOf: function( termCreator ) {
       return ( this.symbol === termCreator.symbol ) &&
-             AbstractTermCreator.prototype.isInverseOf.call( this, termCreator );
+             TermCreator.prototype.isInverseOf.call( this, termCreator );
     }
   } );
 } );

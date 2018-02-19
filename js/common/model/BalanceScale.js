@@ -21,8 +21,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {AbstractTermCreator[]} leftTermCreators - creators for terms on left plate
-   * @param {AbstractTermCreator[]} rightTermCreators - creators for term on right plate
+   * @param {TermCreator[]} leftTermCreators - creators for terms on left plate
+   * @param {TermCreator[]} rightTermCreators - creators for term on right plate
    * @param {Object} [options]
    * @constructor
    */
@@ -64,7 +64,7 @@ define( function( require ) {
     this.leftTermCreators = leftTermCreators;
     this.rightTermCreators = rightTermCreators;
 
-    // {AbstractTermCreator[]} all AbstractTermCreator instances
+    // {TermCreator[]} all TermCreator instances
     var termCreators = leftTermCreators.concat( rightTermCreators );
 
     // Compute the maximum width and height of all term icons

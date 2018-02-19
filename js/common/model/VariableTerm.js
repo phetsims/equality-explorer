@@ -10,10 +10,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AbstractTerm = require( 'EQUALITY_EXPLORER/common/model/AbstractTerm' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
    * @param {string} symbol
@@ -40,12 +40,12 @@ define( function( require ) {
     // @public whether the term's halo is visible
     this.haloVisibleProperty = new BooleanProperty( false );
 
-    AbstractTerm.call( this, icon, shadow, options );
+    Term.call( this, icon, shadow, options );
   }
 
   equalityExplorer.register( 'VariableTerm', VariableTerm );
 
-  return inherit( AbstractTerm, VariableTerm, {
+  return inherit( Term, VariableTerm, {
 
     /**
      * Gets the term's weight.
@@ -59,13 +59,13 @@ define( function( require ) {
 
     /**
      * Is this term the inverse of a specified term?
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @returns {boolean}
      * @public
      * @override
      */
     isInverseOf: function( term ) {
-      return ( this.symbol === term.symbol ) && AbstractTerm.prototype.isInverseOf.call( this, term );
+      return ( this.symbol === term.symbol ) && Term.prototype.isInverseOf.call( this, term );
     }
   } );
 } );

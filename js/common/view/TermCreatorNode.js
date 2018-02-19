@@ -16,7 +16,7 @@ define( function( require ) {
   var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
 
   /**
-   * @param {AbstractTermCreator} termCreator - model element associated with this Node
+   * @param {TermCreator} termCreator - model element associated with this Node
    * @param {Plate} plate - associated plate on the scale
    * @param {Node} termsLayer - parent for TermNodes that will be created
    * @param {Object} [options]
@@ -49,7 +49,7 @@ define( function( require ) {
       var termNode = new TermNode( term, termCreator, plate );
       termsLayer.addChild( termNode );
 
-      // Clean up when the term is disposed. AbstractTerm.dispose handles removal of this listener.
+      // Clean up when the term is disposed. Term.dispose handles removal of this listener.
       term.disposedEmitter.addListener( function( term ) {
         termNode.dispose();
       } );

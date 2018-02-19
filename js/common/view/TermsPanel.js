@@ -22,7 +22,7 @@ define( function( require ) {
   var CONTENT_SIZE = new Dimension2( 250, 50 );
 
   /**
-   * @param {AbstractTermCreator[]} termCreators - creators for terms, appear in this order left-to-right
+   * @param {TermCreator[]} termCreators - creators for terms, appear in this order left-to-right
    * @param {Plate} plate - associated plate on the scale
    * @param {Node} termsLayer - parent for TermNodes that will be created
    * @param {Object} [options]

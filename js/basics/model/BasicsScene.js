@@ -17,8 +17,8 @@ define( function( require ) {
   /**
    * @param {string} debugName - internal name, not displayed to the user, no i18n required
    * @param {Node} icon - icon used to represent the scene
-   * @param {AbstractTermCreator[]} leftTermCreators
-   * @param {AbstractTermCreator[]} rightTermCreators
+   * @param {TermCreator[]} leftTermCreators
+   * @param {TermCreator[]} rightTermCreators
    * @param {Object} [options]
    * @constructor
    */

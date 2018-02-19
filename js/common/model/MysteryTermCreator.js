@@ -9,10 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AbstractTermCreator = require( 'EQUALITY_EXPLORER/common/model/AbstractTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTerm = require( 'EQUALITY_EXPLORER/common/model/MysteryTerm' );
+  var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' )
 
   /**
    * @param {Node} icon
@@ -29,17 +29,17 @@ define( function( require ) {
     // @private
     this._weight = options.weight;
 
-    AbstractTermCreator.call( this, icon, shadow, options );
+    TermCreator.call( this, icon, shadow, options );
   }
 
   equalityExplorer.register( 'MysteryTermCreator', MysteryTermCreator );
 
-  return inherit( AbstractTermCreator, MysteryTermCreator, {
+  return inherit( TermCreator, MysteryTermCreator, {
 
     /**
      * Instantiates a MysteryTerm.
      * @param {Vector2} location
-     * @returns {AbstractTerm}
+     * @returns {Term}
      * @protected
      * @override
      */

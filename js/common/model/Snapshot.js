@@ -51,7 +51,7 @@ define( function( require ) {
 
     // @private
     this.plate = plate;
-    this.termCreators = []; // {AbstractTermCreator[]}
+    this.termCreators = []; // {TermCreator[]}
     this.occupiedCells = []; // {number[][]} the occupied cells (in the plate's 2D grid) for each term creator
 
     var termCreators = plate.termCreators;

@@ -76,7 +76,7 @@ define( function( require ) {
    * @param {NumberProperty} xProperty
    * @param {NumberProperty} yProperty
    * @param {number} initialNumberOfTermsOnScale
-   * @returns {AbstractTermCreator[]}
+   * @returns {TermCreator[]}
    */
   function createTermCreators( xProperty, yProperty, initialNumberOfTermsOnScale ) {
     assert && assert( initialNumberOfTermsOnScale.length === 4 );

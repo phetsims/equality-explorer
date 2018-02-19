@@ -24,8 +24,8 @@ define( function( require ) {
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   /**
-   * @param {AbstractTermCreator[]} leftTermCreators - left side of equation, terms appear in this order
-   * @param {AbstractTermCreator[]} rightTermCreators - right side of equation, terms appear in this order
+   * @param {TermCreator[]} leftTermCreators - left side of equation, terms appear in this order
+   * @param {TermCreator[]} rightTermCreators - right side of equation, terms appear in this order
    * @param {Object} [options]
    * @constructor
    */
@@ -89,7 +89,7 @@ define( function( require ) {
 
       // dynamic equation
 
-      // {AbstractTermCreator[]} all AbstractTermCreator instances
+      // {TermCreator[]} all TermCreator instances
       var termCreators = leftTermCreators.concat( rightTermCreators );
 
       // {Property[]} dependencies that require the equation to be updated
@@ -122,8 +122,8 @@ define( function( require ) {
 
   /**
    * Gets the operator that describes the relationship between the left and right sides.
-   * @param {AbstractTermCreator[]} leftTermCreators
-   * @param {AbstractTermCreator[]} rightTermCreators
+   * @param {TermCreator[]} leftTermCreators
+   * @param {TermCreator[]} rightTermCreators
    * @returns {string}
    */
   function getRelationalOperator( leftTermCreators, rightTermCreators ) {
@@ -157,7 +157,7 @@ define( function( require ) {
 
   /**
    * Creates one side of the equation
-   * @param {AbstractTermCreator[]} termCreators
+   * @param {TermCreator[]} termCreators
    * @param {Font} variableFont - font for variables, like 'x'
    * @param {Font} font - font for everything except variables
    * @param {number} iconScale - scale for term icons

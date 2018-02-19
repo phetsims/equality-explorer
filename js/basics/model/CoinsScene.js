@@ -31,7 +31,7 @@ define( function( require ) {
   /**
    * Creates the term creators for this scene.
    * @param {number[]} initialNumberOfTermsOnScale
-   * @returns {AbstractTermCreator[]}
+   * @returns {TermCreator[]}
    */
   function createTermCreators( initialNumberOfTermsOnScale ) {
     assert && assert( initialNumberOfTermsOnScale.length === 3 );

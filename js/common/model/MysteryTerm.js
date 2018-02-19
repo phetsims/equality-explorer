@@ -12,9 +12,9 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AbstractTerm = require( 'EQUALITY_EXPLORER/common/model/AbstractTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
    * @param {number} weight
@@ -28,12 +28,12 @@ define( function( require ) {
     // @private
     this._weight = weight;
 
-    AbstractTerm.call( this, icon, shadow, options );
+    Term.call( this, icon, shadow, options );
   }
 
   equalityExplorer.register( 'MysteryTerm', MysteryTerm );
 
-  return inherit( AbstractTerm, MysteryTerm, {
+  return inherit( Term, MysteryTerm, {
 
     /**
      * Gets the term's weight.

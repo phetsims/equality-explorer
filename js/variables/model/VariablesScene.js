@@ -49,7 +49,7 @@ define( function( require ) {
    * Creates the term creators for this scene.
    * @param {NumberProperty} xProperty
    * @param {number} initialNumberOfTermsOnScale
-   * @returns {AbstractTermCreator[]}
+   * @returns {TermCreator[]}
    */
   function createTermCreators( xProperty, initialNumberOfTermsOnScale ) {
     assert && assert( initialNumberOfTermsOnScale.length === 4 );

@@ -13,10 +13,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AbstractTerm = require( 'EQUALITY_EXPLORER/common/model/AbstractTerm' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -148,19 +148,19 @@ define( function( require ) {
 
     /**
      * Gets the index for the cell that a term occupies.
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @returns {number} the cell's index, -1 if the term doesn't occupy a cell
      * @public
      */
     getCellForTerm: function( term ) {
-      assert && assert( term instanceof AbstractTerm, 'invalid term' );
+      assert && assert( term instanceof Term, 'invalid term' );
       return this.cells.indexOf( term );
     },
 
     /**
      * Gets the term that occupies a specified cell.
      * @param {number} index - the cell's index
-     * @returns {AbstractTerm|null} - null if the cell is empty
+     * @returns {Term|null} - null if the cell is empty
      * @public
      */
     getTermForCell: function( index ) {
@@ -171,7 +171,7 @@ define( function( require ) {
     /**
      * Gets the term at a specified location in the grid.
      * @param {Vector2} location
-     * @returns {AbstractTerm|null} null if location is outside the grid, or the cell at location is empty
+     * @returns {Term|null} null if location is outside the grid, or the cell at location is empty
      * @public
      */
     getTermAtLocation: function( location ) {
@@ -185,12 +185,12 @@ define( function( require ) {
 
     /**
      * Puts a term in the specified cell. The cell must be empty.
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @param {number} index - the cell's index
      * @public
      */
     putTerm: function( term, index ) {
-      assert && assert( term instanceof AbstractTerm, 'invalid term' );
+      assert && assert( term instanceof Term, 'invalid term' );
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
       assert && assert( this.isEmptyCell( index ), 'cell is occupied, index: ' + index );
       this.cells[ index ] = term;
@@ -199,11 +199,11 @@ define( function( require ) {
 
     /**
      * Removes a term from the grid. Any terms above it move down to fill the empty cell.
-     * @param {AbstractTerm} term
+     * @param {Term} term
      * @public
      */
     removeTerm: function( term ) {
-      assert && assert( term instanceof AbstractTerm, 'invalid term' );
+      assert && assert( term instanceof Term, 'invalid term' );
       var index = this.getCellForTerm( term );
       assert && assert( index !== -1, 'term not found: ' + term.toString() );
       this.clearCell( index );

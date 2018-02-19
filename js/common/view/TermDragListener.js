@@ -21,8 +21,8 @@ define( function( require ) {
 
   /**
    * @param {Node} termNode - Node that the listener is attached to
-   * @param {AbstractTerm} term - the term being dragged
-   * @param {AbstractTermCreator} termCreator - the creator of term
+   * @param {Term} term - the term being dragged
+   * @param {TermCreator} termCreator - the creator of term
    * @param {Plate} plate - the plate on the scale that the term is associated with
    * @param {Object} [options]
    * @constructor
@@ -125,7 +125,7 @@ define( function( require ) {
 
   /**
    * Returns an Term to the panel where it was created.
-   * @param {AbstractTerm} term
+   * @param {Term} term
    * @private
    */
   function animateToPanel( term ) {
@@ -139,8 +139,8 @@ define( function( require ) {
   /**
    * Animates a term to an empty cell on a plate.
    * If there are no empty cells on the plate, the term is returned to the panel where it was created.
-   * @param {AbstractTerm} term
-   * @param {AbstractTermCreator} termCreator
+   * @param {Term} term
+   * @param {TermCreator} termCreator
    * @param {Plate} plate
    * @private
    */

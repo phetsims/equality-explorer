@@ -19,8 +19,8 @@ define( function( require ) {
   var TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
 
   /**
-   * @param {AbstractTerm} term - associated model element
-   * @param {AbstractTermCreator} termCreator - the creator of term
+   * @param {Term} term - associated model element
+   * @param {TermCreator} termCreator - the creator of term
    * @param {Plate} plate - the plate that term is associated with
    * @param {Object} [options]
    * @constructor
