@@ -28,9 +28,6 @@ define( function( require ) {
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
-  // constants
-  var CONSTANT_ITEM_WEIGHT = 1;
-
   /**
    * @constructor
    */
@@ -91,10 +88,10 @@ define( function( require ) {
       sign: -rightPositiveXCreator.sign
     } );
     var rightPositiveOneCreator = new ConstantTermCreator( TermIcons.POSITIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-      weight: CONSTANT_ITEM_WEIGHT
+      weight: 1
     } );
     var rightNegativeOneCreator = new ConstantTermCreator( TermIcons.NEGATIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-      weight: -CONSTANT_ITEM_WEIGHT
+      weight: -rightPositiveOneCreator.weight
     } );
 
     LockableScene.call( this, 'solving',
