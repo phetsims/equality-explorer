@@ -12,7 +12,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTerm = require( 'EQUALITY_EXPLORER/common/model/MysteryTerm' );
-  var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' )
+  var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
 
   /**
    * @param {Node} icon
