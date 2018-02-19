@@ -76,10 +76,10 @@ define( function( require ) {
       sign: -leftPositiveXCreator.sign
     } );
     var leftPositiveOneCreator = new ConstantTermCreator( TermIcons.POSITIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-      weight: CONSTANT_ITEM_WEIGHT
+      weight: 1
     } );
     var leftNegativeOneCreator = new ConstantTermCreator( TermIcons.NEGATIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-      weight: -CONSTANT_ITEM_WEIGHT
+      weight: -leftPositiveOneCreator.weight
     } );
 
     // term creators for right side of scale

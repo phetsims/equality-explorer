@@ -21,7 +21,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var NO_ITEM = null;
+  var NO_TERM = null;
 
   /**
    * @param {Property.<Vector2>} locationProperty
@@ -52,10 +52,10 @@ define( function( require ) {
     this.cellHeight = options.cellHeight;
 
     // @private The 2D grid is stored as a 1D array, in row-major order (left-to-right, top-to-bottom).
-    // Each entry in this array is a cell in the grid.  Empty cells contain NO_ITEM.
+    // Each entry in this array is a cell in the grid.  Empty cells contain NO_TERM.
     this.cells = [];
     for ( var index = 0; index < this.numberOfCells; index++ ) {
-      this.cells[ index ] = NO_ITEM;
+      this.cells[ index ] = NO_TERM;
     }
 
     // @private bounds of the grid, initialized in locationProperty listener
@@ -74,7 +74,7 @@ define( function( require ) {
 
       // move the terms
       for ( var index = 0; index < self.cells.length; index++ ) {
-        if ( self.cells[ index ] !== NO_ITEM ) {
+        if ( self.cells[ index ] !== NO_TERM ) {
           self.cells[ index ].moveTo( self.getLocationForCell( index ) );
         }
       }
@@ -93,7 +93,7 @@ define( function( require ) {
      */
     isEmptyCell: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      return ( this.cells[ index ] === NO_ITEM );
+      return ( this.cells[ index ] === NO_TERM );
     },
 
     /**
@@ -103,7 +103,7 @@ define( function( require ) {
      */
     clearCell: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      this.cells[ index ] = NO_ITEM;
+      this.cells[ index ] = NO_TERM;
     },
 
     /**
@@ -112,7 +112,7 @@ define( function( require ) {
      */
     clearAllCells: function() {
       for ( var index = 0; index < this.cells.length; index++ ) {
-        this.cells[ index ] = NO_ITEM;
+        this.cells[ index ] = NO_TERM;
       }
     },
 
@@ -264,7 +264,7 @@ define( function( require ) {
      * @public
      */
     getFirstEmptyCell: function() {
-      return this.cells.lastIndexOf( NO_ITEM );
+      return this.cells.lastIndexOf( NO_TERM );
     },
 
     /**

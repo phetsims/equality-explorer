@@ -36,7 +36,7 @@ define( function( require ) {
      * @override
      */
     createTermProtected: function( location ) {
-      return new ConstantTerm( this._weight, this.icon, this.shadow, {
+      return new ConstantTerm( this.weight, this.icon, this.shadow, {
         location: location,
         dragBounds: this.dragBounds
       } );
