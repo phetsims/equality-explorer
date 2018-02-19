@@ -34,7 +34,7 @@ define( function( require ) {
       stroke: 'black',
       lineDash: [],
       textFill: 'black',
-      font: new PhetFont( EqualityExplorerConstants.ITEM_FONT_SIZE )
+      font: new PhetFont( EqualityExplorerConstants.TERM_FONT_SIZE )
     }, options );
 
     var circleNode = new Circle( options.radius, {

@@ -32,7 +32,7 @@ define( function( require ) {
       stroke: 'black',
       lineDash: [],
       textFill: 'black',
-      font: new MathSymbolFont( EqualityExplorerConstants.ITEM_FONT_SIZE )
+      font: new MathSymbolFont( EqualityExplorerConstants.TERM_FONT_SIZE )
     }, options );
 
     var squareNode = new Rectangle( 0, 0, options.squareLength, options.squareLength, {
