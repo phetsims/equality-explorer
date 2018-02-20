@@ -62,7 +62,7 @@ define( function( require ) {
     // Callback signature is function( {Term} term ), where the parameter is the term that was disposed.
     this.disposedEmitter = new Emitter();
 
-    // @public (read-only) has dispose been called?
+    // @public (read-only) has dispose completed?
     this.disposed = false;
   }
 
