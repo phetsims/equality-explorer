@@ -36,6 +36,7 @@ define( function( require ) {
     } );
 
     // @public {DerivedProperty.<ReducedFraction>} weight is equivalent to the constant's value
+    // dispose of this in dispose().
     this.weightProperty = new DerivedProperty( [ this.valueProperty ],
 
       /**

@@ -98,7 +98,7 @@ define( function( require ) {
     this.rightPlate = new Plate( rightTermCreators, plateOptions );
 
     // @public {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
-    // unlink not required
+    // dispose not required.
     this.angleProperty = new DerivedProperty(
       [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
 

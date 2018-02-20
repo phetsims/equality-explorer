@@ -47,6 +47,7 @@ define( function( require ) {
     this.variableValueProperty = variableValueProperty;
 
     // @public (read-only) {DerivedProperty.<ReducedFraction>}
+    // dispose of this in dispose().
     this.weightProperty = new DerivedProperty( [ this.coefficientProperty, variableValueProperty ],
 
       /**

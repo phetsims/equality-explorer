@@ -211,12 +211,14 @@ define( function( require ) {
     var downStateProperty = new StringProperty( 'up', { validValues: BUTTON_STATES } );
 
     // {DerivedProperty.<boolean>} whether the up button is enabled
+    // dispose not required.
     var upEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
         return index < terms.length - 1;
       } );
 
     // {DerivedProperty.<boolean>} whether the down button is enabled
+    // dispose not required.
     var downEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
         return index > 0;
