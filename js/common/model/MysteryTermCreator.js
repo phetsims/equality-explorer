@@ -16,6 +16,7 @@ define( function( require ) {
   var MysteryTerm = require( 'EQUALITY_EXPLORER/common/model/MysteryTerm' );
   var MysteryTermNode = require( 'EQUALITY_EXPLORER/common/view/MysteryTermNode' );
   var NumberProperty = require( 'AXON/NumberProperty' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   /**
@@ -29,6 +30,9 @@ define( function( require ) {
   function MysteryTermCreator( symbol, weight, image, shadow, options ) {
 
     options = options || {};
+
+    assert && assert( !options.defaultCoefficient, 'defaultCoefficient is set by this type' );
+    options.defaultCoefficient = ReducedFraction.withInteger( 1 );
 
     assert && assert( !options.icon, 'icon is created by this type' );
     options.icon = new Image( image, { maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER } );
@@ -60,7 +64,6 @@ define( function( require ) {
       options = _.extend( {
         location: this.location,
         dragBounds: this.dragBounds,
-        coefficient: this.defaultCoefficient,
         variableValue: this.variableValueProperty.value
       }, options );
 
