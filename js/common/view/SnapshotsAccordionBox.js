@@ -127,7 +127,8 @@ define( function( require ) {
       }
     } );
 
-    // disable restore and trash buttons when there is no selection
+    // Disables restore and trash buttons when there is no selection.
+    // unlink not required.
     scene.snapshots.selectedSnapshotProperty.link( function( snapshot ) {
       var enabled = ( snapshot !== null );
       restoreButton.enabled = enabled;
@@ -170,7 +171,8 @@ define( function( require ) {
     };
 
     // Register input listener with the Display only when we have a selected snapshot.
-    // This technique was borrowed from circuit-construction-kit-common.CircuitElementNode
+    // This technique was borrowed from circuit-construction-kit-common.CircuitElementNode.
+    // unlink not required.
     scene.snapshots.selectedSnapshotProperty.link( function( selectedSnapshot, oldSelectedSnapshot ) {
       if ( oldSelectedSnapshot ) {
         phet.joist.sim.display.removeInputListener( clickToDeselectListener );

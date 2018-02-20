@@ -108,7 +108,7 @@ define( function( require ) {
       this.grid.putTerm( term, cellIndex );
       this.numberOfTermsProperty.value++;
       this.contentsChangedEmitter.emit();
-      term.weightProperty.link( this.updateWeightPropertyBound );
+      term.weightProperty.link( this.updateWeightPropertyBound ); // unlink required in removeTerm
     },
 
     //TODO something is broken here, the scale doesn't move properly when terms are removed

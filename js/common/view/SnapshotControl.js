@@ -115,7 +115,8 @@ define( function( require ) {
       snapshotNode.center = selectionRectangle.center;
     };
 
-    // updates the view when the model changes
+    // updates the view when the model changes.
+    // unlink not required.
     snapshotProperty.link( function( snapshot ) {
 
       // either the button or the snapshot is visible
@@ -151,14 +152,17 @@ define( function( require ) {
       updateSnapshotLayout();
     } );
 
-    // shows that the associated snapshot has been selected
+    // Shows that the associated snapshot has been selected.
+    // unlink not required.
     selectedSnapshotProperty.link( function( selectedSnapshot ) {
       var isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
       selectionRectangle.stroke = isSelected ? SELECTED_STROKE : UNSELECTED_STROKE;
     } );
 
-    // shows/hides the value of 'x'
     if ( options.xVisibleProperty ) {
+
+      // Shows/hides the value of 'x'.
+      // unlink not required
       options.xVisibleProperty.link( function( xVisible ) {
         updateSnapshotLayout();
       } );

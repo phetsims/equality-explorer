@@ -247,7 +247,7 @@ define( function( require ) {
     } );
     downParent.addInputListener( downListener );
 
-    // enable/disable, unlink unnecessary
+    // enable/disable, unlink not required
     upEnabledProperty.link( function( enabled ) { upListener.enabled = enabled; } );
     downEnabledProperty.link( function( enabled ) { downListener.enabled = enabled; } );
 
@@ -266,9 +266,9 @@ define( function( require ) {
       // synchronize the index
       indexProperty.value = index;
     };
-    valueProperty.link( valueObserver ); // unlink required
+    valueProperty.link( valueObserver ); // unlink required in dispose
 
-    // unlink unnecessary
+    // unlink not required
     indexProperty.link( function( index ) {
        valueProperty.value = terms[ index ].value;
     } );

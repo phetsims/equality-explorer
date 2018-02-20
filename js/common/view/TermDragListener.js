@@ -119,8 +119,8 @@ define( function( require ) {
 
     // @private When the plate moves, or its contents change, refresh the halos around inverse terms.
     var refreshHalosBound = this.refreshHalos.bind( this );
-    plate.locationProperty.link( refreshHalosBound ); // unlink required
-    plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required
+    plate.locationProperty.link( refreshHalosBound ); // unlink required in dispose
+    plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
 
     // @private called by dispose
     this.disposeTermDragListener = function() {

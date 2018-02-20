@@ -140,7 +140,7 @@ define( function( require ) {
         sumToZeroNode.startAnimation();
       }
     };
-    term.valueProperty.link( valueListener ); // unlink required
+    term.valueProperty.link( valueListener ); // unlink required in dispose
 
     // @private
     this.disposeConstantTermNode = function() {
