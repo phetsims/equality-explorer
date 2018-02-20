@@ -65,6 +65,7 @@ define( function( require ) {
     // @private {ObservableArray.<Term>} terms that are on the scale, a subset of allTerms
     this.termsOnScale = new ObservableArray();
 
+    //TODO delete this, EquationNode shouldn't be using it now that each term may have a different weight
     // @public (read-only) so we don't need to expose termsOnScale
     this.numberOfTermsOnScaleProperty = this.termsOnScale.lengthProperty;
 

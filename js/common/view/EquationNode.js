@@ -97,6 +97,7 @@ define( function( require ) {
       var updateDependencies = [];
       termCreators.forEach( function( termCreator ) {
         updateDependencies.push( termCreator.numberOfTermsOnScaleProperty );
+        //TODO termCreator.weightProperty no longer exists
         if ( termCreator.weightProperty ) {
           updateDependencies.push( termCreator.weightProperty );
         }
@@ -132,12 +133,14 @@ define( function( require ) {
     // evaluate the left side
     var leftWeight = 0;
     for ( var i = 0; i < leftTermCreators.length; i++ ) {
+      //TODO leftTermCreators[ i ].weight no longer exists!
       leftWeight += leftTermCreators[ i ].numberOfTermsOnScaleProperty.value * leftTermCreators[ i ].weight;
     }
 
     // evaluate the right side
     var rightWeight = 0;
     for ( i = 0; i < rightTermCreators.length; i++ ) {
+      //TODO rightTermCreators[ i ].weight no longer exists!
       rightWeight += rightTermCreators[ i ].numberOfTermsOnScaleProperty.value * rightTermCreators[ i ].weight;
     }
 
@@ -199,6 +202,7 @@ define( function( require ) {
         else if ( termCreator instanceof ConstantTermCreator ) {
 
           // constant terms contribute their weight to the constant term
+          //TODO termCreator.weight no longer exists
           constantValue += ( termCreator.weight * numberOfTermsOnScale );
         }
         else {
