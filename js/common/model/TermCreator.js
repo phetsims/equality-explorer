@@ -230,6 +230,15 @@ define( function( require ) {
     },
 
     /**
+     * Gets the terms that are on the scale.
+     * @returns {Term[]}
+     * @public
+     */
+    getTermsOnScale: function() {
+      return this.termsOnScale.getArray().slice(); // defensive copy
+    },
+
+    /**
      * Puts a term on the scale, in a specified cell in the associated plate's 2D grid.
      * @param {Term} term
      * @param {number} cellIndex
@@ -262,24 +271,6 @@ define( function( require ) {
      */
     isTermOnScale: function( term ) {
       return this.termsOnScale.contains( term );
-    },
-
-    /**
-     * Gets the terms that are on the scale.
-     * @returns {Term[]}
-     * @public
-     */
-    getTermsOnScale: function() {
-      return this.termsOnScale.getArray().slice(); // defensive copy
-    },
-
-    /**
-     * Gets the number of terms on the scale.
-     * @returns {number}
-     * @public
-     */
-    getNumberOfTermsOnScale: function() {
-      return this.termsOnScale.length;
     },
 
     /**
