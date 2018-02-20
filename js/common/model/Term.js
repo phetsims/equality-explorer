@@ -22,11 +22,11 @@ define( function( require ) {
    */
   function Term( options ) {
 
-    // @public whether the term's halo is visible
-    this.haloVisibleProperty = new BooleanProperty( false );
-
     // @public whether the term's shadow is visible
     this.shadowVisibleProperty = new BooleanProperty( false );
+
+    // @public whether the term's halo is visible
+    this.haloVisibleProperty = new BooleanProperty( false );
 
     EqualityExplorerMovable.call( this, options );
   }
@@ -40,8 +40,8 @@ define( function( require ) {
      * @override
      */
     dispose: function() {
-      this.haloVisibleProperty.dispose();
       this.shadowVisibleProperty.dispose();
+      this.haloVisibleProperty.dispose();
       EqualityExplorerMovable.prototype.dispose.call( this );
     },
 
