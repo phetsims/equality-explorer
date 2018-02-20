@@ -77,6 +77,7 @@ define( function( require ) {
     // @public emit2 is called when a term is created.
     // Callback signature is function( {Term} term, {Event|null} [event] )
     // event arg will be non-null if the term was created as the result of a user interaction.
+    // dispose not required.
     this.termCreatedEmitter = new Emitter();
 
     //TODO delete equivalentTermCreator if not used for lock feature

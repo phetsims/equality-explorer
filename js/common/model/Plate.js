@@ -66,6 +66,7 @@ define( function( require ) {
     this.weightProperty = new Property( ReducedFraction.withInteger( 0 ) );
 
     // @public emit is called when the contents of the grid changes (terms added, removed, organized)
+    // dispose not required.
     this.contentsChangedEmitter = new Emitter();
 
     // associate this plate with its term creators
