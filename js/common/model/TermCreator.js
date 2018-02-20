@@ -40,7 +40,7 @@ define( function( require ) {
     assert && assert( ( options.initialNumberOfTermsOnScale >= 0 ) && Util.isInteger( options.initialNumberOfTermsOnScale ),
       'initialNumberOfTermsOnScale is invalid: ' + options.initialNumberOfTermsOnScale );
 
-    // @public (ready-only)
+    // @public (ready-only) icon used to represent this term creator
     this.icon = options.icon;
 
     // @public {Vector2} (read-only after initialization)
@@ -61,9 +61,6 @@ define( function( require ) {
 
     // @protected {ObservableArray.<Term>} all terms that currently exist
     this.allTerms = new ObservableArray();
-
-    // @public (read-only) so we don't need to expose allTerms
-    this.numberOfTermsProperty = this.allTerms.lengthProperty;
 
     // @private {ObservableArray.<Term>} terms that are on the scale, a subset of allTerms
     this.termsOnScale = new ObservableArray();
