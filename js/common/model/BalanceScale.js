@@ -98,7 +98,9 @@ define( function( require ) {
     this.rightPlate = new Plate( rightTermCreators, plateOptions );
 
     // @public {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
-    this.angleProperty = new DerivedProperty( [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
+    // unlink not required
+    this.angleProperty = new DerivedProperty(
+      [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
 
       /**
        * @param {ReducedFraction} leftWeight
@@ -123,7 +125,8 @@ define( function( require ) {
         return angle;
       } );
 
-    // Move the plates when the angle changes. unlink unnecessary
+    // Move the plates when the angle changes.
+    // unlink not required.
     this.angleProperty.link( function( angle ) {
 
       // hoist reusable vars
@@ -153,6 +156,7 @@ define( function( require ) {
     } );
 
     // @public {DerivedProperty.<number>} total number of terms on the scale (both plates)
+    // dispose not required.
     this.numberOfTermsProperty = new DerivedProperty(
       [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
 
