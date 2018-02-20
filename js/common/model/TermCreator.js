@@ -197,7 +197,8 @@ define( function( require ) {
       var term = this.createTermProtected( options );
       this.allTerms.add( term );
 
-      // Clean up when the term is disposed. Term.dispose handles removal of this listener.
+      // Clean up when the term is disposed.
+      // removeListener required when the term is disposed, see termWasDisposed.
       term.disposedEmitter.addListener( this.termWasDisposedBound );
 
       // Notify that a term was created
@@ -302,9 +303,15 @@ define( function( require ) {
      */
     termWasDisposed: function( term ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
+
       if ( this.isTermOnScale( term ) ) {
         this.removeTermFromScale( term );
       }
+
+      if ( term.disposedEmitter.hasListener( this.termWasDisposedBound ) ) {
+        term.disposedEmitter.removeListener( this.termWasDisposedBound );
+      }
+
       this.allTerms.remove( term );
     }
   } );

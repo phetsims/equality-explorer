@@ -131,7 +131,8 @@ define( function( require ) {
 
     HBox.call( this, options );
 
-    // prevent divide by zero, unlink unnecessary
+    // prevent divide by zero.
+    // unlink not required.
     operatorProperty.link( function( operator ) {
       if ( operator === EqualityExplorerConstants.DIVIDE && operandProperty.value === 0 ) {
         operandProperty.value = 1;

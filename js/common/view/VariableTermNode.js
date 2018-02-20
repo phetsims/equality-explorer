@@ -172,7 +172,7 @@ define( function( require ) {
         sumToZeroNode.startAnimation();
       }
     };
-    term.coefficientProperty.link( coefficientListener ); // unlink required
+    term.coefficientProperty.link( coefficientListener ); // unlink required in dispose
 
     // @private
     this.disposeVariableTermNode = function() {
