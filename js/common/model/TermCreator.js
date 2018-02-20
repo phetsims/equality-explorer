@@ -27,6 +27,7 @@ define( function( require ) {
   /**
    * @param {Object} [options]
    * @constructor
+   * @abstract
    */
   function TermCreator( options ) {
 
