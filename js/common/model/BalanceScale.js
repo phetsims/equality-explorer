@@ -154,11 +154,11 @@ define( function( require ) {
 
     // {Property.<number>} dependencies for deriving numberOfTermsProperty
     var numberOfTermsDependencies = [];
-    leftTermCreators.forEach( function( leftTermCreator ) {
-      numberOfTermsDependencies.push( leftTermCreator.numberOfTermsOnScaleProperty );
+    leftTermCreators.forEach( function( termCreator ) {
+      numberOfTermsDependencies.push( termCreator.numberOfTermsOnScaleProperty );
     } );
-    rightTermCreators.forEach( function( leftTermCreator ) {
-      numberOfTermsDependencies.push( leftTermCreator.numberOfTermsOnScaleProperty );
+    rightTermCreators.forEach( function( termCreator ) {
+      numberOfTermsDependencies.push( termCreator.numberOfTermsOnScaleProperty );
     } );
 
     // @public {DerivedProperty.<number>} total number of terms on the scale (both plates)
