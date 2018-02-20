@@ -54,6 +54,15 @@ define( function( require ) {
   return inherit( Term, ConstantTerm, {
 
     /**
+     * For debugging only
+     * @returns {string}
+     * @public
+     */
+    toString: function() {
+      return 'ConstantTerm: value=' + this.valueProperty.value.toString();
+    },
+
+    /**
      * @public
      * @override
      */

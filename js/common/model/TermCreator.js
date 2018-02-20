@@ -250,8 +250,8 @@ define( function( require ) {
     removeTermFromScale: function( term ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
       assert && assert( this.termsOnScale.contains( term ), 'term not on scale: ' + term.toString() );
-      this.plate.removeTerm( term );
       this.termsOnScale.remove( term );
+      this.plate.removeTerm( term );
     },
 
     /**

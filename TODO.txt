@@ -1,7 +1,6 @@
 TODO items for equality-explorer
 
 Terms
-- BUG: scale isn't moving when terms are removed
 - BUG: equations don't support fractions
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale

@@ -66,6 +66,18 @@ define( function( require ) {
   return inherit( Term, VariableTerm, {
 
     /**
+     * For debugging only.
+     * @returns {string}
+     * @public
+     */
+    toString: function() {
+      return 'VariableTerm:' +
+             ' coefficient=' + this.coefficientProperty.value.toString() +
+             ' symbol=' + this.symbol +
+             ' variableValue=' + this.variableValueProperty.value;
+    },
+
+    /**
      * @public
      * @override
      */

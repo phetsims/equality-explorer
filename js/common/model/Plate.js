@@ -86,7 +86,7 @@ define( function( require ) {
     updateWeightProperty: function() {
       var weight = ReducedFraction.withInteger( 0 );
       for ( var i = 0; i < this.termCreators.length; i++ ) {
-        var terms = this.termCreators[ i ].getTerms();
+        var terms = this.termCreators[ i ].getTermsOnScale();
         for ( var j = 0; j < terms.length; j++ ) {
           weight = weight.plusFraction( terms[ j ].weightProperty.value );
         }
