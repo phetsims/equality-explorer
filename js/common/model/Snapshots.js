@@ -13,6 +13,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
+  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
 
   /**
    * @constructor
@@ -24,7 +25,11 @@ define( function( require ) {
     // @public {Property.<Snapshot|null>[]} a Property for each possible snapshot, null means no snapshot
     this.snapshotProperties = [];
     for ( var i = 0; i < EqualityExplorerConstants.NUMBER_OF_SNAPSHOTS; i++ ) {
-      this.snapshotProperties.push( new Property( null ) );
+      this.snapshotProperties.push( new Property( null, {
+        isValidValue: function( snapshot ) {
+          return ( snapshot === null ) || ( snapshot instanceof Snapshot );
+        }
+      } ) );
     }
 
     // @public {Property.<Snapshot|null>} the selected snapshot, null means no selection
