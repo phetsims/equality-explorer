@@ -16,7 +16,6 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTermCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryTermCreator' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
 
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
