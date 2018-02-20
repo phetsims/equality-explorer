@@ -16,6 +16,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Grid = require( 'EQUALITY_EXPLORER/common/model/Grid' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -57,6 +58,9 @@ define( function( require ) {
       cellWidth: options.cellSize.width,
       cellHeight: options.cellSize.height
     } );
+
+    // @public (read-only) number of terms on the plate
+    this.numberOfTermsProperty = new NumberProperty( 0 );
 
     // @public (read-only) {Property.<ReducedFraction>} total weight of the terms that are on the plate
     this.weightProperty = new Property( ReducedFraction.withInteger( 0 ) );
@@ -102,6 +106,7 @@ define( function( require ) {
      */
     addTerm: function( term, cellIndex ) {
       this.grid.putTerm( term, cellIndex );
+      this.numberOfTermsProperty.value++;
       this.contentsChangedEmitter.emit();
       term.weightProperty.link( this.updateWeightPropertyBound );
     },
@@ -114,6 +119,7 @@ define( function( require ) {
      */
     removeTerm: function( term ) {
       this.grid.removeTerm( term );
+      this.numberOfTermsProperty.value--;
       if ( term.weightProperty.hasListener( this.updateWeightPropertyBound ) ) {
         term.weightProperty.unlink( this.updateWeightPropertyBound );
       }
@@ -196,10 +202,7 @@ define( function( require ) {
      */
     organize: function() {
 
-      var numberOfTermsToOrganize = 0;
-      this.termCreators.forEach( function( termCreator ) {
-        numberOfTermsToOrganize += termCreator.numberOfTermsOnScaleProperty.value;
-      } );
+      var numberOfTermsToOrganize = this.numberOfTermsProperty.value;
 
       if ( numberOfTermsToOrganize > 0 ) {
 

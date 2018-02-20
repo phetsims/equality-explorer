@@ -152,23 +152,17 @@ define( function( require ) {
         new Vector2( self.location.x - dx, self.location.y - dy - options.plateSupportHeight );
     } );
 
-    // {Property.<number>} dependencies for deriving numberOfTermsProperty
-    var numberOfTermsDependencies = [];
-    leftTermCreators.forEach( function( termCreator ) {
-      numberOfTermsDependencies.push( termCreator.numberOfTermsOnScaleProperty );
-    } );
-    rightTermCreators.forEach( function( termCreator ) {
-      numberOfTermsDependencies.push( termCreator.numberOfTermsOnScaleProperty );
-    } );
-
     // @public {DerivedProperty.<number>} total number of terms on the scale (both plates)
-    this.numberOfTermsProperty = new DerivedProperty( numberOfTermsDependencies,
-      function() {
-        var sum = 0;
-        for ( var i = 0; i < numberOfTermsDependencies.length; i++ ) {
-          sum += numberOfTermsDependencies[ i ].value;
-        }
-        return sum;
+    this.numberOfTermsProperty = new DerivedProperty(
+      [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
+
+      /**
+       * @param {number} leftNumberOfTerms
+       * @param {number} rightNumberOfTerms
+       * @returns {number}
+       */
+      function( leftNumberOfTerms, rightNumberOfTerms ) {
+        return leftNumberOfTerms + rightNumberOfTerms;
       } );
   }
 
