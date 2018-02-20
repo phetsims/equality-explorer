@@ -29,6 +29,14 @@ define( function( require ) {
   return inherit( Fraction, ReducedFraction, {
 
     /**
+     * Gets the value in decimal format.  This function is provided to improved readability and refactoring.
+     * @returns {number}
+     */
+    toDecimal: function() {
+       return this.getValue();
+    },
+
+    /**
      * Adds a fraction to this fraction.
      * @param {Fraction} value
      */

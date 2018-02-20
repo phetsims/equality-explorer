@@ -13,29 +13,34 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Util = require( 'DOT/Util' );
 
+  // constants
+  var DEFAULT_ICON = new Rectangle( 0, 0,
+    EqualityExplorerConstants.SMALL_TERM_DIAMETER, EqualityExplorerConstants.SMALL_TERM_DIAMETER,
+    { fill: 'black' } );
+
   /**
-   * @param {Node} icon - the icon used to represent the term
-   * @param {Node} shadow - the shadow displayed behind the icon when the term is being dragged
    * @param {Object} [options]
    * @constructor
    */
-  function TermCreator( icon, shadow, options ) {
+  function TermCreator( options ) {
 
     options = _.extend( {
+      icon: DEFAULT_ICON, // {Node} icon that represents terms of this type
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
-      initialNumberOfTermsOnScale: 0 // number of terms initially on the scale
+      initialNumberOfTermsOnScale: 0 // {number} integer number of terms initially on the scale
     }, options );
 
     assert && assert( ( options.initialNumberOfTermsOnScale >= 0 ) && Util.isInteger( options.initialNumberOfTermsOnScale ),
       'initialNumberOfTermsOnScale is invalid: ' + options.initialNumberOfTermsOnScale );
 
-    // @public (read-only)
-    this.icon = icon;
-    this.shadow = shadow;
+    // @public (ready-only)
+    this.icon = options.icon;
 
     // @public {Vector2} (read-only after initialization)
     // Location is dependent on the view and is unknowable until the sim has loaded.
@@ -125,23 +130,48 @@ define( function( require ) {
 
     /**
      * Instantiates a term.
-     * @param {Vector2} location
+     * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
      * @protected
      * @abstract
      */
-    createTermProtected: function( location ) {
+    createTermProtected: function( options ) {
       throw new Error( 'createTermProtected must be implemented by subtypes' );
     },
 
     /**
-     * Gets the term's weight
-     * @returns {number}
+     * Instantiates the Node that corresponds to a term.
+     * @param {Term} term
+     * @param {Plate} plate
+     * @param {Object} [options] - passed to the TermNode's constructor
+     * @returns {TermNode}
      * @public
      * @abstract
      */
-    get weight() {
-      throw new Error( 'weight getter must be implemented by subtype' );
+    createTermNode: function( term, plate, options ) {
+      throw new Error( 'createTermNode must be implemented by subtypes' );
+    },
+
+    /**
+     * Is this term creator the inverse of a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @abstract
+     */
+    isInverseOf: function( termCreator ) {
+      throw new Error( 'isInverseOf must be implemented by subtype' );
+    },
+
+    /**
+     * Is this term creator equivalent to a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @abstract
+     */
+    isEquivalentTo: function( termCreator ) {
+      throw new Error( 'isInverseOf must be implemented by subtype' );
     },
 
     /**
@@ -158,13 +188,14 @@ define( function( require ) {
     /**
      * Creates a term.
      * @param {Event|null} event - event is provided if a user interaction is creating the term
+     * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
      * @public
      */
-    createTerm: function( event ) {
+    createTerm: function( event, options ) {
 
       // create term
-      var term = this.createTermProtected( this.location );
+      var term = this.createTermProtected( options );
       this.allTerms.add( term );
 
       // Clean up when the term is disposed. Term.dispose handles removal of this listener.
@@ -285,28 +316,6 @@ define( function( require ) {
         this.removeTermFromScale( term );
       }
       this.allTerms.remove( term );
-    },
-
-    /**
-     * Is this term creator equivalent to a specified term creator?
-     * Two term creators are equivalent if they have identical types, and their weights are the same.
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     */
-    isEquivalentTo: function( termCreator ) {
-      return ( this.constructor === termCreator.constructor ) && ( this.weight === termCreator.weight );
-    },
-
-    /**
-     * Is this term creator the inverse of a specified term creator?
-     * Two term creators are inverses if they have identical types, and their weights sum to zero.
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     */
-    isInverseOf: function( termCreator ) {
-      return ( this.constructor === termCreator.constructor ) && ( this.weight + termCreator.weight === 0 );
     }
   } );
 } );

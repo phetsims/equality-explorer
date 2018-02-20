@@ -41,7 +41,7 @@ define( function( require ) {
       maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
       gridRows: 6, // {number} rows in the grid on the scale
       gridColumns: 6, // {number} columns in the grid on the scale
-      iconSize: null // {Dimension2|null} size of icons, computed if null
+      iconSize: null // {Dimension2|null} size of term icons, computed if null
     }, options );
 
     phet.log && phet.log( debugName + ': maxWeight=' + options.maxWeight );

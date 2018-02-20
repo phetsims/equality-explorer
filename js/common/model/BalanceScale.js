@@ -99,10 +99,16 @@ define( function( require ) {
 
     // @public {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
     this.angleProperty = new DerivedProperty( [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
+
+      /**
+       * @param {ReducedFraction} leftWeight
+       * @param {ReducedFraction} rightWeight
+       * @returns {number}
+       */
       function( leftWeight, rightWeight ) {
 
         // compute the weight difference between the 2 plates
-        var weightDelta = ( rightWeight - leftWeight );
+        var weightDelta = ( rightWeight.toDecimal() - leftWeight.toDecimal() );
 
         // constrain to maxWeight so the scale bottoms out
         if ( weightDelta > options.maxWeight ) {

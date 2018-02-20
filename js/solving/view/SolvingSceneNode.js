@@ -11,14 +11,12 @@ define( function( require ) {
 
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var ConstantTermNode2 = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
-  var VariableTermNode2 = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode2' );
 
   /**
    * @param {Scene} scene
@@ -75,18 +73,6 @@ define( function( require ) {
       top: localBounds.bottom + 10
     } );
     this.addChild( operationNode );
-
-    // Terms on left side of the scale
-    var leftVariableTermNode = new VariableTermNode2( scene.leftVariableTerm );
-    this.addChild( leftVariableTermNode );
-    var leftConstantTermNode = new ConstantTermNode2( scene.leftConstantTerm );
-    this.addChild( leftConstantTermNode );
-
-    // Terms on right side of the scale
-    var rightVariableTermNode = new VariableTermNode2( scene.rightVariableTerm );
-    this.addChild( rightVariableTermNode );
-    var rightConstantTermNode = new ConstantTermNode2( scene.rightConstantTerm );
-    this.addChild( rightConstantTermNode );
 
     // Put animation layer on top of everything
     this.addChild( operationAnimationLayer );

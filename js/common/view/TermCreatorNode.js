@@ -13,7 +13,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
 
   /**
    * @param {TermCreator} termCreator - model element associated with this Node
@@ -32,7 +31,7 @@ define( function( require ) {
 
     assert && assert( !options.children, 'this type defines its children' );
     options.children = [
-      termCreator.icon // careful, termCreator.icon is using scenery DAG feature
+      new Node( { children: [ termCreator.icon ] } ) // wrap this node since it uses scenery DAG feature
     ];
 
     // @private
@@ -45,8 +44,8 @@ define( function( require ) {
     // When a term is created in the model, create the corresponding view.
     termCreator.termCreatedEmitter.addListener( function( term, event ) {
 
-      // create an TermNode
-      var termNode = new TermNode( term, termCreator, plate );
+      // create a TermNode
+      var termNode = termCreator.createTermNode( term, plate );
       termsLayer.addChild( termNode );
 
       // Clean up when the term is disposed. Term.dispose handles removal of this listener.

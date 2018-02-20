@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantTerm2 = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm2' );
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
@@ -19,11 +18,10 @@ define( function( require ) {
   var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var StringProperty = require( 'AXON/StringProperty' );
-  var TermIcons = require( 'EQUALITY_EXPLORER/common/view/TermIcons' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
-  var VariableTerm2 = require( 'EQUALITY_EXPLORER/common/model/VariableTerm2' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -38,8 +36,8 @@ define( function( require ) {
 
     // @public (read-only) the value of the variable 'x'
     this.xProperty = new NumberProperty( this.xRange.defaultValue, {
-      range: this.xRange,
-      valueType: 'Integer'
+      valueType: 'Integer',
+      range: this.xRange
     } );
 
     // @public (read-only) set of operators for universal operation
@@ -60,85 +58,51 @@ define( function( require ) {
 
     // @public (read-only) universal operand
     this.operandProperty = new NumberProperty( this.operandRange.defaultValue, {
-      range: this.operandRange,
-      valueType: 'Integer'
-    } );
-
-    // term creators for left side of scale
-    var leftPositiveXCreator = new VariableTermCreator( xString, TermIcons.POSITIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
-      weight: this.xProperty.value
-    } );
-    var leftNegativeXCreator = new VariableTermCreator( xString, TermIcons.NEGATIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
-      weight: -leftPositiveXCreator.weight,
-      sign: -leftPositiveXCreator.sign
-    } );
-    var leftPositiveOneCreator = new ConstantTermCreator( TermIcons.POSITIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-      weight: 1
-    } );
-    var leftNegativeOneCreator = new ConstantTermCreator( TermIcons.NEGATIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-      weight: -leftPositiveOneCreator.weight
-    } );
-
-    // term creators for right side of scale
-    var rightPositiveXCreator = new VariableTermCreator( xString, TermIcons.POSITIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
-      weight: this.xProperty.value
-    } );
-    var rightNegativeXCreator = new VariableTermCreator( xString, TermIcons.NEGATIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
-      weight: -rightPositiveXCreator.weight,
-      sign: -rightPositiveXCreator.sign
-    } );
-    var rightPositiveOneCreator = new ConstantTermCreator( TermIcons.POSITIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-      weight: 1
-    } );
-    var rightNegativeOneCreator = new ConstantTermCreator( TermIcons.NEGATIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-      weight: -rightPositiveOneCreator.weight
+      valueType: 'Integer',
+      range: this.operandRange
     } );
 
     LockableScene.call( this, 'solving',
-      [ leftPositiveXCreator, leftNegativeXCreator, leftPositiveOneCreator, leftNegativeOneCreator ],
-      [ rightPositiveXCreator, rightNegativeXCreator, rightPositiveOneCreator, rightNegativeOneCreator ], {
+      createTermCreators( this.xProperty ),
+      createTermCreators( this.xProperty ), {
         gridRows: 1,
         gridColumns: 2,
-        iconSize: new Dimension2( EqualityExplorerConstants.TERM_DIAMETER + 10, EqualityExplorerConstants.TERM_DIAMETER )
+        iconSize: new Dimension2( EqualityExplorerConstants.BIG_TERM_DIAMETER + 10, EqualityExplorerConstants.BIG_TERM_DIAMETER )
       } );
-
-    // update term creator weights when the value of 'x' changes. unlink unnecessary
-    this.xProperty.lazyLink( function( x ) {
-      leftPositiveXCreator.weightProperty.value = x;
-      leftNegativeXCreator.weightProperty.value = -x;
-      rightPositiveXCreator.weightProperty.value = x;
-      rightNegativeXCreator.weightProperty.value = -x;
-    } );
-
-    //TODO this block is temporary, to get the universal operation working
-    {
-      // @public terms on the left side of the scale
-      this.leftVariableTerm = new VariableTerm2( xString, this.xProperty, {
-        location: this.scale.leftPlate.getLocationForCell( 0 )
-      } );
-      this.leftConstantTerm = new ConstantTerm2( {
-        location: this.scale.leftPlate.getLocationForCell( 1 )
-      } );
-
-      // @public terms on the right side of the scale
-      this.rightVariableTerm = new VariableTerm2( xString, this.xProperty, {
-        location: this.scale.rightPlate.getLocationForCell( 0 )
-      } );
-      this.rightConstantTerm = new ConstantTerm2( {
-        location: this.scale.rightPlate.getLocationForCell( 1 )
-      } );
-
-      // @public (read-only)
-      this.terms = [
-        this.leftVariableTerm,
-        this.rightVariableTerm,
-        this.leftConstantTerm,
-        this.rightConstantTerm
-      ];
-    }
   }
 
   equalityExplorer.register( 'SolvingScene', SolvingScene );
+
+  /**
+   * Creates the term creators for this scene.
+   * @param {NumberProperty} xProperty
+   * @returns {TermCreator[]}
+   */
+  function createTermCreators( xProperty ) {
+
+    return [
+
+      // x
+      new VariableTermCreator( xString, xProperty, {
+        defaultCoefficient: ReducedFraction.withInteger( 1 )
+      } ),
+
+      // -x
+      new VariableTermCreator( xString, xProperty, {
+        defaultCoefficient: ReducedFraction.withInteger( -1 )
+      } ),
+
+      // 1
+      new ConstantTermCreator( {
+        defaultValue: ReducedFraction.withInteger( 1 )
+      } ),
+
+      // -1
+      new ConstantTermCreator( {
+        defaultValue: ReducedFraction.withInteger( -1 )
+      } )
+    ];
+  }
 
   return inherit( LockableScene, SolvingScene, {
 
@@ -147,15 +111,9 @@ define( function( require ) {
      * @override
      */
     reset: function() {
-
       this.xProperty.reset();
       this.operatorProperty.reset();
       this.operandProperty.reset();
-      this.leftVariableTerm.reset();
-      this.rightVariableTerm.reset();
-      this.leftConstantTerm.reset();
-      this.rightConstantTerm.reset();
-
       LockableScene.prototype.reset.call( this );
     },
 

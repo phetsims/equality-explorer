@@ -16,13 +16,13 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
-  var TermIcons = require( 'EQUALITY_EXPLORER/common/view/TermIcons' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
-  
+
   /**
    * @constructor
    */
@@ -33,8 +33,8 @@ define( function( require ) {
 
     // @public (read-only) the value of the variable 'x'
     this.xProperty = new NumberProperty( this.xRange.defaultValue, {
-      range: this.xRange,
-      valueType: 'Integer'
+      valueType: 'Integer',
+      range: this.xRange
     } );
 
     LockableScene.call( this, 'variables',
@@ -52,35 +52,33 @@ define( function( require ) {
    * @returns {TermCreator[]}
    */
   function createTermCreators( xProperty, initialNumberOfTermsOnScale ) {
+
     assert && assert( initialNumberOfTermsOnScale.length === 4 );
     var index = 0;
 
-    var positiveXCreator = new VariableTermCreator( xString, TermIcons.POSITIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
-      weight: xProperty.value,
-      initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
-    } );
-
-    var negativeXCreator = new VariableTermCreator( xString, TermIcons.NEGATIVE_X_NODE, TermIcons.X_SHADOW_NODE, {
-      weight: -positiveXCreator.weight,
-      sign: -positiveXCreator.sign,
-      initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
-    } );
-
-    // unlink unnecessary
-    xProperty.lazyLink( function( x ) {
-      positiveXCreator.weightProperty.value = x;
-      negativeXCreator.weightProperty.value = -x;
-    } );
-
     return [
-      positiveXCreator,
-      negativeXCreator,
-      new ConstantTermCreator( TermIcons.POSITIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-        weight: 1,
+
+      // x
+      new VariableTermCreator( xString, xProperty, {
+        defaultCoefficient: ReducedFraction.withInteger( 1 ),
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new ConstantTermCreator( TermIcons.NEGATIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-        weight: -1,
+
+      // -x
+      new VariableTermCreator( xString, xProperty, {
+        defaultCoefficient: ReducedFraction.withInteger( -1 ),
+        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
+      } ),
+
+      // 1
+      new ConstantTermCreator( {
+        defaultValue: ReducedFraction.withInteger( 1 ),
+        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
+      } ),
+
+      // -1
+      new ConstantTermCreator( {
+        defaultValue: ReducedFraction.withInteger( -1 ),
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } )
     ];

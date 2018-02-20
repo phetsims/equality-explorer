@@ -14,7 +14,7 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
-  var TermIcons = require( 'EQUALITY_EXPLORER/common/view/TermIcons' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
 
   /**
    * @constructor
@@ -34,15 +34,21 @@ define( function( require ) {
    * @returns {TermCreator[]}
    */
   function createTermCreators( initialNumberOfTermsOnScale ) {
+
     assert && assert( initialNumberOfTermsOnScale.length === 2 );
     var index = 0;
+
     return [
-      new ConstantTermCreator( TermIcons.POSITIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-        weight: 1,
+
+      // 1
+      new ConstantTermCreator( {
+        defaultValue: ReducedFraction.withInteger( 1 ),
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new ConstantTermCreator( TermIcons.NEGATIVE_ONE_NODE, TermIcons.ONE_SHADOW_NODE, {
-        weight: -1,
+
+      // -1
+      new ConstantTermCreator( {
+        defaultValue: ReducedFraction.withInteger( -1 ),
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } )
     ];

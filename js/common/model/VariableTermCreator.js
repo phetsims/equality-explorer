@@ -3,7 +3,7 @@
 /**
  * VariableTermCreator creates and manages variable terms (e.g. 'x').
  *
- * @author Chris Malley (PixelZoom, Inc.)     
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';
@@ -12,48 +12,46 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
+  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   /**
    * @param {string} symbol
-   * @param {Node} icon
-   * @param {Node} shadow
+   * @param {NumberProperty} variableValueProperty
    * @param {Object} [options]
    * @constructor
    */
-  function VariableTermCreator( symbol, icon, shadow, options ) {
+  function VariableTermCreator( symbol, variableValueProperty, options ) {
 
-    var self = this;
+    assert && assert( variableValueProperty instanceof NumberProperty, 'invalid variableValueProperty' );
 
     options = _.extend( {
-      weight: 1,
-      sign: 1 // determines the sign of 'x' (1 positive, -1 negative)
+      defaultCoefficient: ReducedFraction.withInteger( 1 ),
+      positiveFill: 'rgb( 49, 193, 238 )',
+      negativeFill: 'rgb( 99, 212, 238 )'
     }, options );
 
-    assert && assert( options.sign === 1 || options.sign === -1,
-      'invalid sign: ' + options.sign );
-    
+    assert && assert( options.defaultCoefficient instanceof ReducedFraction, 'invalid defaultCoefficient' );
+
+    if ( !options.icon ) {
+      options.icon = VariableTermNode.createIcon( symbol, options.defaultCoefficient.toDecimal(), {
+        positiveFill: options.positiveFill,
+        negativeFill: options.negativeFill
+      } );
+    }
+
     // @public (read-only)
     this.symbol = symbol;
+    this.defaultCoefficient = options.defaultCoefficient;
+    this.variableValueProperty = variableValueProperty;
 
-    // @public
-    this.weightProperty = new NumberProperty( options.weight, {
-      valueType: 'Integer'
-    } );
+    // @private
+    this.positiveFill = options.positiveFill;
+    this.negativeFill = options.negativeFill;
 
-    // @public (read-only)
-    this.sign = options.sign;
-
-    TermCreator.call( this, icon, shadow, options );
-
-    // Update the weight of all VariableTerms. unlink unnecessary
-    this.weightProperty.link( function( weight ) {
-      var terms = self.getTerms();
-      for ( var i = 0; i < terms.length; i++ ) {
-        terms[ i ].weightProperty.value = weight;
-      }
-    } );
+    TermCreator.call( this, options );
   }
 
   equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );
@@ -62,26 +60,39 @@ define( function( require ) {
 
     /**
      * Instantiates a VariableTerm.
-     * @param {Vector2} location
+     * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
      * @protected
      * @override
      */
-    createTermProtected: function( location ) {
-      return new VariableTerm( this.symbol, this.weightProperty, this.sign, this.icon, this.shadow, {
-        location: location,
-        dragBounds: this.dragBounds
-      } );
+    createTermProtected: function( options ) {
+
+      options = _.extend( {
+        location: this.location,
+        dragBounds: this.dragBounds,
+        coefficient: this.defaultCoefficient
+      }, options );
+
+      return new VariableTerm( this.symbol, this.variableValueProperty, options );
     },
 
     /**
-     * Gets the term's weight.
-     * @returns {number}
+     * Instantiates the Node that corresponds to this term.
+     * @param {Term} term
+     * @param {Plate} plate
+     * @param {Object} options - passed to the TermNode's constructor
+     * @returns {TermNode}
      * @public
      * @override
      */
-    get weight() {
-      return this.weightProperty.value;
+    createTermNode: function( term, plate, options ) {
+
+      options = _.extend( {
+        positiveFill: this.positiveFill,
+        negativeFill: this.negativeFill
+      }, options );
+
+      return new VariableTermNode( this, term, plate, options );
     },
 
     /**
@@ -92,8 +103,22 @@ define( function( require ) {
      * @override
      */
     isInverseOf: function( termCreator ) {
-      return ( this.symbol === termCreator.symbol ) &&
-             TermCreator.prototype.isInverseOf.call( this, termCreator );
+      return ( termCreator.constructor === this.constructor ) &&  // same type
+             ( termCreator.variableValueProperty === this.variableValueProperty ) && // same variable
+             ( termCreator.defaultCoefficient.toDecimal() + this.defaultCoefficient.toDecimal() === 0 ); // coefficients sum to zero
+    },
+
+    /**
+     * Is this term creator equivalent to a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @abstract
+     */
+    isEquivalentTo: function( termCreator ) {
+      return ( termCreator.constructor === this.constructor ) &&  // same type
+             ( termCreator.variableValueProperty === this.variableValueProperty ) && // same variable
+             ( termCreator.defaultCoefficient.toDecimal() === this.defaultCoefficient.toDecimal() ); // same coefficients
     }
   } );
 } );

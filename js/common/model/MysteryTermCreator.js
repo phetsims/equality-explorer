@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * MysteryTermCreator creates and manages mystery terms.
+ * MysteryTermCreator creates and manages mystery terms (apple, dog, turtle,...)
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -10,54 +10,69 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTerm = require( 'EQUALITY_EXPLORER/common/model/MysteryTerm' );
-  var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
+  var MysteryTermNode = require( 'EQUALITY_EXPLORER/common/view/MysteryTermNode' );
+  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   /**
-   * @param {Node} icon
-   * @param {Node} shadow
+   * @param {string} symbol
+   * @param {NumberProperty} variableValueProperty
+   * @param {HTMLImageElement} image
+   * @param {HTMLImageElement} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTermCreator( icon, shadow, options ) {
+  function MysteryTermCreator( symbol, variableValueProperty, image, shadow, options ) {
 
-    options = _.extend( {
-      weight: 1  // weight of each term that is created
-    }, options );
+    options = options || {};
 
-    // @private
-    this._weight = options.weight;
+    assert && assert( !options.icon, 'icon is created by this type' );
+    options.icon = new Image( image, { maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER } );
 
-    TermCreator.call( this, icon, shadow, options );
+    // @public (read-only) {HTMLImageElement}
+    this.image = image;
+    this.shadow = shadow;
+
+    VariableTermCreator.call( this, symbol, variableValueProperty, options );
   }
 
   equalityExplorer.register( 'MysteryTermCreator', MysteryTermCreator );
 
-  return inherit( TermCreator, MysteryTermCreator, {
+  return inherit( VariableTermCreator, MysteryTermCreator, {
 
     /**
      * Instantiates a MysteryTerm.
-     * @param {Vector2} location
+     * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
      * @protected
      * @override
      */
-    createTermProtected: function( location ) {
-      return new MysteryTerm( this._weight, this.icon, this.shadow, {
-        location: location,
-        dragBounds: this.dragBounds
-      } );
+    createTermProtected: function( options ) {
+
+      options = _.extend( {
+        location: this.location,
+        dragBounds: this.dragBounds,
+        coefficient: this.defaultCoefficient,
+        variableValue: this.variableValueProperty.value
+      }, options );
+
+      return new MysteryTerm( this.symbol, this.image, this.shadow, options );
     },
 
     /**
-     * Gets the term's weight.
-     * @returns {number}
+     * Instantiates the Node that corresponds to this term.
+     * @param {Term} term
+     * @param {Plate} plate
+     * @param {Object} options - passed to the TermNode's constructor
+     * @returns {TermNode}
      * @public
      * @override
      */
-    get weight() {
-      return this._weight;
+    createTermNode: function( term, plate, options ) {
+      return new MysteryTermNode( this, term, plate, options );
     }
   } );
 } );

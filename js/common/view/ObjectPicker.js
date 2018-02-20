@@ -24,6 +24,7 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var StringProperty = require( 'AXON/StringProperty' );
@@ -202,9 +203,7 @@ define( function( require ) {
     // index of the term that's currently selected
     var indexProperty = new NumberProperty( indexOfItemWithValue( terms, valueProperty.value ), {
       valueType: 'Integer',
-      isValidValue: function( value ) {
-        return ( value >= 0 && value < terms.length );
-      }
+      range: new Range( 0, terms.length - 1 )
     } );
 
     // state of the up and down button

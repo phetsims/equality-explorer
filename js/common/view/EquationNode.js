@@ -18,6 +18,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Multilink = require( 'AXON/Multilink' );
+  var MysteryTermCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryTermCreator' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -178,9 +179,17 @@ define( function( require ) {
       var numberOfTermsOnScale = termCreator.numberOfTermsOnScaleProperty.value;
       if ( numberOfTermsOnScale > 0 ) {
 
-        if ( termCreator instanceof VariableTermCreator ) {
+        if ( termCreator instanceof MysteryTermCreator ) {
 
-          // these terms contribute to the coefficient for their associated variable
+          // mystery terms are displayed as a coefficient and icon
+          if ( children.length > 0 ) {
+            children.push( new Text( EqualityExplorerConstants.PLUS, { font: font } ) );
+          }
+          children.push( createTermNode( numberOfTermsOnScale, termCreator.icon, iconScale, font, coefficientSpacing, false ) );
+        }
+        else if ( termCreator instanceof VariableTermCreator ) {
+
+          // variable terms contribute to the coefficient for their associated variable
           if ( !coefficients.hasOwnProperty( termCreator.symbol ) ) {
             coefficients[ termCreator.symbol ] = 0;
           }
@@ -189,16 +198,11 @@ define( function( require ) {
         }
         else if ( termCreator instanceof ConstantTermCreator ) {
 
-          // these terms contribute their weight to the constant term
+          // constant terms contribute their weight to the constant term
           constantValue += ( termCreator.weight * numberOfTermsOnScale );
         }
         else {
-
-          // these terms are displayed as a coefficient and icon
-          if ( children.length > 0 ) {
-            children.push( new Text( EqualityExplorerConstants.PLUS, { font: font } ) );
-          }
-          children.push( createTermNode( numberOfTermsOnScale, termCreator.icon, iconScale, font, coefficientSpacing, false ) );
+          throw new Error( 'unsupported termCreator type' );
         }
       }
     }

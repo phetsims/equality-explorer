@@ -26,7 +26,7 @@ define( function( require ) {
    */
   function ReducedFractionNode( fraction, options ) {
 
-    assert && assert( fraction instanceof ReducedFraction );
+    assert && assert( fraction instanceof ReducedFraction, 'invalid fraction' );
 
     options = _.extend( {
       minLineLength: 1, // length of the fraction line
@@ -83,7 +83,7 @@ define( function( require ) {
       assert && assert( fraction instanceof ReducedFraction );
 
       // add or remove sign, so it doesn't contribute to bounds and thus affect layout
-      if ( fraction.getValue() >= 0 ) {
+      if ( fraction.toDecimal() >= 0 ) {
         if ( this.hasChild( this.negativeSignNode ) ) {
           this.removeChild( this.negativeSignNode );
         }

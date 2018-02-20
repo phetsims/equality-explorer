@@ -1,10 +1,8 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
-//TODO This is really a VariableTerm whose variable value is not exposed.
 /**
- * MysteryTerm is a term that has a constant weight, but that weight is not revealed to the user.
- * MysteryTerms do not contribute to the constant term in an equation.  They are represented as
- * a coefficient and an icon.
+ * MysteryTerm is a variable term whose variable value is not exposed to the user.
+ * Rather than displaying a variable symbol, it displays an icon (apple, dog, turtle,...)
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,38 +12,35 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   /**
-   * @param {number} weight
-   * @param {Node} icon
-   * @param {Node} shadow
+   * @param {string} symbol
+   * @param {HTMLImageElement} image
+   * @param {HTMLImageElement} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTerm( weight, icon, shadow, options ) {
+  function MysteryTerm( symbol, image, shadow, options ) {
 
-    // @private
-    this._weight = weight;
+    options = _.extend( {
+      variableValue: 1
+    }, options );
 
-    Term.call( this, icon, shadow, options );
+    // @public (read-only) {HTMLImageElement}
+    this.image = image;
+    this.shadow = shadow;
+
+    var variableProperty = new NumberProperty( options.variableValue, {
+      valueType: 'Integer'
+    } );
+
+    VariableTerm.call( this, symbol, variableProperty, options );
   }
 
   equalityExplorer.register( 'MysteryTerm', MysteryTerm );
 
-  return inherit( Term, MysteryTerm, {
-
-    /**
-     * Gets the term's weight.
-     * @returns {number}
-     * @public
-     * @override
-     */
-    get weight() {
-      return this._weight;
-    }
-
-    //TODO isInverseOf is not used for MysteryTerm, but it's incorrect. Returns true for different terms with inverse weight.
-  } );
+  return inherit( VariableTerm, MysteryTerm );
 } );
  

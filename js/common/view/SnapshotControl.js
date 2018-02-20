@@ -12,7 +12,6 @@ define( function( require ) {
   // modules
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -28,7 +27,7 @@ define( function( require ) {
   var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
   var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an equation, so bounds are valid
   var NO_X_VALUE_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an x value, so bounds are valid
-  var FONT_SIZE = EqualityExplorerConstants.SNAPSHOTS_ACCORDING_BOX_FONT_SIZE;
+  var FONT_SIZE = 20;
   var SELECTION_RECTANGLE_X_MARGIN = 20;
   var SELECTION_RECTANGLE_Y_MARGIN = 5;
 

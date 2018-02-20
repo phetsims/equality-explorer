@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
@@ -26,8 +25,8 @@ define( function( require ) {
 
     options = options || {};
 
-    assert && assert( !options.icon, 'this type defines its icon' );
-    options.icon = new Node( { children: [ icon ] } ); // wrap the icon, since we're using scenery's DAG feature
+    assert && assert( !options.icon, 'icon is a required parameter' );
+    options.icon = icon;
 
     Scene.call( this, debugName, leftTermCreators, rightTermCreators, options );
   }

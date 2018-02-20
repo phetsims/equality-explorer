@@ -68,7 +68,7 @@ define( function( require ) {
     // @public
     dispose: function() {
       assert && assert( !this.disposed, 'dispose called again' );
-      this.locationProperty.unlinkAll();
+      this.locationProperty.dispose();
       this.disposed = true;
     },
 

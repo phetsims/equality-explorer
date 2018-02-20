@@ -15,9 +15,12 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
-  var Touch = require( 'SCENERY/input/Touch' );
+  var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
+  var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
 
   /**
    * @param {Node} termNode - Node that the listener is attached to
@@ -28,6 +31,11 @@ define( function( require ) {
    * @constructor
    */
   function TermDragListener( termNode, term, termCreator, plate, options ) {
+
+    assert && assert( termNode instanceof Node, 'invalid termNode' );
+    assert && assert( term instanceof Term, 'invalid term' );
+    assert && assert( termCreator instanceof TermCreator, 'invalid termCreator' );
+    assert && assert( plate instanceof Plate, 'invalid plate' );
 
     var self = this;
 
@@ -116,8 +124,12 @@ define( function( require ) {
 
     // @private called by dispose
     this.disposeTermDragListener = function() {
-      plate.locationProperty.unlink( refreshHalosBound );
-      plate.contentsChangedEmitter.removeListener( refreshHalosBound );
+      if ( plate.locationProperty.hasListener( refreshHalosBound ) ) {
+        plate.locationProperty.unlink( refreshHalosBound );
+      }
+      if ( plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
+        plate.contentsChangedEmitter.removeListener( refreshHalosBound );
+      }
     };
   }
 
@@ -194,11 +206,9 @@ define( function( require ) {
      */
     eventToLocation: function( event ) {
 
-      // touch: center icon above finger, so that most of icon is clearly visible
-      // mouse: move bottom center of icon to pointer location
-      var xOffset = 0;
-      var yOffset = ( event.pointer instanceof Touch ) ? -( 1.5 * this.term.icon.height ) : -( 0.5 * this.term.icon.height );
-      var location = this.termNode.globalToParentPoint( event.pointer.point ).plusXY( xOffset, yOffset );
+      //TODO revisit this
+      // move bottom center of termNode to pointer location
+      var location = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( 0, this.termNode.contentNodeSize.height / 2 );
 
       // constrain to drag bounds
       return this.term.dragBounds.closestPointTo( location );
