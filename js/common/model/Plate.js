@@ -106,6 +106,7 @@ define( function( require ) {
       term.weightProperty.link( this.updateWeightPropertyBound );
     },
 
+    //TODO something is broken here, the scale doesn't move properly when terms are removed
     /**
      * Removes a term from the plate.
      * @param {Term} term
