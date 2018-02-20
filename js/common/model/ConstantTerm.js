@@ -84,7 +84,7 @@ define( function( require ) {
 
     /**
      * Is this term the inverse of a specified term?
-     * Two constant terms are inverses if their values weights to zero.
+     * Two constant terms are inverses if their values sum to zero.
      * @param {Term} term
      * @returns {boolean}
      * @public
