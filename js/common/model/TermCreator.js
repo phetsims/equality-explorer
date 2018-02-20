@@ -2,7 +2,8 @@
 
 /**
  * Abstract base type for creating and managing terms.
- * Terms are created either by dragging then out of panels below the scale, or by restoring a snapshot.
+ * Terms are created either by dragging then out of panels below the scale,
+ * by restoring a snapshot, or by using the 'universal operation' control.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
