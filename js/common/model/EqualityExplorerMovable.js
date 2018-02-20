@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2017-2018, University of Colorado Boulder
 
 //TODO migrate to common code? This was copied from unit-rates.URMovable, which was copied from function-builder.Movable
 /**

@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2017-2018, University of Colorado Boulder
 
 //TODO some duplication with VariablesScene. Should this be a subtype of VariablesScene?
 /**

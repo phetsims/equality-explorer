@@ -1,4 +1,4 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2017-2018, University of Colorado Boulder
 
 /**
  * MysteryTerm is a variable term whose variable value is not exposed to the user.

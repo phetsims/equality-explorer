@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2017-2018, University of Colorado Boulder
 
 //TODO migrate to common code, see https://github.com/phetsims/scenery-phet/issues/345
 /**
