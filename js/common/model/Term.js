@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
@@ -22,10 +21,6 @@ define( function( require ) {
    * @abstract
    */
   function Term( options ) {
-
-    // @public (read-only) emit1 when dispose is called.
-    // Callback signature is function( {Term} term ), where the parameter is the term that was disposed.
-    this.disposedEmitter = new Emitter();
 
     // @public whether the term's halo is visible
     this.haloVisibleProperty = new BooleanProperty( false );
@@ -45,8 +40,6 @@ define( function( require ) {
      * @override
      */
     dispose: function() {
-      this.disposedEmitter.emit1( this );
-      this.disposedEmitter.dispose();
       this.haloVisibleProperty.dispose();
       this.shadowVisibleProperty.dispose();
       EqualityExplorerMovable.prototype.dispose.call( this );

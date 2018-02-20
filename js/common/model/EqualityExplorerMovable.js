@@ -14,6 +14,7 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -57,6 +58,10 @@ define( function( require ) {
     // @private {function|null} called when animation to destination completes, set using animateTo
     this.animationCompletedCallback = null;
 
+    // @public (read-only) emit1 when dispose has completed.
+    // Callback signature is function( {Term} term ), where the parameter is the term that was disposed.
+    this.disposedEmitter = new Emitter();
+
     // @public (read-only) has dispose been called?
     this.disposed = false;
   }
@@ -68,8 +73,13 @@ define( function( require ) {
     // @public
     dispose: function() {
       assert && assert( !this.disposed, 'dispose called again' );
+
       this.locationProperty.dispose();
+
+      // Do this last, sequence is important!
       this.disposed = true;
+      this.disposedEmitter.emit1( this );
+      this.disposedEmitter.dispose();
     },
 
     // @public
