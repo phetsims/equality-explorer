@@ -16,7 +16,6 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTermCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryTermCreator' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
 
   // images
   var catImage = require( 'image!EQUALITY_EXPLORER/cat.png' );
@@ -31,19 +30,14 @@ define( function( require ) {
    */
   function AnimalsScene() {
 
-    // weight of each type of animal
-    var dogProperty = new NumberProperty( 11, { valueType: 'Integer' } );
-    var catProperty = new NumberProperty( 4, { valueType: 'Integer' } );
-    var turtleProperty = new NumberProperty( 6, { valueType: 'Integer' } );
-
     // icon that represents this scene
     var icon = new Image( turtleImage, {
       maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
     } );
 
     BasicsScene.call( this, 'animals', icon,
-      createTermCreators( dogProperty, catProperty, turtleProperty, EqualityExplorerQueryParameters.leftBasics ),
-      createTermCreators( dogProperty, catProperty, turtleProperty, EqualityExplorerQueryParameters.rightBasics ), {
+      createTermCreators( EqualityExplorerQueryParameters.leftBasics ),
+      createTermCreators( EqualityExplorerQueryParameters.rightBasics ), {
         maxWeight: 50
       } );
   }
@@ -52,25 +46,22 @@ define( function( require ) {
 
   /**
    * Creates the term creators for this scene.
-   * @param {NumberProperty} dogProperty
-   * @param {NumberProperty} catProperty
-   * @param {NumberProperty} turtleProperty
    * @param {number[]} initialNumberOfTermsOnScale
    * @returns {TermCreator[]}
    */
-  function createTermCreators( dogProperty, catProperty, turtleProperty, initialNumberOfTermsOnScale ) {
+  function createTermCreators( initialNumberOfTermsOnScale ) {
 
     assert && assert( initialNumberOfTermsOnScale.length === 3 );
     var index = 0;
 
     return [
-      new MysteryTermCreator( 'dog', dogProperty, dogImage, dogShadowImage, {
+      new MysteryTermCreator( 'dog', 11, dogImage, dogShadowImage, {
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new MysteryTermCreator( 'cat', catProperty, catImage, catShadowImage, {
+      new MysteryTermCreator( 'cat', 4, catImage, catShadowImage, {
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new MysteryTermCreator( 'turtle', turtleProperty, turtleImage, turtleShadowImage, {
+      new MysteryTermCreator( 'turtle', 6, turtleImage, turtleShadowImage, {
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } )
     ];

@@ -15,17 +15,18 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTerm = require( 'EQUALITY_EXPLORER/common/model/MysteryTerm' );
   var MysteryTermNode = require( 'EQUALITY_EXPLORER/common/view/MysteryTermNode' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   /**
    * @param {string} symbol
-   * @param {NumberProperty} variableValueProperty
+   * @param {number} weight - integer weight of 1 mystery item
    * @param {HTMLImageElement} image
    * @param {HTMLImageElement} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTermCreator( symbol, variableValueProperty, image, shadow, options ) {
+  function MysteryTermCreator( symbol, weight, image, shadow, options ) {
 
     options = options || {};
 
@@ -35,6 +36,10 @@ define( function( require ) {
     // @public (read-only) {HTMLImageElement}
     this.image = image;
     this.shadow = shadow;
+
+    var variableValueProperty = new NumberProperty( weight, {
+      valueType: 'Integer'
+    } );
 
     VariableTermCreator.call( this, symbol, variableValueProperty, options );
   }

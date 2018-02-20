@@ -31,19 +31,14 @@ define( function( require ) {
    */
   function FruitsScene() {
 
-    // weight of each type of fruit
-    var appleProperty = new NumberProperty( 4, { valueType: 'Integer' } );
-    var lemonProperty = new NumberProperty( 5, { valueType: 'Integer' } );
-    var orangeProperty = new NumberProperty( 2, { valueType: 'Integer' } );
-
     // icon that represents this scene
     var icon = new Image( appleImage, {
       maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
     } );
 
     BasicsScene.call( this, 'fruits', icon,
-      createTermCreators( appleProperty, lemonProperty, orangeProperty, EqualityExplorerQueryParameters.leftBasics ),
-      createTermCreators( appleProperty, lemonProperty, orangeProperty, EqualityExplorerQueryParameters.rightBasics )
+      createTermCreators( EqualityExplorerQueryParameters.leftBasics ),
+      createTermCreators( EqualityExplorerQueryParameters.rightBasics )
     );
   }
 
@@ -51,25 +46,22 @@ define( function( require ) {
 
   /**
    * Creates the term creators for this scene.
-   * @param {NumberProperty} appleProperty
-   * @param {NumberProperty} lemonProperty
-   * @param {NumberProperty} orangeProperty
    * @param {number[]} initialNumberOfTermsOnScale
    * @returns {TermCreator[]}
    */
-  function createTermCreators( appleProperty, lemonProperty, orangeProperty, initialNumberOfTermsOnScale) {
+  function createTermCreators( initialNumberOfTermsOnScale) {
 
     assert && assert( initialNumberOfTermsOnScale.length === 3 );
     var index = 0;
 
     return [
-      new MysteryTermCreator( 'apple', appleProperty, appleImage, appleShadowImage, {
+      new MysteryTermCreator( 'apple', 4, appleImage, appleShadowImage, {
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new MysteryTermCreator( 'lemon', lemonProperty, lemonImage, lemonShadowImage, {
+      new MysteryTermCreator( 'lemon', 5, lemonImage, lemonShadowImage, {
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new MysteryTermCreator( 'orange', orangeProperty, orangeImage, orangeShadowImage, {
+      new MysteryTermCreator( 'orange', 2, orangeImage, orangeShadowImage, {
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } )
     ];

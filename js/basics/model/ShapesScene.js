@@ -16,7 +16,6 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTermCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryTermCreator' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
 
   // images
@@ -30,16 +29,12 @@ define( function( require ) {
    */
   function ShapesScene() {
 
-    // weight of each type of shape
-    var sphereProperty = new NumberProperty( 2, { valueType: 'Integer' } );
-    var squareProperty = new NumberProperty( 3, { valueType: 'Integer' } );
-
     // icon that represents this scene
     var icon = ConstantTermNode.createIcon( 1 );
     
     BasicsScene.call( this, 'shapes', icon,
-      createTermCreators( sphereProperty, squareProperty, EqualityExplorerQueryParameters.leftBasics ),
-      createTermCreators( sphereProperty, squareProperty, EqualityExplorerQueryParameters.rightBasics )
+      createTermCreators( EqualityExplorerQueryParameters.leftBasics ),
+      createTermCreators( EqualityExplorerQueryParameters.rightBasics )
     );
   }
 
@@ -47,21 +42,19 @@ define( function( require ) {
 
   /**
    * Creates the term creators for this scene.
-   * @param {NumberProperty} sphereProperty
-   * @param {NumberProperty} squareProperty
    * @param {number[]} initialNumberOfTermsOnScale
    * @returns {TermCreator[]}
    */
-  function createTermCreators( sphereProperty, squareProperty, initialNumberOfTermsOnScale ) {
+  function createTermCreators( initialNumberOfTermsOnScale ) {
 
     assert && assert( initialNumberOfTermsOnScale.length === 3 );
     var index = 0;
 
     return [
-      new MysteryTermCreator( 'sphere', sphereProperty, sphereImage, sphereShadowImage, {
+      new MysteryTermCreator( 'sphere', 2, sphereImage, sphereShadowImage, {
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
-      new MysteryTermCreator( 'square', squareProperty, squareImage, squareShadowImage, {
+      new MysteryTermCreator( 'square', 3, squareImage, squareShadowImage, {
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
       new ConstantTermCreator( {
