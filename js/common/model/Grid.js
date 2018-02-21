@@ -128,8 +128,9 @@ define( function( require ) {
       if ( this.containsLocation( location ) ) {
 
         // row and column of the cell that contains location
-        var row = Math.floor( ( location.y - this.bounds.minY  ) / this.cellHeight );
-        var column = Math.floor( ( location.x - this.bounds.minX ) / this.cellWidth );
+        // Math.min handles the case where location is exactly on bounds.maxX or maxY. See #39.
+        var row = Math.min( this.rows - 1, Math.floor( ( location.y - this.bounds.minY  ) / this.cellHeight ) );
+        var column = Math.min( this.columns - 1, Math.floor( ( location.x - this.bounds.minX ) / this.cellWidth ) );
 
         index = this.rowColumnToIndex( row, column );
       }
