@@ -21,6 +21,7 @@ define( function( require ) {
   var MysteryTermCreator = require( 'EQUALITY_EXPLORER/common/model/MysteryTermCreator' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
@@ -171,8 +172,8 @@ define( function( require ) {
    */
   function createSideNode( termCreators, variableFont, font, iconScale, coefficientSpacing, plusSpacing ) {
 
-    var constantValue = 0;
-    var coefficients = {}; // map from variable symbol to coefficient value, e.g. { x: 5 }
+    var constantValue = ReducedFraction.withInteger( 0 );
+    var coefficients = {}; // map from {string} variable to {ReducedFraction} coefficient, e.g. { x: 3/5 }
 
     var children = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
@@ -188,22 +189,26 @@ define( function( require ) {
           if ( children.length > 0 ) {
             children.push( new Text( EqualityExplorerConstants.PLUS, { font: font } ) );
           }
-          children.push( createTermNode( numberOfTermsOnScale, termCreator.icon, iconScale, font, coefficientSpacing, false ) );
+          children.push( createVariableTermNode( ReducedFraction.withInteger( numberOfTermsOnScale ),
+            termCreator.icon, iconScale, font, coefficientSpacing, false ) );
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
           // variable terms contribute to the coefficient for their associated variable
           if ( !coefficients.hasOwnProperty( termCreator.symbol ) ) {
-            coefficients[ termCreator.symbol ] = 0;
+            coefficients[ termCreator.symbol ] = ReducedFraction.withInteger( 0 );
           }
 
-          coefficients[ termCreator.symbol ] += ( termCreator.sign * numberOfTermsOnScale );
+          //TODO termCreator.sign no longer exists
+          // coefficients[ termCreator.symbol ] += ( termCreator.sign * numberOfTermsOnScale );
+          coefficients[ termCreator.symbol ].plusInteger( numberOfTermsOnScale );
         }
         else if ( termCreator instanceof ConstantTermCreator ) {
 
           // constant terms contribute their weight to the constant term
           //TODO termCreator.weight no longer exists
-          constantValue += ( termCreator.weight * numberOfTermsOnScale );
+          // constantValue.plusInteger( termCreator.weight * numberOfTermsOnScale );
+          constantValue.plusInteger( numberOfTermsOnScale );
         }
         else {
           throw new Error( 'unsupported termCreator type' );
@@ -215,42 +220,42 @@ define( function( require ) {
     for ( var property in coefficients ) {
       if ( coefficients.hasOwnProperty( property ) ) {
 
-        var coefficient = coefficients[ property ];
+        var coefficient = coefficients[ property ]; // {ReducedFraction}
 
-        if ( coefficient !== 0 ) {
+        if ( coefficient.toDecimal() !== 0 ) {
           var variableNode = new Text( property, { font: variableFont } );
 
           if ( children.length > 0 ) {
 
             // if there were previous terms, replace the coefficient's sign with an operator
-            var operator = ( coefficient > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
+            var operator = ( coefficient.toDecimal() > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
             children.push( new Text( operator, { font: font } ) );
-            children.push( createTermNode( Math.abs( coefficient ), variableNode, 1, font, coefficientSpacing, true ) );
+            children.push( createVariableTermNode( coefficient.abs(), variableNode, 1, font, coefficientSpacing, true ) );
           }
           else {
 
             // if there were no variable terms, keep the constant's sign
-            children.push( createTermNode( coefficient, variableNode, 1, font, coefficientSpacing, true ) );
+            children.push( createVariableTermNode( coefficient, variableNode, 1, font, coefficientSpacing, true ) );
           }
         }
       }
     }
 
     // put the non-zero constant term last
-    if ( constantValue !== 0 ) {
+    if ( constantValue.toDecimal() !== 0 ) {
 
       // put the constant term last
       if ( children.length > 0 ) {
 
         // if there were previous terms, replace the constant's sign with an operator
-        operator = ( constantValue > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
+        operator = ( constantValue.toDecimal() > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
         children.push( new Text( operator, { font: font } ) );
-        children.push( createConstantNode( Math.abs( constantValue ), font ) );
+        children.push( createConstantTermNode( constantValue.abs(), font ) );
       }
       else {
 
         // if there were no previous terms, keep the constant's sign
-        children.push( createConstantNode( constantValue, font ) );
+        children.push( createConstantTermNode( constantValue, font ) );
       }
     }
 
@@ -266,8 +271,8 @@ define( function( require ) {
   }
 
   /**
-   * Creates a term.
-   * @param {number} coefficient
+   * Creates the Node for a variable term.
+   * @param {ReducedFraction} coefficient
    * @param {Node} icon
    * @param {number} iconScale - scale for icon
    * @param {Font} font - font for coefficient or constant
@@ -275,7 +280,9 @@ define( function( require ) {
    * @param {boolean} hideOne - whether to hide 1 and -1
    * @returns {Node}
    */
-  function createTermNode( coefficient, icon, iconScale, font, coefficientSpacing, hideOne ) {
+  function createVariableTermNode( coefficient, icon, iconScale, font, coefficientSpacing, hideOne ) {
+
+    assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient type' );
 
     // wrap the icon, since we're using scenery DAG feature
     var wrappedIcon = new Node( {
@@ -288,7 +295,7 @@ define( function( require ) {
     if ( !hideOne || Math.abs( coefficient ) !== 1 ) {
 
       // show the coefficient
-      var constantNode = createConstantNode( coefficient, font );
+      var constantNode = createConstantTermNode( coefficient, font );
       termNode = new HBox( {
         spacing: coefficientSpacing,
         children: [ constantNode, wrappedIcon ]
@@ -313,13 +320,14 @@ define( function( require ) {
   }
 
   /**
-   * Creates a constant.
-   * @param {number} constant
+   * Creates the Node for a constant term.
+   * @param {ReducedFraction} constantValue
    * @param {Font} font
    * @returns {Node}
    */
-  function createConstantNode( constant, font ) {
-    return new Text( '' + constant, { font: font } );
+  function createConstantTermNode( constantValue, font ) {
+    assert && assert( constantValue instanceof ReducedFraction, 'invalid coefficient type' );
+    return new Text( '' + constantValue, { font: font } );
   }
 
   return inherit( Node, EquationNode, {
