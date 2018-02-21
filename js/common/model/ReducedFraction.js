@@ -37,6 +37,14 @@ define( function( require ) {
     },
 
     /**
+     * Returns the absolute value of this fraction.
+     * @returns {ReducedFraction}
+     */
+    abs: function() {
+      return new ReducedFraction( Math.abs( this.numerator ), Math.abs( this.denominator ) );
+    },
+
+    /**
      * Adds a fraction to this fraction.
      * @param {Fraction} value
      */
