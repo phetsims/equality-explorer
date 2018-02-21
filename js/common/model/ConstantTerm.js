@@ -29,11 +29,7 @@ define( function( require ) {
     assert && assert( options.value instanceof ReducedFraction, 'invalid value' );
 
     // @public {Property.<ReducedFraction>}
-    this.valueProperty = new Property( options.value, {
-      isValidValue: function( value ) {
-        return value instanceof ReducedFraction;
-      }
-    } );
+    this.valueProperty = new Property( options.value, { valueType: ReducedFraction } );
 
     // @public {DerivedProperty.<ReducedFraction>} weight is equivalent to the constant's value
     // dispose of this in dispose().
@@ -45,6 +41,8 @@ define( function( require ) {
        */
       function( value ) {
         return value;
+      }, {
+        valueType: ReducedFraction
       } );
 
     Term.call( this, options );

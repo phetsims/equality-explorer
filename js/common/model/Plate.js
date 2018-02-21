@@ -39,11 +39,7 @@ define( function( require ) {
     }, options );
 
     // @public
-    this.locationProperty = new Property( new Vector2( 0, 0 ), {
-      isValidValue: function( location ) {
-        return location instanceof Vector2;
-      }
-    } );
+    this.locationProperty = new Property( new Vector2( 0, 0 ), { valueType: Vector2 } );
 
     // @public (read-only)
     this.termCreators = termCreators;
@@ -67,11 +63,7 @@ define( function( require ) {
     this.numberOfTermsProperty = new NumberProperty( 0 );
 
     // @public (read-only) {Property.<ReducedFraction>} total weight of the terms that are on the plate
-    this.weightProperty = new Property( ReducedFraction.withInteger( 0 ), {
-      isValidValue: function( location ) {
-        return location instanceof ReducedFraction;
-      }
-    } );
+    this.weightProperty = new Property( ReducedFraction.withInteger( 0 ), { valueType: ReducedFraction } );
 
     // @public emit is called when the contents of the grid changes (terms added, removed, organized)
     // dispose not required.

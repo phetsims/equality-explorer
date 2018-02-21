@@ -37,11 +37,7 @@ define( function( require ) {
     this.symbol = symbol;
 
     // @public {Property.<ReducedFraction>}
-    this.coefficientProperty = new Property( options.coefficient, {
-      isValidValue: function( value ) {
-        return value instanceof ReducedFraction;
-      }
-    } );
+    this.coefficientProperty = new Property( options.coefficient, { valueType: ReducedFraction } );
 
     // @public (read-only) {NumberProperty}
     this.variableValueProperty = variableValueProperty;
@@ -57,7 +53,9 @@ define( function( require ) {
        */
       function( coefficient, variableValue ) {
         return coefficient.timesInteger( variableValue );
-      } );
+      }, {
+        valueType: ReducedFraction
+      });
 
     Term.call( this, options );
   }

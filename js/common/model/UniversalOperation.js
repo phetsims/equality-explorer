@@ -21,7 +21,7 @@ define( function( require ) {
   function UniversalOperation( operator, operand ) {
 
     assert && assert( typeof operator === 'string', 'invalid operator: ' + operator );
-    assert && assert( typeof operand === 'number' && Util.isInteger( operand ), 'invalid operand: ' + operand );
+    assert && assert( Util.isInteger( operand ), 'invalid operand: ' + operand );
 
     // @public (read-only)
     this.operator = operator;

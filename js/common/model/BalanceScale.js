@@ -18,6 +18,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
+  var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -123,6 +124,10 @@ define( function( require ) {
         var angle = ( weightDelta / options.maxWeight ) * options.maxAngle;
         assert && assert( Math.abs( angle ) <= options.maxAngle, 'angle out of range: ' + angle );
         return angle;
+      }, {
+        isValidValue: function( value ) {
+          return typeof value === 'number';
+        }
       } );
 
     // Move the plates when the angle changes.
@@ -167,6 +172,10 @@ define( function( require ) {
        */
       function( leftNumberOfTerms, rightNumberOfTerms ) {
         return leftNumberOfTerms + rightNumberOfTerms;
+      }, {
+        isValidValue: function( value ) {
+          return Util.isInteger( value );
+        }
       } );
   }
 

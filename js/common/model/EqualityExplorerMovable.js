@@ -38,12 +38,8 @@ define( function( require ) {
     options.animationSpeed = options.animationSpeed * EqualityExplorerQueryParameters.speed;
 
     // @public (read-only) {Property.<Vector2>} DO NOT set this directly! Use moveTo or animateTo.
-    this.locationProperty = new Property( options.location, {
-      isValidValue: function( location ) {
-         return location instanceof Vector2;
-      }
-    } );
-    
+    this.locationProperty = new Property( options.location, { valueType: Vector2 } );
+
     // @public (read-only)
     this.dragBounds = options.dragBounds;
 

@@ -38,7 +38,7 @@ define( function( require ) {
       initialNumberOfTermsOnScale: 0 // {number} integer number of terms initially on the scale
     }, options );
 
-    assert && assert( ( options.initialNumberOfTermsOnScale >= 0 ) && Util.isInteger( options.initialNumberOfTermsOnScale ),
+    assert && assert( Util.isInteger( options.initialNumberOfTermsOnScale ) && ( options.initialNumberOfTermsOnScale >= 0 ),
       'initialNumberOfTermsOnScale is invalid: ' + options.initialNumberOfTermsOnScale );
 
     // @public (ready-only) icon used to represent this term creator
