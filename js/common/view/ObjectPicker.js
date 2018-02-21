@@ -202,7 +202,7 @@ define( function( require ) {
 
     // index of the term that's currently selected
     var indexProperty = new NumberProperty( indexOfItemWithValue( terms, valueProperty.value ), {
-      valueType: 'Integer',
+      numberType: 'Integer',
       range: new Range( 0, terms.length - 1 )
     } );
 

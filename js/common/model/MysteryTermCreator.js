@@ -45,7 +45,7 @@ define( function( require ) {
     this.shadow = shadow;
 
     var variableValueProperty = new NumberProperty( weight, {
-      valueType: 'Integer'
+      numberType: 'Integer'
     } );
 
     VariableTermCreator.call( this, symbol, variableValueProperty, options );

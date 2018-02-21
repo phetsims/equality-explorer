@@ -36,7 +36,7 @@ define( function( require ) {
 
     // @public (read-only) the value of the variable 'x'
     this.xProperty = new NumberProperty( this.xRange.defaultValue, {
-      valueType: 'Integer',
+      numberType: 'Integer',
       range: this.xRange
     } );
 
@@ -58,7 +58,7 @@ define( function( require ) {
 
     // @public (read-only) universal operand
     this.operandProperty = new NumberProperty( this.operandRange.defaultValue, {
-      valueType: 'Integer',
+      numberType: 'Integer',
       range: this.operandRange
     } );
 

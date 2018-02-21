@@ -36,7 +36,7 @@ define( function( require ) {
     this.shadow = shadow;
 
     var variableProperty = new NumberProperty( options.variableValue, {
-      valueType: 'Integer'
+      numberType: 'Integer'
     } );
 
     VariableTerm.call( this, symbol, variableProperty, options );

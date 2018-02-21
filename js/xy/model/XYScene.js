@@ -37,11 +37,11 @@ define( function( require ) {
 
     // @public values of the variables
     this.xProperty = new NumberProperty( this.xRange.defaultValue, {
-      valueType: 'Integer',
+      numberType: 'Integer',
       range: this.xRange
     } );
     this.yProperty = new NumberProperty( this.yRange.defaultValue, {
-      valueType: 'Integer',
+      numberType: 'Integer',
       range: this.yRange
     } );
 
