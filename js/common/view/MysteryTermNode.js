@@ -28,7 +28,10 @@ define( function( require ) {
       xSpacing: 8 //TODO make this a function of icon size
     }, options );
 
-    //TODO add coefficient to contentNode, factor out of VariableTermNode
+    // All mystery terms are assumed to have a coefficient of 1, so we can show only the icon.
+    // We can make this simplification because mystery terms appear only in the 'Basics' screen,
+    // where like terms are not combined.
+    assert && assert( term.coefficientProperty.value.toDecimal() === 1, 'invalid coefficient' );
 
     var contentNode = new Image( term.image, {
       maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER

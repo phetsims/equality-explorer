@@ -31,6 +31,9 @@ define( function( require ) {
 
     options = options || {};
 
+    // All mystery terms have a coefficient of 1, so we don't have to deal with displaying their coefficient
+    // in MysteryTermNode. We can make this simplification because mystery terms appear only in the 'Basics' screen,
+    // where like terms are not combined.
     assert && assert( !options.defaultCoefficient, 'defaultCoefficient is set by this type' );
     options.defaultCoefficient = ReducedFraction.withInteger( 1 );
 

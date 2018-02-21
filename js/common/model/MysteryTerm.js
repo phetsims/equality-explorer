@@ -41,7 +41,9 @@ define( function( require ) {
 
     VariableTerm.call( this, symbol, variableProperty, options );
 
-    // Mystery terms are constrained to have coefficient of 1.
+    // All mystery terms have a coefficient of 1, so we don't have to deal with displaying their coefficient
+    // in MysteryTermNode. We can make this simplification because mystery terms appear only in the 'Basics' screen,
+    // where like terms are not combined.
     // unlink not required.
     this.coefficientProperty.link( function( coefficient ) {
       assert && assert( coefficient.toDecimal() === 1, 'invalid coefficient: ' + coefficient.toString() );
