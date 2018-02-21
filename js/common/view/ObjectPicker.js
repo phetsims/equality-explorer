@@ -272,7 +272,7 @@ define( function( require ) {
 
     // unlink not required
     indexProperty.link( function( index ) {
-       valueProperty.value = terms[ index ].value;
+      valueProperty.value = terms[ index ].value;
     } );
 
     // @private update colors for 'up' components, unmultilink unnecessary
