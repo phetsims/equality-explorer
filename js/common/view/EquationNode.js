@@ -22,6 +22,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
+  var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
@@ -41,12 +42,12 @@ define( function( require ) {
       // Set this to false to create a static equation.
       updateEnabled: true,
 
-      // icons
-      iconScale: 0.75,
-
-      // fonts sizes
-      fontSize: 14,
-      relationalOperatorFontSize: 14,
+      // fonts sizes, optimized for EquationAccordionBox
+      variableFontSize: 28,
+      operatorFontSize: 28,
+      integerFontSize: 28,
+      fractionFontSize: 16,
+      relationalOperatorFontSize: 40,
 
       // horizontal spacing
       coefficientSpacing: 2, // space between coefficient and icon
@@ -56,9 +57,11 @@ define( function( require ) {
     }, options );
 
     // fonts for various parts of the equation
-    var variableFont = new MathSymbolFont( options.fontSize );
+    var variableFont = new MathSymbolFont( options.variableFontSize );
+    var operatorFont = new PhetFont( options.operatorFontSize );
     var relationalOperatorFont = new PhetFont( { size: options.relationalOperatorFontSize, weight: 'bold' } );
-    var font = new PhetFont( options.fontSize ); // font for everything else
+    var integerFont = new PhetFont( options.integerFontSize );
+    var fractionFont = new PhetFont( options.fractionFontSize );
 
     Node.call( this );
 
@@ -70,11 +73,11 @@ define( function( require ) {
 
       relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
 
-      var leftSideNode = createSideNode( leftTermCreators, variableFont, font,
-        options.iconScale, options.coefficientSpacing, options.plusSpacing );
+      var leftSideNode = createSideNode( leftTermCreators, variableFont, operatorFont, integerFont, fractionFont,
+        options.coefficientSpacing, options.plusSpacing );
 
-      var rightSideNode = createSideNode( rightTermCreators, variableFont, font,
-        options.iconScale, options.coefficientSpacing, options.plusSpacing );
+      var rightSideNode = createSideNode( rightTermCreators, variableFont, operatorFont, integerFont, fractionFont,
+        options.coefficientSpacing, options.plusSpacing );
 
       self.children = [ leftSideNode, relationalOperatorNode, rightSideNode ];
 
@@ -158,13 +161,14 @@ define( function( require ) {
    * Creates one side of the equation
    * @param {TermCreator[]} termCreators
    * @param {Font} variableFont - font for variables, like 'x'
-   * @param {Font} font - font for everything except variables
-   * @param {number} iconScale - scale for terms with icons
+   * @param {Font} operatorFont
+   * @param {Font} integerFont
+   * @param {Font} fractionFont
    * @param {number} coefficientSpacing - space between coefficients and icons
    * @param {number} plusSpacing - space around plus operators
    * @returns {Node}
    */
-  function createSideNode( termCreators, variableFont, font, iconScale, coefficientSpacing, plusSpacing ) {
+  function createSideNode( termCreators, variableFont, operatorFont, integerFont, fractionFont, coefficientSpacing, plusSpacing ) {
 
     var constantValue = ReducedFraction.withInteger( 0 );
     var coefficients = {}; // map from {string} variable to {ReducedFraction} coefficient, e.g. { x: 3/5 }
@@ -174,17 +178,18 @@ define( function( require ) {
 
       var termCreator = termCreators[ i ];
 
+      //TODO we don't care about weight, we want sum of all coefficients, or sum of values for constant terms.
       var weightOnScale = termCreator.weightOnScaleProperty.value;
-      if ( weightOnScale > 0 ) {
+      if ( weightOnScale.toDecimal() > 0 ) {
 
         if ( termCreator instanceof MysteryTermCreator ) {
 
-          //TODO this entire if block needs a rewrite - createMysteryTermNode, etc.
+          //TODO this entire if block needs a rewrite
           // mystery terms are displayed as a coefficient and icon
           if ( children.length > 0 ) {
-            children.push( new Text( EqualityExplorerConstants.PLUS, { font: font } ) );
+            children.push( new Text( EqualityExplorerConstants.PLUS, { font: operatorFont } ) );
           }
-          children.push( createVariableTermNode( weightOnScale, termCreator.icon, iconScale, font, coefficientSpacing, false ) );
+          children.push( createMysteryTermNode( weightOnScale, termCreator.icon, integerFont, fractionFont, coefficientSpacing ) );
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
@@ -218,13 +223,13 @@ define( function( require ) {
 
             // if there were previous terms, replace the coefficient's sign with an operator
             var operator = ( coefficient.toDecimal() > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
-            children.push( new Text( operator, { font: font } ) );
-            children.push( createVariableTermNode( coefficient.abs(), variableNode, 1, font, coefficientSpacing, true ) );
+            children.push( new Text( operator, { font: operatorFont } ) );
+            children.push( createVariableTermNode( coefficient.abs(), variableNode, integerFont, fractionFont, coefficientSpacing, true ) );
           }
           else {
 
             // if there were no variable terms, keep the constant's sign
-            children.push( createVariableTermNode( coefficient, variableNode, 1, font, coefficientSpacing, true ) );
+            children.push( createVariableTermNode( coefficient, variableNode, integerFont, fractionFont, coefficientSpacing, true ) );
           }
         }
       }
@@ -238,19 +243,19 @@ define( function( require ) {
 
         // if there were previous terms, replace the constant's sign with an operator
         operator = ( constantValue.toDecimal() > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
-        children.push( new Text( operator, { font: font } ) );
-        children.push( createConstantTermNode( constantValue.abs(), font ) );
+        children.push( new Text( operator, { font: operatorFont } ) );
+        children.push( createConstantTermNode( constantValue.abs(), integerFont, fractionFont ) );
       }
       else {
 
         // if there were no previous terms, keep the constant's sign
-        children.push( createConstantTermNode( constantValue, font ) );
+        children.push( createConstantTermNode( constantValue, integerFont, fractionFont ) );
       }
     }
 
     // if there were no terms, then this side of the equation evaluated to zero
     if ( children.length === 0 ) {
-      children.push( new Text( '0', { font: font } ) );
+      children.push( new Text( '0', { font: integerFont } ) );
     }
 
     return new HBox( {
@@ -260,48 +265,63 @@ define( function( require ) {
   }
 
   /**
+   * Creates the Node for a mystery term.
+   * @param {ReducedFraction} coefficient
+   * @param {Node} icon
+   * @param {Font} integerFont
+   * @param {Font} fractionFont
+   * @param {number} coefficientSpacing - horizontal space between coefficient and icon
+   * @returns {Node}
+   */
+  function createMysteryTermNode( coefficient, icon, integerFont, fractionFont, coefficientSpacing ) {
+    return createVariableTermNode( coefficient, icon, integerFont, fractionFont, coefficientSpacing, false );
+  }
+
+  /**
    * Creates the Node for a variable term.
    * @param {ReducedFraction} coefficient
    * @param {Node} icon
-   * @param {number} iconScale - scale for icon
-   * @param {Font} font - font for coefficient or constant
+   * @param {Font} integerFont
+   * @param {Font} fractionFont
    * @param {number} coefficientSpacing - horizontal space between coefficient and icon
    * @param {boolean} hideOne - whether to hide 1 and -1
    * @returns {Node}
    */
-  function createVariableTermNode( coefficient, icon, iconScale, font, coefficientSpacing, hideOne ) {
+  function createVariableTermNode( coefficient, icon, integerFont, fractionFont, coefficientSpacing, hideOne ) {
 
     assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient type' );
 
-    // wrap the icon, since we're using scenery DAG feature
-    var wrappedIcon = new Node( {
-      children: [ icon ],
-      scale: iconScale
-    } );
+    //TODO is this necessary?
+    // wrap the icon, in case it's used elsewhere in the scenery DAG
+    var wrappedIcon = new Node( { children: [ icon ] } );
 
     var termNode = null;
 
-    if ( !hideOne || Math.abs( coefficient ) !== 1 ) {
-
-      // show the coefficient
-      var constantNode = createConstantTermNode( coefficient, font );
-      termNode = new HBox( {
-        spacing: coefficientSpacing,
-        children: [ constantNode, wrappedIcon ]
-      } );
-    }
-    else if ( coefficient === 1 ) {
+    if ( hideOne && coefficient.toDecimal() === 1 ) {
 
       // 1x becomes x
       termNode = wrappedIcon;
     }
-    else {
+    else if ( hideOne && coefficient.toDecimal() === -1 ) {
 
       // -1x becomes -x
-      var signNode = new Text( '-', { font: font } );
+      var signNode = new Text( '-', { font: integerFont } );
       termNode = new HBox( {
         spacing: 2,
         children: [ signNode, wrappedIcon ]
+      } );
+    }
+    else {
+
+      // coefficient
+      var coefficientNode = new ReducedFractionNode( coefficient, {
+        integerFont: integerFont,
+        fractionFont: fractionFont
+      } );
+
+      termNode = new HBox( {
+        spacing: coefficientSpacing,
+        children: [ coefficientNode, wrappedIcon ]
       } );
     }
 
@@ -310,13 +330,17 @@ define( function( require ) {
 
   /**
    * Creates the Node for a constant term.
-   * @param {ReducedFraction} constantValue
-   * @param {Font} font
+   * @param {ReducedFraction} value
+   * @param {Font} integerFont
+   * @param {Font} fractionFont
    * @returns {Node}
    */
-  function createConstantTermNode( constantValue, font ) {
-    assert && assert( constantValue instanceof ReducedFraction, 'invalid coefficient type' );
-    return new Text( '' + constantValue, { font: font } );
+  function createConstantTermNode( value, integerFont, fractionFont) {
+    assert && assert( value instanceof ReducedFraction, 'invalid coefficient type' );
+    return new ReducedFraction( value, {
+      integerFont: integerFont,
+      fractionFont: fractionFont
+    } );
   }
 
   return inherit( Node, EquationNode, {

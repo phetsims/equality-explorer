@@ -62,10 +62,7 @@ define( function( require ) {
 
     var strut = new HStrut( contentWidth );
 
-    var equationNode = new EquationNode( leftTermCreators, rightTermCreators, {
-      fontSize: 28,
-      relationalOperatorFontSize: 40
-    } );
+    var equationNode = new EquationNode( leftTermCreators, rightTermCreators );
 
     // wrapper to avoid exceeding stack size when bounds of equationNode changes
     var equationParent = new Node( {

@@ -27,7 +27,8 @@ define( function( require ) {
   var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
   var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an equation, so bounds are valid
   var NO_X_VALUE_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an x value, so bounds are valid
-  var FONT_SIZE = 20;
+  var EQUATION_FONT_SIZE = 20;
+  var FRACTION_FONT_SIZE = 14;
   var SELECTION_RECTANGLE_X_MARGIN = 20;
   var SELECTION_RECTANGLE_Y_MARGIN = 5;
 
@@ -128,14 +129,17 @@ define( function( require ) {
         // create the equation for the snapshot
         equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, {
           updateEnabled: false, // equation is static
-          fontSize: FONT_SIZE,
-          relationalOperatorFontSize: FONT_SIZE
+          variableFontSize: EQUATION_FONT_SIZE,
+          operatorFontSize: EQUATION_FONT_SIZE,
+          integerFontSize: EQUATION_FONT_SIZE,
+          fractionFontSize: FRACTION_FONT_SIZE,
+          relationalOperatorFontSize: EQUATION_FONT_SIZE
         } );
 
         // optionally show the value of 'x'
         if ( options.xVisibleProperty ) {
           assert && assert( snapshot instanceof SnapshotWithVariable, 'expected a snapshot with variable support' );
-          xValueNode = new VariableValueNode( xString, snapshot.x, { fontSize: FONT_SIZE } );
+          xValueNode = new VariableValueNode( xString, snapshot.x, { fontSize: EQUATION_FONT_SIZE } );
         }
 
         // add listener that selects the snapshot
