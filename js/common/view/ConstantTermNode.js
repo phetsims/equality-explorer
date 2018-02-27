@@ -59,14 +59,14 @@ define( function( require ) {
       children: [ circleNode ]
     } );
 
-    // synchronize with the model value, unlink handled by model
-    var valueListener = function( newValue, oldValue ) {
+    // updates the displayed constant value
+    var valueListener = function( value ) {
 
-      assert && assert( newValue instanceof ReducedFraction, 'invalid newValue' );
+      assert && assert( value instanceof ReducedFraction, 'invalid value' );
 
       // update the constant value displayed
       constantNode && contentNode.removeChild( constantNode );
-      constantNode = new ReducedFractionNode( newValue, {
+      constantNode = new ReducedFractionNode( value, {
         fractionFont: options.fractionFont,
         integerFont: options.fractionFont,
         maxWidth: circleNode.width - ( 2 * options.margin ),
@@ -76,7 +76,7 @@ define( function( require ) {
       contentNode.addChild( constantNode );
 
       // update properties based on sign of the constant
-      if ( newValue.toDecimal() >= 0 ) {
+      if ( value.toDecimal() >= 0 ) {
         circleNode.fill = options.positiveFill;
         circleNode.lineDash = options.positiveLineDash;
       }

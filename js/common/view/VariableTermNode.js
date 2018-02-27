@@ -75,7 +75,7 @@ define( function( require ) {
       children: [ squareNode, iconNode ]
     } );
 
-    // synchronize with the model value
+    // updates the displayed coefficient
     var coefficientListener = function( coefficient ) {
 
       assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );

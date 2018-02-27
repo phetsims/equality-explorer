@@ -47,6 +47,7 @@ define( function( require ) {
       children: [ iconNode ]
     } );
 
+    // updates the displayed coefficient
     var coefficientListener = function( coefficient ) {
 
       assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
