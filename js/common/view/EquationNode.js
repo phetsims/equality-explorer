@@ -97,11 +97,7 @@ define( function( require ) {
       // {Property[]} dependencies that require the equation to be updated
       var updateDependencies = [];
       termCreators.forEach( function( termCreator ) {
-        updateDependencies.push( termCreator.numberOfTermsOnScaleProperty );
-        //TODO termCreator.weightProperty no longer exists
-        if ( termCreator.weightProperty ) {
-          updateDependencies.push( termCreator.weightProperty );
-        }
+        updateDependencies.push( termCreator.weightOnScaleProperty );
       } );
 
       // dispose required
@@ -134,15 +130,13 @@ define( function( require ) {
     // evaluate the left side
     var leftWeight = 0;
     for ( var i = 0; i < leftTermCreators.length; i++ ) {
-      //TODO leftTermCreators[ i ].weight no longer exists!
-      leftWeight += leftTermCreators[ i ].numberOfTermsOnScaleProperty.value * leftTermCreators[ i ].weight;
+      leftWeight += leftTermCreators[ i ].weightOnScaleProperty.value.toDecimal();
     }
 
     // evaluate the right side
     var rightWeight = 0;
     for ( i = 0; i < rightTermCreators.length; i++ ) {
-      //TODO rightTermCreators[ i ].weight no longer exists!
-      rightWeight += rightTermCreators[ i ].numberOfTermsOnScaleProperty.value * rightTermCreators[ i ].weight;
+      rightWeight += rightTermCreators[ i ].weightOnScaleProperty.value.toDecimal();
     }
 
     // determine the operator that describes the relationship between left and right sides
@@ -165,7 +159,7 @@ define( function( require ) {
    * @param {TermCreator[]} termCreators
    * @param {Font} variableFont - font for variables, like 'x'
    * @param {Font} font - font for everything except variables
-   * @param {number} iconScale - scale for term icons
+   * @param {number} iconScale - scale for terms with icons
    * @param {number} coefficientSpacing - space between coefficients and icons
    * @param {number} plusSpacing - space around plus operators
    * @returns {Node}
@@ -180,17 +174,17 @@ define( function( require ) {
 
       var termCreator = termCreators[ i ];
 
-      var numberOfTermsOnScale = termCreator.numberOfTermsOnScaleProperty.value;
-      if ( numberOfTermsOnScale > 0 ) {
+      var weightOnScale = termCreator.weightOnScaleProperty.value;
+      if ( weightOnScale > 0 ) {
 
         if ( termCreator instanceof MysteryTermCreator ) {
 
+          //TODO this entire if block needs a rewrite - createMysteryTermNode, etc.
           // mystery terms are displayed as a coefficient and icon
           if ( children.length > 0 ) {
             children.push( new Text( EqualityExplorerConstants.PLUS, { font: font } ) );
           }
-          children.push( createVariableTermNode( ReducedFraction.withInteger( numberOfTermsOnScale ),
-            termCreator.icon, iconScale, font, coefficientSpacing, false ) );
+          children.push( createVariableTermNode( weightOnScale, termCreator.icon, iconScale, font, coefficientSpacing, false ) );
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
@@ -198,17 +192,12 @@ define( function( require ) {
           if ( !coefficients.hasOwnProperty( termCreator.symbol ) ) {
             coefficients[ termCreator.symbol ] = ReducedFraction.withInteger( 0 );
           }
-
-          //TODO termCreator.sign no longer exists
-          // coefficients[ termCreator.symbol ] += ( termCreator.sign * numberOfTermsOnScale );
-          coefficients[ termCreator.symbol ].plusInteger( numberOfTermsOnScale );
+          coefficients[ termCreator.symbol ].plusFraction( weightOnScale );
         }
         else if ( termCreator instanceof ConstantTermCreator ) {
 
           // constant terms contribute their weight to the constant term
-          //TODO termCreator.weight no longer exists
-          // constantValue.plusInteger( termCreator.weight * numberOfTermsOnScale );
-          constantValue.plusInteger( numberOfTermsOnScale );
+          constantValue.plusFraction( weightOnScale );
         }
         else {
           throw new Error( 'unsupported termCreator type' );

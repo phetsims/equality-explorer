@@ -17,7 +17,9 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Util = require( 'DOT/Util' );
 
   // constants
@@ -66,9 +68,10 @@ define( function( require ) {
     // @private {ObservableArray.<Term>} terms that are on the scale, a subset of allTerms
     this.termsOnScale = new ObservableArray();
 
-    //TODO delete this, EquationNode shouldn't be using it now that each term may have a different weight
-    // @public (read-only) so we don't need to expose termsOnScale
-    this.numberOfTermsOnScaleProperty = this.termsOnScale.lengthProperty;
+    // @public (read-only) weight of the terms that are on the scale
+    this.weightOnScaleProperty = new Property( ReducedFraction.withInteger( 0 ), {
+       valueType: ReducedFraction
+    } );
 
     // @public {BooleanProperty|null} optional Property that indicates whether the term creator is locked.
     // Initialized by client after instantiation, if the term creator is lockable.
@@ -249,6 +252,7 @@ define( function( require ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
       assert && assert( !this.termsOnScale.contains( term ), 'term already on scale: ' + term.toString() );
       this.termsOnScale.push( term );
+      this.weightOnScaleProperty.value = this.weightOnScaleProperty.value.plusFraction( term.weightProperty.value );
       this.plate.addTerm( term, cellIndex );
     },
 
@@ -261,6 +265,7 @@ define( function( require ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
       assert && assert( this.termsOnScale.contains( term ), 'term not on scale: ' + term.toString() );
       this.termsOnScale.remove( term );
+      this.weightOnScaleProperty.value = this.weightOnScaleProperty.value.minusFraction( term.weightProperty.value );
       this.plate.removeTerm( term );
     },
 

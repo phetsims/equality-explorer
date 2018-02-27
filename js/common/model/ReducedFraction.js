@@ -47,12 +47,25 @@ define( function( require ) {
     /**
      * Adds a fraction to this fraction.
      * @param {Fraction} value
+     * @returns {ReducedFraction}
+     * @public
      */
     plusFraction: function( value ) {
       assert && assert( value instanceof Fraction, 'value is not a Fraction' );
       var numerator = ( this.numerator * value.denominator ) + ( value.numerator * this.denominator );
       var denominator = this.denominator * value.denominator;
       return new ReducedFraction( numerator, denominator );
+    },
+
+    /**
+     * Subtracts a fraction from this fraction.
+     * @param {Fraction} value
+     * @returns {ReducedFraction}
+     * @public
+     */
+    minusFraction: function( value ) {
+      assert && assert( value instanceof Fraction, 'value is not a Fraction' );
+      return this.plusFraction( value.timesInteger( -1 ) );
     },
 
     /**

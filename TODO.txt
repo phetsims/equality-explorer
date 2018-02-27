@@ -1,6 +1,7 @@
 TODO items for equality-explorer
 
 Terms
+- keep a sum of terms on scale in item creator
 - BUG: equations don't support fractions
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
