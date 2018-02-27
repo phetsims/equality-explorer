@@ -17,6 +17,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {string} symbol - variable symbol, e.g. 'x'
@@ -25,6 +26,8 @@ define( function( require ) {
    * @constructor
    */
   function VariableValueNode( symbol, value, options ) {
+
+    assert && assert( Util.isInteger( value ), 'value must be an integer: ' + value );
 
     options = _.extend( {
       fontSize: 28
