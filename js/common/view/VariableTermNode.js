@@ -18,7 +18,6 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
-  var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -45,8 +44,6 @@ define( function( require ) {
    */
   function VariableTermNode( termCreator, term, plate, options ) {
 
-    var self = this;
-
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
     var squareNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
@@ -64,88 +61,54 @@ define( function( require ) {
       center: squareNode.center
     } );
 
-    // for fractional coefficient
-    var fractionNode = new ReducedFractionNode( term.coefficientProperty.value, {
-      font: options.fractionFont,
-      center: symbolNode.center
-    } );
+    // coefficient
+    var coefficientNode = null; // {ReducedFractio} set by coefficientListener
 
-    // for integer coefficient
-    var integerNode = new Text( 0, {
-      font: options.integerFont,
-      center: symbolNode.center
-    } );
-
-    // coefficient & variable
     var iconNode = new Node( {
-      children: [ fractionNode, integerNode, symbolNode ],
+      children: [ symbolNode ],
       maxWidth: squareNode.width - ( 2 * options.margin ),
-      maxHeight: squareNode.height - ( 2 * options.margin )
+      maxHeight: squareNode.height - ( 2 * options.margin ),
+      center: squareNode.center
     } );
 
     var contentNode = new Node( {
       children: [ squareNode, iconNode ]
     } );
 
-    TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );
-
     // synchronize with the model value
-    var coefficientListener = function( newCoefficient, oldCoefficient ) {
-      assert && assert( newCoefficient instanceof ReducedFraction, 'invalid newCoefficient' );
+    var coefficientListener = function( coefficient ) {
+
+      assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
+
+      var coefficientDecimal = coefficient.toDecimal(); // {number}
 
       // restore the symbol to its default, since some conditions below may have modified it
       symbolNode.text = term.symbol;
 
-      // update the value displayed
-      if ( newCoefficient.isInteger() ) {
+      // update the coefficient displayed
+      coefficientNode && iconNode.removeChild( contentNode );
+      if ( coefficientDecimal === 1 ) {
+        // do nothing, show 'x', not '1x'
+      }
+      else if ( coefficientDecimal === -1 ) {
 
-        // hide fraction
-        if ( iconNode.hasChild( fractionNode ) ) {
-          iconNode.removeChild( fractionNode );
-        }
-
-        // update the integer
-        assert && assert( Math.abs( newCoefficient.denominator ) === 1, 'expected newCoefficient to be reduced' );
-        if ( Math.abs( newCoefficient.toDecimal() ) === 1 ) {
-
-          // hide coefficient of 1 or -1
-          if ( iconNode.hasChild( integerNode ) ) {
-            iconNode.removeChild( integerNode );
-          }
-
-          // show -x, not -1x
-          if ( newCoefficient.toDecimal() === -1 ) {
-            symbolNode.text = '-' + term.symbol;
-          }
-        }
-        else {
-
-          integerNode.text = newCoefficient.numerator;
-          integerNode.right = symbolNode.left - options.xSpacing;
-          integerNode.centerY = symbolNode.centerY;
-          if ( !iconNode.hasChild( integerNode ) ) {
-            iconNode.addChild( integerNode );
-          }
-        }
+        // add sign to symbol
+        symbolNode.text = '-' + term.symbol;
       }
       else {
 
-        // hide the integer
-        if ( iconNode.hasChild( integerNode ) ) {
-          iconNode.removeChild( integerNode );
-        }
-
-        // update the fraction
-        fractionNode.setFraction( newCoefficient );
-        fractionNode.right = symbolNode.left - options.xSpacing;
-        fractionNode.centerY = symbolNode.centerY;
-        if ( !iconNode.hasChild( fractionNode ) ) {
-          iconNode.addChild( fractionNode );
-        }
+        // coefficients other than 1 and -1
+        coefficientNode = new ReducedFractionNode( coefficient, {
+          fractionFont: options.fractionFont,
+          integerFont: options.fractionFont,
+          right: symbolNode.left - options.xSpacing,
+          centerY: symbolNode.centerY
+        } );
+        iconNode.addChild( coefficientNode );
       }
 
       // update properties based on sign
-      if ( newCoefficient.toDecimal() >= 0 ) {
+      if ( coefficientDecimal >= 0 ) {
         squareNode.fill = options.positiveFill;
         squareNode.lineDash = options.positiveLineDash;
       }
@@ -154,25 +117,12 @@ define( function( require ) {
         squareNode.lineDash = options.negativeLineDash;
       }
 
-      // center in the square
+      // re-center icon in square
       iconNode.center = squareNode.center;
-
-      // hide this node when coefficient is zero
-      self.visible = ( newCoefficient.toDecimal() !== 0 );
-
-      // sum-to-zero animation when the coefficient value transitions to zero
-      if ( oldCoefficient && oldCoefficient.toDecimal() !== 0 && newCoefficient.toDecimal() === 0 ) {
-        var sumToZeroNode = new SumToZeroNode( {
-          symbol: term.symbol,
-          haloBaseColor: 'transparent', // no halo
-          fontSize: options.integerFont.size,
-          center: self.center
-        } );
-        self.parent.addChild( sumToZeroNode );
-        sumToZeroNode.startAnimation();
-      }
     };
     term.coefficientProperty.link( coefficientListener ); // unlink required in dispose
+
+    TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );
 
     // @private
     this.disposeVariableTermNode = function() {
@@ -197,10 +147,10 @@ define( function( require ) {
   }, {
 
     /**
-     * Creates an icon for constant terms.
+     * Creates an icon for variable terms.
      * @param {string} symbol
      * @param {number} coefficient - 1 for positive, -1 for negative
-     * @param {Object} [options]
+     * @param {Object} [options] - see VariableTermNode
      * @returns {Node}
      * @public
      * @static
