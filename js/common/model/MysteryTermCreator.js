@@ -10,8 +10,6 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTerm = require( 'EQUALITY_EXPLORER/common/model/MysteryTerm' );
   var MysteryTermNode = require( 'EQUALITY_EXPLORER/common/view/MysteryTermNode' );
@@ -34,11 +32,11 @@ define( function( require ) {
     // All mystery terms have a coefficient of 1, so we don't have to deal with displaying their coefficient
     // in MysteryTermNode. We can make this simplification because mystery terms appear only in the 'Basics' screen,
     // where like terms are not combined.
-    assert && assert( !options.defaultCoefficient, 'defaultCoefficient is set by this type' );
+    assert && assert( !options.defaultCoefficient, 'defaultCoefficient is set by MysteryTermCreator' );
     options.defaultCoefficient = ReducedFraction.withInteger( 1 );
 
-    assert && assert( !options.icon, 'icon is created by this type' );
-    options.icon = new Image( image, { maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER } );
+    assert && assert( !options.icon, 'icon is set by MysteryTermCreator' );
+    options.icon = MysteryTermNode.createIcon( image );
 
     // @public (read-only) {HTMLImageElement}
     this.image = image;

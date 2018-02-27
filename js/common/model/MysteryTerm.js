@@ -3,7 +3,6 @@
 /**
  * MysteryTerm is a variable term whose variable value is not exposed to the user.
  * Rather than displaying a variable symbol, it displays an icon (apple, dog, turtle,...)
- * They are further constrained to having a coefficient of 1, and like terms therefore cannot be combined.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -40,14 +39,6 @@ define( function( require ) {
     } );
 
     VariableTerm.call( this, symbol, variableProperty, options );
-
-    // All mystery terms have a coefficient of 1, so we don't have to deal with displaying their coefficient
-    // in MysteryTermNode. We can make this simplification because mystery terms appear only in the 'Basics' screen,
-    // where like terms are not combined.
-    // unlink not required.
-    this.coefficientProperty.link( function( coefficient ) {
-      assert && assert( coefficient.toDecimal() === 1, 'invalid coefficient: ' + coefficient.toString() );
-    } );
   }
 
   equalityExplorer.register( 'MysteryTerm', MysteryTerm );
