@@ -62,7 +62,7 @@ define( function( require ) {
     } );
 
     // coefficient
-    var coefficientNode = null; // {ReducedFractio} set by coefficientListener
+    var coefficientNode = null; // {ReducedFraction} set by coefficientListener
 
     var iconNode = new Node( {
       children: [ symbolNode ],
