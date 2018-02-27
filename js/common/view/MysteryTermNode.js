@@ -52,11 +52,9 @@ define( function( require ) {
 
       assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
 
-      var coefficientDecimal = coefficient.toDecimal(); // {number}
-
       // update the coefficient displayed
       coefficientNode && iconNode.removeChild( contentNode );
-      if ( coefficientDecimal === 1 ) {
+      if ( coefficient.toDecimal() === 1 ) {
         // do nothing, show just the icon
       }
       else {

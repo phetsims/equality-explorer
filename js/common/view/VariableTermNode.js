@@ -80,17 +80,15 @@ define( function( require ) {
 
       assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
 
-      var coefficientDecimal = coefficient.toDecimal(); // {number}
-
       // restore the symbol to its default, since some conditions below may have modified it
       symbolNode.text = term.symbol;
 
       // update the coefficient displayed
       coefficientNode && iconNode.removeChild( contentNode );
-      if ( coefficientDecimal === 1 ) {
+      if ( coefficient.toDecimal() === 1 ) {
         // do nothing, show 'x', not '1x'
       }
-      else if ( coefficientDecimal === -1 ) {
+      else if ( coefficient.toDecimal() === -1 ) {
 
         // add sign to symbol
         symbolNode.text = '-' + term.symbol;
@@ -108,7 +106,7 @@ define( function( require ) {
       }
 
       // update properties based on sign
-      if ( coefficientDecimal >= 0 ) {
+      if ( coefficient.toDecimal() >= 0 ) {
         squareNode.fill = options.positiveFill;
         squareNode.lineDash = options.positiveLineDash;
       }
