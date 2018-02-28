@@ -68,6 +68,15 @@ define( function( require ) {
     },
 
     /**
+     * @public
+     * @override
+     */
+    dispose: function() {
+      this.weightProperty.dispose();
+      Term.prototype.dispose.call( this );
+    },
+
+    /**
      * For debugging only. Do not rely on the format of toString.
      * @returns {string}
      * @public
