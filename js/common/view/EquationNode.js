@@ -100,7 +100,7 @@ define( function( require ) {
       // {Property[]} dependencies that require the equation to be updated
       var updateDependencies = [];
       termCreators.forEach( function( termCreator ) {
-        updateDependencies.push( termCreator.weightOnScaleProperty );
+        updateDependencies.push( termCreator.numberOfTermsOnScaleProperty );
       } );
 
       // dispose required
@@ -178,9 +178,8 @@ define( function( require ) {
 
       var termCreator = termCreators[ i ];
 
-      //TODO we don't care about weight, we want sum of all coefficients, or sum of values for constant terms.
-      var weightOnScale = termCreator.weightOnScaleProperty.value;
-      if ( weightOnScale.toDecimal() > 0 ) {
+      var numberOfTermsOnScale = termCreator.numberOfTermsOnScaleProperty.value;
+      if ( numberOfTermsOnScale > 0 ) {
 
         if ( termCreator instanceof MysteryTermCreator ) {
 
@@ -189,7 +188,7 @@ define( function( require ) {
           if ( children.length > 0 ) {
             children.push( new Text( EqualityExplorerConstants.PLUS, { font: operatorFont } ) );
           }
-          children.push( createMysteryTermNode( weightOnScale, termCreator.icon, integerFont, fractionFont, coefficientSpacing ) );
+          children.push( createMysteryTermNode( numberOfTermsOnScale, termCreator.icon, integerFont, fractionFont, coefficientSpacing ) );
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
@@ -197,12 +196,12 @@ define( function( require ) {
           if ( !coefficients.hasOwnProperty( termCreator.symbol ) ) {
             coefficients[ termCreator.symbol ] = ReducedFraction.withInteger( 0 );
           }
-          coefficients[ termCreator.symbol ].plusFraction( weightOnScale );
+          coefficients[ termCreator.symbol ] = coefficients[ termCreator.symbol ].plusFraction( termCreator.sumCoefficientsOnScale() );
         }
         else if ( termCreator instanceof ConstantTermCreator ) {
 
           // constant terms contribute their weight to the constant term
-          constantValue.plusFraction( weightOnScale );
+          constantValue = constantValue.plusFraction( termCreator.weightOnScaleProperty.value );
         }
         else {
           throw new Error( 'unsupported termCreator type' );
@@ -266,15 +265,15 @@ define( function( require ) {
 
   /**
    * Creates the Node for a mystery term.
-   * @param {ReducedFraction} coefficient
+   * @param {number} numberOfTerms
    * @param {Node} icon
    * @param {Font} integerFont
    * @param {Font} fractionFont
    * @param {number} coefficientSpacing - horizontal space between coefficient and icon
    * @returns {Node}
    */
-  function createMysteryTermNode( coefficient, icon, integerFont, fractionFont, coefficientSpacing ) {
-    return createVariableTermNode( coefficient, icon, integerFont, fractionFont, coefficientSpacing, false );
+  function createMysteryTermNode( numberOfTerms, icon, integerFont, fractionFont, coefficientSpacing ) {
+    return createVariableTermNode( ReducedFraction.withInteger( numberOfTerms ), icon, integerFont, fractionFont, coefficientSpacing, false );
   }
 
   /**
@@ -337,7 +336,7 @@ define( function( require ) {
    */
   function createConstantTermNode( value, integerFont, fractionFont) {
     assert && assert( value instanceof ReducedFraction, 'invalid coefficient type' );
-    return new ReducedFraction( value, {
+    return new ReducedFractionNode( value, {
       integerFont: integerFont,
       fractionFont: fractionFont
     } );
