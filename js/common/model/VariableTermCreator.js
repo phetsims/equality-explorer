@@ -44,7 +44,7 @@ define( function( require ) {
     this.positiveFill = options.positiveFill;
     this.negativeFill = options.negativeFill;
 
-    var icon = VariableTermNode.createIcon( symbol, options.defaultCoefficient.toDecimal(), {
+    var icon = VariableTermNode.createIcon( symbol, options.defaultCoefficient, {
       positiveFill: options.positiveFill,
       negativeFill: options.negativeFill
     } );

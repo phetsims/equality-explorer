@@ -24,16 +24,14 @@ define( function( require ) {
    */
   function MysteryTermNode( termCreator, term, plate, options ) {
 
-    var iconNode = new Image( term.image, {
-      maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-    } );
+    var contentNode = MysteryTermNode.createIcon( term.image );
 
     var shadowNode = new Image( term.shadow, {
-      maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
+      maxHeight: contentNode.height,
       opacity: 0.4
     } );
 
-    TermNode.call( this, termCreator, term, plate, iconNode, shadowNode, options );
+    TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );
   }
 
   equalityExplorer.register( 'MysteryTermNode', MysteryTermNode );

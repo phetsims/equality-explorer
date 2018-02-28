@@ -30,7 +30,7 @@ define( function( require ) {
   function ShapesScene() {
 
     // icon that represents this scene
-    var icon = ConstantTermNode.createIcon( 1 );
+    var icon = ConstantTermNode.createIcon( ReducedFraction.withInteger( 1 ) );
     
     BasicsScene.call( this, 'shapes', icon,
       createTermCreators( EqualityExplorerQueryParameters.leftBasics ),

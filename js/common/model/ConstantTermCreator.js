@@ -31,7 +31,7 @@ define( function( require ) {
     // @public (read-only) terms are created with this value by default
     this.defaultConstantValue = options.defaultConstantValue;
 
-    var icon = ConstantTermNode.createIcon( options.defaultConstantValue.toDecimal() );
+    var icon = ConstantTermNode.createIcon( options.defaultConstantValue );
 
     TermCreator.call( this, icon, options );
   }
