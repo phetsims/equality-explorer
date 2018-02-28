@@ -24,6 +24,7 @@ define( function( require ) {
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   /**
@@ -188,7 +189,7 @@ define( function( require ) {
           if ( children.length > 0 ) {
             children.push( new Text( EqualityExplorerConstants.PLUS, { font: operatorFont } ) );
           }
-          children.push( createMysteryTermNode( numberOfTermsOnScale, termCreator.icon, integerFont, fractionFont, coefficientSpacing ) );
+          children.push( createMysteryTermNode( numberOfTermsOnScale, termCreator.icon, integerFont, coefficientSpacing ) );
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
@@ -267,13 +268,24 @@ define( function( require ) {
    * Creates the Node for a mystery term.
    * @param {number} numberOfTerms
    * @param {Node} icon
-   * @param {Font} integerFont
-   * @param {Font} fractionFont
+   * @param {Font} font
    * @param {number} coefficientSpacing - horizontal space between coefficient and icon
    * @returns {Node}
    */
-  function createMysteryTermNode( numberOfTerms, icon, integerFont, fractionFont, coefficientSpacing ) {
-    return createVariableTermNode( ReducedFraction.withInteger( numberOfTerms ), icon, integerFont, fractionFont, coefficientSpacing, false );
+  function createMysteryTermNode( numberOfTerms, icon, font, coefficientSpacing ) {
+
+    assert && assert( Util.isInteger( numberOfTerms ), 'invalid numberOfTerms: ' + numberOfTerms );
+
+    var coefficientNode = new Text( numberOfTerms, { font: font } );
+
+    //TODO is this necessary?
+    // wrap the icon, in case it's used elsewhere in the scenery DAG
+    var wrappedIcon = new Node( { children: [ icon ] } );
+
+    return new HBox( {
+      spacing: 2,
+      children: [ coefficientNode, wrappedIcon ]
+    } );
   }
 
   /**
