@@ -27,6 +27,8 @@ define( function( require ) {
 
     assert && assert( variableValueProperty instanceof NumberProperty, 'invalid variableValueProperty' );
 
+    var self = this;
+
     options = _.extend( {
       defaultCoefficient: ReducedFraction.withInteger( 1 ), // terms are created with this coefficient by default
       positiveFill: 'rgb( 49, 193, 238 )',
@@ -50,6 +52,11 @@ define( function( require ) {
     } );
 
     TermCreator.call( this, icon, options );
+
+    // If the variable value changes, update the weight of terms on the scale.
+    this.variableValueProperty.link( function( variableValue ) {
+       self.updateWeightOnScaleProperty();
+    } );
   }
 
   equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );

@@ -36,6 +36,9 @@ define( function( require ) {
     assert && assert( Util.isInteger( options.initialNumberOfTermsOnScale ) && ( options.initialNumberOfTermsOnScale >= 0 ),
       'initialNumberOfTermsOnScale is invalid: ' + options.initialNumberOfTermsOnScale );
 
+    // @private has this instance been fully initialized?
+    this.isInitialized = false;
+
     // @public (ready-only) {Node} icon used to represent this term creator
     this.icon = icon;
 
@@ -94,8 +97,9 @@ define( function( require ) {
     // @private called when Term.dispose is called
     this.termWasDisposedBound = this.termWasDisposed.bind( this );
 
-    // @private has this instance been fully initialized?
-    this.isInitialized = false;
+    // @private
+    this.updateWeightOnScalePropertyBound = this.updateWeightOnScaleProperty.bind( this );
+    this.updateWeightOnScalePropertyBound();
   }
 
   equalityExplorer.register( 'TermCreator', TermCreator );
@@ -245,8 +249,8 @@ define( function( require ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
       assert && assert( !this.termsOnScale.contains( term ), 'term already on scale: ' + term.toString() );
       this.termsOnScale.push( term );
-      this.weightOnScaleProperty.value = this.weightOnScaleProperty.value.plusFraction( term.weight );
       this.plate.addTerm( term, cellIndex );
+      this.updateWeightOnScaleProperty();
     },
 
     /**
@@ -258,8 +262,8 @@ define( function( require ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
       assert && assert( this.termsOnScale.contains( term ), 'term not on scale: ' + term.toString() );
       this.termsOnScale.remove( term );
-      this.weightOnScaleProperty.value = this.weightOnScaleProperty.value.minusFraction( term.weight );
       this.plate.removeTerm( term );
+      this.updateWeightOnScaleProperty();
     },
 
     /**
@@ -313,6 +317,18 @@ define( function( require ) {
       }
 
       this.allTerms.remove( term );
+    },
+
+    /**
+     * Updates weightOnScaleProperty, the total weight of all terms on the scale.
+     * @protected
+     */
+    updateWeightOnScaleProperty: function() {
+      var weight = ReducedFraction.withInteger( 0 );
+      for ( var i = 0; i < this.termsOnScale.length; i++ ) {
+          weight = weight.plusFraction( this.termsOnScale.get( i ).weight );
+      }
+      this.weightOnScaleProperty.value = weight;
     }
   } );
 } );
