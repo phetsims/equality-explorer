@@ -99,6 +99,10 @@ define( function( require ) {
       var updateDependencies = [];
       termCreators.forEach( function( termCreator ) {
         updateDependencies.push( termCreator.numberOfTermsOnScaleProperty );
+        if ( termCreator.variableValueProperty ) {
+          //TODO when variableValueProperty changes, all that really needs updating is relational operator
+          updateDependencies.push( termCreator.variableValueProperty );
+        }
       } );
 
       // dispose required
