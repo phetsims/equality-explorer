@@ -76,7 +76,6 @@ define( function( require ) {
         for ( var i = 0; i < termCreators.length; i++ ) {
           weight = weight.plusFraction( termCreators[ i ].weightOnScaleProperty.value );
         }
-        console.log( 'weight=' + weight.toDecimal() );//XXX
         return weight;
       } );
 
