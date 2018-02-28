@@ -1,8 +1,8 @@
 TODO items for equality-explorer
 
 Terms
-- TermCreator weightOnScaleProperty is wrong - it doesn't account for change of variable, coefficient or constant value
-- EquationNode needs sum of coefficients for variable terms, sum of values for constant terms
+- EquationNode: relational operator is wrong
+- EquationNode: constant term is not in sync with what's on scale, behind by 1 term?
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
 - Optionally associate term type with cells in the grid
