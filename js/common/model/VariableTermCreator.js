@@ -57,6 +57,18 @@ define( function( require ) {
   return inherit( TermCreator, VariableTermCreator, {
 
     /**
+     * Returns the sum of coefficients for all terms on the scale.
+     * @returns {RationalNumber}
+     */
+    sumCoefficientsOnScale: function() {
+      var sum = ReducedFraction.withInteger( 0 );
+      for ( var i = 0; i < this.termsOnScale.length; i++ ) {
+         sum = sum.plusFraction( this.termsOnScale.get( i ).coefficient );
+      }
+      return sum;
+    },
+
+    /**
      * Instantiates a VariableTerm.
      * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
