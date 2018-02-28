@@ -61,31 +61,18 @@ define( function( require ) {
 
     var iconChildren = [];
 
-    // coefficient
-    var coefficientNode = null;
-    if ( term.coefficient.toDecimal() === 1 ) {
-
-      // do nothing - show '1x' as 'x'
-    }
-    else if ( term.coefficient.toDecimal() === -1 ) {
-
-      // show '-1x' as '-x'
-      coefficientNode = new Text( '-', {
-        font: options.symbolFont
-      } );
-    }
-    else if ( term.coefficient.toDecimal() !== 1 ) {
-
-      // coefficient is not 1 or -1
-      coefficientNode = new ReducedFractionNode( term.coefficient, {
+    // coefficient, if not 1 or -1. Show 'x' not '1x', '-x' not '-1x'.
+    if ( term.coefficient.abs().toDecimal() !== 1 ) {
+      var coefficientNode = new ReducedFractionNode( term.coefficient, {
         fractionFont: options.fractionFont,
         integerFont: options.fractionFont
       } );
+      iconChildren.push( coefficientNode );
     }
-    coefficientNode && iconChildren.push( coefficientNode );
 
-    // variable's symbol, e.g. 'x'
-    var symbolNode = new Text( term.symbol, {
+    // variable's symbol, with negative sign if coefficient is -1
+    var symbol = ( term.coefficient.toDecimal() === -1 ) ? ( '-' + term.symbol ) : term.symbol;
+    var symbolNode = new Text( symbol, {
       font: options.symbolFont
     } );
     iconChildren.push( symbolNode );
