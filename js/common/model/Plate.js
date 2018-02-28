@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
@@ -62,8 +63,22 @@ define( function( require ) {
     // @public (read-only) number of terms on the plate
     this.numberOfTermsProperty = new NumberProperty( 0 );
 
+    // weightProperty is derived from the weights of each termCreator
+    var weightDependencies = [];
+    for ( var i = 0; i < termCreators.length; i++ ) {
+      weightDependencies.push( termCreators[ i ].weightOnScaleProperty );
+    }
+
     // @public (read-only) {Property.<ReducedFraction>} total weight of the terms that are on the plate
-    this.weightProperty = new Property( ReducedFraction.withInteger( 0 ), { valueType: ReducedFraction } );
+    this.weightProperty = new DerivedProperty( weightDependencies,
+      function() {
+        var weight = ReducedFraction.withInteger( 0 );
+        for ( var i = 0; i < termCreators.length; i++ ) {
+          weight = weight.plusFraction( termCreators[ i ].weightOnScaleProperty.value );
+        }
+        console.log( 'weight=' + weight.toDecimal() );//XXX
+        return weight;
+      } );
 
     // @public emit is called when the contents of the grid changes (terms added, removed, organized)
     // dispose not required.
@@ -74,30 +89,11 @@ define( function( require ) {
       assert && assert( !termCreator.plate, 'term creator already has an associated plate' );
       termCreator.plate = self;
     } );
-
-    // @private
-    this.updateWeightPropertyBound = this.updateWeightProperty.bind( this );
-    this.updateWeightPropertyBound();
   }
 
   equalityExplorer.register( 'Plate', Plate );
 
   return inherit( Object, Plate, {
-
-    /**
-     * Updates weightProperty, the total weight of all terms on the plate.
-     * @private
-     */
-    updateWeightProperty: function() {
-      var weight = ReducedFraction.withInteger( 0 );
-      for ( var i = 0; i < this.termCreators.length; i++ ) {
-        var terms = this.termCreators[ i ].getTermsOnScale();
-        for ( var j = 0; j < terms.length; j++ ) {
-          weight = weight.plusFraction( terms[ j ].weight );
-        }
-      }
-      this.weightProperty.value = weight;
-    },
 
     /**
      * Adds a term to the plate, in a specific cell in the grid.
@@ -106,16 +102,9 @@ define( function( require ) {
      * @public
      */
     addTerm: function( term, cellIndex ) {
-
-      // If the term has dynamic weight, start observing it.
-      if ( term.weightProperty ) {
-        term.weightProperty.lazyLink( this.updateWeightPropertyBound ); // unlink required in removeTerm
-      }
-
       this.grid.putTerm( term, cellIndex );
       this.numberOfTermsProperty.value++;
       this.contentsChangedEmitter.emit();
-      this.updateWeightProperty();
     },
 
     /**
@@ -124,16 +113,9 @@ define( function( require ) {
      * @public
      */
     removeTerm: function( term ) {
-
-      // if term has dynamic weight, stop observing it.
-      if ( term.weightProperty && term.weightProperty.hasListener( this.updateWeightPropertyBound ) ) {
-        term.weightProperty.unlink( this.updateWeightPropertyBound );
-      }
-
       this.grid.removeTerm( term );
       this.numberOfTermsProperty.value--;
       this.contentsChangedEmitter.emit();
-      this.updateWeightProperty();
     },
 
     /**

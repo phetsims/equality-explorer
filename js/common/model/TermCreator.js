@@ -248,6 +248,12 @@ define( function( require ) {
     putTermOnScale: function( term, cellIndex ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
       assert && assert( !this.termsOnScale.contains( term ), 'term already on scale: ' + term.toString() );
+
+      // If the term has dynamic weight, start observing it.
+      if ( term.weightProperty ) {
+        term.weightProperty.lazyLink( this.updateWeightOnScalePropertyBound ); // unlink required in removeTerm
+      }
+
       this.termsOnScale.push( term );
       this.plate.addTerm( term, cellIndex );
       this.updateWeightOnScaleProperty();
@@ -261,6 +267,12 @@ define( function( require ) {
     removeTermFromScale: function( term ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
       assert && assert( this.termsOnScale.contains( term ), 'term not on scale: ' + term.toString() );
+
+      // if term has dynamic weight, stop observing it.
+      if ( term.weightProperty && term.weightProperty.hasListener( this.updateWeightOnScalePropertyBound ) ) {
+        term.weightProperty.unlink( this.updateWeightOnScalePropertyBound );
+      }
+
       this.termsOnScale.remove( term );
       this.plate.removeTerm( term );
       this.updateWeightOnScaleProperty();
