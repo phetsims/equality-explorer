@@ -66,13 +66,10 @@ define( function( require ) {
 
     Node.call( this );
 
-    // Correct initial operator will be set in multilink below
-    var relationalOperatorNode = new Text( '=', { font: relationalOperatorFont } );
-
     // updates the equation
     var update = function() {
 
-      relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
+      var relationalOperatorNode = createRelationalOperatorNode( leftTermCreators, rightTermCreators, relationalOperatorFont );
 
       var leftSideNode = createSideNode( leftTermCreators, variableFont, operatorFont, integerFont, fractionFont,
         options.coefficientSpacing, options.plusSpacing );
@@ -124,12 +121,13 @@ define( function( require ) {
   equalityExplorer.register( 'EquationNode', EquationNode );
 
   /**
-   * Gets the operator that describes the relationship between the left and right sides.
+   * Create the Node for the operator that describes the relationship between the left and right sides.
    * @param {TermCreator[]} leftTermCreators
    * @param {TermCreator[]} rightTermCreators
-   * @returns {string}
+   * @param {Font} font
+   * @returns {Node}
    */
-  function getRelationalOperator( leftTermCreators, rightTermCreators ) {
+  function createRelationalOperatorNode( leftTermCreators, rightTermCreators, font ) {
 
     // evaluate the left side
     var leftWeight = 0;
@@ -155,11 +153,11 @@ define( function( require ) {
       relationalOperator = EqualityExplorerConstants.EQUALS;
     }
 
-    return relationalOperator;
+    return new Text( relationalOperator, { font: font } );
   }
 
   /**
-   * Creates one side of the equation
+   * Creates one side of the equation.
    * @param {TermCreator[]} termCreators
    * @param {Font} variableFont - font for variables, like 'x'
    * @param {Font} operatorFont
