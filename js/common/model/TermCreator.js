@@ -12,6 +12,7 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -44,7 +45,7 @@ define( function( require ) {
 
     // @public (read-only after initialization) {Vector2}
     // Location is dependent on the view and is unknowable until the sim has loaded.
-    // TermCreators will ultimatley be located in the panels below the scale. See initialize.
+    // TermCreators will ultimately be located in the panels below the scale. See initialize.
     this.location = null;
 
     // @private Number of terms to put on the scale initially.
@@ -61,8 +62,15 @@ define( function( require ) {
     // @protected {ObservableArray.<Term>} all terms that currently exist
     this.allTerms = new ObservableArray();
 
-    // @private {ObservableArray.<Term>} terms that are on the scale, a subset of allTerms
+    // @protected {ObservableArray.<Term>} terms that are on the scale, a subset of allTerms
     this.termsOnScale = new ObservableArray();
+
+    // @public (read-only) so we don't have to expose this.termsOnScale
+    // dispose not needed.
+    this.numberOfTermsOnScaleProperty = new DerivedProperty( [ this.termsOnScale.lengthProperty ],
+      function( length ) {
+        return length;
+      } );
 
     // @public (read-only) weight of the terms that are on the scale
     this.weightOnScaleProperty = new Property( ReducedFraction.withInteger( 0 ), {
