@@ -70,6 +70,7 @@ define( function( require ) {
     }
 
     // @public (read-only) {Property.<ReducedFraction>} total weight of the terms that are on the plate
+    // dispose not required.
     this.weightProperty = new DerivedProperty( weightDependencies,
       function() {
         var weight = ReducedFraction.withInteger( 0 );
