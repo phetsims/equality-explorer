@@ -72,13 +72,13 @@ define( function( require ) {
 
       // 1
       new ConstantTermCreator( {
-        defaultValue: ReducedFraction.withInteger( 1 ),
+        defaultConstantValue: ReducedFraction.withInteger( 1 ),
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } ),
 
       // -1
       new ConstantTermCreator( {
-        defaultValue: ReducedFraction.withInteger( -1 ),
+        defaultConstantValue: ReducedFraction.withInteger( -1 ),
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
       } )
     ];

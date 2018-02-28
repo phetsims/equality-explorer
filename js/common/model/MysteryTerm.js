@@ -1,8 +1,8 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * MysteryTerm is a variable term whose variable value is not exposed to the user.
- * Rather than displaying a variable symbol, it displays an icon (apple, dog, turtle,...)
+ * MysteryTerm has a fixed weight that is exposed to the user.
+ * All mystery terms have an implicit coefficient of 1. Their visual design does not accommodate a coefficient.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -12,37 +12,69 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
+  var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
+  var Util = require( 'DOT/Util' );
 
   /**
-   * @param {string} symbol
+   * @param {string} typeName - internal name of the mystery object type, not visible to the user
+   * @param {number} weight
    * @param {HTMLImageElement} image
    * @param {HTMLImageElement} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTerm( symbol, image, shadow, options ) {
+  function MysteryTerm( typeName, weight, image, shadow, options ) {
 
-    options = _.extend( {
-      coefficient: ReducedFraction.withInteger( 1 ),
-      variableValue: 1
-    }, options );
+    assert && assert( Util.isInteger( weight ), 'weight must be an integer: ' + weight );
 
-    // @public (read-only) {HTMLImageElement}
+    // @public (read-only)
+    this.typeName = typeName;
     this.image = image;
     this.shadow = shadow;
 
-    var variableProperty = new NumberProperty( options.variableValue, {
-      numberType: 'Integer'
-    } );
+    // @private
+    this._weight = weight;
 
-    VariableTerm.call( this, symbol, variableProperty, options );
+    Term.call( this, options );
   }
 
   equalityExplorer.register( 'MysteryTerm', MysteryTerm );
 
-  return inherit( VariableTerm, MysteryTerm );
+  return inherit( Term, MysteryTerm, {
+
+    /**
+     * Gets the weight of this term.
+     * @returns {ReducedFraction}
+     * @public
+     * @override
+     */
+    get weight() {
+      return ReducedFraction.withInteger( this._weight );
+    },
+
+    /**
+     * For debugging only. Do not rely on the format of toString.
+     * @returns {string}
+     * @public
+     */
+    toString: function() {
+      return 'MysteryTerm:' + ' typeName=' + this.typeName + ' weight=' + this._weight;
+    },
+
+    /**
+     * Is this term the inverse of a specified term?
+     * Two mystery terms are inverses if they represent the same mystery object and have inverse weights.
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isInverseOf: function( term ) {
+      return ( term instanceof MysteryTerm ) &&
+             ( this.typeName === term.typeName ) && // same mystery object type
+             ( this.weight.toDecimal() === -term.weight.toDecimal() ); // inverse weights
+    }
+  } );
 } );
  

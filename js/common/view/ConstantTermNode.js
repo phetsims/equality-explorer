@@ -15,7 +15,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -44,8 +43,12 @@ define( function( require ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
+    var isPositive = ( term.constantValue.toDecimal() >= 0 );
+
     var circleNode = new Circle( options.diameter / 2, {
-      stroke: 'black'
+      stroke: 'black',
+      fill: isPositive ? options.positiveFill : options.negativeFill,
+      lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
     } );
 
     var shadowNode = new Circle( options.diameter / 2, {
@@ -53,68 +56,29 @@ define( function( require ) {
       opacity: 0.4
     } );
 
-    var constantNode = null; // {ReducedFractionNode} set by valueListener
-
-    var contentNode = new Node( {
-      children: [ circleNode ]
+    var constantNode = new ReducedFractionNode( term.constantValue, {
+      fractionFont: options.fractionFont,
+      integerFont: options.fractionFont,
+      maxWidth: circleNode.width - ( 2 * options.margin ),
+      maxHeight: circleNode.height - ( 2 * options.margin ),
+      center: circleNode.center
     } );
 
-    // updates the displayed constant value
-    var valueListener = function( value ) {
-
-      assert && assert( value instanceof ReducedFraction, 'invalid value' );
-
-      // update the constant value displayed
-      constantNode && contentNode.removeChild( constantNode );
-      constantNode = new ReducedFractionNode( value, {
-        fractionFont: options.fractionFont,
-        integerFont: options.fractionFont,
-        maxWidth: circleNode.width - ( 2 * options.margin ),
-        maxHeight: circleNode.height - ( 2 * options.margin ),
-        center: circleNode.center
-      } );
-      contentNode.addChild( constantNode );
-
-      // update properties based on sign of the constant
-      if ( value.toDecimal() >= 0 ) {
-        circleNode.fill = options.positiveFill;
-        circleNode.lineDash = options.positiveLineDash;
-      }
-      else {
-        circleNode.fill = options.negativeFill;
-        circleNode.lineDash = options.negativeLineDash;
-      }
-    };
-    term.valueProperty.link( valueListener ); // unlink required in dispose
+    var contentNode = new Node( {
+      children: [ circleNode, constantNode ]
+    } );
 
     TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );
-
-    // @private
-    this.disposeConstantTermNode = function() {
-      if ( term.valueProperty.hasListener( valueListener ) ) {
-        term.valueProperty.unlink( valueListener );
-      }
-    };
   }
 
   equalityExplorer.register( 'ConstantTermNode', ConstantTermNode );
 
-  return inherit( TermNode, ConstantTermNode, {
-
-    /**
-     * @public
-     * @override
-     */
-    dispose: function() {
-      this.disposeConstantTermNode();
-      TermNode.prototype.dispose.call( this );
-    }
-  }, {
+  return inherit( TermNode, ConstantTermNode, {}, {
 
     /**
      * Creates an icon for constant terms.
      * @param {number} value - value shown on the icon, must be an integer
-     * @param {Object} [options] - see ContantTermNode
+     * @param {Object} [options] - see ConstantTermNode
      * @returns {Node}
      * @public
      * @static
@@ -125,10 +89,12 @@ define( function( require ) {
 
       assert && assert( Util.isInteger( value ), 'value must be an integer: ' + value );
 
+      var isPositive = ( value >= 0 );
+
       var circleNode = new Circle( options.diameter / 2, {
         stroke: 'black',
-        fill: ( value >= 0 ) ? options.positiveFill : options.negativeFill,
-        lineDash: ( value >= 0 ) ? options.positiveLineDash : options.negativeLineDash
+        fill: isPositive ? options.positiveFill : options.negativeFill,
+        lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
       } );
 
       var integerNode = new Text( value, {

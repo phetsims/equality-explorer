@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /***
- * Accordion box that allows the student to modify the value of the variable (x).
+ * Accordion box that allows the student to modify the value of a variable (e.g. 'x').
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -27,12 +27,12 @@ define( function( require ) {
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
-   * @param {NumberProperty} valueProperty - the value of the variable 'x'
-   * @param {Range} valueRange - the range of x's value
+   * @param {NumberProperty} variableValueProperty - the value of the variable
+   * @param {Range} valueRange - the range of the variable's alue
    * @param {Object} [options]
    * @constructor
    */
-  function VariableAccordionBox( valueProperty, valueRange, options ) {
+  function VariableAccordionBox( variableValueProperty, valueRange, options ) {
 
     options = _.extend( {
 
@@ -78,7 +78,7 @@ define( function( require ) {
     } );
 
     // NumberPicker.dispose not needed, VariableAccordionBox exists for lifetime of the sim
-    var valuePicker = new NumberPicker( valueProperty, new Property( valueRange ), {
+    var valuePicker = new NumberPicker( variableValueProperty, new Property( valueRange ), {
       color: 'black',
       font: new PhetFont( options.fontSize ),
       xMargin: 6

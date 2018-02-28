@@ -1,7 +1,8 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * MysteryTermCreator creates and manages mystery terms (apple, dog, turtle,...)
+ * MysteryTermCreator creates and manages terms that are associated with mystery objects (apple, dog, turtle,...)
+ * Mystery objects are objects whose (constant) weight is not revealed to the user.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -13,45 +14,35 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTerm = require( 'EQUALITY_EXPLORER/common/model/MysteryTerm' );
   var MysteryTermNode = require( 'EQUALITY_EXPLORER/common/view/MysteryTermNode' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
-  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
+  var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
+  var Util = require( 'DOT/Util' );
 
   /**
-   * @param {string} symbol
+   * @param {string} typeName - internal name for the mystery object type, not visible to the user
    * @param {number} weight - integer weight of 1 mystery item
    * @param {HTMLImageElement} image
    * @param {HTMLImageElement} shadow
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTermCreator( symbol, weight, image, shadow, options ) {
+  function MysteryTermCreator( typeName, weight, image, shadow, options ) {
 
-    options = options || {};
+    assert&& assert( Util.isInteger( weight ), 'weight must be an integer: ' + weight );
 
-    // All mystery terms have a coefficient of 1, so we don't have to deal with displaying their coefficient
-    // in MysteryTermNode. We can make this simplification because mystery terms appear only in the 'Basics' screen,
-    // where like terms are not combined.
-    assert && assert( !options.defaultCoefficient, 'defaultCoefficient is set by MysteryTermCreator' );
-    options.defaultCoefficient = ReducedFraction.withInteger( 1 );
-
-    assert && assert( !options.icon, 'icon is set by MysteryTermCreator' );
-    options.icon = MysteryTermNode.createIcon( image );
-
-    // @public (read-only) {HTMLImageElement}
+    // @public (read-only)
+    this.typeName = typeName;
+    this.weight = weight;
     this.image = image;
     this.shadow = shadow;
 
-    var variableValueProperty = new NumberProperty( weight, {
-      numberType: 'Integer'
-    } );
+    var icon = MysteryTermNode.createIcon( image );
 
-    VariableTermCreator.call( this, symbol, variableValueProperty, options );
+    TermCreator.call( this, icon, options );
   }
 
   equalityExplorer.register( 'MysteryTermCreator', MysteryTermCreator );
 
-  return inherit( VariableTermCreator, MysteryTermCreator, {
+  return inherit( TermCreator, MysteryTermCreator, {
 
     /**
      * Instantiates a MysteryTerm.
@@ -64,11 +55,10 @@ define( function( require ) {
 
       options = _.extend( {
         location: this.location,
-        dragBounds: this.dragBounds,
-        variableValue: this.variableValueProperty.value
+        dragBounds: this.dragBounds
       }, options );
 
-      return new MysteryTerm( this.symbol, this.image, this.shadow, options );
+      return new MysteryTerm( this.typeName, this.weight, this.image, this.shadow, options );
     },
 
     /**

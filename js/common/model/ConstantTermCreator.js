@@ -23,18 +23,17 @@ define( function( require ) {
   function ConstantTermCreator( options ) {
 
     options = _.extend( {
-      defaultValue: ReducedFraction.withInteger( 1 ) // {ReducedFraction} initial value
+      defaultConstantValue: ReducedFraction.withInteger( 1 ) // terms are created with this value by default
     }, options );
 
-    assert && assert( options.defaultValue instanceof ReducedFraction, 'invalid defaultValue' );
+    assert && assert( options.defaultConstantValue instanceof ReducedFraction, 'invalid defaultConstantValue' );
 
-    assert && assert( !options.icon, 'icon is created by this type' );
-    options.icon = ConstantTermNode.createIcon( options.defaultValue.toDecimal() );
+    // @public (read-only) terms are created with this value by default
+    this.defaultConstantValue = options.defaultConstantValue;
 
-    // @public (read-only)
-    this.defaultValue = options.defaultValue;
+    var icon = ConstantTermNode.createIcon( options.defaultConstantValue.toDecimal() );
 
-    TermCreator.call( this, options );
+    TermCreator.call( this, icon, options );
   }
 
   equalityExplorer.register( 'ConstantTermCreator', ConstantTermCreator );
@@ -53,7 +52,7 @@ define( function( require ) {
       options = _.extend( {
         location: this.location,
         dragBounds: this.dragBounds,
-        value: this.defaultValue
+        constantValue: this.defaultConstantValue
       }, options );
 
       return new ConstantTerm( options );
@@ -80,8 +79,8 @@ define( function( require ) {
      * @override
      */
     isInverseOf: function( termCreator ) {
-      return ( termCreator.constructor === this.constructor ) &&  // same type
-             ( termCreator.defaultValue.toDecimal() + this.defaultValue.toDecimal() === 0 ); // values sum to zero
+      return ( termCreator instanceof ConstantTermCreator ) &&
+             ( termCreator.defaultConstantValue.toDecimal() === -this.defaultConstantValue.toDecimal() ); // inverse values
     },
 
     /**
@@ -92,8 +91,8 @@ define( function( require ) {
      * @abstract
      */
     isEquivalentTo: function( termCreator ) {
-      return ( termCreator.constructor === this.constructor ) &&  // same type
-             ( termCreator.defaultValue.toDecimal() === this.defaultValue.toDecimal() ) ; // same values
+      return ( termCreator instanceof ConstantTermCreator ) &&
+             ( termCreator.defaultConstantValue.toDecimal() === this.defaultConstantValue.toDecimal() ); // same values
     }
   } );
 } );

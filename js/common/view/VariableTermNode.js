@@ -11,12 +11,12 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -46,8 +46,12 @@ define( function( require ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
+    var isPositive = ( term.coefficient.toDecimal() >= 0 );
+
     var squareNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
-      stroke: 'black'
+      stroke: 'black',
+      fill: isPositive ? options.positiveFill : options.negativeFill,
+      lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
     } );
 
     var shadowNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
@@ -55,17 +59,41 @@ define( function( require ) {
       opacity: 0.4
     } );
 
-    // variable's symbol, e.g. 'x'
-    var symbolNode = new Text( term.symbol, {
-      font: options.symbolFont,
-      center: squareNode.center
-    } );
+    var iconChildren = [];
 
     // coefficient
-    var coefficientNode = null; // {ReducedFraction} set by coefficientListener
+    var coefficientNode = null;
+    if ( term.coefficient.toDecimal() === 1 ) {
 
-    var iconNode = new Node( {
-      children: [ symbolNode ],
+      // do nothing - show '1x' as 'x'
+    }
+    else if ( term.coefficient.toDecimal() === -1 ) {
+
+      // show '-1x' as '-x'
+      coefficientNode = new Text( '-', {
+        font: options.symbolFont
+      } );
+    }
+    else if ( term.coefficient.toDecimal() !== 1 ) {
+
+      // coefficient is not 1 or -1
+      coefficientNode = new ReducedFractionNode( term.coefficient, {
+        fractionFont: options.fractionFont,
+        integerFont: options.fractionFont
+      } );
+    }
+    coefficientNode && iconChildren.push( coefficientNode );
+
+    // variable's symbol, e.g. 'x'
+    var symbolNode = new Text( term.symbol, {
+      font: options.symbolFont
+    } );
+    iconChildren.push( symbolNode );
+
+    // icon on the square consists of coefficient and variable symbol
+    var iconNode = new HBox( {
+      spacing: options.xSpacing,
+      children: iconChildren,
       maxWidth: squareNode.width - ( 2 * options.margin ),
       maxHeight: squareNode.height - ( 2 * options.margin ),
       center: squareNode.center
@@ -75,74 +103,12 @@ define( function( require ) {
       children: [ squareNode, iconNode ]
     } );
 
-    // updates the displayed coefficient
-    var coefficientListener = function( coefficient ) {
-
-      assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
-
-      // restore the symbol to its default, since some conditions below may have modified it
-      symbolNode.text = term.symbol;
-
-      // update the coefficient displayed
-      coefficientNode && iconNode.removeChild( contentNode );
-      if ( coefficient.toDecimal() === 1 ) {
-        // do nothing, show 'x', not '1x'
-      }
-      else if ( coefficient.toDecimal() === -1 ) {
-
-        // add sign to symbol
-        symbolNode.text = '-' + term.symbol;
-      }
-      else {
-
-        // coefficients other than 1 and -1
-        coefficientNode = new ReducedFractionNode( coefficient, {
-          fractionFont: options.fractionFont,
-          integerFont: options.fractionFont,
-          right: symbolNode.left - options.xSpacing,
-          centerY: symbolNode.centerY
-        } );
-        iconNode.addChild( coefficientNode );
-      }
-
-      // update properties based on sign
-      if ( coefficient.toDecimal() >= 0 ) {
-        squareNode.fill = options.positiveFill;
-        squareNode.lineDash = options.positiveLineDash;
-      }
-      else {
-        squareNode.fill = options.negativeFill;
-        squareNode.lineDash = options.negativeLineDash;
-      }
-
-      // re-center icon in square
-      iconNode.center = squareNode.center;
-    };
-    term.coefficientProperty.link( coefficientListener ); // unlink required in dispose
-
     TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );
-
-    // @private
-    this.disposeVariableTermNode = function() {
-      if ( term.coefficientProperty.hasListener( coefficientListener ) ) {
-        term.coefficientProperty.unlink( coefficientListener );
-      }
-    };
   }
 
   equalityExplorer.register( 'VariableTermNode', VariableTermNode );
 
-  return inherit( TermNode, VariableTermNode, {
-
-    /**
-     * @public
-     * @override
-     */
-    dispose: function() {
-      this.disposeVariableTermNode();
-      TermNode.prototype.dispose.call( this );
-    }
-  }, {
+  return inherit( TermNode, VariableTermNode, {}, {
 
     /**
      * Creates an icon for variable terms.
@@ -156,17 +122,17 @@ define( function( require ) {
     createIcon: function( symbol, coefficient, options ) {
 
       assert && assert( coefficient === 1 || coefficient === -1, 'invalid coefficient: ' + coefficient );
-      var positive = ( coefficient === 1 );
+      var isPositive = ( coefficient === 1 );
 
       options = _.extend( {}, DEFAULT_OPTIONS, options );
 
       var squareNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
         stroke: 'black',
-        fill: positive ? options.positiveFill : options.negativeFill,
-        lineDash: positive ? options.positiveLineDash : options.negativeLineDash
+        fill: isPositive ? options.positiveFill : options.negativeFill,
+        lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
       } );
 
-      var symbolText = positive ? symbol : ( '-' + symbol );
+      var symbolText = isPositive ? symbol : ( '-' + symbol );
       var symbolNode = new Text( symbolText, {
         font: options.symbolFont,
         center: squareNode.center,

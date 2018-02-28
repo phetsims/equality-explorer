@@ -93,7 +93,7 @@ define( function( require ) {
       for ( var i = 0; i < this.termCreators.length; i++ ) {
         var terms = this.termCreators[ i ].getTermsOnScale();
         for ( var j = 0; j < terms.length; j++ ) {
-          weight = weight.plusFraction( terms[ j ].weightProperty.value );
+          weight = weight.plusFraction( terms[ j ].weight );
         }
       }
       this.weightProperty.value = weight;
@@ -106,24 +106,32 @@ define( function( require ) {
      * @public
      */
     addTerm: function( term, cellIndex ) {
+
+      // If the term has dynamic weight, start observing it.
+      if ( term.weightProperty ) {
+        term.weightProperty.lazyLink( this.updateWeightPropertyBound ); // unlink required in removeTerm
+      }
+
       this.grid.putTerm( term, cellIndex );
       this.numberOfTermsProperty.value++;
       this.contentsChangedEmitter.emit();
-      term.weightProperty.link( this.updateWeightPropertyBound ); // unlink required in removeTerm
+      this.updateWeightProperty();
     },
 
-    //TODO something is broken here, the scale doesn't move properly when terms are removed
     /**
      * Removes a term from the plate.
      * @param {Term} term
      * @public
      */
     removeTerm: function( term ) {
-      this.grid.removeTerm( term );
-      this.numberOfTermsProperty.value--;
-      if ( term.weightProperty.hasListener( this.updateWeightPropertyBound ) ) {
+
+      // if term has dynamic weight, stop observing it.
+      if ( term.weightProperty && term.weightProperty.hasListener( this.updateWeightPropertyBound ) ) {
         term.weightProperty.unlink( this.updateWeightPropertyBound );
       }
+
+      this.grid.removeTerm( term );
+      this.numberOfTermsProperty.value--;
       this.contentsChangedEmitter.emit();
       this.updateWeightProperty();
     },

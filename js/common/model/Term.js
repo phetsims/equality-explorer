@@ -36,6 +36,16 @@ define( function( require ) {
   return inherit( EqualityExplorerMovable, Term, {
 
     /**
+     * Gets the weight of this term.
+     * @returns {ReducedFraction}
+     * @public
+     * @abstract
+     */
+    get weight() {
+      throw new Error( 'weight must be implemented by subtype' );
+    },
+
+    /**
      * @public
      * @override
      */

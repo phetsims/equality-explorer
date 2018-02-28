@@ -14,28 +14,21 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Util = require( 'DOT/Util' );
 
-  // constants
-  var DEFAULT_ICON = new Rectangle( 0, 0,
-    EqualityExplorerConstants.SMALL_TERM_DIAMETER, EqualityExplorerConstants.SMALL_TERM_DIAMETER,
-    { fill: 'black' } );
-
   /**
+   * @param {Node} icon - icon used to represent this term creator
    * @param {Object} [options]
    * @constructor
    * @abstract
    */
-  function TermCreator( options ) {
+  function TermCreator( icon, options ) {
 
     options = _.extend( {
-      icon: DEFAULT_ICON, // {Node} icon that represents terms of this type
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
       initialNumberOfTermsOnScale: 0 // {number} integer number of terms initially on the scale
     }, options );
@@ -43,23 +36,23 @@ define( function( require ) {
     assert && assert( Util.isInteger( options.initialNumberOfTermsOnScale ) && ( options.initialNumberOfTermsOnScale >= 0 ),
       'initialNumberOfTermsOnScale is invalid: ' + options.initialNumberOfTermsOnScale );
 
-    // @public (ready-only) icon used to represent this term creator
-    this.icon = options.icon;
+    // @public (ready-only) {Node} icon used to represent this term creator
+    this.icon = icon;
 
-    // @public {Vector2} (read-only after initialization)
+    // @public (read-only after initialization) {Vector2}
     // Location is dependent on the view and is unknowable until the sim has loaded.
-    // See initialize.
+    // TermCreators will ultimatley be located in the panels below the scale. See initialize.
     this.location = null;
 
     // @private Number of terms to put on the scale initially.
     // Terms cannot be put on the scale until this.location is initialized.
     this.initialNumberOfTermsOnScale = options.initialNumberOfTermsOnScale;
 
-    // @public {Plate} the plate that this term creator is associated with.
+    // @public (read-only) {Plate} the plate that this term creator is associated with.
     // This association necessarily occurs after instantiation.
     this.plate = null;
 
-    // @public {Bounds2} drag bounds for terms created
+    // @public {read-only) {Bounds2} drag bounds for terms created
     this.dragBounds = options.dragBounds;
 
     // @protected {ObservableArray.<Term>} all terms that currently exist
@@ -252,7 +245,7 @@ define( function( require ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
       assert && assert( !this.termsOnScale.contains( term ), 'term already on scale: ' + term.toString() );
       this.termsOnScale.push( term );
-      this.weightOnScaleProperty.value = this.weightOnScaleProperty.value.plusFraction( term.weightProperty.value );
+      this.weightOnScaleProperty.value = this.weightOnScaleProperty.value.plusFraction( term.weight );
       this.plate.addTerm( term, cellIndex );
     },
 
@@ -265,7 +258,7 @@ define( function( require ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
       assert && assert( this.termsOnScale.contains( term ), 'term not on scale: ' + term.toString() );
       this.termsOnScale.remove( term );
-      this.weightOnScaleProperty.value = this.weightOnScaleProperty.value.minusFraction( term.weightProperty.value );
+      this.weightOnScaleProperty.value = this.weightOnScaleProperty.value.minusFraction( term.weight );
       this.plate.removeTerm( term );
     },
 

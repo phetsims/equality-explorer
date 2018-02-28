@@ -28,19 +28,12 @@ define( function( require ) {
     assert && assert( variableValueProperty instanceof NumberProperty, 'invalid variableValueProperty' );
 
     options = _.extend( {
-      defaultCoefficient: ReducedFraction.withInteger( 1 ),
+      defaultCoefficient: ReducedFraction.withInteger( 1 ), // terms are created with this coefficient by default
       positiveFill: 'rgb( 49, 193, 238 )',
       negativeFill: 'rgb( 99, 212, 238 )'
     }, options );
 
     assert && assert( options.defaultCoefficient instanceof ReducedFraction, 'invalid defaultCoefficient' );
-
-    if ( !options.icon ) {
-      options.icon = VariableTermNode.createIcon( symbol, options.defaultCoefficient.toDecimal(), {
-        positiveFill: options.positiveFill,
-        negativeFill: options.negativeFill
-      } );
-    }
 
     // @public (read-only)
     this.symbol = symbol;
@@ -51,7 +44,12 @@ define( function( require ) {
     this.positiveFill = options.positiveFill;
     this.negativeFill = options.negativeFill;
 
-    TermCreator.call( this, options );
+    var icon = VariableTermNode.createIcon( symbol, options.defaultCoefficient.toDecimal(), {
+      positiveFill: options.positiveFill,
+      negativeFill: options.negativeFill
+    } );
+
+    TermCreator.call( this, icon, options );
   }
 
   equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );

@@ -13,9 +13,6 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
-  var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
 
   /**
@@ -27,10 +24,6 @@ define( function( require ) {
    */
   function MysteryTermNode( termCreator, term, plate, options ) {
 
-    options = _.extend( {
-      xSpacing: 8 //TODO make this a function of icon size
-    }, options );
-
     var iconNode = new Image( term.image, {
       maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
     } );
@@ -40,64 +33,17 @@ define( function( require ) {
       opacity: 0.4
     } );
 
-    // coefficient
-    var coefficientNode = null; // {ReducedFraction} set by coefficientListener
-
-    var contentNode = new Node( {
-      children: [ iconNode ]
-    } );
-
-    // updates the displayed coefficient
-    var coefficientListener = function( coefficient ) {
-
-      assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
-
-      // update the coefficient displayed
-      coefficientNode && iconNode.removeChild( contentNode );
-      if ( coefficient.toDecimal() === 1 ) {
-        // do nothing, show just the icon
-      }
-      else {
-
-        // coefficients other than 1
-        coefficientNode = new ReducedFractionNode( coefficient, {
-          fractionFont: options.fractionFont,
-          integerFont: options.fractionFont,
-          right: iconNode.left - options.xSpacing,
-          centerY: iconNode.centerY
-        } );
-        iconNode.addChild( coefficientNode );
-      }
-    };
-    term.coefficientProperty.link( coefficientListener ); // unlink required in dispose
-
-    TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );
-
-    this.disposeMysteryTermNode = function() {
-      if ( term.coefficientProperty.hasListener( coefficientListener ) ) {
-        term.coefficientProperty.unlink( coefficientListener );
-      }
-    };
+    TermNode.call( this, termCreator, term, plate, iconNode, shadowNode, options );
   }
 
   equalityExplorer.register( 'MysteryTermNode', MysteryTermNode );
 
-  return inherit( TermNode, MysteryTermNode, {
-
-    /**
-     * @public
-     * @override
-     */
-    dispose: function() {
-      this.disposeMysteryTermNode();
-      TermNode.prototype.dispose.call( this );
-    }
-  }, {
+  return inherit( TermNode, MysteryTermNode, {}, {
 
     /**
      * Creates an icon for mystery terms.
      * @param {HTMLImageElement} image
-     * @param {Object} [options]
+     * @param {Object} [options] - see MysteryTermNode
      * @public
      * @static
      */
