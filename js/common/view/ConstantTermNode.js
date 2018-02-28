@@ -80,7 +80,7 @@ define( function( require ) {
 
       var constantNode = new ReducedFractionNode( constantValue, {
         fractionFont: options.fractionFont,
-        integerFont: options.fractionFont,
+        integerFont: options.integerFont,
         maxWidth: circleNode.width - ( 2 * options.margin ),
         maxHeight: circleNode.height - ( 2 * options.margin ),
         center: circleNode.center

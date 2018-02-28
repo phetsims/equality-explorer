@@ -91,7 +91,7 @@ define( function( require ) {
       if ( coefficient.abs().toDecimal() !== 1 ) {
         var coefficientNode = new ReducedFractionNode( coefficient, {
           fractionFont: options.fractionFont,
-          integerFont: options.fractionFont
+          integerFont: options.integerFont
         } );
         iconChildren.push( coefficientNode );
       }
