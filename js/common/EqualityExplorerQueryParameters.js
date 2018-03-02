@@ -39,9 +39,11 @@ define( function( require ) {
 
     //TODO if we decide not to show grid in production version, replace this with phet.chipper.queryParameters.dev
     // Shows the grid on each of the plates.
+    // For internal use only, not public facing.
     showGrid: { type: 'flag' },
 
     // Add the 'x & y' screen, for testing multi-variable support.
+    // For internal use only, not public facing.
     xy: { type: 'flag' },
 
     // Number of terms that are initially on the left plate in the Basics screen.
