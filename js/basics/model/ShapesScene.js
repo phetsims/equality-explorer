@@ -36,8 +36,12 @@ define( function( require ) {
     ];
 
     BasicsScene.call( this, 'shapes', mysteryObjects, {
+
+      // icon used to represent this scene
       icon: ConstantTermNode.createIcon( ReducedFraction.withInteger( 1 ) ),
-      hasConstantTerms: true // this scene allows you to create constant terms
+
+      // this scene allows you to create constant terms
+      hasConstantTerms: true
     } );
   }
 

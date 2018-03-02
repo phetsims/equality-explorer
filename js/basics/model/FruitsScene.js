@@ -39,6 +39,8 @@ define( function( require ) {
     ];
 
     BasicsScene.call( this, 'fruits', mysteryObjects, {
+
+      // icon used to represent this scene
       icon: new Image( appleImage, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       } )

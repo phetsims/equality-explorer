@@ -39,10 +39,14 @@ define( function( require ) {
     ];
 
     BasicsScene.call( this, 'animals', mysteryObjects, {
+
+      // icon used to represent this scene
       icon: new Image( turtleImage, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       } ),
-      maxWeight: 50 // weight at which the scale bottoms out
+
+      // weight at which the scale bottoms out
+      maxWeight: 50
     } );
   }
 

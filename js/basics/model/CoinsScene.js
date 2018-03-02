@@ -39,6 +39,8 @@ define( function( require ) {
     ];
 
     BasicsScene.call( this, 'coins', mysteryObjects, {
+
+      // icon used to represent this scene
       icon: new Image( coin3Image, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       } )
