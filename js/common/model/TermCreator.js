@@ -76,7 +76,8 @@ define( function( require ) {
 
     // @public (read-only) weight of the terms that are on the scale
     this.weightOnScaleProperty = new Property( ReducedFraction.withInteger( 0 ), {
-       valueType: ReducedFraction
+      valueType: ReducedFraction,
+      useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
     } );
 
     // @public {BooleanProperty|null} optional Property that indicates whether the term creator is locked.
@@ -337,17 +338,11 @@ define( function( require ) {
      * @protected
      */
     updateWeightOnScaleProperty: function() {
-
-      // compute the weight
       var weight = ReducedFraction.withInteger( 0 );
       for ( var i = 0; i < this.termsOnScale.length; i++ ) {
-          weight = weight.plusFraction( this.termsOnScale.get( i ).weight );
+        weight = weight.plusFraction( this.termsOnScale.get( i ).weight );
       }
-
-      // update only if the weight has changed
-      if ( weight.toDecimal() !== this.weightOnScaleProperty.value.toDecimal() ) {
-        this.weightOnScaleProperty.value = weight;
-      }
+      this.weightOnScaleProperty.value = weight;
     }
   } );
 } );
