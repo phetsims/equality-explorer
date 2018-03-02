@@ -64,10 +64,10 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-      return 'VariableTerm:' +
-             ' coefficient=' + this.coefficient +
-             ' symbol=' + this.symbol +
-             ' variableValue=' + this.variableValueProperty.value;
+
+      // e.g. 'VariableTerm: 1/3 x (x=3)'
+      return 'VariableTerm: ' +  ' ' + this.coefficient + ' ' + this.symbol +
+             ' (' + this.symbol + '=' + this.variableValueProperty.value + ')';
     },
 
     /**

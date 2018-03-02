@@ -273,8 +273,9 @@ define( function( require ) {
      * @public
      */
     putTermOnScale: function( term, cellIndex ) {
-      assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
-      assert && assert( !this.termsOnScale.contains( term ), 'term already on scale: ' + term.toString() );
+      assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
+      assert && assert( !this.termsOnScale.contains( term ), 'term already on scale: ' + term );
+      phet.log && phet.log( 'TermCreator.putTermOnScale: ' + term );
       this.plate.addTerm( term, cellIndex );
       this.termsOnScale.push( term );
     },
@@ -285,8 +286,9 @@ define( function( require ) {
      * @public
      */
     removeTermFromScale: function( term ) {
-      assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
-      assert && assert( this.termsOnScale.contains( term ), 'term not on scale: ' + term.toString() );
+      assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
+      assert && assert( this.termsOnScale.contains( term ), 'term not on scale: ' + term );
+      phet.log && phet.log( 'TermCreator.removeTermFromScale: ' + term );
       this.plate.removeTerm( term );
       this.termsOnScale.remove( term );
     },
@@ -331,7 +333,7 @@ define( function( require ) {
      * @private
      */
     termWasDisposed: function( term ) {
-      assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
+      assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
 
       if ( this.isTermOnScale( term ) ) {
         this.removeTermFromScale( term );

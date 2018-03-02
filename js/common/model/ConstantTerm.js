@@ -52,7 +52,9 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-      return 'ConstantTerm: constantValue=' + this.constantValue.toString();
+
+      // e.g. 'ConstantTerm: 5/3'
+      return 'ConstantTerm: ' + this.constantValue;
     },
 
     /**

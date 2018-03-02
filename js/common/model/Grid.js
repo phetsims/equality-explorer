@@ -207,7 +207,7 @@ define( function( require ) {
     removeTerm: function( term ) {
       assert && assert( term instanceof Term, 'invalid term' );
       var index = this.getCellForTerm( term );
-      assert && assert( index !== -1, 'term not found: ' + term.toString() );
+      assert && assert( index !== -1, 'term not found: ' + term );
       this.clearCell( index );
       this.shiftDown( index );
     },

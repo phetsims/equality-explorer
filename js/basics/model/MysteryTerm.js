@@ -48,7 +48,9 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-      return 'MysteryTerm name=' + this.mysteryObject.name + ', weight=' + this.mysteryObject.weight;
+
+      // e.g. 'MysteryTerm: turtle 6'
+      return 'MysteryTerm: ' + this.mysteryObject.name + ' ' + this.mysteryObject.weight;
     },
 
     /**
