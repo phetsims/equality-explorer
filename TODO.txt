@@ -1,7 +1,7 @@
 TODO items for equality-explorer
 
 Terms
-- There is one invalid intermediate state each time that variable value is changed
+- Each time the variable value is changed, EquationNode.getRelationOperator is called 4 times
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
 - Optionally associate term type with cells in the grid
