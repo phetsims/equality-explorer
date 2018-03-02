@@ -298,13 +298,9 @@ define( function( require ) {
 
     var coefficientNode = new Text( numberOfTerms, { font: font } );
 
-    //TODO is this necessary?
-    // wrap the icon, in case it's used elsewhere in the scenery DAG
-    var wrappedIcon = new Node( { children: [ icon ] } );
-
     return new HBox( {
       spacing: 2,
-      children: [ coefficientNode, wrappedIcon ]
+      children: [ coefficientNode, icon ]
     } );
   }
 
@@ -322,16 +318,12 @@ define( function( require ) {
 
     assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient type' );
 
-    //TODO is this necessary?
-    // wrap the icon, in case it's used elsewhere in the scenery DAG
-    var wrappedIcon = new Node( { children: [ icon ] } );
-
     var termNode = null;
 
     if ( hideOne && coefficient.toDecimal() === 1 ) {
 
       // 1x becomes x
-      termNode = wrappedIcon;
+      termNode = icon;
     }
     else if ( hideOne && coefficient.toDecimal() === -1 ) {
 
@@ -339,7 +331,7 @@ define( function( require ) {
       var signNode = new Text( '-', { font: integerFont } );
       termNode = new HBox( {
         spacing: 2,
-        children: [ signNode, wrappedIcon ]
+        children: [ signNode, icon ]
       } );
     }
     else {
@@ -352,7 +344,7 @@ define( function( require ) {
 
       termNode = new HBox( {
         spacing: coefficientSpacing,
-        children: [ coefficientNode, wrappedIcon ]
+        children: [ coefficientNode, icon ]
       } );
     }
 

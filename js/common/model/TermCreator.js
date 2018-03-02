@@ -16,6 +16,7 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
@@ -42,8 +43,8 @@ define( function( require ) {
     // @private has this instance been fully initialized?
     this.isInitialized = false;
 
-    // @public (ready-only) {Node} icon used to represent this term creator
-    this.icon = icon;
+    // @private icon used to represent this term creator. See ES5 getter.
+    this._icon = icon;
 
     // @public (read-only after initialization) {Vector2}
     // Location is dependent on the view and is unknowable until the sim has loaded.
@@ -121,6 +122,15 @@ define( function( require ) {
   equalityExplorer.register( 'TermCreator', TermCreator );
 
   return inherit( Object, TermCreator, {
+
+    /**
+     * Gets the icon used to represent this term creator.
+     * Since this icon is used in multiple places in the scenery DAG, it must be wrapped.
+     * @returns {Node}
+     */
+    get icon() {
+      return new Node( { children: [ this._icon ] } );
+    },
 
     /**
      * Completes initialization. This model element's location is dependent on the location of

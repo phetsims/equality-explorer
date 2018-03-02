@@ -14,6 +14,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
   var Snapshots = require( 'EQUALITY_EXPLORER/common/model/Snapshots' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -49,8 +50,8 @@ define( function( require ) {
     // @public (read-only)
     this.debugName = debugName;
 
-    // @public (read-only) {Node} used to represent the scene
-    this.icon = options.icon;
+    // @private {Node} used to represent the scene. See ES5 getter.
+    this._icon = options.icon;
 
     // @public (read-only) {TermCreator[]} creators for terms on left side of scale
     this.leftTermCreators = leftTermCreators;
@@ -88,6 +89,15 @@ define( function( require ) {
   equalityExplorer.register( 'Scene', Scene );
 
   return inherit( Object, Scene, {
+
+    /**
+     * Gets the icon used to represent this scene.
+     * Since this icon is used in multiple places in the scenery DAG, it must be wrapped.
+     * @returns {Node}
+     */
+    get icon() {
+      return new Node( { children: [ this._icon ] } );
+    },
 
     // @public
     reset: function() {

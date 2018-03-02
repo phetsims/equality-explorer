@@ -30,9 +30,7 @@ define( function( require ) {
     }, options );
 
     assert && assert( !options.children, 'this type defines its children' );
-    options.children = [
-      new Node( { children: [ termCreator.icon ] } ) // wrap this node since it uses scenery DAG feature
-    ];
+    options.children = [ termCreator.icon ];
 
     // @private
     this.termCreator = termCreator;

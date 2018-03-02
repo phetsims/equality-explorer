@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
 
   /**
@@ -38,7 +37,7 @@ define( function( require ) {
       assert && assert( scene.icon, 'scene must have an icon' );
       contentArray.push( {
         value: scene,
-        node: new Node( { children: [ scene.icon ] } ) // wrap the icon since we're using scenery DAG feature
+        node: scene.icon
       } );
     } );
 
