@@ -6,9 +6,9 @@
  * Running with ?log will print these query parameters and their values to the console.
  *
  * Running with ?dev shows the following things that are specific to this sim:
- * - red dot at the origin of each term
- * - red dot at the origin of each plate
- * - red dot at the origin of the scale
+ * - red dot at the origin of each term (geometric center)
+ * - red dot at the origin of each plate (geometric center)
+ * - red dot at the origin of the scale (top of fulcrum)
  * - red rectangle for drag bounds on each side of the scale
  * - red horizontal line that denotes the cutoff of on vs off the scale, when dragging terms
  *
