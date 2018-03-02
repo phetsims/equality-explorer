@@ -126,7 +126,7 @@ define( function( require ) {
       minYMargin: 10
     } );
 
-    assert && assert( !options.children, 'this type defines its children' );
+    assert && assert( !options.children, 'children is set by this Node' );
     options.children = [ operatorPicker, operandPicker, goButton ];
 
     HBox.call( this, options );

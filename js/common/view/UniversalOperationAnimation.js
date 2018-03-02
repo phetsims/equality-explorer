@@ -54,7 +54,7 @@ define( function( require ) {
     } );
 
     // Animate both operation nodes together, so that the operation is applied to both sides simultaneously.
-    assert && assert( !options.children, 'subtype sets its children' );
+    assert && assert( !options.children, 'children is set by this Node' );
     options.children = [ leftOperationNode, rightOperationNode ];
 
     Node.call( this, options );

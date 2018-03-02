@@ -38,7 +38,7 @@ define( function( require ) {
       ySpacing: 3 // vertical spacing above/below the fraction line
     }, options );
 
-    assert && assert( !options.children, 'children is set by ReducedFractionNode' );
+    assert && assert( !options.children, 'children is set by this Node' );
 
     if ( fraction.isInteger() ) {
 

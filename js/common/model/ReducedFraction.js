@@ -29,8 +29,9 @@ define( function( require ) {
   return inherit( Fraction, ReducedFraction, {
 
     /**
-     * Gets the value in decimal format.  This function is provided to improved readability and refactoring.
+     * Gets the value in decimal format.  This function is provided to improved readability and searchability.
      * @returns {number}
+     * @public
      */
     toDecimal: function() {
        return this.getValue();
@@ -39,6 +40,7 @@ define( function( require ) {
     /**
      * Returns the absolute value of this fraction.
      * @returns {ReducedFraction}
+     * @public
      */
     abs: function() {
       return new ReducedFraction( Math.abs( this.numerator ), Math.abs( this.denominator ) );

@@ -27,7 +27,7 @@ define( function( require ) {
       spacing: 3
     }, options );
 
-    assert && assert( !options.children, 'subtype sets its own children' );
+    assert && assert( !options.children, 'children is set by this Node' );
     options.children = [
       new Text( operation.operator, { font: options.font } ),
       new Text( operation.operand, { font: options.font } )

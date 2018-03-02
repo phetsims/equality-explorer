@@ -92,7 +92,7 @@ define( function( require ) {
       }
     } );
 
-    assert && assert( !options.children, 'this type sets its own children' );
+    assert && assert( !options.children, 'children is set by this Node' );
     options.children = [ selectionRectangle, snapshotNode, snapshotButton ];
 
     Node.call( this, options );

@@ -29,7 +29,7 @@ define( function( require ) {
       cursor: 'pointer'
     }, options );
 
-    assert && assert( !options.children, 'this type defines its children' );
+    assert && assert( !options.children, 'children is set by this Node' );
     options.children = [ termCreator.icon ];
 
     // @private

@@ -97,7 +97,7 @@ define( function( require ) {
       centerY: supportNode.bottom
     } );
 
-    assert && assert( !options.children, 'this type defines its children' );
+    assert && assert( !options.children, 'children is set by this Node' );
     options.children = [ supportNode, pivotNode, plateNode ];
 
     // Grid where terms appear
