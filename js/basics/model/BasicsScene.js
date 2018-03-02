@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Base type for a scene in the 'Basics' screen.
+ * Abstract base type for a scene in the 'Basics' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,9 +20,10 @@ define( function( require ) {
   /**
    * @param {string} debugName - internal name, not displayed to the user, no i18n required
    * @param {Node} icon - icon used to represent the scene
-   * @param {{name: string, weight: number, icon: Node, shadow: Node}[]} mysteryObjects
+   * @param {MysteryObject[]} mysteryObjects
    * @param {Object} [options]
    * @constructor
+   * @abstract
    */
   function BasicsScene( debugName, icon, mysteryObjects, options ) {
 
@@ -54,8 +55,7 @@ define( function( require ) {
 
     // creators for mystery terms
     for ( var i = 0; i < mysteryObjects.length; i++ ) {
-      var o = mysteryObjects[ i ];
-      termCreators.push( new MysteryTermCreator( o.name, o.weight, o.icon, o.shadow, {
+      termCreators.push( new MysteryTermCreator( mysteryObjects[ i ], {
         initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ i ]
       } ) );
     }

@@ -14,6 +14,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MysteryObject = require( 'EQUALITY_EXPLORER/basics/model/MysteryObject' );
 
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
@@ -34,13 +35,13 @@ define( function( require ) {
     } );
 
     // mystery objects for this scene
-    var fruits = [
-      { name: 'apple', weight: 4, icon: appleImage, shadow: appleShadowImage },
-      { name: 'lemon', weight: 5, icon: lemonImage, shadow: lemonShadowImage },
-      { name: 'orange', weight: 2, icon: orangeImage, shadow: orangeShadowImage }
+    var mysteryObjects = [
+      new MysteryObject( 'apple', 4, appleImage, appleShadowImage ),
+      new MysteryObject( 'lemon', 5, lemonImage, lemonShadowImage ),
+      new MysteryObject( 'orange', 2, orangeImage, orangeShadowImage )
     ];
 
-    BasicsScene.call( this, 'fruits', icon, fruits );
+    BasicsScene.call( this, 'fruits', icon, mysteryObjects );
   }
 
   equalityExplorer.register( 'FruitsScene', FruitsScene );

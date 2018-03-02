@@ -15,29 +15,20 @@ define( function( require ) {
   var MysteryTerm = require( 'EQUALITY_EXPLORER/basics/model/MysteryTerm' );
   var MysteryTermNode = require( 'EQUALITY_EXPLORER/basics/view/MysteryTermNode' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
-  var Util = require( 'DOT/Util' );
 
   /**
-   * @param {string} typeName - internal name for the mystery object type, not visible to the user
-   * @param {number} weight - integer weight of 1 mystery item
-   * @param {HTMLImageElement} image
-   * @param {HTMLImageElement} shadow
+   * @param {MysteryObject} mysteryObject
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTermCreator( typeName, weight, image, shadow, options ) {
+  function MysteryTermCreator( mysteryObject, options ) {
 
-    assert&& assert( Util.isInteger( weight ), 'weight must be an integer: ' + weight );
-
-    phet.log && phet.log( 'MysteryTermCreator: ' + typeName + '=' + weight );
+    phet.log && phet.log( 'MysteryTermCreator name=' + mysteryObject.name + ', weight=' + mysteryObject.weight );
 
     // @public (read-only)
-    this.typeName = typeName;
-    this.weight = weight;
-    this.image = image;
-    this.shadow = shadow;
+    this.mysteryObject = mysteryObject;
 
-    var icon = MysteryTermNode.createIcon( image );
+    var icon = MysteryTermNode.createIcon( mysteryObject.image );
 
     TermCreator.call( this, icon, options );
   }
@@ -60,7 +51,7 @@ define( function( require ) {
         dragBounds: this.dragBounds
       }, options );
 
-      return new MysteryTerm( this.typeName, this.weight, this.image, this.shadow, options );
+      return new MysteryTerm( this.mysteryObject, options );
     },
 
     /**
@@ -84,9 +75,7 @@ define( function( require ) {
      * @override
      */
     isInverseOf: function( termCreator ) {
-      return ( termCreator instanceof MysteryTermCreator ) &&
-             ( termCreator.typeName === this.typeName ) && // same mystery object type
-             ( termCreator.weight === -this.weight ); // inverse weights
+      return false; // there are no inverses for mystery objects
     },
 
     /**
@@ -97,9 +86,7 @@ define( function( require ) {
      * @override
      */
     isEquivalentTo: function( termCreator ) {
-      return ( termCreator instanceof MysteryTermCreator ) &&
-             ( termCreator.typeName === this.typeName ) && // same mystery object type
-             ( termCreator.weight === this.weight ); // same weights
+      return false; // there are no equivalents for mystery objects
     }
   } );
 } );

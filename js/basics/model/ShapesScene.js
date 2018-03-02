@@ -14,6 +14,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
+  var MysteryObject = require( 'EQUALITY_EXPLORER/basics/model/MysteryObject' );
 
   // images
   var sphereImage = require( 'image!EQUALITY_EXPLORER/sphere.png' );
@@ -30,12 +31,12 @@ define( function( require ) {
     var icon = ConstantTermNode.createIcon( ReducedFraction.withInteger( 1 ) );
 
     // mystery objects for this scene
-    var shapes = [
-      { name: 'sphere', weight: 2, icon: sphereImage, shadow: sphereShadowImage },
-      { name: 'square', weight: 3, icon: squareImage, shadow: squareShadowImage }
+    var mysteryObjects = [
+      new MysteryObject( 'sphere', 2, sphereImage, sphereShadowImage ),
+      new MysteryObject( 'square', 3, squareImage, squareShadowImage )
     ];
 
-    BasicsScene.call( this, 'shapes', icon, shapes, {
+    BasicsScene.call( this, 'shapes', icon, mysteryObjects, {
       hasConstantTerms: true // this scene allows you to create constant terms
     } );
   }

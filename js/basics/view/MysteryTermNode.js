@@ -24,9 +24,9 @@ define( function( require ) {
    */
   function MysteryTermNode( termCreator, term, plate, options ) {
 
-    var contentNode = MysteryTermNode.createIcon( term.image );
+    var contentNode = MysteryTermNode.createIcon( term.mysteryObject.image );
 
-    var shadowNode = new Image( term.shadow, {
+    var shadowNode = new Image( term.mysteryObject.shadow, {
       maxHeight: contentNode.height,
       opacity: 0.4
     } );

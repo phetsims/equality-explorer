@@ -14,6 +14,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MysteryObject = require( 'EQUALITY_EXPLORER/basics/model/MysteryObject' );
 
   // images
   var catImage = require( 'image!EQUALITY_EXPLORER/cat.png' );
@@ -34,13 +35,13 @@ define( function( require ) {
     } );
 
     // mystery objects for this scene
-    var animals = [
-      { name: 'dog', weight: 11, icon: dogImage, shadow: dogShadowImage },
-      { name: 'cat', weight: 4, icon: catImage, shadow: catShadowImage },
-      { name: 'turtle', weight: 6, icon: turtleImage, shadow: turtleShadowImage }
+    var mysteryObjects = [
+      new MysteryObject( 'dog', 11, dogImage, dogShadowImage ),
+      new MysteryObject( 'cat', 4, catImage, catShadowImage ),
+      new MysteryObject( 'turtle', 6, turtleImage, turtleShadowImage )
     ];
 
-    BasicsScene.call( this, 'animals', icon, animals, {
+    BasicsScene.call( this, 'animals', icon, mysteryObjects, {
       maxWeight: 50 // weight at which the scale bottoms out
     } );
   }
