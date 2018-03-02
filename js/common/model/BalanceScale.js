@@ -123,6 +123,8 @@ define( function( require ) {
 
         var angle = ( weightDelta / options.maxWeight ) * options.maxAngle;
         assert && assert( Math.abs( angle ) <= options.maxAngle, 'angle out of range: ' + angle );
+
+        phet.log && phet.log( 'BalanceScale: angle=' + Util.toFixed( Util.toDegrees( angle ), 2 ) );
         return angle;
       }, {
         isValidValue: function( value ) {
