@@ -48,6 +48,7 @@ define( function( require ) {
 
     // Number of terms that are initially on the left plate in the Basics screen.
     // This is intended to be used for debugging and testing, not in production situations.
+    // Example: ?leftBasics=10,11,12
     // See https://github.com/phetsims/equality-explorer/issues/8
     // For internal use only, not public facing.
     leftBasics: {
