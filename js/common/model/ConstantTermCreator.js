@@ -88,7 +88,7 @@ define( function( require ) {
      * @param {TermCreator} termCreator
      * @returns {boolean}
      * @public
-     * @abstract
+     * @override
      */
     isEquivalentTo: function( termCreator ) {
       return ( termCreator instanceof ConstantTermCreator ) &&
