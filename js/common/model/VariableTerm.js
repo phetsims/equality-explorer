@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
@@ -25,8 +24,6 @@ define( function( require ) {
   function VariableTerm( symbol, variableValueProperty, options ) {
 
     assert && assert( variableValueProperty instanceof NumberProperty, 'invalid variableValueProperty' );
-
-    var self = this;
 
     options = _.extend( {
       coefficient: ReducedFraction.withInteger( 1 )
@@ -44,12 +41,6 @@ define( function( require ) {
     // @public (read-only) {NumberProperty}
     this.variableValueProperty = variableValueProperty;
 
-    // @public (read-only) {Property.<ReducedFraction>}
-    this.weightProperty = new DerivedProperty( [ variableValueProperty ],
-      function( variableValue ) {
-        return self.coefficient.timesInteger( variableValue );
-      } );
-
     Term.call( this, options );
   }
 
@@ -64,16 +55,7 @@ define( function( require ) {
      * @override
      */
     get weight() {
-      return this.weightProperty.value;
-    },
-
-    /**
-     * @public
-     * @override
-     */
-    dispose: function() {
-      this.weightProperty.dispose();
-      Term.prototype.dispose.call( this );
+      return this.coefficient.timesInteger( this.variableValueProperty.value );
     },
 
     /**

@@ -27,6 +27,8 @@ define( function( require ) {
 
     assert && assert( variableValueProperty instanceof NumberProperty, 'invalid variableValueProperty' );
 
+    var self = this;
+
     options = _.extend( {
       defaultCoefficient: ReducedFraction.withInteger( 1 ), // terms are created with this coefficient by default
       positiveFill: 'rgb( 49, 193, 238 )',
@@ -50,6 +52,12 @@ define( function( require ) {
     } );
 
     TermCreator.call( this, icon, options );
+
+    // When the variable values changes, recompute the weight of terms on the scale.
+    // dispose not needed.
+    this.variableValueProperty.link( function( variableValue ) {
+      self.updateWeightOnScaleProperty();
+    } );
   }
 
   equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );
@@ -59,6 +67,7 @@ define( function( require ) {
     /**
      * Returns the sum of coefficients for all terms on the scale.
      * @returns {RationalNumber}
+     * @public
      */
     sumCoefficientsOnScale: function() {
       var sum = ReducedFraction.withInteger( 0 );
@@ -123,7 +132,7 @@ define( function( require ) {
      * @param {TermCreator} termCreator
      * @returns {boolean}
      * @public
-     * @abstract
+     * @override
      */
     isEquivalentTo: function( termCreator ) {
       return ( termCreator.constructor === this.constructor ) &&  // same type
