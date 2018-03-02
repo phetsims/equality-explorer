@@ -97,7 +97,7 @@ define( function( require ) {
       }
 
       // variable's symbol, with negative sign if coefficient is -1
-      var symbolText = ( coefficient.toDecimal() === -1 ) ? ( EqualityExplorerConstants.NEGATIVE_SIGN + symbol ) : symbol;
+      var symbolText = ( coefficient.toDecimal() === -1 ) ? ( EqualityExplorerConstants.UNARY_MINUS + symbol ) : symbol;
       var symbolNode = new Text( symbolText, {
         font: options.symbolFont
       } );

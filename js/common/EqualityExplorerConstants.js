@@ -28,7 +28,7 @@ define( function( require ) {
     EQUALS: '\u003d',
     GREATER_THAN: '\u003e',
     LESS_THAN: '\u003c',
-    NEGATIVE_SIGN: '\u002d',
+    UNARY_MINUS: '\u002d',
 
     // Common to all accordion boxes
     ACCORDION_BOX_TITLE_FONT_SIZE: 18,

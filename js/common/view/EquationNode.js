@@ -328,7 +328,7 @@ define( function( require ) {
     else if ( hideOne && coefficient.toDecimal() === -1 ) {
 
       // -1x becomes -x
-      var signNode = new Text( EqualityExplorerConstants.NEGATIVE_SIGN, { font: integerFont } );
+      var signNode = new Text( EqualityExplorerConstants.UNARY_MINUS, { font: integerFont } );
       termNode = new HBox( {
         spacing: 2,
         children: [ signNode, icon ]
