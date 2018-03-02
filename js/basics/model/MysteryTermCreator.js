@@ -1,4 +1,4 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * MysteryTermCreator creates and manages terms that are associated with mystery objects (apple, dog, turtle,...)
@@ -12,8 +12,8 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MysteryTerm = require( 'EQUALITY_EXPLORER/common/model/MysteryTerm' );
-  var MysteryTermNode = require( 'EQUALITY_EXPLORER/common/view/MysteryTermNode' );
+  var MysteryTerm = require( 'EQUALITY_EXPLORER/basics/model/MysteryTerm' );
+  var MysteryTermNode = require( 'EQUALITY_EXPLORER/basics/view/MysteryTermNode' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
   var Util = require( 'DOT/Util' );
 
