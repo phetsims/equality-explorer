@@ -1,4 +1,4 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * MysteryTerm has a fixed weight that is exposed to the user.
@@ -72,8 +72,8 @@ define( function( require ) {
      */
     isInverseOf: function( term ) {
       return ( term instanceof MysteryTerm ) &&
-             ( this.typeName === term.typeName ) && // same mystery object type
-             ( this.weight.toDecimal() === -term.weight.toDecimal() ); // inverse weights
+             ( term.typeName === this.typeName ) && // same mystery object type
+             ( term._weight === -this._weight ); // inverse weights
     }
   } );
 } );
