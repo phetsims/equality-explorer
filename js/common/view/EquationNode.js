@@ -98,11 +98,12 @@ define( function( require ) {
       // {Property[]} dependencies that require the equation to be updated
       var updateDependencies = [];
       termCreators.forEach( function( termCreator ) {
+        //TODO address this problem:
+        // When variable value is non-zero, both numberOfTermsOnScaleProperty and weightOnScaleProperty will
+        // change when an item is removed from the scale.  There will be an invalid intermediate state where
+        // one Property has change, but the other has not.  This also causes the equation to be updated twice.
         updateDependencies.push( termCreator.numberOfTermsOnScaleProperty );
-        if ( termCreator.variableValueProperty ) {
-          //TODO when variableValueProperty changes, all that really needs updating is relational operator
-          updateDependencies.push( termCreator.variableValueProperty );
-        }
+        updateDependencies.push( termCreator.weightOnScaleProperty );
       } );
 
       // dispose required
