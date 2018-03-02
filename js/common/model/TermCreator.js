@@ -29,6 +29,8 @@ define( function( require ) {
    */
   function TermCreator( icon, options ) {
 
+    var self = this;
+
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
       initialNumberOfTermsOnScale: 0 // {number} integer number of terms initially on the scale
@@ -107,7 +109,12 @@ define( function( require ) {
 
     // @private
     this.updateWeightOnScalePropertyBound = this.updateWeightOnScaleProperty.bind( this );
-    this.updateWeightOnScalePropertyBound();
+
+    // Update weight when number of terms on scale changes.
+    // unlink not required.
+    this.numberOfTermsOnScaleProperty.link( function( numberOfTermsOnScale ) {
+      self.updateWeightOnScalePropertyBound();
+    } );
   }
 
   equalityExplorer.register( 'TermCreator', TermCreator );
@@ -248,9 +255,9 @@ define( function( require ) {
     },
 
     /**
-     * Puts a term on the scale, in a specified cell in the associated plate's 2D grid.
+     * Puts a term on the scale. ORDER IS VERY IMPORTANT HERE!
      * @param {Term} term
-     * @param {number} cellIndex
+     * @param {number} cellIndex - cell in the associated plate's 2D grid
      * @public
      */
     putTermOnScale: function( term, cellIndex ) {
@@ -262,13 +269,12 @@ define( function( require ) {
         term.weightProperty.lazyLink( this.updateWeightOnScalePropertyBound ); // unlink required in removeTerm
       }
 
-      this.termsOnScale.push( term );
       this.plate.addTerm( term, cellIndex );
-      this.updateWeightOnScaleProperty();
+      this.termsOnScale.push( term );
     },
 
     /**
-     * Removes a term from the scale.
+     * Removes a term from the scale. ORDER IS VERY IMPORTANT HERE!
      * @param {Term} term
      * @public
      */
@@ -281,9 +287,8 @@ define( function( require ) {
         term.weightProperty.unlink( this.updateWeightOnScalePropertyBound );
       }
 
-      this.termsOnScale.remove( term );
       this.plate.removeTerm( term );
-      this.updateWeightOnScaleProperty();
+      this.termsOnScale.remove( term );
     },
 
     /**

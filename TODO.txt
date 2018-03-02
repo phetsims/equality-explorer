@@ -1,8 +1,6 @@
 TODO items for equality-explorer
 
 Terms
-- EquationNode: relational operator is wrong, behind by 1 term?
-- EquationNode: constant term value is not in sync with what's on scale, behind by 1 term?
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
 - Optionally associate term type with cells in the grid
