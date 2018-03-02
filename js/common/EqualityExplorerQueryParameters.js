@@ -5,8 +5,7 @@
  *
  * Running with ?log will print these query parameters and their values to the console.
  *
- * Running with ?dev shows the following things:
- * - layout bounds for the screen (the safe zone)
+ * Running with ?dev shows the following things that are specific to this sim:
  * - red dot at the origin of each term
  * - red dot at the origin of each plate
  * - red dot at the origin of the scale
