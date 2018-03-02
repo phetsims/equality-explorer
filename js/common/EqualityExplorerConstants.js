@@ -20,7 +20,7 @@ define( function( require ) {
     SCREEN_VIEW_X_MARGIN: 20,
     SCREEN_VIEW_Y_MARGIN: 20,
 
-    // Unicode math symbols, i18n not required
+    // math symbols, i18n not required
     PLUS: '\u002b',
     MINUS: '\u2212',
     TIMES: '\u00d7',
@@ -28,6 +28,7 @@ define( function( require ) {
     EQUALS: '\u003d',
     GREATER_THAN: '\u003e',
     LESS_THAN: '\u003c',
+    NEGATIVE_SIGN: '-',
 
     // Common to all accordion boxes
     ACCORDION_BOX_TITLE_FONT_SIZE: 18,
