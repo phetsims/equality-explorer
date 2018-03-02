@@ -74,6 +74,32 @@ define( function( require ) {
      */
     createTermNode: function( term, plate, options ) {
       return new MysteryTermNode( this, term, plate, options );
+    },
+
+    /**
+     * Is this term creator the inverse of a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isInverseOf: function( termCreator ) {
+      return ( termCreator instanceof MysteryTermCreator ) &&
+             ( termCreator.typeName === this.typeName ) && // same mystery object type
+             ( termCreator.weight === -this.weight ); // inverse weights
+    },
+
+    /**
+     * Is this term creator equivalent to a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isEquivalentTo: function( termCreator ) {
+      return ( termCreator instanceof MysteryTermCreator ) &&
+             ( termCreator.typeName === this.typeName ) && // same mystery object type
+             ( termCreator.weight === this.weight ); // same weights
     }
   } );
 } );
