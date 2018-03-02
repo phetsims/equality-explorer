@@ -21,7 +21,7 @@ define( function( require ) {
     SCREEN_VIEW_Y_MARGIN: 20,
 
     // math symbols, i18n not required
-    PLUS: '+',
+    PLUS: '\u002b',
     MINUS: '\u2212',
     TIMES: '\u00d7',
     DIVIDE: '\u00f7',
