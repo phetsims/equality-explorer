@@ -1,6 +1,6 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
-/***
+/**
  * Accordion box that displays the equation or inequality.
  *
  * @author Chris Malley (PixelZoom, Inc.)
