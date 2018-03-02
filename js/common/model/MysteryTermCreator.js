@@ -29,6 +29,8 @@ define( function( require ) {
 
     assert&& assert( Util.isInteger( weight ), 'weight must be an integer: ' + weight );
 
+    phet.log && phet.log( 'MysteryTermCreator: ' + typeName + '=' + weight );
+
     // @public (read-only)
     this.typeName = typeName;
     this.weight = weight;
