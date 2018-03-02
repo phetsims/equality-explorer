@@ -66,26 +66,39 @@ define( function( require ) {
 
     Node.call( this );
 
-    // updates the equation
-    var update = function() {
+    var leftSideNode = null;
+    var rightSideNode = null;
+    var relationalOperatorNode = new Text( '?', { font: relationalOperatorFont } );
 
-      var relationalOperatorNode = createRelationalOperatorNode( leftTermCreators, rightTermCreators, relationalOperatorFont );
+    // updates the equation's layout, origin at the center of the relational operator
+    var updateLayout = function() {
+      if ( leftSideNode && rightSideNode ) {
+        relationalOperatorNode.centerX = 0;
+        relationalOperatorNode.centerY = 0;
+        leftSideNode.right = relationalOperatorNode.left - options.relationalOperatorSpacing;
+        leftSideNode.centerY = relationalOperatorNode.centerY;
+        rightSideNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
+        rightSideNode.centerY = relationalOperatorNode.centerY;
+      }
+    };
 
-      var leftSideNode = createSideNode( leftTermCreators, variableFont, operatorFont, integerFont, fractionFont,
+    // updates the relational operator based on left vs right weight
+    var updateRelationalOperator = function() {
+      relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
+      updateLayout();
+    };
+
+    // updates the equation's terms
+    var updateTerms = function() {
+
+      leftSideNode = createSideNode( leftTermCreators, variableFont, operatorFont, integerFont, fractionFont,
         options.coefficientSpacing, options.plusSpacing );
 
-      var rightSideNode = createSideNode( rightTermCreators, variableFont, operatorFont, integerFont, fractionFont,
+      rightSideNode = createSideNode( rightTermCreators, variableFont, operatorFont, integerFont, fractionFont,
         options.coefficientSpacing, options.plusSpacing );
 
       self.children = [ leftSideNode, relationalOperatorNode, rightSideNode ];
-
-      // Layout, with origin at center of relational operator
-      relationalOperatorNode.centerX = 0;
-      relationalOperatorNode.centerY = 0;
-      leftSideNode.right = relationalOperatorNode.left - options.relationalOperatorSpacing;
-      leftSideNode.centerY = relationalOperatorNode.centerY;
-      rightSideNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
-      rightSideNode.centerY = relationalOperatorNode.centerY;
+      updateLayout();
     };
 
     if ( options.updateEnabled ) {
@@ -95,29 +108,32 @@ define( function( require ) {
       // {TermCreator[]} all TermCreator instances
       var termCreators = leftTermCreators.concat( rightTermCreators );
 
-      // {Property[]} dependencies that require the equation to be updated
-      var updateDependencies = [];
+      // {Property[]} dependencies that require the relational operator to be updated
+      var relationalOperatorDependencies = [];
+
+      // {Property[]} dependencies that require the terms to be updated
+      var termDependencies = [];
+
       termCreators.forEach( function( termCreator ) {
-        //TODO address this problem:
-        // When variable value is non-zero, both numberOfTermsOnScaleProperty and weightOnScaleProperty will
-        // change when an item is removed from the scale.  There will be an invalid intermediate state where
-        // one Property has change, but the other has not.  This also causes the equation to be updated twice.
-        updateDependencies.push( termCreator.numberOfTermsOnScaleProperty );
-        updateDependencies.push( termCreator.weightOnScaleProperty );
+        relationalOperatorDependencies.push( termCreator.weightOnScaleProperty );
+        termDependencies.push( termCreator.numberOfTermsOnScaleProperty );
       } );
 
       // dispose required
-      var updateMultilink = new Multilink( updateDependencies, update );
+      var relationalOperatorMultilink = new Multilink( relationalOperatorDependencies, updateRelationalOperator );
+      var termsMultilink = new Multilink( termDependencies, updateTerms );
     }
     else {
 
       // static equation
-      update();
+      updateRelationalOperator();
+      updateTerms();
     }
 
     // @private
     this.disposeEquationNode = function() {
-      updateMultilink && updateMultilink.dispose();
+      relationalOperatorMultilink && relationalOperatorMultilink.dispose();
+      termsMultilink && termsMultilink.dispose();
     };
 
     this.mutate( options );
@@ -126,13 +142,13 @@ define( function( require ) {
   equalityExplorer.register( 'EquationNode', EquationNode );
 
   /**
-   * Create the Node for the operator that describes the relationship between the left and right sides.
+   * Gets the operator that describes the relationship between the left and right sides.
    * @param {TermCreator[]} leftTermCreators
    * @param {TermCreator[]} rightTermCreators
    * @param {Font} font
-   * @returns {Node}
+   * @returns {string}
    */
-  function createRelationalOperatorNode( leftTermCreators, rightTermCreators, font ) {
+  function getRelationalOperator( leftTermCreators, rightTermCreators, font ) {
 
     // evaluate the left side
     var leftWeight = 0;
@@ -159,8 +175,7 @@ define( function( require ) {
     }
 
     phet.log && phet.log( 'relational operator: ' + leftWeight + ' ' + relationalOperator + ' ' + rightWeight );
-
-    return new Text( relationalOperator, { font: font } );
+    return relationalOperator;
   }
 
   /**
@@ -351,7 +366,7 @@ define( function( require ) {
    * @param {Font} fractionFont
    * @returns {Node}
    */
-  function createConstantTermNode( value, integerFont, fractionFont) {
+  function createConstantTermNode( value, integerFont, fractionFont ) {
     assert && assert( value instanceof ReducedFraction, 'invalid coefficient type' );
     return new ReducedFractionNode( value, {
       integerFont: integerFont,
