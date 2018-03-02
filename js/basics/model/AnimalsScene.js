@@ -12,10 +12,8 @@ define( function( require ) {
   var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MysteryTermCreator = require( 'EQUALITY_EXPLORER/basics/model/MysteryTermCreator' );
 
   // images
   var catImage = require( 'image!EQUALITY_EXPLORER/cat.png' );
@@ -35,37 +33,19 @@ define( function( require ) {
       maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
     } );
 
-    BasicsScene.call( this, 'animals', icon,
-      createTermCreators( EqualityExplorerQueryParameters.leftBasics ),
-      createTermCreators( EqualityExplorerQueryParameters.rightBasics ), {
-        maxWeight: 50
-      } );
+    // mystery objects for this scene
+    var animals = [
+      { name: 'dog', weight: 11, icon: dogImage, shadow: dogShadowImage },
+      { name: 'cat', weight: 4, icon: catImage, shadow: catShadowImage },
+      { name: 'turtle', weight: 6, icon: turtleImage, shadow: turtleShadowImage }
+    ];
+
+    BasicsScene.call( this, 'animals', icon, animals, {
+      maxWeight: 50 // weight at which the scale bottoms out
+    } );
   }
 
   equalityExplorer.register( 'AnimalsScene', AnimalsScene );
-
-  /**
-   * Creates the term creators for this scene.
-   * @param {number[]} initialNumberOfTermsOnScale
-   * @returns {TermCreator[]}
-   */
-  function createTermCreators( initialNumberOfTermsOnScale ) {
-
-    assert && assert( initialNumberOfTermsOnScale.length === 3 );
-    var index = 0;
-
-    return [
-      new MysteryTermCreator( 'dog', 11, dogImage, dogShadowImage, {
-        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
-      } ),
-      new MysteryTermCreator( 'cat', 4, catImage, catShadowImage, {
-        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
-      } ),
-      new MysteryTermCreator( 'turtle', 6, turtleImage, turtleShadowImage, {
-        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
-      } )
-    ];
-  }
 
   return inherit( BasicsScene, AnimalsScene );
 } );

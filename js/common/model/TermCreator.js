@@ -37,7 +37,7 @@ define( function( require ) {
     }, options );
 
     assert && assert( Util.isInteger( options.initialNumberOfTermsOnScale ) && ( options.initialNumberOfTermsOnScale >= 0 ),
-      'initialNumberOfTermsOnScale is invalid: ' + options.initialNumberOfTermsOnScale );
+      'initialNumberOfTermsOnScale must be an integer >= 0: ' + options.initialNumberOfTermsOnScale );
 
     // @private has this instance been fully initialized?
     this.isInitialized = false;
