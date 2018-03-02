@@ -1,7 +1,6 @@
 TODO items for equality-explorer
 
 Terms
-- Each time the variable value is changed, EquationNode.getRelationOperator is called 4 times
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
 - Optionally associate term type with cells in the grid

@@ -337,11 +337,17 @@ define( function( require ) {
      * @protected
      */
     updateWeightOnScaleProperty: function() {
+
+      // compute the weight
       var weight = ReducedFraction.withInteger( 0 );
       for ( var i = 0; i < this.termsOnScale.length; i++ ) {
           weight = weight.plusFraction( this.termsOnScale.get( i ).weight );
       }
-      this.weightOnScaleProperty.value = weight;
+
+      // update only if the weight has changed
+      if ( weight.toDecimal() !== this.weightOnScaleProperty.value.toDecimal() ) {
+        this.weightOnScaleProperty.value = weight;
+      }
     }
   } );
 } );
