@@ -13,10 +13,10 @@ define( function( require ) {
   // modules
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Multilink = require( 'AXON/Multilink' );
   var MysteryTermCreator = require( 'EQUALITY_EXPLORER/basics/model/MysteryTermCreator' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -165,13 +165,13 @@ define( function( require ) {
     // determine the operator that describes the relationship between left and right sides
     var relationalOperator = null;
     if ( leftWeight < rightWeight ) {
-      relationalOperator = EqualityExplorerConstants.LESS_THAN;
+      relationalOperator = MathSymbols.LESS_THAN;
     }
     else if ( leftWeight > rightWeight ) {
-      relationalOperator = EqualityExplorerConstants.GREATER_THAN;
+      relationalOperator = MathSymbols.GREATER_THAN;
     }
     else {
-      relationalOperator = EqualityExplorerConstants.EQUALS;
+      relationalOperator = MathSymbols.EQUAL_TO;
     }
 
     phet.log && phet.log( 'EquationNode: ' + leftWeight + ' ' + relationalOperator + ' ' + rightWeight );
@@ -207,7 +207,7 @@ define( function( require ) {
           //TODO this entire if block needs a rewrite
           // mystery terms are displayed as a coefficient and icon
           if ( children.length > 0 ) {
-            children.push( new Text( EqualityExplorerConstants.PLUS, { font: operatorFont } ) );
+            children.push( new Text( MathSymbols.PLUS, { font: operatorFont } ) );
           }
           children.push( createMysteryTermNode( numberOfTermsOnScale, termCreator.icon, integerFont, coefficientSpacing ) );
         }
@@ -242,7 +242,7 @@ define( function( require ) {
           if ( children.length > 0 ) {
 
             // if there were previous terms, replace the coefficient's sign with an operator
-            var operator = ( coefficient.toDecimal() > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
+            var operator = ( coefficient.toDecimal() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
             children.push( new Text( operator, { font: operatorFont } ) );
             children.push( createVariableTermNode( coefficient.abs(), variableNode, integerFont, fractionFont, coefficientSpacing, true ) );
           }
@@ -262,7 +262,7 @@ define( function( require ) {
       if ( children.length > 0 ) {
 
         // if there were previous terms, replace the constant's sign with an operator
-        operator = ( constantValue.toDecimal() > 0 ) ? EqualityExplorerConstants.PLUS : EqualityExplorerConstants.MINUS;
+        operator = ( constantValue.toDecimal() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
         children.push( new Text( operator, { font: operatorFont } ) );
         children.push( createConstantTermNode( constantValue.abs(), integerFont, fractionFont ) );
       }
@@ -328,7 +328,7 @@ define( function( require ) {
     else if ( hideOne && coefficient.toDecimal() === -1 ) {
 
       // -1x becomes -x
-      var signNode = new Text( EqualityExplorerConstants.UNARY_MINUS, { font: integerFont } );
+      var signNode = new Text( MathSymbols.UNARY_MINUS, { font: integerFont } );
       termNode = new HBox( {
         spacing: 2,
         children: [ signNode, icon ]

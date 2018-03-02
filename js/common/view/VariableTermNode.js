@@ -14,6 +14,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -97,7 +98,7 @@ define( function( require ) {
       }
 
       // variable's symbol, with negative sign if coefficient is -1
-      var symbolText = ( coefficient.toDecimal() === -1 ) ? ( EqualityExplorerConstants.UNARY_MINUS + symbol ) : symbol;
+      var symbolText = ( coefficient.toDecimal() === -1 ) ? ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
       var symbolNode = new Text( symbolText, {
         font: options.symbolFont
       } );

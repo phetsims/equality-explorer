@@ -16,6 +16,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
@@ -42,14 +43,14 @@ define( function( require ) {
 
     // @public (read-only) set of operators for universal operation
     this.operators = [
-      EqualityExplorerConstants.PLUS,
-      EqualityExplorerConstants.MINUS,
-      EqualityExplorerConstants.TIMES,
-      EqualityExplorerConstants.DIVIDE
+      MathSymbols.PLUS,
+      MathSymbols.MINUS,
+      MathSymbols.TIMES,
+      MathSymbols.DIVIDE
     ];
 
     // @public (read-only) operator for 'universal operation'
-    this.operatorProperty = new StringProperty( EqualityExplorerConstants.PLUS, {
+    this.operatorProperty = new StringProperty( MathSymbols.PLUS, {
       validValues: this.operators
     } );
 

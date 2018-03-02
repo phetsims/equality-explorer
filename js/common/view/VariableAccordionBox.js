@@ -16,6 +16,7 @@ define( function( require ) {
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -73,7 +74,7 @@ define( function( require ) {
       maxWidth: 0.5 * contentWidth
     } );
 
-    var equalsText = new Text( EqualityExplorerConstants.EQUALS, {
+    var equalsText = new Text( MathSymbols.EQUAL_TO, {
       font: new PhetFont( options.fontSize )
     } );
 

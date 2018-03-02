@@ -11,10 +11,10 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -76,7 +76,7 @@ define( function( require ) {
 
       // Add sign for negative values
       if ( fraction.toDecimal() < 0 ) {
-        var negativeSignNode = new Text( EqualityExplorerConstants.MINUS, {
+        var negativeSignNode = new Text( MathSymbols.MINUS, {
           font: options.fractionFont,
           right: lineNode.left - options.xSpacing,
           centerY: lineNode.centerY
