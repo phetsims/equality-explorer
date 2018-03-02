@@ -1,6 +1,7 @@
 TODO items for equality-explorer
 
 Terms
+- BUG: equation is 1 state behind when changing value of 'x'
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
 - Optionally associate term type with cells in the grid
