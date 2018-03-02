@@ -264,6 +264,11 @@ define( function( require ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term.toString() );
       assert && assert( !this.termsOnScale.contains( term ), 'term already on scale: ' + term.toString() );
 
+      //TODO address this, invalid intermediate states
+      // Observing the weightProperty of terms is problematic. VariableTerms derive their weight from variableValueProperty.
+      // And all of the terms have the same variableProperty. So the TermCreator will get notified
+      // individually by each term that its weight has changed. This will result in the sim
+      // going through many invalid intermediate states, until all terms have notified this TermCreator.
       // If the term has dynamic weight, start observing it.
       if ( term.weightProperty ) {
         term.weightProperty.lazyLink( this.updateWeightOnScalePropertyBound ); // unlink required in removeTerm

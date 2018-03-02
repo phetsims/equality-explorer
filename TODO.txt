@@ -1,7 +1,7 @@
 TODO items for equality-explorer
 
 Terms
-- Address TODO in EquationNode, were there's an invalid intermediate state and EquationNode updates twice
+- Address invalid intermediate states in TermCreator, see TODO
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
 - Optionally associate term type with cells in the grid
