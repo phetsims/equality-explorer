@@ -23,5 +23,8 @@ Locked mode, #19
 - term dragged from scale
 - mode change while drag is in progress (ignore mode change?)
 
+Misc
+- if there are N items on the scale, pressing Reset or Reset All update EquationNode N times
+
 Cleanup
 - grunt update-copyright-dates
