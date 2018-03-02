@@ -51,7 +51,7 @@ define( function( require ) {
 
     var shadowNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
       fill: 'black',
-      opacity: 0.4
+      opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
 
     TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );

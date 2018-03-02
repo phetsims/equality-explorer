@@ -28,7 +28,7 @@ define( function( require ) {
 
     var shadowNode = new Image( term.mysteryObject.shadow, {
       maxHeight: contentNode.height,
-      opacity: 0.4
+      opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
 
     TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );

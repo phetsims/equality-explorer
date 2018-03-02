@@ -38,7 +38,8 @@ define( function( require ) {
 
     // terms
     SMALL_TERM_DIAMETER: 32,
-    BIG_TERM_DIAMETER: 100
+    BIG_TERM_DIAMETER: 100,
+    SHADOW_OPACITY: 0.4
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

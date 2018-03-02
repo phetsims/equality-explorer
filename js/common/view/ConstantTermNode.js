@@ -46,7 +46,7 @@ define( function( require ) {
 
     var shadowNode = new Circle( options.diameter / 2, {
       fill: 'black',
-      opacity: 0.4
+      opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
 
     TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );
