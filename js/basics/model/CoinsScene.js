@@ -36,6 +36,8 @@ define( function( require ) {
 
     // mystery objects for this scene
     var mysteryObjects = [
+
+      // name, weight, image, shadow
       new MysteryObject( 'coin1', 3, coin1Image, coin1ShadowImage ),
       new MysteryObject( 'coin2', 2, coin2Image, coin2ShadowImage ),
       new MysteryObject( 'coin3', 5, coin3Image, coin3ShadowImage )

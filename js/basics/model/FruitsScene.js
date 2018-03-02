@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * The 'Fruit' scene in the 'Basics' screen.
+ * The 'Fruits' scene in the 'Basics' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -36,6 +36,8 @@ define( function( require ) {
 
     // mystery objects for this scene
     var mysteryObjects = [
+
+      // name, weight, image, shadow
       new MysteryObject( 'apple', 4, appleImage, appleShadowImage ),
       new MysteryObject( 'lemon', 5, lemonImage, lemonShadowImage ),
       new MysteryObject( 'orange', 2, orangeImage, orangeShadowImage )
