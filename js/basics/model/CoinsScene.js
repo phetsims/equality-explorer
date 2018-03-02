@@ -29,11 +29,6 @@ define( function( require ) {
    */
   function CoinsScene() {
 
-    // icon that represents this scene
-    var icon = new Image( coin3Image, {
-      maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-    } );
-
     // mystery objects for this scene
     var mysteryObjects = [
 
@@ -43,7 +38,11 @@ define( function( require ) {
       new MysteryObject( 'coin3', 5, coin3Image, coin3ShadowImage )
     ];
 
-    BasicsScene.call( this, 'coins', icon, mysteryObjects );
+    BasicsScene.call( this, 'coins', mysteryObjects, {
+      icon: new Image( coin3Image, {
+        maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
+      } )
+    } );
   }
 
   equalityExplorer.register( 'CoinsScene', CoinsScene );

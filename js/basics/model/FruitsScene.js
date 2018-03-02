@@ -29,11 +29,6 @@ define( function( require ) {
    */
   function FruitsScene() {
 
-    // icon that represents this scene
-    var icon = new Image( appleImage, {
-      maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-    } );
-
     // mystery objects for this scene
     var mysteryObjects = [
 
@@ -43,7 +38,11 @@ define( function( require ) {
       new MysteryObject( 'orange', 2, orangeImage, orangeShadowImage )
     ];
 
-    BasicsScene.call( this, 'fruits', icon, mysteryObjects );
+    BasicsScene.call( this, 'fruits', mysteryObjects, {
+      icon: new Image( appleImage, {
+        maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
+      } )
+    } );
   }
 
   equalityExplorer.register( 'FruitsScene', FruitsScene );

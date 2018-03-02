@@ -29,11 +29,6 @@ define( function( require ) {
    */
   function AnimalsScene() {
 
-    // icon that represents this scene
-    var icon = new Image( turtleImage, {
-      maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-    } );
-
     // mystery objects for this scene
     var mysteryObjects = [
 
@@ -43,7 +38,10 @@ define( function( require ) {
       new MysteryObject( 'turtle', 6, turtleImage, turtleShadowImage )
     ];
 
-    BasicsScene.call( this, 'animals', icon, mysteryObjects, {
+    BasicsScene.call( this, 'animals', mysteryObjects, {
+      icon: new Image( turtleImage, {
+        maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
+      } ),
       maxWeight: 50 // weight at which the scale bottoms out
     } );
   }

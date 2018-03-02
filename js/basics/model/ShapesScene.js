@@ -27,9 +27,6 @@ define( function( require ) {
    */
   function ShapesScene() {
 
-    // icon that represents this scene
-    var icon = ConstantTermNode.createIcon( ReducedFraction.withInteger( 1 ) );
-
     // mystery objects for this scene
     var mysteryObjects = [
 
@@ -38,7 +35,8 @@ define( function( require ) {
       new MysteryObject( 'square', 3, squareImage, squareShadowImage )
     ];
 
-    BasicsScene.call( this, 'shapes', icon, mysteryObjects, {
+    BasicsScene.call( this, 'shapes', mysteryObjects, {
+      icon: ConstantTermNode.createIcon( ReducedFraction.withInteger( 1 ) ),
       hasConstantTerms: true // this scene allows you to create constant terms
     } );
   }

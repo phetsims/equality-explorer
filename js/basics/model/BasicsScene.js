@@ -19,20 +19,16 @@ define( function( require ) {
 
   /**
    * @param {string} debugName - internal name, not displayed to the user, no i18n required
-   * @param {Node} icon - icon used to represent the scene
    * @param {MysteryObject[]} mysteryObjects
    * @param {Object} [options]
    * @constructor
    * @abstract
    */
-  function BasicsScene( debugName, icon, mysteryObjects, options ) {
+  function BasicsScene( debugName, mysteryObjects, options ) {
 
     options = _.extend( {
       hasConstantTerms: false // does this scene allow you to create constant terms?
     }, options );
-
-    assert && assert( !options.icon, 'icon is a required parameter for BasicsScene' );
-    options.icon = icon;
 
     Scene.call( this, debugName,
       createTermCreators( mysteryObjects, options.hasConstantTerms, EqualityExplorerQueryParameters.leftBasics ),
