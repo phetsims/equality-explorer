@@ -44,8 +44,7 @@ define( function( require ) {
 
       // integer
       var integerNode = new Text( fraction.toDecimal(), {
-        font: options.integerFont,
-        centerX: 0 // origin at top center
+        font: options.integerFont
       } );
 
       options.children = [ integerNode ];
