@@ -174,7 +174,7 @@ define( function( require ) {
       relationalOperator = EqualityExplorerConstants.EQUALS;
     }
 
-    phet.log && phet.log( 'relational operator: ' + leftWeight + ' ' + relationalOperator + ' ' + rightWeight );
+    phet.log && phet.log( 'EquationNode: ' + leftWeight + ' ' + relationalOperator + ' ' + rightWeight );
     return relationalOperator;
   }
 
