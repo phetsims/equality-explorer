@@ -18,6 +18,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @param {ReducedFraction} fraction
@@ -51,31 +52,37 @@ define( function( require ) {
     }
     else {
 
-      // fraction
-      var numeratorNode = new Text( fraction.numerator, {
+      var numeratorNode = new Text( Math.abs( fraction.numerator ), {
         font: options.fractionFont
       } );
 
-      var lineNode = new Line( 0, 0, 1, 0, {
+      var denominatorNode = new Text( Math.abs( fraction.denominator ), {
+        font: options.fractionFont
+      } );
+
+      var lineLength = Math.max( numeratorNode.width, denominatorNode.width );
+      var lineNode = new Line( 0, 0, lineLength, 0, {
         stroke: options.color,
-        lineWidth: options.lineWidth,
-        centerX: numeratorNode.centerX,
-        top: numeratorNode.bottom + options.ySpacing
+        lineWidth: options.lineWidth
+      } );
+      
+      var absoluteFractionNode = new VBox( {
+        children: [ numeratorNode, lineNode, denominatorNode ],
+        align: 'center',
+        spacing: options.ySpacing
       } );
 
-      var denominatorNode = new Text( fraction.denominator, {
-        font: options.fractionFont,
-        centerX: numeratorNode.centerX,
-        top: lineNode.bottom + options.ySpacing
-      } );
+      options.children = [ absoluteFractionNode ];
 
-      var negativeSignNode = new Text( EqualityExplorerConstants.MINUS, {
-        font: options.fractionFont,
-        right: lineNode.left - options.xSpacing,
-        centerY: lineNode.centerY
-      } );
-
-      options.children = [ negativeSignNode, numeratorNode, lineNode, denominatorNode ];
+      // Add sign for negative values
+      if ( fraction.toDecimal() < 0 ) {
+        var negativeSignNode = new Text( EqualityExplorerConstants.MINUS, {
+          font: options.fractionFont,
+          right: lineNode.left - options.xSpacing,
+          centerY: lineNode.centerY
+        } );
+        options.children.push( negativeSignNode );
+      }
     }
 
     Node.call( this, options );
