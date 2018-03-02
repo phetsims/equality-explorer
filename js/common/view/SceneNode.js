@@ -38,7 +38,7 @@ define( function( require ) {
       organizeButtonVisible: true
     }, options );
 
-    // view-specific Properties
+    // @public view-specific Properties
     this.equationAccordionBoxExpandedProperty = new BooleanProperty( true );
     this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( true );
 

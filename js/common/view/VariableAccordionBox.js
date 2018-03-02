@@ -1,6 +1,6 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
-/***
+/**
  * Accordion box that allows the student to modify the value of a variable (e.g. 'x').
  *
  * @author Chris Malley (PixelZoom, Inc.)
