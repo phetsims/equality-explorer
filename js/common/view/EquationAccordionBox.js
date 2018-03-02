@@ -50,7 +50,7 @@ define( function( require ) {
       contentYMargin: 8
     }, options );
 
-    assert && assert( options.maxWidth === undefined, 'subtype defines its maxWidth' );
+    assert && assert( options.maxWidth === undefined, 'maxWidth is set by this Node' );
     options.maxWidth = options.fixedWidth;
 
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );

@@ -25,7 +25,7 @@ define( function( require ) {
       iconWidth: 22
     }, options );
 
-    assert && assert( !options.listener, 'this type defines its listener' );
+    assert && assert( !options.listener, 'listener is set by this Node' );
     options.listener = function() {
       scale.clear();
     };

@@ -35,7 +35,7 @@ define( function( require ) {
 
     }, options );
 
-    assert && assert( !options.content, 'this type defines its content' );
+    assert && assert( !options.content, 'content is set by this Node' );
 
     // SVG path description is the "d=" field from organize-icon.svg
     // See assets/README.md for more details.
@@ -51,7 +51,7 @@ define( function( require ) {
         scale: 0.105
       } );
 
-    assert && assert( !options.listener, 'this type defines its listener' );
+    assert && assert( !options.listener, 'listener is set by this Node' );
     options.listener = function() {
       scale.organize();
       self.enabled = false;

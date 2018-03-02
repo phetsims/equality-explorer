@@ -30,7 +30,7 @@ define( function( require ) {
     // halo is fully transparent at the edges
     var edgeColor = Color.toColor( options.baseColor ).withAlpha( 0 );
 
-    assert && assert( !options.fill, 'this type defines its fill' );
+    assert && assert( !options.fill, 'fill is set by this Node' );
     options.fill = new RadialGradient( 0, 0, 0, 0, 0, radius )
       .addColorStop( 0.5, options.baseColor )
       .addColorStop( 1, edgeColor );

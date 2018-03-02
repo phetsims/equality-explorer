@@ -55,12 +55,12 @@ define( function( require ) {
       buttonTouchAreaYDilation: 5
     }, options );
 
-    assert && assert( options.maxWidth === undefined, 'subtype defines its maxWidth' );
+    assert && assert( options.maxWidth === undefined, 'maxWidth is set by this Node' );
     options.maxWidth = options.fixedWidth;
 
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
-    assert && assert( !options.titleNode, 'this type defines its titleNode' );
+    assert && assert( !options.titleNode, 'titleNode is set by this Node' );
     options.titleNode = new Text( variableString, {
       font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
       maxWidth: 0.85 * contentWidth

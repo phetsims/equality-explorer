@@ -38,7 +38,7 @@ define( function( require ) {
       xVisibleProperty: new BooleanProperty( true )
     };
 
-    assert && assert( !options.xVisibleProperty, 'this type defines its xVisibleProperty' );
+    assert && assert( !options.xVisibleProperty, 'xVisibleProperty is set by this Node' );
     options.xVisibleProperty = this.viewProperties.xVisibleProperty;
 
     SceneNode.call( this, scene, sceneProperty, layoutBounds, options );
