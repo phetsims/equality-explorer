@@ -120,6 +120,7 @@ define( function( require ) {
     /**
      * Clears the specified column. Used by compactColumn.
      * @param {number} column
+     * @private
      */
     clearColumn: function( column ) {
       assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
@@ -228,6 +229,7 @@ define( function( require ) {
      * Compacts a column so that it contains no empty cells below terms.
      * If the column contains no holes, then the grid in not modified.
      * @param {number} column
+     * @private
      */
     compactColumn: function( column ) {
       assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
