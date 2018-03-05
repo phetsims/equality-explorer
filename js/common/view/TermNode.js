@@ -119,7 +119,7 @@ define( function( require ) {
 
     /**
      * Starts a drag cycle.
-     * The user drags a new term out of a panel below the scale by clicking on an TermCreatorNode.
+     * The user drags a new term out of a panel below the scale by clicking on a TermCreatorNode.
      * That action causes TermCreatorNode to instantiate a TermNode.  This function allows
      * TermCreatorNode to forward the startDrag event to the TermNode that it created.
      * @param {Event} event
