@@ -136,9 +136,8 @@ define( function( require ) {
   equalityExplorer.register( 'TermDragListener', TermDragListener );
 
   /**
-   * Returns an Term to the panel where it was created.
+   * Returns a Term to the panel where it was created.
    * @param {Term} term
-   * @private
    */
   function animateToPanel( term ) {
     term.animateTo( term.locationProperty.initialValue, {
@@ -154,7 +153,6 @@ define( function( require ) {
    * @param {Term} term
    * @param {TermCreator} termCreator
    * @param {Plate} plate
-   * @private
    */
   function animateToClosestEmptyCell( term, termCreator, plate ) {
 
