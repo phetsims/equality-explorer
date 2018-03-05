@@ -100,7 +100,7 @@ define( function( require ) {
         rightX: rightPlate.locationProperty.value.x,
         startY: startY,
         onComplete: function() {
-          //TODO apply to terms on scale, and/or create terms on scale
+          //TODO apply operation to terms on scale, and/or create terms on scale
           self.animations.splice( self.animations.indexOf( animation ), 1 );
         },
         onStop: function() {
