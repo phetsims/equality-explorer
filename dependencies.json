@@ -1,11 +1,11 @@
 {
-  "comment": "# equality-explorer 1.0.0-dev.64 Fri Mar 02 2018 13:55:16 GMT-0700 (MST)",
+  "comment": "# equality-explorer 1.0.0-dev.65 Mon Mar 05 2018 11:54:27 GMT-0700 (MST)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
   },
   "axon": {
-    "sha": "43c79e6e317015bd8063a7a82da1650f40d22ec0",
+    "sha": "085494ff503a1fdea212361c4a15c7f0a527b52d",
     "branch": "master"
   },
   "brand": {
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "37c07d8c07e4eee775080f02197e9b861c42ae27",
+    "sha": "084c35f19d3c77c9915c8eb443cd759b80abc096",
     "branch": "master"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "equality-explorer": {
-    "sha": "5d6becd0ab226f11f1a08cff94fe05f09aa8515c",
+    "sha": "102e3d0e442ec55d072f1570e1f9f2956d84f85c",
     "branch": "master"
   },
   "joist": {
@@ -53,7 +53,7 @@
     "branch": "master"
   },
   "phet-io-wrapper-sonification": {
-    "sha": "e68394e5313332c22e19104642de75aae3527cc9",
+    "sha": "e36be353e32e4bf1bea5a5b9cec22c544d039de9",
     "branch": "master"
   },
   "phet-io-wrappers": {
