@@ -118,6 +118,17 @@ define( function( require ) {
     },
 
     /**
+     * Clears the specified column. Used by compactColumn.
+     * @param {number} column
+     */
+    clearColumn: function( column ) {
+      assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
+       for ( var row = 0; row < this.rows; row++ ) {
+         this.clearCell( this.rowColumnToIndex( row, column ) );
+       }
+    },
+
+    /**
      * Gets the index of the cell that corresponds to a location.
      * @param {Vector2} location
      * @returns {number} -1 if the location is outside the grid
@@ -197,6 +208,7 @@ define( function( require ) {
       assert && assert( this.isEmptyCell( index ), 'cell is occupied, index: ' + index );
       this.cells[ index ] = term;
       term.moveTo( this.getLocationForCell( index ) );
+      this.compactColumn( this.indexToColumn( index ) );
     },
 
     /**
@@ -209,36 +221,49 @@ define( function( require ) {
       var index = this.getCellForTerm( term );
       assert && assert( index !== -1, 'term not found: ' + term );
       this.clearCell( index );
-      this.shiftDown( index );
+      this.compactColumn( this.indexToColumn( index ) );
     },
 
     /**
-     * Shifts all term that are above a cell down 1 cell, to fill the empty cell caused by removing a term.
-     * @param {index} index - index of the cell that was occupied by the removed term
-     * @private
+     * Compacts a column so that it contains no empty cells below terms.
+     * If the column contains no holes, then the grid in not modified.
+     * @param {number} column
      */
-    shiftDown: function( index ) {
-      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      assert && assert( this.isEmptyCell( index ), 'cell is not empty: ' + index );
+    compactColumn: function( column ) {
+      assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
 
-      // row and column of the removed term
-      var removedRow = this.indexToRow( index );
-      var removedColumn = this.indexToColumn( index );
+      var hasHoles = false; // does the column have one or more holes?
+      var terms = []; // terms in the column
 
-      // start with the row above the removed term, and work up
-      for ( var row = removedRow - 1; row >= 0; row-- ) {
+      var term; // the current term
+      var index; // the current cell index
 
-        var currentIndex = this.rowColumnToIndex( row, removedColumn );
 
-        if ( !this.isEmptyCell( currentIndex ) ) {
+      // Get all terms in the column, from top down
+      for ( var row = 0; row < this.rows; row++ ) {
+        index = this.rowColumnToIndex( row, column );
+        term = this.getTermForCell( index );
+        if ( term ) {
+          terms.push( term );
+        }
+        else if ( terms.length > 0 ) {
+          hasHoles = true;
+        }
+      }
 
-          // remove term from it's current cell
-          var term = this.cells[ currentIndex ];
-          this.clearCell( currentIndex );
+      // If the column has holes ...
+      if ( hasHoles ) {
 
-          // move term down 1 row
-          var newIndex = this.rowColumnToIndex( row + 1, removedColumn );
-          this.putTerm( term, newIndex );
+        // clear the column
+        this.clearColumn( column );
+
+        // Put terms pack into the column, from bottom up.
+        row = this.rows - 1;
+        for ( var i = terms.length - 1; i >= 0; i-- ) {
+          term = terms[ i ];
+          index = this.rowColumnToIndex( row--, column );
+          this.cells[ index ] = term;
+          term.moveTo( this.getLocationForCell( index ) );
         }
       }
     },
