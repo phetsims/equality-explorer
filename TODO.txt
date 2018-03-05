@@ -1,8 +1,5 @@
 TODO items for equality-explorer
 
->> Fully test
->> Publish baseline dev version
-
 Terms
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
