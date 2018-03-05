@@ -7,16 +7,16 @@ Terms
 - Create large vs small TermNode
 - Associate term type with cells in the grid
 
-Universal operation
-- sum-to-zero animation should not be shown on Reset or Reset All
-
 Solving screen
-- combine like terms on the scale
-- drag terms from panel, combine with term on scale
-- drag term from scale back to scale
-- drag term from scale to panel
-- universal operation
-- sum terms to zero
+- drag term from panel to scale (small term -> big term)
+- drag term from scale to panel (big term -> panel)
+- drag term from scale back to scale  (big term -> scale)
+- drag term from panel, combine with term on scale (small term + big term -> big term)
+- drag term from scale, combine with term on scale (big term + big term -> big term)
+- universal operation applied to empty scale
+- universal operation applied to terms on scale
+- sum small and big term to zero
+- sum big terms to zero
 
 Locked mode, #19
 - term dragged from panel
