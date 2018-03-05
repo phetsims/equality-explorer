@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * A universal operation, which can be applied to a set of terms.
+ * A universal operation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -30,17 +30,5 @@ define( function( require ) {
 
   equalityExplorer.register( 'UniversalOperation', UniversalOperation );
 
-  return inherit( Object, UniversalOperation, {
-
-    /**
-     * Applies the operation to terms.
-     * @param {Term[]} terms
-     * @public
-     */
-    applyTo: function( terms ) {
-      for ( var i = 0; i < terms.length; i++ ) {
-        terms[ i ].apply( this );
-      }
-    }
-  } );
+  return inherit( Object, UniversalOperation );
 } );

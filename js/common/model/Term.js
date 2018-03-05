@@ -64,30 +64,6 @@ define( function( require ) {
      */
     isInverseOf: function( term ) {
       throw new Error( 'isInverseOf must be implemented by subtype' );
-    },
-
-    /**
-     * Applies a universal operation to this term.
-     * If a term does not support the operator, the operation is ignored.
-     * @param {UniversalOperation} operation
-     * @public
-     */
-    apply: function( operation ) {
-      if ( operation.operator === MathSymbols.PLUS ) {
-        this.plusInteger && this.plusInteger( operation.operand );
-      }
-      else if ( operation.operator === MathSymbols.MINUS ) {
-        this.minusInteger && this.minusInteger( operation.operand );
-      }
-      else if ( operation.operator === MathSymbols.TIMES ) {
-        this.timesInteger( operation.operand );
-      }
-      else if ( operation.operator === MathSymbols.DIVIDE ) {
-        this.divideByInteger( operation.operand );
-      }
-      else {
-        throw new Error( 'invalid operator: ' + operation.operator );
-      }
     }
   } );
 } );
