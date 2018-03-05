@@ -254,6 +254,8 @@ define( function( require ) {
       // If the column has holes ...
       if ( hasHoles ) {
 
+        phet.log && phet.log( 'Grid: compacting holes identified in column ' + column );
+
         // clear the column
         this.clearColumn( column );
 
