@@ -1,10 +1,10 @@
 TODO items for equality-explorer
 
 Terms
+- Combine positive and negative pairs of term creators into one term creator
 - Indicate whether to display a term large or small
 - Indicate whether to combine like terms on the scale
 - Optionally associate term type with cells in the grid
-- Combine positive and negative pairs of term creators into one term creator
 
 Universal operation
 - sum-to-zero animation should not be shown on Reset or Reset All
