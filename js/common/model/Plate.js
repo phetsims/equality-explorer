@@ -154,8 +154,8 @@ define( function( require ) {
      * @returns {Vector2}
      * @public
      */
-    getLocationForCell: function( cellIndex ) {
-      return this.grid.getLocationForCell( cellIndex );
+    getLocationOfCell: function( cellIndex ) {
+      return this.grid.getLocationOfCell( cellIndex );
     },
 
     /**
@@ -252,7 +252,7 @@ define( function( require ) {
           for ( row = grid.rows - 1; row >= 0; row-- ) {
             for ( column = grid.columns - 1; column >= 0; column-- ) {
               var cellIndex = grid.rowColumnToIndex( row, column );
-              var term = grid.getTermForCell( cellIndex );
+              var term = grid.getTermInCell( cellIndex );
               if ( term ) {
 
                 // move term 1 column to the right

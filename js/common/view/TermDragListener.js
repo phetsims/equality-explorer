@@ -167,7 +167,7 @@ define( function( require ) {
     }
     else {
 
-      var cellLocation = plate.getLocationForCell( cellIndex );
+      var cellLocation = plate.getLocationOfCell( cellIndex );
 
       term.animateTo( cellLocation, {
 
@@ -274,7 +274,7 @@ define( function( require ) {
 
       // after the terms have been deleted and the scale has moved,
       // determine the new location of the inverse term's cell
-      var sumToZeroLocation = this.plate.getLocationForCell( cellIndex );
+      var sumToZeroLocation = this.plate.getLocationOfCell( cellIndex );
 
       // show '0' or '0x' in yellow halo, fade out
       var sumToZeroNode = new SumToZeroNode( {

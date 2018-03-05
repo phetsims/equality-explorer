@@ -76,7 +76,7 @@ define( function( require ) {
       // move the terms
       for ( var index = 0; index < self.cells.length; index++ ) {
         if ( self.cells[ index ] !== NO_TERM ) {
-          self.cells[ index ].moveTo( self.getLocationForCell( index ) );
+          self.cells[ index ].moveTo( self.getLocationOfCell( index ) );
         }
       }
     } );
@@ -177,7 +177,7 @@ define( function( require ) {
      * @returns {Term|null} - null if the cell is empty
      * @public
      */
-    getTermForCell: function( index ) {
+    getTermInCell: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
       return this.cells[ index ];
     },
@@ -192,7 +192,7 @@ define( function( require ) {
       var term = null;
       var index = this.getCellAtLocation( location );
       if ( index !== -1 ) {
-        term = this.getTermForCell( index );
+        term = this.getTermInCell( index );
       }
       return term;
     },
@@ -208,7 +208,7 @@ define( function( require ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
       assert && assert( this.isEmptyCell( index ), 'cell is occupied, index: ' + index );
       this.cells[ index ] = term;
-      term.moveTo( this.getLocationForCell( index ) );
+      term.moveTo( this.getLocationOfCell( index ) );
       this.compactColumn( this.indexToColumn( index ) );
     },
 
@@ -244,7 +244,7 @@ define( function( require ) {
       // Get all terms in the column, from top down
       for ( var row = 0; row < this.rows; row++ ) {
         index = this.rowColumnToIndex( row, column );
-        term = this.getTermForCell( index );
+        term = this.getTermInCell( index );
         if ( term ) {
           terms.push( term );
         }
@@ -267,7 +267,7 @@ define( function( require ) {
           term = terms[ i ];
           index = this.rowColumnToIndex( row--, column );
           this.cells[ index ] = term;
-          term.moveTo( this.getLocationForCell( index ) );
+          term.moveTo( this.getLocationOfCell( index ) );
         }
       }
     },
@@ -278,7 +278,7 @@ define( function( require ) {
      * @returns {Vector2}
      * @public
      */
-    getLocationForCell: function( index ) {
+    getLocationOfCell: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
 
       var row = this.indexToRow( index );
@@ -310,12 +310,12 @@ define( function( require ) {
 
       if ( closestIndex !== -1 ) {
 
-        var closestDistance = this.getLocationForCell( closestIndex ).distance( location );
+        var closestDistance = this.getLocationOfCell( closestIndex ).distance( location );
 
         // Find the closest cell based on distance
         for ( var index = 0; index < this.cells.length; index++ ) {
           if ( this.isEmptyCell( index ) ) {
-            var currentDistance = this.getLocationForCell( index ).distance( location );
+            var currentDistance = this.getLocationOfCell( index ).distance( location );
             if ( currentDistance < closestDistance ) {
               closestDistance = currentDistance;
               closestIndex = index;
