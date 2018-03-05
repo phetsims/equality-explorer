@@ -63,7 +63,7 @@ define( function( require ) {
     // @private bounds of the grid, initialized in locationProperty listener
     this.bounds = new Bounds2( 0, 1, 0, 1 );
 
-    // When the grid moves, move all terms that are in the grid.
+    // When the grid moves ...
     // unlink not required.
     this.locationProperty.link( function( location ) {
 
