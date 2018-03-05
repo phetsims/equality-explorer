@@ -299,7 +299,8 @@ define( function( require ) {
     },
 
     /**
-     * Gets the closest empty cell to a specified location.
+     * Gets the closest empty cell to a specified location.  If the closest cell is in a column with
+     * empty cells below it, choose the empty cell that is closest to the bottom of the grid in that column.
      * @param {Vector2} location
      * @returns {number} - the cell's index, -1 if the grid is full
      * @public
