@@ -179,15 +179,6 @@ define( function( require ) {
     },
 
     /**
-     * Gets the number of Cells in the grid. This is the capacity of the plate.
-     * @returns {number}
-     * @public
-     */
-    get numberOfCells() {
-      return this.grid.numberOfCells;
-    },
-
-    /**
      * Organizes terms on the plate, as specified in https://github.com/phetsims/equality-explorer/issues/4
      * @public
      */
@@ -253,7 +244,8 @@ define( function( require ) {
         } );
         assert && assert( numberOfTermsToOrganize === 0 );
 
-        // Center the stacks on the plate by shifting terms to the right.
+        // Center the stacks on the plate by shifting columns to the right.
+        // If it's not possible to exactly center, the additional space will appear on the right.
         var numberOfEmptyColumns = grid.columns - column - 1;
         var gridColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
         if ( gridColumnsToShiftRight > 0 ) {

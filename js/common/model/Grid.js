@@ -45,7 +45,6 @@ define( function( require ) {
     // @public (read-only)
     this.rows = options.rows;
     this.columns = options.columns;
-    this.numberOfCells = options.rows * options.columns;
 
     // @private
     this.cellWidth = options.cellWidth;
@@ -54,7 +53,8 @@ define( function( require ) {
     // @private The 2D grid is stored as a 1D array, in row-major order (left-to-right, top-to-bottom).
     // Each entry in this array is a cell in the grid.  Empty cells contain NO_TERM.
     this.cells = [];
-    for ( var index = 0; index < this.numberOfCells; index++ ) {
+    var numberOfCells = options.rows * options.columns;
+    for ( var index = 0; index < numberOfCells; index++ ) {
       this.cells[ index ] = NO_TERM;
     }
 
