@@ -52,6 +52,8 @@ define( function( require ) {
 
     // @private The 2D grid is stored as a 1D array, in row-major order (left-to-right, top-to-bottom).
     // Each entry in this array is a cell in the grid.  Empty cells contain NO_TERM.
+    // Storing as a 1D array makes it easy for snapshots to save/restore the location of terms in the grid.
+    // See rowColumnToIndex, indexToRow, indexToColumn for mapping between index and (row,column).
     this.cells = [];
     var numberOfCells = options.rows * options.columns;
     for ( var index = 0; index < numberOfCells; index++ ) {
