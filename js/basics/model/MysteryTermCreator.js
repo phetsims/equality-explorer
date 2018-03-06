@@ -93,8 +93,11 @@ define( function( require ) {
     /**
      * Applies a universal operation to terms on the scale.
      * @param {UniversalOperation} operation
+     * @param {Term} term
+     * @public
+     * @override
      */
-    applyOperation: function( operation ) {
+    applyOperation: function( operation, term ) {
       throw new Error( 'applyOperation is not supported by MysteryTermCreator' );
     },
 

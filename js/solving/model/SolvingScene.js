@@ -128,6 +128,7 @@ define( function( require ) {
     /**
      * Applies a universal operation.
      * @param {UniversalOperation} operation
+     * @public
      */
     applyOperation: function( operation ) {
 

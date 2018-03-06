@@ -167,6 +167,8 @@ define( function( require ) {
      * Applies a universal operation to terms on the scale.
      * @param {UniversalOperation} operation
      * @param {Term} term
+     * @public
+     * @override
      */
     applyOperation: function( operation, term ) {
       assert && assert( this.combineLikeTerms, 'applyOperation is only supported when combining like terms' );

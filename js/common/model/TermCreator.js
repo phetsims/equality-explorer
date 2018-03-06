@@ -222,6 +222,8 @@ define( function( require ) {
      * Applies a universal operation to terms on the scale.
      * @param {UniversalOperation} operation
      * @param {Term} term
+     * @public
+     * @abstract
      */
     applyOperation: function( operation, term ) {
       throw new Error( 'applyOperation must be implemented by subtypes' );
