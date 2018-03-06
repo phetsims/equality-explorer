@@ -15,6 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Event = require( 'SCENERY/input/Event' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
@@ -103,19 +104,23 @@ define( function( require ) {
     // dispose not required.
     this.termCreatedEmitter = new Emitter();
 
-    //TODO delete equivalentTermCreator if not used for lock feature
-    // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
-    // This is needed for the lock feature, so that an equivalent term on the opposite side can be created.
-    // Example: When locked, if I drag -x out of the left panel, -x needs to also drag out of the right panel.
-    this.equivalentTermCreator = null;
+    // @public {TermCreator} optional inverse term creator on the same side of the scale.
+    // This is needed for combining terms on a plate.
+    this.inverseTermCreator = null;
 
-    //TODO delete inverseTermCreator if not used for lock feature
+    //TODO delete oppositeInverseTermCreator if not used for lock feature
     // @public {TermCreator} optional inverse term creator on the opposite side of the scale.
     // This is needed for lock feature, for the case where an inverse term must be created.
     // Example: When locked, if I remove x from the left plate, and the right plate is empty, then x needs
-    // to be created and dragged on the right side (by equivalentTermCreator) and -x needs to be created on
-    // the right plate (by inverseTermCreator).
-    this.inverseTermCreator = null;
+    // to be created and dragged on the right side (by oppositeEquivalentTermCreator) and -x needs to be created on
+    // the right plate (by oppositeInverseTermCreator).
+    this.oppositeInverseTermCreator = null;
+
+    //TODO delete oppositeEquivalentTermCreator if not used for lock feature
+    // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
+    // This is needed for the lock feature, so that an equivalent term on the opposite side can be created.
+    // Example: When locked, if I drag -x out of the left panel, -x needs to also drag out of the right panel.
+    this.oppositeEquivalentTermCreator = null;
 
     // @private called when Term.dispose is called
     this.termWasDisposedBound = this.termWasDisposed.bind( this );
@@ -179,6 +184,18 @@ define( function( require ) {
     },
 
     /**
+     * Creates a new term on the plate by combining two terms.
+     * @param {Term} term1
+     * @param {Term} term2
+     * @param {Object} options
+     * @returns {Term}
+     * @public
+     */
+    combineTerms: function( term1, term2, options ) {
+      throw new Error( 'combineTermsOnPlate must be implemented by subtype' );
+    },
+
+    /**
      * Instantiates the Node that corresponds to a term.
      * @param {Term} term
      * @param {Plate} plate
@@ -226,12 +243,16 @@ define( function( require ) {
 
     /**
      * Creates a term.
-     * @param {Event|null} event - event is provided if a user interaction is creating the term
      * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
      * @public
      */
-    createTerm: function( event, options ) {
+    createTerm: function( options ) {
+
+      options = _.extend( {
+        event: null // event is non-null if the term is created as the result of a user interaction
+      }, options );
+      assert && assert( options.event === null || options.event instanceof Event, 'invalid event: ' + event );
 
       // create term
       var term = this.createTermProtected( options );
@@ -242,7 +263,7 @@ define( function( require ) {
       term.disposedEmitter.addListener( this.termWasDisposedBound );
 
       // Notify that a term was created
-      this.termCreatedEmitter.emit2( term, event );
+      this.termCreatedEmitter.emit2( term, options.event );
 
       return term;
     },
@@ -250,11 +271,12 @@ define( function( require ) {
     /**
      * Creates a term and puts it in a specified cell in the associate plate's 2D grid.
      * @param {number} cellIndex
+     * @param {Object} [options] - options passed to createTerm
      * @returns {Term}
      * @public
      */
-    createTermOnPlate: function( cellIndex ) {
-      var term = this.createTerm( null /* event */ );
+    createTermOnPlate: function( cellIndex, options ) {
+      var term = this.createTerm( options );
       this.putTermOnPlate( term, cellIndex );
       return term;
     },

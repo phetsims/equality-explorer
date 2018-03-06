@@ -171,7 +171,40 @@ define( function( require ) {
    */
   function animateToLikeCell( term, termCreator, plate ) {
     assert && assert( termCreator.combineLikeTerms, 'should ONLY be called when combining like terms' );
-    //TODO
+
+    var cellIndex = termCreator.likeTermsCellIndex;
+    var cellLocation = plate.getLocationOfCell( cellIndex );
+
+    term.animateTo( cellLocation, {
+
+      // When the term reaches the cell ...
+      animationCompletedCallback: function() {
+
+        if ( plate.isEmptyCell( cellIndex ) ) {
+
+          //TODO make this a 'big' term via options
+          // If the cell is unoccupied, put the term in the cell.
+          termCreator.putTermOnPlate( term, cellIndex );
+        }
+        else {
+
+          // If the cell is occupied...
+          // Get the term that occupies the cell.
+          var termInCell =  plate.getTermInCell( cellIndex );
+
+          //TODO make this a 'big' term via options
+          // Combine the terms to create a new term. Put the new term in the cell.
+          var combinedTerm = termCreator.combineTerms( term, termInCell );
+
+          // Dispose of the terms that were used to create the combined term.
+          // As a side-effect, this removes termInCell from the plate.
+          term.dispose();
+          termInCell.dispose();
+
+          combinedTerm.termCreator.putTermOnPlate( combinedTerm, cellIndex );
+        }
+      }
+    } );
   }
 
   /**

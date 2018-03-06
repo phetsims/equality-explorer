@@ -18,10 +18,11 @@ define( function( require ) {
   /**
    * @param {string} symbol
    * @param {NumberProperty} variableValueProperty
+   * @param {TermCreator} termCreator
    * @param {Object} [options]
    * @constructor
    */
-  function VariableTerm( symbol, variableValueProperty, options ) {
+  function VariableTerm( symbol, variableValueProperty, termCreator, options ) {
 
     assert && assert( variableValueProperty instanceof NumberProperty, 'invalid variableValueProperty' );
 
@@ -41,7 +42,7 @@ define( function( require ) {
     // @public (read-only) {NumberProperty}
     this.variableValueProperty = variableValueProperty;
 
-    Term.call( this, options );
+    Term.call( this, termCreator, options );
   }
 
   equalityExplorer.register( 'VariableTerm', VariableTerm );

@@ -15,6 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {Object} [options]
@@ -55,7 +56,34 @@ define( function( require ) {
         constantValue: this.defaultConstantValue
       }, options );
 
-      return new ConstantTerm( options );
+      return new ConstantTerm( this, options );
+    },
+
+    /**
+     * Creates a new term by combining two terms.
+     * @param {Term} term1
+     * @param {Term} term2
+     * @param {Object} options
+     * @protected
+     * @override
+     */
+    combineTerms: function( term1, term2, options ) {
+      assert && assert( term1 instanceof ConstantTerm, 'invalid term1' );
+      assert && assert( term2 instanceof ConstantTerm, 'invalid term2' );
+
+      options = options || {};
+      assert && assert( options.constantValue === undefined, 'ConstantTermCreator sets constantValue' );
+      options.constantValue = term1.constantValue.plusFraction( term2.constantValue );
+
+      if ( Util.sign( options.constantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
+        return this.createTerm( options );
+      }
+      else {
+
+        // If sign of the combined term doesn't match this item creator,
+        // forward the creation request to the inverse term creator.
+        return this.inverseTermCreator.createTerm( options );
+      }
     },
 
     /**

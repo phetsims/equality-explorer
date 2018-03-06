@@ -16,6 +16,7 @@ define( function( require ) {
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {string} symbol
@@ -92,7 +93,36 @@ define( function( require ) {
         coefficient: this.defaultCoefficient
       }, options );
 
-      return new VariableTerm( this.symbol, this.variableValueProperty, options );
+      return new VariableTerm( this.symbol, this.variableValueProperty, this, options );
+    },
+
+    /**
+     * Creates a new term by combining two terms.
+     * @param {Term} term1
+     * @param {Term} term2
+     * @param {Object} options
+     * @returns {Term}
+     * @protected
+     * @override
+     */
+    combineTerms: function( term1, term2, options ) {
+      assert && assert( term1 instanceof VariableTerm, 'invalid term1' );
+      assert && assert( term2 instanceof VariableTerm, 'invalid term2' );
+
+      options = options || {};
+      assert && assert( options.coefficient === undefined, 'VariableTermCreator sets coefficient' );
+      options.coefficient = term1.coefficient.plusFraction( term2.coefficient );
+
+      if ( Util.sign( options.coefficient.toDecimal() ) === Util.sign( this.defaultCoefficient.toDecimal() ) ) {
+        return this.createTerm( options );
+      }
+      else {
+        console.log( 'inverseTermCreator.createTerm' );//XXX
+
+        // If sign of the combined term doesn't match this item creator,
+        // forward the creation request to the inverse term creator.
+        return this.inverseTermCreator.createTerm( options );
+      }
     },
 
     /**

@@ -51,7 +51,20 @@ define( function( require ) {
         dragBounds: this.dragBounds
       }, options );
 
-      return new MysteryTerm( this.mysteryObject, options );
+      return new MysteryTerm( this.mysteryObject, this, options );
+    },
+
+    /**
+     * Creates a new term by combining this term with another term.
+     * @param {Term} term1
+     * @param {Term} term2
+     * @param {Object} options
+     * @returns {Term}
+     * @protected
+     * @override
+     */
+    combineTerms: function( term1, term2, options ) {
+       throw new Error( 'combineTerms is not supported by MysteryTermCreator' );
     },
 
     /**

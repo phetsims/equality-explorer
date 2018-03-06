@@ -81,32 +81,31 @@ define( function( require ) {
    */
   function createTermCreators( xProperty ) {
 
-    return [
+    // x and -x
+    var positiveXCreator = new VariableTermCreator( xString, xProperty, {
+      defaultCoefficient: ReducedFraction.withInteger( 1 ),
+      likeTermsCellIndex: 0
+    } );
+    var negativeXCreator = new VariableTermCreator( xString, xProperty, {
+      defaultCoefficient: ReducedFraction.withInteger( -1 ),
+      likeTermsCellIndex: 0
+    } );
+    positiveXCreator.inverseTermCreator = negativeXCreator;
+    negativeXCreator.inverseTermCreator = positiveXCreator;
 
-      // x
-      new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: ReducedFraction.withInteger( 1 ),
-        likeTermsCellIndex: 0
-      } ),
+    // 1 and -1
+    var positiveOneCreator = new ConstantTermCreator( {
+      defaultConstantValue: ReducedFraction.withInteger( 1 ),
+      likeTermsCellIndex: 1
+    } );
+    var negativeOneCreator = new ConstantTermCreator( {
+      defaultConstantValue: ReducedFraction.withInteger( -1 ),
+      likeTermsCellIndex: 1
+    } );
+    positiveOneCreator.inverseTermCreator = negativeOneCreator;
+    negativeOneCreator.inverseTermCreator = positiveOneCreator;
 
-      // -x
-      new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: ReducedFraction.withInteger( -1 ),
-        likeTermsCellIndex: 0
-      } ),
-
-      // 1
-      new ConstantTermCreator( {
-        defaultConstantValue: ReducedFraction.withInteger( 1 ),
-        likeTermsCellIndex: 1
-      } ),
-
-      // -1
-      new ConstantTermCreator( {
-        defaultConstantValue: ReducedFraction.withInteger( -1 ),
-        likeTermsCellIndex: 1
-      } )
-    ];
+    return [ positiveXCreator, negativeXCreator, positiveOneCreator, negativeOneCreator ];
   }
 
   return inherit( LockableScene, SolvingScene, {

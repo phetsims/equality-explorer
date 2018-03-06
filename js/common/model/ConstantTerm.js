@@ -15,10 +15,11 @@ define( function( require ) {
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
+   * @param {TermCreator} termCreator
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantTerm( options ) {
+  function ConstantTerm( termCreator, options ) {
 
     options = _.extend( {
       constantValue: ReducedFraction.withInteger( 1 )
@@ -29,7 +30,7 @@ define( function( require ) {
     // @public (read-only) {ReducedFraction}
     this.constantValue = options.constantValue;
 
-    Term.call( this, options );
+    Term.call( this, termCreator, options );
   }
 
   equalityExplorer.register( 'ConstantTerm', ConstantTerm );

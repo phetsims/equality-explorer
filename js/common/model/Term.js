@@ -15,11 +15,15 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
+   * @param {TermCreator} termCreator - the term creator who created and manages this term
    * @param {Object} [options]
    * @constructor
    * @abstract
    */
-  function Term( options ) {
+  function Term( termCreator, options ) {
+
+    // @public (read-only)
+    this.termCreator = termCreator;
 
     // @public whether the term's shadow is visible
     this.shadowVisibleProperty = new BooleanProperty( false );

@@ -46,21 +46,21 @@ define( function( require ) {
       // Associate term creator with its equivalent term creator on the opposite side of the scale.
       assert && assert( leftTermCreators[ i ].isEquivalentTo( rightTermCreators[ i ] ),
         'equivalent term creators must have the same indices on both sides' );
-      leftTermCreators[ i ].equivalentTermCreator = rightTermCreators[ i ];
-      rightTermCreators[ i ].equivalentTermCreator = leftTermCreators[ i ];
+      leftTermCreators[ i ].oppositeEquivalentTermCreator = rightTermCreators[ i ];
+      rightTermCreators[ i ].oppositeEquivalentTermCreator = leftTermCreators[ i ];
 
       // Associate term creators with their inverse creators on the opposite side of the scale.
       if ( i % 2 === 0 ) {
 
         assert && assert( leftTermCreators[ i ].isInverseOf( rightTermCreators[ i + 1 ] ),
           'equivalent term creators must have specific indices' );
-        leftTermCreators[ i ].inverseTermCreator = rightTermCreators[ i + 1 ];
-        rightTermCreators[ i + 1 ].inverseTermCreator = leftTermCreators[ i ];
+        leftTermCreators[ i ].oppositeInverseTermCreator = rightTermCreators[ i + 1 ];
+        rightTermCreators[ i + 1 ].oppositeInverseTermCreator = leftTermCreators[ i ];
 
         assert && assert( leftTermCreators[ i + 1 ].isInverseOf( rightTermCreators[ i ] ),
           'equivalent term creators must have specific indices' );
-        leftTermCreators[ i + 1 ].inverseTermCreator = rightTermCreators[ i ];
-        rightTermCreators[ i ].inverseTermCreator = leftTermCreators[ 1 + 1 ];
+        leftTermCreators[ i + 1 ].oppositeInverseTermCreator = rightTermCreators[ i ];
+        rightTermCreators[ i ].oppositeInverseTermCreator = leftTermCreators[ 1 + 1 ];
       }
     }
   }
