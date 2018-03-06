@@ -1,19 +1,12 @@
 TODO items for equality-explorer
 
-Terms
-- Combine positive and negative pairs of term creators into one term creator?
-- Indicate whether to combine like terms on the scale
-- Create term with non-default coefficient or constantValue
-- Create large vs small TermNode
-- Associate term type with cells in the grid
-
 Solving screen
-- restore snapshot
-- drag term from scale, combine with term on scale (big term + big term -> big term)
+- rewrite how snapshots are saved and restored, doesn't work for Solving screen
 - universal operation applied to empty scale
 - universal operation applied to terms on scale
 - universal operation results in sum to zero without halo
-- sum big terms to zero
+- drag term from scale, combine with term on scale (multi-touch)
+- sum big terms to zero (multi-touch)
 
 Locked mode, #19
 - term dragged from panel
