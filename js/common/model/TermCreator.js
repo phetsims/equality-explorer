@@ -187,7 +187,7 @@ define( function( require ) {
      * Creates a new term on the plate by combining two terms.
      * @param {Term} term1
      * @param {Term} term2
-     * @param {Object} options
+     * @param {Object} [options]
      * @returns {Term}
      * @public
      */
