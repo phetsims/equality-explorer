@@ -31,7 +31,7 @@ define( function( require ) {
     negativeLineDash: [ 4, 4 ],
     diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
     margin: 6, //TODO make this a function of diameter
-    xSpacing: 8, //TODO make this a function of diameter
+    xSpacing: 2, //TODO make this a function of diameter
     fractionFont: new PhetFont( 12 ),
     integerFont: new PhetFont( 24 ),
     symbolFont: new MathSymbolFont( 24 )
@@ -106,6 +106,7 @@ define( function( require ) {
 
       // icon on the square consists of coefficient and variable
       var iconNode = new HBox( {
+        align: 'bottom',
         spacing: options.xSpacing,
         children: iconChildren,
         maxWidth: squareNode.width - ( 2 * options.margin ),
