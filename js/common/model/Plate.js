@@ -66,7 +66,7 @@ define( function( require ) {
     // weightProperty is derived from the weights of each termCreator
     var weightDependencies = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
-      weightDependencies.push( termCreators[ i ].weightOnScaleProperty );
+      weightDependencies.push( termCreators[ i ].weightOnPlateProperty );
     }
 
     // @public (read-only) {Property.<ReducedFraction>} total weight of the terms that are on the plate
@@ -75,7 +75,7 @@ define( function( require ) {
       function() {
         var weight = ReducedFraction.withInteger( 0 );
         for ( var i = 0; i < termCreators.length; i++ ) {
-          weight = weight.plusFraction( termCreators[ i ].weightOnScaleProperty.value );
+          weight = weight.plusFraction( termCreators[ i ].weightOnPlateProperty.value );
         }
         return weight;
       } );
@@ -198,7 +198,7 @@ define( function( require ) {
 
         this.termCreators.forEach( function( termCreator ) {
 
-          var terms = termCreator.getTermsOnScale(); // {Term[]}
+          var terms = termCreator.getTermsOnPlate(); // {Term[]}
 
           if ( terms.length > 0 ) {
 

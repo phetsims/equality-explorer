@@ -200,10 +200,10 @@ define( function( require ) {
      */
     clear: function() {
       this.leftTermCreators.forEach( function( termCreator ) {
-        termCreator.disposeTermsOnScale();
+        termCreator.disposeTermsOnPlate();
       } );
       this.rightTermCreators.forEach( function( termCreator ) {
-        termCreator.disposeTermsOnScale();
+        termCreator.disposeTermsOnPlate();
       } );
     }
   } );

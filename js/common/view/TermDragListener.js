@@ -68,8 +68,8 @@ define( function( require ) {
 
         term.moveTo( self.eventToLocation( event ) );
 
-        if ( termCreator.isTermOnScale( term ) ) {
-          termCreator.removeTermFromScale( term );
+        if ( termCreator.isTermOnPlate( term ) ) {
+          termCreator.removeTermFromPlate( term );
         }
       },
 
@@ -206,7 +206,7 @@ define( function( require ) {
 
         // When the term reaches the cell, put it in the cell.
         animationCompletedCallback: function() {
-          termCreator.putTermOnScale( term, cellIndex );
+          termCreator.putTermOnPlate( term, cellIndex );
         }
       } );
     }

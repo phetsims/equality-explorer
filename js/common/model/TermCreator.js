@@ -35,11 +35,11 @@ define( function( require ) {
     options = _.extend( {
       combineLikeTerms: false, // {boolean} combine like terms when they are placed on the plate?
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
-      initialNumberOfTermsOnScale: 0 // {number} integer number of terms initially on the plate
+      initialNumberOfTermsOnPlate: 0 // {number} integer number of terms initially on the plate
     }, options );
 
-    assert && assert( Util.isInteger( options.initialNumberOfTermsOnScale ) && ( options.initialNumberOfTermsOnScale >= 0 ),
-      'initialNumberOfTermsOnScale must be an integer >= 0: ' + options.initialNumberOfTermsOnScale );
+    assert && assert( Util.isInteger( options.initialNumberOfTermsOnPlate ) && ( options.initialNumberOfTermsOnPlate >= 0 ),
+      'initialNumberOfTermsOnPlate must be an integer >= 0: ' + options.initialNumberOfTermsOnPlate );
 
     // @private has this instance been fully initialized?
     this.isInitialized = false;
@@ -54,7 +54,7 @@ define( function( require ) {
 
     // @private Number of terms to put on the plate initially.
     // Terms cannot be put on the plate until this.location is initialized.
-    this.initialNumberOfTermsOnScale = options.initialNumberOfTermsOnScale;
+    this.initialNumberOfTermsOnPlate = options.initialNumberOfTermsOnPlate;
 
     // @public (read-only) {Plate} the plate that this term creator is associated with.
     // This association necessarily occurs after instantiation.
@@ -69,18 +69,18 @@ define( function( require ) {
     // @protected {ObservableArray.<Term>} all terms that currently exist
     this.allTerms = new ObservableArray();
 
-    // @protected {ObservableArray.<Term>} terms that are on the scale, a subset of allTerms
-    this.termsOnScale = new ObservableArray();
+    // @protected {ObservableArray.<Term>} terms that are on the plate, a subset of allTerms
+    this.termsOnPlate = new ObservableArray();
 
-    // @public (read-only) so we don't have to expose this.termsOnScale
+    // @public (read-only) so we don't have to expose this.termsOnPlate
     // dispose not needed.
-    this.numberOfTermsOnScaleProperty = new DerivedProperty( [ this.termsOnScale.lengthProperty ],
+    this.numberOfTermsOnPlateProperty = new DerivedProperty( [ this.termsOnPlate.lengthProperty ],
       function( length ) {
         return length;
       } );
 
-    // @public (read-only) weight of the terms that are on the scale
-    this.weightOnScaleProperty = new Property( ReducedFraction.withInteger( 0 ), {
+    // @public (read-only) weight of the terms that are on the plate
+    this.weightOnPlateProperty = new Property( ReducedFraction.withInteger( 0 ), {
       valueType: ReducedFraction,
       useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
     } );
@@ -114,12 +114,12 @@ define( function( require ) {
     this.termWasDisposedBound = this.termWasDisposed.bind( this );
 
     // @private
-    this.updateWeightOnScalePropertyBound = this.updateWeightOnScaleProperty.bind( this );
+    this.updateWeightOnPlatePropertyBound = this.updateWeightOnPlateProperty.bind( this );
 
-    // Update weight when number of terms on scale changes.
+    // Update weight when number of terms on plate changes.
     // unlink not required.
-    this.numberOfTermsOnScaleProperty.link( function( numberOfTermsOnScale ) {
-      self.updateWeightOnScalePropertyBound();
+    this.numberOfTermsOnPlateProperty.link( function( numberOfTermsOnPlate ) {
+      self.updateWeightOnPlatePropertyBound();
     } );
   }
 
@@ -153,10 +153,10 @@ define( function( require ) {
 
       // populate the plate, see https://github.com/phetsims/equality-explorer/issues/8
       assert && assert( this.plate, 'plate has not been initialized' );
-      for ( var i = 0; i < this.initialNumberOfTermsOnScale; i++ ) {
+      for ( var i = 0; i < this.initialNumberOfTermsOnPlate; i++ ) {
         var cellIndex = this.plate.getFirstEmptyCell();
         assert && assert( cellIndex !== -1, 'oops, plate is full' );
-        this.createTermOnScale( cellIndex );
+        this.createTermOnPlate( cellIndex );
       }
     },
 
@@ -246,9 +246,9 @@ define( function( require ) {
      * @returns {Term}
      * @public
      */
-    createTermOnScale: function( cellIndex ) {
+    createTermOnPlate: function( cellIndex ) {
       var term = this.createTerm( null /* event */ );
-      this.putTermOnScale( term, cellIndex );
+      this.putTermOnPlate( term, cellIndex );
       return term;
     },
 
@@ -262,49 +262,49 @@ define( function( require ) {
     },
 
     /**
-     * Gets the terms that are on the scale.
+     * Gets the terms that are on the plate.
      * @returns {Term[]}
      * @public
      */
-    getTermsOnScale: function() {
-      return this.termsOnScale.getArray().slice(); // defensive copy
+    getTermsOnPlate: function() {
+      return this.termsOnPlate.getArray().slice(); // defensive copy
     },
 
     /**
-     * Puts a term on the scale. ORDER IS VERY IMPORTANT HERE!
+     * Puts a term on the plate. ORDER IS VERY IMPORTANT HERE!
      * @param {Term} term
      * @param {number} cellIndex - cell in the associated plate's 2D grid
      * @public
      */
-    putTermOnScale: function( term, cellIndex ) {
+    putTermOnPlate: function( term, cellIndex ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
-      assert && assert( !this.termsOnScale.contains( term ), 'term already on scale: ' + term );
-      phet.log && phet.log( 'TermCreator.putTermOnScale: ' + term );
+      assert && assert( !this.termsOnPlate.contains( term ), 'term already on plate: ' + term );
+      phet.log && phet.log( 'TermCreator.putTermOnPlate: ' + term );
       this.plate.addTerm( term, cellIndex );
-      this.termsOnScale.push( term );
+      this.termsOnPlate.push( term );
     },
 
     /**
-     * Removes a term from the scale. ORDER IS VERY IMPORTANT HERE!
+     * Removes a term from the plate. ORDER IS VERY IMPORTANT HERE!
      * @param {Term} term
      * @public
      */
-    removeTermFromScale: function( term ) {
+    removeTermFromPlate: function( term ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
-      assert && assert( this.termsOnScale.contains( term ), 'term not on scale: ' + term );
-      phet.log && phet.log( 'TermCreator.removeTermFromScale: ' + term );
+      assert && assert( this.termsOnPlate.contains( term ), 'term not on plate: ' + term );
+      phet.log && phet.log( 'TermCreator.removeTermFromPlate: ' + term );
       this.plate.removeTerm( term );
-      this.termsOnScale.remove( term );
+      this.termsOnPlate.remove( term );
     },
 
     /**
-     * Is the specified term on the scale?
+     * Is the specified term on the plate?
      * @param {Term} term
      * @returns {boolean}
      * @public
      */
-    isTermOnScale: function( term ) {
-      return this.termsOnScale.contains( term );
+    isTermOnPlate: function( term ) {
+      return this.termsOnPlate.contains( term );
     },
 
     /**
@@ -320,14 +320,14 @@ define( function( require ) {
     },
 
     /**
-     * Disposes of all terms that are on the scale.
+     * Disposes of all terms that are on the plate.
      * @public
      */
-    disposeTermsOnScale: function() {
+    disposeTermsOnPlate: function() {
 
-      // use a while loop because disposing of a term modifies this.termsOnScale
-      while ( this.termsOnScale.length > 0 ) {
-        this.termsOnScale.get( 0 ).dispose(); // results in call to termWasDisposed
+      // use a while loop because disposing of a term modifies this.termsOnPlate
+      while ( this.termsOnPlate.length > 0 ) {
+        this.termsOnPlate.get( 0 ).dispose(); // results in call to termWasDisposed
       }
     },
 
@@ -339,8 +339,8 @@ define( function( require ) {
     termWasDisposed: function( term ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
 
-      if ( this.isTermOnScale( term ) ) {
-        this.removeTermFromScale( term );
+      if ( this.isTermOnPlate( term ) ) {
+        this.removeTermFromPlate( term );
       }
 
       if ( term.disposedEmitter.hasListener( this.termWasDisposedBound ) ) {
@@ -351,15 +351,15 @@ define( function( require ) {
     },
 
     /**
-     * Updates weightOnScaleProperty, the total weight of all terms on the scale.
+     * Updates weightOnPlateProperty, the total weight of all terms on the plate.
      * @protected
      */
-    updateWeightOnScaleProperty: function() {
+    updateWeightOnPlateProperty: function() {
       var weight = ReducedFraction.withInteger( 0 );
-      for ( var i = 0; i < this.termsOnScale.length; i++ ) {
-        weight = weight.plusFraction( this.termsOnScale.get( i ).weight );
+      for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
+        weight = weight.plusFraction( this.termsOnPlate.get( i ).weight );
       }
-      this.weightOnScaleProperty.value = weight;
+      this.weightOnPlateProperty.value = weight;
     }
   } );
 } );

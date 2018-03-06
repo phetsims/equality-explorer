@@ -48,12 +48,12 @@ define( function( require ) {
   /**
    * Creates the term creators for this scene.
    * @param {NumberProperty} xProperty
-   * @param {number} initialNumberOfTermsOnScale
+   * @param {number} initialNumberOfTermsOnPlate
    * @returns {TermCreator[]}
    */
-  function createTermCreators( xProperty, initialNumberOfTermsOnScale ) {
+  function createTermCreators( xProperty, initialNumberOfTermsOnPlate ) {
 
-    assert && assert( initialNumberOfTermsOnScale.length === 4 );
+    assert && assert( initialNumberOfTermsOnPlate.length === 4 );
     var index = 0;
 
     return [
@@ -61,25 +61,25 @@ define( function( require ) {
       // x
       new VariableTermCreator( xString, xProperty, {
         defaultCoefficient: ReducedFraction.withInteger( 1 ),
-        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
+        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // -x
       new VariableTermCreator( xString, xProperty, {
         defaultCoefficient: ReducedFraction.withInteger( -1 ),
-        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
+        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // 1
       new ConstantTermCreator( {
         defaultConstantValue: ReducedFraction.withInteger( 1 ),
-        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
+        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // -1
       new ConstantTermCreator( {
         defaultConstantValue: ReducedFraction.withInteger( -1 ),
-        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
+        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } )
     ];
   }

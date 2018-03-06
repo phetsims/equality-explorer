@@ -42,17 +42,17 @@ define( function( require ) {
    * Creates the term creators for this scene.
    * @param {Object[]} mysteryObjects - see BasicsScene constructor
    * @param {boolean} hasConstantTerms - does this scene allow you to create constant terms?
-   * @param {number[]} initialNumberOfTermsOnScale
+   * @param {number[]} initialNumberOfTermsOnPlate
    * @returns {TermCreator[]}
    */
-  function createTermCreators( mysteryObjects, hasConstantTerms, initialNumberOfTermsOnScale ) {
+  function createTermCreators( mysteryObjects, hasConstantTerms, initialNumberOfTermsOnPlate ) {
 
     var termCreators = [];
 
     // creators for mystery terms
     for ( var i = 0; i < mysteryObjects.length; i++ ) {
       termCreators.push( new MysteryTermCreator( mysteryObjects[ i ], {
-        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ i ]
+        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ i ]
       } ) );
     }
 
@@ -60,7 +60,7 @@ define( function( require ) {
     if ( hasConstantTerms ) {
       termCreators.push( new ConstantTermCreator( {
           defaultValue: ReducedFraction.withInteger( 1 ),
-          initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ i ]
+          initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ i ]
         } )
       );
     }

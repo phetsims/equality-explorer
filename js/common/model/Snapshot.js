@@ -60,7 +60,7 @@ define( function( require ) {
     for ( var i = 0; i < termCreators.length; i++ ) {
 
       var termCreator = termCreators[ i ];
-      var terms = termCreator.getTermsOnScale();
+      var terms = termCreator.getTermsOnPlate();
 
       this.termCreators[ i ] = termCreator;
 
@@ -92,7 +92,7 @@ define( function( require ) {
 
         // for each cell that was occupied by this type of term, create a term and put it on the scale in the cell
         for ( var j = 0; j < occupiedCells.length; j++ ) {
-          termCreator.createTermOnScale( occupiedCells[ j ] );
+          termCreator.createTermOnPlate( occupiedCells[ j ] );
         }
       }
     }

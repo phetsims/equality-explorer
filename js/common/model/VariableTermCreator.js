@@ -56,7 +56,7 @@ define( function( require ) {
     // When the variable values changes, recompute the weight of terms on the scale.
     // dispose not needed.
     this.variableValueProperty.link( function( variableValue ) {
-      self.updateWeightOnScaleProperty();
+      self.updateWeightOnPlateProperty();
     } );
   }
 
@@ -71,8 +71,8 @@ define( function( require ) {
      */
     sumCoefficientsOnScale: function() {
       var sum = ReducedFraction.withInteger( 0 );
-      for ( var i = 0; i < this.termsOnScale.length; i++ ) {
-         sum = sum.plusFraction( this.termsOnScale.get( i ).coefficient );
+      for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
+         sum = sum.plusFraction( this.termsOnPlate.get( i ).coefficient );
       }
       return sum;
     },

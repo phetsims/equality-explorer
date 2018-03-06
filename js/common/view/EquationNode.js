@@ -115,8 +115,8 @@ define( function( require ) {
       var termDependencies = [];
 
       termCreators.forEach( function( termCreator ) {
-        relationalOperatorDependencies.push( termCreator.weightOnScaleProperty );
-        termDependencies.push( termCreator.numberOfTermsOnScaleProperty );
+        relationalOperatorDependencies.push( termCreator.weightOnPlateProperty );
+        termDependencies.push( termCreator.numberOfTermsOnPlateProperty );
       } );
 
       // dispose required
@@ -153,13 +153,13 @@ define( function( require ) {
     // evaluate the left side
     var leftWeight = 0;
     for ( var i = 0; i < leftTermCreators.length; i++ ) {
-      leftWeight += leftTermCreators[ i ].weightOnScaleProperty.value.toDecimal();
+      leftWeight += leftTermCreators[ i ].weightOnPlateProperty.value.toDecimal();
     }
 
     // evaluate the right side
     var rightWeight = 0;
     for ( i = 0; i < rightTermCreators.length; i++ ) {
-      rightWeight += rightTermCreators[ i ].weightOnScaleProperty.value.toDecimal();
+      rightWeight += rightTermCreators[ i ].weightOnPlateProperty.value.toDecimal();
     }
 
     // determine the operator that describes the relationship between left and right sides
@@ -199,8 +199,8 @@ define( function( require ) {
 
       var termCreator = termCreators[ i ];
 
-      var numberOfTermsOnScale = termCreator.numberOfTermsOnScaleProperty.value;
-      if ( numberOfTermsOnScale > 0 ) {
+      var numberOfTermsOnPlate = termCreator.numberOfTermsOnPlateProperty.value;
+      if ( numberOfTermsOnPlate > 0 ) {
 
         if ( termCreator instanceof MysteryTermCreator ) {
 
@@ -209,7 +209,7 @@ define( function( require ) {
           if ( children.length > 0 ) {
             children.push( new Text( MathSymbols.PLUS, { font: operatorFont } ) );
           }
-          children.push( createMysteryTermNode( numberOfTermsOnScale, termCreator.icon, integerFont, coefficientSpacing ) );
+          children.push( createMysteryTermNode( numberOfTermsOnPlate, termCreator.icon, integerFont, coefficientSpacing ) );
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
@@ -222,7 +222,7 @@ define( function( require ) {
         else if ( termCreator instanceof ConstantTermCreator ) {
 
           // constant terms contribute their weight to the constant term
-          constantValue = constantValue.plusFraction( termCreator.weightOnScaleProperty.value );
+          constantValue = constantValue.plusFraction( termCreator.weightOnPlateProperty.value );
         }
         else {
           throw new Error( 'unsupported termCreator type' );

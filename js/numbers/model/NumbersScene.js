@@ -30,12 +30,12 @@ define( function( require ) {
 
   /**
    * Creates the term creators for this scene.
-   * @param {number} initialNumberOfTermsOnScale
+   * @param {number} initialNumberOfTermsOnPlate
    * @returns {TermCreator[]}
    */
-  function createTermCreators( initialNumberOfTermsOnScale ) {
+  function createTermCreators( initialNumberOfTermsOnPlate ) {
 
-    assert && assert( initialNumberOfTermsOnScale.length === 2 );
+    assert && assert( initialNumberOfTermsOnPlate.length === 2 );
     var index = 0;
 
     return [
@@ -43,13 +43,13 @@ define( function( require ) {
       // 1
       new ConstantTermCreator( {
         defaultConstantValue: ReducedFraction.withInteger( 1 ),
-        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
+        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // -1
       new ConstantTermCreator( {
         defaultConstantValue: ReducedFraction.withInteger( -1 ),
-        initialNumberOfTermsOnScale: initialNumberOfTermsOnScale[ index++ ]
+        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } )
     ];
   }
