@@ -1,16 +1,21 @@
 TODO items for equality-explorer
 
 Solving screen
-- rewrite how snapshots are saved and restored, doesn't work for Solving screen
-- universal operation applied to empty scale
 - universal operation results in sum to zero without halo
+- universal operation applied to empty scale
 - drag term from scale, combine with term on scale (multi-touch)
 - sum big terms to zero (multi-touch)
+- rewrite how snapshots are saved and restored, doesn't work for Solving screen
 
 Locked mode, #19
 - term dragged from panel
 - term dragged from scale
 - mode change while drag is in progress (ignore mode change?)
+
+Solve It! screen
+- vegas game components
+- challenge generation engine
+- reuse parts of Solving screen
 
 Cleanup
 - grunt update-copyright-dates
