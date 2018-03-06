@@ -132,7 +132,7 @@ define( function( require ) {
      */
     applyOperation: function( operation ) {
 
-      // Gets all of the terms that are currently on the scale
+      // Gets all of the terms that are currently on the scale, since applying operations adds/removes terms.
       var terms = [];
       this.leftTermCreators.forEach( function( termCreator ) {
         terms = terms.concat( termCreator.getTermsOnPlate() );
@@ -141,7 +141,7 @@ define( function( require ) {
         terms = terms.concat( termCreator.getTermsOnPlate() );
       } );
 
-      // Apply the operation to terms on the scale
+      // Apply the operation to terms that were on the scale when this method was called.
       for ( var i = 0; i < terms.length; i++ ) {
         var term = terms[ i ];
         term.termCreator.applyOperation( operation, term );
