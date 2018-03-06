@@ -68,6 +68,16 @@ define( function( require ) {
     },
 
     /**
+     * Copies the specified term, with possible modifications specified via options.
+     * @param {Term} term
+     * @param {Object} [options]
+     * @returns {Term}
+     */
+    copyTerm: function( term, options ) {
+      throw new Error( 'copyTerm is not supported by MysteryTermCreator' );
+    },
+
+    /**
      * Instantiates the Node that corresponds to this term.
      * @param {Term} term
      * @param {Plate} plate

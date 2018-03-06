@@ -87,6 +87,22 @@ define( function( require ) {
     },
 
     /**
+     * Copies the specified term, with possible modifications specified via options.
+     * @param {Term} term
+     * @param {Object} [options]
+     * @returns {Term}
+     */
+    copyTerm: function( term, options ) {
+      assert && assert( term instanceof ConstantTerm, 'invalid term' );
+
+      options = options || {};
+      assert && assert( options.constantValue === undefined, 'ConstantTerm sets constantValue' );
+      options.constantValue = term.constantValue;
+
+      return this.createTerm( options );
+    },
+
+    /**
      * Instantiates the Node that corresponds to this term.
      * @param {Term} term
      * @param {Plate} plate

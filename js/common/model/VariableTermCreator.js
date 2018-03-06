@@ -117,12 +117,27 @@ define( function( require ) {
         return this.createTerm( options );
       }
       else {
-        console.log( 'inverseTermCreator.createTerm' );//XXX
 
         // If sign of the combined term doesn't match this item creator,
         // forward the creation request to the inverse term creator.
         return this.inverseTermCreator.createTerm( options );
       }
+    },
+
+    /**
+     * Copies the specified term, with possible modifications specified via options.
+     * @param {Term} term
+     * @param {Object} [options]
+     * @returns {Term}
+     */
+    copyTerm: function( term, options ) {
+      assert && assert( term instanceof VariableTerm, 'invalid term' );
+
+      options = options || {};
+      assert && assert( options.coefficient === undefined, 'VariableTermCreator sets coefficient' );
+      options.coefficient = term.coefficient;
+
+      return this.createTerm( options );
     },
 
     /**

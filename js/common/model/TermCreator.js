@@ -196,6 +196,16 @@ define( function( require ) {
     },
 
     /**
+     * Copies the specified term, with possible modifications specified via options.
+     * @param {Term} term
+     * @param {Object} [options]
+     * @returns {Term}
+     */
+    copyTerm: function( term, options ) {
+      throw new Error( 'copyTerm must be implemented by subtype' );
+    },
+
+    /**
      * Instantiates the Node that corresponds to a term.
      * @param {Term} term
      * @param {Plate} plate

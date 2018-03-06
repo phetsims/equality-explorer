@@ -24,10 +24,12 @@ define( function( require ) {
    */
   function MysteryTermNode( termCreator, term, plate, options ) {
 
-    var contentNode = MysteryTermNode.createIcon( term.mysteryObject.image );
+    var contentNode = MysteryTermNode.createIcon( term.mysteryObject.image, {
+      maxHeight: term.diameter
+    } );
 
     var shadowNode = new Image( term.mysteryObject.shadow, {
-      maxHeight: contentNode.height,
+      maxHeight: term.diameter,
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
 
