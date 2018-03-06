@@ -20,9 +20,5 @@ Locked mode, #19
 - term dragged from scale
 - mode change while drag is in progress (ignore mode change?)
 
-Misc
-- if there are N items on the scale, pressing Reset or Reset All results in N-1 intermediate states
-- if there are N terms in a snapshot, restoring the snapshot results in N-1 intermediate states
-
 Cleanup
 - grunt update-copyright-dates
