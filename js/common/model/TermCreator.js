@@ -2,7 +2,7 @@
 
 /**
  * Abstract base type for creating and managing terms.
- * Terms are created either by dragging then out of panels below the scale,
+ * Terms are created either by dragging them out of the panel below the plate,
  * by restoring a snapshot, or by using the 'universal operation' control.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -33,8 +33,9 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+      combineLikeTerms: false, // {boolean} combine like terms when they are placed on the plate?
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
-      initialNumberOfTermsOnScale: 0 // {number} integer number of terms initially on the scale
+      initialNumberOfTermsOnScale: 0 // {number} integer number of terms initially on the plate
     }, options );
 
     assert && assert( Util.isInteger( options.initialNumberOfTermsOnScale ) && ( options.initialNumberOfTermsOnScale >= 0 ),
@@ -48,16 +49,19 @@ define( function( require ) {
 
     // @public (read-only after initialization) {Vector2}
     // Location is dependent on the view and is unknowable until the sim has loaded.
-    // TermCreators will ultimately be located in the panels below the scale. See initialize.
+    // TermCreators will ultimately be located in the panel below the plate. See initialize.
     this.location = null;
 
-    // @private Number of terms to put on the scale initially.
-    // Terms cannot be put on the scale until this.location is initialized.
+    // @private Number of terms to put on the plate initially.
+    // Terms cannot be put on the plate until this.location is initialized.
     this.initialNumberOfTermsOnScale = options.initialNumberOfTermsOnScale;
 
     // @public (read-only) {Plate} the plate that this term creator is associated with.
     // This association necessarily occurs after instantiation.
     this.plate = null;
+
+    // @public (read-only) combine like terms when they are placed on the plate?
+    this.combineLikeTerms = options.combineLikeTerms;
 
     // @public {read-only) {Bounds2} drag bounds for terms created
     this.dragBounds = options.dragBounds;
@@ -147,7 +151,7 @@ define( function( require ) {
 
       this.location = location;
 
-      // populate the scale, see https://github.com/phetsims/equality-explorer/issues/8
+      // populate the plate, see https://github.com/phetsims/equality-explorer/issues/8
       assert && assert( this.plate, 'plate has not been initialized' );
       for ( var i = 0; i < this.initialNumberOfTermsOnScale; i++ ) {
         var cellIndex = this.plate.getFirstEmptyCell();

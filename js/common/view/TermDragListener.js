@@ -109,8 +109,8 @@ define( function( require ) {
         }
         else {
 
-          // term was released above the plate, animate to closest empty cell
-          animateToClosestEmptyCell( term, termCreator, plate );
+          // term was released above the plate
+          animateToPlate( term, termCreator, plate );
         }
       }
     } );
@@ -146,13 +146,43 @@ define( function( require ) {
   }
 
   /**
-   * Animates a term to an empty cell on a plate.
+   * Animates a term to the plate.
+   * @param {Term} term
+   * @param {TermCreator} termCreator
+   * @param {Plate} plate
+   */
+  function animateToPlate( term, termCreator, plate ) {
+    if ( termCreator.combineLikeTerms ) {
+      animateToLikeCell( term, termCreator, plate );
+    }
+    else {
+      animateToEmptyCell( term, termCreator, plate );
+    }
+  }
+
+  /**
+   * Animates a term to the cell for like terms.
+   * In this scenarios, each term *type* occupies a specific cell on the plate.
+   * If there's a term in that cell, then terms are combined to produce a new term that occupies the cell.
+   * Or if the terms sum to zero, then the sum-to-zero animation is performed.
+   * @param term
+   * @param termCreator
+   * @param plate
+   */
+  function animateToLikeCell( term, termCreator, plate ) {
+    //TODO
+  }
+
+  /**
+   * Animates a term to an empty cell.
+   * In this scenario, each term occupies a cell on the plate, and we do not sum like terms.
    * If there are no empty cells on the plate, the term is returned to the panel where it was created.
    * @param {Term} term
    * @param {TermCreator} termCreator
    * @param {Plate} plate
    */
-  function animateToClosestEmptyCell( term, termCreator, plate ) {
+  function animateToEmptyCell( term, termCreator, plate ) {
+    assert && assert( !termCreator.combineLikeTerms, 'invalid combineLikeTerms: ' + termCreator.combineLikeTerms );
 
     var cellIndex = plate.getClosestEmptyCell( term.locationProperty.value );
     if ( cellIndex === -1 ) {
@@ -170,7 +200,7 @@ define( function( require ) {
         // If the target cell has become occupied, choose another cell.
         animationStepCallback: function() {
           if ( !plate.isEmptyCell( cellIndex ) ) {
-            animateToClosestEmptyCell( term, termCreator, plate );
+            animateToEmptyCell( term, termCreator, plate );
           }
         },
 

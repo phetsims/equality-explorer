@@ -27,6 +27,9 @@ define( function( require ) {
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
+  // constants
+  var COMBINE_LIKE_TERMS = true; // combine like terms when they are placed on the scale
+
   /**
    * @constructor
    */
@@ -85,22 +88,26 @@ define( function( require ) {
 
       // x
       new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: ReducedFraction.withInteger( 1 )
+        defaultCoefficient: ReducedFraction.withInteger( 1 ),
+        combineLikeTerms: COMBINE_LIKE_TERMS
       } ),
 
       // -x
       new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: ReducedFraction.withInteger( -1 )
+        defaultCoefficient: ReducedFraction.withInteger( -1 ),
+        combineLikeTerms: COMBINE_LIKE_TERMS
       } ),
 
       // 1
       new ConstantTermCreator( {
-        defaultConstantValue: ReducedFraction.withInteger( 1 )
+        defaultConstantValue: ReducedFraction.withInteger( 1 ),
+        combineLikeTerms: COMBINE_LIKE_TERMS
       } ),
 
       // -1
       new ConstantTermCreator( {
-        defaultConstantValue: ReducedFraction.withInteger( -1 )
+        defaultConstantValue: ReducedFraction.withInteger( -1 ),
+        combineLikeTerms: COMBINE_LIKE_TERMS
       } )
     ];
   }
