@@ -49,7 +49,7 @@ define( function( require ) {
     this.plate = plate;
     this.haloRadius = options.haloRadius;
 
-    // @private {Node} term the is the inverse of the term being dragged. E.g. 1 and -1, x and -x
+    // @private {Term} inverse of the term being dragged. E.g. 1 and -1, x and -x
     this.inverseTerm = null;
 
     SimpleDragHandler.call( this, {
