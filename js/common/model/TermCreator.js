@@ -33,9 +33,12 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      combineLikeTerms: false, // {boolean} combine like terms when they are placed on the plate?
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
-      initialNumberOfTermsOnPlate: 0 // {number} integer number of terms initially on the plate
+      initialNumberOfTermsOnPlate: 0, // {number} integer number of terms initially on the plate
+
+      // {number} like terms will occupy this cell index in the plate's 2D grid
+      // -1 means 'no cell', and like terms will not be combined
+      likeTermsCellIndex: -1
     }, options );
 
     assert && assert( Util.isInteger( options.initialNumberOfTermsOnPlate ) && ( options.initialNumberOfTermsOnPlate >= 0 ),
@@ -60,8 +63,12 @@ define( function( require ) {
     // This association necessarily occurs after instantiation.
     this.plate = null;
 
-    // @public (read-only) combine like terms when they are placed on the plate?
-    this.combineLikeTerms = options.combineLikeTerms;
+    // @public (read-only) like terms will be combined in this cell in the plate's 2D grid
+    this.likeTermsCellIndex = options.likeTermsCellIndex;
+    this.combineLikeTerms = ( options.likeTermsCellIndex !== -1 ); // convenience property
+
+    // @public (read-only) if we're combining like terms, they will be in this cell in the 2D grid
+    this.cellIndex = options.cellIndex;
 
     // @public {read-only) {Bounds2} drag bounds for terms created
     this.dragBounds = options.dragBounds;

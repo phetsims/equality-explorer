@@ -170,6 +170,7 @@ define( function( require ) {
    * @param plate
    */
   function animateToLikeCell( term, termCreator, plate ) {
+    assert && assert( termCreator.combineLikeTerms, 'should ONLY be called when combining like terms' );
     //TODO
   }
 
@@ -182,7 +183,7 @@ define( function( require ) {
    * @param {Plate} plate
    */
   function animateToEmptyCell( term, termCreator, plate ) {
-    assert && assert( !termCreator.combineLikeTerms, 'invalid combineLikeTerms: ' + termCreator.combineLikeTerms );
+    assert && assert( !termCreator.combineLikeTerms, 'should NOT be called when combining like terms' );
 
     var cellIndex = plate.getClosestEmptyCell( term.locationProperty.value );
     if ( cellIndex === -1 ) {
