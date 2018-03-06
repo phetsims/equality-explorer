@@ -219,6 +219,15 @@ define( function( require ) {
     },
 
     /**
+     * Applies a universal operation to terms on the scale.
+     * @param {UniversalOperation} operation
+     * @param {Term} term
+     */
+    applyOperation: function( operation, term ) {
+      throw new Error( 'applyOperation must be implemented by subtypes' );
+    },
+
+    /**
      * Is this term creator the inverse of a specified term creator?
      * @param {TermCreator} termCreator
      * @returns {boolean}

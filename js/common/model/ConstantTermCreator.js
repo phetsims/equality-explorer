@@ -12,7 +12,9 @@ define( function( require ) {
   var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
   var Util = require( 'DOT/Util' );
@@ -76,11 +78,13 @@ define( function( require ) {
       options.constantValue = term1.constantValue.plusFraction( term2.constantValue );
 
       if ( Util.sign( options.constantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
+
+        // sign is the same as this term creator, so create the term
         return this.createTerm( options );
       }
       else {
 
-        // If sign of the combined term doesn't match this item creator,
+        // sign of the combined term doesn't match this term creator,
         // forward the creation request to the inverse term creator.
         return this.inverseTermCreator.createTerm( options );
       }
@@ -113,6 +117,62 @@ define( function( require ) {
      */
     createTermNode: function( term, plate, options ) {
       return new ConstantTermNode( this, term, plate, options );
+    },
+
+    /**
+     * Applies a universal operation to terms on the scale.
+     * @param {UniversalOperation} operation
+     * @param {Term} term
+     */
+    applyOperation: function( operation, term ) {
+      assert && assert( this.combineLikeTerms, 'applyOperation is only supported when combining like terms' );
+
+      var cellIndex = this.plate.getCellForTerm( term );
+
+      // compute the new constant value
+      var constantValue;
+      if ( operation.operator === MathSymbols.PLUS ) {
+        constantValue = term.constantValue.plusInteger( operation.operand );
+      }
+      else if ( operation.operator === MathSymbols.MINUS ) {
+        constantValue = term.constantValue.minusInteger( operation.operand );
+      }
+      else if ( operation.operator === MathSymbols.TIMES ) {
+        constantValue = term.constantValue.timesInteger( operation.operand );
+      }
+      else if ( operation.operator === MathSymbols.DIVIDE ) {
+        constantValue = term.constantValue.divideByInteger( operation.operand );
+      }
+      else {
+        throw new Error( 'invalid operator: ' + operation.operator );
+      }
+      console.log( term.constantValue + ' ' + operation.operator + ' ' + operation.operand + ' = ' + constantValue );//XXX
+
+      // Dispose of the term, has the side-effect of removing it from the plate.
+      term.dispose();
+
+      if ( constantValue.toDecimal() === 0 ) {
+        //TODO sum-to-zero animation without halo
+      }
+      else {
+
+        // create a new term on the plate
+        var newTermOptions = {
+          constantValue: constantValue,
+          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+        };
+
+        if ( Util.sign( constantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
+
+          // sign is the same as this term creator, so create the term
+          this.createTermOnPlate( cellIndex, newTermOptions );
+        }
+        else {
+
+          // sign is different than this term creator, forward the creation request to the inverse term creator.
+          this.inverseTermCreator.createTermOnPlate( cellIndex, newTermOptions );
+        }
+      }
     },
 
     /**

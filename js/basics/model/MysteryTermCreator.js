@@ -91,6 +91,14 @@ define( function( require ) {
     },
 
     /**
+     * Applies a universal operation to terms on the scale.
+     * @param {UniversalOperation} operation
+     */
+    applyOperation: function( operation ) {
+      throw new Error( 'applyOperation is not supported by MysteryTermCreator' );
+    },
+
+    /**
      * Is this term creator the inverse of a specified term creator?
      * @param {TermCreator} termCreator
      * @returns {boolean}
