@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
 
