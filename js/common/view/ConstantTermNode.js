@@ -26,8 +26,8 @@ define( function( require ) {
     positiveLineDash: [], // solid
     negativeLineDash: [ 3, 3 ],
     margin: 8,
-    fractionFont: new PhetFont( 12 ),
-    integerFont: new PhetFont( 24 )
+    fractionFont: new PhetFont( 20 ),
+    integerFont: new PhetFont( 40 )
   };
 
   /**

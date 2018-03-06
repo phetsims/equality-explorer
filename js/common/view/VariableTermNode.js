@@ -31,9 +31,9 @@ define( function( require ) {
     negativeLineDash: [ 4, 4 ],
     margin: 6,
     xSpacing: 2,
-    fractionFont: new PhetFont( 12 ),
-    integerFont: new PhetFont( 24 ),
-    symbolFont: new MathSymbolFont( 24 )
+    fractionFont: new PhetFont( 20 ),
+    integerFont: new PhetFont( 40 ),
+    symbolFont: new MathSymbolFont( 40 )
   };
 
   /**
