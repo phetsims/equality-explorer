@@ -15,7 +15,6 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
   var VariablesModel = require( 'EQUALITY_EXPLORER/variables/model/VariablesModel' );
   var VariablesScreenView = require( 'EQUALITY_EXPLORER/variables/view/VariablesScreenView' );
-  var VariablesScreenModel = require( 'EQUALITY_EXPLORER/variables/model/VariablesScreenModel' );
 
   // strings
   var screenVariablesString = require( 'string!EQUALITY_EXPLORER/screen.variables' );
