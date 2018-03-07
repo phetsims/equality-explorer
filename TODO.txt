@@ -1,7 +1,6 @@
 TODO items for equality-explorer
 
 Solving screen
-- fix #42
 - universal operation results in sum to zero without halo
 - plus and minus applied to empty scale creates constant term
 - rewrite how snapshots are saved and restored, doesn't work for Solving screen
