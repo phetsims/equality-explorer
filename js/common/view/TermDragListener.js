@@ -213,18 +213,20 @@ define( function( require ) {
               diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
             } );
 
-            // Dispose of the terms that were used to create the combined term.
-            // As a side-effect, this removes termInCell from the plate.
-            self.term.dispose();
-            termInCell.dispose();
-
             if ( combinedTerm ) {
 
               // Put the new term on the plate.
+              self.term.dispose();
+              termInCell.dispose();
               combinedTerm.termCreator.putTermOnPlate( combinedTerm, cellIndex );
             }
             else {
-              //TODO perform sum-to-zero animation without halo
+
+              // Terms sum to zero
+              self.inverseTerm = termInCell;
+              self.sumToZero( {
+                haloBaseColor: 'transparent' // no visible halo
+              } );
             }
           }
         }
@@ -329,9 +331,10 @@ define( function( require ) {
 
     /**
      * Sums a term and its inverse to zero, and performs the associated animation. See equality-explorer#17
+     * @param {Object} [options] - passed to SumToZero constructor
      * @private
      */
-    sumToZero: function() {
+    sumToZero: function( options ) {
       assert && assert( this.inverseTerm, 'no inverse' );
 
       // determine which cell the inverse term appears in
@@ -349,12 +352,14 @@ define( function( require ) {
       // determine the new location of the inverse term's cell
       var sumToZeroLocation = this.plate.getLocationOfCell( cellIndex );
 
-      // show '0' or '0x' in yellow halo, fade out
-      var sumToZeroNode = new SumToZeroNode( {
+      options = _.extend( {
         symbol: symbol,
         haloRadius: this.haloRadius,
         center: sumToZeroLocation
-      } );
+      }, options );
+
+      // show '0' or '0x' in yellow halo, fade out
+      var sumToZeroNode = new SumToZeroNode( options );
       parent.addChild( sumToZeroNode );
       sumToZeroNode.startAnimation();
     }
