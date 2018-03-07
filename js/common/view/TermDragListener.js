@@ -63,13 +63,17 @@ define( function( require ) {
        */
       start: function( event, trail ) {
 
+        // move the node we're dragging to the foreground
+        termNode.moveToFront();
+
+        // set term properties at beginning of drag
         term.dragging = true;
         term.shadowVisibleProperty.value = true;
 
-        termNode.moveToFront();
-
+        // move the term a bit, so it's obvious that we're interacting with it
         term.moveTo( self.eventToLocation( event ) );
 
+        // if the term is on the plate, remove it from the plate
         if ( termCreator.isTermOnPlate( term ) ) {
           termCreator.removeTermFromPlate( term );
         }
@@ -85,7 +89,7 @@ define( function( require ) {
         // move the term
         term.moveTo( self.eventToLocation( event ) );
 
-        // refresh the halos that appear when dragged term overlaps its inverse
+        // refresh the halos that appear when dragged term overlaps with an inverse term
         self.refreshHalos();
       },
 
@@ -96,6 +100,7 @@ define( function( require ) {
        */
       end: function( event, trail ) {
 
+        // set term properties at end of drag
         term.dragging = false;
         term.shadowVisibleProperty.value = false;
 
@@ -106,12 +111,12 @@ define( function( require ) {
         }
         else if ( term.locationProperty.value.y > plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
-          // term was released below the plate, animate back to panel and dispose
+          // term was released below the plate, animate back to panel
           self.animateToPanel();
         }
         else {
 
-          // term was released above the plate
+          // term was released above the plate, animate to the plate
           self.animateToPlate();
         }
       }
@@ -174,7 +179,7 @@ define( function( require ) {
 
     /**
      * Animates a term to the cell for like terms.
-     * In this scenarios, each term *type* occupies a specific cell on the plate.
+     * In this scenarios, all like terms occupy a specific cell on the plate.
      * If there's a term in that cell, then terms are combined to produce a new term that occupies the cell.
      * Or if the terms sum to zero, then the sum-to-zero animation is performed.
      * @private
@@ -193,7 +198,7 @@ define( function( require ) {
 
           if ( self.plate.isEmptyCell( cellIndex ) ) {
 
-            // If the cell is unoccupied, make a 'big' copy of this term and put it in the cell.
+            // If the cell is empty, make a 'big' copy of this term and put it in the cell.
             var termCopy = self.termCreator.copyTerm( self.term, {
               diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
             } );
@@ -235,7 +240,7 @@ define( function( require ) {
 
     /**
      * Animates the term to an empty cell.
-     * In this scenario, each term occupies a cell on the plate, and we do not sum like terms.
+     * In this scenario, each term occupies a cell on the plate, and like terms are not combined.
      * If there are no empty cells on the plate, the term is returned to the panel where it was created.
      * @private
      */
@@ -246,8 +251,7 @@ define( function( require ) {
 
       if ( cellIndex === -1 ) {
 
-        // Plate has become full, or there is no available cell above the term's location.
-        // Return the term to panel.
+        // Plate is full. Return the term to its panel.
         this.animateToPanel( this.term );
       }
       else {
@@ -290,8 +294,8 @@ define( function( require ) {
     },
 
     /**
-     * Refreshes the visual feedback (yellow halos) that is provided when a dragged term
-     * overlaps its inverse on the scale. See equality-explorer#17
+     * Refreshes the visual feedback (yellow halos) that is provided when a dragged term overlaps an inverse term
+     * that is on the scale. See equality-explorer#17
      * @private
      */
     refreshHalos: function() {
