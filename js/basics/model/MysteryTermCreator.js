@@ -59,8 +59,8 @@ define( function( require ) {
      * @param {Term} term1
      * @param {Term} term2
      * @param {Object} options
-     * @returns {Term}
-     * @protected
+     * @returns {Term|null}
+     * @public
      * @override
      */
     combineTerms: function( term1, term2, options ) {

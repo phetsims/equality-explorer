@@ -198,7 +198,7 @@ define( function( require ) {
           // Get the term that occupies the cell.
           var termInCell =  plate.getTermInCell( cellIndex );
 
-          // Combine the terms to create a new 'big' term. Put the new term in the cell.
+          // Combine the terms to create a new 'big' term.
           var combinedTerm = termCreator.combineTerms( term, termInCell, {
             diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
           } );
@@ -208,7 +208,14 @@ define( function( require ) {
           term.dispose();
           termInCell.dispose();
 
-          combinedTerm.termCreator.putTermOnPlate( combinedTerm, cellIndex );
+          if ( combinedTerm ) {
+
+            // Put the new term on the plate.
+            combinedTerm.termCreator.putTermOnPlate( combinedTerm, cellIndex );
+          }
+          else {
+            //TODO perform sum-to-zero animation without halo
+          }
         }
       }
     } );

@@ -187,18 +187,19 @@ define( function( require ) {
      * Creates a new term on the plate by combining two terms.
      * @param {Term} term1
      * @param {Term} term2
-     * @param {Object} [options]
-     * @returns {Term}
+     * @param {Object} [options] - passed to the combined Term's constructor
+     * @returns {Term|null} - the combined term, null if the terms sum to zero
      * @public
+     * @abstract
      */
     combineTerms: function( term1, term2, options ) {
-      throw new Error( 'combineTermsOnPlate must be implemented by subtype' );
+      throw new Error( 'combineTerms must be implemented by subtype' );
     },
 
     /**
      * Copies the specified term, with possible modifications specified via options.
      * @param {Term} term
-     * @param {Object} [options]
+     * @param {Object} [options] - passed to the new Term's constructor
      * @returns {Term}
      */
     copyTerm: function( term, options ) {

@@ -102,36 +102,49 @@ define( function( require ) {
      * Creates a new term by combining two terms.
      * @param {Term} term1
      * @param {Term} term2
-     * @param {Object} options
-     * @returns {Term}
-     * @protected
+     * @param {Object} options - passed to the combined Term's constructor
+     * @returns {Term|null} - the combined term, null if the terms sum to zero
+     * @public
      * @override
      */
     combineTerms: function( term1, term2, options ) {
+
       assert && assert( term1 instanceof VariableTerm, 'invalid term1' );
       assert && assert( term2 instanceof VariableTerm, 'invalid term2' );
 
       options = options || {};
       assert && assert( options.coefficient === undefined, 'VariableTermCreator sets coefficient' );
-      options.coefficient = term1.coefficient.plusFraction( term2.coefficient );
 
-      if ( Util.sign( options.coefficient.toDecimal() ) === Util.sign( this.defaultCoefficient.toDecimal() ) ) {
+      var coefficient = term1.coefficient.plusFraction( term2.coefficient );
+      var combinedTerm;
 
-        // sign is the same as this term creator, so create the term
-        return this.createTerm( options );
+      if ( coefficient.toDecimal() === 0 ) {
+
+        // terms summed to zero
+        combinedTerm = null;
       }
       else {
+        options.coefficient = coefficient;
 
-        // sign of the combined term doesn't match this term creator,
-        // forward the creation request to the inverse term creator.
-        return this.inverseTermCreator.createTerm( options );
+        if ( Util.sign( options.coefficient.toDecimal() ) === Util.sign( this.defaultCoefficient.toDecimal() ) ) {
+
+          // sign is the same as this term creator, so create the term
+          combinedTerm = this.createTerm( options );
+        }
+        else {
+
+          // sign of the combined term doesn't match this term creator,
+          // forward the creation request to the inverse term creator.
+          combinedTerm = this.inverseTermCreator.createTerm( options );
+        }
       }
+      return combinedTerm;
     },
 
     /**
      * Copies the specified term, with possible modifications specified via options.
      * @param {Term} term
-     * @param {Object} [options]
+     * @param {Object} [options] - passed to the new Term's constructor
      * @returns {Term}
      */
     copyTerm: function( term, options ) {

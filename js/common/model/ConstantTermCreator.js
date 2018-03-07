@@ -45,7 +45,7 @@ define( function( require ) {
 
     /**
      * Instantiates a ConstantTerm.
-     * @param {Object} [options]
+     * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
      * @protected
      * @override
@@ -65,35 +65,49 @@ define( function( require ) {
      * Creates a new term by combining two terms.
      * @param {Term} term1
      * @param {Term} term2
-     * @param {Object} options
-     * @protected
+     * @param {Object} options - passed to the combined Term's constructor
+     * @returns {Term|null} - the combined term, null if the terms sum to zero
+     * @public
      * @override
      */
     combineTerms: function( term1, term2, options ) {
+
       assert && assert( term1 instanceof ConstantTerm, 'invalid term1' );
       assert && assert( term2 instanceof ConstantTerm, 'invalid term2' );
 
       options = options || {};
       assert && assert( options.constantValue === undefined, 'ConstantTermCreator sets constantValue' );
-      options.constantValue = term1.constantValue.plusFraction( term2.constantValue );
 
-      if ( Util.sign( options.constantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
+      var constantValue = term1.constantValue.plusFraction( term2.constantValue );
+      var combinedTerm;
+      
+      if ( constantValue.toDecimal() === 0 ) {
 
-        // sign is the same as this term creator, so create the term
-        return this.createTerm( options );
+        // terms summed to zero
+        combinedTerm = null;
       }
       else {
+        options.constantValue = constantValue;
 
-        // sign of the combined term doesn't match this term creator,
-        // forward the creation request to the inverse term creator.
-        return this.inverseTermCreator.createTerm( options );
+        if ( Util.sign( options.constantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
+
+          // sign is the same as this term creator, so create the term
+          combinedTerm = this.createTerm( options );
+        }
+        else {
+
+          // sign of the combined term doesn't match this term creator,
+          // forward the creation request to the inverse term creator.
+          combinedTerm = this.inverseTermCreator.createTerm( options );
+        }
       }
+      return combinedTerm;
     },
 
     /**
      * Copies the specified term, with possible modifications specified via options.
      * @param {Term} term
-     * @param {Object} [options]
+     * @param {Object} [options] - passed to the new Term's constructor
      * @returns {Term}
      */
     copyTerm: function( term, options ) {
@@ -110,7 +124,7 @@ define( function( require ) {
      * Instantiates the Node that corresponds to this term.
      * @param {Term} term
      * @param {Plate} plate
-     * @param {Object} options
+     * @param {Object} [options]  - passed to the TermNode's constructor
      * @returns {TermNode}
      * @public
      * @override
