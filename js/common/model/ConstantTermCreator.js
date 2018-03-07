@@ -148,7 +148,6 @@ define( function( require ) {
       else {
         throw new Error( 'invalid operator: ' + operation.operator );
       }
-      console.log( term.constantValue + ' ' + operation.operator + ' ' + operation.operand + ' = ' + constantValue );//XXX
 
       // Dispose of the term, has the side-effect of removing it from the plate.
       term.dispose();

@@ -192,7 +192,6 @@ define( function( require ) {
       else {
         throw new Error( 'unsupported operand: ' + operation.operand );
       }
-      console.log( term.coefficient + ' ' + operation.operator + ' ' + operation.operand + ' = ' + coefficient );//XXX
 
       // Dispose of the term, has the side-effect of removing it from the plate.
       term.dispose();
