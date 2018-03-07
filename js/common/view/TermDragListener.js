@@ -45,8 +45,9 @@ define( function( require ) {
     }, options );
 
     // @private
-    this.term = term;
     this.termNode = termNode;
+    this.term = term;
+    this.termCreator = termCreator;
     this.plate = plate;
     this.haloRadius = options.haloRadius;
     this.inverseTerm = null; // {Term} inverse of the term being dragged. E.g. 1 and -1, x and -x
@@ -106,12 +107,12 @@ define( function( require ) {
         else if ( term.locationProperty.value.y > plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
           // term was released below the plate, animate back to panel and dispose
-          animateToPanel( term );
+          self.animateToPanel();
         }
         else {
 
           // term was released above the plate
-          animateToPlate( term, termCreator, plate );
+          self.animateToPlate();
         }
       }
     } );
@@ -134,132 +135,6 @@ define( function( require ) {
 
   equalityExplorer.register( 'TermDragListener', TermDragListener );
 
-  /**
-   * Returns a Term to the panel where it was created.
-   * @param {Term} term
-   */
-  function animateToPanel( term ) {
-    term.animateTo( term.locationProperty.initialValue, {
-      animationCompletedCallback: function() {
-        term.dispose();
-      }
-    } );
-  }
-
-  /**
-   * Animates a term to the plate.
-   * @param {Term} term
-   * @param {TermCreator} termCreator
-   * @param {Plate} plate
-   */
-  function animateToPlate( term, termCreator, plate ) {
-    if ( termCreator.combineLikeTerms ) {
-      animateToLikeCell( term, termCreator, plate );
-    }
-    else {
-      animateToEmptyCell( term, termCreator, plate );
-    }
-  }
-
-  /**
-   * Animates a term to the cell for like terms.
-   * In this scenarios, each term *type* occupies a specific cell on the plate.
-   * If there's a term in that cell, then terms are combined to produce a new term that occupies the cell.
-   * Or if the terms sum to zero, then the sum-to-zero animation is performed.
-   * @param term
-   * @param termCreator
-   * @param plate
-   */
-  function animateToLikeCell( term, termCreator, plate ) {
-    assert && assert( termCreator.combineLikeTerms, 'should ONLY be called when combining like terms' );
-
-    var cellIndex = termCreator.likeTermsCellIndex;
-    var cellLocation = plate.getLocationOfCell( cellIndex );
-
-    term.animateTo( cellLocation, {
-
-      // When the term reaches the cell ...
-      animationCompletedCallback: function() {
-
-        if ( plate.isEmptyCell( cellIndex ) ) {
-
-          // If the cell is unoccupied, make a 'big' copy of this term and put it in the cell.
-          var termCopy = termCreator.copyTerm( term, {
-            diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-          } );
-          termCreator.putTermOnPlate( termCopy, cellIndex );
-
-          // dispose of the original term
-          term.dispose();
-        }
-        else {
-
-          // If the cell is occupied...
-          // Get the term that occupies the cell.
-          var termInCell =  plate.getTermInCell( cellIndex );
-
-          // Combine the terms to create a new 'big' term.
-          var combinedTerm = termCreator.combineTerms( term, termInCell, {
-            diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-          } );
-
-          // Dispose of the terms that were used to create the combined term.
-          // As a side-effect, this removes termInCell from the plate.
-          term.dispose();
-          termInCell.dispose();
-
-          if ( combinedTerm ) {
-
-            // Put the new term on the plate.
-            combinedTerm.termCreator.putTermOnPlate( combinedTerm, cellIndex );
-          }
-          else {
-            //TODO perform sum-to-zero animation without halo
-          }
-        }
-      }
-    } );
-  }
-
-  /**
-   * Animates a term to an empty cell.
-   * In this scenario, each term occupies a cell on the plate, and we do not sum like terms.
-   * If there are no empty cells on the plate, the term is returned to the panel where it was created.
-   * @param {Term} term
-   * @param {TermCreator} termCreator
-   * @param {Plate} plate
-   */
-  function animateToEmptyCell( term, termCreator, plate ) {
-    assert && assert( !termCreator.combineLikeTerms, 'should NOT be called when combining like terms' );
-
-    var cellIndex = plate.getClosestEmptyCell( term.locationProperty.value );
-    if ( cellIndex === -1 ) {
-
-      // Plate has become full, or there is no available cell above the term's location.
-      // Return the term to panel.
-      animateToPanel( term );
-    }
-    else {
-
-      var cellLocation = plate.getLocationOfCell( cellIndex );
-
-      term.animateTo( cellLocation, {
-
-        // If the target cell has become occupied, choose another cell.
-        animationStepCallback: function() {
-          if ( !plate.isEmptyCell( cellIndex ) ) {
-            animateToEmptyCell( term, termCreator, plate );
-          }
-        },
-
-        // When the term reaches the cell, put it in the cell.
-        animationCompletedCallback: function() {
-          termCreator.putTermOnPlate( term, cellIndex );
-        }
-      } );
-    }
-  }
-
   return inherit( SimpleDragHandler, TermDragListener, {
 
     /**
@@ -269,6 +144,130 @@ define( function( require ) {
     dispose: function() {
       this.disposeTermDragListener();
       SimpleDragHandler.prototype.dispose.call( this );
+    },
+
+    /**
+     * Returns the term to the panel where it was created.
+     * @private
+     */
+    animateToPanel: function() {
+      var self = this;
+      this.term.animateTo( this.term.locationProperty.initialValue, {
+        animationCompletedCallback: function() {
+          self.term.dispose();
+        }
+      } );
+    },
+
+    /**
+     * Animates the term to the plate.
+     * @private
+     */
+    animateToPlate: function() {
+      if ( this.termCreator.combineLikeTerms ) {
+        this.animateToLikeCell();
+      }
+      else {
+        this.animateToEmptyCell();
+      }
+    },
+
+    /**
+     * Animates a term to the cell for like terms.
+     * In this scenarios, each term *type* occupies a specific cell on the plate.
+     * If there's a term in that cell, then terms are combined to produce a new term that occupies the cell.
+     * Or if the terms sum to zero, then the sum-to-zero animation is performed.
+     * @private
+     */
+    animateToLikeCell: function() {
+      assert && assert( this.termCreator.combineLikeTerms, 'should ONLY be called when combining like terms' );
+
+      var self = this;
+      var cellIndex = this.termCreator.likeTermsCellIndex;
+      var cellLocation = this.plate.getLocationOfCell( cellIndex );
+
+      this.term.animateTo( cellLocation, {
+
+        // When the term reaches the cell ...
+        animationCompletedCallback: function() {
+
+          if ( self.plate.isEmptyCell( cellIndex ) ) {
+
+            // If the cell is unoccupied, make a 'big' copy of this term and put it in the cell.
+            var termCopy = self.termCreator.copyTerm( self.term, {
+              diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+            } );
+            self.termCreator.putTermOnPlate( termCopy, cellIndex );
+
+            // dispose of the original term
+            self.term.dispose();
+          }
+          else {
+
+            // If the cell is occupied...
+            // Get the term that occupies the cell.
+            var termInCell = self.plate.getTermInCell( cellIndex );
+
+            // Combine the terms to create a new 'big' term.
+            var combinedTerm = self.termCreator.combineTerms( self.term, termInCell, {
+              diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+            } );
+
+            // Dispose of the terms that were used to create the combined term.
+            // As a side-effect, this removes termInCell from the plate.
+            self.term.dispose();
+            termInCell.dispose();
+
+            if ( combinedTerm ) {
+
+              // Put the new term on the plate.
+              combinedTerm.termCreator.putTermOnPlate( combinedTerm, cellIndex );
+            }
+            else {
+              //TODO perform sum-to-zero animation without halo
+            }
+          }
+        }
+      } );
+    },
+
+    /**
+     * Animates the term to an empty cell.
+     * In this scenario, each term occupies a cell on the plate, and we do not sum like terms.
+     * If there are no empty cells on the plate, the term is returned to the panel where it was created.
+     * @private
+     */
+    animateToEmptyCell: function() {
+      assert && assert( !this.termCreator.combineLikeTerms, 'should NOT be called when combining like terms' );
+
+      var cellIndex = this.plate.getClosestEmptyCell( this.term.locationProperty.value );
+
+      if ( cellIndex === -1 ) {
+
+        // Plate has become full, or there is no available cell above the term's location.
+        // Return the term to panel.
+        this.animateToPanel( this.term );
+      }
+      else {
+
+        var self = this;
+        var cellLocation = this.plate.getLocationOfCell( cellIndex );
+
+        this.term.animateTo( cellLocation, {
+
+          // If the target cell has become occupied, choose another cell.
+          animationStepCallback: function() {
+            if ( !self.plate.isEmptyCell( cellIndex ) ) {
+              self.animateToEmptyCell();
+            }
+          },
+
+          // When the term reaches the cell, put it in the cell.
+          animationCompletedCallback: function() {
+            self.termCreator.putTermOnPlate( self.term, cellIndex );
+          }
+        } );
+      }
     },
 
     /**
