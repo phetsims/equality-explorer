@@ -3,8 +3,6 @@ TODO items for equality-explorer
 Solving screen
 - universal operation results in sum to zero without halo
 - universal operation applied to empty scale
-- drag term from scale, combine with term on scale (multi-touch)
-- sum big terms to zero (multi-touch)
 - rewrite how snapshots are saved and restored, doesn't work for Solving screen
 - cleanup/refactor everything added for this screen
 
