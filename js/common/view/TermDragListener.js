@@ -330,7 +330,8 @@ define( function( require ) {
     },
 
     /**
-     * Sums a term and its inverse to zero, and performs the associated animation. See equality-explorer#17
+     * Sums the term and its inverse to zero, disposes of both terms, and performs the associated animation.
+     * See equality-explorer#17
      * @param {Object} [options] - passed to SumToZero constructor
      * @private
      */
