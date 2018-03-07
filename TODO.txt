@@ -1,12 +1,13 @@
 TODO items for equality-explorer
 
 Solving screen
-- universal operation results in sum to zero without halo (see ConstantTermCreator, VariableTermCreator)
-- plus and minus applied to empty scale creates constant term
+- sum-to-zero animation for universal operation (see ConstantTermCreator, VariableTermCreator)
+- create constant term on scale for plus and minus operations
 - rewrite how snapshots are saved and restored, doesn't work for Solving screen
 - reconsider the decision to make Terms immutable
 - cleanup/refactor everything added for this screen
 - consolidate sum-to-zero, it's handled in a few places for different scenarios
+- change "apply" of universal operator to create terms that are combined with what's on scale
 
 Locked mode, #19
 - term dragged from panel
