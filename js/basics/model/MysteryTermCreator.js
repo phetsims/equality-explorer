@@ -51,7 +51,30 @@ define( function( require ) {
         dragBounds: this.dragBounds
       }, options );
 
-      return new MysteryTerm( this.mysteryObject, options );
+      return new MysteryTerm( this.mysteryObject, this, options );
+    },
+
+    /**
+     * Creates a new term by combining this term with another term.
+     * @param {Term} term1
+     * @param {Term} term2
+     * @param {Object} options
+     * @returns {Term}
+     * @protected
+     * @override
+     */
+    combineTerms: function( term1, term2, options ) {
+       throw new Error( 'combineTerms is not supported by MysteryTermCreator' );
+    },
+
+    /**
+     * Copies the specified term, with possible modifications specified via options.
+     * @param {Term} term
+     * @param {Object} [options]
+     * @returns {Term}
+     */
+    copyTerm: function( term, options ) {
+      throw new Error( 'copyTerm is not supported by MysteryTermCreator' );
     },
 
     /**
@@ -65,6 +88,17 @@ define( function( require ) {
      */
     createTermNode: function( term, plate, options ) {
       return new MysteryTermNode( this, term, plate, options );
+    },
+
+    /**
+     * Applies a universal operation to terms on the scale.
+     * @param {UniversalOperation} operation
+     * @param {Term} term
+     * @public
+     * @override
+     */
+    applyOperation: function( operation, term ) {
+      throw new Error( 'applyOperation is not supported by MysteryTermCreator' );
     },
 
     /**

@@ -17,15 +17,16 @@ define( function( require ) {
 
   /**
    * @param {MysteryObject} mysteryObject
+   * @param {TermCreator} termCreator
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTerm( mysteryObject, options ) {
+  function MysteryTerm( mysteryObject, termCreator, options ) {
 
     // @public (read-only)
     this.mysteryObject = mysteryObject;
 
-    Term.call( this, options );
+    Term.call( this, termCreator, options );
   }
 
   equalityExplorer.register( 'MysteryTerm', MysteryTerm );

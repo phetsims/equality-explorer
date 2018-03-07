@@ -1,31 +1,22 @@
 TODO items for equality-explorer
 
-Terms
-- Combine positive and negative pairs of term creators into one term creator?
-- Indicate whether to combine like terms on the scale
-- Create term with non-default coefficient or constantValue
-- Create large vs small TermNode
-- Associate term type with cells in the grid
-
 Solving screen
-- drag term from panel to scale (small term -> big term)
-- drag term from scale to panel (big term -> panel)
-- drag term from scale back to scale  (big term -> scale)
-- drag term from panel, combine with term on scale (small term + big term -> big term)
-- drag term from scale, combine with term on scale (big term + big term -> big term)
+- universal operation results in sum to zero without halo
 - universal operation applied to empty scale
-- universal operation applied to terms on scale
-- sum small and big term to zero
-- sum big terms to zero
+- drag term from scale, combine with term on scale (multi-touch)
+- sum big terms to zero (multi-touch)
+- rewrite how snapshots are saved and restored, doesn't work for Solving screen
+- cleanup/refactor everything added for this screen
 
 Locked mode, #19
 - term dragged from panel
 - term dragged from scale
 - mode change while drag is in progress (ignore mode change?)
 
-Misc
-- if there are N items on the scale, pressing Reset or Reset All results in N-1 intermediate states
-- if there are N terms in a snapshot, restoring the snapshot results in N-1 intermediate states
+Solve It! screen
+- vegas game components
+- challenge generation engine
+- reuse parts of Solving screen
 
 Cleanup
 - grunt update-copyright-dates

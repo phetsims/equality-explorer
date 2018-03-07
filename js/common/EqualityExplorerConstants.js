@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   var EqualityExplorerConstants = {
@@ -26,6 +27,7 @@ define( function( require ) {
     // model
     VARIABLE_RANGE: new RangeWithValue( -40, 40, 1 ),
     NUMBER_OF_SNAPSHOTS: 5,
+    OPERATORS: [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ],
 
     // terms
     SMALL_TERM_DIAMETER: 32,

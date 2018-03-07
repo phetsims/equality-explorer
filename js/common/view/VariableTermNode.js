@@ -29,12 +29,11 @@ define( function( require ) {
     negativeFill: 'rgb( 99, 212, 238 )',
     positiveLineDash: [], // solid
     negativeLineDash: [ 4, 4 ],
-    diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
-    margin: 6, //TODO make this a function of diameter
-    xSpacing: 8, //TODO make this a function of diameter
-    fractionFont: new PhetFont( 12 ),
-    integerFont: new PhetFont( 24 ),
-    symbolFont: new MathSymbolFont( 24 )
+    margin: 6,
+    xSpacing: 2,
+    fractionFont: new PhetFont( 20 ),
+    integerFont: new PhetFont( 40 ),
+    symbolFont: new MathSymbolFont( 40 )
   };
 
   /**
@@ -48,9 +47,11 @@ define( function( require ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
-    var contentNode = VariableTermNode.createIcon( term.symbol, term.coefficient, options );
+    var contentNode = VariableTermNode.createIcon( term.symbol, term.coefficient, {
+      diameter: term.diameter
+    } );
 
-    var shadowNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
+    var shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
       fill: 'black',
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
@@ -76,7 +77,9 @@ define( function( require ) {
       assert && assert( typeof symbol === 'string', 'invalid coefficient' );
       assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
 
-      options = _.extend( {}, DEFAULT_OPTIONS, options );
+      options = _.extend( {
+        diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
+      }, DEFAULT_OPTIONS, options );
 
       var isPositive = ( coefficient.toDecimal() >= 0 );
 
@@ -106,6 +109,7 @@ define( function( require ) {
 
       // icon on the square consists of coefficient and variable
       var iconNode = new HBox( {
+        align: 'bottom',
         spacing: options.xSpacing,
         children: iconChildren,
         maxWidth: squareNode.width - ( 2 * options.margin ),
@@ -113,9 +117,10 @@ define( function( require ) {
         center: squareNode.center
       } );
 
-      return new Node( {
-        children: [ squareNode, iconNode ]
-      } );
+      assert && assert( !options.children, 'icon sets children' );
+      options.children = [ squareNode, iconNode ];
+
+      return new Node( options );
     }
   } );
 } );

@@ -58,12 +58,12 @@ define( function( require ) {
       }
     } );
 
-    // On down event, create a term and start a drag cycle
+    // On down event, create a term and start a drag cycle by forwarding the event
     this.addInputListener( SimpleDragHandler.createForwardingListener(
 
       // down
       function( event ) {
-        termCreator.createTerm( event );
+        termCreator.createTerm( { event: event } );
       }, {
         allowTouchSnag: true
       }

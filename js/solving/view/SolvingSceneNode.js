@@ -73,6 +73,7 @@ define( function( require ) {
       top: localBounds.bottom + 10
     } );
     this.addChild( operationNode );
+    operationNode.moveToBack();
 
     // Put animation layer on top of everything
     this.addChild( operationAnimationLayer );

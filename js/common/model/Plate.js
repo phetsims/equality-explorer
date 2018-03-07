@@ -169,6 +169,16 @@ define( function( require ) {
     },
 
     /**
+     * Gets the term in a specified cell.
+     * @param {number} cellIndex
+     * @returns {Term|null} null if the cell is empty
+     * @public
+     */
+    getTermInCell: function( cellIndex ) {
+      return this.grid.getTermInCell( cellIndex );
+    },
+
+    /**
      * Gets the index for the cell that a term occupies.
      * @param {Term} term
      * @returns {number} the cell's index, -1 if the term doesn't occupy a cell

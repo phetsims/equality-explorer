@@ -25,10 +25,9 @@ define( function( require ) {
     negativeFill: 'rgb( 248, 238, 229 )',
     positiveLineDash: [], // solid
     negativeLineDash: [ 3, 3 ],
-    diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
-    margin: 8, //TODO make this a function of diameter
-    fractionFont: new PhetFont( 12 ),
-    integerFont: new PhetFont( 24 )
+    margin: 8,
+    fractionFont: new PhetFont( 20 ),
+    integerFont: new PhetFont( 40 )
   };
 
   /**
@@ -42,9 +41,11 @@ define( function( require ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
-    var contentNode = ConstantTermNode.createIcon( term.constantValue, options );
+    var contentNode = ConstantTermNode.createIcon( term.constantValue, {
+      diameter: term.diameter
+    } );
 
-    var shadowNode = new Circle( options.diameter / 2, {
+    var shadowNode = new Circle( term.diameter / 2, {
       fill: 'black',
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
@@ -68,7 +69,9 @@ define( function( require ) {
 
       assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue' );
 
-      options = _.extend( {}, DEFAULT_OPTIONS, options );
+      options = _.extend( {
+        diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
+      }, DEFAULT_OPTIONS, options );
 
       var isPositive = ( constantValue.toDecimal() >= 0 );
 

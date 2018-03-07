@@ -13,6 +13,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -171,7 +172,46 @@ define( function( require ) {
    */
   function animateToLikeCell( term, termCreator, plate ) {
     assert && assert( termCreator.combineLikeTerms, 'should ONLY be called when combining like terms' );
-    //TODO
+
+    var cellIndex = termCreator.likeTermsCellIndex;
+    var cellLocation = plate.getLocationOfCell( cellIndex );
+
+    term.animateTo( cellLocation, {
+
+      // When the term reaches the cell ...
+      animationCompletedCallback: function() {
+
+        if ( plate.isEmptyCell( cellIndex ) ) {
+
+          // If the cell is unoccupied, make a 'big' copy of this term and put it in the cell.
+          var termCopy = termCreator.copyTerm( term, {
+            diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+          } );
+          termCreator.putTermOnPlate( termCopy, cellIndex );
+
+          // dispose of the original term
+          term.dispose();
+        }
+        else {
+
+          // If the cell is occupied...
+          // Get the term that occupies the cell.
+          var termInCell =  plate.getTermInCell( cellIndex );
+
+          // Combine the terms to create a new 'big' term. Put the new term in the cell.
+          var combinedTerm = termCreator.combineTerms( term, termInCell, {
+            diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+          } );
+
+          // Dispose of the terms that were used to create the combined term.
+          // As a side-effect, this removes termInCell from the plate.
+          term.dispose();
+          termInCell.dispose();
+
+          combinedTerm.termCreator.putTermOnPlate( combinedTerm, cellIndex );
+        }
+      }
+    } );
   }
 
   /**
