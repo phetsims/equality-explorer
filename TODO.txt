@@ -1,8 +1,8 @@
 TODO items for equality-explorer
 
 Solving screen
-- sum-to-zero animation for universal operation (see ConstantTermCreator, VariableTermCreator)
-- rewrite how snapshots are saved and restored, doesn't work for Solving screen
+* sum-to-zero animation for universal operation (see ConstantTermCreator, VariableTermCreator)
+* rewrite how snapshots are saved and restored, doesn't work for Solving screen
 - make Terms mutable, so that combining doesn't require removing term from scale?
 - combine termCreator and inverseTermCreator into one object?
 - change "apply" of universal operator to create terms that are combined with what's on scale?
