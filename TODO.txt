@@ -4,6 +4,7 @@ Solving screen
 - sum-to-zero animation for universal operation (see ConstantTermCreator, VariableTermCreator)
 - rewrite how snapshots are saved and restored, doesn't work for Solving screen
 - reconsider the decision to make Terms immutable
+- combine termCreator and inverseTermCreator into one object
 - cleanup/refactor everything added for this screen
 - consolidate sum-to-zero, it's handled in a few places for different scenarios
 - change "apply" of universal operator to create terms that are combined with what's on scale
