@@ -167,7 +167,7 @@ define( function( require ) {
       term.dispose();
 
       if ( constantValue.toDecimal() === 0 ) {
-        //TODO sum-to-zero animation without halo
+        //TODO sum-to-zero animation without halo, *after* operation has been applied to all terms, and scale has moved
       }
       else {
 
