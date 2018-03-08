@@ -42,7 +42,7 @@ define( function( require ) {
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
     var contentNode = ConstantTermNode.createIcon( term.constantValue,
-      _.extend( {}, options, { diameter: term.diameter } ) );
+      _.extend( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
     var shadowNode = new Circle( term.diameter / 2, {
       fill: 'black',
