@@ -174,7 +174,6 @@ define( function( require ) {
       relationalOperator = MathSymbols.EQUAL_TO;
     }
 
-    phet.log && phet.log( 'EquationNode: ' + leftWeight + ' ' + relationalOperator + ' ' + rightWeight );
     return relationalOperator;
   }
 
