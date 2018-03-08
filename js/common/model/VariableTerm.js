@@ -67,7 +67,7 @@ define( function( require ) {
     toString: function() {
 
       // e.g. 'VariableTerm: 1/3 x (x=3)'
-      return 'VariableTerm: ' +  ' ' + this.coefficient + ' ' + this.symbol +
+      return 'VariableTerm: ' +  this.coefficient + ' ' + this.symbol +
              ' (' + this.symbol + '=' + this.variableValueProperty.value + ')';
     },
 
