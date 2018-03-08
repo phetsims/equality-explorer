@@ -47,9 +47,8 @@ define( function( require ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
-    var contentNode = VariableTermNode.createIcon( term.symbol, term.coefficient, {
-      diameter: term.diameter
-    } );
+    var contentNode = VariableTermNode.createIcon( term.symbol, term.coefficient,
+      _.extend( {}, options, { diameter: term.diameter } ) );
 
     var shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
       fill: 'black',
