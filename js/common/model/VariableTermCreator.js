@@ -177,13 +177,13 @@ define( function( require ) {
     },
 
     /**
-     * Applies a universal operation to terms on the scale.
+     * Applies a universal operation to a term on the scale.
      * @param {UniversalOperation} operation
      * @param {Term} term
      * @public
      * @override
      */
-    applyOperation: function( operation, term ) {
+    applyOperationToTerm: function( operation, term ) {
       assert && assert( this.combineLikeTerms, 'applyOperation is only supported when combining like terms' );
       assert && assert( term instanceof VariableTerm, 'invalid term' );
 
@@ -231,6 +231,17 @@ define( function( require ) {
           this.inverseTermCreator.createTermOnPlate( cellIndex, newTermOptions );
         }
       }
+    },
+
+    /**
+     * Applies a universal operation to the plate.
+     * There is no operation that results in the creation of a variable term on the plate, so return immediately.
+     * @param {UniversalOperation} operation
+     * @public
+     * @abstract
+     */
+    applyOperationToPlate: function( operation ) {
+      return;
     },
 
     /**

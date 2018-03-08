@@ -220,14 +220,24 @@ define( function( require ) {
     },
 
     /**
-     * Applies a universal operation to terms on the scale.
+     * Applies a universal operation to a term on the scale.
      * @param {UniversalOperation} operation
      * @param {Term} term
      * @public
      * @abstract
      */
-    applyOperation: function( operation, term ) {
-      throw new Error( 'applyOperation must be implemented by subtypes' );
+    applyOperationToTerm: function( operation, term ) {
+      throw new Error( 'applyOperationToTerm must be implemented by subtypes' );
+    },
+
+    /**
+     * Applies a universal operation to the plate.
+     * @param {UniversalOperation} operation
+     * @public
+     * @abstract
+     */
+    applyOperationToPlate: function( operation ) {
+      throw new Error( 'applyOperationToPlate must be implemented by subtypes' );
     },
 
     /**

@@ -2,7 +2,6 @@ TODO items for equality-explorer
 
 Solving screen
 - sum-to-zero animation for universal operation (see ConstantTermCreator, VariableTermCreator)
-- create constant term on scale for plus and minus operations
 - rewrite how snapshots are saved and restored, doesn't work for Solving screen
 - reconsider the decision to make Terms immutable
 - cleanup/refactor everything added for this screen

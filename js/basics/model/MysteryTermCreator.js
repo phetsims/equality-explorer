@@ -91,14 +91,24 @@ define( function( require ) {
     },
 
     /**
-     * Applies a universal operation to terms on the scale.
+     * Applies a universal operation to a term on the scale.
      * @param {UniversalOperation} operation
      * @param {Term} term
      * @public
      * @override
      */
-    applyOperation: function( operation, term ) {
-      throw new Error( 'applyOperation is not supported by MysteryTermCreator' );
+    applyOperationToTerm: function( operation, term ) {
+      throw new Error( 'applyOperationToTerm is not supported by MysteryTermCreator' );
+    },
+
+    /**
+     * Applies a universal operation to the plate.
+     * @param {UniversalOperation} operation
+     * @public
+     * @abstract
+     */
+    applyOperationToPlate: function( operation ) {
+      throw new Error( 'createTermOnPlateForOperation is not supported by MysteryTermCreator' );
     },
 
     /**

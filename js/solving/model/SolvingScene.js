@@ -132,19 +132,23 @@ define( function( require ) {
      */
     applyOperation: function( operation ) {
 
+      var termCreators = this.leftTermCreators.concat( this.rightTermCreators );
+
       // Gets all of the terms that are currently on the scale, since applying operations adds/removes terms.
       var terms = [];
-      this.leftTermCreators.forEach( function( termCreator ) {
+      termCreators.forEach( function( termCreator ) {
+
+        // Accumulate terms that are on the plate.
         terms = terms.concat( termCreator.getTermsOnPlate() );
-      } );
-      this.rightTermCreators.forEach( function( termCreator ) {
-        terms = terms.concat( termCreator.getTermsOnPlate() );
+
+        // Apply the operation to the plate. This may or may not create a term on the plate.
+        termCreator.applyOperationToPlate( operation );
       } );
 
       // Apply the operation to terms that were on the scale when this method was called.
       for ( var i = 0; i < terms.length; i++ ) {
         var term = terms[ i ];
-        term.termCreator.applyOperation( operation, term );
+        term.termCreator.applyOperationToTerm( operation, term );
       }
     }
   } );
