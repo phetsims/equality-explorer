@@ -1,6 +1,7 @@
 TODO items for equality-explorer
 
 Solving screen
+* BUG: equation can get too long in Solving screen, set maxWidth
 * rewrite how snapshots are saved and restored, doesn't work for Solving screen
 - instead of specifying diameter, specify whether term is 'big' or 'small' (constant and variable)
 - make Terms mutable, so that combining doesn't require removing term from scale?
