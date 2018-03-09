@@ -47,6 +47,14 @@ define( function( require ) {
     },
 
     /**
+     * Is this fraction an integer value?
+     * @returns {boolean}
+     */
+    isInteger: function() {
+      return Util.isInteger( this.toDecimal() );
+    },
+
+    /**
      * Adds a fraction to this fraction.
      * @param {Fraction} value
      * @returns {ReducedFraction}
