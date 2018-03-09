@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var Dimension2 = require( 'DOT/Dimension2' );
+  var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -56,6 +57,9 @@ define( function( require ) {
       numberType: 'Integer',
       range: this.operandRange
     } );
+
+    // @public (read-only) emit1( sumToZeroData ) when terms sum to zero as the result of a universal operation
+    this.sumToZeroEmitter = new Emitter();
 
     LockableScene.call( this, 'solving',
       createTermCreators( this.xProperty ),
@@ -145,10 +149,39 @@ define( function( require ) {
         termCreator.applyOperationToPlate( operation );
       } );
 
+      // Describes the terms that became zero as the result of applying the operation.
+      // {{ plate: Plate, cellIndex: number, symbol: string|null }[]}
+      var sumToZeroData = [];
+
       // Apply the operation to terms that were on the scale when this method was called.
       for ( var i = 0; i < terms.length; i++ ) {
+
         var term = terms[ i ];
-        term.termCreator.applyOperationToTerm( operation, term );
+
+        // Determine where the term was, in case it sums to zero
+        var plate = term.termCreator.plate;
+        var cellIndex = term.termCreator.plate.getCellForTerm( term );
+        var symbol = term.symbol || null; // undefined for some term types
+
+        // Apply the operation to the term, returns null if the term became zero.
+        var newTerm = term.termCreator.applyOperationToTerm( operation, term );
+
+        // The term became zero, save information needed to perform sum-to-zero animation.
+        if ( !newTerm ) {
+          sumToZeroData.push( {
+            plate: plate, // {Plate} the term was on this plate
+            cellIndex: cellIndex, // {number} the term was in this cell in the plate's 2D grid
+            symbol: symbol // {string|null} the term had this associated symbol
+          } );
+        }
+      }
+
+      // Tell the view which terms summed to zero.
+      // Do this after the operation has been fully applied, so that sum-to-zero animations
+      // appear in the cells at the scale's final position, not at the position before the
+      // operation was applied, or at some intermediate location as the operation is being applied.
+      if ( sumToZeroData.length > 0 ) {
+        this.sumToZeroEmitter.emit1( sumToZeroData );
       }
     }
   } );

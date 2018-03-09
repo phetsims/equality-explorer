@@ -47,20 +47,20 @@ define( function( require ) {
     var leftTermCreators = scene.leftTermCreators;
     var rightTermCreators = scene.rightTermCreators;
 
-    // terms live in this layer
-    var termsLayer = new Node();
+    // @protected terms live in this layer
+    this.termsLayer = new Node();
 
     var scaleNode = new BalanceScaleNode( scale, {
       organizeButtonVisible: options.organizeButtonVisible
     } );
 
-    var leftTermsPanel = new TermsPanel( leftTermCreators, scale.leftPlate, termsLayer, {
+    var leftTermsPanel = new TermsPanel( leftTermCreators, scale.leftPlate, this.termsLayer, {
       spacing: options.termsPanelSpacing,
       centerX: scale.leftPlate.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var rightTermsPanel = new TermsPanel( rightTermCreators, scale.rightPlate, termsLayer, {
+    var rightTermsPanel = new TermsPanel( rightTermCreators, scale.rightPlate, this.termsLayer, {
       spacing: options.termsPanelSpacing,
       centerX: scale.rightPlate.locationProperty.value.x,
       bottom: leftTermsPanel.bottom
@@ -90,7 +90,7 @@ define( function( require ) {
       rightTermsPanel,
       equationAccordionBox,
       snapshotsAccordionBox,
-      termsLayer // on top, so that terms are in front of everything else
+      this.termsLayer // on top, so that terms are in front of everything else
     ];
 
     // Some scenes support locking the left and right sides of the equation,

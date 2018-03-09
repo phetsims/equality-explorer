@@ -14,8 +14,11 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
+  var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
+  var Util = require( 'DOT/Util' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
 
   /**
@@ -26,6 +29,8 @@ define( function( require ) {
    * @constructor
    */
   function SolvingSceneNode( scene, sceneProperty, layoutBounds, options ) {
+
+    var self = this;
 
     options = _.extend( {
       termsPanelSpacing: 30,
@@ -80,6 +85,32 @@ define( function( require ) {
 
     // @private fields needed by prototype functions
     this.operationNode = operationNode;
+
+    // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
+    scene.sumToZeroEmitter.addListener(
+      // @param {{ plate: Plate, cellIndex: number, symbol: string|null }[]} sumToZeroData
+      function( sumToZeroData ) {
+
+        for ( var i = 0; i < sumToZeroData.length; i++ ) {
+
+          // data structure that describes a term that became zero
+          var data = sumToZeroData[ i ];
+          assert && assert( data.plate instanceof Plate, 'invalid plate: ' + data.plate );
+          assert && assert( Util.isInteger( data.cellIndex ), 'invalid cellIndex: ' + data.cellIndex );
+          assert && assert( ( typeof data.symbol === 'string' ) || ( data.symbol === null ), 'invalid symbol: ' + data.symbol );
+
+          // determine where the cell that contained the term is currently located
+          var cellCenter = data.plate.getLocationOfCell( data.cellIndex );
+
+          // display the animation in that cell
+          var sumToZeroNode = new SumToZeroNode( {
+            symbol: data.symbol,
+            center: cellCenter
+          } );
+          self.termsLayer.addChild( sumToZeroNode );
+          sumToZeroNode.startAnimation();
+        }
+      } );
   }
 
   equalityExplorer.register( 'SolvingSceneNode', SolvingSceneNode );
