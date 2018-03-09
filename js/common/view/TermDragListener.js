@@ -334,13 +334,16 @@ define( function( require ) {
     },
 
     /**
-     * Sums the term and its inverse to zero, disposes of both terms, and performs the associated animation.
+     * Sums the term and its inverse to zero.
+     * Disposes of both terms, and performs the associated animation.
      * See equality-explorer#17
      * @param {Object} [options] - passed to SumToZero constructor
      * @private
      */
     sumToZero: function( options ) {
       assert && assert( this.inverseTerm, 'no inverse' );
+      assert && assert( this.term.weight.plusFraction( this.inverseTerm.weight ).toDecimal() === 0,
+        'terms do not sum to zero' );
 
       // determine which cell the inverse term appears in
       var cellIndex = this.plate.getCellForTerm( this.inverseTerm );
