@@ -137,6 +137,7 @@ define( function( require ) {
      * Applies a universal operation to a term on the scale.
      * @param {UniversalOperation} operation
      * @param {Term} term
+     * @returns {Term|null} the new term, null if the the operation resulted in zero
      * @public
      * @override
      */
@@ -166,6 +167,7 @@ define( function( require ) {
       // Dispose of the term, has the side-effect of removing it from the plate.
       term.dispose();
 
+      var newTerm = null;
       if ( constantValue.toDecimal() === 0 ) {
         //TODO sum-to-zero animation without halo, *after* operation has been applied to all terms, and scale has moved
       }
@@ -180,14 +182,16 @@ define( function( require ) {
         if ( Util.sign( constantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
 
           // sign is the same as this term creator, so create the term
-          this.createTermOnPlate( cellIndex, newTermOptions );
+          newTerm = this.createTermOnPlate( cellIndex, newTermOptions );
         }
         else {
 
           // sign is different than this term creator, forward the creation request to the inverse term creator.
-          this.inverseTermCreator.createTermOnPlate( cellIndex, newTermOptions );
+          newTerm = this.inverseTermCreator.createTermOnPlate( cellIndex, newTermOptions );
         }
       }
+
+      return newTerm;
     },
 
     /**
@@ -195,10 +199,13 @@ define( function( require ) {
      * If there is already a like term on the plate, this is a no-op.
      * If not, a term is created on the plate.
      * @param {UniversalOperation} operation
+     * @returns {Term|null} the term created, null if no term was created
      * @public
      * @abstract
      */
     applyOperationToPlate: function( operation ) {
+
+      var term = null;
 
       // If the plate contains no like terms (no terms for this creator or its inverse)...
       if ( this.numberOfTermsOnPlateProperty.value === 0 &&
@@ -211,12 +218,14 @@ define( function( require ) {
 
         // If the constant has the same sign as this term, create a constant term on the plate
         if ( Util.sign( constantInteger ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
-          this.createTermOnPlate( this.likeTermsCellIndex, {
+          term = this.createTermOnPlate( this.likeTermsCellIndex, {
             constantValue: ReducedFraction.withInteger( constantInteger ),
             diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
           } );
         }
       }
+
+      return term;
     },
 
     /**

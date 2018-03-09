@@ -180,6 +180,7 @@ define( function( require ) {
      * Applies a universal operation to a term on the scale.
      * @param {UniversalOperation} operation
      * @param {Term} term
+     * @returns {Term|null} the new term, null if the the operation resulted in zero
      * @public
      * @override
      */
@@ -209,6 +210,7 @@ define( function( require ) {
       // Dispose of the term, has the side-effect of removing it from the plate.
       term.dispose();
 
+      var newTerm = null;
       if ( coefficient.toDecimal() === 0 ) {
         //TODO sum-to-zero animation without halo, *after* operation has been applied to all terms, and scale has moved
       }
@@ -223,25 +225,29 @@ define( function( require ) {
         if ( Util.sign( coefficient.toDecimal() ) === Util.sign( this.defaultCoefficient.toDecimal() ) ) {
 
           // sign is the same as this term creator, so create the term
-          this.createTermOnPlate( cellIndex, newTermOptions );
+          newTerm = this.createTermOnPlate( cellIndex, newTermOptions );
         }
         else {
 
           // sign is different than this term creator, forward the creation request to the inverse term creator.
-          this.inverseTermCreator.createTermOnPlate( cellIndex, newTermOptions );
+          newTerm = this.inverseTermCreator.createTermOnPlate( cellIndex, newTermOptions );
         }
       }
+
+      return newTerm;
     },
 
     /**
      * Applies a universal operation to the plate.
-     * There is no operation that results in the creation of a variable term on the plate, so return immediately.
      * @param {UniversalOperation} operation
+     * @returns {Term|null} the term created, null if no term was created
      * @public
      * @abstract
      */
     applyOperationToPlate: function( operation ) {
-      return;
+
+      // There is no operation that results in the creation of a variable term on the plate, so always return null.
+      return null;
     },
 
     /**
