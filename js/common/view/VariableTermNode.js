@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
@@ -30,7 +29,8 @@ define( function( require ) {
     positiveLineDash: [], // solid
     negativeLineDash: [ 4, 4 ],
     margin: 6,
-    xSpacing: 2,
+    integerXSpacing: 3,
+    fractionXSpacing: 6,
     fractionFont: new PhetFont( 20 ),
     integerFont: new PhetFont( 40 ),
     symbolFont: new MathSymbolFont( 40 )
@@ -106,10 +106,21 @@ define( function( require ) {
       } );
       iconChildren.push( symbolNode );
 
+      // layout
+      if ( coefficientNode ) {
+        if ( coefficient.isInteger() ) {
+          symbolNode.left = coefficientNode.right + options.integerXSpacing;
+        }
+        else {
+
+          // vertically center variable on fractional coefficient
+          symbolNode.left = coefficientNode.right + options.fractionXSpacing;
+          symbolNode.centerY = coefficientNode.centerY;
+        }
+      }
+
       // icon on the square consists of coefficient and variable
-      var iconNode = new HBox( {
-        align: 'bottom',
-        spacing: options.xSpacing,
+      var iconNode = new Node( {
         children: iconChildren,
         maxWidth: squareNode.width - ( 2 * options.margin ),
         maxHeight: squareNode.height - ( 2 * options.margin ),
