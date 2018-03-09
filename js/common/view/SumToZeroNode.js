@@ -11,6 +11,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -31,7 +32,7 @@ define( function( require ) {
       symbol: null, // optional symbol that appears after the '0', e.g. '0x'
       haloRadius: 20,
       haloBaseColor: 'transparent', // no visible halo, set this if you want to see the halo
-      fontSize: 18
+      fontSize: EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
     }, options );
 
     var zeroNode = new Text( '0', {

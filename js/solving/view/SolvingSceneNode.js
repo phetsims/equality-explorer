@@ -107,7 +107,7 @@ define( function( require ) {
           var sumToZeroNode = new SumToZeroNode( {
             symbol: data.symbol,
             center: cellCenter,
-            fontSize: EqualityExplorerConstants.BIG_TERM_INTEGER_FONT_SIZE
+            fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
           } );
           self.termsLayer.addChild( sumToZeroNode );
           sumToZeroNode.startAnimation();
