@@ -28,7 +28,6 @@ define( function( require ) {
     margin: 8, // margin inside the background circle
     integerFont: new PhetFont( 40 ), // font for integer constant value
     fractionFont: new PhetFont( 20 ) // font for fractional constant value
-
   };
 
   /**
