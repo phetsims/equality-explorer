@@ -30,7 +30,7 @@ define( function( require ) {
     options = _.extend( {
       symbol: null, // optional symbol that appears after the '0', e.g. '0x'
       haloRadius: 20,
-      haloBaseColor: 'rgba( 255, 255, 0, 0.85 )',
+      haloBaseColor: 'transparent', // no visible halo, set this if you want to see the halo
       fontSize: 18
     }, options );
 

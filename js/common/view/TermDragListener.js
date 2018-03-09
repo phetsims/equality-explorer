@@ -107,7 +107,9 @@ define( function( require ) {
         if ( self.inverseTerm ) {
 
           // we identified an inverse for this term, sum to zero
-          self.sumToZero();
+          self.sumToZero( {
+            haloBaseColor: 'rgba( 255, 255, 0, 0.85 )' // show the halo, since the terms overlap
+          } );
         }
         else if ( term.locationProperty.value.y > plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
@@ -229,9 +231,7 @@ define( function( require ) {
 
               // Terms sum to zero
               self.inverseTerm = termInCell;
-              self.sumToZero( {
-                haloBaseColor: 'transparent' // no visible halo
-              } );
+              self.sumToZero(); // no halo, since the terms did not overlap when drag ended
             }
           }
         }
