@@ -211,10 +211,7 @@ define( function( require ) {
       term.dispose();
 
       var newTerm = null;
-      if ( coefficient.toDecimal() === 0 ) {
-        //TODO sum-to-zero animation without halo, *after* operation has been applied to all terms, and scale has moved
-      }
-      else {
+      if ( coefficient.toDecimal() !== 0 ) {
 
         // create a new term on the plate
         var newTermOptions = {
