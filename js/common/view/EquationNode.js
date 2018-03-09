@@ -51,7 +51,7 @@ define( function( require ) {
       relationalOperatorFontSize: 40,
 
       // horizontal spacing
-      coefficientSpacing: 2, // space between coefficient and icon
+      coefficientSpacing: 3, // space between coefficient and icon
       plusSpacing: 8, // space around plus operator
       relationalOperatorSpacing: 20 // space around the relational operator
 
