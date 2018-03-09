@@ -31,9 +31,9 @@ define( function( require ) {
     margin: 6, // margin inside the background square
     integerXSpacing: 4, // space between integer coefficient and variable symbol
     fractionXSpacing: 4, // space between fractional coefficient and variable symbol
-    integerFont: new PhetFont( 40 ), // font for integer coefficient
+    integerFont: new PhetFont( EqualityExplorerConstants.BIG_TERM_INTEGER_FONT_SIZE ), // font for integer coefficient
     fractionFont: new PhetFont( 20 ), // font for fractional coefficient
-    symbolFont: new MathSymbolFont( 40 ) // font for variable symbol
+    symbolFont: new MathSymbolFont( EqualityExplorerConstants.BIG_TERM_INTEGER_FONT_SIZE ) // font for variable symbol
   };
 
   /**

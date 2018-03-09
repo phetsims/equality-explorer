@@ -229,7 +229,7 @@ define( function( require ) {
             }
             else {
 
-              // Terms sum to zero
+              // Terms sum to zero.
               self.inverseTerm = termInCell;
               self.sumToZero(); // no halo, since the terms did not overlap when drag ended
             }
@@ -365,6 +365,12 @@ define( function( require ) {
         haloRadius: this.haloRadius,
         center: sumToZeroLocation
       }, options );
+
+      //TODO clean up, this is a bit of a hack
+      // If we're replacing a 'big' term on the scale, use big font
+      if ( this.inverseTerm.diameter === EqualityExplorerConstants.BIG_TERM_DIAMETER ) {
+        options.fontSize = EqualityExplorerConstants.BIG_TERM_INTEGER_FONT_SIZE
+      }
 
       // show '0' or '0x' in yellow halo, fade out
       var sumToZeroNode = new SumToZeroNode( options );

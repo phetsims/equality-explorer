@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
@@ -105,7 +106,8 @@ define( function( require ) {
           // display the animation in that cell
           var sumToZeroNode = new SumToZeroNode( {
             symbol: data.symbol,
-            center: cellCenter
+            center: cellCenter,
+            fontSize: EqualityExplorerConstants.BIG_TERM_INTEGER_FONT_SIZE
           } );
           self.termsLayer.addChild( sumToZeroNode );
           sumToZeroNode.startAnimation();

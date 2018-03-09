@@ -23,6 +23,7 @@ define( function( require ) {
 
     // Common to all accordion boxes
     ACCORDION_BOX_TITLE_FONT_SIZE: 18,
+    BIG_TERM_INTEGER_FONT_SIZE: 40,
 
     // model
     VARIABLE_RANGE: new RangeWithValue( -40, 40, 1 ),
