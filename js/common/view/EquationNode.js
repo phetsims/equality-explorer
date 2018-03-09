@@ -203,7 +203,6 @@ define( function( require ) {
 
         if ( termCreator instanceof MysteryTermCreator ) {
 
-          //TODO this entire if block needs a rewrite
           // mystery terms are displayed as a coefficient and icon
           if ( children.length > 0 ) {
             children.push( new Text( MathSymbols.PLUS, { font: operatorFont } ) );
@@ -295,6 +294,7 @@ define( function( require ) {
 
     assert && assert( Util.isInteger( numberOfTerms ), 'invalid numberOfTerms: ' + numberOfTerms );
 
+    // Each mystery term has an implict coefficient of 1, so the use the number of terms as the coefficient.
     var coefficientNode = new Text( numberOfTerms, { font: font } );
 
     return new HBox( {
