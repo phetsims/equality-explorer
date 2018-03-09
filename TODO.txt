@@ -8,6 +8,7 @@ Solving screen
 - change "apply" of universal operator to create terms that are combined with what's on scale?
 - consolidate sum-to-zero? it's handled in a few places for different scenarios
 - cleanup/refactor everything added for this screen
+- consider always putting a yellow halo around sum-to-zero animation
 
 Locked mode, #19
 - term dragged from panel
