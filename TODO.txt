@@ -2,7 +2,6 @@ TODO items for equality-explorer
 
 Solving screen
 * rewrite how snapshots are saved and restored, doesn't work for Solving screen
-- more margin for big terms (constant and variable)
 - instead of specifying diameter, specify whether term is 'big' or 'small' (constant and variable)
 - make Terms mutable, so that combining doesn't require removing term from scale?
 - combine termCreator and inverseTermCreator into one object?

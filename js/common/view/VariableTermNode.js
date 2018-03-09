@@ -28,7 +28,6 @@ define( function( require ) {
     negativeFill: 'rgb( 99, 212, 238 )', // fill of background square for negative coefficient
     positiveLineDash: [], // solid border for positive coefficient
     negativeLineDash: [ 4, 4 ], // dashed border for negative coefficient
-    margin: 6, // margin inside the background square
     integerXSpacing: 4, // space between integer coefficient and variable symbol
     fractionXSpacing: 4, // space between fractional coefficient and variable symbol
     integerFont: new PhetFont( 40 ), // font for integer coefficient
@@ -82,6 +81,7 @@ define( function( require ) {
 
       var isPositive = ( coefficient.toDecimal() >= 0 );
 
+      // background square
       var squareNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
         stroke: 'black',
         fill: isPositive ? options.positiveFill : options.negativeFill,
@@ -106,7 +106,7 @@ define( function( require ) {
       } );
       iconChildren.push( symbolNode );
 
-      // layout
+      // layout of coefficient and variable
       if ( coefficientNode ) {
         if ( coefficient.isInteger() ) {
           symbolNode.left = coefficientNode.right + options.integerXSpacing;
@@ -119,11 +119,12 @@ define( function( require ) {
         }
       }
 
-      // icon on the square consists of coefficient and variable
+      // coefficient and variable
+      var margin = 0.12 * options.diameter; // determined empirically
       var iconNode = new Node( {
         children: iconChildren,
-        maxWidth: squareNode.width - ( 2 * options.margin ),
-        maxHeight: squareNode.height - ( 2 * options.margin ),
+        maxWidth: squareNode.width - ( 2 * margin ),
+        maxHeight: squareNode.height - ( 2 * margin ),
         center: squareNode.center
       } );
 

@@ -74,17 +74,20 @@ define( function( require ) {
 
       var isPositive = ( constantValue.toDecimal() >= 0 );
 
+      // background circl
       var circleNode = new Circle( options.diameter / 2, {
         stroke: 'black',
         fill: isPositive ? options.positiveFill : options.negativeFill,
         lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
       } );
 
+      // constant value
+      var margin = 0.18 * options.diameter; // determined empirically
       var constantNode = new ReducedFractionNode( constantValue, {
         fractionFont: options.fractionFont,
         integerFont: options.integerFont,
-        maxWidth: circleNode.width - ( 2 * options.margin ),
-        maxHeight: circleNode.height - ( 2 * options.margin ),
+        maxWidth: circleNode.width - ( 2 * margin ),
+        maxHeight: circleNode.height - ( 2 * margin ),
         center: circleNode.center
       } );
 
