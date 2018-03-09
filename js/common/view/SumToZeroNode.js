@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * A '0' or '0x' with a yellow halo around it that fades out.
+ * A '0' or '0x' (with optional halo) that fades out.
  * Used to indicate that 1 and -1, or x and -x, have summed to zero.
  *
  * @author Chris Malley (PixelZoom, Inc.)
