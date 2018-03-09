@@ -29,8 +29,8 @@ define( function( require ) {
     positiveLineDash: [], // solid
     negativeLineDash: [ 4, 4 ],
     margin: 6,
-    integerXSpacing: 3,
-    fractionXSpacing: 6,
+    integerXSpacing: 4,
+    fractionXSpacing: 4,
     fractionFont: new PhetFont( 20 ),
     integerFont: new PhetFont( 40 ),
     symbolFont: new MathSymbolFont( 40 )
