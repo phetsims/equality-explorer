@@ -24,16 +24,16 @@ define( function( require ) {
 
   // constants
   var DEFAULT_OPTIONS = {
-    positiveFill: 'rgb( 49, 193, 238 )',
-    negativeFill: 'rgb( 99, 212, 238 )',
-    positiveLineDash: [], // solid
-    negativeLineDash: [ 4, 4 ],
-    margin: 6,
-    integerXSpacing: 4,
-    fractionXSpacing: 4,
-    fractionFont: new PhetFont( 20 ),
-    integerFont: new PhetFont( 40 ),
-    symbolFont: new MathSymbolFont( 40 )
+    positiveFill: 'rgb( 49, 193, 238 )', // fill of background square for positive coefficient
+    negativeFill: 'rgb( 99, 212, 238 )', // fill of background square for negative coefficient
+    positiveLineDash: [], // solid border for positive coefficient
+    negativeLineDash: [ 4, 4 ], // dashed border for negative coefficient
+    margin: 6, // margin inside the background square
+    integerXSpacing: 4, // space between integer coefficient and variable symbol
+    fractionXSpacing: 4, // space between fractional coefficient and variable symbol
+    integerFont: new PhetFont( 40 ), // font for integer coefficient
+    fractionFont: new PhetFont( 20 ), // font for fractional coefficient
+    symbolFont: new MathSymbolFont( 40 ) // font for variable symbol
   };
 
   /**
@@ -66,7 +66,7 @@ define( function( require ) {
      * Creates an icon for variable terms.
      * @param {string} symbol
      * @param {ReducedFraction} coefficient
-     * @param {Object} [options] - see VariableTermNode
+     * @param {Object} [options] - see DEFAULT_OPTIONS
      * @returns {Node}
      * @public
      * @static

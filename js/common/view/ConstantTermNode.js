@@ -21,13 +21,14 @@ define( function( require ) {
 
   // constants
   var DEFAULT_OPTIONS = {
-    positiveFill: 'rgb( 246, 228, 213 )',
-    negativeFill: 'rgb( 248, 238, 229 )',
-    positiveLineDash: [], // solid
-    negativeLineDash: [ 3, 3 ],
-    margin: 8,
-    fractionFont: new PhetFont( 20 ),
-    integerFont: new PhetFont( 40 )
+    positiveFill: 'rgb( 246, 228, 213 )', // fill of background circle for positive coefficient
+    negativeFill: 'rgb( 248, 238, 229 )', // fill of background circle for negative coefficient
+    positiveLineDash: [], // solid border for positive coefficient
+    negativeLineDash: [ 3, 3 ], // dashed border for negative coefficient
+    margin: 8, // margin inside the background circle
+    integerFont: new PhetFont( 40 ), // font for integer constant value
+    fractionFont: new PhetFont( 20 ) // font for fractional constant value
+
   };
 
   /**
@@ -59,7 +60,7 @@ define( function( require ) {
     /**
      * Creates an icon for constant terms.
      * @param {ReducedFraction} constantValue - value shown on the icon
-     * @param {Object} [options] - see ConstantTermNode
+     * @param {Object} [options] - see DEFAULT_OPTIONS
      * @returns {Node}
      * @public
      * @static
