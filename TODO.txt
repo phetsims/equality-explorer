@@ -1,6 +1,7 @@
 TODO items for equality-explorer
 
 Solving screen
+- use ConstantTermNode.createIcon, VariableTermNode.createIcon, MysteryTermNode.createIcon in EquationNode
 * rewrite how snapshots are saved and restored, doesn't work for Solving screen
 - make Terms mutable, so that combining doesn't require removing term from scale?
 - combine termCreator and inverseTermCreator into one object?
