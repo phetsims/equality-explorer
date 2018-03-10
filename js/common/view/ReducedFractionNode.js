@@ -20,6 +20,10 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
+  // constants
+  var DEFAULT_FRACTION_FONT = new PhetFont( 22 );
+  var DEFAULT_INTEGER_FONT = new PhetFont( 40 );
+
   /**
    * @param {ReducedFraction} fraction
    * @param {Object} [options]
@@ -31,8 +35,8 @@ define( function( require ) {
 
     options = _.extend( {
       minLineLength: 1, // length of the fraction line
-      fractionFont: new PhetFont( 22 ), // font for numerator and denominator of fraction value
-      integerFont: new PhetFont( 40 ), // font for integer value
+      fractionFont: DEFAULT_FRACTION_FONT, // font for numerator and denominator of fraction value
+      integerFont: DEFAULT_INTEGER_FONT, // font for integer value
       color: 'black', // color of everything
       lineWidth: 1, // for the fraction line
       xSpacing: 5, // horizontal space between negative sign and fraction line
