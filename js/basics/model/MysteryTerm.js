@@ -2,7 +2,8 @@
 
 /**
  * MysteryTerm has a fixed weight that is exposed to the user.
- * All mystery terms have an implicit coefficient of 1. Their visual design does not accommodate a coefficient.
+ * All mystery terms have an implicit coefficient of 1.
+ * The visual design of interactive mystery terms does not include a coefficient.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
