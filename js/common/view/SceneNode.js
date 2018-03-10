@@ -35,7 +35,7 @@ define( function( require ) {
     options = _.extend( {
       termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale
       xVisibleProperty: null, // {BooleanProperty|null} whether 'x' value is visible in snapshots
-      organizeButtonVisible: true
+      organizeButtonVisible: true // is the organize button visible on the scale?
     }, options );
 
     // @public view-specific Properties

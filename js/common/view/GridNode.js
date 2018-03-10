@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2017-2018, University of Colorado Boulder
 
 /**
  * A rectangular 2D grid of cells.
@@ -24,7 +24,7 @@ define( function( require ) {
     options = _.extend( {
       rows: 1,
       columns: 1,
-      cellSize: new Dimension2( 5, 5 ),
+      cellSize: new Dimension2( 5, 5 ), // uniform width and height of each cell
       stroke: 'rgb( 160, 160, 160 )',
       lineWidth: 0.25
     }, options );

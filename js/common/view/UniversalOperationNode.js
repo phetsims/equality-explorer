@@ -24,6 +24,8 @@ define( function( require ) {
 
     options = _.extend( {
       font: new PhetFont( 24 ),
+
+      // supertype options
       spacing: 3
     }, options );
 

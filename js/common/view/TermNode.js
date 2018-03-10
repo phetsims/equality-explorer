@@ -32,8 +32,10 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      cursor: 'pointer',
-      shadowOffset: new Dimension2( 4, 4 )
+      shadowOffset: new Dimension2( 4, 4 ),
+
+      // supertype options
+      cursor: 'pointer'
     }, options );
 
     // @public (read-only)

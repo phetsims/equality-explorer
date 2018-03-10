@@ -41,7 +41,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      haloRadius: 10
+      haloRadius: 10 // radius of the halo around terms that sum to zero
     }, options );
 
     // @private

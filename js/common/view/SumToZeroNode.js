@@ -73,7 +73,7 @@ define( function( require ) {
   return inherit( Node, SumToZeroNode, {
 
     /**
-     * Starts animation.
+     * Starts the animation.
      * @public
      */
     startAnimation: function() {

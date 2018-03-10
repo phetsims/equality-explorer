@@ -26,6 +26,8 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+
+      // supertype options
       cursor: 'pointer'
     }, options );
 
