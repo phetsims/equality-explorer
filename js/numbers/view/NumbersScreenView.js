@@ -1,8 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
-//TODO delete NumbersScreenView if it adds no new functionality
 /**
  * View for the 'Numbers' screen.
+ * Adds no new functionality. Provided for symmetry, so that every screen has ScreenView and model types.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
