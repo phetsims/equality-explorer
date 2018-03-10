@@ -48,7 +48,7 @@ define( function( require ) {
     // @private has this instance been fully initialized?
     this.isInitialized = false;
 
-    // @private icon used to represent this term creator. See ES5 getter.
+    // @private icon that appears in toolboxes below the scale. See ES5 getter.
     this._icon = icon;
 
     // @public (read-only after initialization) {Vector2}
@@ -93,11 +93,6 @@ define( function( require ) {
       useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
     } );
 
-    // @public {BooleanProperty|null} optional Property that indicates whether the term creator is locked.
-    // Initialized by client after instantiation, if the term creator is lockable.
-    // Resetting this is the responsibility of the client.
-    this.lockedProperty = null;
-
     // @public emit2 is called when a term is created.
     // Callback signature is function( {Term} term, {Event|null} [event] )
     // event arg will be non-null if the term was created as the result of a user interaction.
@@ -107,6 +102,12 @@ define( function( require ) {
     // @public {TermCreator} optional inverse term creator on the same side of the scale.
     // This is needed for combining terms on a plate.
     this.inverseTermCreator = null;
+
+    //TODO revisit this
+    // @public {BooleanProperty|null} optional Property that indicates whether the term creator is locked.
+    // Initialized by client after instantiation, if the term creator is lockable.
+    // Resetting this is the responsibility of the client.
+    this.lockedProperty = null;
 
     //TODO delete oppositeInverseTermCreator if not used for lock feature
     // @public {TermCreator} optional inverse term creator on the opposite side of the scale.
@@ -140,8 +141,9 @@ define( function( require ) {
   return inherit( Object, TermCreator, {
 
     /**
-     * Gets the icon used to represent this term creator.
-     * Since this icon is used in multiple places in the scenery DAG, it must be wrapped.
+     * Gets the icon used to represent this term creator in the toolboxes below the scale.
+     * Since this icon is used in multiple places in the scenery DAG (specifically, in multiple
+     * toolboxes), it must be wrapped.
      * @returns {Node}
      * @public
      */
@@ -201,6 +203,8 @@ define( function( require ) {
      * @param {Term} term
      * @param {Object} [options] - passed to the new Term's constructor
      * @returns {Term}
+     * @public
+     * @abstract
      */
     copyTerm: function( term, options ) {
       throw new Error( 'copyTerm must be implemented by subtype' );

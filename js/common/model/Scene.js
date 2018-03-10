@@ -94,6 +94,7 @@ define( function( require ) {
      * Gets the icon used to represent this scene.
      * Since this icon is used in multiple places in the scenery DAG, it must be wrapped.
      * @returns {Node}
+     * @public
      */
     get icon() {
       return new Node( { children: [ this._icon ] } );

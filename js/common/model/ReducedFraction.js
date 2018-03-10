@@ -29,7 +29,7 @@ define( function( require ) {
   return inherit( Fraction, ReducedFraction, {
 
     /**
-     * Gets the value in decimal format.  This function is provided to improved readability and searchability.
+     * Gets the value in decimal format. This function is provided to improved readability and searchability.
      * @returns {number}
      * @public
      */

@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Term whose value a coefficient times some variable value.
+ * Term whose value is a coefficient times some variable value.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -16,9 +16,9 @@ define( function( require ) {
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
-   * @param {string} symbol
+   * @param {string} symbol - the variable's symbol, e.g. 'x'
    * @param {NumberProperty} variableValueProperty
-   * @param {TermCreator} termCreator
+   * @param {TermCreator} termCreator - created and manages this term
    * @param {Object} [options]
    * @constructor
    */

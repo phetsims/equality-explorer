@@ -23,9 +23,9 @@ define( function( require ) {
   function BoxNode( options ) {
 
     options = _.extend( {
-      width: 200, // {number} width of the top face at it's center
-      height: 10, // {number} height of the front face
-      depth: 20,  // {number} depth of the top face after flattening to 2D
+      width: 200, // width of the top face at it's center
+      height: 10, // height of the front face
+      depth: 20,  // depth of the top face after flattening to 2D
       vanishingPointDistance: 100, // distance of the vanishing point from the center of the top face
       topFill: 'white', // {Color|string} fill for the top face of the box
       frontFill: 'white', // {Color|string} fill fo the front face of the box

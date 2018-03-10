@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Base type for a "lockable" scene.
+ * Base type for a scene that supports the 'lock' feature.
  * A lockable scene is one in which the left and right sides can be locked together,
  * so that an action on one side is balanced by an equivalent action on the opposite side.
  *
@@ -30,14 +30,12 @@ define( function( require ) {
     // @public whether the 2 sides of the equation are locked
     this.lockedProperty = new BooleanProperty( false );
 
-    var i; // hoist loop variable explicitly
-
     assert && assert( leftTermCreators.length === rightTermCreators.length,
       'must have same number of term creators on left and right' );
     assert && assert( leftTermCreators.length % 2 === 0,
       'scene must have an even number of term creators per side' );
 
-    for ( i = 0; i < leftTermCreators.length; i++ ) {
+    for ( var i = 0; i < leftTermCreators.length; i++ ) {
 
       // These term creators are lockable, so initialize lockedProperty
       leftTermCreators[ i ].lockedProperty = this.lockedProperty;

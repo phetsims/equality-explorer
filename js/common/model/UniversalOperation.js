@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * A universal operation.
+ * Data structure that describes a universal operation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

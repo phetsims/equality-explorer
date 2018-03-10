@@ -241,7 +241,7 @@ define( function( require ) {
      * @param {UniversalOperation} operation
      * @returns {Term|null} the term created, null if no term was created
      * @public
-     * @abstract
+     * @override
      */
     applyOperationToPlate: function( operation ) {
 

@@ -19,10 +19,10 @@ define( function( require ) {
    */
   function EqualityExplorerModel( scenes ) {
 
-    // @public scenes, in the order that they appear from left-to-right as radio buttons
+    // @public {Scene[]} scenes, in the order that they appear from left-to-right as radio buttons
     this.scenes = scenes;
 
-    // @public the selected scene
+    // @public {Property.<Scene>} the selected scene
     this.sceneProperty = new Property( scenes[ 0 ], {
       validValues: scenes
     } );

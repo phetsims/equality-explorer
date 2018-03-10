@@ -20,6 +20,7 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
+  var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -61,7 +62,12 @@ define( function( require ) {
     } );
 
     // @public (read-only) number of terms on the plate
-    this.numberOfTermsProperty = new NumberProperty( 0 );
+    this.numberOfTermsProperty = new NumberProperty( 0, {
+      numberType: 'Integer',
+      isValidValue: function( value ) {
+        return value >= 0;
+      }
+    } );
 
     // weightProperty is derived from the weights of each termCreator
     var weightDependencies = [];
@@ -78,6 +84,10 @@ define( function( require ) {
           weight = weight.plusFraction( termCreators[ i ].weightOnPlateProperty.value );
         }
         return weight;
+      }, {
+        isValidValue: function( value ) {
+          return value.toDecimal() >= 0;
+        }
       } );
 
     // @public emit is called when the contents of the grid changes (terms added, removed, organized)

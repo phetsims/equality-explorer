@@ -27,6 +27,7 @@ define( function( require ) {
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
     }, options );
 
+    //TODO would be nice to make this go away
     // @public (read-only)
     this.termCreator = termCreator;
 

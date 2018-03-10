@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2017-2018, University of Colorado Boulder
 
 /**
  * Base type for ScreenViews in the Equality Explorer sim.
@@ -52,7 +52,7 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    // @private create the view for each scene
+    // @private {Scene[]} create the view for each scene
     this.sceneNodes = [];
     model.scenes.forEach( function( scene ) {
       var sceneNode = options.createSceneNode( scene, model.sceneProperty, self.layoutBounds );
