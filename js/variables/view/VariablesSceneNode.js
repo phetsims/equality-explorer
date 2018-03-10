@@ -25,7 +25,7 @@ define( function( require ) {
   function VariablesSceneNode( scene, sceneProperty, layoutBounds, options ) {
 
     options = _.extend( {
-      termsPanelSpacing: 30
+      termsToolboxSpacing: 30 // horizontal spacing between terms in the toolbox
     }, options );
 
     // @private view-specific Properties

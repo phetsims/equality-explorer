@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Panel that contains the terms that can be dragged out onto the scale.
+ * Toolbox that contains the terms that can be dragged out onto the scale.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -28,7 +28,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function TermsPanel( termCreators, plate, termsLayer, options ) {
+  function TermsToolbox( termCreators, plate, termsLayer, options ) {
 
     options = _.extend( {
       
@@ -62,7 +62,7 @@ define( function( require ) {
     Panel.call( this, content, options );
   }
 
-  equalityExplorer.register( 'TermsPanel', TermsPanel );
+  equalityExplorer.register( 'TermsToolbox', TermsToolbox );
 
-  return inherit( Panel, TermsPanel );
+  return inherit( Panel, TermsToolbox );
 } );

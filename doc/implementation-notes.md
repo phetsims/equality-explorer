@@ -28,6 +28,7 @@ relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are diffe
 * restore snapshot button
 * sum to zero
 * term
+* toolbox
 * trash snapshot button
 * universal operation
 * zero pair

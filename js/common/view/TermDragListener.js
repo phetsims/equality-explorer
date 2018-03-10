@@ -113,8 +113,8 @@ define( function( require ) {
         }
         else if ( term.locationProperty.value.y > plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
-          // term was released below the plate, animate back to panel
-          self.animateToPanel();
+          // term was released below the plate, animate back to toolbox
+          self.animateToToolbox();
         }
         else {
 
@@ -154,10 +154,10 @@ define( function( require ) {
     },
 
     /**
-     * Returns the term to the panel where it was created.
+     * Returns the term to the toolbox where it was created.
      * @private
      */
-    animateToPanel: function() {
+    animateToToolbox: function() {
       var self = this;
       this.term.animateTo( this.term.locationProperty.initialValue, {
         animationCompletedCallback: function() {
@@ -241,7 +241,7 @@ define( function( require ) {
     /**
      * Animates the term to an empty cell.
      * In this scenario, each term occupies a cell on the plate, and like terms are not combined.
-     * If there are no empty cells on the plate, the term is returned to the panel where it was created.
+     * If there are no empty cells on the plate, the term is returned to the toolbox where it was created.
      * @private
      */
     animateToEmptyCell: function() {
@@ -251,8 +251,8 @@ define( function( require ) {
 
       if ( cellIndex === -1 ) {
 
-        // Plate is full. Return the term to its panel.
-        this.animateToPanel( this.term );
+        // Plate is full. Return the term to its toolbox.
+        this.animateToToolbox( this.term );
       }
       else {
 

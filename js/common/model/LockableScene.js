@@ -18,8 +18,8 @@ define( function( require ) {
 
   /**
    * @param {string} debugName - internal name, not displayed to the user
-   * @param {TermCreator[]} leftTermCreators - in the order that they appear in the left panel and left side of equations
-   * @param {TermCreator[]} rightTermCreators - in the order that they appear in the right panel and right side of equations
+   * @param {TermCreator[]} leftTermCreators - in the order that they appear in the left toolbox and left side of equations
+   * @param {TermCreator[]} rightTermCreators - in the order that they appear in the right toolbox and right side of equations
    * @param {Object} [options]
    * @constructor
    */

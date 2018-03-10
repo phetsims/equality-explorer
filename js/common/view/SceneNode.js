@@ -19,7 +19,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
-  var TermsPanel = require( 'EQUALITY_EXPLORER/common/view/TermsPanel' );
+  var TermsToolbox = require( 'EQUALITY_EXPLORER/common/view/TermsToolbox' );
 
   /**
    * @param {Scene} scene
@@ -33,7 +33,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      termsPanelSpacing: 50, // spacing of terms in the panels that appear below the scale
+      termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale
       xVisibleProperty: null, // {BooleanProperty|null} whether 'x' value is visible in snapshots
       organizeButtonVisible: true
     }, options );
@@ -54,20 +54,20 @@ define( function( require ) {
       organizeButtonVisible: options.organizeButtonVisible
     } );
 
-    var leftTermsPanel = new TermsPanel( leftTermCreators, scale.leftPlate, this.termsLayer, {
-      spacing: options.termsPanelSpacing,
+    var leftTermsToolbox = new TermsToolbox( leftTermCreators, scale.leftPlate, this.termsLayer, {
+      spacing: options.termsToolboxSpacing,
       centerX: scale.leftPlate.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var rightTermsPanel = new TermsPanel( rightTermCreators, scale.rightPlate, this.termsLayer, {
-      spacing: options.termsPanelSpacing,
+    var rightTermsToolbox = new TermsToolbox( rightTermCreators, scale.rightPlate, this.termsLayer, {
+      spacing: options.termsToolboxSpacing,
       centerX: scale.rightPlate.locationProperty.value.x,
-      bottom: leftTermsPanel.bottom
+      bottom: leftTermsToolbox.bottom
     } );
 
     var equationAccordionBox = new EquationAccordionBox( leftTermCreators, rightTermCreators, {
-      fixedWidth: rightTermsPanel.right - leftTermsPanel.left,
+      fixedWidth: rightTermsToolbox.right - leftTermsToolbox.left,
       expandedProperty: this.equationAccordionBoxExpandedProperty,
 
       // Slightly off center, so that the equation's relational operator is horizontally centered
@@ -86,8 +86,8 @@ define( function( require ) {
 
     var children = [
       scaleNode,
-      leftTermsPanel,
-      rightTermsPanel,
+      leftTermsToolbox,
+      rightTermsToolbox,
       equationAccordionBox,
       snapshotsAccordionBox,
       this.termsLayer // on top, so that terms are in front of everything else
@@ -98,7 +98,7 @@ define( function( require ) {
     if ( scene.lockedProperty ) {
       var lockControl = new LockControl( scene.lockedProperty, {
         x: scale.location.x,
-        y: leftTermsPanel.centerY - 5 // offset determined empirically
+        y: leftTermsToolbox.centerY - 5 // offset determined empirically
       } );
       children.unshift( lockControl ); // add to beginning
     }

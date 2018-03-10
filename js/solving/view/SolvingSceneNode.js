@@ -34,7 +34,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      termsPanelSpacing: 30,
+      termsToolboxSpacing: 30,
       organizeButtonVisible: false
     }, options );
 

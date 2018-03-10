@@ -55,7 +55,7 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0 ], // in the order that terms appear in the panel below the scale
+      defaultValue: [ 0, 0, 0 ], // in the order that terms appear in the toolbox below the scale
       isValidValue: function( value ) {
         return isValidTermsArray( value, 3 );
       }
@@ -81,7 +81,7 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0 ], // in the order that terms appear in the panel below the scale
+      defaultValue: [ 0, 0 ], // in the order that terms appear in the toolbox below the scale
       isValidValue: function( value ) {
         return isValidTermsArray( value, 2 );
       }
@@ -107,7 +107,7 @@ define( function( require ) {
       elementSchema: {
         type: 'number'
       },
-      defaultValue: [ 0, 0, 0, 0 ], // in the order that terms appear in the panel below the scale
+      defaultValue: [ 0, 0, 0, 0 ], // in the order that terms appear in the toolbox below the scale
       isValidValue: function( value ) {
         return isValidTermsArray( value, 4 );
       }

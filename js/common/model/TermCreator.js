@@ -2,7 +2,7 @@
 
 /**
  * Abstract base type for creating and managing terms.
- * Terms are created either by dragging them out of the panel below the plate,
+ * Terms are created either by dragging them out of the toolbox below the plate,
  * by restoring a snapshot, or by using the 'universal operation' control.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -53,7 +53,7 @@ define( function( require ) {
 
     // @public (read-only after initialization) {Vector2}
     // Location is dependent on the view and is unknowable until the sim has loaded.
-    // TermCreators will ultimately be located in the panel below the plate. See initialize.
+    // TermCreators will ultimately be located in the toolbox below the plate. See initialize.
     this.location = null;
 
     // @private Number of terms to put on the plate initially.
@@ -119,7 +119,7 @@ define( function( require ) {
     //TODO delete oppositeEquivalentTermCreator if not used for lock feature
     // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
     // This is needed for the lock feature, so that an equivalent term on the opposite side can be created.
-    // Example: When locked, if I drag -x out of the left panel, -x needs to also drag out of the right panel.
+    // Example: When locked, if I drag -x out of the left toolbox, -x needs to also drag out of the right toolbox.
     this.oppositeEquivalentTermCreator = null;
 
     // @private called when Term.dispose is called
