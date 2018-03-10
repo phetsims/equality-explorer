@@ -22,8 +22,9 @@ define( function( require ) {
     SCREEN_VIEW_X_MARGIN: 20,
     SCREEN_VIEW_Y_MARGIN: 20,
 
-    // Common to all accordion boxes
+    // Shared fonts
     ACCORDION_BOX_TITLE_FONT: new PhetFont( 18 ),
+    UNIVERSAL_OPERATION_FONT: new PhetFont( 24 ),
 
     // Sum-to-zero animation
     SUM_TO_ZERO_BIG_FONT_SIZE: 40, // for sum-to-zero animation that involves a 'big' term on the scale

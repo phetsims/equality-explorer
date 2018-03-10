@@ -11,12 +11,12 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoveTo = require( 'TWIXT/MoveTo' );
   var Node = require( 'SCENERY/nodes/Node' );
   var OpacityTo = require( 'TWIXT/OpacityTo' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -30,7 +30,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      font: new PhetFont( 24 ),
+      font: EqualityExplorerConstants.UNIVERSAL_OPERATION_FONT,
       leftX: 0,
       rightX: 100,
       startY: 0,
