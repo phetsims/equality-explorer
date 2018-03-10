@@ -18,6 +18,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VStrut = require( 'SCENERY/nodes/VStrut' );
 
   // strings
   var equationOrInequalityString = require( 'string!EQUALITY_EXPLORER/equationOrInequality' );
@@ -32,8 +33,9 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // this accordion box is designed to be a fixed width, regardless of its content
+      // this accordion box is designed to be a fixed size, regardless of its content
       fixedWidth: 100,
+      fixedHeight: 60,
 
       // supertype options
       resize: false,
@@ -54,13 +56,15 @@ define( function( require ) {
     options.maxWidth = options.fixedWidth;
 
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
+    var contentHeight = options.fixedHeight - ( 2 * options.contentYMargin );
 
     options.titleNode = options.titleNode || new Text( equationOrInequalityString, {
       font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
       maxWidth: 0.85 * contentWidth
     } );
 
-    var strut = new HStrut( contentWidth );
+    var hStrut = new HStrut( contentWidth );
+    var vStrut = new VStrut( contentHeight );
 
     var equationNode = new EquationNode( leftTermCreators, rightTermCreators );
 
@@ -84,12 +88,14 @@ define( function( require ) {
       }
 
       // Center the equation
-      equationParent.x = strut.centerX;
-      equationParent.centerY = strut.centerY;
+      equationParent.x = hStrut.centerX;
+      equationParent.centerY = vStrut.centerY;
     } );
 
     var contentNode = new Node( {
-      children: [ strut, equationParent ]
+      children: [ hStrut, vStrut, equationParent ],
+      maxWidth: contentWidth,
+      maxHeight: contentHeight
     } );
 
     AccordionBox.call( this, contentNode, options );
