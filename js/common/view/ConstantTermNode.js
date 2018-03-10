@@ -74,7 +74,7 @@ define( function( require ) {
 
       var isPositive = ( constantValue.toDecimal() >= 0 );
 
-      // background circl
+      // background circle
       var circleNode = new Circle( options.diameter / 2, {
         stroke: 'black',
         fill: isPositive ? options.positiveFill : options.negativeFill,
@@ -83,7 +83,7 @@ define( function( require ) {
 
       // constant value
       var margin = 0.18 * options.diameter; // determined empirically
-      var constantNode = new ReducedFractionNode( constantValue, {
+      var constantNode = ConstantTermNode.createValueNode( constantValue, {
         fractionFont: options.fractionFont,
         integerFont: options.integerFont,
         maxWidth: circleNode.width - ( 2 * margin ),
@@ -94,6 +94,17 @@ define( function( require ) {
       return new Node( {
         children: [ circleNode, constantNode ]
       } );
+    },
+
+    /**
+     * Creates a Node that represents the term's value, shown on interactive icons and in equations.
+     * @param {ReducedFraction} constantValue
+     * @param {Object} [options] - see ReducedFractionNode
+     * @returns {Node}
+     */
+    createValueNode: function( constantValue, options ) {
+      assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue type' );
+      return new ReducedFractionNode( constantValue, options );
     }
   } );
 } );

@@ -47,7 +47,7 @@ define( function( require ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
-    var contentNode = VariableTermNode.createIcon( term.symbol, term.coefficient,
+    var contentNode = VariableTermNode.createIcon( term.coefficient, term.symbol,
       _.extend( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
     var shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
@@ -64,17 +64,17 @@ define( function( require ) {
 
     /**
      * Creates an icon for variable terms.
-     * @param {string} symbol
      * @param {ReducedFraction} coefficient
+     * @param {string} symbol
      * @param {Object} [options] - see DEFAULT_OPTIONS
      * @returns {Node}
      * @public
      * @static
      */
-    createIcon: function( symbol, coefficient, options ) {
+    createIcon: function( coefficient, symbol, options ) {
 
-      assert && assert( typeof symbol === 'string', 'invalid coefficient' );
       assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
+      assert && assert( typeof symbol === 'string', 'invalid coefficient' );
 
       options = _.extend( {
         diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
@@ -89,30 +89,9 @@ define( function( require ) {
         lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
       } );
 
-      var iconChildren = [];
-
-      // coefficient, if not 1 or -1. Show 'x' not '1x', '-x' not '-1x'.
-      if ( coefficient.abs().toDecimal() !== 1 ) {
-        var coefficientNode = new ReducedFractionNode( coefficient, {
-          fractionFont: options.fractionFont,
-          integerFont: options.integerFont
-        } );
-        iconChildren.push( coefficientNode );
-      }
-
-      // variable's symbol, with negative sign if coefficient is -1
-      var symbolText = ( coefficient.toDecimal() === -1 ) ? ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
-      var symbolNode = new Text( symbolText, {
-        font: options.symbolFont
-      } );
-      iconChildren.push( symbolNode );
-
-      // coefficient and variable
       var margin = 0.12 * options.diameter; // determined empirically
-      var spacing = coefficient.isInteger() ? options.integerXSpacing : options.fractionXSpacing;
-      var iconNode = new HBox( {
-        children: iconChildren,
-        spacing: spacing,
+
+      var valueNode = VariableTermNode.createValueNode(coefficient, symbol, {
         align: 'center',
         maxWidth: squareNode.width - ( 2 * margin ),
         maxHeight: squareNode.height - ( 2 * margin ),
@@ -120,9 +99,47 @@ define( function( require ) {
       } );
 
       assert && assert( !options.children, 'icon sets children' );
-      options.children = [ squareNode, iconNode ];
+      options.children = [ squareNode, valueNode ];
 
       return new Node( options );
+    },
+
+    /**
+     * Creates a Node that represents the term's value, shown on interactive icons and in equations.
+     * @param {ReducedFraction} coefficient
+     * @param {string} symbol - the variable symbol
+     * @param {Object} [options] - see ReducedFractionNode
+     * @returns {Node}
+     */
+    createValueNode: function(coefficient,  symbol, options ) {
+
+      options = _.extend( {
+        align: 'center'
+      }, DEFAULT_OPTIONS, options );
+
+      assert && assert( !options.children, 'sets its own children' );
+      options.children = [];
+
+      // coefficient, if not 1 or -1. Show 'x' not '1x', '-x' not '-1x'.
+      if ( coefficient.abs().toDecimal() !== 1 ) {
+        var coefficientNode = new ReducedFractionNode( coefficient, {
+          fractionFont: options.fractionFont,
+          integerFont: options.integerFont
+        } );
+        options.children.push( coefficientNode );
+      }
+
+      // variable's symbol, with negative sign if coefficient is -1
+      var symbolText = ( coefficient.toDecimal() === -1 ) ? ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
+      var symbolNode = new Text( symbolText, {
+        font: options.symbolFont
+      } );
+      options.children.push( symbolNode );
+
+      assert && assert( options.spacing === undefined, 'sets its own spacing' );
+      options.spacing = coefficient.isInteger() ? options.integerXSpacing : options.fractionXSpacing;
+
+      return new HBox( options );
     }
   } );
 } );
