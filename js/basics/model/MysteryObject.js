@@ -2,6 +2,7 @@
 
 /**
  * Description of a mystery object - an object whose weight is not exposed to the user.
+ * E.g. apple, dog, turtle
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
