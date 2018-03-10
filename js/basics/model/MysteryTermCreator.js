@@ -1,4 +1,4 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2017-2018, University of Colorado Boulder
 
 /**
  * MysteryTermCreator creates and manages terms that are associated with mystery objects (apple, dog, turtle,...)
