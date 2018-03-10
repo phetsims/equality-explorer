@@ -46,7 +46,7 @@ define( function( require ) {
       buttonYMargin: 8,
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5,
-      contentXMargin: 5,
+      contentXMargin: 20,
       contentYMargin: 8
     }, options );
 
@@ -56,22 +56,34 @@ define( function( require ) {
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
     options.titleNode = options.titleNode || new Text( equationOrInequalityString, {
-        font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
-        maxWidth: 0.85 * contentWidth
-      } );
+      font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
+      maxWidth: 0.85 * contentWidth
+    } );
 
     var strut = new HStrut( contentWidth );
 
     var equationNode = new EquationNode( leftTermCreators, rightTermCreators );
 
     // wrapper to avoid exceeding stack size when bounds of equationNode changes
-    var equationParent = new Node( {
-      children: [ equationNode ],
-      maxWidth: contentWidth
-    } );
+    var equationParent = new Node( { children: [ equationNode ] } );
 
-    // Center the equation when it changes
     equationNode.on( 'bounds', function() {
+
+      // Scale the equation if it gets too wide.
+      // This is more complicated than setting maxWidth because the equation's relation operator is
+      // centered in the accordion box, and only one side of the equation may get too wide.
+      var maxSideWidth = contentWidth / 2;
+      var leftSideOverflow = Math.max( 0, equationNode.x - equationNode.left - maxSideWidth );
+      var rightSideOverflow = Math.max( 0, equationNode.right - equationNode.x - maxSideWidth );
+      var maxOverflow = Math.max( leftSideOverflow, rightSideOverflow );
+      if ( maxOverflow > 0 ) {
+        equationParent.setScaleMagnitude( maxSideWidth / ( maxSideWidth + maxOverflow ) );
+      }
+      else {
+        equationParent.setScaleMagnitude( 1 );
+      }
+
+      // Center the equation
       equationParent.x = strut.centerX;
       equationParent.centerY = strut.centerY;
     } );
