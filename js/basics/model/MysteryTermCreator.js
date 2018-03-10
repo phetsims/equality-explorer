@@ -39,7 +39,7 @@ define( function( require ) {
 
     /**
      * Instantiates a MysteryTerm.
-     * @param {Object} [options] - passed to the Term's constructor
+     * @param {Object} [options] - passed to the MysteryTerm's constructor
      * @returns {Term}
      * @protected
      * @override
@@ -81,7 +81,7 @@ define( function( require ) {
      * Instantiates the Node that corresponds to this term.
      * @param {Term} term
      * @param {Plate} plate
-     * @param {Object} options - passed to the TermNode's constructor
+     * @param {Object} options - passed to the MysteryTermNode's constructor
      * @returns {TermNode}
      * @public
      * @override

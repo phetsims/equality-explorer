@@ -45,7 +45,7 @@ define( function( require ) {
 
     /**
      * Instantiates a ConstantTerm.
-     * @param {Object} [options] - passed to the Term's constructor
+     * @param {Object} [options] - passed to the ConstantTerm's constructor
      * @returns {Term}
      * @protected
      * @override
@@ -65,7 +65,7 @@ define( function( require ) {
      * Creates a new term by combining two terms.
      * @param {Term} term1
      * @param {Term} term2
-     * @param {Object} options - passed to the combined Term's constructor
+     * @param {Object} options - passed to the combined ConstantTerm's constructor
      * @returns {Term|null} - the combined term, null if the terms sum to zero
      * @public
      * @override
@@ -107,7 +107,7 @@ define( function( require ) {
     /**
      * Copies the specified term, with possible modifications specified via options.
      * @param {Term} term
-     * @param {Object} [options] - passed to the new Term's constructor
+     * @param {Object} [options] - passed to the new ConstantTerm's constructor
      * @returns {Term}
      */
     copyTerm: function( term, options ) {
@@ -124,7 +124,7 @@ define( function( require ) {
      * Instantiates the Node that corresponds to this term.
      * @param {Term} term
      * @param {Plate} plate
-     * @param {Object} [options]  - passed to the TermNode's constructor
+     * @param {Object} [options]  - passed to the ConstantTermNode's constructor
      * @returns {TermNode}
      * @public
      * @override
