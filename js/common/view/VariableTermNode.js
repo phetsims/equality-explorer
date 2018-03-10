@@ -110,6 +110,8 @@ define( function( require ) {
      * @param {string} symbol - the variable symbol
      * @param {Object} [options] - see ReducedFractionNode
      * @returns {Node}
+     * @public
+     * @static
      */
     createValueNode: function(coefficient,  symbol, options ) {
 

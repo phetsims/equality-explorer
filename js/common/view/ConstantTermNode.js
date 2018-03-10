@@ -101,6 +101,8 @@ define( function( require ) {
      * @param {ReducedFraction} constantValue
      * @param {Object} [options] - see ReducedFractionNode
      * @returns {Node}
+     * @public
+     * @static
      */
     createValueNode: function( constantValue, options ) {
       assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue type' );
