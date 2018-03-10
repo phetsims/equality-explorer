@@ -15,6 +15,9 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
 
+  // constants
+  var DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
+
   /**
    * @param {Object} [options]
    * @constructor
@@ -24,7 +27,7 @@ define( function( require ) {
     options = _.extend( {
       rows: 1,
       columns: 1,
-      cellSize: new Dimension2( 5, 5 ), // uniform width and height of each cell
+      cellSize: DEFAULT_CELL_SIZE, // {Dimension2} uniform width and height of each cell
       stroke: 'rgb( 160, 160, 160 )',
       lineWidth: 0.25
     }, options );

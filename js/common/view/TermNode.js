@@ -17,6 +17,9 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
 
+  // constants
+  var DEFAULT_SHADOW_OFFSET = new Dimension2( 4, 4 );
+
   /**
    * @param {TermCreator} termCreator
    * @param {Term} term
@@ -32,7 +35,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      shadowOffset: new Dimension2( 4, 4 ),
+      shadowOffset: DEFAULT_SHADOW_OFFSET,
 
       // supertype options
       cursor: 'pointer'

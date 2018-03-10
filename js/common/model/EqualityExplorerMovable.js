@@ -28,7 +28,7 @@ define( function( require ) {
   function EqualityExplorerMovable( options ) {
 
     options = _.extend( {
-      location: new Vector2( 0, 0 ), // {Vector2} initial location
+      location: Vector2.ZERO, // {Vector2} initial location
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} bounds that constrain dragging
       dragging: false, // {boolean} is this instance being dragged by the user?
       animationSpeed: 400 // {number} distance/second when animating

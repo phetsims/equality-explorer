@@ -42,7 +42,7 @@ define( function( require ) {
 
     options = _.extend( {
       cursor: 'pointer',
-      color: new Color( 0, 0, 255 ), // {Color|string} color of arrows, and top/bottom gradient on pointer over
+      color: 'blue', // {Color|string} color of arrows, and top/bottom gradient on pointer over
       backgroundColor: 'white', // {Color|string} color of the background when pointer is not over it
       cornerRadius: 6,
       xMargin: 3,

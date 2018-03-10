@@ -27,6 +27,11 @@ define( function( require ) {
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
+  // constants
+  var ICON_SIZE = new Dimension2(
+    EqualityExplorerConstants.BIG_TERM_DIAMETER + 10,
+    EqualityExplorerConstants.BIG_TERM_DIAMETER );
+
   /**
    * @constructor
    */
@@ -66,7 +71,7 @@ define( function( require ) {
       createTermCreators( this.xProperty ), {
         gridRows: 1,
         gridColumns: 2,
-        iconSize: new Dimension2( EqualityExplorerConstants.BIG_TERM_DIAMETER + 10, EqualityExplorerConstants.BIG_TERM_DIAMETER )
+        iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
       } );
   }
 
