@@ -367,7 +367,7 @@ define( function( require ) {
       }, options );
 
       //TODO clean up, this is a bit of a hack
-      // If we're replacing a 'big' term on the scale, use big font
+      // If we're replacing a 'big' term on the scale (e.g. in Solving screen), use big font
       if ( this.inverseTerm.diameter === EqualityExplorerConstants.BIG_TERM_DIAMETER ) {
         options.fontSize = EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
       }
