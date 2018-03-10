@@ -269,6 +269,23 @@ define( function( require ) {
     },
 
     /**
+     * Creates a data structure that describes the terms on the plate for this TermCreator.
+     * The format of this data structure is specific to the TermCreator type.
+     * @returns {*}
+     */
+    createSnapshot: function() {
+      throw new Error( 'createSnapshot must be implemented by subtype' );
+    },
+
+    /**
+     * Restores a snapshot of terms on the plate for this TermCreator.
+     * @param {*} snapshot - format is specific to TermCreator subtype. See createSnapshot.
+     */
+    restoreSnapshot: function( snapshot ) {
+      throw new Error( 'restoreSnapshot must be implemented by subtype' );
+    },
+
+    /**
      * Animates terms.
      * @param {number} dt - time since the previous step, in seconds
      * @public

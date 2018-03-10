@@ -273,6 +273,39 @@ define( function( require ) {
       return ( termCreator.constructor === this.constructor ) &&  // same type
              ( termCreator.variableValueProperty === this.variableValueProperty ) && // same variable
              ( termCreator.defaultCoefficient.toDecimal() === this.defaultCoefficient.toDecimal() ); // same coefficients
+    },
+
+    /**
+     * Creates a data structure that describes the terms on the plate for this TermCreator.
+     * The format of this data structure is specific VariableTermCreator.
+     * @returns {{cellIndex: number, coefficient: ReducedFraction, diameter: number}[]}
+     */
+    createSnapshot: function() {
+      var snapshot = [];
+      var termsOnPlate = this.getTermsOnPlate();
+      for ( var i = 0; i < termsOnPlate.length; i++ ) {
+        var term = termsOnPlate[ i ];
+        assert && assert( term instanceof VariableTerm, 'unexpected term type' );
+        snapshot.push( {
+          cellIndex: this.plate.getCellForTerm( term ),
+          coefficient: term.coefficient,
+          diameter: term.diameter
+        } );
+      }
+      return snapshot;
+    },
+
+    /**
+     * Restores a snapshot of terms on the plate for this TermCreator.
+     * @param {*} snapshot - see createSnapshot
+     */
+    restoreSnapshot: function( snapshot ) {
+      for ( var i = 0; i < snapshot.length; i++ ) {
+        this.createTermOnPlate( snapshot[ i ].cellIndex, {
+          coefficient: snapshot[ i ].coefficient,
+          diameter: snapshot[ i ].diameter
+        } );
+      }
     }
   } );
 } );

@@ -247,6 +247,39 @@ define( function( require ) {
     isEquivalentTo: function( termCreator ) {
       return ( termCreator instanceof ConstantTermCreator ) &&
              ( termCreator.defaultConstantValue.toDecimal() === this.defaultConstantValue.toDecimal() ); // same values
+    },
+
+    /**
+     * Creates a data structure that describes the terms on the plate for this TermCreator.
+     * The format of this data structure is specific ConstantTermCreator.
+     * @returns {{cellIndex: number, constantValue: ReducedFraction, diameter: number}[]}
+     */
+    createSnapshot: function() {
+      var snapshot = [];
+      var termsOnPlate = this.getTermsOnPlate();
+      for ( var i = 0; i < termsOnPlate.length; i++ ) {
+        var term = termsOnPlate[ i ];
+        assert && assert( term instanceof ConstantTerm, 'unexpected term type' );
+        snapshot.push( {
+          cellIndex: this.plate.getCellForTerm( term ),
+          constantValue: term.constantValue,
+          diameter: term.diameter
+        } );
+      }
+      return snapshot;
+    },
+
+    /**
+     * Restores a snapshot of terms on the plate for this TermCreator.
+     * @param {*} snapshot - see createSnapshot
+     */
+    restoreSnapshot: function( snapshot ) {
+      for ( var i = 0; i < snapshot.length; i++ ) {
+        this.createTermOnPlate( snapshot[ i ].cellIndex, {
+          constantValue: snapshot[ i ].constantValue,
+          diameter: snapshot[ i ].diameter
+        } );
+      }
     }
   } );
 } );

@@ -50,28 +50,16 @@ define( function( require ) {
   function PlateSnapshot( plate ) {
 
     // @private
-    this.plate = plate;
-    this.termCreators = []; // {TermCreator[]}
-    this.occupiedCells = []; // {number[][]} the occupied cells (in the plate's 2D grid) for each term creator
+    this.termCreators = plate.termCreators;
 
-    var termCreators = plate.termCreators;
+    // @private {*[]} data structure that describes the terms for each termCreator.
+    // Format is specific to TermCreator subtype. See createSnapshot for each TermCreator subtype.
+    this.snapshotDataStructures = [];
 
-    // ad hoc map, using parallel arrays
-    for ( var i = 0; i < termCreators.length; i++ ) {
-
-      var termCreator = termCreators[ i ];
-      var terms = termCreator.getTermsOnPlate();
-
-      this.termCreators[ i ] = termCreator;
-
-      var indices = []; // {number[]} cell indices
-      for ( var j = 0; j < terms.length; j++ ) {
-        indices.push( plate.getCellForTerm( terms[ j ] ) );
-      }
-      this.occupiedCells.push( indices );
+    // Create a snapshot data structure for each termCreator
+    for ( var i = 0; i < this.termCreators.length; i++ ) {
+      this.snapshotDataStructures[ i ] = this.termCreators[ i ].createSnapshot();
     }
-    assert && assert( this.termCreators.length === this.occupiedCells.length,
-      'arrays must have the same length' );
   }
 
   equalityExplorer.register( 'Snapshot.PlateSnapshot', PlateSnapshot );
@@ -83,17 +71,10 @@ define( function( require ) {
      * @public
      */
     restore: function() {
-
-      // for each type of term ...
+      assert && assert( this.termCreators.length === this.snapshotDataStructures.length,
+        'arrays should have same length' );
       for ( var i = 0; i < this.termCreators.length; i++ ) {
-
-        var termCreator = this.termCreators[ i ];
-        var occupiedCells = this.occupiedCells[ i ];
-
-        // for each cell that was occupied by this type of term, create a term and put it on the scale in the cell
-        for ( var j = 0; j < occupiedCells.length; j++ ) {
-          termCreator.createTermOnPlate( occupiedCells[ j ] );
-        }
+        this.termCreators[ i ].restoreSnapshot( this.snapshotDataStructures[ i ] );
       }
     }
   } );

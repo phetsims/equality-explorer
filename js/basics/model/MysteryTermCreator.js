@@ -64,7 +64,7 @@ define( function( require ) {
      * @override
      */
     combineTerms: function( term1, term2, options ) {
-       throw new Error( 'combineTerms is not supported by MysteryTermCreator' );
+      throw new Error( 'combineTerms is not supported by MysteryTermCreator' );
     },
 
     /**
@@ -133,6 +133,32 @@ define( function( require ) {
      */
     isEquivalentTo: function( termCreator ) {
       return false; // there are no equivalents for mystery objects
+    },
+
+    /**
+     * Creates a data structure that describes the terms on the plate for this TermCreator.
+     * The format of this data structure is specific MysteryTermCreator.
+     * @returns {{cellIndex: number}[]}
+     */
+    createSnapshot: function() {
+      var snapshot = [];
+      var termsOnPlate = this.getTermsOnPlate();
+      for ( var i = 0; i < termsOnPlate.length; i++ ) {
+        var term = termsOnPlate[ i ];
+        assert && assert( term instanceof MysteryTerm, 'unexpected term type' );
+        snapshot.push( { cellIndex: this.plate.getCellForTerm( term ) } );
+      }
+      return snapshot;
+    },
+
+    /**
+     * Restores a snapshot of terms on the plate for this TermCreator.
+     * @param {*} snapshot - see createSnapshot
+     */
+    restoreSnapshot: function( snapshot ) {
+      for ( var i = 0; i < snapshot.length; i++ ) {
+        this.createTermOnPlate( snapshot[ i ].cellIndex );
+      }
     }
   } );
 } );
