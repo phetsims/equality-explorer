@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
@@ -106,23 +107,13 @@ define( function( require ) {
       } );
       iconChildren.push( symbolNode );
 
-      // layout of coefficient and variable
-      if ( coefficientNode ) {
-        if ( coefficient.isInteger() ) {
-          symbolNode.left = coefficientNode.right + options.integerXSpacing;
-        }
-        else {
-
-          // vertically center variable on fractional coefficient
-          symbolNode.left = coefficientNode.right + options.fractionXSpacing;
-          symbolNode.centerY = coefficientNode.centerY;
-        }
-      }
-
       // coefficient and variable
       var margin = 0.12 * options.diameter; // determined empirically
-      var iconNode = new Node( {
+      var spacing = coefficient.isInteger() ? options.integerXSpacing : options.fractionXSpacing;
+      var iconNode = new HBox( {
         children: iconChildren,
+        spacing: spacing,
+        align: 'center',
         maxWidth: squareNode.width - ( 2 * margin ),
         maxHeight: squareNode.height - ( 2 * margin ),
         center: squareNode.center
