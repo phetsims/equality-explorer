@@ -3,7 +3,7 @@
 /**
  * Displays an equation or inequality.
  * Designed to support multiple variables, but has only been tested extensively with 1 variable.
- * Origin is at the center of the relational operator.
+ * Origin is at the center of the relational operator, to facilitate horizontal alignment with the scale.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,11 +20,11 @@ define( function( require ) {
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Multilink = require( 'AXON/Multilink' );
   var MysteryTermCreator = require( 'EQUALITY_EXPLORER/basics/model/MysteryTermCreator' );
+  var MysteryTermNode = require( 'EQUALITY_EXPLORER/basics/view/MysteryTermNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
@@ -208,7 +208,12 @@ define( function( require ) {
           if ( children.length > 0 ) {
             children.push( new Text( MathSymbols.PLUS, { font: operatorFont } ) );
           }
-          children.push( new MysteryTermNode( numberOfTermsOnPlate, termCreator.icon, integerFont, coefficientSpacing ) );
+
+          // Each mystery term has an implicit coefficient of 1, so the use the number of terms as the coefficient.
+          children.push( MysteryTermNode.createValueNode( numberOfTermsOnPlate, termCreator.icon, {
+            font: integerFont,
+            spacing: coefficientSpacing
+          } ) );
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
@@ -295,7 +300,7 @@ define( function( require ) {
     } );
   }
 
-  inherit( Node, EquationNode, {
+  return inherit( Node, EquationNode, {
 
     /**
      * @public
@@ -306,31 +311,4 @@ define( function( require ) {
       Node.prototype.dispose.call( this );
     }
   } );
-
-  /**
-   * Displays a mystery term in the equation.
-   * @param {number} numberOfTerms
-   * @param {Node} icon
-   * @param {Font} font
-   * @param {number} coefficientSpacing - horizontal space between coefficient and icon
-   * @constructor
-   * @private
-   */
-  function MysteryTermNode( numberOfTerms, icon, font, coefficientSpacing ) {
-    assert && assert( Util.isInteger( numberOfTerms ), 'invalid numberOfTerms: ' + numberOfTerms );
-
-    // Each mystery term has an implicit coefficient of 1, so the use the number of terms as the coefficient.
-    var coefficientNode = new Text( numberOfTerms, { font: font } );
-
-    HBox.call( this, {
-      spacing: 2,
-      children: [ coefficientNode, icon ]
-    } );
-  }
-
-  equalityExplorer.register( 'EquationNode.MysteryTermNode', MysteryTermNode );
-
-  inherit( HBox, MysteryTermNode );
-
-  return EquationNode;
 } );

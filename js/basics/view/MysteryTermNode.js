@@ -11,9 +11,16 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
+
+  // constants
+  var DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
 
   /**
    * @param {MysteryTermCreator} termCreator
@@ -42,6 +49,7 @@ define( function( require ) {
 
     /**
      * Creates an icon for mystery terms.
+     * No coefficient is shown because every mystery term has an implicit coefficient of 1.
      * @param {HTMLImageElement} image
      * @param {Object} [options] - see MysteryTermNode
      * @public
@@ -54,6 +62,30 @@ define( function( require ) {
       }, options );
 
       return new Image( image, options );
+    },
+
+    /**
+     * Creates a Node that represents the term's value, shown in equations.
+     * @param {number} coefficient
+     * @param {Node} icon
+     * @param {Object} [options]
+     * @public
+     * @static
+     */
+    createValueNode: function( coefficient, icon, options ) {
+
+      assert && assert( Util.isInteger( coefficient ), 'invalid coefficient: ' + coefficient );
+
+      options = _.extend( {
+        font: DEFAULT_COEFFICIENT_FONT
+      }, options );
+
+      var coefficientNode = new Text( coefficient, { font: options.font } );
+
+      return new HBox( {
+        spacing: 2,
+        children: [ coefficientNode, icon ]
+      } );
     }
   } );
 } );
