@@ -190,7 +190,7 @@ define( function( require ) {
 
       // addition and subtraction are not relevant
       if ( operation.operator === MathSymbols.PLUS || operation.operator === MathSymbols.MINUS ) {
-        return;
+        return term;
       }
 
       var cellIndex = this.plate.getCellForTerm( term );
