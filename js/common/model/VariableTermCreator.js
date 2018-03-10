@@ -180,7 +180,9 @@ define( function( require ) {
      * Applies a universal operation to a term on the scale.
      * @param {UniversalOperation} operation
      * @param {Term} term
-     * @returns {Term|null} the new term, null if the the operation resulted in zero
+     * @returns {Term|null} same term if the operation is irrelevant,
+     *                      new term if the operation is relevant,
+     *                      null if the the operation resulted in zero
      * @public
      * @override
      */
