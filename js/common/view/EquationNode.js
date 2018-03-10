@@ -207,7 +207,7 @@ define( function( require ) {
           if ( children.length > 0 ) {
             children.push( new Text( MathSymbols.PLUS, { font: operatorFont } ) );
           }
-          children.push( createMysteryTermNode( numberOfTermsOnPlate, termCreator.icon, integerFont, coefficientSpacing ) );
+          children.push( new MysteryTermNode( numberOfTermsOnPlate, termCreator.icon, integerFont, coefficientSpacing ) );
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
@@ -235,19 +235,17 @@ define( function( require ) {
         var coefficient = coefficients[ property ]; // {ReducedFraction}
 
         if ( coefficient.toDecimal() !== 0 ) {
-          var variableNode = new Text( property, { font: variableFont } );
-
           if ( children.length > 0 ) {
 
             // if there were previous terms, replace the coefficient's sign with an operator
             var operator = ( coefficient.toDecimal() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
             children.push( new Text( operator, { font: operatorFont } ) );
-            children.push( createVariableTermNode( coefficient.abs(), variableNode, integerFont, fractionFont, coefficientSpacing, true ) );
+            children.push( new VariableTermNode( coefficient.abs(), property, integerFont, fractionFont, variableFont, coefficientSpacing, true ) );
           }
           else {
 
             // if there were no variable terms, keep the constant's sign
-            children.push( createVariableTermNode( coefficient, variableNode, integerFont, fractionFont, coefficientSpacing, true ) );
+            children.push( new VariableTermNode( coefficient, property, integerFont, fractionFont, variableFont, coefficientSpacing, true ) );
           }
         }
       }
@@ -262,12 +260,12 @@ define( function( require ) {
         // if there were previous terms, replace the constant's sign with an operator
         operator = ( constantValue.toDecimal() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
         children.push( new Text( operator, { font: operatorFont } ) );
-        children.push( createConstantTermNode( constantValue.abs(), integerFont, fractionFont ) );
+        children.push( new ConstantTermNode( constantValue.abs(), integerFont, fractionFont ) );
       }
       else {
 
         // if there were no previous terms, keep the constant's sign
-        children.push( createConstantTermNode( constantValue, integerFont, fractionFont ) );
+        children.push( new ConstantTermNode( constantValue, integerFont, fractionFont ) );
       }
     }
 
@@ -282,90 +280,7 @@ define( function( require ) {
     } );
   }
 
-  /**
-   * Creates the Node for a mystery term.
-   * @param {number} numberOfTerms
-   * @param {Node} icon
-   * @param {Font} font
-   * @param {number} coefficientSpacing - horizontal space between coefficient and icon
-   * @returns {Node}
-   */
-  function createMysteryTermNode( numberOfTerms, icon, font, coefficientSpacing ) {
-
-    assert && assert( Util.isInteger( numberOfTerms ), 'invalid numberOfTerms: ' + numberOfTerms );
-
-    // Each mystery term has an implict coefficient of 1, so the use the number of terms as the coefficient.
-    var coefficientNode = new Text( numberOfTerms, { font: font } );
-
-    return new HBox( {
-      spacing: 2,
-      children: [ coefficientNode, icon ]
-    } );
-  }
-
-  /**
-   * Creates the Node for a variable term.
-   * @param {ReducedFraction} coefficient
-   * @param {Node} icon
-   * @param {Font} integerFont
-   * @param {Font} fractionFont
-   * @param {number} coefficientSpacing - horizontal space between coefficient and icon
-   * @param {boolean} hideOne - whether to hide 1 and -1
-   * @returns {Node}
-   */
-  function createVariableTermNode( coefficient, icon, integerFont, fractionFont, coefficientSpacing, hideOne ) {
-
-    assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient type' );
-
-    var termNode = null;
-
-    if ( hideOne && coefficient.toDecimal() === 1 ) {
-
-      // 1x becomes x
-      termNode = icon;
-    }
-    else if ( hideOne && coefficient.toDecimal() === -1 ) {
-
-      // -1x becomes -x
-      var signNode = new Text( MathSymbols.UNARY_MINUS, { font: integerFont } );
-      termNode = new HBox( {
-        spacing: 2,
-        children: [ signNode, icon ]
-      } );
-    }
-    else {
-
-      // coefficient
-      var coefficientNode = new ReducedFractionNode( coefficient, {
-        integerFont: integerFont,
-        fractionFont: fractionFont
-      } );
-
-      termNode = new HBox( {
-        spacing: coefficientSpacing,
-        children: [ coefficientNode, icon ]
-      } );
-    }
-
-    return termNode;
-  }
-
-  /**
-   * Creates the Node for a constant term.
-   * @param {ReducedFraction} value
-   * @param {Font} integerFont
-   * @param {Font} fractionFont
-   * @returns {Node}
-   */
-  function createConstantTermNode( value, integerFont, fractionFont ) {
-    assert && assert( value instanceof ReducedFraction, 'invalid coefficient type' );
-    return new ReducedFractionNode( value, {
-      integerFont: integerFont,
-      fractionFont: fractionFont
-    } );
-  }
-
-  return inherit( Node, EquationNode, {
+  inherit( Node, EquationNode, {
 
     /**
      * @public
@@ -376,4 +291,106 @@ define( function( require ) {
       Node.prototype.dispose.call( this );
     }
   } );
+
+  /**
+   * Displays a constant term in the equation.
+   * @param {ReducedFraction} value
+   * @param {Font} integerFont - font used to display integer constant value
+   * @param {Font} fractionFont - font used to display fractional constant value
+   * @constructor
+   * @private
+   */
+  function ConstantTermNode( value, integerFont, fractionFont ) {
+    ReducedFractionNode.call( this, value, {
+      integerFont: integerFont,
+      fractionFont: fractionFont
+    } );
+  }
+
+  equalityExplorer.register( 'EquationNode.ConstantTermNode', ConstantTermNode );
+
+  inherit( ReducedFractionNode, ConstantTermNode );
+
+  /**
+   * Displays a mystery term in the equation.
+   * @param {number} numberOfTerms
+   * @param {Node} icon
+   * @param {Font} font
+   * @param {number} coefficientSpacing - horizontal space between coefficient and icon
+   * @constructor
+   * @private
+   */
+  function MysteryTermNode( numberOfTerms, icon, font, coefficientSpacing ) {
+    assert && assert( Util.isInteger( numberOfTerms ), 'invalid numberOfTerms: ' + numberOfTerms );
+
+    // Each mystery term has an implicit coefficient of 1, so the use the number of terms as the coefficient.
+    var coefficientNode = new Text( numberOfTerms, { font: font } );
+
+    HBox.call( this, {
+      spacing: 2,
+      children: [ coefficientNode, icon ]
+    } );
+  }
+
+  equalityExplorer.register( 'EquationNode.MysteryTermNode', MysteryTermNode );
+
+  inherit( HBox, MysteryTermNode );
+
+  /**
+   * Displays a constant term in the equation.
+   * @param {ReducedFraction} coefficient
+   * @param {string} symbol
+   * @param {Font} integerFont
+   * @param {Font} fractionFont
+   * @param {Font} variableFont
+   * @param {number} coefficientSpacing - horizontal space between coefficient and icon
+   * @param {boolean} hideOne - whether to hide 1 and -1
+   * @constructor
+   * @private
+   */
+  function VariableTermNode( coefficient, symbol, integerFont, fractionFont, variableFont, coefficientSpacing, hideOne ) {
+
+    assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient type' );
+
+    var children = [];
+    var spacing = 0;
+
+    var variableNode = new Text( symbol, { font: variableFont } );
+
+    if ( hideOne && coefficient.toDecimal() === 1 ) {
+
+      // 1x becomes x
+      children.push( variableNode );
+    }
+    else if ( hideOne && coefficient.toDecimal() === -1 ) {
+
+      // -1x becomes -x
+      var signNode = new Text( MathSymbols.UNARY_MINUS, { font: integerFont } );
+      children.push( signNode );
+      children.push( variableNode );
+      spacing = 2;
+    }
+    else {
+
+      // coefficient
+      var coefficientNode = new ReducedFractionNode( coefficient, {
+        integerFont: integerFont,
+        fractionFont: fractionFont
+      } );
+      children.push( coefficientNode );
+      children.push( variableNode );
+      spacing = coefficientSpacing;
+    }
+
+    HBox.call( this, {
+      spacing: spacing,
+      children: children
+    } );
+  }
+
+  equalityExplorer.register( 'EquationNode.VariableTermNode', VariableTermNode );
+
+  inherit( HBox, VariableTermNode );
+
+  return EquationNode;
 } );
