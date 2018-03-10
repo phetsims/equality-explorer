@@ -13,12 +13,11 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VStrut = require( 'SCENERY/nodes/VStrut' );
 
   // strings
   var equationOrInequalityString = require( 'string!EQUALITY_EXPLORER/equationOrInequality' );
@@ -63,8 +62,8 @@ define( function( require ) {
       maxWidth: 0.85 * contentWidth
     } );
 
-    var hStrut = new HStrut( contentWidth );
-    var vStrut = new VStrut( contentHeight );
+    // use an invisible rectangle to enforce fixed content size
+    var invisibleRectangle = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     var equationNode = new EquationNode( leftTermCreators, rightTermCreators );
 
@@ -88,12 +87,12 @@ define( function( require ) {
       }
 
       // Center the equation
-      equationParent.x = hStrut.centerX;
-      equationParent.centerY = vStrut.centerY;
+      equationParent.x = invisibleRectangle.centerX;
+      equationParent.centerY = invisibleRectangle.centerY;
     } );
 
     var contentNode = new Node( {
-      children: [ hStrut, vStrut, equationParent ],
+      children: [ invisibleRectangle, equationParent ],
       maxWidth: contentWidth,
       maxHeight: contentHeight
     } );
