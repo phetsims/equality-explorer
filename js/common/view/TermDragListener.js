@@ -367,9 +367,9 @@ define( function( require ) {
       }, options );
 
       //TODO clean up, this is a bit of a hack
-      // If we're replacing a 'big' term on the scale (e.g. in Solving screen), use big font
+      // If we're replacing a 'big' term on the scale (e.g. in Solving screen)  , use big font
       if ( this.inverseTerm.diameter === EqualityExplorerConstants.BIG_TERM_DIAMETER ) {
-        options.fontSize = EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
+        options.fontSize = EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE;
       }
 
       // show '0' or '0x' in yellow halo, fade out
