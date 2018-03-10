@@ -18,6 +18,8 @@ define( function( require ) {
    * @constructor
    */
   function SolvingModel() {
+
+    // this screen has 1 scene
     EqualityExplorerModel.call( this, [ new SolvingScene() ] );
   }
 
