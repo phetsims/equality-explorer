@@ -35,7 +35,7 @@ define( function( require ) {
     // @public (read-only) range of variable 'x'
     this.xRange = EqualityExplorerConstants.VARIABLE_RANGE;
 
-    // @public (read-only) the value of the variable 'x'
+    // @public the value of the variable 'x'
     this.xProperty = new NumberProperty( this.xRange.defaultValue, {
       numberType: 'Integer',
       range: this.xRange
@@ -44,7 +44,7 @@ define( function( require ) {
     // @public (read-only) set of operators for universal operation
     this.operators = EqualityExplorerConstants.OPERATORS;
 
-    // @public (read-only) operator for 'universal operation'
+    // @public operator for 'universal operation'
     this.operatorProperty = new StringProperty( this.operators[ 0 ], {
       validValues: this.operators
     } );
@@ -52,13 +52,13 @@ define( function( require ) {
     // @public (read-only) range for universal operand
     this.operandRange = new RangeWithValue( -10, 10, 1 );
 
-    // @public (read-only) universal operand
+    // @public universal operand
     this.operandProperty = new NumberProperty( this.operandRange.defaultValue, {
       numberType: 'Integer',
       range: this.operandRange
     } );
 
-    // @public (read-only) emit1( sumToZeroData ) when terms sum to zero as the result of a universal operation
+    // @public (read-only) emit1( sumToZeroData ) when one or more terms become zero as the result of a universal operation
     this.sumToZeroEmitter = new Emitter();
 
     LockableScene.call( this, 'solving',

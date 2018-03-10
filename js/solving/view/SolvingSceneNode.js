@@ -34,8 +34,8 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      termsToolboxSpacing: 30,
-      organizeButtonVisible: false
+      termsToolboxSpacing: 30, // horizontal space between terms in the toolboxes
+      organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
     }, options );
 
     // @private view-specific Properties
@@ -73,19 +73,16 @@ define( function( require ) {
     // Layer when universal operation animation occurs
     var operationAnimationLayer = new Node();
 
-    // Universal Operation, below Equation accordion box
-    var operationNode = new UniversalOperationControl( scene, operationAnimationLayer, {
-      centerX: scene.scale.location.x,
+    // @private Universal Operation, below Equation accordion box
+    this.operationNode = new UniversalOperationControl( scene, operationAnimationLayer, {
+      centerX: scene.scale.location.x, // centered on the scale
       top: localBounds.bottom + 10
     } );
-    this.addChild( operationNode );
-    operationNode.moveToBack();
+    this.addChild( this.operationNode );
+    this.operationNode.moveToBack();
 
     // Put animation layer on top of everything
     this.addChild( operationAnimationLayer );
-
-    // @private fields needed by prototype functions
-    this.operationNode = operationNode;
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
     scene.sumToZeroEmitter.addListener(
@@ -98,7 +95,8 @@ define( function( require ) {
           var data = sumToZeroData[ i ];
           assert && assert( data.plate instanceof Plate, 'invalid plate: ' + data.plate );
           assert && assert( Util.isInteger( data.cellIndex ), 'invalid cellIndex: ' + data.cellIndex );
-          assert && assert( ( typeof data.symbol === 'string' ) || ( data.symbol === null ), 'invalid symbol: ' + data.symbol );
+          assert && assert( ( typeof data.symbol === 'string' ) || ( data.symbol === null ),
+            'invalid symbol: ' + data.symbol );
 
           // determine where the cell that contained the term is currently located
           var cellCenter = data.plate.getLocationOfCell( data.cellIndex );

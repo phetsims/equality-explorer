@@ -33,7 +33,7 @@ define( function( require ) {
        * @param {Scene} scene
        * @param {Property.<Scene>} sceneProperty - the selected Scene
        * @param {Bounds2} layoutBounds
-       * @returns {*}
+       * @returns {Node}
        */
       createSceneNode: function( scene, sceneProperty, layoutBounds ) {
         return new SceneNode( scene, sceneProperty, layoutBounds );
