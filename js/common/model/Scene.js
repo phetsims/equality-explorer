@@ -132,11 +132,11 @@ define( function( require ) {
     },
 
     /**
-     * Saves a snapshot of the scene. Restore is handled by the snapshot.
+     * Creates a snapshot of the scene.
      * @returns {Snapshot}
      * @public
      */
-    save: function() {
+    createSnapshot: function() {
       return new Snapshot( this );
     }
   } );

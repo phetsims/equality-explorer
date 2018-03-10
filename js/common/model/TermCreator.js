@@ -269,7 +269,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a data structure that describes the terms on the plate for this TermCreator.
+     * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
      * The format of this data structure is specific to the TermCreator type.
      * @returns {*}
      */

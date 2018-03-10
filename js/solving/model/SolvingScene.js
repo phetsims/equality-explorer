@@ -125,12 +125,12 @@ define( function( require ) {
     },
 
     /**
-     * Saves a snapshot of the scene. Restore is handled by the snapshot.
+     * Creates a snapshot of the scene.
      * @returns {SnapshotWithVariable}
      * @public
      * @override
      */
-    save: function() {
+    createSnapshot: function() {
       return new SnapshotWithVariable( this );
     },
 
