@@ -25,7 +25,7 @@ define( function( require ) {
   var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
 
   /**
-   * @param {SolvingScene} scene TODO too much information?
+   * @param {SolvingScene} scene
    * @param {Node} animationLayer
    * @param {Object} [options]
    * @constructor
