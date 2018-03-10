@@ -1,6 +1,6 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
-//TODO lots of duplication with VariablesSceneNode
+//TODO duplication with VariablesSceneNode. Should this be a subtype of VariablesSceneNode?
 /**
  * A scene in the Solving screen.
  *
