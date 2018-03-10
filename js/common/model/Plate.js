@@ -22,6 +22,9 @@ define( function( require ) {
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  // constants
+  var DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
+
   /**
    * @param {TermCreator[]} termCreators - creators associated with term on this plate
    * @param {Object} [options]
@@ -36,7 +39,7 @@ define( function( require ) {
       diameter: 20, // diameter of the plate
       gridRows: 1, // rows in the 2D grid
       gridColumns: 1, // columns in the 2D grid
-      cellSize: new Dimension2( 5, 5 ) // dimensions of each cell in the grid
+      cellSize: DEFAULT_CELL_SIZE // {Dimension2} dimensions of each cell in the grid
     }, options );
 
     // @public
@@ -83,10 +86,6 @@ define( function( require ) {
           weight = weight.plusFraction( termCreators[ i ].weightOnPlateProperty.value );
         }
         return weight;
-      }, {
-        isValidValue: function( value ) {
-          return value.toDecimal() >= 0;
-        }
       } );
 
     // @public emit is called when the contents of the grid changes (terms added, removed, organized)
