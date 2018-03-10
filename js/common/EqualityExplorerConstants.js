@@ -12,6 +12,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   var EqualityExplorerConstants = {
@@ -22,7 +23,7 @@ define( function( require ) {
     SCREEN_VIEW_Y_MARGIN: 20,
 
     // Common to all accordion boxes
-    ACCORDION_BOX_TITLE_FONT_SIZE: 18,
+    ACCORDION_BOX_TITLE_FONT: new PhetFont( 18 ),
 
     // Sum-to-zero animation
     SUM_TO_ZERO_BIG_FONT_SIZE: 40, // for sum-to-zero animation that involves a 'big' term on the scale

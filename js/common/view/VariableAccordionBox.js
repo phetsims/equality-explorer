@@ -63,7 +63,7 @@ define( function( require ) {
 
     assert && assert( !options.titleNode, 'titleNode is set by this Node' );
     options.titleNode = new Text( variableString, {
-      font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
+      font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
     } );
 

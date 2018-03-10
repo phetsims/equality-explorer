@@ -16,7 +16,6 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HSeparator = require( 'SUN/HSeparator' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var SnapshotControl = require( 'EQUALITY_EXPLORER/common/view/SnapshotControl' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -73,7 +72,7 @@ define( function( require ) {
     // title
     assert && assert( !options.titleNode, 'titleNode is set by this Node' );
     options.titleNode = new Text( snapshotsString, {
-      font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
+      font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
     } );
 

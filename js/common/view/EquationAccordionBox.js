@@ -15,7 +15,6 @@ define( function( require ) {
   var EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -58,7 +57,7 @@ define( function( require ) {
     var contentHeight = options.fixedHeight - ( 2 * options.contentYMargin );
 
     options.titleNode = options.titleNode || new Text( equationOrInequalityString, {
-      font: new PhetFont( EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT_SIZE ),
+      font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
     } );
 
