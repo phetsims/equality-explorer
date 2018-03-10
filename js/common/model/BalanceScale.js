@@ -35,17 +35,16 @@ define( function( require ) {
 
       location: new Vector2( 0, 0 ), // location of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
-      maxAngle: 22 * ( Math.PI / 180 ), // degrees to radians
+      maxAngle: Util.toRadians( 22 ), // max angle of the scale, in radians
       maxWeight: 30, // weight at which a plate 'bottoms out'
 
-      // height of vertical support that connects plate to beam
-      plateSupportHeight: 70,
+      plateSupportHeight: 70, // height of vertical support that connects plate to beam
       plateDiameter: 300, // diameter of the plates
       plateXInset: 45, // inset of the plates from the ends of the beam
 
       // options related to the plate's 2D grid
-      gridRows: 6, // {number} rows in the grid
-      gridColumns: 6, // {number} columns in the grid
+      gridRows: 6, // rows in the grid
+      gridColumns: 6, // columns in the grid
       gridXMargin: 2, // horizontal space between stacks of terms
       gridYMargin: 0,  // vertical space between terms in each stack
       iconSize: null // {Dimension2|null} size of icons, computed if null
@@ -162,7 +161,7 @@ define( function( require ) {
         new Vector2( self.location.x - dx, self.location.y - dy - options.plateSupportHeight );
     } );
 
-    // @public {DerivedProperty.<number>} total number of terms on the scale (both plates)
+    // @public {DerivedProperty.<number>} total number of terms on the scale
     // dispose not required.
     this.numberOfTermsProperty = new DerivedProperty(
       [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
@@ -199,10 +198,8 @@ define( function( require ) {
      * @public
      */
     clear: function() {
-      this.leftTermCreators.forEach( function( termCreator ) {
-        termCreator.disposeTermsOnPlate();
-      } );
-      this.rightTermCreators.forEach( function( termCreator ) {
+      var termCreators = this.leftTermCreators.concat( this.rightTermCreators );
+      termCreators.forEach( function( termCreator ) {
         termCreator.disposeTermsOnPlate();
       } );
     }
