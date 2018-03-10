@@ -41,7 +41,7 @@ define( function( require ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
-    var contentNode = ConstantTermNode.createIcon( term.constantValue,
+    var contentNode = ConstantTermNode.createInteractiveTermNode( term.constantValue,
       _.extend( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
     var shadowNode = new Circle( term.diameter / 2, {
@@ -57,14 +57,14 @@ define( function( require ) {
   return inherit( TermNode, ConstantTermNode, {}, {
 
     /**
-     * Creates an icon for constant terms.
+     * Creates the representation of a term that appears on interactive nodes.
      * @param {ReducedFraction} constantValue - value shown on the icon
      * @param {Object} [options] - see DEFAULT_OPTIONS
      * @returns {Node}
      * @public
      * @static
      */
-    createIcon: function( constantValue, options ) {
+    createInteractiveTermNode: function( constantValue, options ) {
 
       assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue' );
 
@@ -83,7 +83,7 @@ define( function( require ) {
 
       // constant value
       var margin = 0.18 * options.diameter; // determined empirically
-      var constantNode = ConstantTermNode.createValueNode( constantValue, {
+      var constantNode = ConstantTermNode.createEquationTermNode( constantValue, {
         fractionFont: options.fractionFont,
         integerFont: options.integerFont,
         maxWidth: circleNode.width - ( 2 * margin ),
@@ -97,14 +97,15 @@ define( function( require ) {
     },
 
     /**
-     * Creates a Node that represents the term's value, shown on interactive icons and in equations.
+     * Creates the representation of a term that is shown in equations.
+     * For constant terms, this same representation appears on interactive terms.
      * @param {ReducedFraction} constantValue
      * @param {Object} [options] - see ReducedFractionNode
      * @returns {Node}
      * @public
      * @static
      */
-    createValueNode: function( constantValue, options ) {
+    createEquationTermNode: function( constantValue, options ) {
       assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue type' );
       return new ReducedFractionNode( constantValue, options );
     }

@@ -34,7 +34,7 @@ define( function( require ) {
     // @public (read-only) terms are created with this value by default
     this.defaultConstantValue = options.defaultConstantValue;
 
-    var icon = ConstantTermNode.createIcon( options.defaultConstantValue );
+    var icon = ConstantTermNode.createInteractiveTermNode( options.defaultConstantValue );
 
     TermCreator.call( this, icon, options );
   }

@@ -28,7 +28,7 @@ define( function( require ) {
     // @public (read-only)
     this.mysteryObject = mysteryObject;
 
-    var icon = MysteryTermNode.createIcon( mysteryObject.image );
+    var icon = MysteryTermNode.createInteractiveTermNode( mysteryObject.image );
 
     TermCreator.call( this, icon, options );
   }

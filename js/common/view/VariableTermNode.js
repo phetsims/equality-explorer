@@ -47,7 +47,7 @@ define( function( require ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
-    var contentNode = VariableTermNode.createIcon( term.coefficient, term.symbol,
+    var contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.symbol,
       _.extend( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
     var shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
@@ -63,7 +63,7 @@ define( function( require ) {
   return inherit( TermNode, VariableTermNode, {}, {
 
     /**
-     * Creates an icon for variable terms.
+     * Creates the representation of a term that appears on interactive nodes.
      * @param {ReducedFraction} coefficient
      * @param {string} symbol
      * @param {Object} [options] - see DEFAULT_OPTIONS
@@ -71,10 +71,10 @@ define( function( require ) {
      * @public
      * @static
      */
-    createIcon: function( coefficient, symbol, options ) {
+    createInteractiveTermNode: function( coefficient, symbol, options ) {
 
       assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
-      assert && assert( typeof symbol === 'string', 'invalid coefficient' );
+      assert && assert( typeof symbol === 'string', 'invalid symbol' );
 
       options = _.extend( {
         diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
@@ -91,7 +91,7 @@ define( function( require ) {
 
       var margin = 0.12 * options.diameter; // determined empirically
 
-      var valueNode = VariableTermNode.createValueNode(coefficient, symbol, {
+      var valueNode = VariableTermNode.createEquationTermNode( coefficient, symbol, {
         align: 'center',
         maxWidth: squareNode.width - ( 2 * margin ),
         maxHeight: squareNode.height - ( 2 * margin ),
@@ -105,7 +105,8 @@ define( function( require ) {
     },
 
     /**
-     * Creates a Node that represents the term's value, shown on interactive icons and in equations.
+     * Creates the representation of a term that is shown in equations.
+     * For constant terms, this same representation appears on interactive terms.
      * @param {ReducedFraction} coefficient
      * @param {string} symbol - the variable symbol
      * @param {Object} [options] - see ReducedFractionNode
@@ -113,7 +114,10 @@ define( function( require ) {
      * @public
      * @static
      */
-    createValueNode: function(coefficient,  symbol, options ) {
+    createEquationTermNode: function( coefficient, symbol, options ) {
+
+      assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
+      assert && assert( typeof symbol === 'string', 'invalid symbol' );
 
       options = _.extend( {
         align: 'center'

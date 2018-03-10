@@ -31,7 +31,7 @@ define( function( require ) {
    */
   function MysteryTermNode( termCreator, term, plate, options ) {
 
-    var contentNode = MysteryTermNode.createIcon( term.mysteryObject.image, {
+    var contentNode = MysteryTermNode.createInteractiveTermNode( term.mysteryObject.image, {
       maxHeight: term.diameter
     } );
 
@@ -48,14 +48,14 @@ define( function( require ) {
   return inherit( TermNode, MysteryTermNode, {}, {
 
     /**
-     * Creates an icon for mystery terms.
+     * Creates the representation of a term that appears on interactive nodes.
      * No coefficient is shown because every mystery term has an implicit coefficient of 1.
      * @param {HTMLImageElement} image
      * @param {Object} [options] - see MysteryTermNode
      * @public
      * @static
      */
-    createIcon: function( image, options ) {
+    createInteractiveTermNode: function( image, options ) {
 
       options = _.extend( {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
@@ -65,14 +65,15 @@ define( function( require ) {
     },
 
     /**
-     * Creates a Node that represents the term's value, shown in equations.
+     * Creates the representation of a term that is shown in equations.
+     * Since every mystery term has an implicit coefficient of 1, the coefficient is an integer.
      * @param {number} coefficient
      * @param {Node} icon
      * @param {Object} [options]
      * @public
      * @static
      */
-    createValueNode: function( coefficient, icon, options ) {
+    createEquationTermNode: function( coefficient, icon, options ) {
 
       assert && assert( Util.isInteger( coefficient ), 'invalid coefficient: ' + coefficient );
 

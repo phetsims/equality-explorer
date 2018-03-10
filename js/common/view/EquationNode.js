@@ -210,7 +210,7 @@ define( function( require ) {
           }
 
           // Each mystery term has an implicit coefficient of 1, so the use the number of terms as the coefficient.
-          children.push( MysteryTermNode.createValueNode( numberOfTermsOnPlate, termCreator.icon, {
+          children.push( MysteryTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.icon, {
             font: integerFont,
             spacing: coefficientSpacing
           } ) );
@@ -254,12 +254,12 @@ define( function( require ) {
             // if there were previous terms, replace the coefficient's sign with an operator
             var operator = ( coefficient.toDecimal() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
             children.push( new Text( operator, { font: operatorFont } ) );
-            children.push( VariableTermNode.createValueNode( coefficient.abs(), property, variableTermOptions ) );
+            children.push( VariableTermNode.createEquationTermNode( coefficient.abs(), property, variableTermOptions ) );
           }
           else {
 
             // if there were no variable terms, keep the constant's sign
-            children.push( VariableTermNode.createValueNode( coefficient, property, variableTermOptions ) );
+            children.push( VariableTermNode.createEquationTermNode( coefficient, property, variableTermOptions ) );
           }
         }
       }
@@ -268,24 +268,23 @@ define( function( require ) {
     // put the non-zero constant term last
     if ( constantValue.toDecimal() !== 0 ) {
 
+      var constantTermOptions = {
+        integerFont: integerFont,
+        fractionFont: fractionFont
+      };
+
       // put the constant term last
       if ( children.length > 0 ) {
 
         // if there were previous terms, replace the constant's sign with an operator
         operator = ( constantValue.toDecimal() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
         children.push( new Text( operator, { font: operatorFont } ) );
-        children.push( ConstantTermNode.createValueNode( constantValue.abs(), {
-          integerFont: integerFont,
-          fractionFont: fractionFont
-        } ) );
+        children.push( ConstantTermNode.createEquationTermNode( constantValue.abs(), constantTermOptions ) );
       }
       else {
 
         // if there were no previous terms, keep the constant's sign
-        children.push( ConstantTermNode.createValueNode( constantValue, {
-          integerFont: integerFont,
-          fractionFont: fractionFont
-        } ) );
+        children.push( ConstantTermNode.createEquationTermNode( constantValue, constantTermOptions ) );
       }
     }
 
