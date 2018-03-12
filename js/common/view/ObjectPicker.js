@@ -33,12 +33,12 @@ define( function( require ) {
   var BUTTON_STATES = [ 'up', 'down', 'over', 'out' ];
 
   /**
-   * @param {Property.<Object>} valueProperty - value of the current term that is displayed
-   * @param {{value:Object, node:Node}[]} terms - the set of terms that you can select from
+   * @param {Property.<Object>} valueProperty - value of the current item that is displayed
+   * @param {{value:Object, node:Node}[]} items - the set of items that you can select from
    * @param {Object} [options]
    * @constructor
    */
-  function ObjectPicker( valueProperty, terms, options ) {
+  function ObjectPicker( valueProperty, items, options ) {
 
     options = _.extend( {
       wrapEnabled: false, // whether to wrap around at ends of range
@@ -70,12 +70,12 @@ define( function( require ) {
     //------------------------------------------------------------
     // Nodes
 
-    // maximum dimensions of term Nodes
-    var maxWidth = _.maxBy( terms, function( term ) {
-      return term.node.width;
+    // maximum dimensions of item Nodes
+    var maxWidth = _.maxBy( items, function( item ) {
+      return item.node.width;
     } ).node.width;
-    var maxHeight = _.maxBy( terms, function( term ) {
-      return term.node.height;
+    var maxHeight = _.maxBy( items, function( item ) {
+      return item.node.height;
     } ).node.height;
 
     // compute shape of the background behind the value
@@ -201,10 +201,10 @@ define( function( require ) {
     //------------------------------------------------------------
     // Properties
 
-    // index of the term that's currently selected
-    var indexProperty = new NumberProperty( indexOfItemWithValue( terms, valueProperty.value ), {
+    // index of the item that's currently selected
+    var indexProperty = new NumberProperty( indexOfItemWithValue( items, valueProperty.value ), {
       numberType: 'Integer',
-      range: new Range( 0, terms.length - 1 )
+      range: new Range( 0, items.length - 1 )
     } );
 
     // state of the up and down button
@@ -215,7 +215,7 @@ define( function( require ) {
     // dispose not required.
     var upEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
-        return options.wrapEnabled || ( index < terms.length - 1 );
+        return options.wrapEnabled || ( index < items.length - 1 );
       } );
 
     // {DerivedProperty.<boolean>} whether the down button is enabled
@@ -233,7 +233,7 @@ define( function( require ) {
     var upListener = new FireOnHoldInputListener( {
       listener: function() {
         var index = indexProperty.value + 1;
-        if ( options.wrapEnabled && index >= terms.length ) {
+        if ( options.wrapEnabled && index >= items.length ) {
           index = 0;
         }
         indexProperty.value = index;
@@ -249,7 +249,7 @@ define( function( require ) {
       listener: function() {
         var index = indexProperty.value - 1;
         if ( options.wrapEnabled && index < 0 ) {
-          index = terms.length - 1;
+          index = items.length - 1;
         }
         indexProperty.value = index;
       },
@@ -268,8 +268,8 @@ define( function( require ) {
       valueParentNode.removeAllChildren();
 
       // show the node associated with the value
-      var index = indexOfItemWithValue( terms, value );
-      var valueNode = terms[ index ].node;
+      var index = indexOfItemWithValue( items, value );
+      var valueNode = items[ index ].node;
       valueParentNode.addChild( valueNode );
       valueNode.centerX = backgroundWidth / 2;
       valueNode.centerY = backgroundHeight / 2;
@@ -281,7 +281,7 @@ define( function( require ) {
 
     // unlink not required
     indexProperty.link( function( index ) {
-      valueProperty.value = terms[ index ].value;
+      valueProperty.value = items[ index ].value;
     } );
 
     // @private update colors for 'up' components, unmultilink unnecessary
@@ -333,15 +333,15 @@ define( function( require ) {
   inherit( ButtonListener, ButtonStateListener );
 
   /**
-   * Gets the index of the term that has a specified value.
-   * @param {{value:Object, node:Node}} terms
+   * Gets the index of the item that has a specified value.
+   * @param {{value:Object, node:Node}} items
    * @param {Object} value
    * @return {number}
    */
-  var indexOfItemWithValue = function( terms, value ) {
+  var indexOfItemWithValue = function( items, value ) {
     var index = -1;
-    for ( var i = 0; i < terms.length; i++ ) {
-      if ( terms[ i ].value === value ) {
+    for ( var i = 0; i < items.length; i++ ) {
+      if ( items[ i ].value === value ) {
         index = i;
         break;
       }
