@@ -27,7 +27,8 @@ define( function( require ) {
    */
   function VariableTermCreator( symbol, variableValueProperty, options ) {
 
-    assert && assert( variableValueProperty instanceof NumberProperty, 'invalid variableValueProperty' );
+    assert && assert( variableValueProperty instanceof NumberProperty,
+      'invalid variableValueProperty: ' + variableValueProperty );
 
     var self = this;
 
@@ -37,7 +38,8 @@ define( function( require ) {
       negativeFill: 'rgb( 99, 212, 238 )'
     }, options );
 
-    assert && assert( options.defaultCoefficient instanceof ReducedFraction, 'invalid defaultCoefficient' );
+    assert && assert( options.defaultCoefficient instanceof ReducedFraction,
+      'invalid defaultCoefficient: ' + options.defaultCoefficient );
 
     // @public (read-only)
     this.symbol = symbol;
@@ -103,8 +105,8 @@ define( function( require ) {
      */
     combineTerms: function( term1, term2, options ) {
 
-      assert && assert( term1 instanceof VariableTerm, 'invalid term1' );
-      assert && assert( term2 instanceof VariableTerm, 'invalid term2' );
+      assert && assert( term1 instanceof VariableTerm, 'invalid term1: ' + term1 );
+      assert && assert( term2 instanceof VariableTerm, 'invalid term2: ' + term2 );
 
       options = options || {};
       assert && assert( options.coefficient === undefined, 'VariableTermCreator sets coefficient' );
@@ -144,7 +146,7 @@ define( function( require ) {
      * @override
      */
     copyTerm: function( term, options ) {
-      assert && assert( term instanceof VariableTerm, 'invalid term' );
+      assert && assert( term instanceof VariableTerm, 'invalid term: ' + term );
 
       options = options || {};
       assert && assert( options.coefficient === undefined, 'VariableTermCreator sets coefficient' );
@@ -184,7 +186,7 @@ define( function( require ) {
      */
     applyOperationToTerm: function( operation, term ) {
       assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
-      assert && assert( term instanceof VariableTerm, 'invalid term' );
+      assert && assert( term instanceof VariableTerm, 'invalid term: ' + term );
 
       // addition and subtraction are not relevant
       if ( operation.operator === MathSymbols.PLUS || operation.operator === MathSymbols.MINUS ) {
@@ -281,7 +283,7 @@ define( function( require ) {
       var termsOnPlate = this.getTermsOnPlate();
       for ( var i = 0; i < termsOnPlate.length; i++ ) {
         var term = termsOnPlate[ i ];
-        assert && assert( term instanceof VariableTerm, 'unexpected term type' );
+        assert && assert( term instanceof VariableTerm, 'invalid term: ' + term );
         snapshot.push( {
           cellIndex: this.plate.getCellForTerm( term ),
           coefficient: term.coefficient,

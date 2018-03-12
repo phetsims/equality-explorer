@@ -220,7 +220,7 @@ define( function( require ) {
      * @public
      */
     removeTerm: function( term ) {
-      assert && assert( term instanceof Term, 'invalid term' );
+      assert && assert( term instanceof Term, 'invalid term: ' + term );
       var index = this.getCellForTerm( term );
       assert && assert( index !== -1, 'term not found: ' + term );
       this.clearCell( index );

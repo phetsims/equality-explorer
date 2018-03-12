@@ -66,7 +66,7 @@ define( function( require ) {
      */
     createInteractiveTermNode: function( constantValue, options ) {
 
-      assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue' );
+      assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue: ' + constantValue );
 
       options = _.extend( {
         diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
@@ -106,7 +106,7 @@ define( function( require ) {
      * @static
      */
     createEquationTermNode: function( constantValue, options ) {
-      assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue type' );
+      assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue: ' + constantValue );
       return new ReducedFractionNode( constantValue, options );
     }
   } );

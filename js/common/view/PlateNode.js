@@ -79,7 +79,7 @@ define( function( require ) {
       centerY: 0
     } );
     plateNode.setScaleMagnitude( plate.diameter / plateNode.width, 1 );
-    assert && assert( plateNode.width === plate.diameter );
+    assert && assert( plateNode.width === plate.diameter, 'programming error in scaling' );
 
     // Vertical support that attaches the plate to the pivot point
     var supportNode = new Rectangle( 0, 0, 10, plate.supportHeight - options.pivotRadius, {

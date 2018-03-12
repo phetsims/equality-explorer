@@ -75,7 +75,7 @@ define( function( require ) {
      */
     createEquationTermNode: function( coefficient, icon, options ) {
 
-      assert && assert( Util.isInteger( coefficient ), 'invalid coefficient: ' + coefficient );
+      assert && assert( Util.isInteger( coefficient ), 'coefficient must be an integer: ' + coefficient );
 
       options = _.extend( {
         font: DEFAULT_COEFFICIENT_FONT

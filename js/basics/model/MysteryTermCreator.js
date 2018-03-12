@@ -116,7 +116,7 @@ define( function( require ) {
       var termsOnPlate = this.getTermsOnPlate();
       for ( var i = 0; i < termsOnPlate.length; i++ ) {
         var term = termsOnPlate[ i ];
-        assert && assert( term instanceof MysteryTerm, 'unexpected term type' );
+        assert && assert( term instanceof MysteryTerm, 'invalid term: ' + term );
         snapshot.push( { cellIndex: this.plate.getCellForTerm( term ) } );
       }
       return snapshot;

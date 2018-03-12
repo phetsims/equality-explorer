@@ -53,7 +53,7 @@ define( function( require ) {
      * @public
      */
     plusFraction: function( value ) {
-      assert && assert( value instanceof Fraction, 'value is not a Fraction' );
+      assert && assert( value instanceof Fraction, 'value is not a Fraction: ' + value );
       var numerator = ( this.numerator * value.denominator ) + ( value.numerator * this.denominator );
       var denominator = this.denominator * value.denominator;
       return new ReducedFraction( numerator, denominator );
@@ -66,7 +66,7 @@ define( function( require ) {
      * @public
      */
     minusFraction: function( value ) {
-      assert && assert( value instanceof Fraction, 'value is not a Fraction' );
+      assert && assert( value instanceof Fraction, 'value is not a Fraction: ' + value );
       return this.plusFraction( value.timesInteger( -1 ) );
     },
 

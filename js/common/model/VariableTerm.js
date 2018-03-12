@@ -24,7 +24,8 @@ define( function( require ) {
    */
   function VariableTerm( symbol, variableValueProperty, termCreator, options ) {
 
-    assert && assert( variableValueProperty instanceof NumberProperty, 'invalid variableValueProperty' );
+    assert && assert( variableValueProperty instanceof NumberProperty,
+      'invalid variableValueProperty: ' + variableValueProperty );
 
     options = _.extend( {
       coefficient: ReducedFraction.withInteger( 1 )

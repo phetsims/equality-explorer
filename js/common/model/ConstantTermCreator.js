@@ -29,7 +29,8 @@ define( function( require ) {
       defaultConstantValue: ReducedFraction.withInteger( 1 ) // terms are created with this value by default
     }, options );
 
-    assert && assert( options.defaultConstantValue instanceof ReducedFraction, 'invalid defaultConstantValue' );
+    assert && assert( options.defaultConstantValue instanceof ReducedFraction,
+      'invalid defaultConstantValue: ' + options.defaultConstantValue );
 
     // @public (read-only) terms are created with this value by default
     this.defaultConstantValue = options.defaultConstantValue;
@@ -67,11 +68,11 @@ define( function( require ) {
      */
     combineTerms: function( term1, term2, options ) {
 
-      assert && assert( term1 instanceof ConstantTerm, 'invalid term1' );
-      assert && assert( term2 instanceof ConstantTerm, 'invalid term2' );
+      assert && assert( term1 instanceof ConstantTerm, 'invalid term1: ' + term1 );
+      assert && assert( term2 instanceof ConstantTerm, 'invalid term2: ' + term2 );
 
       options = options || {};
-      assert && assert( options.constantValue === undefined, 'ConstantTermCreator sets constantValue' );
+      assert && assert( !options.constantValue, 'ConstantTermCreator sets constantValue' );
 
       var constantValue = term1.constantValue.plusFraction( term2.constantValue );
       var combinedTerm;
@@ -108,10 +109,10 @@ define( function( require ) {
      * @override
      */
     copyTerm: function( term, options ) {
-      assert && assert( term instanceof ConstantTerm, 'invalid term' );
+      assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
 
       options = options || {};
-      assert && assert( options.constantValue === undefined, 'ConstantTerm sets constantValue' );
+      assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
       options.constantValue = term.constantValue;
 
       return this.createTerm( options );
@@ -140,7 +141,7 @@ define( function( require ) {
      */
     applyOperationToTerm: function( operation, term ) {
       assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
-      assert && assert( term instanceof ConstantTerm, 'invalid term type' );
+      assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
 
       var cellIndex = this.plate.getCellForTerm( term );
 
@@ -257,7 +258,7 @@ define( function( require ) {
       var termsOnPlate = this.getTermsOnPlate();
       for ( var i = 0; i < termsOnPlate.length; i++ ) {
         var term = termsOnPlate[ i ];
-        assert && assert( term instanceof ConstantTerm, 'unexpected term type' );
+        assert && assert( term instanceof ConstantTerm, 'invalid term:' + term );
         snapshot.push( {
           cellIndex: this.plate.getCellForTerm( term ),
           constantValue: term.constantValue,

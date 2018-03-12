@@ -33,10 +33,10 @@ define( function( require ) {
    */
   function TermDragListener( termNode, term, termCreator, plate, options ) {
 
-    assert && assert( termNode instanceof Node, 'invalid termNode' );
-    assert && assert( term instanceof Term, 'invalid term' );
-    assert && assert( termCreator instanceof TermCreator, 'invalid termCreator' );
-    assert && assert( plate instanceof Plate, 'invalid plate' );
+    assert && assert( termNode instanceof Node, 'invalid termNode: ' + termNode );
+    assert && assert( term instanceof Term, 'invalid term: ' + term );
+    assert && assert( termCreator instanceof TermCreator, 'invalid termCreator: ' + termCreator );
+    assert && assert( plate instanceof Plate, 'invalid plate: ' + plate );
 
     var self = this;
 
@@ -341,7 +341,7 @@ define( function( require ) {
      * @private
      */
     sumToZero: function( options ) {
-      assert && assert( this.inverseTerm, 'no inverse' );
+      assert && assert( this.inverseTerm, 'this function requires an inverse term' );
       assert && assert( this.term.weight.plusFraction( this.inverseTerm.weight ).toDecimal() === 0,
         'terms do not sum to zero' );
 

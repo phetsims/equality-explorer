@@ -31,7 +31,7 @@ define( function( require ) {
    */
   function ReducedFractionNode( fraction, options ) {
 
-    assert && assert( fraction instanceof ReducedFraction, 'invalid fraction' );
+    assert && assert( fraction instanceof ReducedFraction, 'invalid fraction: ' + fraction );
 
     options = _.extend( {
       minLineLength: 1, // length of the fraction line

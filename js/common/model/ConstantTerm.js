@@ -25,7 +25,8 @@ define( function( require ) {
       constantValue: ReducedFraction.withInteger( 1 )
     }, options );
 
-    assert && assert( options.constantValue instanceof ReducedFraction, 'invalid constantValue' );
+    assert && assert( options.constantValue instanceof ReducedFraction,
+      'invalid constantValue: ' + options.constantValue );
 
     // @public (read-only) {ReducedFraction}
     this.constantValue = options.constantValue;

@@ -94,7 +94,7 @@ define( function( require ) {
           // data structure that describes a term that became zero
           var data = sumToZeroData[ i ];
           assert && assert( data.plate instanceof Plate, 'invalid plate: ' + data.plate );
-          assert && assert( Util.isInteger( data.cellIndex ), 'invalid cellIndex: ' + data.cellIndex );
+          assert && assert( Util.isInteger( data.cellIndex ), 'cellIndex must be an integer: ' + data.cellIndex );
           assert && assert( ( typeof data.symbol === 'string' ) || ( data.symbol === null ),
             'invalid symbol: ' + data.symbol );
 

@@ -337,7 +337,7 @@ define( function( require ) {
         break;
       }
     }
-    assert && assert( index !== -1, 'invalid value' );
+    assert && assert( index !== -1, 'invalid value: ' + index );
     return index;
   };
 
