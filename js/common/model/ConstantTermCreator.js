@@ -270,7 +270,7 @@ define( function( require ) {
 
     /**
      * Restores a snapshot of terms on the plate for this TermCreator.
-     * @param {*} snapshot - see createSnapshot
+     * @param {*} snapshot - see return value of createSnapshot
      */
     restoreSnapshot: function( snapshot ) {
       for ( var i = 0; i < snapshot.length; i++ ) {
