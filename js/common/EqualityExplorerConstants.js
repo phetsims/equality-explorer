@@ -28,7 +28,7 @@ define( function( require ) {
 
     // Sum-to-zero animation
     SUM_TO_ZERO_BIG_FONT_SIZE: 40, // for sum-to-zero animation that involves a 'big' term on the scale
-    SUM_TO_ZERO_SMALL_FONT_SIZE: 18, // for sum-to-zero animation that involves a 'small' term on the scale
+    SUM_TO_ZERO_SMALL_FONT_SIZE: 24, // for sum-to-zero animation that involves a 'small' term on the scale
 
     // model
     VARIABLE_RANGE: new RangeWithValue( -40, 40, 1 ),
