@@ -49,7 +49,7 @@ define( function( require ) {
     // @public (read-only)
     this.debugName = debugName;
 
-    // @private {Node} used to represent the scene. See ES5 getter.
+    // @private {Node|null} used to represent the scene. See ES5 getter.
     this._icon = options.icon;
 
     // @public (read-only) {TermCreator[]} creators for terms on left side of scale
