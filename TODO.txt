@@ -1,8 +1,5 @@
 TODO items for equality-explorer
 
-Solving screen
-- cleanup/refactor everything added for this screen
-
 Locked mode, #19
 - term dragged from panel
 - term dragged from scale
