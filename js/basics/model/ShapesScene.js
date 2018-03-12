@@ -37,7 +37,7 @@ define( function( require ) {
 
     BasicsScene.call( this, 'shapes', mysteryObjects, {
 
-      // icon used to represent this scene
+      // icon used to represent this scene in the scene control (radio buttons)
       icon: ConstantTermNode.createInteractiveTermNode( ReducedFraction.withInteger( 1 ) ),
 
       // this scene allows you to create constant terms

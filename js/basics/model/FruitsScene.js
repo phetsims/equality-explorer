@@ -40,7 +40,7 @@ define( function( require ) {
 
     BasicsScene.call( this, 'fruits', mysteryObjects, {
 
-      // icon used to represent this scene
+      // icon used to represent this scene in the scene control (radio buttons)
       icon: new Image( appleImage, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       } )

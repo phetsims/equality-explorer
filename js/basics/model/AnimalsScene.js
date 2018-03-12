@@ -40,7 +40,7 @@ define( function( require ) {
 
     BasicsScene.call( this, 'animals', mysteryObjects, {
 
-      // icon used to represent this scene
+      // icon used to represent this scene in the scene control (radio buttons)
       icon: new Image( turtleImage, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       } ),

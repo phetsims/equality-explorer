@@ -40,7 +40,7 @@ define( function( require ) {
 
     BasicsScene.call( this, 'coins', mysteryObjects, {
 
-      // icon used to represent this scene
+      // icon used to represent this scene in the scene control (radio buttons)
       icon: new Image( coin3Image, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       } )
