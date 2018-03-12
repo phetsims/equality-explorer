@@ -41,7 +41,7 @@ define( function( require ) {
   function ObjectPicker( valueProperty, terms, options ) {
 
     options = _.extend( {
-      cycle: false, // whether to cycle around at ends of range
+      wrapEnabled: false, // whether to wrap around at ends of range
       cursor: 'pointer',
       color: 'blue', // {Color|string} color of arrows, and top/bottom gradient on pointer over
       backgroundColor: 'white', // {Color|string} color of the background when pointer is not over it
@@ -215,14 +215,14 @@ define( function( require ) {
     // dispose not required.
     var upEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
-        return options.cycle || ( index < terms.length - 1 );
+        return options.wrapEnabled || ( index < terms.length - 1 );
       } );
 
     // {DerivedProperty.<boolean>} whether the down button is enabled
     // dispose not required.
     var downEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
-        return options.cycle || ( index > 0 );
+        return options.wrapEnabled || ( index > 0 );
       } );
 
     //------------------------------------------------------------
@@ -233,7 +233,7 @@ define( function( require ) {
     var upListener = new FireOnHoldInputListener( {
       listener: function() {
         var index = indexProperty.value + 1;
-        if ( options.cycle && index >= terms.length ) {
+        if ( options.wrapEnabled && index >= terms.length ) {
           index = 0;
         }
         indexProperty.value = index;
@@ -248,7 +248,7 @@ define( function( require ) {
     var downListener = new FireOnHoldInputListener( {
       listener: function() {
         var index = indexProperty.value - 1;
-        if ( options.cycle && index < 0 ) {
+        if ( options.wrapEnabled && index < 0 ) {
           index = terms.length - 1;
         }
         indexProperty.value = index;

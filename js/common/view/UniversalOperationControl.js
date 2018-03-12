@@ -58,7 +58,7 @@ define( function( require ) {
       } );
     }
     var operatorPicker = new ObjectPicker( operatorProperty, operatorTerms, {
-      cycle: true, // cycle around when min/max is reached
+      wrapEnabled: true, // wrap around when min/max is reached
       color: 'black',
       xMargin: 12
     } );
