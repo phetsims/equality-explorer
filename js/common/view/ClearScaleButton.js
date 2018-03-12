@@ -25,7 +25,7 @@ define( function( require ) {
       iconWidth: 22
     }, options );
 
-    assert && assert( !options.listener, 'listener is set by this Node' );
+    assert && assert( !options.listener, 'ClearScaleButton sets listener' );
     options.listener = function() {
       scale.clear();
     };

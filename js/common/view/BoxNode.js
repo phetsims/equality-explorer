@@ -57,7 +57,7 @@ define( function( require ) {
       stroke: options.stroke
     } );
 
-    assert && assert( !options.children, 'children is set by this Node' );
+    assert && assert( !options.children, 'BoxNode sets children' );
     options.children = [ topNode, frontNode ];
 
     Node.call( this, options );

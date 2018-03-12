@@ -50,7 +50,7 @@ define( function( require ) {
       contentYMargin: 8
     }, options );
 
-    assert && assert( options.maxWidth === undefined, 'maxWidth is set by this Node' );
+    assert && assert( options.maxWidth === undefined, 'EquationAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
 
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );

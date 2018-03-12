@@ -24,7 +24,7 @@ define( function( require ) {
     assert && assert( _.includes( EqualityExplorerConstants.OPERATORS, operator ),
       'invalid operator: ' + operator );
     assert && assert( Util.isInteger( operand ),
-      'invalid operand: ' + operand );
+      'operand must be an integer: ' + operand );
 
     // @public (read-only)
     this.operator = operator;
