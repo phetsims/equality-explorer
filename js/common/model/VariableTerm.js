@@ -30,7 +30,7 @@ define( function( require ) {
       coefficient: ReducedFraction.withInteger( 1 )
     }, options );
 
-    assert && assert( options.coefficient instanceof ReducedFraction, 'invalid coefficient' );
+    assert && assert( options.coefficient instanceof ReducedFraction, 'invalid coefficient: ' + options.coefficient );
     assert && assert( options.coefficient.toDecimal() !== 0, 'coefficient cannot be zero' );
 
     // @public (read-only)
