@@ -37,7 +37,6 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      debugName: null,
       icon: null, // {Node|null} optional icon used to represent the scene
       maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
       gridRows: 6, // {number} rows in the grid on the scale
