@@ -35,7 +35,8 @@ define( function( require ) {
    */
   function createTermCreators( initialNumberOfTermsOnPlate ) {
 
-    assert && assert( initialNumberOfTermsOnPlate.length === 2 );
+    assert && assert( initialNumberOfTermsOnPlate.length === 2,
+      'incorrect number of elements in initialNumberOfTermsOnPlate: ' + initialNumberOfTermsOnPlate.length );
     var index = 0;
 
     return [

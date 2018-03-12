@@ -53,7 +53,8 @@ define( function( require ) {
    */
   function createTermCreators( xProperty, initialNumberOfTermsOnPlate ) {
 
-    assert && assert( initialNumberOfTermsOnPlate.length === 4 );
+    assert && assert( initialNumberOfTermsOnPlate.length === 4,
+      'incorrect number of elements in initialNumberOfTermsOnPlate: ' + initialNumberOfTermsOnPlate.length );
     var index = 0;
 
     return [

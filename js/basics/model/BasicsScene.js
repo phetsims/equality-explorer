@@ -51,6 +51,9 @@ define( function( require ) {
    */
   function createTermCreators( mysteryObjects, hasConstantTerms, initialNumberOfTermsOnPlate ) {
 
+    assert && assert( initialNumberOfTermsOnPlate.length === mysteryObjects.length + ( ( hasConstantTerms ) ? 1 : 0 ),
+      'incorrect number of elements in initialNumberOfTermsOnPlate: ' + initialNumberOfTermsOnPlate.length );
+
     var termCreators = [];
 
     // creators for mystery terms
