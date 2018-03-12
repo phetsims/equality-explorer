@@ -41,6 +41,7 @@ define( function( require ) {
   function ObjectPicker( valueProperty, terms, options ) {
 
     options = _.extend( {
+      cycle: false, // whether to cycle around at ends of range
       cursor: 'pointer',
       color: 'blue', // {Color|string} color of arrows, and top/bottom gradient on pointer over
       backgroundColor: 'white', // {Color|string} color of the background when pointer is not over it
@@ -214,14 +215,14 @@ define( function( require ) {
     // dispose not required.
     var upEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
-        return index < terms.length - 1;
+        return options.cycle || ( index < terms.length - 1 );
       } );
 
     // {DerivedProperty.<boolean>} whether the down button is enabled
     // dispose not required.
     var downEnabledProperty = new DerivedProperty( [ indexProperty ],
       function( index ) {
-        return index > 0;
+        return options.cycle || ( index > 0 );
       } );
 
     //------------------------------------------------------------
@@ -231,7 +232,11 @@ define( function( require ) {
     upParent.addInputListener( new ButtonStateListener( upStateProperty ) );
     var upListener = new FireOnHoldInputListener( {
       listener: function() {
-        indexProperty.value = Math.min( indexProperty.value + 1, terms.length - 1 );
+        var index = indexProperty.value + 1;
+        if ( options.cycle && index >= terms.length ) {
+          index = 0;
+        }
+        indexProperty.value = index;
       },
       timerDelay: options.timerDelay,
       timerInterval: options.timerInterval
@@ -242,7 +247,11 @@ define( function( require ) {
     downParent.addInputListener( new ButtonStateListener( downStateProperty ) );
     var downListener = new FireOnHoldInputListener( {
       listener: function() {
-        indexProperty.value = Math.max( indexProperty.value - 1, 0 );
+        var index = indexProperty.value - 1;
+        if ( options.cycle && index < 0 ) {
+          index = terms.length - 1;
+        }
+        indexProperty.value = index;
       },
       timerDelay: options.timerDelay,
       timerInterval: options.timerInterval
