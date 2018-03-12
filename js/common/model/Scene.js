@@ -44,8 +44,8 @@ define( function( require ) {
       lockable: true, // is the lock feature supported for this scene?
       icon: null, // {Node|null} optional icon used to represent the scene in the scene control (radio buttons)
       maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
-      gridRows: 6, // {number} rows in the grid on the scale
-      gridColumns: 6, // {number} columns in the grid on the scale
+      gridRows: 6, // rows in the grid on the scale
+      gridColumns: 6, // columns in the grid on the scale
       iconSize: null // {Dimension2|null} size of term icons on the scale, computed if null
     }, options );
 
