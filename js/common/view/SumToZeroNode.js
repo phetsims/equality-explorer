@@ -62,7 +62,7 @@ define( function( require ) {
       center: contentNode.center
     } );
 
-    assert && assert( !options.children, 'children is set by this Node' );
+    assert && assert( !options.children, 'SumToZeroNode sets children' );
     options.children = [ haloNode, contentNode ];
 
     Node.call( this, options );

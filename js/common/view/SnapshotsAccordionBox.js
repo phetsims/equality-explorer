@@ -64,13 +64,13 @@ define( function( require ) {
 
     }, options );
 
-    assert && assert( options.maxWidth === undefined, 'maxWidth is set by this Node' );
+    assert && assert( options.maxWidth === undefined, 'SnapshotsAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
 
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
     // title
-    assert && assert( !options.titleNode, 'titleNode is set by this Node' );
+    assert && assert( !options.titleNode, 'SnapshotsAccordionBox sets titleNode' );
     options.titleNode = new Text( snapshotsString, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth

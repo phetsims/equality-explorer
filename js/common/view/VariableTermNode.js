@@ -98,7 +98,7 @@ define( function( require ) {
         center: squareNode.center
       } );
 
-      assert && assert( !options.children, 'icon sets children' );
+      assert && assert( !options.children, 'VariableTermNode sets children' );
       options.children = [ squareNode, valueNode ];
 
       return new Node( options );
@@ -142,7 +142,7 @@ define( function( require ) {
       } );
       options.children.push( symbolNode );
 
-      assert && assert( options.spacing === undefined, 'sets its own spacing' );
+      assert && assert( options.spacing === undefined, 'VariableTermNode sets spacing' );
       options.spacing = coefficient.isInteger() ? options.integerXSpacing : options.fractionXSpacing;
 
       return new HBox( options );

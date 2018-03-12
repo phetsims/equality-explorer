@@ -31,7 +31,7 @@ define( function( require ) {
       cursor: 'pointer'
     }, options );
 
-    assert && assert( !options.children, 'children is set by this Node' );
+    assert && assert( !options.children, 'TermCreatorNode sets children' );
     options.children = [ termCreator.icon ];
 
     // @private

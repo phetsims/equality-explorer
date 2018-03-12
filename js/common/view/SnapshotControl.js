@@ -92,7 +92,7 @@ define( function( require ) {
       }
     } );
 
-    assert && assert( !options.children, 'children is set by this Node' );
+    assert && assert( !options.children, 'SnapshotControl sets children' );
     options.children = [ selectionRectangle, snapshotNode, snapshotButton ];
 
     Node.call( this, options );

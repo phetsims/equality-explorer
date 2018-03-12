@@ -51,7 +51,7 @@ define( function( require ) {
       y: -lockClosedNode.height / 2
     } );
 
-    assert && assert( !options.children, 'children is set by this Node' );
+    assert && assert( !options.children, 'LockControl sets children' );
     options.children = [ toggleNode ];
 
     Node.call( this, options );

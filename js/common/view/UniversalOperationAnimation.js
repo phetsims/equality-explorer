@@ -54,7 +54,7 @@ define( function( require ) {
     } );
 
     // Animate both operation nodes together, so that the operation is applied to both sides simultaneously.
-    assert && assert( !options.children, 'children is set by this Node' );
+    assert && assert( !options.children, 'UniversalOperationAnimation sets children' );
     options.children = [ leftOperationNode, rightOperationNode ];
 
     Node.call( this, options );

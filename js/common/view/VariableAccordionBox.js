@@ -56,12 +56,12 @@ define( function( require ) {
       buttonTouchAreaYDilation: 5
     }, options );
 
-    assert && assert( options.maxWidth === undefined, 'maxWidth is set by this Node' );
+    assert && assert( options.maxWidth === undefined, 'VariableAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
 
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
-    assert && assert( !options.titleNode, 'titleNode is set by this Node' );
+    assert && assert( !options.titleNode, 'VariableAccordionBox sets titleNode' );
     options.titleNode = new Text( variableString, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth

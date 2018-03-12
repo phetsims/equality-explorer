@@ -129,7 +129,7 @@ define( function( require ) {
       minYMargin: 10
     } );
 
-    assert && assert( !options.children, 'children is set by this Node' );
+    assert && assert( !options.children, 'UniversalOperationControl sets children' );
     options.children = [ operatorPicker, operandPicker, goButton ];
 
     HBox.call( this, options );

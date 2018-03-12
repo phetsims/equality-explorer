@@ -35,7 +35,7 @@ define( function( require ) {
 
     }, options );
 
-    assert && assert( !options.content, 'content is set by this Node' );
+    assert && assert( !options.content, 'OrganizeButton sets content' );
 
     // SVG path description is the "d=" field from organize-icon.svg
     // See assets/README.md for more details.
@@ -51,7 +51,7 @@ define( function( require ) {
         scale: 0.105
       } );
 
-    assert && assert( !options.listener, 'listener is set by this Node' );
+    assert && assert( !options.listener, 'OrganizeButton sets listener' );
     options.listener = function() {
       scale.organize();
       self.enabled = false;

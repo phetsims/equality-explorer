@@ -59,7 +59,7 @@ define( function( require ) {
       visible: false
     } );
 
-    assert && assert( !options.children, 'children is set by this Node' );
+    assert && assert( !options.children, 'TermNode sets children' );
     options.children = [ haloNode, shadowNode, contentNode ];
 
     // Red dot at the origin

@@ -29,7 +29,7 @@ define( function( require ) {
       spacing: 3
     }, options );
 
-    assert && assert( !options.children, 'children is set by this Node' );
+    assert && assert( !options.children, 'UniversalOperationNode sets children' );
     options.children = [
       new Text( operation.operator, { font: options.font } ),
       new Text( operation.operand, { font: options.font } )
