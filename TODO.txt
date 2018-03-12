@@ -2,7 +2,6 @@ TODO items for equality-explorer
 
 Solving screen
 - cleanup/refactor everything added for this screen
-- consider always putting a yellow halo around sum-to-zero animation
 
 Locked mode, #19
 - term dragged from panel
