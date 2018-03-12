@@ -66,7 +66,7 @@ define( function( require ) {
 
     // @public (read-only) like terms will be combined in this cell in the plate's 2D grid
     this.likeTermsCellIndex = options.likeTermsCellIndex;
-    this.combineLikeTerms = ( options.likeTermsCellIndex !== -1 ); // convenience property
+    this.combineLikeTermsEnabled = ( options.likeTermsCellIndex !== -1 ); // convenience property
 
     // @public (read-only) if we're combining like terms, they will be in this cell in the 2D grid
     this.cellIndex = options.cellIndex;

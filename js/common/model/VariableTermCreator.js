@@ -183,7 +183,7 @@ define( function( require ) {
      * @override
      */
     applyOperationToTerm: function( operation, term ) {
-      assert && assert( this.combineLikeTerms, 'applyOperation is only supported when combining like terms' );
+      assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
       assert && assert( term instanceof VariableTerm, 'invalid term' );
 
       // addition and subtraction are not relevant

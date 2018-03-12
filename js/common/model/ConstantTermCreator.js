@@ -139,7 +139,8 @@ define( function( require ) {
      * @override
      */
     applyOperationToTerm: function( operation, term ) {
-      assert && assert( this.combineLikeTerms, 'applyOperation is only supported when combining like terms' );
+      assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
+      assert && assert( term instanceof ConstantTerm, 'invalid term type' );
 
       var cellIndex = this.plate.getCellForTerm( term );
 

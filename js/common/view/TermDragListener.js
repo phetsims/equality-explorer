@@ -171,7 +171,7 @@ define( function( require ) {
      * @private
      */
     animateToPlate: function() {
-      if ( this.termCreator.combineLikeTerms ) {
+      if ( this.termCreator.combineLikeTermsEnabled ) {
         this.animateToLikeCell();
       }
       else {
@@ -187,7 +187,7 @@ define( function( require ) {
      * @private
      */
     animateToLikeCell: function() {
-      assert && assert( this.termCreator.combineLikeTerms, 'should ONLY be called when combining like terms' );
+      assert && assert( this.termCreator.combineLikeTermsEnabled, 'should ONLY be called when combining like terms' );
 
       var self = this;
       var cellIndex = this.termCreator.likeTermsCellIndex;
@@ -245,7 +245,7 @@ define( function( require ) {
      * @private
      */
     animateToEmptyCell: function() {
-      assert && assert( !this.termCreator.combineLikeTerms, 'should NOT be called when combining like terms' );
+      assert && assert( !this.termCreator.combineLikeTermsEnabled, 'should NOT be called when combining like terms' );
 
       var cellIndex = this.plate.getClosestEmptyCell( this.term.locationProperty.value );
 
@@ -367,7 +367,7 @@ define( function( require ) {
       }, options );
 
       // If we're combining like terms on the scale (e.g. in Solving screen), use big font
-      if ( this.termCreator.combineLikeTerms ) {
+      if ( this.termCreator.combineLikeTermsEnabled ) {
         options.fontSize = EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE;
       }
 
