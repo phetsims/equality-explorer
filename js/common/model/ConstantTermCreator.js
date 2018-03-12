@@ -51,14 +51,9 @@ define( function( require ) {
      * @override
      */
     createTermProtected: function( options ) {
-
-      options = _.extend( {
-        location: this.location,
-        dragBounds: this.dragBounds,
+      return new ConstantTerm( this, _.extend( {
         constantValue: this.defaultConstantValue
-      }, options );
-
-      return new ConstantTerm( this, options );
+      }, options ) );
     },
 
     /**

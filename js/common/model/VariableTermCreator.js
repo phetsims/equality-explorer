@@ -88,14 +88,9 @@ define( function( require ) {
      * @override
      */
     createTermProtected: function( options ) {
-
-      options = _.extend( {
-        location: this.location,
-        dragBounds: this.dragBounds,
+      return new VariableTerm( this.symbol, this.variableValueProperty, this, _.extend( {
         coefficient: this.defaultCoefficient
-      }, options );
-
-      return new VariableTerm( this.symbol, this.variableValueProperty, this, options );
+      }, options ) );
     },
 
     /**

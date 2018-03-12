@@ -305,6 +305,8 @@ define( function( require ) {
     createTerm: function( options ) {
 
       options = _.extend( {
+        location: this.location,
+        dragBounds: this.dragBounds,
         event: null // event is non-null if the term is created as the result of a user interaction
       }, options );
       assert && assert( options.event === null || options.event instanceof Event, 'invalid event: ' + event );

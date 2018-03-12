@@ -45,12 +45,6 @@ define( function( require ) {
      * @override
      */
     createTermProtected: function( options ) {
-
-      options = _.extend( {
-        location: this.location,
-        dragBounds: this.dragBounds
-      }, options );
-
       return new MysteryTerm( this.mysteryObject, this, options );
     },
 
