@@ -22,7 +22,7 @@ define( function( require ) {
     assert && assert( scene.xProperty, 'scene must have a variable' );
 
     // @private
-    this.scene = scene;
+    this.xProperty = scene.xProperty;
     this.x = scene.xProperty.value;
 
     Snapshot.call( this, scene );
@@ -38,7 +38,7 @@ define( function( require ) {
      * @override
      */
     restore: function() {
-      this.scene.xProperty.value = this.x;
+      this.xProperty.value = this.x;
       Snapshot.prototype.restore.call( this );
     }
   } );
