@@ -109,19 +109,10 @@ define( function( require ) {
     // Resetting this is the responsibility of the client.
     this.lockedProperty = null;
 
-    //TODO delete oppositeInverseTermCreator if not used for lock feature
-    // @public {TermCreator} optional inverse term creator on the opposite side of the scale.
-    // This is needed for lock feature, for the case where an inverse term must be created.
-    // Example: When locked, if I remove x from the left plate, and the right plate is empty, then x needs
-    // to be created and dragged on the right side (by oppositeEquivalentTermCreator) and -x needs to be created on
-    // the right plate (by oppositeInverseTermCreator).
-    this.oppositeInverseTermCreator = null;
-
-    //TODO delete oppositeEquivalentTermCreator if not used for lock feature
     // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
     // This is needed for the lock feature, so that an equivalent term on the opposite side can be created.
     // Example: When locked, if I drag -x out of the left toolbox, -x needs to also drag out of the right toolbox.
-    this.oppositeEquivalentTermCreator = null;
+    this.equivalentTermCreator = null;
 
     // @private called when Term.dispose is called
     this.termWasDisposedBound = this.termWasDisposed.bind( this );
