@@ -436,7 +436,7 @@ define( function( require ) {
 
     /**
      * Restores a snapshot of terms on the plate for this TermCreator.
-     * @param {*} snapshot - format is specific to TermCreator subtype. See createSnapshot.
+     * @param {*} snapshot - see createSnapshot
      */
     restoreSnapshot: function( snapshot ) {
       throw new Error( 'restoreSnapshot must be implemented by subtype' );
