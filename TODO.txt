@@ -1,7 +1,6 @@
 TODO items for equality-explorer
 
 Solving screen
-* ObjectPicker option to cycle around
 - cleanup/refactor everything added for this screen
 
 Locked mode, #19
