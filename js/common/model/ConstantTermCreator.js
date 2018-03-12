@@ -168,7 +168,7 @@ define( function( require ) {
         // create a new term on the plate
         var newTermOptions = {
           constantValue: constantValue,
-          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+          diameter: term.diameter
         };
 
         if ( Util.sign( constantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
