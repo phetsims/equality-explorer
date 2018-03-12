@@ -49,29 +49,6 @@ define( function( require ) {
     },
 
     /**
-     * Creates a new term by combining this term with another term.
-     * @param {Term} term1
-     * @param {Term} term2
-     * @param {Object} options
-     * @returns {Term|null}
-     * @public
-     * @override
-     */
-    combineTerms: function( term1, term2, options ) {
-      throw new Error( 'combineTerms is not supported by MysteryTermCreator' );
-    },
-
-    /**
-     * Copies the specified term, with possible modifications specified via options.
-     * @param {Term} term
-     * @param {Object} [options]
-     * @returns {Term}
-     */
-    copyTerm: function( term, options ) {
-      throw new Error( 'copyTerm is not supported by MysteryTermCreator' );
-    },
-
-    /**
      * Instantiates the Node that corresponds to this term.
      * @param {Term} term
      * @param {Plate} plate
@@ -93,7 +70,7 @@ define( function( require ) {
      * @override
      */
     applyOperationToTerm: function( operation, term ) {
-      throw new Error( 'applyOperationToTerm is not supported by MysteryTermCreator' );
+      return term; // operations do not apply to mystery terms
     },
 
     /**
@@ -104,7 +81,7 @@ define( function( require ) {
      * @abstract
      */
     applyOperationToPlate: function( operation ) {
-      throw new Error( 'createTermOnPlateForOperation is not supported by MysteryTermCreator' );
+      return null; // operations do not apply to mystery terms
     },
 
     /**
@@ -153,6 +130,35 @@ define( function( require ) {
       for ( var i = 0; i < snapshot.length; i++ ) {
         this.createTermOnPlate( snapshot[ i ].cellIndex );
       }
+    },
+
+    //-------------------------------------------------------------------------------------------------
+    // Below here are parts of the TermCreator API that are not supported for mystery terms
+    //-------------------------------------------------------------------------------------------------
+
+    /**
+     * Creates a new term by combining this term with another term.
+     * @param {Term} term1
+     * @param {Term} term2
+     * @param {Object} options
+     * @returns {Term|null}
+     * @public
+     * @override
+     */
+    combineTerms: function( term1, term2, options ) {
+      throw new Error( 'combineTerms is not supported by MysteryTermCreator' );
+    },
+
+    /**
+     * Copies the specified term, with possible modifications specified via options.
+     * @param {Term} term
+     * @param {Object} [options]
+     * @returns {Term}
+     * @public
+     * @override
+     */
+    copyTerm: function( term, options ) {
+      throw new Error( 'copyTerm is not supported by MysteryTermCreator' );
     }
   } );
 } );

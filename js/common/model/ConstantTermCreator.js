@@ -104,6 +104,8 @@ define( function( require ) {
      * @param {Term} term
      * @param {Object} [options] - passed to the new ConstantTerm's constructor
      * @returns {Term}
+     * @public
+     * @override
      */
     copyTerm: function( term, options ) {
       assert && assert( term instanceof ConstantTerm, 'invalid term' );

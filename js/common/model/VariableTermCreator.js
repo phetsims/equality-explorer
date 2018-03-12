@@ -140,6 +140,8 @@ define( function( require ) {
      * @param {Term} term
      * @param {Object} [options] - passed to the new VariableTerm's constructor
      * @returns {Term}
+     * @public
+     * @override
      */
     copyTerm: function( term, options ) {
       assert && assert( term instanceof VariableTerm, 'invalid term' );

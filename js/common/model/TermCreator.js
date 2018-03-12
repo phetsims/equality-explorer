@@ -165,117 +165,6 @@ define( function( require ) {
     },
 
     /**
-     * Instantiates a term.
-     * @param {Object} [options] - passed to the Term's constructor
-     * @returns {Term}
-     * @protected
-     * @abstract
-     */
-    createTermProtected: function( options ) {
-      throw new Error( 'createTermProtected must be implemented by subtypes' );
-    },
-
-    /**
-     * Creates a new term on the plate by combining two terms.
-     * @param {Term} term1
-     * @param {Term} term2
-     * @param {Object} [options] - passed to the combined Term's constructor
-     * @returns {Term|null} - the combined term, null if the terms sum to zero
-     * @public
-     * @abstract
-     */
-    combineTerms: function( term1, term2, options ) {
-      throw new Error( 'combineTerms must be implemented by subtype' );
-    },
-
-    /**
-     * Copies the specified term, with possible modifications specified via options.
-     * @param {Term} term
-     * @param {Object} [options] - passed to the new Term's constructor
-     * @returns {Term}
-     * @public
-     * @abstract
-     */
-    copyTerm: function( term, options ) {
-      throw new Error( 'copyTerm must be implemented by subtype' );
-    },
-
-    /**
-     * Instantiates the Node that corresponds to a term.
-     * @param {Term} term
-     * @param {Plate} plate
-     * @param {Object} [options] - passed to the TermNode's constructor
-     * @returns {TermNode}
-     * @public
-     * @abstract
-     */
-    createTermNode: function( term, plate, options ) {
-      throw new Error( 'createTermNode must be implemented by subtypes' );
-    },
-
-    /**
-     * Applies a universal operation to a term on the scale.
-     * @param {UniversalOperation} operation
-     * @param {Term} term
-     * @returns {Term|null} the new term, null if the the operation resulted in zero
-     * @public
-     * @abstract
-     */
-    applyOperationToTerm: function( operation, term ) {
-      throw new Error( 'applyOperationToTerm must be implemented by subtypes' );
-    },
-
-    /**
-     * Applies a universal operation to the plate.
-     * @param {UniversalOperation} operation
-     * @returns {Term|null} the term created, null if no term was created
-     * @public
-     * @abstract
-     */
-    applyOperationToPlate: function( operation ) {
-      throw new Error( 'applyOperationToPlate must be implemented by subtypes' );
-    },
-
-    /**
-     * Is this term creator the inverse of a specified term creator?
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @abstract
-     */
-    isInverseOf: function( termCreator ) {
-      throw new Error( 'isInverseOf must be implemented by subtype' );
-    },
-
-    /**
-     * Is this term creator equivalent to a specified term creator?
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @abstract
-     */
-    isEquivalentTo: function( termCreator ) {
-      throw new Error( 'isInverseOf must be implemented by subtype' );
-    },
-
-    /**
-     * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
-     * The format of this data structure is specific to the TermCreator type.
-     * @returns {*}
-     */
-    createSnapshot: function() {
-      throw new Error( 'createSnapshot must be implemented by subtype' );
-    },
-
-    /**
-     * Restores a snapshot of terms on the plate for this TermCreator.
-     * @param {*} snapshot - format is specific to TermCreator subtype. See createSnapshot.
-     */
-    restoreSnapshot: function( snapshot ) {
-      throw new Error( 'restoreSnapshot must be implemented by subtype' );
-    },
-
-    /**
      * Animates terms.
      * @param {number} dt - time since the previous step, in seconds
      * @public
@@ -436,6 +325,121 @@ define( function( require ) {
         weight = weight.plusFraction( this.termsOnPlate.get( i ).weight );
       }
       this.weightOnPlateProperty.value = weight;
+    },
+
+    //-------------------------------------------------------------------------------------------------
+    // Below here are @abstract methods, to be implemented by subtypes
+    //-------------------------------------------------------------------------------------------------
+
+    /**
+     * Instantiates a term.
+     * @param {Object} [options] - passed to the Term's constructor
+     * @returns {Term}
+     * @protected
+     * @abstract
+     */
+    createTermProtected: function( options ) {
+      throw new Error( 'createTermProtected must be implemented by subtypes' );
+    },
+
+    /**
+     * Creates a new term on the plate by combining two terms.
+     * @param {Term} term1
+     * @param {Term} term2
+     * @param {Object} [options] - passed to the combined Term's constructor
+     * @returns {Term|null} - the combined term, null if the terms sum to zero
+     * @public
+     * @abstract
+     */
+    combineTerms: function( term1, term2, options ) {
+      throw new Error( 'combineTerms must be implemented by subtype' );
+    },
+
+    /**
+     * Copies the specified term, with possible modifications specified via options.
+     * @param {Term} term
+     * @param {Object} [options] - passed to the new Term's constructor
+     * @returns {Term}
+     * @public
+     * @abstract
+     */
+    copyTerm: function( term, options ) {
+      throw new Error( 'copyTerm must be implemented by subtype' );
+    },
+
+    /**
+     * Instantiates the Node that corresponds to a term.
+     * @param {Term} term
+     * @param {Plate} plate
+     * @param {Object} [options] - passed to the TermNode's constructor
+     * @returns {TermNode}
+     * @public
+     * @abstract
+     */
+    createTermNode: function( term, plate, options ) {
+      throw new Error( 'createTermNode must be implemented by subtypes' );
+    },
+
+    /**
+     * Applies a universal operation to a term on the scale.
+     * @param {UniversalOperation} operation
+     * @param {Term} term
+     * @returns {Term|null} the new term, null if the the operation resulted in zero
+     * @public
+     * @abstract
+     */
+    applyOperationToTerm: function( operation, term ) {
+      throw new Error( 'applyOperationToTerm must be implemented by subtypes' );
+    },
+
+    /**
+     * Applies a universal operation to the plate.
+     * @param {UniversalOperation} operation
+     * @returns {Term|null} the term created, null if no term was created
+     * @public
+     * @abstract
+     */
+    applyOperationToPlate: function( operation ) {
+      throw new Error( 'applyOperationToPlate must be implemented by subtypes' );
+    },
+
+    /**
+     * Is this term creator the inverse of a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @abstract
+     */
+    isInverseOf: function( termCreator ) {
+      throw new Error( 'isInverseOf must be implemented by subtype' );
+    },
+
+    /**
+     * Is this term creator equivalent to a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @abstract
+     */
+    isEquivalentTo: function( termCreator ) {
+      throw new Error( 'isInverseOf must be implemented by subtype' );
+    },
+
+    /**
+     * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
+     * The format of this data structure is specific to the TermCreator type.
+     * @returns {*}
+     */
+    createSnapshot: function() {
+      throw new Error( 'createSnapshot must be implemented by subtype' );
+    },
+
+    /**
+     * Restores a snapshot of terms on the plate for this TermCreator.
+     * @param {*} snapshot - format is specific to TermCreator subtype. See createSnapshot.
+     */
+    restoreSnapshot: function( snapshot ) {
+      throw new Error( 'restoreSnapshot must be implemented by subtype' );
     }
   } );
 } );
