@@ -30,6 +30,10 @@ define( function( require ) {
       hasConstantTerms: false // does this scene allow you to create constant terms?
     }, options );
 
+    // the lock feature is not supported for scenes in the Basics screen
+    assert && assert( options.lockable === undefined, 'BasicsScene sets lockable' );
+    options.lockable = false;
+
     Scene.call( this, debugName,
       createTermCreators( mysteryObjects, options.hasConstantTerms, EqualityExplorerQueryParameters.leftBasics ),
       createTermCreators( mysteryObjects, options.hasConstantTerms, EqualityExplorerQueryParameters.rightBasics ),

@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var BalanceScale = require( 'EQUALITY_EXPLORER/common/model/BalanceScale' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -34,9 +35,13 @@ define( function( require ) {
    */
   function Scene( debugName, leftTermCreators, rightTermCreators, options ) {
 
+    assert && assert( leftTermCreators.length === rightTermCreators.length,
+      'the same number of term creators are required on both sides of the scale' );
+
     var self = this;
 
     options = _.extend( {
+      lockable: true, // is the lock feature supported for this scene?
       icon: null, // {Node|null} optional icon used to represent the scene
       maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
       gridRows: 6, // {number} rows in the grid on the scale
@@ -83,6 +88,27 @@ define( function( require ) {
 
     // @public collection of snapshots, for saving/restoring the state of a Scene
     this.snapshots = new Snapshots();
+
+    // @public {BooleanProperty|null} locks equivalent terms, null if this feature is not supported
+    this.lockedProperty = null;
+
+    if ( options.lockable ) {
+
+      this.lockedProperty = new BooleanProperty( false );
+
+      for ( var i = 0; i < leftTermCreators.length; i++ ) {
+
+        // Initialize lockedProperty
+        leftTermCreators[ i ].lockedProperty = this.lockedProperty;
+        rightTermCreators[ i ].lockedProperty = this.lockedProperty;
+
+        // Associate each term creator with its equivalent term creator on the opposite side of the scale.
+        assert && assert( leftTermCreators[ i ].isEquivalentTo( rightTermCreators[ i ] ),
+          'equivalent term creators must have the same indices on both sides' );
+        leftTermCreators[ i ].equivalentTermCreator = rightTermCreators[ i ];
+        rightTermCreators[ i ].equivalentTermCreator = leftTermCreators[ i ];
+      }
+    }
   }
 
   equalityExplorer.register( 'Scene', Scene );

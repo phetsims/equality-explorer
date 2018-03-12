@@ -103,7 +103,6 @@ define( function( require ) {
     // This is needed for combining terms on a plate.
     this.inverseTermCreator = null;
 
-    //TODO revisit this
     // @public {BooleanProperty|null} optional Property that indicates whether the term creator is locked.
     // Initialized by client after instantiation, if the term creator is lockable.
     // Resetting this is the responsibility of the client.

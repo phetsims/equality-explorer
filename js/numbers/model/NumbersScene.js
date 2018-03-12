@@ -13,14 +13,14 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
+  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
    * @constructor
    */
   function NumbersScene() {
-    LockableScene.call( this, 'numbers',
+    Scene.call( this, 'numbers',
       createTermCreators( EqualityExplorerQueryParameters.leftNumbers ),
       createTermCreators( EqualityExplorerQueryParameters.rightNumbers )
     );
@@ -54,5 +54,5 @@ define( function( require ) {
     ];
   }
 
-  return inherit( LockableScene, NumbersScene );
+  return inherit( Scene, NumbersScene );
 } );

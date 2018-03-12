@@ -14,9 +14,9 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
+  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
@@ -37,7 +37,7 @@ define( function( require ) {
       range: this.xRange
     } );
 
-    LockableScene.call( this, 'variables',
+    Scene.call( this, 'variables',
       createTermCreators( this.xProperty, EqualityExplorerQueryParameters.leftVariables ),
       createTermCreators( this.xProperty, EqualityExplorerQueryParameters.rightVariables )
     );
@@ -84,7 +84,7 @@ define( function( require ) {
     ];
   }
 
-  return inherit( LockableScene, VariablesScene, {
+  return inherit( Scene, VariablesScene, {
 
     /**
      * @public
@@ -92,7 +92,7 @@ define( function( require ) {
      */
     reset: function() {
       this.xProperty.reset();
-      LockableScene.prototype.reset.call( this );
+      Scene.prototype.reset.call( this );
     },
 
     /**

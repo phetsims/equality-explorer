@@ -16,11 +16,11 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LockableScene = require( 'EQUALITY_EXPLORER/common/model/LockableScene' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
+  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var StringProperty = require( 'AXON/StringProperty' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
@@ -66,7 +66,7 @@ define( function( require ) {
     // @public (read-only) emit1( sumToZeroData ) when one or more terms become zero as the result of a universal operation
     this.sumToZeroEmitter = new Emitter();
 
-    LockableScene.call( this, 'solving',
+    Scene.call( this, 'solving',
       createTermCreators( this.xProperty ),
       createTermCreators( this.xProperty ), {
         gridRows: 1,
@@ -111,7 +111,7 @@ define( function( require ) {
     return [ positiveXCreator, negativeXCreator, positiveOneCreator, negativeOneCreator ];
   }
 
-  return inherit( LockableScene, SolvingScene, {
+  return inherit( Scene, SolvingScene, {
 
     /**
      * @public
@@ -121,7 +121,7 @@ define( function( require ) {
       this.xProperty.reset();
       this.operatorProperty.reset();
       this.operandProperty.reset();
-      LockableScene.prototype.reset.call( this );
+      Scene.prototype.reset.call( this );
     },
 
     /**
