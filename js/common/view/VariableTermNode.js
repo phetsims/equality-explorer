@@ -73,8 +73,8 @@ define( function( require ) {
      */
     createInteractiveTermNode: function( coefficient, symbol, options ) {
 
-      assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
-      assert && assert( typeof symbol === 'string', 'invalid symbol' );
+      assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient: ' + coefficient );
+      assert && assert( typeof symbol === 'string', 'invalid symbol: ' + symbol );
 
       options = _.extend( {
         diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
@@ -116,8 +116,8 @@ define( function( require ) {
      */
     createEquationTermNode: function( coefficient, symbol, options ) {
 
-      assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient' );
-      assert && assert( typeof symbol === 'string', 'invalid symbol' );
+      assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient: ' + coefficient );
+      assert && assert( typeof symbol === 'string', 'invalid symbol: ' + symbol );
 
       options = _.extend( {
         align: 'center'
