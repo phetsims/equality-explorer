@@ -41,7 +41,6 @@ define( function( require ) {
 
   /**
    * Snapshot of a plate's state.
-   * This is an ad hoc map: termCreator -> occupiedCells
    *
    * @param {Plate} plate
    * @constructor
