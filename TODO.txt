@@ -3,11 +3,11 @@ TODO items for equality-explorer
 Lock feature, #19
 - how to detect whether Term came from toolbox or plate, and not snagged while animating?
 - who is responsible for creating ghost Term? does it differ for toolbox vs plate?
+- who is responsible for creating inverse Term related to ghost term?
 - how it interactivity disabled for a ghost TermNode?
-- how should the ghost Term be managed? as a field in an interactive Term?
+- how should ghost and inverse Terms be managed? as fields in an interactive Term?
 
 Lock feature scenarios:
-- lockedProperty changes while drag is in progress (ignore change?)
 - term dragged from toolbox to toolbox, term and ghost return to toolboxes
 - term dragged from toolbox to scale, room for term and ghost on scale
 - term dragged from toolbox to scale, term's plate is full
@@ -18,6 +18,7 @@ Lock feature scenarios:
 - term dragged from scale to toolbox, ghost available on scale
 - term dragged from scale to toolbox, ghost requires creating inverse on scale
 - term dragged from scale to toolbox, ghost requires creating inverse on scale, inverse removed from scale
+- lockedProperty changes while drag is in progress for all of the above
 
 Solve It! screen
 - vegas game components
