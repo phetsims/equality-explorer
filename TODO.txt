@@ -6,6 +6,7 @@ Lock feature, #19
 - who is responsible for creating inverse Term related to ghost term?
 - how it interactivity disabled for a ghost TermNode?
 - how should ghost and inverse Terms be managed? as fields in an interactive Term?
+- how to 'break relationship' between ghost and inverse Terms?
 
 Lock feature scenarios:
 - term dragged from toolbox to toolbox, term and ghost return to toolboxes
