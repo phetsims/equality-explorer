@@ -1,7 +1,9 @@
 TODO items for equality-explorer
 
 Locked mode, #19
-- how to detect where the term was when drag started? can't tell toolbox vs animating
+- how to detect whether term came from toolbox or plate, and not snagged while animating?
+- who is responsible for creating ghost term? does it differ for toolbox vs plate?
+- how should the ghost term be managed? as a field in a term?
 - term dragged from panel
 - term dragged from scale
 - mode change while drag is in progress (ignore mode change?)
