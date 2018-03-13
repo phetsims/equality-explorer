@@ -1,6 +1,7 @@
 TODO items for equality-explorer
 
 Locked mode, #19
+- how to detect where the term was when drag started? can't tell toolbox vs animating
 - term dragged from panel
 - term dragged from scale
 - mode change while drag is in progress (ignore mode change?)
