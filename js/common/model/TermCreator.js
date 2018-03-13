@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Emitter = require( 'AXON/Emitter' );
@@ -103,15 +104,13 @@ define( function( require ) {
     // This is needed for combining terms on a plate.
     this.inverseTermCreator = null;
 
-    // @public {BooleanProperty|null} optional Property that indicates whether the term creator is locked.
-    // Initialized by client after instantiation, if the term creator is lockable.
-    // Resetting this is the responsibility of the client.
-    this.lockedProperty = null;
-
     // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
-    // This is needed for the lock feature, so that an equivalent term on the opposite side can be created.
-    // Example: When locked, if I drag -x out of the left toolbox, -x needs to also drag out of the right toolbox.
+    // This is needed for the lock feature, which involves creating an equivalent term on the opposite side of the scale.
+    // Example: When locked, if you drag -x out of the left toolbox, -x must also drag out of the right toolbox.
     this.equivalentTermCreator = null;
+
+    // @public {BooleanProperty|null} indicates whether the term creator is locked to equivalentTermCreator
+    this.lockedProperty = new BooleanProperty( false );
 
     // @private called when Term.dispose is called
     this.termWasDisposedBound = this.termWasDisposed.bind( this );
@@ -123,6 +122,11 @@ define( function( require ) {
     // unlink not required.
     this.numberOfTermsOnPlateProperty.link( function( numberOfTermsOnPlate ) {
       self.updateWeightOnPlatePropertyBound();
+    } );
+
+    // If lock feature is turned on, verify that an equivalentTermCreator has been provided.
+    this.lockedProperty.link( function( locked ) {
+      assert && assert( !locked || self.equivalentTermCreator, 'lock feature requires equivalentTermCreator' );
     } );
   }
 
