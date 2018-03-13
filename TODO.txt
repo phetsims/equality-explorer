@@ -1,12 +1,23 @@
 TODO items for equality-explorer
 
-Locked mode, #19
+Lock feature, #19
 - how to detect whether term came from toolbox or plate, and not snagged while animating?
-- who is responsible for creating ghost term? does it differ for toolbox vs plate?
-- how should the ghost term be managed? as a field in a term?
-- term dragged from panel
-- term dragged from scale
-- mode change while drag is in progress (ignore mode change?)
+- who is responsible for creating ghost Term? does it differ for toolbox vs plate?
+- how it interactivity disabled for a ghost TermNode?
+- how should the ghost Term be managed? as a field in an interactive Term?
+
+Lock feature scenarios:
+- lockedProperty changes while drag is in progress (ignore change?)
+- term dragged from toolbox to toolbox, term and ghost return to toolboxes
+- term dragged from toolbox to scale, room for term and ghost on scale
+- term dragged from toolbox to scale, term's plate is full
+- term dragged from toolbox to scale, ghost's plate is full
+- term dragged from scale to scale, ghost available on scale
+- term dragged from scale to scale, ghost requires creating inverse on scale
+- term dragged from scale to scale, ghost requires creating inverse on scale, inverse removed from scale
+- term dragged from scale to toolbox, ghost available on scale
+- term dragged from scale to toolbox, ghost requires creating inverse on scale
+- term dragged from scale to toolbox, ghost requires creating inverse on scale, inverse removed from scale
 
 Solve It! screen
 - vegas game components
