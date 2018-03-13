@@ -4,7 +4,7 @@ Lock feature, #19
 - how to detect whether Term came from toolbox or plate, and not snagged while animating?
 - who is responsible for creating ghost Term? does it differ for toolbox vs plate?
 - who is responsible for creating inverse Term related to ghost term?
-- how it interactivity disabled for a ghost TermNode?
+- how is interactivity disabled for a ghost TermNode?
 - how should ghost and inverse Terms be managed? as fields in an interactive Term?
 - how to 'break relationship' between ghost and inverse Terms?
 
