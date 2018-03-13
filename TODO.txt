@@ -1,7 +1,7 @@
 TODO items for equality-explorer
 
 Lock feature, #19
-- how to detect whether term came from toolbox or plate, and not snagged while animating?
+- how to detect whether Term came from toolbox or plate, and not snagged while animating?
 - who is responsible for creating ghost Term? does it differ for toolbox vs plate?
 - how it interactivity disabled for a ghost TermNode?
 - how should the ghost Term be managed? as a field in an interactive Term?
