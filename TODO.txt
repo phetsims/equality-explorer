@@ -19,6 +19,8 @@ Lock feature scenarios:
 - term dragged from scale to toolbox, ghost available on scale
 - term dragged from scale to toolbox, ghost requires creating inverse on scale
 - term dragged from scale to toolbox, ghost requires creating inverse on scale, inverse removed from scale
+- animate to scale, term's plate has become full, return both to toolbox
+- animate to scale, ghost's plate has become full, return both to toolbox
 
 Solve It! screen
 - vegas game components
