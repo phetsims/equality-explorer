@@ -130,7 +130,7 @@ define( function( require ) {
       // If lock feature is turned on, verify that an equivalentTermCreator has been provided.
       assert && assert( !locked || self.equivalentTermCreator, 'lock feature requires equivalentTermCreator' );
 
-      // Changing lock state causes all terms that are not on the plate to be disposed.
+      // {Term[]} Changing lock state causes all terms that are not on the plate to be disposed.
       var termsOffPlate = _.difference( self.allTerms.getArray(), self.termsOnPlate.getArray() );
       for ( var i = 0; i < termsOffPlate.length; i++ ) {
         termsOffPlate[ i ].dispose();
