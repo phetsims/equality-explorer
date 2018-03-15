@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
@@ -28,7 +29,7 @@ define( function( require ) {
       rows: 1,
       columns: 1,
       cellSize: DEFAULT_CELL_SIZE, // {Dimension2} uniform width and height of each cell
-      stroke: 'rgb( 160, 160, 160 )',
+      stroke: EqualityExplorerColors.GRID_STROKE,
       lineWidth: 0.25
     }, options );
 

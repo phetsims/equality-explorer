@@ -31,7 +31,20 @@ define( function( require ) {
     NEGATIVE_CONSTANT_FILL: 'rgb( 248, 238, 229 )', // lighter beige
 
     // halo that appears when a dragged term overlaps a like term on the scale
-    HALO: 'rgba( 255, 255, 0, 0.85 )' // slightly transparent yellow
+    HALO: 'rgba( 255, 255, 0, 0.85 )', // slightly transparent yellow
+
+    // scale and its components
+    SCALE_ARROW_BALANCED: 'rgb( 0, 200, 0 )',
+    SCALE_ARROW_UNBALANCED: 'black',
+    SCALE_ARROW_BOTTOMED_OUT: 'red',
+    SCALE_TOP_FACE_FILL: 'rgb( 177, 177, 177 )',
+    SCALE_FRONT_FACE_FILL: 'rgb( 100, 100, 100 )',
+    SCALE_FULCRUM_FILL: 'rgb( 204, 204, 204 )',
+    PLATE_SUPPORT_FILL: 'rgb( 204, 204, 204 )',
+    PLATE_OUTSIDE_FILL: '#666666',
+    PLATE_INSIDE_FILL: '#B1B1B1',
+    PLATE_SURFACE_FILL: '#E4E4E4',
+    GRID_STROKE: 'rgb( 160, 160, 160 )'
   };
 
   equalityExplorer.register( 'EqualityExplorerColors', EqualityExplorerColors );

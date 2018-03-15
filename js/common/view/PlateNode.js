@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var GridNode = require( 'EQUALITY_EXPLORER/common/view/GridNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -19,10 +20,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-
-  // constants
-  var SUPPORT_FILL = 'rgb( 204, 204, 204 )';
-  var SUPPORT_STROKE = 'black';
 
   /**
    * @param {Plate} plate - associated model element
@@ -83,16 +80,16 @@ define( function( require ) {
 
     // Vertical support that attaches the plate to the pivot point
     var supportNode = new Rectangle( 0, 0, 10, plate.supportHeight - options.pivotRadius, {
-      fill: SUPPORT_FILL,
-      stroke: SUPPORT_STROKE,
+      fill: EqualityExplorerColors.PLATE_SUPPORT_FILL,
+      stroke: 'black',
       centerX: plateNode.centerX,
       top: plateNode.centerY
     } );
 
     // Pivot point that connects to the balance beam
     var pivotNode = new Circle( options.pivotRadius, {
-      fill: SUPPORT_FILL,
-      stroke: SUPPORT_STROKE,
+      fill: EqualityExplorerColors.PLATE_SUPPORT_FILL,
+      stroke: 'black',
       centerX: supportNode.centerX,
       centerY: supportNode.bottom
     } );

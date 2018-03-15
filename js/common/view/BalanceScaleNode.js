@@ -16,6 +16,7 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var ClearScaleButton = require( 'EQUALITY_EXPLORER/common/view/ClearScaleButton' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -25,11 +26,6 @@ define( function( require ) {
   var PlateNode = require( 'EQUALITY_EXPLORER/common/view/PlateNode' );
   var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
-
-  // colors
-  var TOP_FACE_FILL = 'rgb( 177, 177, 177 )';
-  var FRONT_FACE_FILL = 'rgb( 100, 100, 100 )';
-  var FULCRUM_FILL = 'rgb( 204, 204, 204 )';
 
   // base
   var BASE_WIDTH = 200;
@@ -72,7 +68,7 @@ define( function( require ) {
     ] );
     var fulcrumNode = new Path( fulcrumShape, {
       stroke: 'black',
-      fill: FULCRUM_FILL,
+      fill: EqualityExplorerColors.SCALE_FULCRUM_FILL,
 
       // origin is at center-top of fulcrum
       centerX: 0,
@@ -85,8 +81,8 @@ define( function( require ) {
       height: BASE_HEIGHT,
       depth: BASE_DEPTH,
       stroke: 'black',
-      topFill: TOP_FACE_FILL,
-      frontFill: FRONT_FACE_FILL,
+      topFill: EqualityExplorerColors.SCALE_TOP_FACE_FILL,
+      frontFill: EqualityExplorerColors.SCALE_FRONT_FACE_FILL,
       centerX: fulcrumNode.centerX,
       top: fulcrumNode.bottom - ( BASE_DEPTH / 2 )
     } );
@@ -97,8 +93,8 @@ define( function( require ) {
       height: BEAM_HEIGHT,
       depth: BEAM_DEPTH,
       stroke: 'black',
-      topFill: TOP_FACE_FILL,
-      frontFill: FRONT_FACE_FILL,
+      topFill: EqualityExplorerColors.SCALE_TOP_FACE_FILL,
+      frontFill: EqualityExplorerColors.SCALE_FRONT_FACE_FILL,
       centerX: baseNode.centerX,
       top: fulcrumNode.top - ( 0.5 * BEAM_DEPTH )
     } );
@@ -185,13 +181,13 @@ define( function( require ) {
       // rotate and fill the arrow
       arrowNode.rotateAround( new Vector2( beamNode.centerX, 0 ), deltaAngle );
       if ( angle === 0 ) {
-        arrowNode.fill = 'rgb( 0, 200, 0 )'; // the scale is balanced
+        arrowNode.fill = EqualityExplorerColors.SCALE_ARROW_BALANCED; // the scale is balanced
       }
       else if ( Math.abs( angle ) === scale.maxAngle ) {
-        arrowNode.fill = 'red'; // the scale is bottomed out
+        arrowNode.fill = EqualityExplorerColors.SCALE_ARROW_BOTTOMED_OUT; // the scale is bottomed out
       }
       else {
-        arrowNode.fill = 'black'; // the scale is unbalanced, but not bottomed out
+        arrowNode.fill = EqualityExplorerColors.SCALE_ARROW_UNBALANCED; // the scale is unbalanced, but not bottomed out
       }
     } );
 
