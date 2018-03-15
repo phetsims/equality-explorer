@@ -22,6 +22,7 @@ relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are diffe
 * expression - a combination of symbols that is well-formed according to rules that depend on the context
 * ghost term
 * inverse term
+* like terms
 * locked
 * plate
 * organize button
