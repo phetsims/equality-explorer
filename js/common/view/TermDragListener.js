@@ -106,7 +106,7 @@ define( function( require ) {
 
         if ( self.inverseTerm ) {
 
-          // we identified an inverse for this term, sum to zero
+          // term overlaps an inverse term, sum to zero
           self.sumToZero( {
             haloBaseColor: 'rgba( 255, 255, 0, 0.85 )' // show the halo, since the terms overlap
           } );
