@@ -300,7 +300,7 @@ define( function( require ) {
      */
     refreshHalos: function() {
 
-      if ( this.term.dragging && this.term.haloVisibleProperty ) {
+      if ( this.term.dragging ) {
 
         var previousInverseTerm = this.inverseTerm;
         this.inverseTerm = null;
