@@ -416,17 +416,6 @@ define( function( require ) {
     },
 
     /**
-     * Is this term creator the inverse of a specified term creator?
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @abstract
-     */
-    isInverseOf: function( termCreator ) {
-      throw new Error( 'isInverseOf must be implemented by subtype' );
-    },
-
-    /**
      * Is this term creator equivalent to a specified term creator?
      * @param {TermCreator} termCreator
      * @returns {boolean}

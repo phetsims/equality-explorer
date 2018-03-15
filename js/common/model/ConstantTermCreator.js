@@ -225,18 +225,6 @@ define( function( require ) {
     },
 
     /**
-     * Is this term creator the inverse of a specified term creator?
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isInverseOf: function( termCreator ) {
-      return ( termCreator instanceof ConstantTermCreator ) &&
-             ( termCreator.defaultConstantValue.toDecimal() === -this.defaultConstantValue.toDecimal() ); // inverse values
-    },
-
-    /**
      * Is this term creator equivalent to a specified term creator?
      * @param {TermCreator} termCreator
      * @returns {boolean}

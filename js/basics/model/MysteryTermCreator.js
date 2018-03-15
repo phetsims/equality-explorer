@@ -85,17 +85,6 @@ define( function( require ) {
     },
 
     /**
-     * Is this term creator the inverse of a specified term creator?
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isInverseOf: function( termCreator ) {
-      return false; // there are no inverses for mystery objects
-    },
-
-    /**
      * Is this term creator equivalent to a specified term creator?
      * @param {TermCreator} termCreator
      * @returns {boolean}
