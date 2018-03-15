@@ -2,7 +2,7 @@ TODO items for equality-explorer
 
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
-- can this feature be separated from TermCreatorNode and TermDragListener?
+- can this feature be separated from TermCreator and TermDragListener?
 - how to detect whether Term came from toolbox or plate, and not snagged while animating?
 - who is responsible for creating ghost Term? does it differ for toolbox vs plate?
 - who is responsible for creating inverse Term related to ghost term?
