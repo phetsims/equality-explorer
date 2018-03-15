@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
@@ -27,7 +28,7 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenVariablesString,
-      backgroundColorProperty: new Property( 'rgb( 239, 253, 218 )' )
+      backgroundColorProperty: new Property( EqualityExplorerColors.VARIABLES_SCREEN_BACKGROUND )
     }, options );
 
     Screen.call( this,

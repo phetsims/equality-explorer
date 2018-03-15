@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SolveItModel = require( 'EQUALITY_EXPLORER/solveit/model/SolveItModel' );
   var SolveItScreenView = require( 'EQUALITY_EXPLORER/solveit/view/SolveItScreenView' );
@@ -27,7 +28,7 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenSolveItString,
-      backgroundColorProperty: new Property( 'rgb( 248, 227, 226 )' )
+      backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND )
     }, options );
 
     Screen.call( this,
