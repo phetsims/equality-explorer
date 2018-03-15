@@ -423,7 +423,7 @@ define( function( require ) {
      * @abstract
      */
     isEquivalentTo: function( termCreator ) {
-      throw new Error( 'isInverseOf must be implemented by subtype' );
+      throw new Error( 'isEquivalentTo must be implemented by subtype' );
     },
 
     /**
