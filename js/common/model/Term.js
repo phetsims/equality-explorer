@@ -68,13 +68,24 @@ define( function( require ) {
     },
 
     /**
+     * Is this term a like term?
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     * @abstract
+     */
+    isLikeTerm: function( term ) {
+      throw new Error( 'isLikeTerm must be implemented by subtype' );
+    },
+
+    /**
      * Is this term the inverse of a specified term?
      * @param {Term} term
      * @returns {boolean}
      * @public
      * @abstract
      */
-    isInverseOf: function( term ) {
+    isInverseTerm: function( term ) {
       throw new Error( 'isInverseOf must be implemented by subtype' );
     }
   } );

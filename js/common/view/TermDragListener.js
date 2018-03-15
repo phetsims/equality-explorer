@@ -51,7 +51,7 @@ define( function( require ) {
     this.termCreator = termCreator;
     this.plate = plate;
     this.haloRadius = options.haloRadius;
-    this.inverseTerm = null; // {Term} inverse of the term being dragged. E.g. 1 and -1, x and -x
+    this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
 
     SimpleDragHandler.call( this, {
 
@@ -105,10 +105,10 @@ define( function( require ) {
         term.dragging = false;
         term.shadowVisibleProperty.value = false;
 
-        if ( self.inverseTerm ) {
+        if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
 
           // term overlaps an inverse term, sum to zero
-          self.sumToZero( {
+          self.sumToZero( self.likeTerm, {
             haloBaseColor: EqualityExplorerColors.HALO // show the halo, since the terms overlap
           } );
         }
@@ -231,8 +231,7 @@ define( function( require ) {
             else {
 
               // Terms sum to zero.
-              self.inverseTerm = termInCell;
-              self.sumToZero(); // no halo, since the terms did not overlap when drag ended
+              self.sumToZero( termInCell ); // no halo, since the terms did not overlap when drag ended
             }
           }
         }
@@ -295,41 +294,43 @@ define( function( require ) {
     },
 
     /**
-     * Refreshes the visual feedback (yellow halos) that is provided when a dragged term overlaps an inverse term
-     * that is on the scale. See equality-explorer#17
+     * Refreshes the visual feedback (yellow halos) that is provided when a dragged term overlaps
+     * a like term that is on the scale. This has the side-effect of setting this.likeTerm.
+     * See equality-explorer#17
      * @private
      */
     refreshHalos: function() {
 
       if ( this.term.dragging ) {
 
-        var previousInverseTerm = this.inverseTerm;
-        this.inverseTerm = null;
+        var previousLikeTerm = this.likeTerm;
+        this.likeTerm = null;
 
-        // does this term overlap an inverse term on the plate?
+        // does this term overlap a like term on the plate?
         var termOnPlate = this.plate.getTermAtLocation( this.term.locationProperty.value );
-        if ( termOnPlate && termOnPlate.isInverseOf( this.term ) ) {
-          this.inverseTerm = termOnPlate;
+        if ( termOnPlate && termOnPlate.isLikeTerm( this.term ) ) {
+          this.likeTerm = termOnPlate;
         }
 
-        // if the inverse term is new, then clean up previous inverse term
-        if ( previousInverseTerm && ( previousInverseTerm !== this.inverseTerm ) ) {
-          previousInverseTerm.haloVisibleProperty.value = false;
+        // if the like term is new, then clean up previous like term
+        if ( previousLikeTerm && ( previousLikeTerm !== this.likeTerm ) ) {
+          previousLikeTerm.haloVisibleProperty.value = false;
         }
 
-        if ( !this.inverseTerm ) {
+        if ( !this.likeTerm ) {
 
-          // no inverse term
+          // no like term
           this.term.shadowVisibleProperty.value = true;
           this.term.haloVisibleProperty.value = false;
         }
-        else if ( this.inverseTerm !== previousInverseTerm ) {
+        else if ( this.likeTerm !== previousLikeTerm &&
+                  ( this.termCreator.combineLikeTermsEnabled || this.term.isInverseTerm( this.likeTerm ) ) ) {
 
-          // new inverse term
+          // show halo for term and likeTerm
           this.termNode.moveToFront();
           this.term.shadowVisibleProperty.value = false;
           this.term.haloVisibleProperty.value = true;
-          this.inverseTerm.haloVisibleProperty.value = true;
+          this.likeTerm.haloVisibleProperty.value = true;
         }
       }
     },
@@ -338,16 +339,15 @@ define( function( require ) {
      * Sums the term and its inverse to zero.
      * Disposes of both terms, and performs the associated animation.
      * See equality-explorer#17
+     * @param {Term} {inverseTerm}
      * @param {Object} [options] - passed to SumToZero constructor
      * @private
      */
-    sumToZero: function( options ) {
-      assert && assert( this.inverseTerm, 'this function requires an inverse term' );
-      assert && assert( this.term.weight.plusFraction( this.inverseTerm.weight ).toDecimal() === 0,
-        'terms do not sum to zero' );
+    sumToZero: function( inverseTerm, options ) {
+      assert && assert( this.term.isInverseTerm( inverseTerm ), 'inverseTerm is not an inverse: ' + inverseTerm );
 
       // determine which cell the inverse term appears in
-      var cellIndex = this.plate.getCellForTerm( this.inverseTerm );
+      var cellIndex = this.plate.getCellForTerm( inverseTerm );
 
       // some things we need before the terms are deleted
       var symbol = this.term.symbol || null;
@@ -355,7 +355,7 @@ define( function( require ) {
 
       // delete the 2 terms that sum to zero
       this.term.dispose();
-      this.inverseTerm.dispose();
+      inverseTerm.dispose();
 
       // after the terms have been deleted and the scale has moved,
       // determine the new location of the inverse term's cell

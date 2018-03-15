@@ -60,6 +60,17 @@ define( function( require ) {
     },
 
     /**
+     * Is this term a like term?
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isLikeTerm: function( term ) {
+      return ( term instanceof ConstantTerm );
+    },
+
+    /**
      * Is this term the inverse of a specified term?
      * Two constant terms are inverses if their values are inverses.
      * @param {Term} term
@@ -67,7 +78,7 @@ define( function( require ) {
      * @public
      * @override
      */
-    isInverseOf: function( term ) {
+    isInverseTerm: function( term ) {
       return ( term instanceof ConstantTerm ) &&
              ( this.constantValue.toDecimal() === -term.constantValue.toDecimal() );
     }

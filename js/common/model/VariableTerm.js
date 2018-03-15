@@ -73,6 +73,18 @@ define( function( require ) {
     },
 
     /**
+     * Is this term a like term?
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isLikeTerm: function( term ) {
+      return ( term instanceof VariableTerm ) &&
+             ( term.variableValueProperty === this.variableValueProperty ); // associated with same variable
+    },
+
+    /**
      * Is this term the inverse of a specified term?
      * Two variable terms are inverses if they represent the same variable and have inverse coefficients.
      * @param {Term} term
@@ -80,10 +92,10 @@ define( function( require ) {
      * @public
      * @override
      */
-    isInverseOf: function( term ) {
+    isInverseTerm: function( term ) {
       return ( term instanceof VariableTerm ) &&
              ( this.symbol === term.symbol ) &&
-             ( this.variableProperty === term.variableProperty ) &&  // same Property, not same value!
+             ( this.variableProperty === term.variableProperty ) &&  // associated with same variable
              ( this.coefficient.toDecimal() === -term.coefficient.toDecimal() ); // inverse coefficients
     }
   } );

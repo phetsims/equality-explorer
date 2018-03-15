@@ -56,13 +56,24 @@ define( function( require ) {
     },
 
     /**
+     * Is this term a like term?
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isLikeTerm: function( term ) {
+      return ( term instanceof MysteryTerm ) && ( term.mysteryObject === this.mysteryObject );
+    },
+
+    /**
      * Is this term the inverse of a specified term?
      * @param {Term} term
      * @returns {boolean}
      * @public
      * @override
      */
-    isInverseOf: function( term ) {
+    isInverseTerm: function( term ) {
       return false; // there are no inverses for mystery terms
     }
   } );
