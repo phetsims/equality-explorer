@@ -13,6 +13,7 @@ Lock feature scenarios:
 - term dragged from toolbox to scale, room for term and ghost on scale
 - term dragged from toolbox to scale, term's plate is full
 - term dragged from toolbox to scale, ghost's plate is full
+- term dragged from toolbox to scale, term sums to zero with term on scale, ghost moves to plate
 - term dragged from scale to scale, ghost available on scale
 - term dragged from scale to scale, ghost requires creating inverse on scale
 - term dragged from scale to scale, ghost requires creating inverse on scale, inverse removed from scale
