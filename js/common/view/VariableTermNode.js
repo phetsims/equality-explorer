@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -25,8 +26,8 @@ define( function( require ) {
 
   // constants
   var DEFAULT_OPTIONS = {
-    positiveFill: 'rgb( 49, 193, 238 )', // fill of background square for positive coefficient
-    negativeFill: 'rgb( 99, 212, 238 )', // fill of background square for negative coefficient
+    positiveFill: EqualityExplorerColors.POSITIVE_X_FILL, // fill of background square for positive coefficient
+    negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL, // fill of background square for negative coefficient
     positiveLineDash: [], // solid border for positive coefficient
     negativeLineDash: [ 4, 4 ], // dashed border for negative coefficient
     integerXSpacing: 4, // space between integer coefficient and variable symbol

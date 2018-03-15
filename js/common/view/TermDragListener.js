@@ -13,6 +13,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -108,7 +109,7 @@ define( function( require ) {
 
           // term overlaps an inverse term, sum to zero
           self.sumToZero( {
-            haloBaseColor: 'rgba( 255, 255, 0, 0.85 )' // show the halo, since the terms overlap
+            haloBaseColor: EqualityExplorerColors.HALO // show the halo, since the terms overlap
           } );
         }
         else if ( term.locationProperty.value.y > plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {

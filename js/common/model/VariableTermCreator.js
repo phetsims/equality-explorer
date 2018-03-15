@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var NumberProperty = require( 'AXON/NumberProperty' );
@@ -34,8 +35,8 @@ define( function( require ) {
 
     options = _.extend( {
       defaultCoefficient: ReducedFraction.withInteger( 1 ), // terms are created with this coefficient by default
-      positiveFill: 'rgb( 49, 193, 238 )',
-      negativeFill: 'rgb( 99, 212, 238 )'
+      positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
+      negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL
     }, options );
 
     assert && assert( options.defaultCoefficient instanceof ReducedFraction,

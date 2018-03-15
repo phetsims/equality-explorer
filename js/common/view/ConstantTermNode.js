@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Circle = require( 'SCENERY/nodes/Circle' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -21,8 +22,8 @@ define( function( require ) {
 
   // constants
   var DEFAULT_OPTIONS = {
-    positiveFill: 'rgb( 246, 228, 213 )', // fill of background circle for positive coefficient
-    negativeFill: 'rgb( 248, 238, 229 )', // fill of background circle for negative coefficient
+    positiveFill: EqualityExplorerColors.POSITIVE_CONSTANT_FILL, // fill of background circle for positive coefficient
+    negativeFill: EqualityExplorerColors.NEGATIVE_CONSTANT_FILL, // fill of background circle for negative coefficient
     positiveLineDash: [], // solid border for positive coefficient
     negativeLineDash: [ 3, 3 ], // dashed border for negative coefficient
     margin: 8, // margin inside the background circle

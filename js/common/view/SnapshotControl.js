@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -23,8 +24,6 @@ define( function( require ) {
   var VariableValueNode = require( 'EQUALITY_EXPLORER/common/view/VariableValueNode' );
 
   // constants
-  var SELECTED_STROKE = 'rgb( 85, 169, 223 )'; // stroke for selection rectangle
-  var UNSELECTED_STROKE = 'rgba( 0, 0, 0, 0 )'; // non-null so that size of control doesn't vary
   var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an equation, so bounds are valid
   var NO_X_VALUE_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an x value, so bounds are valid
   var EQUATION_FONT_SIZE = 20;
@@ -56,7 +55,7 @@ define( function( require ) {
     var selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
       cornerRadius: 3,
       lineWidth: 3,
-      stroke: UNSELECTED_STROKE
+      stroke: 'transparent'
     } );
 
     // placeholders, so that snapshotNode has valid bounds
@@ -160,7 +159,7 @@ define( function( require ) {
     // unlink not required.
     selectedSnapshotProperty.link( function( selectedSnapshot ) {
       var isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
-      selectionRectangle.stroke = isSelected ? SELECTED_STROKE : UNSELECTED_STROKE;
+      selectionRectangle.stroke = isSelected ? EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE : 'transparent';
     } );
 
     if ( options.xVisibleProperty ) {
