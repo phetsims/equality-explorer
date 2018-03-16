@@ -162,11 +162,11 @@ define( function( require ) {
       else if ( operation.operator === MathSymbols.TIMES ) {
         newConstantValue = term.constantValue.timesInteger( constantValue );
       }
-      else if ( operation.operator === MathSymbols.DIVIDE ) {
+      else if ( operation.operator === MathSymbols.DIVIDE && constantValue !== 0 ) {
         newConstantValue = term.constantValue.divideByInteger( constantValue );
       }
       else {
-        throw new Error( 'invalid operator: ' + operation.operator );
+        return term; // operation is not applicable
       }
 
       // Dispose of the term, has the side-effect of removing it from the plate.

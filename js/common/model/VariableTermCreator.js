@@ -195,40 +195,20 @@ define( function( require ) {
 
       // compute the new coefficient value
       var coefficient;
-      if ( operation.operator === MathSymbols.PLUS ) {
-        if ( operation.operand.coefficient !== undefined || operation.operand.symbol === this.symbol ) {
-          coefficient = term.coefficient.plusInteger( operation.operand.coefficient );
-        }
-        else {
-          return term;
-        }
+      if ( operation.operator === MathSymbols.PLUS && operation.operand.symbol === this.symbol ) {
+        coefficient = term.coefficient.plusInteger( operation.operand.coefficient );
       }
-      else if ( operation.operator === MathSymbols.MINUS ) {
-        if ( operation.operand.coefficient !== undefined || operation.operand.symbol === this.symbol ) {
-          coefficient = term.coefficient.minusInteger( operation.operand.coefficient );
-        }
-        else {
-          return term;
-        }
+      else if ( operation.operator === MathSymbols.MINUS && operation.operand.symbol === this.symbol ) {
+        coefficient = term.coefficient.minusInteger( operation.operand.coefficient );
       }
-      else if ( operation.operator === MathSymbols.TIMES ) {
-        if ( operation.operand.constantValue !== undefined ) {
-          coefficient = term.coefficient.timesInteger( operation.operand.constantValue );
-        }
-        else {
-          return term;
-        }
+      else if ( operation.operator === MathSymbols.TIMES && operation.operand.constantValue !== undefined ) {
+        coefficient = term.coefficient.timesInteger( operation.operand.constantValue );
       }
-      else if ( operation.operator === MathSymbols.DIVIDE ) {
-        if ( operation.operand.constantValue !== undefined && operation.operand.constantValue !== 0 ) {
-          coefficient = term.coefficient.divideByInteger( operation.operand.constantValue );
-        }
-        else {
-          return term;
-        }
+      else if ( operation.operator === MathSymbols.DIVIDE && operation.operand.constantValue !== undefined && operation.operand.constantValue !== 0 ) {
+        coefficient = term.coefficient.divideByInteger( operation.operand.constantValue );
       }
       else {
-        throw new Error( 'unsupported operand: ' + operation.operand );
+        return term; // operation is not applicable
       }
 
       // Dispose of the term, has the side-effect of removing it from the plate.
