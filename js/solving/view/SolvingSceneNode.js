@@ -74,12 +74,12 @@ define( function( require ) {
     var operationAnimationLayer = new Node();
 
     // @private Universal Operation, below Equation accordion box
-    this.operationNode = new UniversalOperationControl( scene, operationAnimationLayer, {
+    this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
       centerX: scene.scale.location.x, // centered on the scale
       top: localBounds.bottom + 10
     } );
-    this.addChild( this.operationNode );
-    this.operationNode.moveToBack();
+    this.addChild( this.universalOperationControl );
+    this.universalOperationControl.moveToBack();
 
     // Put animation layer on top of everything
     this.addChild( operationAnimationLayer );
@@ -130,8 +130,8 @@ define( function( require ) {
         }
       }
 
-      // reset the universal operator, to cancel any operation animations that are in progress
-      this.operationNode.reset();
+      // universal operation control has Properties and animations that may be in progress
+      this.universalOperationControl.reset();
 
       SceneNode.prototype.reset.call( this );
     }
