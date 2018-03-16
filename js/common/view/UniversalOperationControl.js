@@ -189,6 +189,8 @@ define( function( require ) {
     //TODO skip 0 operand when operator is DIVIDE
     //TODO change 0 operand to 1 when operator becomes DIVIDE
     //TODO change Nx operand to N when operator becomes TIMES or DIVIDE
+    
+    //TODO disable goButton when operation would cause any numerator or denominator would exceed 1M
   }
 
   equalityExplorer.register( 'UniversalOperationControl', UniversalOperationControl );
