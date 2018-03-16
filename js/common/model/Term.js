@@ -86,7 +86,7 @@ define( function( require ) {
      * @abstract
      */
     isInverseTerm: function( term ) {
-      throw new Error( 'isInverseOf must be implemented by subtype' );
+      throw new Error( 'isInverseTerm must be implemented by subtype' );
     }
   } );
 } );
