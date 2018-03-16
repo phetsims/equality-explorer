@@ -17,11 +17,9 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
-  var StringProperty = require( 'AXON/StringProperty' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   // string
@@ -44,23 +42,6 @@ define( function( require ) {
     this.xProperty = new NumberProperty( this.xRange.defaultValue, {
       numberType: 'Integer',
       range: this.xRange
-    } );
-
-    // @public (read-only) set of operators for universal operation
-    this.operators = EqualityExplorerConstants.OPERATORS;
-
-    // @public operator for 'universal operation'
-    this.operatorProperty = new StringProperty( this.operators[ 0 ], {
-      validValues: this.operators
-    } );
-
-    // @public (read-only) range for universal operand
-    this.operandRange = new RangeWithValue( -10, 10, 1 );
-
-    // @public universal operand
-    this.operandProperty = new NumberProperty( this.operandRange.defaultValue, {
-      numberType: 'Integer',
-      range: this.operandRange
     } );
 
     // @public (read-only) emit1( sumToZeroData ) when one or more terms become zero as the result of a universal operation
@@ -119,8 +100,6 @@ define( function( require ) {
      */
     reset: function() {
       this.xProperty.reset();
-      this.operatorProperty.reset();
-      this.operandProperty.reset();
       Scene.prototype.reset.call( this );
     },
 

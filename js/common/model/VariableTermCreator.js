@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var NumberProperty = require( 'AXON/NumberProperty' );
@@ -175,6 +176,7 @@ define( function( require ) {
       return new VariableTermNode( this, term, plate, options );
     },
 
+    //TODO clean up this abomination, too much duck typing of operand data structures
     /**
      * Applies a universal operation to a term on the scale.
      * @param {UniversalOperation} operation
@@ -189,20 +191,41 @@ define( function( require ) {
       assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
       assert && assert( term instanceof VariableTerm, 'invalid term: ' + term );
 
-      // addition and subtraction are not relevant
-      if ( operation.operator === MathSymbols.PLUS || operation.operator === MathSymbols.MINUS ) {
-        return term;
-      }
-
       var cellIndex = this.plate.getCellForTerm( term );
 
       // compute the new coefficient value
       var coefficient;
-      if ( operation.operator === MathSymbols.TIMES ) {
-        coefficient = term.coefficient.timesInteger( operation.operand );
+      if ( operation.operator === MathSymbols.PLUS ) {
+        if ( operation.operand.coefficient !== undefined || operation.operand.symbol === this.symbol ) {
+          coefficient = term.coefficient.plusInteger( operation.operand.coefficient );
+        }
+        else {
+          return term;
+        }
+      }
+      else if ( operation.operator === MathSymbols.MINUS ) {
+        if ( operation.operand.coefficient !== undefined || operation.operand.symbol === this.symbol ) {
+          coefficient = term.coefficient.minusInteger( operation.operand.coefficient );
+        }
+        else {
+          return term;
+        }
+      }
+      else if ( operation.operator === MathSymbols.TIMES ) {
+        if ( operation.operand.constantValue !== undefined ) {
+          coefficient = term.coefficient.timesInteger( operation.operand.constantValue );
+        }
+        else {
+          return term;
+        }
       }
       else if ( operation.operator === MathSymbols.DIVIDE ) {
-        coefficient = term.coefficient.divideByInteger( operation.operand );
+        if ( operation.operand.constantValue !== undefined && operation.operand.constantValue !== 0 ) {
+          coefficient = term.coefficient.divideByInteger( operation.operand.constantValue );
+        }
+        else {
+          return term;
+        }
       }
       else {
         throw new Error( 'unsupported operand: ' + operation.operand );
@@ -235,6 +258,7 @@ define( function( require ) {
       return newTerm;
     },
 
+    //TODO clean up this abomination, too much duck typing of operand data structures
     /**
      * Applies a universal operation to the plate.
      * @param {UniversalOperation} operation
@@ -244,8 +268,31 @@ define( function( require ) {
      */
     applyOperationToPlate: function( operation ) {
 
-      // There is no operation that results in the creation of a variable term on the plate, so always return null.
-      return null;
+      var term = null;
+
+      //TODO difficult to read
+      // If the plate contains no like terms (no terms for this creator or its inverse)...
+      if ( this.numberOfTermsOnPlateProperty.value === 0 &&
+           this.inverseTermCreator.numberOfTermsOnPlateProperty.value === 0 &&
+           // ... and operand matches this term creator ...
+           operation.operand.coefficient !== undefined &&
+           operation.operand.symbol === this.symbol &&
+           // ... and the operator is one that creates constant terms...
+           ( operation.operator === MathSymbols.PLUS || operation.operator === MathSymbols.MINUS ) ) {
+
+        // compute the constant value
+        var coefficient = ( operation.operator === MathSymbols.PLUS ) ? operation.operand.coefficient : -operation.operand.coefficient;
+
+        // If the coefficient has the same sign as this term, create a coefficient term on the plate
+        if ( Util.sign( coefficient ) === Util.sign( this.defaultCoefficient.toDecimal() ) ) {
+          term = this.createTermOnPlate( this.likeTermsCellIndex, {
+            coefficient: ReducedFraction.withInteger( coefficient ),
+            diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+          } );
+        }
+      }
+
+      return term;
     },
 
     /**

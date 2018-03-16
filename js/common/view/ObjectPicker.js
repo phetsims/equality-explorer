@@ -59,7 +59,9 @@ define( function( require ) {
       arrowHeight: 6,
       arrowYSpacing: 3,
       arrowStroke: 'black',
-      arrowLineWidth: 0.25
+      arrowLineWidth: 0.25,
+      upFunction: function( index ) { return index + 1; },
+      downFunction: function( index ) { return index - 1; }
     }, options );
 
     // {Color|string} color of arrows and top/bottom gradient when pressed
@@ -232,9 +234,9 @@ define( function( require ) {
     upParent.addInputListener( new ButtonStateListener( upStateProperty ) );
     var upListener = new FireOnHoldInputListener( {
       listener: function() {
-        var index = indexProperty.value + 1;
+        var index = options.upFunction( indexProperty.value );
         if ( options.wrapEnabled && index >= items.length ) {
-          index = 0;
+          index = options.upFunction( -1 );
         }
         indexProperty.value = index;
       },
@@ -247,9 +249,9 @@ define( function( require ) {
     downParent.addInputListener( new ButtonStateListener( downStateProperty ) );
     var downListener = new FireOnHoldInputListener( {
       listener: function() {
-        var index = indexProperty.value - 1;
+        var index = options.downFunction( indexProperty.value );
         if ( options.wrapEnabled && index < 0 ) {
-          index = items.length - 1;
+          index = options.downFunction( items.length );
         }
         indexProperty.value = index;
       },

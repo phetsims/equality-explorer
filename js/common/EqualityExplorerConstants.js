@@ -22,11 +22,9 @@ define( function( require ) {
     SCREEN_VIEW_X_MARGIN: 20,
     SCREEN_VIEW_Y_MARGIN: 20,
 
-    // Shared fonts
+    // Fonts
     ACCORDION_BOX_TITLE_FONT: new PhetFont( 18 ),
-    UNIVERSAL_OPERATION_FONT: new PhetFont( 24 ),
-
-    // Sum-to-zero animation
+    UNIVERSAL_OPERATION_FONT_SIZE: 24,
     SUM_TO_ZERO_BIG_FONT_SIZE: 40, // for sum-to-zero animation that involves a 'big' term on the scale
     SUM_TO_ZERO_SMALL_FONT_SIZE: 24, // for sum-to-zero animation that involves a 'small' term on the scale
 

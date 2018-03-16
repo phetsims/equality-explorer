@@ -15,14 +15,20 @@ define( function( require ) {
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
+  var StringProperty = require( 'AXON/StringProperty' );
   var Text = require( 'SCENERY/nodes/Text' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
   var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
+
+  // strings
+  var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
    * @param {SolvingScene} scene
@@ -35,55 +41,101 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      font: EqualityExplorerConstants.UNIVERSAL_OPERATION_FONT,
+      fontSize: EqualityExplorerConstants.UNIVERSAL_OPERATION_FONT_SIZE,
+      operandRange: new Range( -10, 10 ),
 
       // supertype options
       spacing: 15
     }, options );
 
-    // to improve readability
-    var operatorProperty = scene.operatorProperty;
-    var operators = scene.operators;
-    var operandProperty = scene.operandProperty;
-    var operandRange = scene.operandRange;
-    var leftPlate = scene.scale.leftPlate;
-    var rightPlate = scene.scale.rightPlate;
+    var normalFont = new PhetFont( options.fontSize );
+    var mathFont = new MathSymbolFont( options.fontSize );
 
-    // picker for choosing operator
+    //TODO move value component to model?
+    // operator choices
     var operatorTerms = [];
+    var operators = EqualityExplorerConstants.OPERATORS;
     for ( var i = 0; i < operators.length; i++ ) {
       operatorTerms.push( {
         value: operators[ i ],
-        node: new Text( operators[ i ], { font: options.font } )
+        node: new Text( operators[ i ], { font: normalFont } )
       } );
     }
-    var operatorPicker = new ObjectPicker( operatorProperty, operatorTerms, {
+
+    //TODO move to model?
+    // @private
+    this.operatorProperty = new StringProperty( operators[ 0 ], {
+      validValues: operators
+    } );
+
+    // picker for choosing operator
+    var operatorPicker = new ObjectPicker( this.operatorProperty, operatorTerms, {
       wrapEnabled: true, // wrap around when min/max is reached
       color: 'black',
       xMargin: 12
     } );
 
+    //TODO move value component to model?
+    //TODO this is a wonky way to specify order and interleaving of variable term operands
+    // operand choices - constant and variable terms
+    // For the format of values, see UniversalOperator createConstantTermOperand and createVariableTermOperand.
+    var operands = [];
+    var operandTerms = [];
+    for ( i = options.operandRange.min; i <= options.operandRange.max; i++ ) {
+
+      // constant term
+      var constantTermOperand = UniversalOperation.createConstantTermOperand( i );
+      operands.push( constantTermOperand );
+      operandTerms.push( {
+        value: constantTermOperand,
+        node: new Text( i, { font: normalFont } )
+      } );
+
+      // variable term
+      var variableTermOperand = UniversalOperation.createVariableTermOperand( i, xString );
+      operands.push( variableTermOperand );
+      if ( i === 1 ) {
+
+        // x
+        operandTerms.push( {
+          value: variableTermOperand,
+          node: new Text( xString, { font: mathFont } )
+        } );
+      }
+      else if ( i === -1 ) {
+
+        // -x
+        operandTerms.push( {
+          value: variableTermOperand,
+          node: new Text( MathSymbols.UNARY_MINUS + xString, { font: mathFont } )
+        } );
+      }
+      else if ( i !== 0 ) {
+
+        // Nx
+        operandTerms.push( {
+          value: variableTermOperand,
+          node: new HBox( {
+            spacing: 2,
+            children: [
+              new Text( i, { font: normalFont } ),
+              new Text( xString, { font: mathFont } )
+            ]
+          } )
+        } );
+      }
+    }
+
+    //TODO move to model?
+    // @private {Property.<Object>}
+    this.operandProperty = new Property( operandTerms[ 0 ].value );
+
     // picker for choosing operand
-    var operandPicker = new NumberPicker( operandProperty, new Property( operandRange ), {
+    var operandPicker = new ObjectPicker( this.operandProperty, operandTerms, {
+      wrapEnabled: true, // wrap around when min/max is reached
       color: 'black',
       font: options.font,
-      xMargin: 6,
-      upFunction: function( value ) {
-        if ( value === -1 && operatorProperty.value === MathSymbols.DIVIDE ) {
-          return 1; // prevent divide by zero
-        }
-        else {
-          return value + 1;
-        }
-      },
-      downFunction: function( value ) {
-        if ( value === 1 && operatorProperty.value === MathSymbols.DIVIDE ) {
-          return -1; // prevent divide by zero
-        }
-        else {
-          return value - 1;
-        }
-      }
+      xMargin: 6
     } );
 
     // @private Tween animations that are running
@@ -92,15 +144,15 @@ define( function( require ) {
     // When the 'go' button is pressed, animate operations, then apply operations to terms.
     var goButtonListener = function() {
 
-      var operation = new UniversalOperation( operatorProperty.value, operandProperty.value );
+      var operation = new UniversalOperation( self.operatorProperty.value, self.operandProperty.value );
 
       // start vertically aligned with the operator picker
       var startY = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
 
       var animation = new UniversalOperationAnimation( operation, {
         font: options.font,
-        leftX: leftPlate.locationProperty.value.x,
-        rightX: rightPlate.locationProperty.value.x,
+        leftX: scene.scale.leftPlate.locationProperty.value.x,
+        rightX: scene.scale.rightPlate.locationProperty.value.x,
         startY: startY,
         onComplete: function() {
           scene.applyOperation( operation );
@@ -134,13 +186,9 @@ define( function( require ) {
 
     HBox.call( this, options );
 
-    // prevent divide by zero.
-    // unlink not required.
-    operatorProperty.link( function( operator ) {
-      if ( operator === MathSymbols.DIVIDE && operandProperty.value === 0 ) {
-        operandProperty.value = 1;
-      }
-    } );
+    //TODO skip 0 operand when operator is DIVIDE
+    //TODO change 0 operand to 1 when operator becomes DIVIDE
+    //TODO change Nx operand to N when operator becomes TIMES or DIVIDE
   }
 
   equalityExplorer.register( 'UniversalOperationControl', UniversalOperationControl );
@@ -156,6 +204,9 @@ define( function( require ) {
       for ( var i = 0; i < arrayCopy.length; i++ ) {
         arrayCopy[ i ].stop();
       }
+
+      this.operatorProperty.reset();
+      this.operandProperty.reset();
     }
   } );
 } );

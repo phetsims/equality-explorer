@@ -131,6 +131,7 @@ define( function( require ) {
       return new ConstantTermNode( this, term, plate, options );
     },
 
+    //TODO clean up this abomination, too much duck typing of operand data structures
     /**
      * Applies a universal operation to a term on the scale.
      * @param {UniversalOperation} operation
@@ -143,21 +144,26 @@ define( function( require ) {
       assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
       assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
 
+      var constantValue = operation.operand.constantValue;
+      if ( constantValue === undefined ) {
+        return term; // operation is not applicable to constant terms
+      }
+      
       var cellIndex = this.plate.getCellForTerm( term );
 
       // compute the new constant value
-      var constantValue;
+      var newConstantValue;
       if ( operation.operator === MathSymbols.PLUS ) {
-        constantValue = term.constantValue.plusInteger( operation.operand );
+        newConstantValue = term.constantValue.plusInteger( constantValue );
       }
       else if ( operation.operator === MathSymbols.MINUS ) {
-        constantValue = term.constantValue.minusInteger( operation.operand );
+        newConstantValue = term.constantValue.minusInteger( constantValue );
       }
       else if ( operation.operator === MathSymbols.TIMES ) {
-        constantValue = term.constantValue.timesInteger( operation.operand );
+        newConstantValue = term.constantValue.timesInteger( constantValue );
       }
       else if ( operation.operator === MathSymbols.DIVIDE ) {
-        constantValue = term.constantValue.divideByInteger( operation.operand );
+        newConstantValue = term.constantValue.divideByInteger( constantValue );
       }
       else {
         throw new Error( 'invalid operator: ' + operation.operator );
@@ -167,15 +173,15 @@ define( function( require ) {
       term.dispose();
 
       var newTerm = null;
-      if ( constantValue.toDecimal() !== 0 ) {
+      if ( newConstantValue.toDecimal() !== 0 ) {
 
         // create a new term on the plate
         var newTermOptions = {
-          constantValue: constantValue,
+          constantValue: newConstantValue,
           diameter: term.diameter
         };
 
-        if ( Util.sign( constantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
+        if ( Util.sign( newConstantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
 
           // sign is the same as this term creator, so create the term
           newTerm = this.createTermOnPlate( cellIndex, newTermOptions );
@@ -190,6 +196,7 @@ define( function( require ) {
       return newTerm;
     },
 
+    //TODO clean up this abomination, too much duck typing of operand data structures
     /**
      * Applies a universal operation to the plate.
      * If there is already a like term on the plate, this is a no-op.
@@ -201,8 +208,14 @@ define( function( require ) {
      */
     applyOperationToPlate: function( operation ) {
 
+      var constantValue = operation.operand.constantValue;
+      if ( constantValue === undefined ) {
+        return term; // operation is not applicable to constant terms
+      }
+
       var term = null;
 
+      //TODO difficult to read
       // If the plate contains no like terms (no terms for this creator or its inverse)...
       if ( this.numberOfTermsOnPlateProperty.value === 0 &&
            this.inverseTermCreator.numberOfTermsOnPlateProperty.value === 0 &&
@@ -210,7 +223,7 @@ define( function( require ) {
            ( operation.operator === MathSymbols.PLUS || operation.operator === MathSymbols.MINUS ) ) {
 
         // compute the constant value
-        var constantInteger = ( operation.operator === MathSymbols.PLUS ) ? operation.operand : -operation.operand;
+        var constantInteger = ( operation.operator === MathSymbols.PLUS ) ? constantValue : -constantValue;
 
         // If the constant has the same sign as this term, create a constant term on the plate
         if ( Util.sign( constantInteger ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {

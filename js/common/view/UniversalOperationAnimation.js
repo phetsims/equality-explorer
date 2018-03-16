@@ -30,7 +30,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      font: EqualityExplorerConstants.UNIVERSAL_OPERATION_FONT,
+      fontSize: EqualityExplorerConstants.UNIVERSAL_OPERATION_FONT_SIZE,
       leftX: 0,
       rightX: 100,
       startY: 0,
@@ -43,12 +43,12 @@ define( function( require ) {
 
     // Nodes for the operation
     var leftOperationNode = new UniversalOperationNode( operation, {
-      font: options.font,
+      fontSize: options.fontSize,
       centerX: options.leftX,
       centerY: options.startY
     } );
     var rightOperationNode = new UniversalOperationNode( operation, {
-      font: options.font,
+      fontSize: options.fontSize,
       centerX: options.rightX,
       centerY: options.startY
     } );
