@@ -17,11 +17,11 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Event = require( 'SCENERY/input/Event' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Util = require( 'DOT/Util' );
 
   /**
@@ -89,8 +89,8 @@ define( function( require ) {
       } );
 
     // @public (read-only) weight of the terms that are on the plate
-    this.weightOnPlateProperty = new Property( ReducedFraction.withInteger( 0 ), {
-      valueType: ReducedFraction,
+    this.weightOnPlateProperty = new Property( Fraction.withInteger( 0 ), {
+      valueType: Fraction,
       useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
     } );
 
@@ -332,9 +332,9 @@ define( function( require ) {
      * @protected
      */
     updateWeightOnPlateProperty: function() {
-      var weight = ReducedFraction.withInteger( 0 );
+      var weight = Fraction.withInteger( 0 );
       for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
-        weight = weight.plus( this.termsOnPlate.get( i ).weight );
+        weight = weight.plus( this.termsOnPlate.get( i ).weight ).reduced();
       }
       this.weightOnPlateProperty.value = weight;
     },

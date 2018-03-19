@@ -15,9 +15,9 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
@@ -67,11 +67,11 @@ define( function( require ) {
 
     // x and -x
     var positiveXCreator = new VariableTermCreator( xString, xProperty, {
-      defaultCoefficient: ReducedFraction.withInteger( 1 ),
+      defaultCoefficient: Fraction.withInteger( 1 ),
       likeTermsCellIndex: 0
     } );
     var negativeXCreator = new VariableTermCreator( xString, xProperty, {
-      defaultCoefficient: ReducedFraction.withInteger( -1 ),
+      defaultCoefficient: Fraction.withInteger( -1 ),
       likeTermsCellIndex: 0
     } );
     positiveXCreator.inverseTermCreator = negativeXCreator;
@@ -79,11 +79,11 @@ define( function( require ) {
 
     // 1 and -1
     var positiveOneCreator = new ConstantTermCreator( {
-      defaultConstantValue: ReducedFraction.withInteger( 1 ),
+      defaultConstantValue: Fraction.withInteger( 1 ),
       likeTermsCellIndex: 1
     } );
     var negativeOneCreator = new ConstantTermCreator( {
-      defaultConstantValue: ReducedFraction.withInteger( -1 ),
+      defaultConstantValue: Fraction.withInteger( -1 ),
       likeTermsCellIndex: 1
     } );
     positiveOneCreator.inverseTermCreator = negativeOneCreator;

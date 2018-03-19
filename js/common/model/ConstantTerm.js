@@ -10,8 +10,8 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
@@ -22,13 +22,15 @@ define( function( require ) {
   function ConstantTerm( termCreator, options ) {
 
     options = _.extend( {
-      constantValue: ReducedFraction.withInteger( 1 )
+      constantValue: Fraction.withInteger( 1 )
     }, options );
 
-    assert && assert( options.constantValue instanceof ReducedFraction,
+    assert && assert( options.constantValue instanceof Fraction,
       'invalid constantValue: ' + options.constantValue );
+    assert && assert( options.constantValue.isReduced(),
+      'constantValue must be reduced: ' + options.constantValue );
 
-    // @public (read-only) {ReducedFraction}
+    // @public (read-only) {Fraction}
     this.constantValue = options.constantValue;
 
     Term.call( this, termCreator, options );
@@ -40,7 +42,7 @@ define( function( require ) {
 
     /**
      * The weight of a constant term is the same as its value.
-     * @returns {ReducedFraction}
+     * @returns {Fraction}
      * @public
      * @override
      */
@@ -80,7 +82,7 @@ define( function( require ) {
      */
     isInverseTerm: function( term ) {
       return ( term instanceof ConstantTerm ) &&
-             ( this.constantValue.toDecimal() === -term.constantValue.toDecimal() );
+             ( this.constantValue.getValue() === -term.constantValue.getValue() );
     }
   } );
 } );

@@ -11,8 +11,8 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
 
   /**
    * @param {number} coefficient
@@ -21,7 +21,8 @@ define( function( require ) {
    */
   function VariableTermOperand( coefficient, symbol ) {
 
-    assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient: ' + coefficient );
+    assert && assert( coefficient instanceof Fraction, 'invalid coefficient: ' + coefficient );
+    assert && assert( coefficient.isReduced(), 'coefficient must be reduced: ' + coefficient );
 
     // @public (read-only)
     this.coefficient = coefficient;

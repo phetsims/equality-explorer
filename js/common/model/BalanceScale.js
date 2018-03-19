@@ -103,14 +103,14 @@ define( function( require ) {
       [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
 
       /**
-       * @param {ReducedFraction} leftWeight
-       * @param {ReducedFraction} rightWeight
+       * @param {Fraction} leftWeight
+       * @param {Fraction} rightWeight
        * @returns {number}
        */
       function( leftWeight, rightWeight ) {
 
         // compute the weight difference between the 2 plates
-        var weightDelta = ( rightWeight.toDecimal() - leftWeight.toDecimal() );
+        var weightDelta = ( rightWeight.getValue() - leftWeight.getValue() );
 
         // constrain to maxWeight so the scale bottoms out
         if ( weightDelta > options.maxWeight ) {

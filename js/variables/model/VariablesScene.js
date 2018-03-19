@@ -13,9 +13,9 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
@@ -61,25 +61,25 @@ define( function( require ) {
 
       // x
       new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: ReducedFraction.withInteger( 1 ),
+        defaultCoefficient: Fraction.withInteger( 1 ),
         initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // -x
       new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: ReducedFraction.withInteger( -1 ),
+        defaultCoefficient: Fraction.withInteger( -1 ),
         initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // 1
       new ConstantTermCreator( {
-        defaultConstantValue: ReducedFraction.withInteger( 1 ),
+        defaultConstantValue: Fraction.withInteger( 1 ),
         initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // -1
       new ConstantTermCreator( {
-        defaultConstantValue: ReducedFraction.withInteger( -1 ),
+        defaultConstantValue: Fraction.withInteger( -1 ),
         initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } )
     ];

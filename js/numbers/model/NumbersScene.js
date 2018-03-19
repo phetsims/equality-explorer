@@ -12,8 +12,8 @@ define( function( require ) {
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
@@ -43,13 +43,13 @@ define( function( require ) {
 
       // 1
       new ConstantTermCreator( {
-        defaultConstantValue: ReducedFraction.withInteger( 1 ),
+        defaultConstantValue: Fraction.withInteger( 1 ),
         initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // -1
       new ConstantTermCreator( {
-        defaultConstantValue: ReducedFraction.withInteger( -1 ),
+        defaultConstantValue: Fraction.withInteger( -1 ),
         initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } )
     ];

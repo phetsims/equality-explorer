@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
@@ -25,13 +25,14 @@ define( function( require ) {
   var DEFAULT_INTEGER_FONT = new PhetFont( 40 );
 
   /**
-   * @param {ReducedFraction} fraction
+   * @param {Fraction} fraction
    * @param {Object} [options]
    * @constructor
    */
   function ReducedFractionNode( fraction, options ) {
 
-    assert && assert( fraction instanceof ReducedFraction, 'invalid fraction: ' + fraction );
+    assert && assert( fraction instanceof Fraction, 'invalid fraction: ' + fraction );
+    assert && assert( fraction.isReduced(), 'fraction must be reduced: ' + fraction );
 
     options = _.extend( {
       minLineLength: 1, // length of the fraction line
@@ -48,7 +49,7 @@ define( function( require ) {
     if ( fraction.isInteger() ) {
 
       // integer
-      var integerNode = new Text( fraction.toDecimal(), {
+      var integerNode = new Text( fraction.getValue(), {
         font: options.integerFont
       } );
 
@@ -79,7 +80,7 @@ define( function( require ) {
       options.children = [ absoluteFractionNode ];
 
       // Add sign for negative values
-      if ( fraction.toDecimal() < 0 ) {
+      if ( fraction.getValue() < 0 ) {
         var negativeSignNode = new Text( MathSymbols.MINUS, {
           font: options.fractionFont,
           right: lineNode.left - options.xSpacing,

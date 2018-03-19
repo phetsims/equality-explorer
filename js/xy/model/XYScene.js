@@ -11,9 +11,9 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
@@ -66,24 +66,24 @@ define( function( require ) {
 
       // x
       new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: ReducedFraction.withInteger( 1 )
+        defaultCoefficient: Fraction.withInteger( 1 )
       } ),
 
       // -x
       new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: ReducedFraction.withInteger( -1 )
+        defaultCoefficient: Fraction.withInteger( -1 )
       } ),
 
       // y
       new VariableTermCreator( yString, yProperty, {
-        defaultCoefficient: ReducedFraction.withInteger( 1 ),
+        defaultCoefficient: Fraction.withInteger( 1 ),
         positiveFill: POSITIVE_Y_FILL,
         negativeFill: NEGATIVE_Y_FILL
       } ),
 
       // -y
       new VariableTermCreator( yString, yProperty, {
-        defaultCoefficient: ReducedFraction.withInteger( -1 ),
+        defaultCoefficient: Fraction.withInteger( -1 ),
         positiveFill: POSITIVE_Y_FILL,
         negativeFill: NEGATIVE_Y_FILL
       } )

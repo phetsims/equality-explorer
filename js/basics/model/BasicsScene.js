@@ -12,9 +12,9 @@ define( function( require ) {
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTermCreator = require( 'EQUALITY_EXPLORER/basics/model/MysteryTermCreator' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
@@ -66,7 +66,7 @@ define( function( require ) {
     // creator for constant terms
     if ( hasConstantTerms ) {
       termCreators.push( new ConstantTermCreator( {
-          defaultValue: ReducedFraction.withInteger( 1 ),
+          defaultConstantValue: Fraction.withInteger( 1 ),
           initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ i ]
         } )
       );

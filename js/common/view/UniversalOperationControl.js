@@ -14,13 +14,13 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var StringProperty = require( 'AXON/StringProperty' );
@@ -85,7 +85,7 @@ define( function( require ) {
     for ( i = options.operandRange.min; i <= options.operandRange.max; i++ ) {
 
       // constant term
-      var constantTermOperand = new ConstantTermOperand( ReducedFraction.withInteger( i ) );
+      var constantTermOperand = new ConstantTermOperand( Fraction.withInteger( i ) );
       operands.push( constantTermOperand );
       operandTerms.push( {
         value: constantTermOperand,
@@ -96,7 +96,7 @@ define( function( require ) {
       } );
 
       // variable term
-      var variableTermOperand = new VariableTermOperand( ReducedFraction.withInteger( i ), xString );
+      var variableTermOperand = new VariableTermOperand( Fraction.withInteger( i ), xString );
       operands.push( variableTermOperand );
       if ( i === 1 ) {
 

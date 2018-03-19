@@ -13,10 +13,10 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
 
@@ -59,7 +59,7 @@ define( function( require ) {
 
     /**
      * Creates the representation of a term that appears on interactive nodes.
-     * @param {ReducedFraction} constantValue - value shown on the icon
+     * @param {Fraction} constantValue - value shown on the icon
      * @param {Object} [options] - see DEFAULT_OPTIONS
      * @returns {Node}
      * @public
@@ -67,13 +67,14 @@ define( function( require ) {
      */
     createInteractiveTermNode: function( constantValue, options ) {
 
-      assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue: ' + constantValue );
+      assert && assert( constantValue instanceof Fraction, 'invalid constantValue: ' + constantValue );
+      assert && assert( constantValue.isReduced(), 'constantValue must be reduced: ' + constantValue );
 
       options = _.extend( {
         diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       }, DEFAULT_OPTIONS, options );
 
-      var isPositive = ( constantValue.toDecimal() >= 0 );
+      var isPositive = ( constantValue.getValue() >= 0 );
 
       // background circle
       var circleNode = new Circle( options.diameter / 2, {
@@ -100,14 +101,15 @@ define( function( require ) {
     /**
      * Creates the representation of a term that is shown in equations.
      * For constant terms, this same representation appears on interactive terms.
-     * @param {ReducedFraction} constantValue
+     * @param {Fraction} constantValue
      * @param {Object} [options] - see ReducedFractionNode
      * @returns {Node}
      * @public
      * @static
      */
     createEquationTermNode: function( constantValue, options ) {
-      assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue: ' + constantValue );
+      assert && assert( constantValue instanceof Fraction, 'invalid constantValue: ' + constantValue );
+      assert && assert( constantValue.isReduced(), 'constantValue must be reduced: ' + constantValue );
       return new ReducedFractionNode( constantValue, options );
     }
   } );

@@ -13,10 +13,10 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
@@ -36,13 +36,15 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      defaultCoefficient: ReducedFraction.withInteger( 1 ), // terms are created with this coefficient by default
+      defaultCoefficient: Fraction.withInteger( 1 ), // terms are created with this coefficient by default
       positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
       negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL
     }, options );
 
-    assert && assert( options.defaultCoefficient instanceof ReducedFraction,
+    assert && assert( options.defaultCoefficient instanceof Fraction,
       'invalid defaultCoefficient: ' + options.defaultCoefficient );
+    assert && assert( options.defaultCoefficient.isReduced(),
+      'defaultCoefficient must be reduced: ' + options.defaultCoefficient );
 
     // @public (read-only)
     this.symbol = symbol;
@@ -77,9 +79,9 @@ define( function( require ) {
      * @public
      */
     sumCoefficientsOnScale: function() {
-      var sum = ReducedFraction.withInteger( 0 );
+      var sum = Fraction.withInteger( 0 );
       for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
-        sum = sum.plus( this.termsOnPlate.get( i ).coefficient );
+        sum = sum.plus( this.termsOnPlate.get( i ).coefficient ).reduced();
       }
       return sum;
     },
@@ -114,10 +116,10 @@ define( function( require ) {
       options = options || {};
       assert && assert( options.coefficient === undefined, 'VariableTermCreator sets coefficient' );
 
-      var coefficient = term1.coefficient.plus( term2.coefficient );
+      var coefficient = term1.coefficient.plus( term2.coefficient ).reduced();
       var combinedTerm;
 
-      if ( coefficient.toDecimal() === 0 ) {
+      if ( coefficient.getValue() === 0 ) {
 
         // terms summed to zero
         combinedTerm = null;
@@ -194,20 +196,20 @@ define( function( require ) {
 
       var cellIndex = this.plate.getCellForTerm( term );
 
-      // {ReducedFraction} compute the new coefficient value
+      // {Fraction} compute the new coefficient value
       var newCoefficient;
       if ( operation.operator === MathSymbols.PLUS && operation.operand instanceof VariableTermOperand ) {
-        newCoefficient = term.coefficient.plus( operation.operand.coefficient );
+        newCoefficient = term.coefficient.plus( operation.operand.coefficient ).reduced();
       }
       else if ( operation.operator === MathSymbols.MINUS && operation.operand instanceof VariableTermOperand ) {
-        newCoefficient = term.coefficient.minus( operation.operand.coefficient );
+        newCoefficient = term.coefficient.minus( operation.operand.coefficient ).reduced();
       }
       else if ( operation.operator === MathSymbols.TIMES && operation.operand instanceof ConstantTermOperand ) {
-        newCoefficient = term.coefficient.times( operation.operand.constantValue );
+        newCoefficient = term.coefficient.times( operation.operand.constantValue ).reduced();
       }
       else if ( operation.operator === MathSymbols.DIVIDE && operation.operand instanceof ConstantTermOperand &&
-                operation.operand.constantValue.toDecimal() !== 0 ) {
-        newCoefficient = term.coefficient.divided( operation.operand.constantValue );
+                operation.operand.constantValue.getValue() !== 0 ) {
+        newCoefficient = term.coefficient.divided( operation.operand.constantValue ).reduced();
       }
       else {
         return term; // operation is not applicable to this term
@@ -217,7 +219,7 @@ define( function( require ) {
       term.dispose();
 
       var newTerm = null;
-      if ( newCoefficient.toDecimal() !== 0 ) {
+      if ( newCoefficient.getValue() !== 0 ) {
 
         // create a new term on the plate
         var newTermOptions = {
@@ -266,7 +268,7 @@ define( function( require ) {
 
       var term = null;
 
-      // {ReducedFraction} compute the coefficient
+      // {Fraction} compute the coefficient
       var coefficient = ( operation.operator === MathSymbols.PLUS ) ?
                         operation.operand.coefficient : operation.operand.coefficient.timesInteger( -1 );
 
@@ -292,13 +294,13 @@ define( function( require ) {
     isEquivalentTo: function( termCreator ) {
       return ( termCreator.constructor === this.constructor ) &&  // same type
              ( termCreator.variableValueProperty === this.variableValueProperty ) && // same variable
-             ( termCreator.defaultCoefficient.toDecimal() === this.defaultCoefficient.toDecimal() ); // same coefficients
+             ( termCreator.defaultCoefficient.getValue() === this.defaultCoefficient.getValue() ); // same coefficients
     },
 
     /**
      * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
      * The format of this data structure is specific VariableTermCreator.
-     * @returns {{cellIndex: number, coefficient: ReducedFraction, diameter: number}[]}
+     * @returns {{cellIndex: number, coefficient: Fraction, diameter: number}[]}
      */
     createSnapshot: function() {
       var snapshot = [];

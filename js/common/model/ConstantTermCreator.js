@@ -14,9 +14,9 @@ define( function( require ) {
   var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
 
   /**
@@ -26,11 +26,13 @@ define( function( require ) {
   function ConstantTermCreator( options ) {
 
     options = _.extend( {
-      defaultConstantValue: ReducedFraction.withInteger( 1 ) // terms are created with this value by default
+      defaultConstantValue: Fraction.withInteger( 1 ) // terms are created with this value by default
     }, options );
 
-    assert && assert( options.defaultConstantValue instanceof ReducedFraction,
+    assert && assert( options.defaultConstantValue instanceof Fraction,
       'invalid defaultConstantValue: ' + options.defaultConstantValue );
+    assert && assert( options.defaultConstantValue.isReduced(),
+      'defaultConstantValue must be reduced: ' + options.defaultConstantValue );
 
     // @public (read-only) terms are created with this value by default
     this.defaultConstantValue = options.defaultConstantValue;
@@ -74,10 +76,10 @@ define( function( require ) {
       options = options || {};
       assert && assert( !options.constantValue, 'ConstantTermCreator sets constantValue' );
 
-      var constantValue = term1.constantValue.plus( term2.constantValue );
+      var constantValue = term1.constantValue.plus( term2.constantValue ).reduced();
       var combinedTerm;
 
-      if ( constantValue.toDecimal() === 0 ) {
+      if ( constantValue.getValue() === 0 ) {
 
         // terms summed to zero
         combinedTerm = null;
@@ -148,22 +150,22 @@ define( function( require ) {
         return term; // operand is not applicable to constant terms
       }
 
-      var constantValue = operation.operand.constantValue; // {ReducedFraction}
+      var constantValue = operation.operand.constantValue; // {Fraction}
       var cellIndex = this.plate.getCellForTerm( term );
 
       // compute the new constant value
       var newConstantValue;
       if ( operation.operator === MathSymbols.PLUS ) {
-        newConstantValue = term.constantValue.plus( constantValue );
+        newConstantValue = term.constantValue.plus( constantValue ).reduced();
       }
       else if ( operation.operator === MathSymbols.MINUS ) {
-        newConstantValue = term.constantValue.minus( constantValue );
+        newConstantValue = term.constantValue.minus( constantValue ).reduced();
       }
       else if ( operation.operator === MathSymbols.TIMES ) {
-        newConstantValue = term.constantValue.times( constantValue );
+        newConstantValue = term.constantValue.times( constantValue ).reduced();
       }
-      else if ( operation.operator === MathSymbols.DIVIDE && constantValue.toDecimal() !== 0 ) {
-        newConstantValue = term.constantValue.divided( constantValue );
+      else if ( operation.operator === MathSymbols.DIVIDE && constantValue.getValue() !== 0 ) {
+        newConstantValue = term.constantValue.divided( constantValue ).reduced();
       }
       else {
         return term; // operation is not applicable
@@ -173,7 +175,7 @@ define( function( require ) {
       term.dispose();
 
       var newTerm = null;
-      if ( newConstantValue.toDecimal() !== 0 ) {
+      if ( newConstantValue.getValue() !== 0 ) {
 
         // create a new term on the plate
         var newTermOptions = {
@@ -226,7 +228,7 @@ define( function( require ) {
 
       var term = null;
 
-      // {ReducedFraction} compute the constant value
+      // {Fraction} compute the constant value
       var newConstantValue = ( operation.operator === MathSymbols.PLUS ) ?
                             operation.operand.constantValue : operation.operand.constantValue.timesInteger( -1 );
 
@@ -251,13 +253,13 @@ define( function( require ) {
      */
     isEquivalentTo: function( termCreator ) {
       return ( termCreator instanceof ConstantTermCreator ) &&
-             ( termCreator.defaultConstantValue.toDecimal() === this.defaultConstantValue.toDecimal() ); // same values
+             ( termCreator.defaultConstantValue.getValue() === this.defaultConstantValue.getValue() ); // same values
     },
 
     /**
      * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
      * The format of this data structure is specific ConstantTermCreator.
-     * @returns {{cellIndex: number, constantValue: ReducedFraction, diameter: number}[]}
+     * @returns {{cellIndex: number, constantValue: Fraction, diameter: number}[]}
      */
     createSnapshot: function() {
       var snapshot = [];

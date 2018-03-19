@@ -12,8 +12,8 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
@@ -36,12 +36,12 @@ define( function( require ) {
 
     /**
      * Gets the weight of this term.
-     * @returns {ReducedFraction}
+     * @returns {Fraction}
      * @public
      * @override
      */
     get weight() {
-      return ReducedFraction.withInteger( this.mysteryObject.weight );
+      return Fraction.withInteger( this.mysteryObject.weight );
     },
 
     /**

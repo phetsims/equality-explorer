@@ -12,6 +12,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
@@ -19,7 +20,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -65,7 +65,7 @@ define( function( require ) {
 
     /**
      * Creates the representation of a term that appears on interactive nodes.
-     * @param {ReducedFraction} coefficient
+     * @param {Fraction} coefficient
      * @param {string} symbol
      * @param {Object} [options] - see DEFAULT_OPTIONS
      * @returns {Node}
@@ -74,14 +74,15 @@ define( function( require ) {
      */
     createInteractiveTermNode: function( coefficient, symbol, options ) {
 
-      assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient: ' + coefficient );
+      assert && assert( coefficient instanceof Fraction, 'invalid coefficient: ' + coefficient );
+      assert && assert( coefficient.isReduced(), 'coefficient must be reduced: ' + coefficient );
       assert && assert( typeof symbol === 'string', 'invalid symbol: ' + symbol );
 
       options = _.extend( {
         diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       }, DEFAULT_OPTIONS, options );
 
-      var isPositive = ( coefficient.toDecimal() >= 0 );
+      var isPositive = ( coefficient.getValue() >= 0 );
 
       // background square
       var squareNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
@@ -108,7 +109,7 @@ define( function( require ) {
     /**
      * Creates the representation of a term that is shown in equations.
      * For constant terms, this same representation appears on interactive terms.
-     * @param {ReducedFraction} coefficient
+     * @param {Fraction} coefficient
      * @param {string} symbol - the variable symbol
      * @param {Object} [options] - see ReducedFractionNode
      * @returns {Node}
@@ -117,7 +118,8 @@ define( function( require ) {
      */
     createEquationTermNode: function( coefficient, symbol, options ) {
 
-      assert && assert( coefficient instanceof ReducedFraction, 'invalid coefficient: ' + coefficient );
+      assert && assert( coefficient instanceof Fraction, 'invalid coefficient: ' + coefficient );
+      assert && assert( coefficient.isReduced(), 'coefficient must be reduced: ' + coefficient );
       assert && assert( typeof symbol === 'string', 'invalid symbol: ' + symbol );
 
       options = _.extend( {
@@ -128,7 +130,7 @@ define( function( require ) {
       options.children = [];
 
       // coefficient, if not 1 or -1. Show 'x' not '1x', '-x' not '-1x'.
-      if ( coefficient.abs().toDecimal() !== 1 ) {
+      if ( coefficient.abs().getValue() !== 1 ) {
         var coefficientNode = new ReducedFractionNode( coefficient, {
           fractionFont: options.fractionFont,
           integerFont: options.integerFont
@@ -137,7 +139,7 @@ define( function( require ) {
       }
 
       // variable's symbol, with negative sign if coefficient is -1
-      var symbolText = ( coefficient.toDecimal() === -1 ) ? ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
+      var symbolText = ( coefficient.getValue() === -1 ) ? ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
       var symbolNode = new Text( symbolText, {
         font: options.symbolFont
       } );

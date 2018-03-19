@@ -49,7 +49,7 @@ define( function( require ) {
 
     /**
      * Gets the weight of this term.
-     * @returns {ReducedFraction}
+     * @returns {Fraction}
      * @public
      * @abstract
      */

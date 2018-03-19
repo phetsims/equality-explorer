@@ -14,6 +14,7 @@ define( function( require ) {
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
@@ -23,7 +24,6 @@ define( function( require ) {
   var MysteryTermNode = require( 'EQUALITY_EXPLORER/basics/view/MysteryTermNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
@@ -154,13 +154,13 @@ define( function( require ) {
     // evaluate the left side
     var leftWeight = 0;
     for ( var i = 0; i < leftTermCreators.length; i++ ) {
-      leftWeight += leftTermCreators[ i ].weightOnPlateProperty.value.toDecimal();
+      leftWeight += leftTermCreators[ i ].weightOnPlateProperty.value.getValue();
     }
 
     // evaluate the right side
     var rightWeight = 0;
     for ( i = 0; i < rightTermCreators.length; i++ ) {
-      rightWeight += rightTermCreators[ i ].weightOnPlateProperty.value.toDecimal();
+      rightWeight += rightTermCreators[ i ].weightOnPlateProperty.value.getValue();
     }
 
     // determine the operator that describes the relationship between left and right sides
@@ -191,8 +191,8 @@ define( function( require ) {
    */
   function createSideNode( termCreators, symbolFont, operatorFont, integerFont, fractionFont, coefficientSpacing, plusSpacing ) {
 
-    var constantValue = ReducedFraction.withInteger( 0 );
-    var coefficients = {}; // map from {string} variable to {ReducedFraction} coefficient, e.g. { x: 3/5 }
+    var constantValue = Fraction.withInteger( 0 );
+    var coefficients = {}; // map from {string} variable to {Fraction} coefficient, e.g. { x: 3/5 }
 
     var children = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
@@ -219,14 +219,15 @@ define( function( require ) {
 
           // variable terms contribute to the coefficient for their associated variable
           if ( !coefficients.hasOwnProperty( termCreator.symbol ) ) {
-            coefficients[ termCreator.symbol ] = ReducedFraction.withInteger( 0 );
+            coefficients[ termCreator.symbol ] = Fraction.withInteger( 0 );
           }
-          coefficients[ termCreator.symbol ] = coefficients[ termCreator.symbol ].plus( termCreator.sumCoefficientsOnScale() );
+          coefficients[ termCreator.symbol ] =
+            coefficients[ termCreator.symbol ].plus( termCreator.sumCoefficientsOnScale() ).reduced();
         }
         else if ( termCreator instanceof ConstantTermCreator ) {
 
           // constant terms contribute their weight to the constant term
-          constantValue = constantValue.plus( termCreator.weightOnPlateProperty.value );
+          constantValue = constantValue.plus( termCreator.weightOnPlateProperty.value ).reduced();
         }
         else {
           throw new Error( 'unsupported termCreator type' );
@@ -238,9 +239,9 @@ define( function( require ) {
     for ( var property in coefficients ) {
       if ( coefficients.hasOwnProperty( property ) ) {
 
-        var coefficient = coefficients[ property ]; // {ReducedFraction}
+        var coefficient = coefficients[ property ]; // {Fraction}
 
-        if ( coefficient.toDecimal() !== 0 ) {
+        if ( coefficient.getValue() !== 0 ) {
 
           var variableTermOptions = {
             integerFont: integerFont,
@@ -252,7 +253,7 @@ define( function( require ) {
           if ( children.length > 0 ) {
 
             // if there were previous terms, replace the coefficient's sign with an operator
-            var operator = ( coefficient.toDecimal() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
+            var operator = ( coefficient.getValue() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
             children.push( new Text( operator, { font: operatorFont } ) );
             children.push( VariableTermNode.createEquationTermNode( coefficient.abs(), property, variableTermOptions ) );
           }
@@ -266,7 +267,7 @@ define( function( require ) {
     }
 
     // put the non-zero constant term last
-    if ( constantValue.toDecimal() !== 0 ) {
+    if ( constantValue.getValue() !== 0 ) {
 
       var constantTermOptions = {
         integerFont: integerFont,
@@ -277,7 +278,7 @@ define( function( require ) {
       if ( children.length > 0 ) {
 
         // if there were previous terms, replace the constant's sign with an operator
-        operator = ( constantValue.toDecimal() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
+        operator = ( constantValue.getValue() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
         children.push( new Text( operator, { font: operatorFont } ) );
         children.push( ConstantTermNode.createEquationTermNode( constantValue.abs(), constantTermOptions ) );
       }

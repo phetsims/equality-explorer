@@ -15,11 +15,11 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var Grid = require( 'EQUALITY_EXPLORER/common/model/Grid' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -77,13 +77,13 @@ define( function( require ) {
       weightDependencies.push( termCreators[ i ].weightOnPlateProperty );
     }
 
-    // @public (read-only) {Property.<ReducedFraction>} total weight of the terms that are on the plate
+    // @public (read-only) {Property.<Fraction>} total weight of the terms that are on the plate
     // dispose not required.
     this.weightProperty = new DerivedProperty( weightDependencies,
       function() {
-        var weight = ReducedFraction.withInteger( 0 );
+        var weight = Fraction.withInteger( 0 );
         for ( var i = 0; i < termCreators.length; i++ ) {
-          weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value );
+          weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value ).reduced();
         }
         return weight;
       } );

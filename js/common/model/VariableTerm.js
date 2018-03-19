@@ -10,9 +10,9 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
@@ -28,16 +28,17 @@ define( function( require ) {
       'invalid variableValueProperty: ' + variableValueProperty );
 
     options = _.extend( {
-      coefficient: ReducedFraction.withInteger( 1 )
+      coefficient: Fraction.withInteger( 1 )
     }, options );
 
-    assert && assert( options.coefficient instanceof ReducedFraction, 'invalid coefficient: ' + options.coefficient );
-    assert && assert( options.coefficient.toDecimal() !== 0, 'coefficient cannot be zero' );
+    assert && assert( options.coefficient instanceof Fraction, 'invalid coefficient: ' + options.coefficient );
+    assert && assert( options.coefficient.isReduced(), 'coefficient must be reduced: ' + options.coefficient );
+    assert && assert( options.coefficient.getValue() !== 0, 'coefficient cannot be zero' );
 
     // @public (read-only)
     this.symbol = symbol;
 
-    // @public {ReducedFraction}
+    // @public {Fraction}
     this.coefficient = options.coefficient;
 
     // @public (read-only) {NumberProperty}
@@ -52,12 +53,12 @@ define( function( require ) {
 
     /**
      * Gets the weight of this term.
-     * @returns {ReducedFraction}
+     * @returns {Fraction}
      * @public
      * @override
      */
     get weight() {
-      return this.coefficient.timesInteger( this.variableValueProperty.value );
+      return this.coefficient.timesInteger( this.variableValueProperty.value ).reduced();
     },
 
     /**
@@ -96,7 +97,7 @@ define( function( require ) {
       return ( term instanceof VariableTerm ) &&
              ( this.symbol === term.symbol ) &&
              ( this.variableProperty === term.variableProperty ) &&  // associated with same variable
-             ( this.coefficient.toDecimal() === -term.coefficient.toDecimal() ); // inverse coefficients
+             ( this.coefficient.getValue() === -term.coefficient.getValue() ); // inverse coefficients
     }
   } );
 } );

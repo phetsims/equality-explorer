@@ -12,8 +12,8 @@ define( function( require ) {
   var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var MysteryObject = require( 'EQUALITY_EXPLORER/basics/model/MysteryObject' );
 
   // images
@@ -38,7 +38,7 @@ define( function( require ) {
     BasicsScene.call( this, 'shapes', mysteryObjects, {
 
       // icon used to represent this scene in the scene control (radio buttons)
-      icon: ConstantTermNode.createInteractiveTermNode( ReducedFraction.withInteger( 1 ) ),
+      icon: ConstantTermNode.createInteractiveTermNode( Fraction.withInteger( 1 ) ),
 
       // this scene allows you to create constant terms
       hasConstantTerms: true
