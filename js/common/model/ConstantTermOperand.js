@@ -25,5 +25,15 @@ define( function( require ) {
 
   equalityExplorer.register( 'ConstantTermOperand', ConstantTermOperand );
 
-  return inherit( Object, ConstantTermOperand );
+  return inherit( Object, ConstantTermOperand, {
+
+    /**
+     * For debugging only. Do not rely on the format of this.
+     * @public
+     * @returns {string}
+     */
+    toString: function() {
+      return 'ConstantTermOperand: ' + this.constantValue;
+    }
+  } );
 } );

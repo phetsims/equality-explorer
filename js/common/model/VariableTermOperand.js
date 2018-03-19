@@ -27,5 +27,15 @@ define( function( require ) {
 
   equalityExplorer.register( 'VariableTermOperand', VariableTermOperand );
 
-  return inherit( Object, VariableTermOperand );
+  return inherit( Object, VariableTermOperand, {
+
+    /**
+     * For debugging only. Do not rely on the format of this.
+     * @public
+     * @returns {string}
+     */
+    toString: function() {
+      return 'VariableTermOperand: ' + this.coefficient + ' ' + this.symbol;
+    }
+  } );
 } );
