@@ -163,7 +163,7 @@ define( function( require ) {
         newConstantValue = term.constantValue.times( constantValue );
       }
       else if ( operation.operator === MathSymbols.DIVIDE && constantValue.toDecimal() !== 0 ) {
-        newConstantValue = term.constantValue.divideBy( constantValue );
+        newConstantValue = term.constantValue.divided( constantValue );
       }
       else {
         return term; // operation is not applicable

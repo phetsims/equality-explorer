@@ -97,7 +97,7 @@ define( function( require ) {
      * @returns {ReducedFraction}
      * @public
      */
-    divideBy: function( value ) {
+    divided: function( value ) {
       assert && assert( value instanceof Fraction, 'value is not a Fraction: ' + value );
       var numerator = this.numerator * value.denominator;
       var denominator = this.denominator * value.numerator;
@@ -143,7 +143,7 @@ define( function( require ) {
      * @returns {ReducedFraction}
      * @public
      */
-    divideByInteger: function( value ) {
+    dividedInteger: function( value ) {
       assert && assert( Util.isInteger( value ), 'value is not an integer: ' + value );
       assert && assert( value !== 0, 'division by zero' );
       return new ReducedFraction( this.numerator, this.denominator * value );

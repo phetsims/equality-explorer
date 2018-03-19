@@ -207,7 +207,7 @@ define( function( require ) {
       }
       else if ( operation.operator === MathSymbols.DIVIDE && operation.operand instanceof ConstantTermOperand &&
                 operation.operand.constantValue.toDecimal() !== 0 ) {
-        newCoefficient = term.coefficient.divideBy( operation.operand.constantValue );
+        newCoefficient = term.coefficient.divided( operation.operand.constantValue );
       }
       else {
         return term; // operation is not applicable to this term
