@@ -47,6 +47,14 @@ define( function( require ) {
     },
 
     /**
+     * Gets the sign of the value.
+     * @returns {number} same as Math.sign
+     */
+    get sign() {
+      return Util.sign( this.toDecimal() );
+    },
+
+    /**
      * Adds a fraction to this fraction.
      * @param {Fraction} value
      * @returns {ReducedFraction}
@@ -68,6 +76,32 @@ define( function( require ) {
     minusFraction: function( value ) {
       assert && assert( value instanceof Fraction, 'value is not a Fraction: ' + value );
       return this.plusFraction( value.timesInteger( -1 ) );
+    },
+
+    /**
+     * Multiplies this fraction with another fraction.
+     * @param {Fraction} value
+     * @returns {ReducedFraction}
+     * @public
+     */
+    timesFraction: function( value ) {
+      assert && assert( value instanceof Fraction, 'value is not a Fraction: ' + value );
+      var numerator = this.numerator * value.numerator;
+      var denominator = this.denominator * value.denominator;
+      return new ReducedFraction( numerator, denominator );
+    },
+
+    /**
+     * Divides this fraction by another fraction.
+     * @param {Fraction} value
+     * @returns {ReducedFraction}
+     * @public
+     */
+    divideByFraction: function( value ) {
+      assert && assert( value instanceof Fraction, 'value is not a Fraction: ' + value );
+      var numerator = this.numerator * value.denominator;
+      var denominator = this.denominator * value.numerator;
+      return new ReducedFraction( numerator, denominator );
     },
 
     /**
