@@ -196,6 +196,7 @@ define( function( require ) {
     HBox.call( this, options );
 
     //TODO skip 0 operand when operator is DIVIDE
+    //TODO skip variable operands when operator is TIMES or DIVIDE
     //TODO change 0 operand to 1 when operator becomes DIVIDE
     //TODO change Nx operand to N when operator becomes TIMES or DIVIDE
     
