@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
+  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -131,7 +132,7 @@ define( function( require ) {
       return new ConstantTermNode( this, term, plate, options );
     },
 
-    //TODO clean up this abomination, too much duck typing of operand data structures
+    //TODO 3 return statements in this function
     /**
      * Applies a universal operation to a term on the scale.
      * @param {UniversalOperation} operation
@@ -141,14 +142,14 @@ define( function( require ) {
      * @override
      */
     applyOperationToTerm: function( operation, term ) {
-      assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
+      assert && assert( this.combineLikeTermsEnabled, 'applyOperationToTerm is only supported when combining like terms' );
       assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
 
-      var constantValue = operation.operand.constantValue;
-      if ( constantValue === undefined ) {
-        return term; // operation is not applicable to constant terms
+      if ( !( operation.operand instanceof ConstantTermOperand ) ) {
+        return term; // operand is not applicable to constant terms
       }
-      
+
+      var constantValue = operation.operand.constantValue;
       var cellIndex = this.plate.getCellForTerm( term );
 
       // compute the new constant value
@@ -196,7 +197,7 @@ define( function( require ) {
       return newTerm;
     },
 
-    //TODO clean up this abomination, too much duck typing of operand data structures
+    //TODO 4 return statements in this function
     /**
      * Applies a universal operation to the plate.
      * If there is already a like term on the plate, this is a no-op.
@@ -207,31 +208,36 @@ define( function( require ) {
      * @abstract
      */
     applyOperationToPlate: function( operation ) {
+      assert && assert( this.combineLikeTermsEnabled, 'applyOperationToPlate is only supported when combining like terms' );
 
-      var constantValue = operation.operand.constantValue;
-      if ( constantValue === undefined ) {
-        return term; // operation is not applicable to constant terms
+      // operator is not applicable to constant terms
+      if ( operation.operator !== MathSymbols.PLUS && operation.operator !== MathSymbols.MINUS ) {
+        return null;
+      }
+
+      // operand is not applicable to constant terms
+      if ( !( operation.operand instanceof ConstantTermOperand ) ) {
+        return null;
+      }
+
+      // the plate already contains one or more like terms
+      if( this.numberOfTermsOnPlateProperty.value + this.inverseTermCreator.numberOfTermsOnPlateProperty.value !== 0 ) {
+        return null;
       }
 
       var term = null;
 
-      //TODO difficult to read
-      // If the plate contains no like terms (no terms for this creator or its inverse)...
-      if ( this.numberOfTermsOnPlateProperty.value === 0 &&
-           this.inverseTermCreator.numberOfTermsOnPlateProperty.value === 0 &&
-           // ... and the operator is one that creates constant terms...
-           ( operation.operator === MathSymbols.PLUS || operation.operator === MathSymbols.MINUS ) ) {
+      // compute the constant value
+      var newConstantValue = ( operation.operator === MathSymbols.PLUS ) ?
+                            operation.operand.constantValue : -operation.operand.constantValue;
 
-        // compute the constant value
-        var constantInteger = ( operation.operator === MathSymbols.PLUS ) ? constantValue : -constantValue;
-
-        // If the constant has the same sign as this term, create a constant term on the plate
-        if ( Util.sign( constantInteger ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
-          term = this.createTermOnPlate( this.likeTermsCellIndex, {
-            constantValue: ReducedFraction.withInteger( constantInteger ),
-            diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-          } );
-        }
+      // If the constant has the same sign as this term, create a constant term on the plate.
+      // Otherwise do nothing because the inverse term creator will create the term.
+      if ( Util.sign( newConstantValue ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
+        term = this.createTermOnPlate( this.likeTermsCellIndex, {
+          constantValue: ReducedFraction.withInteger( newConstantValue ),
+          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+        } );
       }
 
       return term;

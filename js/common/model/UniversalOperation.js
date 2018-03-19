@@ -30,30 +30,5 @@ define( function( require ) {
 
   equalityExplorer.register( 'UniversalOperation', UniversalOperation );
 
-  return inherit( Object, UniversalOperation, {}, {
-
-    //TODO this approach leans too heavily on duck typing for processing these data structures
-    /**
-     * Creates a data structure that describes a constant term operand.
-     * @param {number} constantValue
-     * @returns {{constantValue: number}}
-     * @public
-     * @static
-     */
-    createConstantTermOperand: function( constantValue ) {
-      return { constantValue: constantValue };
-    },
-
-    /**
-     * Creates a data structure that describes a variable term operand.
-     * @param {number} coefficient
-     * @param {string} symbol
-     * @returns {{coefficient: number, symbol: string}}
-     * @public
-     * @static
-     */
-    createVariableTermOperand: function( coefficient, symbol ) {
-      return { coefficient: coefficient, symbol: symbol };
-    }
-  } );
+  return inherit( Object, UniversalOperation );
 } );

@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
@@ -26,6 +27,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
   var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
+  var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
 
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -84,7 +86,7 @@ define( function( require ) {
     for ( i = options.operandRange.min; i <= options.operandRange.max; i++ ) {
 
       // constant term
-      var constantTermOperand = UniversalOperation.createConstantTermOperand( i );
+      var constantTermOperand = new ConstantTermOperand( i );
       operands.push( constantTermOperand );
       operandTerms.push( {
         value: constantTermOperand,
@@ -92,7 +94,7 @@ define( function( require ) {
       } );
 
       // variable term
-      var variableTermOperand = UniversalOperation.createVariableTermOperand( i, xString );
+      var variableTermOperand = new VariableTermOperand( i, xString );
       operands.push( variableTermOperand );
       if ( i === 1 ) {
 
