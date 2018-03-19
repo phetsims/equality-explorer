@@ -77,8 +77,14 @@ define( function( require ) {
       }
     }
 
+    // Start with operand 1
+    var defaultOperand = _.find( this.operands, function( operand ) {
+      return ( operand instanceof ConstantTermOperand ) && ( operand.constantValue.getValue() === 1 );
+    } );
+    assert && assert( defaultOperand, 'oops, the default was not found' );
+
     // @private {Property.<ConstantTermOperator|VariableTermOperator>}
-    this.operandProperty = new Property( this.operands[ 0 ], {
+    this.operandProperty = new Property( defaultOperand, {
       validValues: this.operands
     } );
 
