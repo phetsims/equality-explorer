@@ -10,12 +10,15 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
+  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var UniversalOperandNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperandNode' );
+  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
+  var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
 
   /**
    * @param {UniversalOperation} operation
@@ -33,9 +36,11 @@ define( function( require ) {
       spacing: 4
     }, options );
 
-    var operatorNode = new Text( operation.operator, { font: options.integerFont } );
+    var operatorNode = UniversalOperationNode.createOperatorNode( operation.operator, {
+      font: options.integerFont
+    } );
 
-    var operandNode = new UniversalOperandNode( operation.operand, {
+    var operandNode = UniversalOperationNode.createOperandNode( operation.operand, {
       symbolFont: options.symbolFont,
       integerFont: options.integerFont,
       fractionFont: options.fractionFont
@@ -49,6 +54,51 @@ define( function( require ) {
 
   equalityExplorer.register( 'UniversalOperationNode', UniversalOperationNode );
 
-  return inherit( HBox, UniversalOperationNode );
+  return inherit( HBox, UniversalOperationNode, {}, {
+
+    /**
+     * Creates the view for a universal operator.
+     * @param {string} operator
+     * @param {Object} [options]
+     * @returns {Node}
+     * @public
+     * @static
+     */
+    createOperatorNode: function( operator, options ) {
+      return new Text( operator, options );
+    },
+
+    /**
+     * Creates the view for a universal operand.
+     * @param {ConstantTermOperand|VariableTermOperand} operand
+     * @param {Object} [options]
+     * @returns {Node}
+     * @public
+     * @static
+     */
+    createOperandNode: function( operand, options ) {
+
+      var operandNode = null;
+
+      if ( operand instanceof ConstantTermOperand ) {
+        operandNode = ConstantTermNode.createEquationTermNode( operand.constantValue, {
+          integerFont: options.integerFont,
+          fractionFont: options.fractionFont
+        } );
+      }
+      else if ( operand instanceof VariableTermOperand ) {
+        operandNode = VariableTermNode.createEquationTermNode( operand.coefficient, operand.symbol, {
+          symbolFont: options.symbolFont,
+          integerFont: options.integerFont,
+          fractionFont: options.fractionFont
+        } );
+      }
+      else {
+        throw new Error( 'unsupported operand type: ' + operand );
+      }
+
+      return operandNode;
+    }
+  } );
 } );
  

@@ -18,10 +18,9 @@ define( function( require ) {
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var SolvingScene = require( 'EQUALITY_EXPLORER/solving/model/SolvingScene' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
-  var UniversalOperandNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperandNode' );
   var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
+  var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
 
   /**
    * @param {SolvingScene} scene
@@ -47,9 +46,12 @@ define( function( require ) {
     // items for the operator picker
     var operatorItems = [];
     for ( var i = 0; i < scene.operators.length; i++ ) {
+      var operator = scene.operators[ i ];
       operatorItems.push( {
-        value: scene.operators[ i ],
-        node: new Text( scene.operators[ i ], { font: options.integerFont } )
+        value: operator,
+        node: UniversalOperationNode.createOperatorNode( operator, {
+          font: options.integerFont
+        } )
       } );
     }
 
@@ -63,9 +65,10 @@ define( function( require ) {
     // items for the operand picker
     var operandItems = [];
     for ( i = 0; i < scene.operands.length; i++ ) {
+      var operand = scene.operands[ i ];
       operandItems.push( {
-        value: scene.operands[ i ],
-        node: new UniversalOperandNode( scene.operands[ i ], {
+        value: operand,
+        node: UniversalOperationNode.createOperandNode( operand, {
           symbolFont: options.symbolFont,
           integerFont: options.integerFont,
           fractionFont: options.fractionFont
