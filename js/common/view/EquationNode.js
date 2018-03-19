@@ -221,12 +221,12 @@ define( function( require ) {
           if ( !coefficients.hasOwnProperty( termCreator.symbol ) ) {
             coefficients[ termCreator.symbol ] = ReducedFraction.withInteger( 0 );
           }
-          coefficients[ termCreator.symbol ] = coefficients[ termCreator.symbol ].plusFraction( termCreator.sumCoefficientsOnScale() );
+          coefficients[ termCreator.symbol ] = coefficients[ termCreator.symbol ].plus( termCreator.sumCoefficientsOnScale() );
         }
         else if ( termCreator instanceof ConstantTermCreator ) {
 
           // constant terms contribute their weight to the constant term
-          constantValue = constantValue.plusFraction( termCreator.weightOnPlateProperty.value );
+          constantValue = constantValue.plus( termCreator.weightOnPlateProperty.value );
         }
         else {
           throw new Error( 'unsupported termCreator type' );

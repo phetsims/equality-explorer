@@ -83,7 +83,7 @@ define( function( require ) {
       function() {
         var weight = ReducedFraction.withInteger( 0 );
         for ( var i = 0; i < termCreators.length; i++ ) {
-          weight = weight.plusFraction( termCreators[ i ].weightOnPlateProperty.value );
+          weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value );
         }
         return weight;
       } );

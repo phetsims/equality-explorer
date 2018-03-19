@@ -74,7 +74,7 @@ define( function( require ) {
       options = options || {};
       assert && assert( !options.constantValue, 'ConstantTermCreator sets constantValue' );
 
-      var constantValue = term1.constantValue.plusFraction( term2.constantValue );
+      var constantValue = term1.constantValue.plus( term2.constantValue );
       var combinedTerm;
 
       if ( constantValue.toDecimal() === 0 ) {
@@ -154,16 +154,16 @@ define( function( require ) {
       // compute the new constant value
       var newConstantValue;
       if ( operation.operator === MathSymbols.PLUS ) {
-        newConstantValue = term.constantValue.plusFraction( constantValue );
+        newConstantValue = term.constantValue.plus( constantValue );
       }
       else if ( operation.operator === MathSymbols.MINUS ) {
-        newConstantValue = term.constantValue.minusFraction( constantValue );
+        newConstantValue = term.constantValue.minus( constantValue );
       }
       else if ( operation.operator === MathSymbols.TIMES ) {
-        newConstantValue = term.constantValue.timesFraction( constantValue );
+        newConstantValue = term.constantValue.times( constantValue );
       }
       else if ( operation.operator === MathSymbols.DIVIDE && constantValue.toDecimal() !== 0 ) {
-        newConstantValue = term.constantValue.divideByFraction( constantValue );
+        newConstantValue = term.constantValue.divideBy( constantValue );
       }
       else {
         return term; // operation is not applicable

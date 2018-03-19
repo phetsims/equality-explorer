@@ -79,7 +79,7 @@ define( function( require ) {
     sumCoefficientsOnScale: function() {
       var sum = ReducedFraction.withInteger( 0 );
       for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
-        sum = sum.plusFraction( this.termsOnPlate.get( i ).coefficient );
+        sum = sum.plus( this.termsOnPlate.get( i ).coefficient );
       }
       return sum;
     },
@@ -114,7 +114,7 @@ define( function( require ) {
       options = options || {};
       assert && assert( options.coefficient === undefined, 'VariableTermCreator sets coefficient' );
 
-      var coefficient = term1.coefficient.plusFraction( term2.coefficient );
+      var coefficient = term1.coefficient.plus( term2.coefficient );
       var combinedTerm;
 
       if ( coefficient.toDecimal() === 0 ) {
@@ -197,17 +197,17 @@ define( function( require ) {
       // {ReducedFraction} compute the new coefficient value
       var newCoefficient;
       if ( operation.operator === MathSymbols.PLUS && operation.operand instanceof VariableTermOperand ) {
-        newCoefficient = term.coefficient.plusFraction( operation.operand.coefficient );
+        newCoefficient = term.coefficient.plus( operation.operand.coefficient );
       }
       else if ( operation.operator === MathSymbols.MINUS && operation.operand instanceof VariableTermOperand ) {
-        newCoefficient = term.coefficient.minusFraction( operation.operand.coefficient );
+        newCoefficient = term.coefficient.minus( operation.operand.coefficient );
       }
       else if ( operation.operator === MathSymbols.TIMES && operation.operand instanceof ConstantTermOperand ) {
-        newCoefficient = term.coefficient.timesFraction( operation.operand.constantValue );
+        newCoefficient = term.coefficient.times( operation.operand.constantValue );
       }
       else if ( operation.operator === MathSymbols.DIVIDE && operation.operand instanceof ConstantTermOperand &&
                 operation.operand.constantValue.toDecimal() !== 0 ) {
-        newCoefficient = term.coefficient.divideByFraction( operation.operand.constantValue );
+        newCoefficient = term.coefficient.divideBy( operation.operand.constantValue );
       }
       else {
         return term; // operation is not applicable to this term

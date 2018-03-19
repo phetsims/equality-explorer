@@ -334,7 +334,7 @@ define( function( require ) {
     updateWeightOnPlateProperty: function() {
       var weight = ReducedFraction.withInteger( 0 );
       for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
-        weight = weight.plusFraction( this.termsOnPlate.get( i ).weight );
+        weight = weight.plus( this.termsOnPlate.get( i ).weight );
       }
       this.weightOnPlateProperty.value = weight;
     },
