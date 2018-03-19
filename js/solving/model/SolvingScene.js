@@ -11,6 +11,7 @@ define( function( require ) {
 
   // modules
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
+  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
@@ -18,14 +19,19 @@ define( function( require ) {
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
+  var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
+  var StringProperty = require( 'AXON/StringProperty' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
+  var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
+  var OPERAND_RANGE = new Range( -10, 10 );
   var ICON_SIZE = new Dimension2(
     EqualityExplorerConstants.BIG_TERM_DIAMETER + 10,
     EqualityExplorerConstants.BIG_TERM_DIAMETER );
@@ -46,6 +52,35 @@ define( function( require ) {
 
     // @public (read-only) emit1( sumToZeroData ) when one or more terms become zero as the result of a universal operation
     this.sumToZeroEmitter = new Emitter();
+
+    // @public (read-only)
+    this.operators = EqualityExplorerConstants.OPERATORS;
+
+    // @public
+    this.operatorProperty = new StringProperty( this.operators[ 0 ], {
+      validValues: this.operators
+    } );
+
+    //TODO this is a wonky way to specify order and interleaving of variable term operands
+    // @public (read-only)
+    this.operands = [];
+    for ( var i = OPERAND_RANGE.min; i <= OPERAND_RANGE.max; i++ ) {
+
+      // constant term
+      var constantTermOperand = new ConstantTermOperand( Fraction.withInteger( i ) );
+      this.operands.push( constantTermOperand );
+
+      // variable term, skip zero coefficient
+      if ( i !== 0 ) {
+        var variableTermOperand = new VariableTermOperand( Fraction.withInteger( i ), xString );
+        this.operands.push( variableTermOperand );
+      }
+    }
+
+    // @private {Property.<ConstantTermOperator|VariableTermOperator>}
+    this.operandProperty = new Property( this.operands[ 0 ], {
+      validValues: this.operands
+    } );
 
     Scene.call( this, 'solving',
       createTermCreators( this.xProperty ),
@@ -100,6 +135,8 @@ define( function( require ) {
      */
     reset: function() {
       this.xProperty.reset();
+      this.operatorProperty.reset();
+      this.operandProperty.reset();
       Scene.prototype.reset.call( this );
     },
 

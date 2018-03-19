@@ -10,27 +10,18 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
-  var StringProperty = require( 'AXON/StringProperty' );
+  var SolvingScene = require( 'EQUALITY_EXPLORER/solving/model/SolvingScene' );
   var Text = require( 'SCENERY/nodes/Text' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
+  var UniversalOperandNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperandNode' );
   var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
-  var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
-
-  // strings
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
    * @param {SolvingScene} scene
@@ -40,10 +31,11 @@ define( function( require ) {
    */
   function UniversalOperationControl( scene, animationLayer, options ) {
 
+    assert && assert( scene instanceof SolvingScene, 'invalid scene: ' + scene );
+
     var self = this;
 
     options = _.extend( {
-      operandRange: new Range( -10, 10 ),
       symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
       integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
       fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
@@ -52,93 +44,37 @@ define( function( require ) {
       spacing: 15
     }, options );
 
-    //TODO move value component to model?
-    // operator choices
-    var operatorTerms = [];
-    var operators = EqualityExplorerConstants.OPERATORS;
-    for ( var i = 0; i < operators.length; i++ ) {
-      operatorTerms.push( {
-        value: operators[ i ],
-        node: new Text( operators[ i ], { font: options.integerFont } )
+    // items for the operator picker
+    var operatorItems = [];
+    for ( var i = 0; i < scene.operators.length; i++ ) {
+      operatorItems.push( {
+        value: scene.operators[ i ],
+        node: new Text( scene.operators[ i ], { font: options.integerFont } )
       } );
     }
 
-    //TODO move to model?
-    // @private
-    this.operatorProperty = new StringProperty( operators[ 0 ], {
-      validValues: operators
-    } );
-
     // picker for choosing operator
-    var operatorPicker = new ObjectPicker( this.operatorProperty, operatorTerms, {
+    var operatorPicker = new ObjectPicker( scene.operatorProperty, operatorItems, {
       wrapEnabled: true, // wrap around when min/max is reached
       color: 'black',
       xMargin: 12
     } );
 
-    //TODO move value component to model?
-    //TODO this is a wonky way to specify order and interleaving of variable term operands
-    // operand choices - constant and variable terms
-    // For the format of values, see UniversalOperator createConstantTermOperand and createVariableTermOperand.
-    var operands = [];
-    var operandTerms = [];
-    for ( i = options.operandRange.min; i <= options.operandRange.max; i++ ) {
-
-      // constant term
-      var constantTermOperand = new ConstantTermOperand( Fraction.withInteger( i ) );
-      operands.push( constantTermOperand );
-      operandTerms.push( {
-        value: constantTermOperand,
-        node: new ReducedFractionNode( constantTermOperand.constantValue, {
+    // items for the operand picker
+    var operandItems = [];
+    for ( i = 0; i < scene.operands.length; i++ ) {
+      operandItems.push( {
+        value: scene.operands[ i ],
+        node: new UniversalOperandNode( scene.operands[ i ], {
+          symbolFont: options.symbolFont,
           integerFont: options.integerFont,
           fractionFont: options.fractionFont
         } )
       } );
-
-      // variable term
-      var variableTermOperand = new VariableTermOperand( Fraction.withInteger( i ), xString );
-      operands.push( variableTermOperand );
-      if ( i === 1 ) {
-
-        // x
-        operandTerms.push( {
-          value: variableTermOperand,
-          node: new Text( xString, { font: options.symbolFont } )
-        } );
-      }
-      else if ( i === -1 ) {
-
-        // -x
-        operandTerms.push( {
-          value: variableTermOperand,
-          node: new Text( MathSymbols.UNARY_MINUS + xString, { font: options.symbolFont } )
-        } );
-      }
-      else if ( i !== 0 ) {
-
-        // Nx
-        operandTerms.push( {
-          value: variableTermOperand,
-          node: new HBox( {
-            spacing: 2,
-            children: [
-              new ReducedFractionNode( variableTermOperand.coefficient, {
-                integerFont: options.integerFont,
-                fractionFont: options.fractionFont
-              } ),
-              new Text( xString, { font: options.symbolFont } )
-            ]
-          } )
-        } );
-      }
     }
 
-    //TODO move to model?
-    // @private {Property.<Object>}
-    this.operandProperty = new Property( operandTerms[ 0 ].value );
-
     // picker for choosing operand
-    var operandPicker = new ObjectPicker( this.operandProperty, operandTerms, {
+    var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, {
       wrapEnabled: true, // wrap around when min/max is reached
       color: 'black',
       font: options.integerFont,
@@ -151,7 +87,7 @@ define( function( require ) {
     // When the 'go' button is pressed, animate operations, then apply operations to terms.
     var goButtonListener = function() {
 
-      var operation = new UniversalOperation( self.operatorProperty.value, self.operandProperty.value );
+      var operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
 
       // start vertically aligned with the operator picker
       var startY = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
@@ -211,14 +147,11 @@ define( function( require ) {
     reset: function() {
 
       // Stop all animations.
-      // Operate on a copy of the array, since animations remove themselves when stopped.
+      // Operate on a copy of the array, since animations remove themselves from the array when stopped.
       var arrayCopy = this.animations.slice( 0 );
       for ( var i = 0; i < arrayCopy.length; i++ ) {
         arrayCopy[ i ].stop();
       }
-
-      this.operatorProperty.reset();
-      this.operandProperty.reset();
     }
   } );
 } );
