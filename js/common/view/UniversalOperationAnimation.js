@@ -30,7 +30,9 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      fontSize: EqualityExplorerConstants.UNIVERSAL_OPERATION_FONT_SIZE,
+      symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
+      integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
+      fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
       leftX: 0,
       rightX: 100,
       startY: 0,
@@ -43,12 +45,16 @@ define( function( require ) {
 
     // Nodes for the operation
     var leftOperationNode = new UniversalOperationNode( operation, {
-      fontSize: options.fontSize,
+      symbolFont: options.symbolFont,
+      integerFont: options.integerFont,
+      fractionFont: options.fractionFont,
       centerX: options.leftX,
       centerY: options.startY
     } );
     var rightOperationNode = new UniversalOperationNode( operation, {
-      fontSize: options.fontSize,
+      symbolFont: options.symbolFont,
+      integerFont: options.integerFont,
+      fractionFont: options.fractionFont,
       centerX: options.rightX,
       centerY: options.startY
     } );

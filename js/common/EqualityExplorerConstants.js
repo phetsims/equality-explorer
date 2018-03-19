@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RangeWithValue = require( 'DOT/RangeWithValue' );
@@ -24,7 +25,9 @@ define( function( require ) {
 
     // Fonts
     ACCORDION_BOX_TITLE_FONT: new PhetFont( 18 ),
-    UNIVERSAL_OPERATION_FONT_SIZE: 24,
+    UNIVERSAL_OPERATION_SYMBOL_FONT: new MathSymbolFont( 24 ),
+    UNIVERSAL_OPERATION_INTEGER_FONT: new PhetFont( 24 ),
+    UNIVERSAL_OPERATION_FRACTION_FONT: new PhetFont( 12 ),
     SUM_TO_ZERO_BIG_FONT_SIZE: 40, // for sum-to-zero animation that involves a 'big' term on the scale
     SUM_TO_ZERO_SMALL_FONT_SIZE: 24, // for sum-to-zero animation that involves a 'small' term on the scale
 

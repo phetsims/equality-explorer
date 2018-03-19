@@ -21,7 +21,6 @@ define( function( require ) {
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
   var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
-  var Util = require( 'DOT/Util' );
 
   /**
    * @param {string} symbol
@@ -126,7 +125,7 @@ define( function( require ) {
       else {
         options.coefficient = coefficient;
 
-        if ( Util.sign( options.coefficient.toDecimal() ) === Util.sign( this.defaultCoefficient.toDecimal() ) ) {
+        if ( options.coefficient.sign === this.defaultCoefficient.sign ) {
 
           // sign is the same as this term creator, so create the term
           combinedTerm = this.createTerm( options );
@@ -195,20 +194,20 @@ define( function( require ) {
 
       var cellIndex = this.plate.getCellForTerm( term );
 
-      // compute the new coefficient value
-      var coefficient;
+      // {ReducedFraction} compute the new coefficient value
+      var newCoefficient;
       if ( operation.operator === MathSymbols.PLUS && operation.operand instanceof VariableTermOperand ) {
-        coefficient = term.coefficient.plusInteger( operation.operand.coefficient );
+        newCoefficient = term.coefficient.plusFraction( operation.operand.coefficient );
       }
       else if ( operation.operator === MathSymbols.MINUS && operation.operand instanceof VariableTermOperand ) {
-        coefficient = term.coefficient.minusInteger( operation.operand.coefficient );
+        newCoefficient = term.coefficient.minusFraction( operation.operand.coefficient );
       }
       else if ( operation.operator === MathSymbols.TIMES && operation.operand instanceof ConstantTermOperand ) {
-        coefficient = term.coefficient.timesInteger( operation.operand.constantValue );
+        newCoefficient = term.coefficient.timesFraction( operation.operand.constantValue );
       }
       else if ( operation.operator === MathSymbols.DIVIDE && operation.operand instanceof ConstantTermOperand &&
-                operation.operand.constantValue !== 0 ) {
-        coefficient = term.coefficient.divideByInteger( operation.operand.constantValue );
+                operation.operand.constantValue.toDecimal() !== 0 ) {
+        newCoefficient = term.coefficient.divideByFraction( operation.operand.constantValue );
       }
       else {
         return term; // operation is not applicable to this term
@@ -218,15 +217,15 @@ define( function( require ) {
       term.dispose();
 
       var newTerm = null;
-      if ( coefficient.toDecimal() !== 0 ) {
+      if ( newCoefficient.toDecimal() !== 0 ) {
 
         // create a new term on the plate
         var newTermOptions = {
-          coefficient: coefficient,
+          coefficient: newCoefficient,
           diameter: term.diameter
         };
 
-        if ( Util.sign( coefficient.toDecimal() ) === Util.sign( this.defaultCoefficient.toDecimal() ) ) {
+        if ( newCoefficient.sign === this.defaultCoefficient.sign ) {
 
           // sign is the same as this term creator, so create the term
           newTerm = this.createTermOnPlate( cellIndex, newTermOptions );
@@ -267,14 +266,15 @@ define( function( require ) {
 
       var term = null;
 
-      // compute the coefficient
+      // {ReducedFraction} compute the coefficient
       var coefficient = ( operation.operator === MathSymbols.PLUS ) ?
-                        operation.operand.coefficient : -operation.operand.coefficient;
+                        operation.operand.coefficient : operation.operand.coefficient.timesInteger( -1 );
 
-      // If the coefficient has the same sign as this term, create a coefficient term on the plate
-      if ( Util.sign( coefficient ) === Util.sign( this.defaultCoefficient.toDecimal() ) ) {
+      // If the coefficient has the same sign as this term, create a coefficient term on the plate.
+      // Otherwise do nothing because the inverse term creator will create the term.
+      if ( coefficient.sign === this.defaultCoefficient.sign ) {
         term = this.createTermOnPlate( this.likeTermsCellIndex, {
-          coefficient: ReducedFraction.withInteger( coefficient ),
+          coefficient: coefficient,
           diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
         } );
       }

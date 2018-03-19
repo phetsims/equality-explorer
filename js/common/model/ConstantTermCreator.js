@@ -18,7 +18,6 @@ define( function( require ) {
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
-  var Util = require( 'DOT/Util' );
 
   /**
    * @param {Object} [options]
@@ -86,7 +85,7 @@ define( function( require ) {
       else {
         options.constantValue = constantValue;
 
-        if ( Util.sign( options.constantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
+        if ( options.constantValue.sign === this.defaultConstantValue.sign ) {
 
           // sign is the same as this term creator, so create the term
           combinedTerm = this.createTerm( options );
@@ -149,22 +148,22 @@ define( function( require ) {
         return term; // operand is not applicable to constant terms
       }
 
-      var constantValue = operation.operand.constantValue;
+      var constantValue = operation.operand.constantValue; // {ReducedFraction}
       var cellIndex = this.plate.getCellForTerm( term );
 
       // compute the new constant value
       var newConstantValue;
       if ( operation.operator === MathSymbols.PLUS ) {
-        newConstantValue = term.constantValue.plusInteger( constantValue );
+        newConstantValue = term.constantValue.plusFraction( constantValue );
       }
       else if ( operation.operator === MathSymbols.MINUS ) {
-        newConstantValue = term.constantValue.minusInteger( constantValue );
+        newConstantValue = term.constantValue.minusFraction( constantValue );
       }
       else if ( operation.operator === MathSymbols.TIMES ) {
-        newConstantValue = term.constantValue.timesInteger( constantValue );
+        newConstantValue = term.constantValue.timesFraction( constantValue );
       }
-      else if ( operation.operator === MathSymbols.DIVIDE && constantValue !== 0 ) {
-        newConstantValue = term.constantValue.divideByInteger( constantValue );
+      else if ( operation.operator === MathSymbols.DIVIDE && constantValue.toDecimal() !== 0 ) {
+        newConstantValue = term.constantValue.divideByFraction( constantValue );
       }
       else {
         return term; // operation is not applicable
@@ -182,7 +181,7 @@ define( function( require ) {
           diameter: term.diameter
         };
 
-        if ( Util.sign( newConstantValue.toDecimal() ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
+        if ( newConstantValue.sign === this.defaultConstantValue.sign ) {
 
           // sign is the same as this term creator, so create the term
           newTerm = this.createTermOnPlate( cellIndex, newTermOptions );
@@ -227,15 +226,15 @@ define( function( require ) {
 
       var term = null;
 
-      // compute the constant value
+      // {ReducedFraction} compute the constant value
       var newConstantValue = ( operation.operator === MathSymbols.PLUS ) ?
-                            operation.operand.constantValue : -operation.operand.constantValue;
+                            operation.operand.constantValue : operation.operand.constantValue.timesInteger( -1 );
 
       // If the constant has the same sign as this term, create a constant term on the plate.
       // Otherwise do nothing because the inverse term creator will create the term.
-      if ( Util.sign( newConstantValue ) === Util.sign( this.defaultConstantValue.toDecimal() ) ) {
+      if ( newConstantValue.sign === this.defaultConstantValue.sign ) {
         term = this.createTermOnPlate( this.likeTermsCellIndex, {
-          constantValue: ReducedFraction.withInteger( newConstantValue ),
+          constantValue: newConstantValue,
           diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
         } );
       }

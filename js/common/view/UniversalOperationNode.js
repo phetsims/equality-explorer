@@ -9,15 +9,15 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
+  var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
 
   /**
    * @param {UniversalOperation} operation
@@ -27,49 +27,52 @@ define( function( require ) {
   function UniversalOperationNode( operation, options ) {
 
     options = _.extend( {
-      fontSize: EqualityExplorerConstants.UNIVERSAL_OPERATION_FONT_SIZE,
+      symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
+      integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
+      fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
 
       // supertype options
       spacing: 4
     }, options );
 
-    var normalFont = new PhetFont( options.fontSize );
-    var mathFont = new MathSymbolFont( options.fontSize );
-
-    var operatorNode = new Text( operation.operator, { font: normalFont } );
+    var operatorNode = new Text( operation.operator, { font: options.integerFont } );
 
     var operandNode = null;
-    var constantValue = operation.operand.constantValue;
-    if ( constantValue !== undefined ) {
-      assert && assert( Util.isInteger( constantValue ), 'constantValue must be an integer: ' + constantValue );
-      operandNode = new Text( constantValue, { font: normalFont } );
+    if ( operation.operand instanceof ConstantTermOperand ) {
+      operandNode = new ReducedFractionNode( operation.operand.constantValue, {
+        integerFont: options.integerFont,
+        fractionFont: options.fractionFont
+      } );
     }
-    else {
+    else if ( operation.operand instanceof VariableTermOperand ){
 
       var coefficient = operation.operand.coefficient;
       var symbol = operation.operand.symbol;
-      assert && assert( coefficient !== undefined, 'operand is missing coefficient: ' + operation.operand );
-      assert && assert( Util.isInteger( coefficient ), 'coefficient must be an integer: ' + coefficient );
-      assert && assert( operation.operand.symbol, 'operand is missing symbol: ' + operation.operand );
 
       if ( coefficient === 1 ) {
         // x
-        operandNode = new Text( symbol, { font: mathFont } );
+        operandNode = new Text( symbol, { font: options.symbolFont } );
       }
       else if ( coefficient === -1 ) {
         // -x
-        operandNode = new Text( MathSymbols.UNARY_MINUS + symbol, { font: mathFont } );
+        operandNode = new Text( MathSymbols.UNARY_MINUS + symbol, { font: options.symbolFont } );
       }
       else {
         // Nx
         operandNode = new HBox( {
           spacing: 2,
           children: [
-            new Text( coefficient, { font: normalFont } ),
-            new Text( symbol, { font: mathFont } )
+            new ReducedFractionNode( coefficient, {
+              integerFont: options.integerFont,
+              fractionFont: options.fractionFont
+            } ),
+            new Text( symbol, { font: options.symbolFont } )
           ]
         } );
       }
+    }
+    else {
+      throw new Error( 'unsupported operand type: ' + operation.operand );
     }
 
     assert && assert( !options.children, 'UniversalOperationNode sets children' );

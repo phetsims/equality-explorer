@@ -12,12 +12,15 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
 
   /**
-   * @param {number} constantValue
+   * @param {ReducedFraction} constantValue
    * @constructor
    */
   function ConstantTermOperand( constantValue ) {
+
+    assert && assert( constantValue instanceof ReducedFraction, 'invalid constantValue: ' + constantValue );
 
     // @public (read-only)
     this.constantValue = constantValue;

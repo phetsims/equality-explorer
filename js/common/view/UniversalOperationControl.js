@@ -16,12 +16,12 @@ define( function( require ) {
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+  var ReducedFraction = require( 'EQUALITY_EXPLORER/common/model/ReducedFraction' );
+  var ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var StringProperty = require( 'AXON/StringProperty' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -43,15 +43,14 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      fontSize: EqualityExplorerConstants.UNIVERSAL_OPERATION_FONT_SIZE,
       operandRange: new Range( -10, 10 ),
+      symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
+      integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
+      fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
 
       // supertype options
       spacing: 15
     }, options );
-
-    var normalFont = new PhetFont( options.fontSize );
-    var mathFont = new MathSymbolFont( options.fontSize );
 
     //TODO move value component to model?
     // operator choices
@@ -60,7 +59,7 @@ define( function( require ) {
     for ( var i = 0; i < operators.length; i++ ) {
       operatorTerms.push( {
         value: operators[ i ],
-        node: new Text( operators[ i ], { font: normalFont } )
+        node: new Text( operators[ i ], { font: options.integerFont } )
       } );
     }
 
@@ -86,22 +85,25 @@ define( function( require ) {
     for ( i = options.operandRange.min; i <= options.operandRange.max; i++ ) {
 
       // constant term
-      var constantTermOperand = new ConstantTermOperand( i );
+      var constantTermOperand = new ConstantTermOperand( ReducedFraction.withInteger( i ) );
       operands.push( constantTermOperand );
       operandTerms.push( {
         value: constantTermOperand,
-        node: new Text( i, { font: normalFont } )
+        node: new ReducedFractionNode( constantTermOperand.constantValue, {
+          integerFont: options.integerFont,
+          fractionFont: options.fractionFont
+        } )
       } );
 
       // variable term
-      var variableTermOperand = new VariableTermOperand( i, xString );
+      var variableTermOperand = new VariableTermOperand( ReducedFraction.withInteger( i ), xString );
       operands.push( variableTermOperand );
       if ( i === 1 ) {
 
         // x
         operandTerms.push( {
           value: variableTermOperand,
-          node: new Text( xString, { font: mathFont } )
+          node: new Text( xString, { font: options.symbolFont } )
         } );
       }
       else if ( i === -1 ) {
@@ -109,7 +111,7 @@ define( function( require ) {
         // -x
         operandTerms.push( {
           value: variableTermOperand,
-          node: new Text( MathSymbols.UNARY_MINUS + xString, { font: mathFont } )
+          node: new Text( MathSymbols.UNARY_MINUS + xString, { font: options.symbolFont } )
         } );
       }
       else if ( i !== 0 ) {
@@ -120,8 +122,11 @@ define( function( require ) {
           node: new HBox( {
             spacing: 2,
             children: [
-              new Text( i, { font: normalFont } ),
-              new Text( xString, { font: mathFont } )
+              new ReducedFractionNode( variableTermOperand.coefficient, {
+                integerFont: options.integerFont,
+                fractionFont: options.fractionFont
+              } ),
+              new Text( xString, { font: options.symbolFont } )
             ]
           } )
         } );
@@ -136,7 +141,7 @@ define( function( require ) {
     var operandPicker = new ObjectPicker( this.operandProperty, operandTerms, {
       wrapEnabled: true, // wrap around when min/max is reached
       color: 'black',
-      font: options.font,
+      font: options.integerFont,
       xMargin: 6
     } );
 
@@ -152,7 +157,9 @@ define( function( require ) {
       var startY = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
 
       var animation = new UniversalOperationAnimation( operation, {
-        font: options.font,
+        symbolFont: options.symbolFont,
+        integerFont: options.integerFont,
+        fractionFont: options.fractionFont,
         leftX: scene.scale.leftPlate.locationProperty.value.x,
         rightX: scene.scale.rightPlate.locationProperty.value.x,
         startY: startY,
