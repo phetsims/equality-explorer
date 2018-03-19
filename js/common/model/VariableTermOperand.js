@@ -2,6 +2,7 @@
 
 /**
  * Data structure for a variable term operand in a universal operation.
+ * There's not much to this data structure. It's a type solely for differentiation with ConstantTermOperand.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
