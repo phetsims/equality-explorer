@@ -195,11 +195,11 @@ define( function( require ) {
 
     HBox.call( this, options );
 
-    //TODO skip 0 operand when operator is DIVIDE
-    //TODO skip variable operands when operator is TIMES or DIVIDE
-    //TODO change 0 operand to 1 when operator becomes DIVIDE
-    //TODO change Nx operand to N when operator becomes TIMES or DIVIDE
-    
+    //TODO operator picker: change 0 operand to 1 when operator becomes DIVIDE
+    //TODO operator picker: change Nx operand to N when operator becomes TIMES or DIVIDE
+    //TODO operand picker: skip 0 operand when operator is DIVIDE
+    //TODO operand picker: skip variable operands when operator is TIMES or DIVIDE
+
     //TODO disable goButton when operation would cause any numerator or denominator would exceed some big integer
   }
 
