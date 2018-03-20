@@ -161,7 +161,7 @@ define( function( require ) {
       var leftConstantTermNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 2 ) );
 
       // relational operator
-      var greaterThanNode = new Text( MathSymbols.GREATER_THAN, operatorOptions );
+      var greaterThanNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );
 
       // ride side of the equation
       var rightVariableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
