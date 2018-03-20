@@ -151,7 +151,28 @@ define( function( require ) {
      * @returns {ScreenIcon}
      */
     createSolvingScreenIcon: function() {
-      //TODO
+
+      var operatorOptions = { font: new PhetFont( 30 ) };
+
+      // left side of the equation
+      var leftVariableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ), xString );
+      var plusNode = new Text( MathSymbols.PLUS, operatorOptions );
+      var leftConstantTermNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 2 ) );
+
+      // relational operator
+      var greaterThanNode = new Text( MathSymbols.GREATER_THAN, operatorOptions );
+
+      // ride side of the equation
+      var rightVariableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
+
+      var iconNode = new HBox( {
+        spacing: 5,
+        children: [ leftVariableTermNode, plusNode, leftConstantTermNode, greaterThanNode, rightVariableTermNode ]
+      });
+
+      return new ScreenIcon( iconNode, {
+        fill: EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND
+      } );
     },
 
     /**
