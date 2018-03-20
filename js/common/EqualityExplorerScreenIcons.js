@@ -27,6 +27,7 @@ define( function( require ) {
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
   var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
+  var phetGirlImage = require( 'image!EQUALITY_EXPLORER/phetGirl.png' );
 
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -180,7 +181,7 @@ define( function( require ) {
      * @returns {ScreenIcon}
      */
     createSolveItHomeScreenIcon: function() {
-      var iconNode = new Text( '?' );
+      var iconNode = new Image( phetGirlImage );
       return new ScreenIcon( iconNode, {
         fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
       } );
