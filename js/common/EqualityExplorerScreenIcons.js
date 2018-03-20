@@ -180,15 +180,21 @@ define( function( require ) {
      * @returns {ScreenIcon}
      */
     createSolveItHomeScreenIcon: function() {
-      //TODO
+      var iconNode = new Text( '?' );
+      return new ScreenIcon( iconNode, {
+        fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
+      } );
     },
 
     /**
      * Creates the navigation bar icon for the 'Solve It!' screen.
      * @returns {ScreenIcon}
      */
-    createSolveItNavbarIcon: function() {
-      //TODO
+    createSolveItNavigationBarIcon: function() {
+      var iconNode = new Text( '?' );
+      return new ScreenIcon( iconNode, {
+        fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
+      } );
     }
   };
 
