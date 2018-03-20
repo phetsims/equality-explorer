@@ -20,6 +20,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ScreenIcon = require( 'JOIST/ScreenIcon' );
+  var StarNode = require( 'SCENERY_PHET/StarNode' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -192,7 +193,16 @@ define( function( require ) {
      * @returns {ScreenIcon}
      */
     createSolveItNavigationBarIcon: function() {
-      var iconNode = new Text( '?' );
+
+      var numberNode = new Text( '7', { font: new PhetFont( 25 ) } );
+
+      var starNode = new StarNode();
+
+      var iconNode = new HBox( {
+        spacing: 3,
+        children: [ numberNode, starNode ]
+      });
+
       return new ScreenIcon( iconNode, {
         fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
       } );
