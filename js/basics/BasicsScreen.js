@@ -13,6 +13,7 @@ define( function( require ) {
   var BasicsScreenView = require( 'EQUALITY_EXPLORER/basics/view/BasicsScreenView' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
@@ -28,7 +29,8 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenBasicsString,
-      backgroundColorProperty: new Property( EqualityExplorerColors.BASICS_SCREEN_BACKGROUND )
+      backgroundColorProperty: new Property( EqualityExplorerColors.BASICS_SCREEN_BACKGROUND ),
+      homeScreenIcon: EqualityExplorerScreenIcons.createBasics()
     }, options );
 
     Screen.call( this,
