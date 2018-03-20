@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumbersModel = require( 'EQUALITY_EXPLORER/numbers/model/NumbersModel' );
   var NumbersScreenView = require( 'EQUALITY_EXPLORER/numbers/view/NumbersScreenView' );
@@ -28,7 +29,8 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenNumbersString,
-      backgroundColorProperty: new Property( EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND )
+      backgroundColorProperty: new Property( EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND ),
+      homeScreenIcon: EqualityExplorerScreenIcons.createNumbersScreenIcon()
     }, options );
 
     Screen.call( this,

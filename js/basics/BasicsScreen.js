@@ -30,7 +30,7 @@ define( function( require ) {
     options = _.extend( {
       name: screenBasicsString,
       backgroundColorProperty: new Property( EqualityExplorerColors.BASICS_SCREEN_BACKGROUND ),
-      homeScreenIcon: EqualityExplorerScreenIcons.createBasics()
+      homeScreenIcon: EqualityExplorerScreenIcons.createBasicsScreenIcon()
     }, options );
 
     Screen.call( this,

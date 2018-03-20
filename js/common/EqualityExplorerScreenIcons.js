@@ -9,8 +9,11 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
+  var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
@@ -30,7 +33,7 @@ define( function( require ) {
      * Creates the icons for the 'Basics' screen.
      * @returns {ScreenIcon}
      */
-    createBasics: function() {
+    createBasicsScreenIcon: function() {
 
       var appleNode1 = new Image( appleImage );
       var appleNode2 = new Image( appleImage, {
@@ -64,6 +67,51 @@ define( function( require ) {
       return new ScreenIcon( iconNode, {
         fill: EqualityExplorerColors.BASICS_SCREEN_BACKGROUND
       } );
+    },
+
+    createNumbersScreenIcon: function() {
+
+      // 1
+      var positiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
+
+      // -1
+      var negativeOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ) );
+      negativeOneNode.left = positiveOneNode.right - 10;
+      negativeOneNode.bottom = positiveOneNode.centerY + 10;
+
+      // halos
+      var haloRadius = 0.85 * positiveOneNode.width;
+      var positiveOneHaloNode = new HaloNode( haloRadius, {
+        center: positiveOneNode.center
+      } );
+      var negativeOneHaloNode = new HaloNode( haloRadius, {
+         center: negativeOneNode.center
+      } );
+
+      var iconNode = new Node( {
+        children: [ positiveOneHaloNode, negativeOneHaloNode, positiveOneNode, negativeOneNode ]
+      } );
+
+      return new ScreenIcon( iconNode, {
+        // maxIconWidthProportion: 0.7,
+        fill: EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND
+      } );
+    },
+
+    createVariablesScreenIcon: function() {
+      //TODO
+    },
+
+    createSolvingScreenIcon: function() {
+      //TODO
+    },
+
+    createSolveItHomeScreenIcon: function() {
+      //TODO
+    },
+
+    createSolveItNavbarIcon: function() {
+      //TODO
     }
   };
 
