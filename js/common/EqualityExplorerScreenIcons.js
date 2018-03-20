@@ -21,20 +21,25 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ScreenIcon = require( 'JOIST/ScreenIcon' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
   var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
 
+  // strings
+  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+
   var EqualityExplorerScreenIcons = {
 
     /**
-     * Creates the icons for the 'Basics' screen.
+     * Creates the icon for the 'Basics' screen.
      * @returns {ScreenIcon}
      */
     createBasicsScreenIcon: function() {
 
+      // left side of the equation
       var appleNode1 = new Image( appleImage );
       var appleNode2 = new Image( appleImage, {
         left: appleNode1.left - 10,
@@ -48,10 +53,12 @@ define( function( require ) {
         children: [ appleNode1, appleNode2, appleNode3 ]
       } );
 
+      // relational operator
       var greaterThanNode = new Text( MathSymbols.GREATER_THAN, {
         font: new PhetFont( 80 )
       } );
 
+      // right side of the equation
       var orangeNode1 = new Image( orangeImage );
       var orangeNode2 = new Image( orangeImage );
       var orangeGroupNode = new VBox( {
@@ -69,6 +76,10 @@ define( function( require ) {
       } );
     },
 
+    /**
+     * Creates the icon for the 'Numbers' screen.
+     * @returns {ScreenIcon}
+     */
     createNumbersScreenIcon: function() {
 
       // 1
@@ -85,7 +96,7 @@ define( function( require ) {
         center: positiveOneNode.center
       } );
       var negativeOneHaloNode = new HaloNode( haloRadius, {
-         center: negativeOneNode.center
+        center: negativeOneNode.center
       } );
 
       var iconNode = new Node( {
@@ -93,23 +104,68 @@ define( function( require ) {
       } );
 
       return new ScreenIcon( iconNode, {
-        // maxIconWidthProportion: 0.7,
         fill: EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND
       } );
     },
 
+    /**
+     * Creates the icon for the 'Variables' screen.
+     * @returns {ScreenIcon}
+     */
     createVariablesScreenIcon: function() {
-      //TODO
+
+      // left side of the equation
+      var leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
+      var leftNegativeXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ), xString );
+      var leftGroupNode = new VBox( {
+        spacing: 10,
+        children: [ leftPositiveXNode, leftNegativeXNode ]
+      } );
+
+      // relational operator
+      var lessThanNode = new Text( MathSymbols.LESS_THAN, {
+        font: new PhetFont( 50 )
+      } );
+
+      // right side of the equation
+      var rightPositiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
+      var rightPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
+      var rightGroupNode = new VBox( {
+        spacing: 10,
+        children: [ rightPositiveOneNode, rightPositiveXNode ]
+      } );
+
+      var iconNode = new HBox( {
+        spacing: 10,
+        children: [ leftGroupNode, lessThanNode, rightGroupNode ]
+      } );
+
+      return new ScreenIcon( iconNode, {
+        maxIconWidthProportion: 0.75,
+        fill: EqualityExplorerColors.VARIABLES_SCREEN_BACKGROUND
+      } );
     },
 
+    /**
+     * Creates the icon for the 'Solving' screen.
+     * @returns {ScreenIcon}
+     */
     createSolvingScreenIcon: function() {
       //TODO
     },
 
+    /**
+     * Creates the home screen icon for the 'Solve It!' screen.
+     * @returns {ScreenIcon}
+     */
     createSolveItHomeScreenIcon: function() {
       //TODO
     },
 
+    /**
+     * Creates the navigation bar icon for the 'Solve It!' screen.
+     * @returns {ScreenIcon}
+     */
     createSolveItNavbarIcon: function() {
       //TODO
     }
