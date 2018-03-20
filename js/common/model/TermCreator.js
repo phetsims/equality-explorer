@@ -89,7 +89,7 @@ define( function( require ) {
       } );
 
     // @public (read-only) weight of the terms that are on the plate
-    this.weightOnPlateProperty = new Property( Fraction.withInteger( 0 ), {
+    this.weightOnPlateProperty = new Property( Fraction.fromInteger( 0 ), {
       valueType: Fraction,
       useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
     } );
@@ -332,7 +332,7 @@ define( function( require ) {
      * @protected
      */
     updateWeightOnPlateProperty: function() {
-      var weight = Fraction.withInteger( 0 );
+      var weight = Fraction.fromInteger( 0 );
       for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
         weight = weight.plus( this.termsOnPlate.get( i ).weight ).reduced();
       }

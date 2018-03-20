@@ -61,25 +61,25 @@ define( function( require ) {
 
       // x
       new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: Fraction.withInteger( 1 ),
+        defaultCoefficient: Fraction.fromInteger( 1 ),
         initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // -x
       new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: Fraction.withInteger( -1 ),
+        defaultCoefficient: Fraction.fromInteger( -1 ),
         initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // 1
       new ConstantTermCreator( {
-        defaultConstantValue: Fraction.withInteger( 1 ),
+        defaultConstantValue: Fraction.fromInteger( 1 ),
         initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } ),
 
       // -1
       new ConstantTermCreator( {
-        defaultConstantValue: Fraction.withInteger( -1 ),
+        defaultConstantValue: Fraction.fromInteger( -1 ),
         initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
       } )
     ];

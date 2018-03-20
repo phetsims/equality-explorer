@@ -66,24 +66,24 @@ define( function( require ) {
 
       // x
       new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: Fraction.withInteger( 1 )
+        defaultCoefficient: Fraction.fromInteger( 1 )
       } ),
 
       // -x
       new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: Fraction.withInteger( -1 )
+        defaultCoefficient: Fraction.fromInteger( -1 )
       } ),
 
       // y
       new VariableTermCreator( yString, yProperty, {
-        defaultCoefficient: Fraction.withInteger( 1 ),
+        defaultCoefficient: Fraction.fromInteger( 1 ),
         positiveFill: POSITIVE_Y_FILL,
         negativeFill: NEGATIVE_Y_FILL
       } ),
 
       // -y
       new VariableTermCreator( yString, yProperty, {
-        defaultCoefficient: Fraction.withInteger( -1 ),
+        defaultCoefficient: Fraction.fromInteger( -1 ),
         positiveFill: POSITIVE_Y_FILL,
         negativeFill: NEGATIVE_Y_FILL
       } )

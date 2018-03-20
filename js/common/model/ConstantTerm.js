@@ -22,7 +22,7 @@ define( function( require ) {
   function ConstantTerm( termCreator, options ) {
 
     options = _.extend( {
-      constantValue: Fraction.withInteger( 1 )
+      constantValue: Fraction.fromInteger( 1 )
     }, options );
 
     assert && assert( options.constantValue instanceof Fraction,

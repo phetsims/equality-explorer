@@ -67,12 +67,12 @@ define( function( require ) {
     for ( var i = OPERAND_RANGE.min; i <= OPERAND_RANGE.max; i++ ) {
 
       // constant term
-      var constantTermOperand = new ConstantTermOperand( Fraction.withInteger( i ) );
+      var constantTermOperand = new ConstantTermOperand( Fraction.fromInteger( i ) );
       this.operands.push( constantTermOperand );
 
       // variable term, skip zero coefficient
       if ( i !== 0 ) {
-        var variableTermOperand = new VariableTermOperand( Fraction.withInteger( i ), xString );
+        var variableTermOperand = new VariableTermOperand( Fraction.fromInteger( i ), xString );
         this.operands.push( variableTermOperand );
       }
     }
@@ -108,11 +108,11 @@ define( function( require ) {
 
     // x and -x
     var positiveXCreator = new VariableTermCreator( xString, xProperty, {
-      defaultCoefficient: Fraction.withInteger( 1 ),
+      defaultCoefficient: Fraction.fromInteger( 1 ),
       likeTermsCellIndex: 0
     } );
     var negativeXCreator = new VariableTermCreator( xString, xProperty, {
-      defaultCoefficient: Fraction.withInteger( -1 ),
+      defaultCoefficient: Fraction.fromInteger( -1 ),
       likeTermsCellIndex: 0
     } );
     positiveXCreator.inverseTermCreator = negativeXCreator;
@@ -120,11 +120,11 @@ define( function( require ) {
 
     // 1 and -1
     var positiveOneCreator = new ConstantTermCreator( {
-      defaultConstantValue: Fraction.withInteger( 1 ),
+      defaultConstantValue: Fraction.fromInteger( 1 ),
       likeTermsCellIndex: 1
     } );
     var negativeOneCreator = new ConstantTermCreator( {
-      defaultConstantValue: Fraction.withInteger( -1 ),
+      defaultConstantValue: Fraction.fromInteger( -1 ),
       likeTermsCellIndex: 1
     } );
     positiveOneCreator.inverseTermCreator = negativeOneCreator;

@@ -36,7 +36,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      defaultCoefficient: Fraction.withInteger( 1 ), // terms are created with this coefficient by default
+      defaultCoefficient: Fraction.fromInteger( 1 ), // terms are created with this coefficient by default
       positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
       negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL
     }, options );
@@ -79,7 +79,7 @@ define( function( require ) {
      * @public
      */
     sumCoefficientsOnScale: function() {
-      var sum = Fraction.withInteger( 0 );
+      var sum = Fraction.fromInteger( 0 );
       for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
         sum = sum.plus( this.termsOnPlate.get( i ).coefficient ).reduced();
       }

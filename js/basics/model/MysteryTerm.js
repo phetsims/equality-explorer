@@ -41,7 +41,7 @@ define( function( require ) {
      * @override
      */
     get weight() {
-      return Fraction.withInteger( this.mysteryObject.weight );
+      return Fraction.fromInteger( this.mysteryObject.weight );
     },
 
     /**

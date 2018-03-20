@@ -28,7 +28,7 @@ define( function( require ) {
       'invalid variableValueProperty: ' + variableValueProperty );
 
     options = _.extend( {
-      coefficient: Fraction.withInteger( 1 )
+      coefficient: Fraction.fromInteger( 1 )
     }, options );
 
     assert && assert( options.coefficient instanceof Fraction, 'invalid coefficient: ' + options.coefficient );

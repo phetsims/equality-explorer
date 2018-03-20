@@ -191,7 +191,7 @@ define( function( require ) {
    */
   function createSideNode( termCreators, symbolFont, operatorFont, integerFont, fractionFont, coefficientSpacing, plusSpacing ) {
 
-    var constantValue = Fraction.withInteger( 0 );
+    var constantValue = Fraction.fromInteger( 0 );
     var coefficients = {}; // map from {string} variable to {Fraction} coefficient, e.g. { x: 3/5 }
 
     var children = [];
@@ -219,7 +219,7 @@ define( function( require ) {
 
           // variable terms contribute to the coefficient for their associated variable
           if ( !coefficients.hasOwnProperty( termCreator.symbol ) ) {
-            coefficients[ termCreator.symbol ] = Fraction.withInteger( 0 );
+            coefficients[ termCreator.symbol ] = Fraction.fromInteger( 0 );
           }
           coefficients[ termCreator.symbol ] =
             coefficients[ termCreator.symbol ].plus( termCreator.sumCoefficientsOnScale() ).reduced();

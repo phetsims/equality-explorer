@@ -26,7 +26,7 @@ define( function( require ) {
   function ConstantTermCreator( options ) {
 
     options = _.extend( {
-      defaultConstantValue: Fraction.withInteger( 1 ) // terms are created with this value by default
+      defaultConstantValue: Fraction.fromInteger( 1 ) // terms are created with this value by default
     }, options );
 
     assert && assert( options.defaultConstantValue instanceof Fraction,

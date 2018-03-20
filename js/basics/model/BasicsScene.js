@@ -66,7 +66,7 @@ define( function( require ) {
     // creator for constant terms
     if ( hasConstantTerms ) {
       termCreators.push( new ConstantTermCreator( {
-          defaultConstantValue: Fraction.withInteger( 1 ),
+          defaultConstantValue: Fraction.fromInteger( 1 ),
           initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ i ]
         } )
       );

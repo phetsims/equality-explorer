@@ -81,7 +81,7 @@ define( function( require ) {
     // dispose not required.
     this.weightProperty = new DerivedProperty( weightDependencies,
       function() {
-        var weight = Fraction.withInteger( 0 );
+        var weight = Fraction.fromInteger( 0 );
         for ( var i = 0; i < termCreators.length; i++ ) {
           weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value ).reduced();
         }
