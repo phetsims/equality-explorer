@@ -78,7 +78,6 @@ define( function( require ) {
 
     // picker for choosing operand
     var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, {
-      wrapEnabled: true, // wrap around when min/max is reached
       color: 'black',
       font: options.integerFont,
       xMargin: 6
