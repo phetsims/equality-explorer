@@ -204,6 +204,7 @@ define( function( require ) {
       });
 
       return new ScreenIcon( iconNode, {
+        maxIconWidthProportion: 0.75,
         fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
       } );
     }
