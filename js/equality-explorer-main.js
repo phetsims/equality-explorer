@@ -27,7 +27,7 @@ define( function( require ) {
       //TODO fill in credits, https://github.com/phetsims/equality-explorer/issues/2
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
-      team: 'Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
+      team: 'Diana Berenice L\u00f3pez Tavares, Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
       qualityAssurance: '',
       graphicArts: 'Mariah Hermsmeyer, Cheryl McCutchan',
       thanks: ''
