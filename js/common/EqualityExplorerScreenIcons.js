@@ -26,8 +26,8 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // images
-  var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
-  var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
+  var appleBigImage = require( 'image!EQUALITY_EXPLORER/appleBig.png' );
+  var orangeBigImage = require( 'image!EQUALITY_EXPLORER/orangeBig.png' );
   var phetGirlImage = require( 'image!EQUALITY_EXPLORER/phetGirl.png' );
 
   // strings
@@ -42,8 +42,8 @@ define( function( require ) {
     createBasicsScreenIcon: function() {
 
       // left side of the equation
-      var appleNode1 = new Image( appleImage );
-      var appleNode2 = new Image( appleImage, {
+      var appleNode1 = new Image( appleBigImage );
+      var appleNode2 = new Image( appleBigImage, {
         left: appleNode1.left - 10,
         top: appleNode1.bottom + 5
       } );
@@ -54,18 +54,19 @@ define( function( require ) {
 
       // relational operator
       var greaterThanNode = new Text( MathSymbols.GREATER_THAN, {
-        font: new PhetFont( 80 )
+        font: new PhetFont( 140 )
       } );
 
       // right side of the equation
-      var orangeNode = new Image( orangeImage );
+      var orangeNode = new Image( orangeBigImage );
 
       var iconNode = new HBox( {
-        spacing: 10,
+        spacing: 15,
         children: [ appleGroupNode, greaterThanNode, orangeNode ]
       } );
 
       return new ScreenIcon( iconNode, {
+        maxIconHeightProportion: 0.8,
         fill: EqualityExplorerColors.BASICS_SCREEN_BACKGROUND
       } );
     },
