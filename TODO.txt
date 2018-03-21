@@ -1,5 +1,8 @@
 TODO items for equality-explorer
 
+Universal Operation
+- UX support for variable term operands, #45
+
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
 - can this feature be separated from TermCreator and TermDragListener?
