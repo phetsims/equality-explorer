@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.0.0-dev.74 Tue Mar 20 2018 17:58:05 GMT-0600 (MDT)",
+  "comment": "# equality-explorer 1.0.0-dev.75 Tue Mar 20 2018 18:13:52 GMT-0600 (MDT)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "equality-explorer": {
-    "sha": "af75a8f09ad3102533ba0cd6bb1a3ed6afc8a16f",
+    "sha": "0298898c7d6035d7b69914a040b09f6068d3f7af",
     "branch": "master"
   },
   "joist": {
