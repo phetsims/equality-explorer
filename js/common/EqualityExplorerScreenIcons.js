@@ -177,7 +177,7 @@ define( function( require ) {
      */
     createSolveItNavigationBarIcon: function() {
 
-      var numberNode = new Text( '7', { font: new PhetFont( 25 ) } );
+      var numberNode = new Text( MathSymbols.UNARY_PLUS + '1', { font: new PhetFont( 25 ) } );
 
       var starNode = new StarNode();
 
