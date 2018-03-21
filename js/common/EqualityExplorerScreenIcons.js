@@ -47,12 +47,9 @@ define( function( require ) {
         left: appleNode1.left - 10,
         top: appleNode1.bottom + 5
       } );
-      var appleNode3 = new Image( appleImage, {
-        left: appleNode2.right + 5,
-        top: appleNode1.bottom - 5
-      } );
-      var appleGroupNode = new Node( {
-        children: [ appleNode1, appleNode2, appleNode3 ]
+      var appleGroupNode = new VBox( {
+        spacing: 2,
+        children: [ appleNode1, appleNode2 ]
       } );
 
       // relational operator
@@ -61,16 +58,11 @@ define( function( require ) {
       } );
 
       // right side of the equation
-      var orangeNode1 = new Image( orangeImage );
-      var orangeNode2 = new Image( orangeImage );
-      var orangeGroupNode = new VBox( {
-        spacing: 10,
-        children: [ orangeNode1, orangeNode2 ]
-      } );
+      var orangeNode = new Image( orangeImage );
 
       var iconNode = new HBox( {
         spacing: 10,
-        children: [ appleGroupNode, greaterThanNode, orangeGroupNode ]
+        children: [ appleGroupNode, greaterThanNode, orangeNode ]
       } );
 
       return new ScreenIcon( iconNode, {
@@ -120,7 +112,6 @@ define( function( require ) {
       var leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
       var leftNegativeXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ), xString );
       var leftGroupNode = new VBox( {
-        spacing: 10,
         children: [ leftPositiveXNode, leftNegativeXNode ]
       } );
 
@@ -133,7 +124,6 @@ define( function( require ) {
       var rightPositiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
       var rightPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
       var rightGroupNode = new VBox( {
-        spacing: 10,
         children: [ rightPositiveOneNode, rightPositiveXNode ]
       } );
 
@@ -156,20 +146,13 @@ define( function( require ) {
 
       var operatorOptions = { font: new PhetFont( 30 ) };
 
-      // left side of the equation
-      var leftVariableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ), xString );
-      var plusNode = new Text( MathSymbols.PLUS, operatorOptions );
-      var leftConstantTermNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 2 ) );
-
-      // relational operator
+      var variableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ), xString );
       var greaterThanNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );
-
-      // ride side of the equation
-      var rightVariableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
+      var constantTermNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 6 ) );
 
       var iconNode = new HBox( {
         spacing: 5,
-        children: [ leftVariableTermNode, plusNode, leftConstantTermNode, greaterThanNode, rightVariableTermNode ]
+        children: [ variableTermNode, greaterThanNode, constantTermNode ]
       });
 
       return new ScreenIcon( iconNode, {
