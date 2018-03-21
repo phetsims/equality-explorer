@@ -156,6 +156,7 @@ define( function( require ) {
       });
 
       return new ScreenIcon( iconNode, {
+        maxIconWidthProportion: 0.75,
         fill: EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND
       } );
     },
