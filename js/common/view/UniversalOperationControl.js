@@ -59,49 +59,38 @@ define( function( require ) {
     }
 
     /*
-     * If the next operator would result in divide by zero, change the operand to 1.
-     * @param {number} index - index into operators array
+     * Adjusts the operand to accommodate a proposed operator.
+     * @param {string} operator
      */
-    var updateDivideByZero = function( nextIndex ) {
+    var adjustOperandForOperator = function( operator ) {
 
-      var nextOperator = scene.operators[ nextIndex ];
       var currentOperand = scene.operandProperty.value;
+      var adjustedOperand;
 
-      if ( nextOperator === MathSymbols.DIVIDE &&
-           ( currentOperand instanceof ConstantTermOperand && currentOperand.constantValue.getValue() === 0 ) ) {
-        var operand = _.find( scene.operands, function( operand ) {
+      // If the operator would result in division by zero, change the operand to 1.
+      if ( isDivideByZero( operator, currentOperand ) ) {
+        adjustedOperand = _.find( scene.operands, function( operand ) {
           return ( operand instanceof ConstantTermOperand ) && ( operand.constantValue.getValue() === 1 );
         } );
-        assert && assert( operand, 'expected to find constant 1' );
-        scene.operandProperty.value = operand;
+        assert && assert( adjustedOperand, 'expected to find constant 1' );
+        scene.operandProperty.value = adjustedOperand;
       }
-    };
 
-    /**
-     * If the next operator would be invalid for a variable term, change the operand to
-     * a constant that has the same value as the variable term's coefficient.
-     * E.g. if the variable term is '5x', change to constant term '5'.
-     * @param nextIndex
-     */
-    var updateInvalidVariableTerm = function( nextIndex ) {
-
-      var nextOperator = scene.operators[ nextIndex ];
-      var currentOperand = scene.operandProperty.value;
-      
-      if ( ( nextOperator === MathSymbols.TIMES || nextOperator === MathSymbols.DIVIDE ) &&
+      // If the operator is not supported for a variable term operand, change the operand to
+      // a constant term that has the same value as the variable term's coefficient.
+      // E.g. if the operand is '5x', change to '5'.
+      if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
            currentOperand instanceof VariableTermOperand ) {
         var currentCoefficient = currentOperand.coefficient;
-        var operand = _.find( scene.operands, function( operand ) {
+        adjustedOperand = _.find( scene.operands, function( operand ) {
           return ( operand instanceof ConstantTermOperand ) &&
                  ( operand.constantValue.getValue() === currentCoefficient.getValue() );
         } );
-        assert && assert( operand, 'expected to find constant ' + currentCoefficient );
-        scene.operandProperty.value = operand;
+        assert && assert( adjustedOperand, 'expected to find constant ' + currentCoefficient );
+        scene.operandProperty.value = adjustedOperand;
       }
     };
 
-    //TODO operator picker: change 0 operand to 1 when operator becomes DIVIDE
-    //TODO operator picker: change Nx operand to N when operator becomes TIMES or DIVIDE
     // picker for choosing operator
     var operatorPicker = new ObjectPicker( scene.operatorProperty, operatorItems, {
       wrapEnabled: true, // wrap around when min/max is reached
@@ -109,14 +98,12 @@ define( function( require ) {
       xMargin: 12,
       upFunction: function( index ) {
         var nextIndex = index + 1;
-        updateDivideByZero( nextIndex );
-        updateInvalidVariableTerm( nextIndex );
+        adjustOperandForOperator( scene.operators[ nextIndex ] );
         return nextIndex;
       },
       downFunction: function( index ) {
         var nextIndex = index - 1;
-        updateDivideByZero( nextIndex );
-        updateInvalidVariableTerm( nextIndex );
+        adjustOperandForOperator( scene.operators[ nextIndex ] );
         return nextIndex;
       }
     } );
@@ -196,6 +183,17 @@ define( function( require ) {
   }
 
   equalityExplorer.register( 'UniversalOperationControl', UniversalOperationControl );
+
+  /**
+   * Does this operation result in division by zero?
+   * @param {string} operator
+   * @param {ConstantTermOperator|VariableTermOperator} operand
+   * @returns {boolean}
+   */
+  function isDivideByZero( operator, operand ) {
+    return operator === MathSymbols.DIVIDE &&
+           ( operand instanceof ConstantTermOperand && operand.constantValue.getValue() === 0 );
+  }
 
   return inherit( HBox, UniversalOperationControl, {
 
