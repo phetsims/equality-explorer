@@ -10,11 +10,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
@@ -55,11 +57,44 @@ define( function( require ) {
       } );
     }
 
+    /*
+     * If next operator would result in divide by zero, change the operand to 1.
+     * @param {number} index - index into operators array
+     */
+    var updateDivideByZero = function( nextIndex ) {
+
+      if ( scene.operators[ nextIndex ] === MathSymbols.DIVIDE &&
+           scene.operandProperty.value instanceof ConstantTermOperand &&
+           scene.operandProperty.value.constantValue.getValue() === 0 ) {
+        var operand = _.find( scene.operands, function( operand ) {
+          return ( operand instanceof ConstantTermOperand ) && ( operand.constantValue.getValue() === 1 );
+        } );
+        assert && assert( operand, 'oops, where is 1?' );
+        scene.operandProperty.value = operand;
+      }
+    };
+
+    //TODO operator picker: change 0 operand to 1 when operator becomes DIVIDE
+    //TODO operator picker: change Nx operand to N when operator becomes TIMES or DIVIDE
     // picker for choosing operator
     var operatorPicker = new ObjectPicker( scene.operatorProperty, operatorItems, {
       wrapEnabled: true, // wrap around when min/max is reached
       color: 'black',
-      xMargin: 12
+      xMargin: 12,
+      upFunction: function( index ) {
+
+        var nextIndex = index + 1;
+        updateDivideByZero( nextIndex );
+
+        return nextIndex;
+      },
+      downFunction: function( index ) {
+
+        var nextIndex = index - 1;
+        updateDivideByZero( nextIndex );
+
+        return nextIndex;
+      }
     } );
 
     // items for the operand picker
@@ -76,6 +111,8 @@ define( function( require ) {
       } );
     }
 
+    //TODO operand picker: skip 0 operand when operator is DIVIDE
+    //TODO operand picker: skip variable operands when operator is TIMES or DIVIDE
     // picker for choosing operand
     var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, {
       color: 'black',
@@ -132,13 +169,6 @@ define( function( require ) {
     options.children = [ operatorPicker, operandPicker, goButton ];
 
     HBox.call( this, options );
-
-    //TODO operator picker: change 0 operand to 1 when operator becomes DIVIDE
-    //TODO operator picker: change Nx operand to N when operator becomes TIMES or DIVIDE
-    //TODO operand picker: skip 0 operand when operator is DIVIDE
-    //TODO operand picker: skip variable operands when operator is TIMES or DIVIDE
-
-    //TODO disable goButton when operation would cause any numerator or denominator would exceed some big integer
   }
 
   equalityExplorer.register( 'UniversalOperationControl', UniversalOperationControl );
