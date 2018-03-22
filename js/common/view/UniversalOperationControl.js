@@ -60,27 +60,28 @@ define( function( require ) {
 
     /*
      * Adjusts the operand to accommodate a proposed operator.
-     * @param {string} operator
+     * @param {string} operator - the proposed operator
      */
     var adjustOperandForOperator = function( operator ) {
 
       var currentOperand = scene.operandProperty.value;
       var adjustedOperand;
 
-      // If the operator would result in division by zero, change the operand to 1.
       if ( isDivideByZero( operator, currentOperand ) ) {
+
+        // If the operator would result in division by zero, change the operand to 1.
         adjustedOperand = _.find( scene.operands, function( operand ) {
           return ( operand instanceof ConstantTermOperand ) && ( operand.constantValue.getValue() === 1 );
         } );
         assert && assert( adjustedOperand, 'expected to find constant 1' );
         scene.operandProperty.value = adjustedOperand;
       }
-
-      // If the operator is not supported for a variable term operand, change the operand to
-      // a constant term that has the same value as the variable term's coefficient.
-      // E.g. if the operand is '5x', change to '5'.
-      if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
+      else if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
            currentOperand instanceof VariableTermOperand ) {
+
+        // If the operator is not supported for a variable term operand, change the operand to
+        // a constant term that has the same value as the variable term's coefficient.
+        // E.g. if the operand is '5x', change to '5'.
         var currentCoefficient = currentOperand.coefficient;
         adjustedOperand = _.find( scene.operands, function( operand ) {
           return ( operand instanceof ConstantTermOperand ) &&
@@ -122,13 +123,54 @@ define( function( require ) {
       } );
     }
 
-    //TODO operand picker: skip 0 operand when operator is DIVIDE
-    //TODO operand picker: skip variable operands when operator is TIMES or DIVIDE
+    /*
+     * Should a proposed operand be skipped for the current operator?
+     * @param {ConstantTermOperand|VariableTermOperand} operand - the proposed operand
+     * @returns {boolean}
+     */
+    var skipProposedOperand = function( operand ) {
+      var operator = scene.operatorProperty.value;
+      var skip = false;
+      if ( isDivideByZero( operator, operand ) ) {
+        skip = true;
+      }
+      else if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
+                operand instanceof VariableTermOperand ) {
+        skip = true;
+      }
+      return skip;
+    };
+
+    //TODO how to disable arrow buttons if skipProposedOperand is true at ends of index range?
     // picker for choosing operand
     var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, {
       color: 'black',
       font: options.integerFont,
-      xMargin: 6
+      xMargin: 6,
+      upFunction: function( index ) {
+        var nextIndex = index + 1;
+        while ( skipProposedOperand( scene.operands[ nextIndex ] ) ) {
+          if ( nextIndex === scene.operands.length - 1 ) {
+            break;
+          }
+          else {
+            nextIndex++;
+          }
+        }
+        return nextIndex;
+      },
+      downFunction: function( index ) {
+        var nextIndex = index - 1;
+        while ( skipProposedOperand( scene.operands[ nextIndex ] ) ) {
+          if ( nextIndex === 0 ) {
+            break;
+          }
+          else {
+            nextIndex--;
+          }
+        }
+        return nextIndex;
+      }
     } );
 
     // @private Tween animations that are running
@@ -187,7 +229,7 @@ define( function( require ) {
   /**
    * Does this operation result in division by zero?
    * @param {string} operator
-   * @param {ConstantTermOperator|VariableTermOperator} operand
+   * @param {ConstantTermOperand|VariableTermOperand} operand
    * @returns {boolean}
    */
   function isDivideByZero( operator, operand ) {
