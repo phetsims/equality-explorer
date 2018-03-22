@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * View for the 'Solving' screen.
+ * View for the 'Operations' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -12,21 +12,21 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerScreenView = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var SolvingSceneNode = require( 'EQUALITY_EXPLORER/solving/view/SolvingSceneNode' );
+  var OperationsSceneNode = require( 'EQUALITY_EXPLORER/solving/view/OperationsSceneNode' );
 
   /**
-   * @param {SolvingModel} model
+   * @param {OperationsModel} model
    * @constructor
    */
-  function SolvingScreenView( model ) {
+  function OperationsScreenView( model ) {
     EqualityExplorerScreenView.call( this, model, {
       createSceneNode: function( scene, sceneProperty, layoutBounds ) {
-        return new SolvingSceneNode( scene, sceneProperty, layoutBounds );
+        return new OperationsSceneNode( scene, sceneProperty, layoutBounds );
       }
     } );
   }
 
-  equalityExplorer.register( 'SolvingScreenView', SolvingScreenView );
+  equalityExplorer.register( 'OperationsScreenView', OperationsScreenView );
 
-  return inherit( EqualityExplorerScreenView, SolvingScreenView );
+  return inherit( EqualityExplorerScreenView, OperationsScreenView );
 } );

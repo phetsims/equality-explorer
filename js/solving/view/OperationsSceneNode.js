@@ -2,7 +2,7 @@
 
 //TODO duplication with VariablesSceneNode. Should this be a subtype of VariablesSceneNode?
 /**
- * A scene in the Solving screen.
+ * A scene in the Operations screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -29,7 +29,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function SolvingSceneNode( scene, sceneProperty, layoutBounds, options ) {
+  function OperationsSceneNode( scene, sceneProperty, layoutBounds, options ) {
 
     var self = this;
 
@@ -48,7 +48,7 @@ define( function( require ) {
       xVisibleProperty: new BooleanProperty( true )
     };
 
-    assert && assert( !options.xVisibleProperty, 'SolvingSceneNode sets xVisibleProperty' );
+    assert && assert( !options.xVisibleProperty, 'OperationsSceneNode sets xVisibleProperty' );
     options.xVisibleProperty = this.viewProperties.xVisibleProperty;
 
     SceneNode.call( this, scene, sceneProperty, layoutBounds, options );
@@ -113,9 +113,9 @@ define( function( require ) {
       } );
   }
 
-  equalityExplorer.register( 'SolvingSceneNode', SolvingSceneNode );
+  equalityExplorer.register( 'OperationsSceneNode', OperationsSceneNode );
 
-  return inherit( SceneNode, SolvingSceneNode, {
+  return inherit( SceneNode, OperationsSceneNode, {
 
     /**
      * @public

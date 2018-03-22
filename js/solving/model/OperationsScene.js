@@ -2,7 +2,7 @@
 
 //TODO duplication with VariablesScene. Should this be a subtype of VariablesScene?
 /**
- * The sole scene in the 'Solving' screen.
+ * The sole scene in the 'Operations' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -39,7 +39,7 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function SolvingScene() {
+  function OperationsScene() {
 
     // @public (read-only) range of variable 'x'
     this.xRange = EqualityExplorerConstants.VARIABLE_RANGE;
@@ -88,7 +88,7 @@ define( function( require ) {
       validValues: this.operands
     } );
 
-    Scene.call( this, 'solving',
+    Scene.call( this, 'operations',
       createTermCreators( this.xProperty ),
       createTermCreators( this.xProperty ), {
         gridRows: 1,
@@ -97,7 +97,7 @@ define( function( require ) {
       } );
   }
 
-  equalityExplorer.register( 'SolvingScene', SolvingScene );
+  equalityExplorer.register( 'OperationsScene', OperationsScene );
 
   /**
    * Creates the term creators for this scene.
@@ -133,7 +133,7 @@ define( function( require ) {
     return [ positiveXCreator, negativeXCreator, positiveOneCreator, negativeOneCreator ];
   }
 
-  return inherit( Scene, SolvingScene, {
+  return inherit( Scene, OperationsScene, {
 
     /**
      * @public

@@ -140,10 +140,10 @@ define( function( require ) {
     },
 
     /**
-     * Creates the icon for the 'Solving' screen.
+     * Creates the icon for the 'Operations' screen.
      * @returns {ScreenIcon}
      */
-    createSolvingScreenIcon: function() {
+    createOperationsScreenIcon: function() {
 
       var operatorOptions = { font: new PhetFont( 30 ) };
 

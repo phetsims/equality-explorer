@@ -367,7 +367,7 @@ define( function( require ) {
         center: sumToZeroLocation
       }, options );
 
-      // If we're combining like terms on the scale (e.g. in Solving screen), use big font
+      // If we're combining like terms on the scale (e.g. in Operations screen), use big font
       if ( this.termCreator.combineLikeTermsEnabled ) {
         options.fontSize = EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE;
       }

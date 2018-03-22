@@ -17,20 +17,20 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
-  var SolvingScene = require( 'EQUALITY_EXPLORER/solving/model/SolvingScene' );
+  var OperationsScene = require( 'EQUALITY_EXPLORER/solving/model/OperationsScene' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
   var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
   var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
 
   /**
-   * @param {SolvingScene} scene
+   * @param {OperationsScene} scene
    * @param {Node} animationLayer
    * @param {Object} [options]
    * @constructor
    */
   function UniversalOperationControl( scene, animationLayer, options ) {
 
-    assert && assert( scene instanceof SolvingScene, 'invalid scene: ' + scene );
+    assert && assert( scene instanceof OperationsScene, 'invalid scene: ' + scene );
 
     var self = this;
 

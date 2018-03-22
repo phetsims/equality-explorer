@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * The 'Solving' screen.
+ * The 'Operations' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -15,32 +15,32 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
-  var SolvingModel = require( 'EQUALITY_EXPLORER/solving/model/SolvingModel' );
-  var SolvingScreenView = require( 'EQUALITY_EXPLORER/solving/view/SolvingScreenView' );
+  var OperationsModel = require( 'EQUALITY_EXPLORER/solving/model/OperationsModel' );
+  var OperationsScreenView = require( 'EQUALITY_EXPLORER/solving/view/OperationsScreenView' );
 
   // strings
-  var screenSolvingString = require( 'string!EQUALITY_EXPLORER/screen.solving' );
+  var screenOperationsString = require( 'string!EQUALITY_EXPLORER/screen.operations' );
 
   /**
    * @param {Object} [options]
    * @constructor
    */
-  function SolvingScreen( options ) {
+  function OperationsScreen( options ) {
 
     options = _.extend( {
-      name: screenSolvingString,
+      name: screenOperationsString,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND ),
-      homeScreenIcon: EqualityExplorerScreenIcons.createSolvingScreenIcon()
+      homeScreenIcon: EqualityExplorerScreenIcons.createOperationsScreenIcon()
     }, options );
 
     Screen.call( this,
-      function() { return new SolvingModel(); },
-      function( model ) { return new SolvingScreenView( model ); },
+      function() { return new OperationsModel(); },
+      function( model ) { return new OperationsScreenView( model ); },
       options
     );
   }
 
-  equalityExplorer.register( 'SolvingScreen', SolvingScreen );
+  equalityExplorer.register( 'OperationsScreen', OperationsScreen );
 
-  return inherit( Screen, SolvingScreen );
+  return inherit( Screen, OperationsScreen );
 } );
