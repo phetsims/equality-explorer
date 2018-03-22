@@ -1,7 +1,8 @@
 TODO items for equality-explorer
 
 Universal Operation
-- UX support for variable term operands, #45
+- how to disable arrows when min/max operand should be skipped?
+- order of negative operands
 
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
