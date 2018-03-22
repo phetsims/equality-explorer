@@ -61,7 +61,7 @@ define( function( require ) {
       validValues: this.operators
     } );
 
-    //TODO this is a wonky way to specify order and interleaving of variable term operands
+    //TODO change order of negative terms so that constants are encountered first with down arrow picker?
     // @public (read-only)
     this.operands = [];
     for ( var i = OPERAND_RANGE.min; i <= OPERAND_RANGE.max; i++ ) {
