@@ -12,7 +12,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerScreenView = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var OperationsSceneNode = require( 'EQUALITY_EXPLORER/solving/view/OperationsSceneNode' );
+  var OperationsSceneNode = require( 'EQUALITY_EXPLORER/operations/view/OperationsSceneNode' );
 
   /**
    * @param {OperationsModel} model

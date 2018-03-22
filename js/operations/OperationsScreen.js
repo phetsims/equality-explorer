@@ -15,8 +15,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
-  var OperationsModel = require( 'EQUALITY_EXPLORER/solving/model/OperationsModel' );
-  var OperationsScreenView = require( 'EQUALITY_EXPLORER/solving/view/OperationsScreenView' );
+  var OperationsModel = require( 'EQUALITY_EXPLORER/operations/model/OperationsModel' );
+  var OperationsScreenView = require( 'EQUALITY_EXPLORER/operations/view/OperationsScreenView' );
 
   // strings
   var screenOperationsString = require( 'string!EQUALITY_EXPLORER/screen.operations' );

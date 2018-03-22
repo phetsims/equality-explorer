@@ -15,7 +15,7 @@ define( function( require ) {
   var NumbersScreen = require( 'EQUALITY_EXPLORER/numbers/NumbersScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
-  var OperationsScreen = require( 'EQUALITY_EXPLORER/solving/OperationsScreen' );
+  var OperationsScreen = require( 'EQUALITY_EXPLORER/operations/OperationsScreen' );
   var VariablesScreen = require( 'EQUALITY_EXPLORER/variables/VariablesScreen' );
   var XYScreen = require( 'EQUALITY_EXPLORER/xy/XYScreen' );
 
