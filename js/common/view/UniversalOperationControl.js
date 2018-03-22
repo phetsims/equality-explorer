@@ -23,6 +23,7 @@ define( function( require ) {
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
   var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
   var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
+  var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
 
   /**
    * @param {OperationsScene} scene
@@ -58,18 +59,43 @@ define( function( require ) {
     }
 
     /*
-     * If next operator would result in divide by zero, change the operand to 1.
+     * If the next operator would result in divide by zero, change the operand to 1.
      * @param {number} index - index into operators array
      */
     var updateDivideByZero = function( nextIndex ) {
 
-      if ( scene.operators[ nextIndex ] === MathSymbols.DIVIDE &&
-           scene.operandProperty.value instanceof ConstantTermOperand &&
-           scene.operandProperty.value.constantValue.getValue() === 0 ) {
+      var nextOperator = scene.operators[ nextIndex ];
+      var currentOperand = scene.operandProperty.value;
+
+      if ( nextOperator === MathSymbols.DIVIDE &&
+           ( currentOperand instanceof ConstantTermOperand && currentOperand.constantValue.getValue() === 0 ) ) {
         var operand = _.find( scene.operands, function( operand ) {
           return ( operand instanceof ConstantTermOperand ) && ( operand.constantValue.getValue() === 1 );
         } );
-        assert && assert( operand, 'oops, where is 1?' );
+        assert && assert( operand, 'expected to find constant 1' );
+        scene.operandProperty.value = operand;
+      }
+    };
+
+    /**
+     * If the next operator would be invalid for a variable term, change the operand to
+     * a constant that has the same value as the variable term's coefficient.
+     * E.g. if the variable term is '5x', change to constant term '5'.
+     * @param nextIndex
+     */
+    var updateInvalidVariableTerm = function( nextIndex ) {
+
+      var nextOperator = scene.operators[ nextIndex ];
+      var currentOperand = scene.operandProperty.value;
+      
+      if ( ( nextOperator === MathSymbols.TIMES || nextOperator === MathSymbols.DIVIDE ) &&
+           currentOperand instanceof VariableTermOperand ) {
+        var currentCoefficient = currentOperand.coefficient;
+        var operand = _.find( scene.operands, function( operand ) {
+          return ( operand instanceof ConstantTermOperand ) &&
+                 ( operand.constantValue.getValue() === currentCoefficient.getValue() );
+        } );
+        assert && assert( operand, 'expected to find constant ' + currentCoefficient );
         scene.operandProperty.value = operand;
       }
     };
@@ -82,17 +108,15 @@ define( function( require ) {
       color: 'black',
       xMargin: 12,
       upFunction: function( index ) {
-
         var nextIndex = index + 1;
         updateDivideByZero( nextIndex );
-
+        updateInvalidVariableTerm( nextIndex );
         return nextIndex;
       },
       downFunction: function( index ) {
-
         var nextIndex = index - 1;
         updateDivideByZero( nextIndex );
-
+        updateInvalidVariableTerm( nextIndex );
         return nextIndex;
       }
     } );
