@@ -13,10 +13,10 @@ define( function( require ) {
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
   var OperationsModel = require( 'EQUALITY_EXPLORER/operations/model/OperationsModel' );
   var OperationsScreenView = require( 'EQUALITY_EXPLORER/operations/view/OperationsScreenView' );
+  var Property = require( 'AXON/Property' );
+  var Screen = require( 'JOIST/Screen' );
 
   // strings
   var screenOperationsString = require( 'string!EQUALITY_EXPLORER/screen.operations' );
