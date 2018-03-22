@@ -1,6 +1,7 @@
 TODO items for equality-explorer
 
 Universal Operation
+- support dynamic addition/deletion of items in ObjectPicker
 - how to disable arrows when min/max operand should be skipped?
 - order of negative operands
 

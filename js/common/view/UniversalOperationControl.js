@@ -58,6 +58,7 @@ define( function( require ) {
       } );
     }
 
+    //TODO if there are no valid operands for operator above/below current operand, then disable up/down button
     /*
      * Adjusts the operand to accommodate a proposed operator.
      * @param {string} operator - the proposed operator
