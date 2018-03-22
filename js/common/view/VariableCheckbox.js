@@ -16,7 +16,6 @@ define( function( require ) {
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
@@ -38,12 +37,8 @@ define( function( require ) {
       font: new MathSymbolFont( FONT_SIZE )
     } );
 
-    // '= ?' in normal font, i18n not required
-    var rightString = StringUtils.fillIn( ' {{equals}} {{questionMark}}', {
-      equals: MathSymbols.EQUAL_TO,
-      questionMark: questionMarkString
-    } );
-    var rightNode = new Text( rightString, {
+    // '= ?' in normal font
+    var rightNode = new Text( ' ' + MathSymbols.EQUAL_TO + ' ' + questionMarkString, {
       font: new PhetFont( FONT_SIZE )
     } );
 
