@@ -180,6 +180,10 @@ define( function( require ) {
     // When the 'go' button is pressed, animate operations, then apply operations to terms.
     var goButtonListener = function() {
 
+      // Go button is disabled until the animation completes, so that students don't press the button in rapid-fire.
+      // See https://github.com/phetsims/equality-explorer/issues/48#issuecomment-375807008
+      goButton.enabled = false;
+
       var operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
 
       // start vertically aligned with the operator picker
@@ -195,9 +199,11 @@ define( function( require ) {
         onComplete: function() {
           scene.applyOperation( operation );
           self.animations.splice( self.animations.indexOf( animation ), 1 );
+          goButton.enabled = true;
         },
         onStop: function() {
           self.animations.splice( self.animations.indexOf( animation ), 1 );
+          goButton.enabled = true;
         }
       } );
       self.animations.push( animation );
