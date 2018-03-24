@@ -130,7 +130,14 @@ define( function( require ) {
     plateYOffset: {
       type: 'number',
       defaultValue: 18
-    }
+    },
+
+    // Normally the universal operator's 'go' button is disabled until the operation is actually applied.
+    // This prevents students from abusing the button by pressing it repeatedly (rapid-fire), which could
+    // cause them to reach the numeric limits of the sim very quickly.  Setting this flag keeps the 'go'
+    // button enabled at all times, allowing you to press it repeatedly, for the purposes of testing the limits.
+    // And in case it's not obvious: For internal use only, not public facing.
+    goButtonEnabled: { type: 'flag' }
   } );
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );

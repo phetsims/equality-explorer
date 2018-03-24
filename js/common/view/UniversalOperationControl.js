@@ -13,6 +13,7 @@ define( function( require ) {
   var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -182,7 +183,7 @@ define( function( require ) {
 
       // Go button is disabled until the animation completes, so that students don't press the button in rapid-fire.
       // See https://github.com/phetsims/equality-explorer/issues/48#issuecomment-375807008
-      goButton.enabled = false;
+      goButton.enabled = EqualityExplorerQueryParameters.goButtonEnabled;
 
       var operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
 
