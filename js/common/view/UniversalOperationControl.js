@@ -62,8 +62,8 @@ define( function( require ) {
     }
 
     /*
-     * Adjusts the operand if it's not appropriate for a proposed operator.
-     * @param {string} operator - the proposed operator
+     * Adjusts the operand if it's not appropriate for a specified operator.
+     * @param {string} operator
      */
     var adjustOperandForOperator = function( operator ) {
 
@@ -79,8 +79,7 @@ define( function( require ) {
         assert && assert( adjustedOperand, 'expected to find constant 1' );
         scene.operandProperty.value = adjustedOperand;
       }
-      else if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
-           currentOperand instanceof VariableTermOperand ) {
+      else if ( isUnsupportedVariableTermOperation( operator, currentOperand ) ) {
 
         // If the operator is not supported for a variable term operand, change the operand to
         // a constant term that has the same value as the variable term's coefficient.
@@ -130,24 +129,6 @@ define( function( require ) {
       } );
     }
 
-    /*
-     * Should a proposed operand be skipped for the current operator?
-     * @param {ConstantTermOperand|VariableTermOperand} operand - the proposed operand
-     * @returns {boolean}
-     */
-    var skipProposedOperand = function( operand ) {
-      var operator = scene.operatorProperty.value;
-      var skip = false;
-      if ( isDivideByZero( operator, operand ) ) {
-        skip = true;
-      }
-      else if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
-                operand instanceof VariableTermOperand ) {
-        skip = true;
-      }
-      return skip;
-    };
-
     // Take control of enabling up/down arrows for operand picker
     var upEnabledProperty = new BooleanProperty( true );
     var downEnabledProperty = new BooleanProperty( true );
@@ -163,14 +144,10 @@ define( function( require ) {
       // when the up button is pressed, skip operands that are inappropriate for the operation
       upFunction: function( index ) {
         var nextOperandIndex = index + 1;
-        while ( skipProposedOperand( scene.operands[ nextOperandIndex ] ) ) {
-          if ( nextOperandIndex === scene.operands.length - 1 ) {
-            break;
-          }
-          else {
-            nextOperandIndex++;
-            assert && assert( nextOperandIndex < scene.operands.length, 'nextOperandIndex out of range: ' + nextOperandIndex );
-          }
+        var operator = scene.operatorProperty.value;
+        while ( !isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
+          nextOperandIndex++;
+          assert && assert( nextOperandIndex < scene.operands.length, 'nextOperandIndex out of range: ' + nextOperandIndex );
         }
         return nextOperandIndex;
       },
@@ -178,14 +155,10 @@ define( function( require ) {
       // when the down button is pressed, skip operands that are inappropriate for the operation
       downFunction: function( index ) {
         var nextOperandIndex = index - 1;
-        while ( skipProposedOperand( scene.operands[ nextOperandIndex ] ) ) {
-          if ( nextOperandIndex === 0 ) {
-            break;
-          }
-          else {
-            nextOperandIndex--;
-            assert && assert( nextOperandIndex >= 0, 'nextOperandIndex out of range: ' + nextOperandIndex );
-          }
+        var operator = scene.operatorProperty.value;
+        while ( !isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
+          nextOperandIndex--;
+          assert && assert( nextOperandIndex >= 0, 'nextOperandIndex out of range: ' + nextOperandIndex );
         }
         return nextOperandIndex;
       }
@@ -200,6 +173,7 @@ define( function( require ) {
         assert && assert( operandIndex !== -1, 'operand not found: ' + operand );
 
         if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) ) {
+          assert && assert( operand instanceof ConstantTermOperand, 'unexpected operand type: ' + operand );
 
           // up arrow is enabled if there are any constant term operands about the current selection
           var upEnabled = false;
@@ -216,6 +190,8 @@ define( function( require ) {
           downEnabledProperty.value = downEnabled;
         }
         else {
+
+          // other operators are supported for all operands
           upEnabledProperty.value = ( operandIndex < operandItems.length - 1 );
           downEnabledProperty.value = ( operandIndex > 0 );
         }
@@ -289,6 +265,28 @@ define( function( require ) {
   function isDivideByZero( operator, operand ) {
     return operator === MathSymbols.DIVIDE &&
            ( operand instanceof ConstantTermOperand && operand.constantValue.getValue() === 0 );
+  }
+
+  /**
+   * Is the operation invalid an attempt to do something unsupported with a variable term operand?
+   * Times and divide are unsupported for variable terms operands.
+   * @param operator
+   * @param operand
+   * @returns {boolean}
+   */
+  function isUnsupportedVariableTermOperation( operator, operand ) {
+    return ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
+               operand instanceof VariableTermOperand;
+  }
+
+  /*
+   * Are the specified operator and operand a supported combination?
+   * @param {string} operator
+   * @param {ConstantTermOperand|VariableTermOperand} operand - the proposed operand
+   * @returns {boolean}
+   */
+  function isSupportedOperation( operator, operand ) {
+    return !isDivideByZero( operator, operand ) && !isUnsupportedVariableTermOperation( operator, operand );
   }
 
   return inherit( HBox, UniversalOperationControl, {
