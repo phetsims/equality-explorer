@@ -4,6 +4,10 @@
  * The 'universal operation' control (as it's referred to in the design document)
  * allows the user to apply an operation to both sides of the scale and equation.
  *
+ * Since some combinations of operator and operand are not supported (specifically division by zero, and
+ * multiplication or division by variable terms) the UX for this control is complex, and potentially confusing.
+ * For historical discussion and specifications, see https://github.com/phetsims/equality-explorer/issues/45.
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
