@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -20,6 +21,7 @@ define( function( require ) {
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
+  var Property = require( 'AXON/Property' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
   var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
@@ -59,9 +61,8 @@ define( function( require ) {
       } );
     }
 
-    //TODO if there are no valid operands for operator above/below current operand, then disable up/down button
     /*
-     * Adjusts the operand to accommodate a proposed operator.
+     * Adjusts the operand if it's not appropriate for a proposed operator.
      * @param {string} operator - the proposed operator
      */
     var adjustOperandForOperator = function( operator ) {
@@ -83,7 +84,7 @@ define( function( require ) {
 
         // If the operator is not supported for a variable term operand, change the operand to
         // a constant term that has the same value as the variable term's coefficient.
-        // E.g. if the operand is '5x', change to '5'.
+        // E.g. if the operand is '5x', change the operand to '5'.
         var currentCoefficient = currentOperand.coefficient;
         adjustedOperand = _.find( scene.operands, function( operand ) {
           return ( operand instanceof ConstantTermOperand ) &&
@@ -99,11 +100,15 @@ define( function( require ) {
       wrapEnabled: true, // wrap around when min/max is reached
       color: 'black',
       xMargin: 12,
+
+      // when the up button is pressed, change the operand if it's inappropriate for the operator
       upFunction: function( index ) {
         var nextIndex = index + 1;
         adjustOperandForOperator( scene.operators[ nextIndex ] );
         return nextIndex;
       },
+
+      // when the down button is pressed, change the operand if it's inappropriate for the operator
       downFunction: function( index ) {
         var nextIndex = index - 1;
         adjustOperandForOperator( scene.operators[ nextIndex ] );
@@ -143,37 +148,78 @@ define( function( require ) {
       return skip;
     };
 
-    //TODO how to disable arrow buttons if skipProposedOperand is true at ends of index range?
+    // Take control of enabling up/down arrows for operand picker
+    var upEnabledProperty = new BooleanProperty( true );
+    var downEnabledProperty = new BooleanProperty( true );
+
     // picker for choosing operand
     var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, {
       color: 'black',
       font: options.integerFont,
       xMargin: 6,
+      upEnabledProperty: upEnabledProperty,
+      downEnabledProperty: downEnabledProperty,
+
+      // when the up button is pressed, skip operands that are inappropriate for the operation
       upFunction: function( index ) {
-        var nextIndex = index + 1;
-        while ( skipProposedOperand( scene.operands[ nextIndex ] ) ) {
-          if ( nextIndex === scene.operands.length - 1 ) {
+        var nextOperandIndex = index + 1;
+        while ( skipProposedOperand( scene.operands[ nextOperandIndex ] ) ) {
+          if ( nextOperandIndex === scene.operands.length - 1 ) {
             break;
           }
           else {
-            nextIndex++;
+            nextOperandIndex++;
+            assert && assert( nextOperandIndex < scene.operands.length, 'nextOperandIndex out of range: ' + nextOperandIndex );
           }
         }
-        return nextIndex;
+        return nextOperandIndex;
       },
+
+      // when the down button is pressed, skip operands that are inappropriate for the operation
       downFunction: function( index ) {
-        var nextIndex = index - 1;
-        while ( skipProposedOperand( scene.operands[ nextIndex ] ) ) {
-          if ( nextIndex === 0 ) {
+        var nextOperandIndex = index - 1;
+        while ( skipProposedOperand( scene.operands[ nextOperandIndex ] ) ) {
+          if ( nextOperandIndex === 0 ) {
             break;
           }
           else {
-            nextIndex--;
+            nextOperandIndex--;
+            assert && assert( nextOperandIndex >= 0, 'nextOperandIndex out of range: ' + nextOperandIndex );
           }
         }
-        return nextIndex;
+        return nextOperandIndex;
       }
     } );
+
+    // Adjust the enabled state of the operand picker's up/down arrows.
+    // dispose not needed
+    Property.multilink( [ scene.operatorProperty, scene.operandProperty ],
+      function( operator, operand ) {
+
+        var operandIndex = scene.operands.indexOf( operand );
+        assert && assert( operandIndex !== -1, 'operand not found: ' + operand );
+
+        if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) ) {
+
+          // up arrow is enabled if there are any constant term operands about the current selection
+          var upEnabled = false;
+          for ( var i = operandIndex + 1; i < scene.operands.length && !upEnabled; i++ ) {
+            upEnabled = ( scene.operands[ i ] instanceof ConstantTermOperand );
+          }
+          upEnabledProperty.value = upEnabled;
+
+          // down arrow is enabled if there are any constant term operands below the current selection
+          var downEnabled = false;
+          for ( i = operandIndex - 1; i >= 0 && !downEnabled; i-- ) {
+            downEnabled = ( scene.operands[ i ] instanceof ConstantTermOperand );
+          }
+          downEnabledProperty.value = downEnabled;
+        }
+        else {
+          upEnabledProperty.value = ( operandIndex < operandItems.length - 1 );
+          downEnabledProperty.value = ( operandIndex > 0 );
+        }
+      } );
 
     // @private Tween animations that are running
     this.animations = [];
