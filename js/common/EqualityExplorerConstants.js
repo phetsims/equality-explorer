@@ -34,6 +34,8 @@ define( function( require ) {
     // model
     VARIABLE_RANGE: new RangeWithValue( -40, 40, 1 ),
     NUMBER_OF_SNAPSHOTS: 5,
+
+    // universal operators, in the order that they appear in the picker
     OPERATORS: [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ],
 
     // terms

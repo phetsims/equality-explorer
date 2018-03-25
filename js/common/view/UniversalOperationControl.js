@@ -63,7 +63,7 @@ define( function( require ) {
 
     /*
      * Adjusts the operand if it's not appropriate for a specified operator.
-     * @param {string} operator
+     * @param {string} operator - see EqualityExplorerConstants.OPERATORS
      */
     var adjustOperandForOperator = function( operator ) {
 
@@ -167,6 +167,11 @@ define( function( require ) {
     // Adjust the enabled state of the operand picker's up/down arrows.
     // dispose not needed
     Property.multilink( [ scene.operatorProperty, scene.operandProperty ],
+
+      /**
+       * @param {string} operator - see EqualityExplorerConstants.OPERATORS
+       * @param {ConstantTermOperand|VariableTermOperand} operand
+       */
       function( operator, operand ) {
 
         var operandIndex = scene.operands.indexOf( operand );
@@ -258,7 +263,7 @@ define( function( require ) {
 
   /**
    * Does this operation result in division by zero?
-   * @param {string} operator
+   * @param {string} operator - see EqualityExplorerConstants.OPERATORS
    * @param {ConstantTermOperand|VariableTermOperand} operand
    * @returns {boolean}
    */
@@ -270,8 +275,8 @@ define( function( require ) {
   /**
    * Is the operation invalid an attempt to do something unsupported with a variable term operand?
    * Times and divide are unsupported for variable terms operands.
-   * @param operator
-   * @param operand
+   * @param {string} operator - see EqualityExplorerConstants.OPERATORS
+   * @param {ConstantTermOperand|VariableTermOperand} operand
    * @returns {boolean}
    */
   function isUnsupportedVariableTermOperation( operator, operand ) {
@@ -281,7 +286,7 @@ define( function( require ) {
 
   /*
    * Are the specified operator and operand a supported combination?
-   * @param {string} operator
+   * @param {string} operator - see EqualityExplorerConstants.OPERATORS
    * @param {ConstantTermOperand|VariableTermOperand} operand - the proposed operand
    * @returns {boolean}
    */

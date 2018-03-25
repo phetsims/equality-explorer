@@ -16,8 +16,8 @@ define( function( require ) {
   var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
 
   /**
-   * @param {string} operator
-   * @param {Object} operand
+   * @param {string} operator - see EqualityExplorerConstants.OPERATORS
+   * @param {ConstantTermOperand|VariableTermOperand} operand
    * @constructor
    */
   function UniversalOperation( operator, operand ) {

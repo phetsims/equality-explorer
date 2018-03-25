@@ -58,7 +58,7 @@ define( function( require ) {
 
     /**
      * Creates the view for a universal operator.
-     * @param {string} operator
+     * @param {string} operator - see EqualityExplorerConstants.OPERATORS
      * @param {Object} [options]
      * @returns {Node}
      * @public
