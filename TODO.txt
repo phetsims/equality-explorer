@@ -28,7 +28,7 @@ Lock feature scenarios:
 Solve It! screen
 - vegas game components
 - challenge generation engine
-- reuse parts of Solving screen
+- reuse parts of Operations screen
 
 Cleanup
 - grunt update-copyright-dates
