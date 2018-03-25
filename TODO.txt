@@ -1,10 +1,5 @@
 TODO items for equality-explorer
 
-Universal Operation
-- support dynamic addition/deletion of items in ObjectPicker
-- how to disable arrows when min/max operand should be skipped?
-- order of negative operands
-
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
 - can this feature be separated from TermCreator and TermDragListener?
