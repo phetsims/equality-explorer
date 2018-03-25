@@ -61,7 +61,13 @@ define( function( require ) {
       arrowStroke: 'black',
       arrowLineWidth: 0.25,
       upFunction: function( index ) { return index + 1; },
-      downFunction: function( index ) { return index - 1; }
+      downFunction: function( index ) { return index - 1; },
+
+      // {Property.<boolean>||null} whether the up and down buttons are enabled.
+      // If the client provides these, then the client is fully responsible for the state of these Properties.
+      // If null, a default implementation is used.
+      upEnabledProperty: null,
+      downEnabledProperty: null
     }, options );
 
     // {Color|string} color of arrows and top/bottom gradient when pressed
@@ -213,19 +219,21 @@ define( function( require ) {
     var upStateProperty = new StringProperty( 'up', { validValues: BUTTON_STATES } );
     var downStateProperty = new StringProperty( 'up', { validValues: BUTTON_STATES } );
 
-    // {DerivedProperty.<boolean>} whether the up button is enabled
-    // dispose not required.
-    var upEnabledProperty = new DerivedProperty( [ indexProperty ],
-      function( index ) {
-        return options.wrapEnabled || ( index < items.length - 1 );
-      } );
+    // enables the up button
+    if ( !options.upEnabledProperty ) {
+      options.upEnabledProperty = new DerivedProperty( [ indexProperty ],
+        function( index ) {
+          return options.wrapEnabled || ( index < items.length - 1 );
+        } );
+    }
 
-    // {DerivedProperty.<boolean>} whether the down button is enabled
-    // dispose not required.
-    var downEnabledProperty = new DerivedProperty( [ indexProperty ],
-      function( index ) {
-        return options.wrapEnabled || ( index > 0 );
-      } );
+    // enables the down button
+    if ( !options.downEnabledProperty ) {
+      options.downEnabledProperty = new DerivedProperty( [ indexProperty ],
+        function( index ) {
+          return options.wrapEnabled || ( index > 0 );
+        } );
+    }
 
     //------------------------------------------------------------
     // Observers and InputListeners
@@ -260,9 +268,11 @@ define( function( require ) {
     } );
     downParent.addInputListener( downListener );
 
-    // enable/disable, unlink not required
-    upEnabledProperty.link( function( enabled ) { upListener.enabled = enabled; } );
-    downEnabledProperty.link( function( enabled ) { downListener.enabled = enabled; } );
+    // enable/disable, unlink required
+    var upEnabledListener = function( enabled ) { upListener.enabled = enabled; };
+    var downEnabledListener = function( enabled ) { downListener.enabled = enabled; };
+    options.upEnabledProperty.link( upEnabledListener );
+    options.downEnabledProperty.link( downEnabledListener );
 
     // Update displayed Node and index to match the curret value
     var valueObserver = function( value ) {
@@ -287,12 +297,12 @@ define( function( require ) {
     } );
 
     // @private update colors for 'up' components, unmultilink unnecessary
-    Property.multilink( [ upStateProperty, upEnabledProperty ], function( buttonState, enabled ) {
+    Property.multilink( [ upStateProperty, options.upEnabledProperty ], function( buttonState, enabled ) {
       updateColors( buttonState, enabled, upBackground, upArrow, backgroundColors, arrowColors );
     } );
 
     // @private update colors for 'down' components, unmultilink unnecessary
-    Property.multilink( [ downStateProperty, downEnabledProperty ], function( buttonState, enabled ) {
+    Property.multilink( [ downStateProperty, options.downEnabledProperty ], function( buttonState, enabled ) {
       updateColors( buttonState, enabled, downBackground, downArrow, backgroundColors, arrowColors );
     } );
 
@@ -301,6 +311,8 @@ define( function( require ) {
     // @private called by dispose
     this.disposeObjectPicker = function() {
       valueProperty.unlink( valueObserver );
+      options.upEnabledProperty.unlink( upEnabledListener );
+      options.downEnabledProperty.unlink( downEnabledListener );
     };
   }
 
