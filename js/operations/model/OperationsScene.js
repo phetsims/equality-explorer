@@ -61,19 +61,33 @@ define( function( require ) {
       validValues: this.operators
     } );
 
-    //TODO change order of negative terms so that constants are encountered first with down arrow picker?
     // @public (read-only)
     this.operands = [];
     for ( var i = OPERAND_RANGE.min; i <= OPERAND_RANGE.max; i++ ) {
 
-      // constant term
       var constantTermOperand = new ConstantTermOperand( Fraction.fromInteger( i ) );
-      this.operands.push( constantTermOperand );
 
-      // variable term, skip zero coefficient
-      if ( i !== 0 ) {
+      if ( i === 0 ) {
+
+        // skip variable term with zero coefficient
+        this.operands.push( constantTermOperand );
+      }
+      else {
         var variableTermOperand = new VariableTermOperand( Fraction.fromInteger( i ), xString );
-        this.operands.push( variableTermOperand );
+        if ( i < 0 ) {
+
+          // for negative numbers, put the variable term before the constant term
+          // e.g. ... -2x, -2, -x, -1
+          this.operands.push( variableTermOperand );
+          this.operands.push( constantTermOperand );
+        }
+        else {
+
+          // for positive numbers, put the variable term before the constant term
+          // e.g. 1, x, 2, 2x, ...
+          this.operands.push( constantTermOperand );
+          this.operands.push( variableTermOperand );
+        }
       }
     }
 
