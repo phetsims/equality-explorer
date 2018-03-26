@@ -25,6 +25,7 @@ define( function( require ) {
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
+  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var Property = require( 'AXON/Property' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
@@ -252,7 +253,7 @@ define( function( require ) {
     var goButton = new RoundPushButton( {
       listener: goButtonListener,
       content: goButtonIcon,
-      baseColor: 'white',
+      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       minXMargin: 10,
       minYMargin: 10
     } );
