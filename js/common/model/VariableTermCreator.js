@@ -253,12 +253,14 @@ define( function( require ) {
     applyOperationToPlate: function( operation ) {
       assert && assert( this.combineLikeTermsEnabled, 'applyOperationToPlate is only supported when combining like terms' );
 
+      // operator is not applicable to variable terms
       if ( operation.operator !== MathSymbols.PLUS && operation.operator !== MathSymbols.MINUS ) {
-        return null; // operator is not applicable to variable terms
+        return null;
       }
 
+      // operand is not this variable term
       if ( !( operation.operand instanceof VariableTermOperand && operation.operand.symbol === this.symbol ) ) {
-        return null; // operand is not applicable to this variable term
+        return null;
       }
 
       // the plate already contains one or more like terms

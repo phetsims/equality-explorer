@@ -216,7 +216,7 @@ define( function( require ) {
         return null;
       }
 
-      // operand is not applicable to constant terms
+      // operand is not a constant term
       if ( !( operation.operand instanceof ConstantTermOperand ) ) {
         return null;
       }
