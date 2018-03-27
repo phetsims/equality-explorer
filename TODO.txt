@@ -33,4 +33,5 @@ Solve It! screen
 Cleanup
 - grunt update-copyright-dates
 - review unresolved comments in design document
+- symbol -> variableSymbol throughout
                     
