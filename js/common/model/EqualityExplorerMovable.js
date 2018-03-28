@@ -72,7 +72,7 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      assert && assert( !this.disposed, 'dispose called again' );
+      assert && assert( !this.disposed, 'dispose called twice for ' + this );
 
       this.locationProperty.dispose();
 
