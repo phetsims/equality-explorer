@@ -14,7 +14,6 @@ define( function( require ) {
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
@@ -191,9 +190,6 @@ define( function( require ) {
    */
   function createSideNode( termCreators, symbolFont, operatorFont, integerFont, fractionFont, coefficientSpacing, plusSpacing ) {
 
-    var constantValue = Fraction.fromInteger( 0 );
-    var coefficients = {}; // map from {string} variable to {Fraction} coefficient, e.g. { x: 3/5 }
-
     var children = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
 
@@ -209,7 +205,7 @@ define( function( require ) {
             children.push( new Text( MathSymbols.PLUS, { font: operatorFont } ) );
           }
 
-          // Each mystery term has an implicit coefficient of 1, so the use the number of terms as the coefficient.
+          // Each mystery term has an implicit coefficient of 1, so use the number of terms as the coefficient.
           children.push( MysteryTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.createIcon(), {
             font: integerFont,
             spacing: coefficientSpacing
@@ -217,75 +213,46 @@ define( function( require ) {
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
-          // variable terms contribute to the coefficient for their associated variable
-          if ( !coefficients.hasOwnProperty( termCreator.symbol ) ) {
-            coefficients[ termCreator.symbol ] = Fraction.fromInteger( 0 );
+          var coefficient = termCreator.sumCoefficientsOnScale();
+
+          if ( coefficient.getValue() !== 0 ) {
+
+            // if there were previous terms, replace the coefficient's sign with an operator
+            if ( children.length > 0 ) {
+              var operator = ( coefficient.getValue() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
+              children.push( new Text( operator, { font: operatorFont } ) );
+              coefficient = coefficient.abs();
+            }
+            children.push( VariableTermNode.createEquationTermNode( coefficient, termCreator.symbol, {
+              integerFont: integerFont,
+              fractionFont: fractionFont,
+              symbolFont: symbolFont,
+              coefficientSpacing: coefficientSpacing
+            } ) );
           }
-          coefficients[ termCreator.symbol ] =
-            coefficients[ termCreator.symbol ].plus( termCreator.sumCoefficientsOnScale() ).reduced();
         }
         else if ( termCreator instanceof ConstantTermCreator ) {
 
-          // constant terms contribute their weight to the constant term
-          constantValue = constantValue.plus( termCreator.weightOnPlateProperty.value ).reduced();
+          var constantValue = termCreator.sumConstantsOnScale();
+
+          if ( constantValue.getValue() !== 0 ) {
+
+            // if there were previous terms, replace the constant's sign with an operator
+            if ( children.length > 0 ) {
+              operator = ( constantValue.getValue() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
+              children.push( new Text( operator, { font: operatorFont } ) );
+              constantValue = constantValue.abs();
+            }
+
+            children.push( ConstantTermNode.createEquationTermNode( constantValue, {
+              integerFont: integerFont,
+              fractionFont: fractionFont
+            } ) );
+          }
         }
         else {
-          throw new Error( 'unsupported termCreator type' );
+          throw new Error( 'unsupported termCreator: ' + termCreator );
         }
-      }
-    }
-
-    // Create a term for each variable that has a non-zero coefficient.
-    for ( var property in coefficients ) {
-      if ( coefficients.hasOwnProperty( property ) ) {
-
-        var coefficient = coefficients[ property ]; // {Fraction}
-
-        if ( coefficient.getValue() !== 0 ) {
-
-          var variableTermOptions = {
-            integerFont: integerFont,
-            fractionFont: fractionFont,
-            symbolFont: symbolFont,
-            coefficientSpacing: coefficientSpacing
-          };
-
-          if ( children.length > 0 ) {
-
-            // if there were previous terms, replace the coefficient's sign with an operator
-            var operator = ( coefficient.getValue() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
-            children.push( new Text( operator, { font: operatorFont } ) );
-            children.push( VariableTermNode.createEquationTermNode( coefficient.abs(), property, variableTermOptions ) );
-          }
-          else {
-
-            // if there were no variable terms, keep the constant's sign
-            children.push( VariableTermNode.createEquationTermNode( coefficient, property, variableTermOptions ) );
-          }
-        }
-      }
-    }
-
-    // put the non-zero constant term last
-    if ( constantValue.getValue() !== 0 ) {
-
-      var constantTermOptions = {
-        integerFont: integerFont,
-        fractionFont: fractionFont
-      };
-
-      // put the constant term last
-      if ( children.length > 0 ) {
-
-        // if there were previous terms, replace the constant's sign with an operator
-        operator = ( constantValue.getValue() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
-        children.push( new Text( operator, { font: operatorFont } ) );
-        children.push( ConstantTermNode.createEquationTermNode( constantValue.abs(), constantTermOptions ) );
-      }
-      else {
-
-        // if there were no previous terms, keep the constant's sign
-        children.push( ConstantTermNode.createEquationTermNode( constantValue, constantTermOptions ) );
       }
     }
 
@@ -311,4 +278,5 @@ define( function( require ) {
       Node.prototype.dispose.call( this );
     }
   } );
-} );
+} )
+;
