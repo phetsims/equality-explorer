@@ -39,9 +39,6 @@ define( function( require ) {
       likeTermsCellIndex: -1
     }, options );
 
-    // @private has this instance been fully initialized?
-    this.isInitialized = false;
-
     // @public (read-only after initialization) {Vector2}
     // Location of the associated positive TermCreatorNode.
     // The value is dependent on the view and is unknowable until the sim has loaded.
