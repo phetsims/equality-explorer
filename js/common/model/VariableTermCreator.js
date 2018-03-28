@@ -94,9 +94,12 @@ define( function( require ) {
      * @override
      */
     createTermProtected: function( options ) {
-      return new VariableTerm( this.symbol, this.variableValueProperty, this, _.extend( {
+
+      options = _.extend( {
         coefficient: this.defaultCoefficient
-      }, options ) );
+      }, options );
+
+      return new VariableTerm( this.symbol, this.variableValueProperty, this, options );
     },
 
     /**
@@ -196,7 +199,7 @@ define( function( require ) {
 
       var cellIndex = this.plate.getCellForTerm( term );
 
-      // {Fraction} compute the new coefficient value
+      // {Fraction} compute the new coefficient
       var newCoefficient;
       if ( operation.operator === MathSymbols.PLUS && operation.operand instanceof VariableTermOperand ) {
         newCoefficient = term.coefficient.plus( operation.operand.coefficient ).reduced();
@@ -218,27 +221,11 @@ define( function( require ) {
       // Dispose of the term, has the side-effect of removing it from the plate.
       term.dispose();
 
+      // If the new coefficient isn't zero, create a new term on the plate.
       var newTerm = null;
       if ( newCoefficient.getValue() !== 0 ) {
-
-        // create a new term on the plate
-        var newTermOptions = {
-          coefficient: newCoefficient,
-          diameter: term.diameter
-        };
-
-        if ( newCoefficient.sign === this.defaultCoefficient.sign ) {
-
-          // sign is the same as this term creator, so create the term
-          newTerm = this.createTermOnPlate( cellIndex, newTermOptions );
-        }
-        else {
-
-          // sign is different than this term creator, forward the creation request to the inverse term creator.
-          newTerm = this.inverseTermCreator.createTermOnPlate( cellIndex, newTermOptions );
-        }
+        newTerm = this.delegateCreateTermOnPlate( cellIndex, newCoefficient, term.diameter );
       }
-
       return newTerm;
     },
 
@@ -258,29 +245,52 @@ define( function( require ) {
         return null;
       }
 
-      // operand is not this variable term
+      // operand is not a like term
       if ( !( operation.operand instanceof VariableTermOperand && operation.operand.symbol === this.symbol ) ) {
         return null;
       }
 
       // the plate already contains one or more like terms
-      if( this.numberOfTermsOnPlateProperty.value + this.inverseTermCreator.numberOfTermsOnPlateProperty.value !== 0 ) {
+      if ( this.numberOfTermsOnPlateProperty.value + this.inverseTermCreator.numberOfTermsOnPlateProperty.value !== 0 ) {
         return null;
       }
-
-      var term = null;
 
       // {Fraction} compute the coefficient
       var coefficient = ( operation.operator === MathSymbols.PLUS ) ?
                         operation.operand.coefficient : operation.operand.coefficient.timesInteger( -1 );
 
-      // If the coefficient has the same sign as this term, create a coefficient term on the plate.
-      // Otherwise do nothing because the inverse term creator will create the term.
+      // create a new term on the plate
+      return this.delegateCreateTermOnPlate( this.likeTermsCellIndex, coefficient,
+        EqualityExplorerConstants.BIG_TERM_DIAMETER );
+    },
+
+    /**
+     * Creates a term on the plate, possibly delegating creation to the inverse term creator.
+     * For example, if the 'x' term creator is asked to create a '-2x', it will delegate to the '-x' creator.
+     * @param {number} cellIndex
+     * @param {Fraction} coefficient - the term's coefficient
+     * @param {number} diameter - diameter of the term's visual representation
+     * @returns {Term}
+     * @private
+     */
+    delegateCreateTermOnPlate: function( cellIndex, coefficient, diameter ) {
+
+      var term = null;
+
+      var termOptions = {
+        coefficient: coefficient,
+        diameter: diameter
+      };
+
       if ( coefficient.sign === this.defaultCoefficient.sign ) {
-        term = this.createTermOnPlate( this.likeTermsCellIndex, {
-          coefficient: coefficient,
-          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-        } );
+
+        // Sign is the same as this term creator, so create the term.
+        term = this.createTermOnPlate( this.likeTermsCellIndex, termOptions );
+      }
+      else {
+
+        // Sign is different than this term creator, so forward the creation request to the inverse term creator.
+        term = this.inverseTermCreator.createTermOnPlate( this.likeTermsCellIndex, termOptions );
       }
 
       return term;

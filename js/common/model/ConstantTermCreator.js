@@ -54,9 +54,12 @@ define( function( require ) {
      * @override
      */
     createTermProtected: function( options ) {
-      return new ConstantTerm( this, _.extend( {
+
+      options = _.extend( {
         constantValue: this.defaultConstantValue
-      }, options ) );
+      }, options );
+
+      return new ConstantTerm( this, options );
     },
 
     /**
@@ -174,27 +177,11 @@ define( function( require ) {
       // Dispose of the term, has the side-effect of removing it from the plate.
       term.dispose();
 
+      // If the new constant isn't zero, create a new term on the plate.
       var newTerm = null;
       if ( newConstantValue.getValue() !== 0 ) {
-
-        // create a new term on the plate
-        var newTermOptions = {
-          constantValue: newConstantValue,
-          diameter: term.diameter
-        };
-
-        if ( newConstantValue.sign === this.defaultConstantValue.sign ) {
-
-          // sign is the same as this term creator, so create the term
-          newTerm = this.createTermOnPlate( cellIndex, newTermOptions );
-        }
-        else {
-
-          // sign is different than this term creator, forward the creation request to the inverse term creator.
-          newTerm = this.inverseTermCreator.createTermOnPlate( cellIndex, newTermOptions );
-        }
+        newTerm = this.delegateCreateTermOnPlate( cellIndex, newConstantValue, term.diameter );
       }
-
       return newTerm;
     },
 
@@ -216,29 +203,53 @@ define( function( require ) {
         return null;
       }
 
-      // operand is not a constant term
+      // operand is not a like term
       if ( !( operation.operand instanceof ConstantTermOperand ) ) {
         return null;
       }
 
       // the plate already contains one or more like terms
-      if( this.numberOfTermsOnPlateProperty.value + this.inverseTermCreator.numberOfTermsOnPlateProperty.value !== 0 ) {
+      if ( this.numberOfTermsOnPlateProperty.value + this.inverseTermCreator.numberOfTermsOnPlateProperty.value !== 0 ) {
         return null;
       }
 
+      // {Fraction} compute the constant value
+      var constantValue = ( operation.operator === MathSymbols.PLUS ) ?
+                          operation.operand.constantValue : operation.operand.constantValue.timesInteger( -1 );
+
+      // create a new term on the plate
+      return this.delegateCreateTermOnPlate( this.likeTermsCellIndex, constantValue,
+        EqualityExplorerConstants.BIG_TERM_DIAMETER );
+    },
+
+    /**
+     * Creates a term on the plate, possibly delegating creation to the inverse term creator.
+     * For example, if the positive constant creator is asked to create '-2', it will delegate to the negative
+     * constant creator.
+     * @param {number} cellIndex
+     * @param {Fraction} constantValue - the term's constant value
+     * @param {number} diameter - diameter of the term's visual representation
+     * @returns {Term}
+     * @private
+     */
+    delegateCreateTermOnPlate: function( cellIndex, constantValue, diameter ) {
+
       var term = null;
 
-      // {Fraction} compute the constant value
-      var newConstantValue = ( operation.operator === MathSymbols.PLUS ) ?
-                            operation.operand.constantValue : operation.operand.constantValue.timesInteger( -1 );
+      var termOptions = {
+        constantValue: constantValue,
+        diameter: diameter
+      };
 
-      // If the constant has the same sign as this term, create a constant term on the plate.
-      // Otherwise do nothing because the inverse term creator will create the term.
-      if ( newConstantValue.sign === this.defaultConstantValue.sign ) {
-        term = this.createTermOnPlate( this.likeTermsCellIndex, {
-          constantValue: newConstantValue,
-          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-        } );
+      if ( constantValue.sign === this.defaultConstantValue.sign ) {
+
+        // Sign is the same as this term creator, so create the term.
+        term = this.createTermOnPlate( this.likeTermsCellIndex, termOptions );
+      }
+      else {
+
+        // Sign is different than this term creator, so forward the creation request to the inverse term creator.
+        term = this.inverseTermCreator.createTermOnPlate( this.likeTermsCellIndex, termOptions );
       }
 
       return term;
