@@ -28,14 +28,23 @@ define( function( require ) {
     // @public (read-only)
     this.mysteryObject = mysteryObject;
 
-    var icon = MysteryTermNode.createInteractiveTermNode( mysteryObject.image );
-
-    TermCreator.call( this, icon, options );
+    TermCreator.call( this, options );
   }
 
   equalityExplorer.register( 'MysteryTermCreator', MysteryTermCreator );
 
   return inherit( TermCreator, MysteryTermCreator, {
+
+    /**
+     * Creates the icon used to represent this term in the TermsToolbox and equations.
+     * @param {Object} [options]
+     * @returns {Node}
+     * @public
+     * @override
+     */
+    createIcon: function( options ) {
+      return MysteryTermNode.createInteractiveTermNode( this.mysteryObject.image );
+    },
 
     /**
      * Instantiates a MysteryTerm.
@@ -51,14 +60,13 @@ define( function( require ) {
     /**
      * Instantiates the Node that corresponds to this term.
      * @param {Term} term
-     * @param {Plate} plate
      * @param {Object} options - passed to the MysteryTermNode's constructor
      * @returns {TermNode}
      * @public
      * @override
      */
-    createTermNode: function( term, plate, options ) {
-      return new MysteryTermNode( this, term, plate, options );
+    createTermNode: function( term, options ) {
+      return new MysteryTermNode( this, term, this.plate, options );
     },
 
     /**
@@ -93,17 +101,6 @@ define( function( require ) {
      */
     isEquivalentTo: function( termCreator ) {
       return false; // there are no equivalents for mystery objects
-    },
-
-    /**
-     * Is this term creator the inverse of a specified term creator?
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isInverseOf: function( termCreator ) {
-      throw false; // there are no inverses for mystery objects
     },
 
     /**

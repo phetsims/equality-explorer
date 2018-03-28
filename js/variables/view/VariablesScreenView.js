@@ -20,8 +20,8 @@ define( function( require ) {
    */
   function VariablesScreenView( model ) {
     EqualityExplorerScreenView.call( this, model, {
-      createSceneNode: function( scene, sceneProperty, layoutBounds ) {
-        return new VariablesSceneNode( scene, sceneProperty, layoutBounds );
+      createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
+        return new VariablesSceneNode( scene, sceneProperty, layoutBounds, options );
       }
     } );
   }

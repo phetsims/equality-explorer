@@ -19,25 +19,22 @@ define( function( require ) {
   var Event = require( 'SCENERY/input/Event' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {Node} icon - icon used to represent this term creator
    * @param {Object} [options]
    * @constructor
    * @abstract
    */
-  function TermCreator( icon, options ) {
+  function TermCreator( options ) {
 
     var self = this;
 
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
       initialNumberOfTermsOnPlate: 0, // {number} integer number of terms initially on the plate
-      inverseTermCreator: null, // {TermCreator|null} optional inverse term creator on the same side of the scale.
 
       // {number} like terms will occupy this cell index in the plate's 2D grid
       // -1 means 'no cell', and like terms will not be combined
@@ -50,13 +47,15 @@ define( function( require ) {
     // @private has this instance been fully initialized?
     this.isInitialized = false;
 
-    // @private icon that appears in toolboxes below the scale. See ES5 getter.
-    this._icon = icon;
+    // @public (read-only after initialization) {Vector2}
+    // Location of the associated positive TermCreatorNode.
+    // The value is dependent on the view and is unknowable until the sim has loaded.
+    // See TermCreatorNode.frameStartedCallback
+    this.location = null;
 
     // @public (read-only after initialization) {Vector2}
-    // Location is dependent on the view and is unknowable until the sim has loaded.
-    // TermCreators will ultimately be located in the toolbox below the plate. See initialize.
-    this.location = null;
+    // Similar to this.location, but for the optional negative TermCreatorNode
+    this.inverseLocation = null;
 
     // @private Number of terms to put on the plate initially.
     // Terms cannot be put on the plate until this.location is initialized.
@@ -95,25 +94,11 @@ define( function( require ) {
       useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
     } );
 
-    // @public emit2 is called when a term is created.
-    // Callback signature is function( {Term} term, {Event|null} [event] )
+    // @public emit3 is called when a term is created.
+    // Callback signature is function( {TermCreator} termCreator, {Term} term, {Event|null} [event] )
     // event arg will be non-null if the term was created as the result of a user interaction.
     // dispose not required.
     this.termCreatedEmitter = new Emitter();
-
-    // @public {TermCreator} optional inverse term creator on the same side of the scale.
-    // This is needed for combining terms on a plate.
-    // If an inverseTermCreator is provided, a 2-way association is created.
-    this.inverseTermCreator = options.inverseTermCreator;
-    if ( this.inverseTermCreator ) {
-      if ( !options.inverseTermCreator.inverseTermCreator ) {
-        options.inverseTermCreator.inverseTermCreator = this;
-      }
-      assert && assert( options.inverseTermCreator.inverseTermCreator === this,
-        'inverseTermCreator is associated with some other term creator' );
-      assert && assert( this.isInverseOf( this.inverseTermCreator ),
-        'inverseTermCreator is not an inverse' );
-    }
 
     // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
     // This is needed for the lock feature, which involves creating an equivalent term on the opposite side of the scale.
@@ -155,40 +140,6 @@ define( function( require ) {
   return inherit( Object, TermCreator, {
 
     /**
-     * Gets the icon used to represent this term creator in the toolboxes below the scale.
-     * Since this icon is used in multiple places in the scenery DAG (specifically, in multiple
-     * toolboxes), it must be wrapped.
-     * @returns {Node}
-     * @public
-     */
-    get icon() {
-      return new Node( { children: [ this._icon ] } );
-    },
-
-    /**
-     * Completes initialization. This model element's location is dependent on the location of
-     * its associated view element (TermCreatorNode).  So initialization cannot be completed
-     * until the sim has fully loaded. See frameStartedCallback in TermCreatorNode.
-     * @param {Vector2} location
-     * @public
-     */
-    initialize: function( location ) {
-
-      assert && assert( !this.isInitialized, 'initialize has already been called' );
-      this.isInitialized = true;
-
-      this.location = location;
-
-      // populate the plate, see https://github.com/phetsims/equality-explorer/issues/8
-      assert && assert( this.plate, 'plate has not been initialized' );
-      for ( var i = 0; i < this.initialNumberOfTermsOnPlate; i++ ) {
-        var cellIndex = this.plate.getFirstEmptyCell();
-        assert && assert( cellIndex !== -1, 'oops, plate is full' );
-        this.createTermOnPlate( cellIndex );
-      }
-    },
-
-    /**
      * Animates terms.
      * @param {number} dt - time since the previous step, in seconds
      * @public
@@ -208,11 +159,21 @@ define( function( require ) {
     createTerm: function( options ) {
 
       options = _.extend( {
-        location: this.location,
+        sign: 1,
         dragBounds: this.dragBounds,
         event: null // event is non-null if the term is created as the result of a user interaction
       }, options );
-      assert && assert( options.event === null || options.event instanceof Event, 'invalid event: ' + event );
+      assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
+      assert && assert( options.event === null || options.event instanceof Event, 'invalid event: ' + options.event );
+
+      assert && assert( !options.location, 'TermCreator sets location' );
+      if ( options.sign === 1 ) {
+        options.location = this.location;
+      }
+      else {
+        assert && assert( this.inverseLocation, 'inverseLocation was never initialized' );
+        options.location = this.inverseLocation;
+      }
 
       // create term
       var term = this.createTermProtected( options );
@@ -223,7 +184,7 @@ define( function( require ) {
       term.disposedEmitter.addListener( this.termWasDisposedBound );
 
       // Notify that a term was created
-      this.termCreatedEmitter.emit2( term, options.event );
+      this.termCreatedEmitter.emit3( this, term, options.event );
 
       return term;
     },
@@ -356,6 +317,17 @@ define( function( require ) {
     //-------------------------------------------------------------------------------------------------
 
     /**
+     * Creates the icon used to represent this term in the TermsToolbox and equations.
+     * @param {Object} [options]
+     * @returns {Node}
+     * @public
+     * @abstract
+     */
+    createIcon: function( options ) {
+      throw new Error( 'createIcon must be implemented by subtypes' );
+    },
+
+    /**
      * Instantiates a term.
      * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
@@ -394,13 +366,12 @@ define( function( require ) {
     /**
      * Instantiates the Node that corresponds to a term.
      * @param {Term} term
-     * @param {Plate} plate
      * @param {Object} [options] - passed to the TermNode's constructor
      * @returns {TermNode}
      * @public
      * @abstract
      */
-    createTermNode: function( term, plate, options ) {
+    createTermNode: function( term, options ) {
       throw new Error( 'createTermNode must be implemented by subtypes' );
     },
 
@@ -436,17 +407,6 @@ define( function( require ) {
      */
     isEquivalentTo: function( termCreator ) {
       throw new Error( 'isEquivalentTo must be implemented by subtype' );
-    },
-
-    /**
-     * Is this term creator the inverse of a specified term creator?
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @abstract
-     */
-    isInverseOf: function( termCreator ) {
-      throw new Error( 'isInverseOf must be implemented by subtype' );
     },
 
     /**

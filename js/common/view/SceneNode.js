@@ -33,6 +33,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+      inverseTermsInToolbox: true, // put positive and negative version of each term in the toolbox, e.g. x and -x
       termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale
       xVisibleProperty: null, // {BooleanProperty|null} whether 'x' value is visible in snapshots
       organizeButtonVisible: true // is the organize button visible on the scale?
@@ -55,12 +56,14 @@ define( function( require ) {
     } );
 
     var leftTermsToolbox = new TermsToolbox( leftTermCreators, scale.leftPlate, this.termsLayer, {
+      inverseTermsInToolbox: options.inverseTermsInToolbox,
       spacing: options.termsToolboxSpacing,
       centerX: scale.leftPlate.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     var rightTermsToolbox = new TermsToolbox( rightTermCreators, scale.rightPlate, this.termsLayer, {
+      inverseTermsInToolbox: options.inverseTermsInToolbox,
       spacing: options.termsToolboxSpacing,
       centerX: scale.rightPlate.locationProperty.value.x,
       bottom: leftTermsToolbox.bottom
@@ -105,6 +108,28 @@ define( function( require ) {
 
     Node.call( this, {
       children: children
+    } );
+
+    // When a term is created in the model, create the corresponding view.
+    var termCreatedListener = function( termCreator, term, event ) {
+
+      // create a TermNode
+      var termNode = termCreator.createTermNode( term );
+      self.termsLayer.insertChild( 0, termNode ); // behind other Nodes
+
+      // Clean up when the term is disposed. Term.dispose handles removal of this listener.
+      term.disposedEmitter.addListener( function( term ) {
+        termNode.dispose();
+      } );
+
+      // event is non-null when the term was created via user interaction with termCreator.
+      // start a drag cycle by forwarding the event to termNode.
+      if ( event ) {
+        termNode.startDrag( event );
+      }
+    };
+    scene.leftTermCreators.concat( scene.rightTermCreators ).forEach( function( termCreator ) {
+      termCreator.termCreatedEmitter.addListener( termCreatedListener ); // removeListener not needed
     } );
 
     // Make this scene visible when it's selected.

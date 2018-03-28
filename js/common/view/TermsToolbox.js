@@ -31,7 +31,7 @@ define( function( require ) {
   function TermsToolbox( termCreators, plate, termsLayer, options ) {
 
     options = _.extend( {
-      
+      inverseTermsInToolbox: false, // whether to create TermCreatorNodes for both positive and negative terms
       spacing: 45, // horizontal space between TermCreatorNodes
 
       // supertype options
@@ -44,6 +44,11 @@ define( function( require ) {
     var termCreatorNodes = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
       termCreatorNodes.push( new TermCreatorNode( termCreators[ i ], plate, termsLayer ) );
+      if ( options.inverseTermsInToolbox ) {
+        termCreatorNodes.push( new TermCreatorNode( termCreators[ i ], plate, termsLayer, {
+          sign: -1
+        } ) );
+      }
     }
 
     var hBox = new HBox( {

@@ -19,7 +19,9 @@ define( function( require ) {
    * @constructor
    */
   function BasicsScreenView( model ) {
-    EqualityExplorerScreenView.call( this, model );
+    EqualityExplorerScreenView.call( this, model, {
+      inverseTermsInToolbox: false // create Node for positive terms only in the toolbox
+    } );
   }
 
   equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );

@@ -210,7 +210,7 @@ define( function( require ) {
           }
 
           // Each mystery term has an implicit coefficient of 1, so the use the number of terms as the coefficient.
-          children.push( MysteryTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.icon, {
+          children.push( MysteryTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.createIcon(), {
             font: integerFont,
             spacing: coefficientSpacing
           } ) );

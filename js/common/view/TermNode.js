@@ -88,10 +88,10 @@ define( function( require ) {
     term.haloVisibleProperty.link( haloVisibleListener ); // unlink required in dispose.
 
     // @private dispose required
-    this.dragListener = new TermDragListener( this, term, termCreator, plate, {
+    this.termDragListener = new TermDragListener( this, term, termCreator, plate, {
       haloRadius: haloRadius
     } );
-    this.addInputListener( this.dragListener ); // removeListener required in dispose
+    this.addInputListener( this.termDragListener ); // removeListener required in dispose
 
     // @private
     this.disposeTermNode = function() {
@@ -104,8 +104,8 @@ define( function( require ) {
       if ( term.shadowVisibleProperty.hasListener( haloVisibleListener ) ) {
         term.haloVisibleProperty.unlink( haloVisibleListener );
       }
-      self.removeInputListener( self.dragListener );
-      self.dragListener.dispose();
+      self.removeInputListener( self.termDragListener );
+      self.termDragListener.dispose();
     };
   }
 
@@ -131,7 +131,7 @@ define( function( require ) {
      * @public
      */
     startDrag: function( event ) {
-      this.dragListener.startDrag( event );
+      this.termDragListener.startDrag( event );
     }
   } );
 } );

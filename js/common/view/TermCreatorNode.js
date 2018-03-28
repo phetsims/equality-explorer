@@ -26,13 +26,16 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+      sign: 1,  // sign that will be applied to terms created by this Node, 1 or -1
 
       // supertype options
       cursor: 'pointer'
     }, options );
 
+    assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
+
     assert && assert( !options.children, 'TermCreatorNode sets children' );
-    options.children = [ termCreator.icon ];
+    options.children = [ termCreator.createIcon( { sign: options.sign } ) ];
 
     // @private
     this.termCreator = termCreator;
@@ -41,31 +44,15 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    // When a term is created in the model, create the corresponding view.
-    termCreator.termCreatedEmitter.addListener( function( term, event ) {
-
-      // create a TermNode
-      var termNode = termCreator.createTermNode( term, plate );
-      termsLayer.insertChild( 0, termNode ); // behind other Nodes
-
-      // Clean up when the term is disposed. Term.dispose handles removal of this listener.
-      term.disposedEmitter.addListener( function( term ) {
-        termNode.dispose();
-      } );
-
-      // event is non-null when the term was created via user interaction with termCreator.
-      // start a drag cycle by forwarding the event to termNode.
-      if ( event ) {
-        termNode.startDrag( event );
-      }
-    } );
-
     // On down event, create a term and start a drag cycle by forwarding the event
     this.addInputListener( SimpleDragHandler.createForwardingListener(
 
       // down
       function( event ) {
-        termCreator.createTerm( { event: event } );
+        termCreator.createTerm( {
+          event: event,
+          sign: options.sign
+        } );
       }, {
         allowTouchSnag: true
       }
@@ -74,11 +61,18 @@ define( function( require ) {
     // Things to do after the sim has loaded, when this Node has a valid location.
     var frameStartedCallback = function() {
 
-      // termCreator's location
+      // This Node's location
       var location = termsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
 
-      // complete initialization
-      termCreator.initialize( location );
+      // assign to termCreator's location
+      if ( options.sign === 1 ) {
+        assert && assert( !termCreator.location, 'attempted to initialize termCreator.location twice' );
+        termCreator.location = location;
+      }
+      else {
+        assert && assert( !termCreator.inverseLocation, 'attempted to initialize termCreator.location twice' );
+        termCreator.inverseLocation = location;
+      }
 
       // Remove this function, so that it's called only once.
       phet.joist.sim.frameStartedEmitter.removeListener( frameStartedCallback );

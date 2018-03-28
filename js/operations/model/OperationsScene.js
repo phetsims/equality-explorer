@@ -120,29 +120,18 @@ define( function( require ) {
    */
   function createTermCreators( xProperty ) {
 
-    // x and -x
-    var positiveXCreator = new VariableTermCreator( xString, xProperty, {
-      defaultCoefficient: Fraction.fromInteger( 1 ),
-      likeTermsCellIndex: 0
-    } );
-    var negativeXCreator = new VariableTermCreator( xString, xProperty, {
-      defaultCoefficient: Fraction.fromInteger( -1 ),
-      likeTermsCellIndex: 0,
-      inverseTermCreator: positiveXCreator // this creates a 2-way association between x creators
-    } );
+    return [
 
-    // 1 and -1
-    var positiveOneCreator = new ConstantTermCreator( {
-      defaultConstantValue: Fraction.fromInteger( 1 ),
-      likeTermsCellIndex: 1
-    } );
-    var negativeOneCreator = new ConstantTermCreator( {
-      defaultConstantValue: Fraction.fromInteger( -1 ),
-      likeTermsCellIndex: 1,
-      inverseTermCreator: positiveOneCreator // this creates a 2-way association between constant creators
-    } );
+      // x and -x
+      new VariableTermCreator( xString, xProperty, {
+        likeTermsCellIndex: 0 // cell on the plate that all like terms will occupy
+      } ),
 
-    return [ positiveXCreator, negativeXCreator, positiveOneCreator, negativeOneCreator ];
+      // 1 and -1
+      new ConstantTermCreator( {
+        likeTermsCellIndex: 1 // cell on the plate that all like terms will occupy
+      } )
+    ];
   }
 
   return inherit( Scene, OperationsScene, {

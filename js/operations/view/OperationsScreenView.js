@@ -20,8 +20,8 @@ define( function( require ) {
    */
   function OperationsScreenView( model ) {
     EqualityExplorerScreenView.call( this, model, {
-      createSceneNode: function( scene, sceneProperty, layoutBounds ) {
-        return new OperationsSceneNode( scene, sceneProperty, layoutBounds );
+      createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
+        return new OperationsSceneNode( scene, sceneProperty, layoutBounds, options );
       }
     } );
   }

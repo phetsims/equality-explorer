@@ -55,12 +55,7 @@ define( function( require ) {
     this.positiveFill = options.positiveFill;
     this.negativeFill = options.negativeFill;
 
-    var icon = VariableTermNode.createInteractiveTermNode( options.defaultCoefficient, symbol, {
-      positiveFill: options.positiveFill,
-      negativeFill: options.negativeFill
-    } );
-
-    TermCreator.call( this, icon, options );
+    TermCreator.call( this, options );
 
     // When the variable values changes, recompute the weight of terms on the scale.
     // dispose not needed.
@@ -72,6 +67,26 @@ define( function( require ) {
   equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );
 
   return inherit( TermCreator, VariableTermCreator, {
+
+    /**
+     * Creates the icon used to represent this term in the TermsToolbox and equations.
+     * @param {Object} [options]
+     * @returns {Node}
+     * @public
+     * @override
+     */
+    createIcon: function( options ) {
+
+      options = _.extend( {
+        sign: 1  // sign of the coefficient shown on the icon, 1 or -1
+      }, options );
+      assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
+
+      return VariableTermNode.createInteractiveTermNode( this.defaultCoefficient.timesInteger( options.sign ), this.symbol, {
+        positiveFill: this.positiveFill,
+        negativeFill: this.negativeFill
+      } );
+    },
 
     /**
      * Returns the sum of coefficients for all terms on the scale.
@@ -96,8 +111,12 @@ define( function( require ) {
     createTermProtected: function( options ) {
 
       options = _.extend( {
-        coefficient: this.defaultCoefficient
+        sign: 1
       }, options );
+
+      if ( !options.coefficient ) {
+        options.coefficient = this.defaultCoefficient.timesInteger( options.sign );
+      }
 
       return new VariableTerm( this.symbol, this.variableValueProperty, this, options );
     },
@@ -115,7 +134,6 @@ define( function( require ) {
 
       assert && assert( term1 instanceof VariableTerm, 'invalid term1: ' + term1 );
       assert && assert( term2 instanceof VariableTerm, 'invalid term2: ' + term2 );
-      assert && assert( this.inverseTermCreator, 'combineTerms requires an inverseTermCreator' );
 
       options = options || {};
 
@@ -125,17 +143,7 @@ define( function( require ) {
       // If the coefficient is not zero, create a new term.
       var combinedTerm = null;
       if ( options.coefficient.getValue() !== 0 ) {
-
-        if ( options.coefficient.sign === this.defaultCoefficient.sign ) {
-
-          // Sign is the same as this term creator, so create the term.
-          combinedTerm = this.createTerm( options );
-        }
-        else {
-
-          // Sign is different than this term creator, so forward the creation request to the inverse term creator.
-          combinedTerm = this.inverseTermCreator.createTerm( options );
-        }
+        combinedTerm = this.createTerm( options );
       }
       return combinedTerm;
     },
@@ -161,20 +169,19 @@ define( function( require ) {
     /**
      * Instantiates the Node that corresponds to this term.
      * @param {Term} term
-     * @param {Plate} plate
      * @param {Object} options - passed to the VariableTermNode's constructor
      * @returns {TermNode}
      * @public
      * @override
      */
-    createTermNode: function( term, plate, options ) {
+    createTermNode: function( term, options ) {
 
       options = _.extend( {
         positiveFill: this.positiveFill,
         negativeFill: this.negativeFill
       }, options );
 
-      return new VariableTermNode( this, term, plate, options );
+      return new VariableTermNode( this, term, this.plate, options );
     },
 
     /**
@@ -218,7 +225,7 @@ define( function( require ) {
       // If the new coefficient isn't zero, create a new term on the plate.
       var newTerm = null;
       if ( newCoefficient.getValue() !== 0 ) {
-        newTerm = this.delegateCreateTermOnPlate( cellIndex, {
+        newTerm = this.createTermOnPlate( cellIndex, {
           coefficient: newCoefficient,
           diameter: term.diameter
         } );
@@ -235,7 +242,6 @@ define( function( require ) {
      */
     applyOperationToPlate: function( operation ) {
       assert && assert( this.combineLikeTermsEnabled, 'applyOperationToPlate is only supported when combining like terms' );
-      assert && assert( this.inverseTermCreator, 'applyOperationToPlate requires an inverseTermCreator' );
 
       // operator is not applicable to variable terms
       if ( operation.operator !== MathSymbols.PLUS && operation.operator !== MathSymbols.MINUS ) {
@@ -248,7 +254,7 @@ define( function( require ) {
       }
 
       // the plate already contains one or more like terms
-      if ( this.numberOfTermsOnPlateProperty.value + this.inverseTermCreator.numberOfTermsOnPlateProperty.value !== 0 ) {
+      if ( this.numberOfTermsOnPlateProperty.value !== 0 ) {
         return null;
       }
 
@@ -257,39 +263,10 @@ define( function( require ) {
                         operation.operand.coefficient : operation.operand.coefficient.timesInteger( -1 );
 
       // create a new term on the plate
-      return this.delegateCreateTermOnPlate( this.likeTermsCellIndex, {
+      return this.createTermOnPlate( this.likeTermsCellIndex, {
         coefficient: coefficient,
         diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
       } );
-    },
-
-    /**
-     * Creates a term on the plate, possibly delegating creation to the inverse term creator.
-     * For example, if the 'x' term creator is asked to create a '-2x', it will delegate to the '-x' creator.
-     * @param {number} cellIndex
-     * @param {Object} options - passed to the VariableTerm's constructor
-     * @returns {Term}
-     * @private
-     */
-    delegateCreateTermOnPlate: function( cellIndex, options ) {
-
-      options = _.extend( {
-        coefficient: this.defaultCoefficient,
-        diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-      }, options );
-
-      var term = null;
-      if ( options.coefficient.sign === this.defaultCoefficient.sign ) {
-
-        // Sign is the same as this term creator, so create the term.
-        term = this.createTermOnPlate( cellIndex, options );
-      }
-      else {
-
-        // Sign is different than this term creator, so forward the creation request to the inverse term creator.
-        term = this.inverseTermCreator.createTermOnPlate( cellIndex, options );
-      }
-      return term;
     },
 
     /**
@@ -303,19 +280,6 @@ define( function( require ) {
       return ( termCreator instanceof VariableTermCreator ) &&
              ( termCreator.variableValueProperty === this.variableValueProperty ) && // same variable
              ( termCreator.defaultCoefficient.getValue() === this.defaultCoefficient.getValue() ); // same coefficients
-    },
-
-    /**
-     * Is this term creator the inverse of a specified term creator?
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isInverseOf: function( termCreator ) {
-      return ( termCreator instanceof VariableTermCreator ) &&
-             ( termCreator.variableValueProperty === this.variableValueProperty ) && // same variable
-             ( termCreator.defaultCoefficient.getValue() === -this.defaultCoefficient.getValue() ); // inverse coefficients
     },
 
     /**

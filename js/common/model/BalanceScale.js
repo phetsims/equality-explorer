@@ -72,8 +72,8 @@ define( function( require ) {
       var maxIconWidth = 0;
       var maxIconHeight = 0;
       termCreators.forEach( function( termCreator ) {
-        maxIconWidth = Math.max( maxIconWidth, termCreator.icon.width );
-        maxIconHeight = Math.max( maxIconHeight, termCreator.icon.height );
+        maxIconWidth = Math.max( maxIconWidth, termCreator.createIcon().width );
+        maxIconHeight = Math.max( maxIconHeight, termCreator.createIcon().height );
       } );
       options.iconSize = new Dimension2( maxIconWidth, maxIconHeight );
     }

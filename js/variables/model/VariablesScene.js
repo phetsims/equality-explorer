@@ -12,8 +12,6 @@ define( function( require ) {
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
@@ -37,10 +35,7 @@ define( function( require ) {
       range: this.xRange
     } );
 
-    Scene.call( this, 'variables',
-      createTermCreators( this.xProperty, EqualityExplorerQueryParameters.leftVariables ),
-      createTermCreators( this.xProperty, EqualityExplorerQueryParameters.rightVariables )
-    );
+    Scene.call( this, 'variables', createTermCreators( this.xProperty ), createTermCreators( this.xProperty ) );
   }
 
   equalityExplorer.register( 'VariablesScene', VariablesScene );
@@ -48,40 +43,17 @@ define( function( require ) {
   /**
    * Creates the term creators for this scene.
    * @param {NumberProperty} xProperty
-   * @param {number} initialNumberOfTermsOnPlate
    * @returns {TermCreator[]}
    */
-  function createTermCreators( xProperty, initialNumberOfTermsOnPlate ) {
-
-    assert && assert( initialNumberOfTermsOnPlate.length === 4,
-      'incorrect number of elements in initialNumberOfTermsOnPlate: ' + initialNumberOfTermsOnPlate.length );
-    var index = 0;
+  function createTermCreators( xProperty ) {
 
     return [
 
-      // x
-      new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: Fraction.fromInteger( 1 ),
-        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
-      } ),
+      // x and -x
+      new VariableTermCreator( xString, xProperty ),
 
-      // -x
-      new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: Fraction.fromInteger( -1 ),
-        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
-      } ),
-
-      // 1
-      new ConstantTermCreator( {
-        defaultConstantValue: Fraction.fromInteger( 1 ),
-        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
-      } ),
-
-      // -1
-      new ConstantTermCreator( {
-        defaultConstantValue: Fraction.fromInteger( -1 ),
-        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ index++ ]
-      } )
+      // 1 and -1
+      new ConstantTermCreator()
     ];
   }
 

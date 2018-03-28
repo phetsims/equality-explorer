@@ -33,11 +33,15 @@ define( function( require ) {
        * @param {Scene} scene
        * @param {Property.<Scene>} sceneProperty - the selected Scene
        * @param {Bounds2} layoutBounds
+       * @param {Object} [options]
        * @returns {Node}
        */
-      createSceneNode: function( scene, sceneProperty, layoutBounds ) {
-        return new SceneNode( scene, sceneProperty, layoutBounds );
-      }
+      createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
+        return new SceneNode( scene, sceneProperty, layoutBounds, options );
+      },
+
+      // {boolean} if true, create Nodes for both positive and negative term creation in the toolbox
+      inverseTermsInToolbox: true
     }, options );
 
     ScreenView.call( this );
@@ -55,7 +59,9 @@ define( function( require ) {
     // @private {Scene[]} create the view for each scene
     this.sceneNodes = [];
     model.scenes.forEach( function( scene ) {
-      var sceneNode = options.createSceneNode( scene, model.sceneProperty, self.layoutBounds );
+      var sceneNode = options.createSceneNode( scene, model.sceneProperty, self.layoutBounds, {
+        inverseTermsInToolbox: options.inverseTermsInToolbox
+      } );
       self.sceneNodes.push( sceneNode );
       self.addChild( sceneNode );
     } );
