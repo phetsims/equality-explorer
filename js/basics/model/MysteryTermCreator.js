@@ -35,6 +35,10 @@ define( function( require ) {
 
   return inherit( TermCreator, MysteryTermCreator, {
 
+    //-------------------------------------------------------------------------------------------------
+    // Below here is the implementation of the TermCreator API
+    //-------------------------------------------------------------------------------------------------
+
     /**
      * Creates the icon used to represent this term in the TermsToolbox and equations.
      * @param {Object} [options]

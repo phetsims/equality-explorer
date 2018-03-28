@@ -69,6 +69,23 @@ define( function( require ) {
   return inherit( TermCreator, VariableTermCreator, {
 
     /**
+     * Returns the sum of coefficients for all terms on the scale.
+     * @returns {RationalNumber}
+     * @public
+     */
+    sumCoefficientsOnScale: function() {
+      var sum = Fraction.fromInteger( 0 );
+      for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
+        sum = sum.plus( this.termsOnPlate.get( i ).coefficient ).reduced();
+      }
+      return sum;
+    },
+
+    //-------------------------------------------------------------------------------------------------
+    // Below here is the implementation of the TermCreator API
+    //-------------------------------------------------------------------------------------------------
+
+    /**
      * Creates the icon used to represent this term in the TermsToolbox and equations.
      * @param {Object} [options]
      * @returns {Node}
@@ -86,19 +103,6 @@ define( function( require ) {
         positiveFill: this.positiveFill,
         negativeFill: this.negativeFill
       } );
-    },
-
-    /**
-     * Returns the sum of coefficients for all terms on the scale.
-     * @returns {RationalNumber}
-     * @public
-     */
-    sumCoefficientsOnScale: function() {
-      var sum = Fraction.fromInteger( 0 );
-      for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
-        sum = sum.plus( this.termsOnPlate.get( i ).coefficient ).reduced();
-      }
-      return sum;
     },
 
     /**

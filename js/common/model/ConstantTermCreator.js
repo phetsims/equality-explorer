@@ -45,6 +45,23 @@ define( function( require ) {
   return inherit( TermCreator, ConstantTermCreator, {
 
     /**
+     * Returns the sum of constant values for all terms on the scale.
+     * @returns {RationalNumber}
+     * @public
+     */
+    sumConstantsOnScale: function() {
+      var sum = Fraction.fromInteger( 0 );
+      for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
+        sum = sum.plus( this.termsOnPlate.get( i ).constantValue ).reduced();
+      }
+      return sum;
+    },
+
+    //-------------------------------------------------------------------------------------------------
+    // Below here is the implementation of the TermCreator API
+    //-------------------------------------------------------------------------------------------------
+
+    /**
      * Creates the icon used to represent this term in the TermsToolbox and equations.
      * @param {Object} [options]
      * @returns {Node}
@@ -59,19 +76,6 @@ define( function( require ) {
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
       return ConstantTermNode.createInteractiveTermNode( this.defaultConstantValue.timesInteger( options.sign ) );
-    },
-
-    /**
-     * Returns the sum of constant values for all terms on the scale.
-     * @returns {RationalNumber}
-     * @public
-     */
-    sumConstantsOnScale: function() {
-      var sum = Fraction.fromInteger( 0 );
-      for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
-        sum = sum.plus( this.termsOnPlate.get( i ).constantValue ).reduced();
-      }
-      return sum;
     },
 
     /**
