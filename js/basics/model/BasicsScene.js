@@ -11,8 +11,6 @@ define( function( require ) {
   // modules
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTermCreator = require( 'EQUALITY_EXPLORER/basics/model/MysteryTermCreator' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
@@ -35,8 +33,8 @@ define( function( require ) {
     options.lockable = false;
 
     Scene.call( this, debugName,
-      createTermCreators( mysteryObjects, options.hasConstantTerms, EqualityExplorerQueryParameters.leftBasics ),
-      createTermCreators( mysteryObjects, options.hasConstantTerms, EqualityExplorerQueryParameters.rightBasics ),
+      createTermCreators( mysteryObjects, options.hasConstantTerms ),
+      createTermCreators( mysteryObjects, options.hasConstantTerms ),
       options );
   }
 
@@ -46,30 +44,20 @@ define( function( require ) {
    * Creates the term creators for this scene.
    * @param {Object[]} mysteryObjects - see BasicsScene constructor
    * @param {boolean} hasConstantTerms - does this scene allow you to create constant terms?
-   * @param {number[]} initialNumberOfTermsOnPlate
    * @returns {TermCreator[]}
    */
-  function createTermCreators( mysteryObjects, hasConstantTerms, initialNumberOfTermsOnPlate ) {
-
-    assert && assert( initialNumberOfTermsOnPlate.length === mysteryObjects.length + ( ( hasConstantTerms ) ? 1 : 0 ),
-      'incorrect number of elements in initialNumberOfTermsOnPlate: ' + initialNumberOfTermsOnPlate.length );
+  function createTermCreators( mysteryObjects, hasConstantTerms ) {
 
     var termCreators = [];
 
     // creators for mystery terms
     for ( var i = 0; i < mysteryObjects.length; i++ ) {
-      termCreators.push( new MysteryTermCreator( mysteryObjects[ i ], {
-        initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ i ]
-      } ) );
+      termCreators.push( new MysteryTermCreator( mysteryObjects[ i ] ) );
     }
 
     // creator for constant terms
     if ( hasConstantTerms ) {
-      termCreators.push( new ConstantTermCreator( {
-          defaultConstantValue: Fraction.fromInteger( 1 ),
-          initialNumberOfTermsOnPlate: initialNumberOfTermsOnPlate[ i ]
-        } )
-      );
+      termCreators.push( new ConstantTermCreator() );
     }
 
     return termCreators;

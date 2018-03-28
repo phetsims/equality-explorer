@@ -21,7 +21,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
-  var Util = require( 'DOT/Util' );
 
   /**
    * @param {Object} [options]
@@ -34,15 +33,11 @@ define( function( require ) {
 
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
-      initialNumberOfTermsOnPlate: 0, // {number} integer number of terms initially on the plate
 
       // {number} like terms will occupy this cell index in the plate's 2D grid
       // -1 means 'no cell', and like terms will not be combined
       likeTermsCellIndex: -1
     }, options );
-
-    assert && assert( Util.isInteger( options.initialNumberOfTermsOnPlate ) && ( options.initialNumberOfTermsOnPlate >= 0 ),
-      'initialNumberOfTermsOnPlate must be an integer >= 0: ' + options.initialNumberOfTermsOnPlate );
 
     // @private has this instance been fully initialized?
     this.isInitialized = false;
@@ -56,10 +51,6 @@ define( function( require ) {
     // @public (read-only after initialization) {Vector2}
     // Similar to this.location, but for the optional negative TermCreatorNode
     this.inverseLocation = null;
-
-    // @private Number of terms to put on the plate initially.
-    // Terms cannot be put on the plate until this.location is initialized.
-    this.initialNumberOfTermsOnPlate = options.initialNumberOfTermsOnPlate;
 
     // @public (read-only) {Plate} the plate that this term creator is associated with.
     // This association necessarily occurs after instantiation.
