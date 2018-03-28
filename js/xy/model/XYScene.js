@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
@@ -64,26 +63,11 @@ define( function( require ) {
 
     return [
 
-      // x
-      new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: Fraction.fromInteger( 1 )
-      } ),
+      // x & -x
+      new VariableTermCreator( xString, xProperty ),
 
-      // -x
-      new VariableTermCreator( xString, xProperty, {
-        defaultCoefficient: Fraction.fromInteger( -1 )
-      } ),
-
-      // y
+      // y & -y
       new VariableTermCreator( yString, yProperty, {
-        defaultCoefficient: Fraction.fromInteger( 1 ),
-        positiveFill: POSITIVE_Y_FILL,
-        negativeFill: NEGATIVE_Y_FILL
-      } ),
-
-      // -y
-      new VariableTermCreator( yString, yProperty, {
-        defaultCoefficient: Fraction.fromInteger( -1 ),
         positiveFill: POSITIVE_Y_FILL,
         negativeFill: NEGATIVE_Y_FILL
       } )
