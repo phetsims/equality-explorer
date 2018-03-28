@@ -117,28 +117,22 @@ define( function( require ) {
       assert && assert( term2 instanceof VariableTerm, 'invalid term2: ' + term2 );
 
       options = options || {};
+
       assert && assert( options.coefficient === undefined, 'VariableTermCreator sets coefficient' );
+      options.coefficient = term1.coefficient.plus( term2.coefficient ).reduced();
 
-      var coefficient = term1.coefficient.plus( term2.coefficient ).reduced();
-      var combinedTerm;
-
-      if ( coefficient.getValue() === 0 ) {
-
-        // terms summed to zero
-        combinedTerm = null;
-      }
-      else {
-        options.coefficient = coefficient;
+      // If the coefficient is not zero, create a new term.
+      var combinedTerm = null;
+      if ( options.coefficient.getValue() !== 0 ) {
 
         if ( options.coefficient.sign === this.defaultCoefficient.sign ) {
 
-          // sign is the same as this term creator, so create the term
+          // Sign is the same as this term creator, so create the term.
           combinedTerm = this.createTerm( options );
         }
         else {
 
-          // sign of the combined term doesn't match this term creator,
-          // forward the creation request to the inverse term creator.
+          // Sign is different than this term creator, so forward the creation request to the inverse term creator.
           combinedTerm = this.inverseTermCreator.createTerm( options );
         }
       }

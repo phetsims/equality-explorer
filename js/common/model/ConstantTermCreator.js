@@ -77,28 +77,22 @@ define( function( require ) {
       assert && assert( term2 instanceof ConstantTerm, 'invalid term2: ' + term2 );
 
       options = options || {};
+
       assert && assert( !options.constantValue, 'ConstantTermCreator sets constantValue' );
+      options.constantValue = term1.constantValue.plus( term2.constantValue ).reduced();
 
-      var constantValue = term1.constantValue.plus( term2.constantValue ).reduced();
-      var combinedTerm;
-
-      if ( constantValue.getValue() === 0 ) {
-
-        // terms summed to zero
-        combinedTerm = null;
-      }
-      else {
-        options.constantValue = constantValue;
+      // If the constant is not zero, create a new term.
+      var combinedTerm = null;
+      if ( options.constantValue.getValue() !== 0 ) {
 
         if ( options.constantValue.sign === this.defaultConstantValue.sign ) {
 
-          // sign is the same as this term creator, so create the term
+          // Sign is the same as this term creator, so create the term.
           combinedTerm = this.createTerm( options );
         }
         else {
 
-          // sign of the combined term doesn't match this term creator,
-          // forward the creation request to the inverse term creator.
+          // Sign is different than this term creator, so forward the creation request to the inverse term creator.
           combinedTerm = this.inverseTermCreator.createTerm( options );
         }
       }
