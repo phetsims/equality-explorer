@@ -21,6 +21,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @param {Object} [options]
@@ -39,14 +40,9 @@ define( function( require ) {
       likeTermsCellIndex: -1
     }, options );
 
-    // @private {Vector2}
-    // Location of the associated positive TermCreatorNode.
-    // The value is dependent on the view and is unknowable until the sim has loaded.
-    // See TermCreatorNode.frameStartedCallback
+    // @private {Vector2} locations of the associated positive and negative TermCreatorNodes
+    // See set positiveLocation() and set negativeLocation() for notes.
     this._positiveLocation = null;
-
-    // @private {Vector2}
-    // Similar to this._positiveLocation, but for the optional negative TermCreatorNode
     this._negativeLocation = null;
 
     // @public (read-only) {Plate} the plate that this term creator is associated with.
@@ -129,17 +125,21 @@ define( function( require ) {
 
     /**
      * Initializes the location of the positive TermCreatorNode.
+     * The value is dependent on the view and is unknowable until the sim has loaded.
      * See TermCreatorNode.frameStartedCallback for initialization.
      * @param {Vector2} value
+     * @public
      */
     set positiveLocation( value ) {
       assert && assert( !this._positiveLocation, 'attempted to initialize positiveLocation twice' );
+      assert && assert( value instanceof Vector2, 'invalid positiveLocation: ' + value );
       this._positiveLocation = value;
     },
 
     /**
      * Gets the location of the positive TermCreatorNode.
      * @returns {Vector2}
+     * @public
      */
     get positiveLocation() {
       assert && assert( this._positiveLocation, 'attempt to access positiveLocation before it was initialized' );
@@ -148,23 +148,27 @@ define( function( require ) {
 
     /**
      * Initializes the location of the negative TermCreatorNode.
+     * The value is dependent on the view and is unknowable until the sim has loaded.
      * See TermCreatorNode.frameStartedCallback for initialization.
      * @param {Vector2} value
+     * @public
      */
     set negativeLocation( value ) {
       assert && assert( !this._negativeLocation, 'attempted to initialize negativeLocation twice' );
+      assert && assert( value instanceof Vector2, 'invalid negativeLocation: ' + value );
       this._negativeLocation = value;
     },
 
     /**
      * Gets the location of the negative TermCreatorNode.
      * @returns {Vector2}
+     * @public
      */
     get negativeLocation() {
       assert && assert( this._negativeLocation, 'attempt to access negativeLocation before it was initialized' );
       return this._negativeLocation;
     },
-    
+
     /**
      * Animates terms.
      * @param {number} dt - time since the previous step, in seconds
@@ -244,7 +248,7 @@ define( function( require ) {
      */
     getPositiveTermsOnPlate: function() {
       return _.filter( this.termsOnPlate.getArray(), function( term ) {
-        return ( term.sign ===  1 );
+        return ( term.sign === 1 );
       } );
     },
 
@@ -255,7 +259,7 @@ define( function( require ) {
      */
     getNegativeTermsOnPlate: function() {
       return _.filter( this.termsOnPlate.getArray(), function( term ) {
-        return ( term.sign ===  -1 );
+        return ( term.sign === -1 );
       } );
     },
 
