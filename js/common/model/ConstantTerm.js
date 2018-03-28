@@ -42,6 +42,21 @@ define( function( require ) {
   return inherit( Term, ConstantTerm, {
 
     /**
+     * For debugging only. Do not rely on the format of toString.
+     * @returns {string}
+     * @public
+     */
+    toString: function() {
+
+      // e.g. 'ConstantTerm: 5/3'
+      return 'ConstantTerm: ' + this.constantValue;
+    },
+
+    //-------------------------------------------------------------------------------------------------
+    // Below here is the implementation of the Term API
+    //-------------------------------------------------------------------------------------------------
+
+    /**
      * The weight of a constant term is the same as its value.
      * @returns {Fraction}
      * @public
@@ -59,17 +74,6 @@ define( function( require ) {
      */
     get sign() {
       return Util.sign( this.constantValue.getValue() );
-    },
-
-    /**
-     * For debugging only. Do not rely on the format of toString.
-     * @returns {string}
-     * @public
-     */
-    toString: function() {
-
-      // e.g. 'ConstantTerm: 5/3'
-      return 'ConstantTerm: ' + this.constantValue;
     },
 
     /**

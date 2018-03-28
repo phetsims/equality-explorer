@@ -53,6 +53,22 @@ define( function( require ) {
   return inherit( Term, VariableTerm, {
 
     /**
+     * For debugging only. Do not rely on the format of toString.
+     * @returns {string}
+     * @public
+     */
+    toString: function() {
+
+      // e.g. 'VariableTerm: 1/3 x (x=3)'
+      return 'VariableTerm: ' +  this.coefficient + ' ' + this.symbol +
+             ' (' + this.symbol + '=' + this.variableValueProperty.value + ')';
+    },
+
+    //-------------------------------------------------------------------------------------------------
+    // Below here is the implementation of the Term API
+    //-------------------------------------------------------------------------------------------------
+
+    /**
      * Gets the weight of this term.
      * @returns {Fraction}
      * @public
@@ -70,18 +86,6 @@ define( function( require ) {
      */
     get sign() {
       return Util.sign( this.coefficient.getValue() );
-    },
-
-    /**
-     * For debugging only. Do not rely on the format of toString.
-     * @returns {string}
-     * @public
-     */
-    toString: function() {
-
-      // e.g. 'VariableTerm: 1/3 x (x=3)'
-      return 'VariableTerm: ' +  this.coefficient + ' ' + this.symbol +
-             ' (' + this.symbol + '=' + this.variableValueProperty.value + ')';
     },
 
     /**

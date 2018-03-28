@@ -35,6 +35,21 @@ define( function( require ) {
   return inherit( Term, MysteryTerm, {
 
     /**
+     * For debugging only. Do not rely on the format of toString.
+     * @returns {string}
+     * @public
+     */
+    toString: function() {
+
+      // e.g. 'MysteryTerm: turtle 6'
+      return 'MysteryTerm: ' + this.mysteryObject.name + ' ' + this.mysteryObject.weight;
+    },
+
+    //-------------------------------------------------------------------------------------------------
+    // Below here is the implementation of the Term API
+    //-------------------------------------------------------------------------------------------------
+
+    /**
      * Gets the weight of this term.
      * @returns {Fraction}
      * @public
@@ -52,17 +67,6 @@ define( function( require ) {
      */
     get sign() {
       return 1; // all mystery terms have an implicit coefficient of +1, so sign is 1
-    },
-
-    /**
-     * For debugging only. Do not rely on the format of toString.
-     * @returns {string}
-     * @public
-     */
-    toString: function() {
-
-      // e.g. 'MysteryTerm: turtle 6'
-      return 'MysteryTerm: ' + this.mysteryObject.name + ' ' + this.mysteryObject.weight;
     },
 
     /**

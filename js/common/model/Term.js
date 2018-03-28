@@ -48,6 +48,20 @@ define( function( require ) {
   return inherit( EqualityExplorerMovable, Term, {
 
     /**
+     * @public
+     * @override
+     */
+    dispose: function() {
+      this.shadowVisibleProperty.dispose();
+      this.haloVisibleProperty.dispose();
+      EqualityExplorerMovable.prototype.dispose.call( this );
+    },
+
+    //-------------------------------------------------------------------------------------------------
+    // Below here are @abstract methods, to be implemented by subtypes
+    //-------------------------------------------------------------------------------------------------
+
+    /**
      * Gets the weight of this term.
      * @returns {Fraction}
      * @public
@@ -60,19 +74,11 @@ define( function( require ) {
     /**
      * Gets the sign of a term.
      * @returns {number} ala Math.sign
+     * @public
+     * @abstract
      */
     get sign() {
       throw new Error( 'sign must be implemented by subtype' );
-    },
-
-    /**
-     * @public
-     * @override
-     */
-    dispose: function() {
-      this.shadowVisibleProperty.dispose();
-      this.haloVisibleProperty.dispose();
-      EqualityExplorerMovable.prototype.dispose.call( this );
     },
 
     /**
