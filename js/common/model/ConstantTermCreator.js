@@ -75,6 +75,7 @@ define( function( require ) {
 
       assert && assert( term1 instanceof ConstantTerm, 'invalid term1: ' + term1 );
       assert && assert( term2 instanceof ConstantTerm, 'invalid term2: ' + term2 );
+      assert && assert( this.inverseTermCreator, 'combineTerms requires an inverseTermCreator' );
 
       options = options || {};
 
@@ -192,6 +193,7 @@ define( function( require ) {
      */
     applyOperationToPlate: function( operation ) {
       assert && assert( this.combineLikeTermsEnabled, 'applyOperationToPlate is only supported when combining like terms' );
+      assert && assert( this.inverseTermCreator, 'applyOperationToPlate requires an inverseTermCreator' );
 
       // operator is not applicable to constant terms
       if ( operation.operator !== MathSymbols.PLUS && operation.operator !== MathSymbols.MINUS ) {
