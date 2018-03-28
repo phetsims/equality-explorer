@@ -95,7 +95,6 @@ define( function( require ) {
      */
     isInverseTerm: function( term ) {
       return ( term instanceof VariableTerm ) &&
-             ( this.symbol === term.symbol ) &&
              ( this.variableProperty === term.variableProperty ) &&  // associated with same variable
              ( this.coefficient.getValue() === -term.coefficient.getValue() ); // inverse coefficients
     }
