@@ -127,10 +127,9 @@ define( function( require ) {
     } );
     var negativeXCreator = new VariableTermCreator( xString, xProperty, {
       defaultCoefficient: Fraction.fromInteger( -1 ),
-      likeTermsCellIndex: 0
+      likeTermsCellIndex: 0,
+      inverseTermCreator: positiveXCreator // this creates a 2-way association between x creators
     } );
-    positiveXCreator.inverseTermCreator = negativeXCreator;
-    negativeXCreator.inverseTermCreator = positiveXCreator;
 
     // 1 and -1
     var positiveOneCreator = new ConstantTermCreator( {
@@ -139,10 +138,9 @@ define( function( require ) {
     } );
     var negativeOneCreator = new ConstantTermCreator( {
       defaultConstantValue: Fraction.fromInteger( -1 ),
-      likeTermsCellIndex: 1
+      likeTermsCellIndex: 1,
+      inverseTermCreator: positiveOneCreator // this creates a 2-way association between constant creators
     } );
-    positiveOneCreator.inverseTermCreator = negativeOneCreator;
-    negativeOneCreator.inverseTermCreator = positiveOneCreator;
 
     return [ positiveXCreator, negativeXCreator, positiveOneCreator, negativeOneCreator ];
   }

@@ -37,6 +37,7 @@ define( function( require ) {
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
       initialNumberOfTermsOnPlate: 0, // {number} integer number of terms initially on the plate
+      inverseTermCreator: null, // {TermCreator|null} optional inverse term creator on the same side of the scale.
 
       // {number} like terms will occupy this cell index in the plate's 2D grid
       // -1 means 'no cell', and like terms will not be combined
@@ -102,7 +103,17 @@ define( function( require ) {
 
     // @public {TermCreator} optional inverse term creator on the same side of the scale.
     // This is needed for combining terms on a plate.
-    this.inverseTermCreator = null;
+    // If an inverseTermCreator is provided, a 2-way association is created.
+    this.inverseTermCreator = options.inverseTermCreator;
+    if ( this.inverseTermCreator ) {
+      if ( !options.inverseTermCreator.inverseTermCreator ) {
+        options.inverseTermCreator.inverseTermCreator = this;
+      }
+      assert && assert( options.inverseTermCreator.inverseTermCreator === this,
+        'inverseTermCreator is associated with some other term creator' );
+      assert && assert( this.isInverseOf( this.inverseTermCreator ),
+        'inverseTermCreator is not an inverse' );
+    }
 
     // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
     // This is needed for the lock feature, which involves creating an equivalent term on the opposite side of the scale.
@@ -424,6 +435,17 @@ define( function( require ) {
      */
     isEquivalentTo: function( termCreator ) {
       throw new Error( 'isEquivalentTo must be implemented by subtype' );
+    },
+
+    /**
+     * Is this term creator the inverse of a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @abstract
+     */
+    isInverseOf: function( termCreator ) {
+      throw new Error( 'isInverseOf must be implemented by subtype' );
     },
 
     /**

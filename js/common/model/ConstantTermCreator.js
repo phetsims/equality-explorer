@@ -262,6 +262,18 @@ define( function( require ) {
     },
 
     /**
+     * Is this term creator the inverse of a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isInverseOf: function( termCreator ) {
+      return ( termCreator instanceof ConstantTermCreator ) &&
+             ( termCreator.defaultConstantValue.getValue() === -this.defaultConstantValue.getValue() ); // inverse values
+    },
+
+    /**
      * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
      * The format of this data structure is specific ConstantTermCreator.
      * @returns {{cellIndex: number, constantValue: Fraction, diameter: number}[]}

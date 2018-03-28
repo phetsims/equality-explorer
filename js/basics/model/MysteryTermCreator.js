@@ -96,6 +96,17 @@ define( function( require ) {
     },
 
     /**
+     * Is this term creator the inverse of a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isInverseOf: function( termCreator ) {
+      throw false; // there are no inverses for mystery objects
+    },
+
+    /**
      * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
      * The format of this data structure is specific MysteryTermCreator.
      * @returns {{cellIndex: number}[]}

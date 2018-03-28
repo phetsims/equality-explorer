@@ -298,9 +298,22 @@ define( function( require ) {
      * @override
      */
     isEquivalentTo: function( termCreator ) {
-      return ( termCreator.constructor === this.constructor ) &&  // same type
+      return ( termCreator instanceof VariableTermCreator ) &&
              ( termCreator.variableValueProperty === this.variableValueProperty ) && // same variable
              ( termCreator.defaultCoefficient.getValue() === this.defaultCoefficient.getValue() ); // same coefficients
+    },
+
+    /**
+     * Is this term creator the inverse of a specified term creator?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isInverseOf: function( termCreator ) {
+      return ( termCreator instanceof VariableTermCreator ) &&
+             ( termCreator.variableValueProperty === this.variableValueProperty ) && // same variable
+             ( termCreator.defaultCoefficient.getValue() === -this.defaultCoefficient.getValue() ); // inverse coefficients
     },
 
     /**
