@@ -111,11 +111,8 @@ define( function( require ) {
       // If lock feature is turned on, verify that an equivalentTermCreator has been provided.
       assert && assert( !locked || self.equivalentTermCreator, 'lock feature requires equivalentTermCreator' );
 
-      // {Term[]} Changing lock state causes all terms that are not on the plate to be disposed.
-      var termsOffPlate = _.difference( self.allTerms.getArray(), self.termsOnPlate.getArray() );
-      for ( var i = 0; i < termsOffPlate.length; i++ ) {
-        termsOffPlate[ i ].dispose();
-      }
+      // Changing lock state causes all terms that are not on the plate to be disposed.
+      self.disposeTermsNotOnPlate();
     } );
   }
 
@@ -224,15 +221,6 @@ define( function( require ) {
     },
 
     /**
-     * Gets an array of all terms managed.
-     * @returns {Term[]}
-     * @public
-     */
-    getTerms: function() {
-      return this.allTerms.getArray().slice(); // defensive copy
-    },
-
-    /**
      * Gets the terms that are on the plate.
      * @returns {Term[]}
      * @public
@@ -306,10 +294,8 @@ define( function( require ) {
      */
     disposeAllTerms: function() {
 
-      // use a while loop because disposing of a term removes it from this.allTerms
-      while ( this.allTerms.length > 0 ) {
-        this.allTerms.get( 0 ).dispose(); // results in call to termWasDisposed
-      }
+      // operate on a copy, since dispose causes the ObservableArray to be modified
+      this.disposeTerms( this.allTerms.getArray().slice() );
     },
 
     /**
@@ -318,9 +304,26 @@ define( function( require ) {
      */
     disposeTermsOnPlate: function() {
 
-      // use a while loop because disposing of a term modifies this.termsOnPlate
-      while ( this.termsOnPlate.length > 0 ) {
-        this.termsOnPlate.get( 0 ).dispose(); // results in call to termWasDisposed
+      // operate on a copy, since dispose causes the ObservableArray to be modified
+      this.disposeTerms( this.termsOnPlate.getArray().slice() );
+    },
+
+    /**
+     * Disposes of all terms that are NOT on the plate.
+     * @public
+     */
+    disposeTermsNotOnPlate: function() {
+      this.disposeTerms( _.difference( this.allTerms.getArray(), this.termsOnPlate.getArray() ) );
+    },
+
+    /**
+     * Disposes of some collection of terms.
+     * @param {Term[]} terms
+     * @private
+     */
+    disposeTerms: function( terms ) {
+      for ( var i = 0; i < terms.length; i++ ) {
+        terms[ i ].dispose(); // results in call to termWasDisposed
       }
     },
 
