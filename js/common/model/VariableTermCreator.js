@@ -313,6 +313,8 @@ define( function( require ) {
      * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
      * The format of this data structure is specific VariableTermCreator.
      * @returns {{cellIndex: number, coefficient: Fraction, diameter: number}[]}
+     * @public
+     * @override
      */
     createSnapshot: function() {
       var snapshot = [];
@@ -332,6 +334,8 @@ define( function( require ) {
     /**
      * Restores a snapshot of terms on the plate for this TermCreator.
      * @param {*} snapshot - see return value of createSnapshot
+     * @public
+     * @override
      */
     restoreSnapshot: function( snapshot ) {
       for ( var i = 0; i < snapshot.length; i++ ) {

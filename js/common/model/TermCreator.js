@@ -430,6 +430,8 @@ define( function( require ) {
      * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
      * The format of this data structure is specific to the TermCreator type.
      * @returns {*}
+     * @public
+     * @abstract
      */
     createSnapshot: function() {
       throw new Error( 'createSnapshot must be implemented by subtype' );
@@ -438,6 +440,8 @@ define( function( require ) {
     /**
      * Restores a snapshot of terms on the plate for this TermCreator.
      * @param {*} snapshot - see createSnapshot
+     * @public
+     * @abstract
      */
     restoreSnapshot: function( snapshot ) {
       throw new Error( 'restoreSnapshot must be implemented by subtype' );

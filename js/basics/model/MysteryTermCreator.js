@@ -78,7 +78,7 @@ define( function( require ) {
      * @param {UniversalOperation} operation
      * @returns {Term|null} the term created, null if no term was created
      * @public
-     * @abstract
+     * @override
      */
     applyOperationToPlate: function( operation ) {
       return null; // operations do not apply to mystery terms
@@ -99,6 +99,8 @@ define( function( require ) {
      * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
      * The format of this data structure is specific MysteryTermCreator.
      * @returns {{cellIndex: number}[]}
+     * @public
+     * @override
      */
     createSnapshot: function() {
       var snapshot = [];
@@ -114,6 +116,8 @@ define( function( require ) {
     /**
      * Restores a snapshot of terms on the plate for this TermCreator.
      * @param {*} snapshot - see return value of createSnapshot
+     * @public
+     * @override
      */
     restoreSnapshot: function( snapshot ) {
       for ( var i = 0; i < snapshot.length; i++ ) {
