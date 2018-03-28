@@ -223,9 +223,14 @@ define( function( require ) {
 
             if ( combinedTerm ) {
 
-              // Put the new term on the plate.
+              // dispose of the terms used to create the combined term
               self.term.dispose();
               termInCell.dispose();
+
+              // Put the new term on the plate.
+              // Depending on the sign of the combined term, self.termCreator.combineTerms may have
+              // delegated creation of the combined term to its inverse term creator, so be sure to
+              // use combinedTerm.termCreator here, so that we have the correct term creator.
               combinedTerm.termCreator.putTermOnPlate( combinedTerm, cellIndex );
             }
             else {
