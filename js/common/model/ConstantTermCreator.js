@@ -62,6 +62,19 @@ define( function( require ) {
     },
 
     /**
+     * Returns the sum of constant values for all terms on the scale.
+     * @returns {RationalNumber}
+     * @public
+     */
+    sumConstantsOnScale: function() {
+      var sum = Fraction.fromInteger( 0 );
+      for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
+        sum = sum.plus( this.termsOnPlate.get( i ).constantValue ).reduced();
+      }
+      return sum;
+    },
+
+    /**
      * Instantiates a ConstantTerm.
      * @param {Object} [options] - passed to the ConstantTerm's constructor
      * @returns {Term}
