@@ -136,6 +136,7 @@ define( function( require ) {
     } );
 
     // When locked changes...
+    // unlink not required.
     this.lockedProperty.lazyLink( function( locked ) {
 
       // If lock feature is turned on, verify that an equivalentTermCreator has been provided.
