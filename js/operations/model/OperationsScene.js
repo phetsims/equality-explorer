@@ -180,11 +180,12 @@ define( function( require ) {
       // Gets all of the terms that are currently on the scale, since applying operations adds/removes terms.
       var terms = [];
       termCreators.forEach( function( termCreator ) {
-
-        // Accumulate terms that are on the plate.
         terms = terms.concat( termCreator.getTermsOnPlate() );
+      } );
 
-        // Apply the operation to the plate. This may or may not create a term on the plate.
+      // Apply the operation to the plate.  This may create terms on the plate.
+      // For example, applying operation '+ 2' to an empty plate will create a '+2' constant term on the plate.
+      termCreators.forEach( function( termCreator ) {
         termCreator.applyOperationToPlate( operation );
       } );
 
