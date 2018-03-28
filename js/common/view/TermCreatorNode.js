@@ -66,12 +66,10 @@ define( function( require ) {
 
       // assign to termCreator's location
       if ( options.sign === 1 ) {
-        assert && assert( !termCreator.location, 'attempted to initialize termCreator.location twice' );
-        termCreator.location = location;
+        termCreator.positiveLocation = location;
       }
       else {
-        assert && assert( !termCreator.inverseLocation, 'attempted to initialize termCreator.location twice' );
-        termCreator.inverseLocation = location;
+        termCreator.negativeLocation = location;
       }
 
       // Remove this function, so that it's called only once.

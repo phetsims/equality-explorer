@@ -25,17 +25,8 @@ define( function( require ) {
    */
   function ConstantTermCreator( options ) {
 
-    options = _.extend( {
-      defaultConstantValue: Fraction.fromInteger( 1 ) // terms are created with this value by default
-    }, options );
-
-    assert && assert( options.defaultConstantValue instanceof Fraction,
-      'invalid defaultConstantValue: ' + options.defaultConstantValue );
-    assert && assert( options.defaultConstantValue.isReduced(),
-      'defaultConstantValue must be reduced: ' + options.defaultConstantValue );
-
-    // @public (read-only) terms are created with this value by default
-    this.defaultConstantValue = options.defaultConstantValue;
+    // @private terms are created with this value by default
+    this.defaultConstantValue = Fraction.fromInteger( 1 );
 
     TermCreator.call( this, options );
   }
@@ -99,11 +90,11 @@ define( function( require ) {
       // Choose location based on sign of the constant.
       // This determines which TermCreatorNode in the TermToolbox this term will animate to.
       assert && assert( !options.location, 'ConstantTermCreator sets location' );
-      if ( options.constantValue.sign === this.defaultConstantValue.sign ) {
-        options.location = this.location;
+      if ( options.constantValue.sign === 1 ) {
+        options.location = this.positiveLocation;
       }
       else {
-        options.location = this.inverseLocation;
+        options.location = this.negativeLocation;
       }
 
       return new ConstantTerm( this, options );

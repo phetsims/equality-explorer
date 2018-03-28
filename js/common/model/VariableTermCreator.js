@@ -36,22 +36,16 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      defaultCoefficient: Fraction.fromInteger( 1 ), // terms are created with this coefficient by default
       positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
       negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL
     }, options );
 
-    assert && assert( options.defaultCoefficient instanceof Fraction,
-      'invalid defaultCoefficient: ' + options.defaultCoefficient );
-    assert && assert( options.defaultCoefficient.isReduced(),
-      'defaultCoefficient must be reduced: ' + options.defaultCoefficient );
-
     // @public (read-only)
     this.symbol = symbol;
-    this.defaultCoefficient = options.defaultCoefficient;
     this.variableValueProperty = variableValueProperty;
 
     // @private
+    this.defaultCoefficient = Fraction.fromInteger( 1 ); // terms are created with this coefficient by default
     this.positiveFill = options.positiveFill;
     this.negativeFill = options.negativeFill;
 
@@ -126,11 +120,11 @@ define( function( require ) {
       // Choose location based on sign of the constant.
       // This determines which TermCreatorNode in the TermToolbox this term will animate to.
       assert && assert( !options.location, 'ConstantTermCreator sets location' );
-      if ( options.coefficient.sign === this.defaultCoefficient.sign ) {
-        options.location = this.location;
+      if ( options.coefficient.sign === 1 ) {
+        options.location = this.positiveLocation;
       }
       else {
-        options.location = this.inverseLocation;
+        options.location = this.negativeLocation;
       }
 
       return new VariableTerm( this.symbol, this.variableValueProperty, this, options );

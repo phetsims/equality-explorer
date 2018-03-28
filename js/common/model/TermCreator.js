@@ -39,15 +39,15 @@ define( function( require ) {
       likeTermsCellIndex: -1
     }, options );
 
-    // @public (read-only after initialization) {Vector2}
+    // @private {Vector2}
     // Location of the associated positive TermCreatorNode.
     // The value is dependent on the view and is unknowable until the sim has loaded.
     // See TermCreatorNode.frameStartedCallback
-    this.location = null;
+    this._positiveLocation = null;
 
-    // @public (read-only after initialization) {Vector2}
-    // Similar to this.location, but for the optional negative TermCreatorNode
-    this.inverseLocation = null;
+    // @private {Vector2}
+    // Similar to this._positiveLocation, but for the optional negative TermCreatorNode
+    this._negativeLocation = null;
 
     // @public (read-only) {Plate} the plate that this term creator is associated with.
     // This association necessarily occurs after instantiation.
@@ -127,6 +127,44 @@ define( function( require ) {
 
   return inherit( Object, TermCreator, {
 
+    /**
+     * Initializes the location of the positive TermCreatorNode.
+     * See TermCreatorNode.frameStartedCallback for initialization.
+     * @param {Vector2} value
+     */
+    set positiveLocation( value ) {
+      assert && assert( !this._positiveLocation, 'attempted to initialize positiveLocation twice' );
+      this._positiveLocation = value;
+    },
+
+    /**
+     * Gets the location of the positive TermCreatorNode.
+     * @returns {Vector2}
+     */
+    get positiveLocation() {
+      assert && assert( this._positiveLocation, 'attempt to access positiveLocation before it was initialized' );
+      return this._positiveLocation;
+    },
+
+    /**
+     * Initializes the location of the negative TermCreatorNode.
+     * See TermCreatorNode.frameStartedCallback for initialization.
+     * @param {Vector2} value
+     */
+    set negativeLocation( value ) {
+      assert && assert( !this._negativeLocation, 'attempted to initialize negativeLocation twice' );
+      this._negativeLocation = value;
+    },
+
+    /**
+     * Gets the location of the negative TermCreatorNode.
+     * @returns {Vector2}
+     */
+    get negativeLocation() {
+      assert && assert( this._negativeLocation, 'attempt to access negativeLocation before it was initialized' );
+      return this._negativeLocation;
+    },
+    
     /**
      * Animates terms.
      * @param {number} dt - time since the previous step, in seconds

@@ -59,7 +59,7 @@ define( function( require ) {
      */
     createTermProtected: function( options ) {
       return new MysteryTerm( this.mysteryObject, this, {
-        location: this.location
+        location: this.positiveLocation // all mystery terms have an implicit coefficient of 1
       } );
     },
 
