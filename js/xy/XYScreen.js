@@ -2,9 +2,10 @@
 
 /**
  * The 'x & y' screen.
- * This is a non-production screen, used to test multi-variable support.
- * The view for this screen is identical to the 'Variables' screen, but the model contains 2 variables (x & y).
- * See EqualityExplorerQueryParameters.xy for details.
+ *
+ * NOTE: This screen is NOT part of the production sim. It is used to test multi-variable support.
+ * The view for this screen is identical to the 'Variables' screen, but the model has 2 variables, x & y.
+ * This screen is hidden behind a query parameter -- see EqualityExplorerQueryParameters.xy
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

@@ -2,6 +2,7 @@
 
 /**
  * The sole scene in the 'x & y' screen.
+ * This code is not part of the production sim - see XYScreen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,10 +21,6 @@ define( function( require ) {
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
   var yString = 'y'; // i18n not required, this is a test string
-
-  // constants
-  var POSITIVE_Y_FILL = 'rgb( 250, 100, 255 )';
-  var NEGATIVE_Y_FILL = 'rgb( 240, 140, 255 )';
 
   /**
    * @constructor
@@ -68,8 +65,8 @@ define( function( require ) {
 
       // y & -y
       new VariableTermCreator( yString, yProperty, {
-        positiveFill: POSITIVE_Y_FILL,
-        negativeFill: NEGATIVE_Y_FILL
+        positiveFill: 'rgb( 250, 100, 255 )',
+        negativeFill: 'rgb( 240, 140, 255 )'
       } )
     ];
   }

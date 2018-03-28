@@ -2,6 +2,7 @@
 
 /**
  * Model for the 'x & y' screen.
+ * This code is not part of the production sim - see XYScreen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
