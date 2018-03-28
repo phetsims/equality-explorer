@@ -136,7 +136,6 @@ define( function( require ) {
       return new ConstantTermNode( this, term, plate, options );
     },
 
-    //TODO 3 return statements in this function
     /**
      * Applies a universal operation to a term on the scale.
      * @param {UniversalOperation} operation
@@ -180,12 +179,14 @@ define( function( require ) {
       // If the new constant isn't zero, create a new term on the plate.
       var newTerm = null;
       if ( newConstantValue.getValue() !== 0 ) {
-        newTerm = this.delegateCreateTermOnPlate( cellIndex, newConstantValue, term.diameter );
+        newTerm = this.delegateCreateTermOnPlate( cellIndex, {
+          constantValue: newConstantValue,
+          diameter: term.diameter
+        } );
       }
       return newTerm;
     },
 
-    //TODO 4 return statements in this function
     /**
      * Applies a universal operation to the plate.
      * If there is already a like term on the plate, this is a no-op.
@@ -218,8 +219,10 @@ define( function( require ) {
                           operation.operand.constantValue : operation.operand.constantValue.timesInteger( -1 );
 
       // create a new term on the plate
-      return this.delegateCreateTermOnPlate( this.likeTermsCellIndex, constantValue,
-        EqualityExplorerConstants.BIG_TERM_DIAMETER );
+      return this.delegateCreateTermOnPlate( this.likeTermsCellIndex, {
+        constantValue: constantValue,
+        diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+      } );
     },
 
     /**
@@ -227,31 +230,28 @@ define( function( require ) {
      * For example, if the positive constant creator is asked to create '-2', it will delegate to the negative
      * constant creator.
      * @param {number} cellIndex
-     * @param {Fraction} constantValue - the term's constant value
-     * @param {number} diameter - diameter of the term's visual representation
+     * @param {Object} options - passed to the ConstantTerm's constructor
      * @returns {Term}
      * @private
      */
-    delegateCreateTermOnPlate: function( cellIndex, constantValue, diameter ) {
+    delegateCreateTermOnPlate: function( cellIndex, options ) {
+
+      options = _.extend( {
+        constantValue: this.defaultConstantValue,
+        diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
+      }, options );
 
       var term = null;
-
-      var termOptions = {
-        constantValue: constantValue,
-        diameter: diameter
-      };
-
-      if ( constantValue.sign === this.defaultConstantValue.sign ) {
+      if ( options.constantValue.sign === this.defaultConstantValue.sign ) {
 
         // Sign is the same as this term creator, so create the term.
-        term = this.createTermOnPlate( this.likeTermsCellIndex, termOptions );
+        term = this.createTermOnPlate( cellIndex, options );
       }
       else {
 
         // Sign is different than this term creator, so forward the creation request to the inverse term creator.
-        term = this.inverseTermCreator.createTermOnPlate( this.likeTermsCellIndex, termOptions );
+        term = this.inverseTermCreator.createTermOnPlate( cellIndex, options );
       }
-
       return term;
     },
 
