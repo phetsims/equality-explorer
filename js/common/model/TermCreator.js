@@ -161,7 +161,7 @@ define( function( require ) {
       options = _.extend( {
         sign: 1,
         dragBounds: this.dragBounds,
-        event: null // event is non-null if the term is created as the result of a user interaction
+        event: null // {Event|null} event is non-null if the term is created as the result of a user interaction
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
       assert && assert( options.event === null || options.event instanceof Event, 'invalid event: ' + options.event );
