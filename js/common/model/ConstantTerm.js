@@ -13,6 +13,7 @@ define( function( require ) {
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {TermCreator} termCreator
@@ -48,6 +49,16 @@ define( function( require ) {
      */
     get weight() {
       return this.constantValue;
+    },
+
+    /**
+     * Gets the sign of a term.
+     * @returns {number} ala Math.sign
+     * @public
+     * @override
+     */
+    get sign() {
+      return Util.sign( this.constantValue.getValue() );
     },
 
     /**

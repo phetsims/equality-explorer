@@ -58,6 +58,14 @@ define( function( require ) {
     },
 
     /**
+     * Gets the sign of a term.
+     * @returns {number} ala Math.sign
+     */
+    get sign() {
+      throw new Error( 'sign must be implemented by subtype' );
+    },
+
+    /**
      * @public
      * @override
      */

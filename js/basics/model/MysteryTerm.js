@@ -45,6 +45,16 @@ define( function( require ) {
     },
 
     /**
+     * Gets the sign of a term.
+     * @returns {number} ala Math.sign
+     * @public
+     * @override
+     */
+    get sign() {
+      return 1; // all mystery terms have an implicit coefficient of +1, so sign is 1
+    },
+
+    /**
      * For debugging only. Do not rely on the format of toString.
      * @returns {string}
      * @public

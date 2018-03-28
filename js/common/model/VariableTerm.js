@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @param {string} symbol - the variable's symbol, e.g. 'x'
@@ -59,6 +60,16 @@ define( function( require ) {
      */
     get weight() {
       return this.coefficient.timesInteger( this.variableValueProperty.value ).reduced();
+    },
+
+    /**
+     * Gets the sign of a term.
+     * @returns {number} ala Math.sign
+     * @public
+     * @override
+     */
+    get sign() {
+      return Util.sign( this.coefficient.getValue() );
     },
 
     /**

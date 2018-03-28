@@ -212,6 +212,28 @@ define( function( require ) {
     },
 
     /**
+     * Gets the positive terms on the plate.
+     * @returns {Term[]}
+     * @public
+     */
+    getPositiveTermsOnPlate: function() {
+      return _.filter( this.termsOnPlate.getArray(), function( term ) {
+        return ( term.sign ===  1 );
+      } );
+    },
+
+    /**
+     * Gets the negative terms on the plate.
+     * @returns {Term[]}
+     * @public
+     */
+    getNegativeTermsOnPlate: function() {
+      return _.filter( this.termsOnPlate.getArray(), function( term ) {
+        return ( term.sign ===  -1 );
+      } );
+    },
+
+    /**
      * Puts a term on the plate. ORDER IS VERY IMPORTANT HERE!
      * @param {Term} term
      * @param {number} cellIndex - cell in the associated plate's 2D grid

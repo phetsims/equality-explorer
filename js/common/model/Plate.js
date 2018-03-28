@@ -214,9 +214,14 @@ define( function( require ) {
         var row = grid.rows - 1;
         var column = 0;
 
+        // Group the terms by positive and negative
+        var termGroups = []; // {Term[][]}
         this.termCreators.forEach( function( termCreator ) {
+          termGroups.push( termCreator.getPositiveTermsOnPlate() );
+          termGroups.push( termCreator.getNegativeTermsOnPlate() );
+        } );
 
-          var terms = termCreator.getTermsOnPlate(); // {Term[]}
+        termGroups.forEach( function( terms ) {
 
           if ( terms.length > 0 ) {
 
