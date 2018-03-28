@@ -86,9 +86,20 @@ define( function( require ) {
       options = _.extend( {
         sign: 1
       }, options );
+      assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
       if ( !options.constantValue ) {
         options.constantValue = this.defaultConstantValue.timesInteger( options.sign );
+      }
+
+      // Choose location based on sign of the constant.
+      // This determines which TermCreatorNode in the TermToolbox this term will animate to.
+      assert && assert( !options.location, 'ConstantTermCreator sets location' );
+      if ( options.constantValue.sign === this.defaultConstantValue.sign ) {
+        options.location = this.location;
+      }
+      else {
+        options.location = this.inverseLocation;
       }
 
       return new ConstantTerm( this, options );

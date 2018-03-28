@@ -48,13 +48,15 @@ define( function( require ) {
 
     /**
      * Instantiates a MysteryTerm.
-     * @param {Object} [options] - passed to the MysteryTerm's constructor
+     * @param {Object} [options] - ignored for this TermCreator subtype
      * @returns {Term}
      * @protected
      * @override
      */
     createTermProtected: function( options ) {
-      return new MysteryTerm( this.mysteryObject, this, options );
+      return new MysteryTerm( this.mysteryObject, this, {
+        location: this.location
+      } );
     },
 
     /**

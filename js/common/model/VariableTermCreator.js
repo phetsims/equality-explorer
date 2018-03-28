@@ -113,9 +113,20 @@ define( function( require ) {
       options = _.extend( {
         sign: 1
       }, options );
+      assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
       if ( !options.coefficient ) {
         options.coefficient = this.defaultCoefficient.timesInteger( options.sign );
+      }
+
+      // Choose location based on sign of the constant.
+      // This determines which TermCreatorNode in the TermToolbox this term will animate to.
+      assert && assert( !options.location, 'ConstantTermCreator sets location' );
+      if ( options.coefficient.sign === this.defaultCoefficient.sign ) {
+        options.location = this.location;
+      }
+      else {
+        options.location = this.inverseLocation;
       }
 
       return new VariableTerm( this.symbol, this.variableValueProperty, this, options );

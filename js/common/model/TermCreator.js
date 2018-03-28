@@ -166,15 +166,6 @@ define( function( require ) {
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
       assert && assert( options.event === null || options.event instanceof Event, 'invalid event: ' + options.event );
 
-      assert && assert( !options.location, 'TermCreator sets location' );
-      if ( options.sign === 1 ) {
-        options.location = this.location;
-      }
-      else {
-        assert && assert( this.inverseLocation, 'inverseLocation was never initialized' );
-        options.location = this.inverseLocation;
-      }
-
       // create term
       var term = this.createTermProtected( options );
       this.allTerms.add( term );
