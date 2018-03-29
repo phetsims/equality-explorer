@@ -31,6 +31,21 @@ define( function( require ) {
     // For internal use only, not public facing.
     xy: { type: 'flag' },
 
+    // Vertical offset, relative to center of plate, for when a term is considered 'above' the plate.
+    // Positive y is down in scenery, so positive values are below the center of the plate.
+    // For internal use only, not public facing.
+    plateYOffset: {
+      type: 'number',
+      defaultValue: 18
+    },
+
+    // After pressing the universal operator's 'go' button, it is normally disabled until the operation is applied.
+    // This prevents students from abusing the button by pressing it repeatedly (rapid-fire), which could
+    // cause them to reach the numeric limits of the sim very quickly.  Setting this flag keeps the 'go'
+    // button enabled at all times, allowing you to press it repeatedly, for the purposes of testing sim limits.
+    // And in case it's not obvious: For internal use only, not public facing.
+    goButtonEnabled: { type: 'flag' },
+
     // Number of terms that are initially on the left plate in the Basics screen.
     // This is intended to be used for debugging and testing, not in production situations.
     // Example: ?leftBasics=10,11,12
@@ -110,21 +125,7 @@ define( function( require ) {
       isValidValue: function( value ) {
         return isValidTermsArray( value, 4 );
       }
-    },
-
-    // Offset, relative to center of plate, for when a term is considered 'above' the plate.
-    // For internal use only, not public facing.
-    plateYOffset: {
-      type: 'number',
-      defaultValue: 18
-    },
-
-    // After pressing the universal operator's 'go' button, it is normally disabled until the operation is applied.
-    // This prevents students from abusing the button by pressing it repeatedly (rapid-fire), which could
-    // cause them to reach the numeric limits of the sim very quickly.  Setting this flag keeps the 'go'
-    // button enabled at all times, allowing you to press it repeatedly, for the purposes of testing sim limits.
-    // And in case it's not obvious: For internal use only, not public facing.
-    goButtonEnabled: { type: 'flag' }
+    }
   } );
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
