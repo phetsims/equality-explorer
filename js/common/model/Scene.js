@@ -54,10 +54,12 @@ define( function( require ) {
     // @private {Node|null} used to represent the scene. See ES5 getter.
     this._icon = options.icon;
 
-    // @public (read-only) {TermCreator[]} creators for terms on left side of scale
-    this.leftTermCreators = leftTermCreators;
+    // Check for potential bad combinations of term creators
+    assert && validateTermCreators( leftTermCreators );
+    assert && validateTermCreators( rightTermCreators );
 
-    // @public (read-only) {TermCreator[]} creators for terms on right side of scale
+    // @public (read-only) {TermCreator[]} creators for terms on left and right sides of scale
+    this.leftTermCreators = leftTermCreators;
     this.rightTermCreators = rightTermCreators;
 
     // @public (read-only)
@@ -116,6 +118,25 @@ define( function( require ) {
   }
 
   equalityExplorer.register( 'Scene', Scene );
+
+  /**
+   * Verifies that none of the specified term creators are equivalent.
+   * Equivalent term creators are not allowed on the same side of the equation.
+   * For example, there should not be 2 creators for constants, or 2 creators for 'x'.
+   * @param {TermCreator[]} termCreators
+   */
+  function validateTermCreators( termCreators ) {
+    for ( var i = 0; i < termCreators.length; i++ ) {
+      for ( var j = 0; j < termCreators.length; j++ ) {
+        
+        // skip comparisons to self
+        if ( termCreators[ i ] !== termCreators[ j ] ) {
+          assert && assert( !( termCreators[ i ].isEquivalentTo( termCreators[ j ] ) ),
+            'equivalent term creators are not allowed on the same side of the equation' );
+        }
+      }
+    }
+  }
 
   return inherit( Object, Scene, {
 
