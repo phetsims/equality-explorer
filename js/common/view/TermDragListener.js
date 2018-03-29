@@ -103,7 +103,7 @@ define( function( require ) {
 
         // set term properties at end of drag
         term.dragging = false;
-        term.shadowVisibleProperty.value = false;
+        term.shadowVisibleProperty.value = false; //TODO should shadow be visible until term is on scale?
 
         if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
 
