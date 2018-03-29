@@ -32,16 +32,16 @@ define( function( require ) {
     SUM_TO_ZERO_SMALL_FONT_SIZE: 24, // for sum-to-zero animation that involves a 'small' term on the scale
 
     // model
-    VARIABLE_RANGE: new RangeWithValue( -40, 40, 1 ),
-    NUMBER_OF_SNAPSHOTS: 5,
+    VARIABLE_RANGE: new RangeWithValue( -40, 40, 1 ), // range of variables
+    NUMBER_OF_SNAPSHOTS: 5, // number of snapshots in the Snapshots accordion box
 
-    // universal operators, in the order that they appear in the picker
+    // universal operators, in the order that they appear in the operator picker
     OPERATORS: [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ],
 
     // terms
-    SMALL_TERM_DIAMETER: 32,
-    BIG_TERM_DIAMETER: 100,
-    SHADOW_OPACITY: 0.4
+    SMALL_TERM_DIAMETER: 32, // diameter of small terms, like those in the TermsToolbox
+    BIG_TERM_DIAMETER: 100, // diameter of big terms, like those on the scale in the Operations screen
+    SHADOW_OPACITY: 0.4 // opacity of the shadow that appears on terms, 0-1 (transparent-opaque)
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );
