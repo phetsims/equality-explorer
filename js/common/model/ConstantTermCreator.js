@@ -271,9 +271,9 @@ define( function( require ) {
         var term = termsOnPlate[ i ];
         assert && assert( term instanceof ConstantTerm, 'invalid term:' + term );
         snapshot.push( {
-          cellIndex: this.plate.getCellForTerm( term ),
-          constantValue: term.constantValue,
-          diameter: term.diameter
+          cellIndex: this.plate.getCellForTerm( term ), // {number}
+          constantValue: term.constantValue, // {Fraction}
+          diameter: term.diameter // {number}
         } );
       }
       return snapshot;

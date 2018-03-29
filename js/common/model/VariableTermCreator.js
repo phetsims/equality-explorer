@@ -304,9 +304,9 @@ define( function( require ) {
         var term = termsOnPlate[ i ];
         assert && assert( term instanceof VariableTerm, 'invalid term: ' + term );
         snapshot.push( {
-          cellIndex: this.plate.getCellForTerm( term ),
-          coefficient: term.coefficient,
-          diameter: term.diameter
+          cellIndex: this.plate.getCellForTerm( term ), // {number}
+          coefficient: term.coefficient, // {Fraction}
+          diameter: term.diameter // {number}
         } );
       }
       return snapshot;
