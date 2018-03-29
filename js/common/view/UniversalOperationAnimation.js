@@ -12,7 +12,6 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoveTo = require( 'TWIXT/MoveTo' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -37,8 +36,8 @@ define( function( require ) {
       rightX: 100,
       startY: 0,
       distance: 65, // how far the operations will fall vertically
-      motionDuration: 700 / EqualityExplorerQueryParameters.speed, // motion duration, ms
-      opacityDuration: 250 / EqualityExplorerQueryParameters.speed, // fade duration, in ms
+      motionDuration: 700, // motion duration, ms
+      opacityDuration: 250, // fade duration, in ms
       onComplete: function() {}, // called when the animation completes
       onStop: function() {} // called when the animation is stopped (by calling stop)
     }, options );

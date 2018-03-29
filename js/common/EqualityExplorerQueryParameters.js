@@ -23,19 +23,6 @@ define( function( require ) {
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
-    // Speed multiplier for all animations, including motion, fades, etc.
-    // Normal speed is 1. Larger values make animations run faster, smaller values make animations run slower.
-    // For example, ?speed=0.5 will make animations run at half the normal speed.
-    // Useful for testing multi-touch, so that terms are easier to grab while they're moving.
-    // For internal use only, not public facing.
-    speed: {
-      type: 'number',
-      defaultValue: 1,
-      isValidValue: function( value ) {
-        return value > 0;
-      }
-    },
-
     // Shows the grid on each of the plates.
     // For internal use only, not public facing.
     showGrid: { type: 'flag' },

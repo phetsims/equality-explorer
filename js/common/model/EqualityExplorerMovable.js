@@ -16,7 +16,6 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -33,9 +32,6 @@ define( function( require ) {
       dragging: false, // {boolean} is this instance being dragged by the user?
       animationSpeed: 400 // {number} distance/second when animating
     }, options );
-
-    // scale the animation speed based on 'speed' query parameter
-    options.animationSpeed = options.animationSpeed * EqualityExplorerQueryParameters.speed;
 
     // @public (read-only) {Property.<Vector2>} DO NOT set this directly! Use moveTo or animateTo.
     this.locationProperty = new Property( options.location, { valueType: Vector2 } );

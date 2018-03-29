@@ -93,9 +93,6 @@ define( function( require ) {
         }
       };
 
-      // scale the duration based on 'speed' query parameter
-      options.duration = options.duration / EqualityExplorerQueryParameters.speed;
-
       // start animation, gradually fade out by modulating opacity
       var animation = new OpacityTo( this, options );
       animation.start( phet.joist.elapsedTime );
