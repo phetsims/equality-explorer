@@ -41,7 +41,7 @@ define( function( require ) {
      */
     createBasicsScreenIcon: function() {
 
-      // left side of the equation
+      // apples on left side of the equation
       var appleNode1 = new Image( appleBigImage );
       var appleNode2 = new Image( appleBigImage, {
         left: appleNode1.left - 10,
@@ -57,7 +57,7 @@ define( function( require ) {
         font: new PhetFont( 140 )
       } );
 
-      // right side of the equation
+      // an orange on right side of the equation
       var orangeNode = new Image( orangeBigImage );
 
       var iconNode = new HBox( {
@@ -82,6 +82,8 @@ define( function( require ) {
 
       // -1
       var negativeOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ) );
+
+      // -1 overlaps 1
       negativeOneNode.left = positiveOneNode.right - 10;
       negativeOneNode.bottom = positiveOneNode.centerY + 10;
 
@@ -109,7 +111,7 @@ define( function( require ) {
      */
     createVariablesScreenIcon: function() {
 
-      // left side of the equation
+      // x and -x on left side of the equation
       var leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
       var leftNegativeXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ), xString );
       var leftGroupNode = new VBox( {
@@ -121,7 +123,7 @@ define( function( require ) {
         font: new PhetFont( 50 )
       } );
 
-      // right side of the equation
+      // 1 and x on right side of the equation
       var rightPositiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
       var rightPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
       var rightGroupNode = new VBox( {
@@ -147,8 +149,13 @@ define( function( require ) {
 
       var operatorOptions = { font: new PhetFont( 30 ) };
 
+      // 3x on left side of equation
       var variableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ), xString );
+
+      // =
       var greaterThanNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );
+
+      // 6 on right side of equation
       var constantTermNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 6 ) );
 
       var iconNode = new HBox( {
@@ -180,7 +187,6 @@ define( function( require ) {
     createSolveItNavigationBarIcon: function() {
 
       var numberNode = new Text( MathSymbols.UNARY_PLUS + '1', { font: new PhetFont( 25 ) } );
-
       var starNode = new StarNode();
 
       var iconNode = new HBox( {
