@@ -25,7 +25,7 @@ define( function( require ) {
   var FONT_SIZE = 24;
 
   /**
-   * @param {string} symbol
+   * @param {string} symbol - the variable's symbol, e.g. 'x'
    * @param {BooleanProperty} variableVisibleProperty - whether the variable is visible
    * @param {Object} [options]
    * @constructor

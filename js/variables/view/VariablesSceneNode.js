@@ -16,7 +16,7 @@ define( function( require ) {
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
 
   /**
-   * @param {Scene} scene
+   * @param {VariablesScene} scene
    * @param {Property.<Scene>} sceneProperty - the selected scene
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
@@ -48,7 +48,7 @@ define( function( require ) {
     var localBounds = this.globalToLocalBounds( globalBounds );
 
     // Variable accordion box, below the Snapshots accordion box
-    var variableAccordionBox = new VariableAccordionBox( scene.xProperty, scene.xRange, {
+    var variableAccordionBox = new VariableAccordionBox( scene.xVariable, {
       expandedProperty: this.viewProperties.variableAccordionBoxExpandedProperty,
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: localBounds.right,

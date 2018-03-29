@@ -12,20 +12,15 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {string} symbol - the variable's symbol, e.g. 'x'
-   * @param {NumberProperty} variableValueProperty
+   * @param {Variable} variable - the variable for this term, e.g. 'x'
    * @param {Object} [options]
    * @constructor
    */
-  function VariableTerm( symbol, variableValueProperty, options ) {
-
-    assert && assert( variableValueProperty instanceof NumberProperty,
-      'invalid variableValueProperty: ' + variableValueProperty );
+  function VariableTerm( variable, options ) {
 
     options = _.extend( {
       coefficient: Fraction.fromInteger( 1 )
@@ -35,14 +30,11 @@ define( function( require ) {
     assert && assert( options.coefficient.isReduced(), 'coefficient must be reduced: ' + options.coefficient );
     assert && assert( options.coefficient.getValue() !== 0, 'coefficient cannot be zero' );
 
-    // @public (read-only)
-    this.symbol = symbol;
-
     // @public {Fraction}
     this.coefficient = options.coefficient;
 
-    // @public (read-only) {NumberProperty}
-    this.variableValueProperty = variableValueProperty;
+    // @public (read-only)
+    this.variable = variable;
 
     Term.call( this, options );
   }
@@ -57,10 +49,7 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-
-      // e.g. 'VariableTerm: 1/3 x (x=3)'
-      return 'VariableTerm: ' +  this.coefficient + ' ' + this.symbol +
-             ' (' + this.symbol + '=' + this.variableValueProperty.value + ')';
+      return 'VariableTerm: ' +  this.coefficient + ' ' + this.variable;
     },
 
     //-------------------------------------------------------------------------------------------------
@@ -74,7 +63,7 @@ define( function( require ) {
      * @override
      */
     get weight() {
-      return this.coefficient.timesInteger( this.variableValueProperty.value ).reduced();
+      return this.coefficient.timesInteger( this.variable.valueProperty.value ).reduced();
     },
 
     /**
@@ -96,7 +85,7 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       return ( term instanceof VariableTerm ) &&
-             ( term.variableValueProperty === this.variableValueProperty ); // associated with same variable
+             ( term.variable === this.variable ); // associated with same variable
     },
 
     /**
@@ -109,7 +98,7 @@ define( function( require ) {
      */
     isInverseTerm: function( term ) {
       return ( term instanceof VariableTerm ) &&
-             ( this.variableProperty === term.variableProperty ) &&  // associated with same variable
+             ( this.variable === term.variable ) &&  // associated with same variable
              ( this.coefficient.getValue() === -term.coefficient.getValue() ); // inverse coefficients
     }
   } );

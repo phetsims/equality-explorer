@@ -20,19 +20,15 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
-  var VariableValueNode = require( 'EQUALITY_EXPLORER/common/view/VariableValueNode' );
+  var VariableValuesNode = require( 'EQUALITY_EXPLORER/common/view/VariableValuesNode' );
 
   // constants
   var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an equation, so bounds are valid
-  var NO_X_VALUE_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an x value, so bounds are valid
+  var NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an x value, so bounds are valid
   var EQUATION_FONT_SIZE = 20;
   var FRACTION_FONT_SIZE = 14;
   var SELECTION_RECTANGLE_X_MARGIN = 20;
   var SELECTION_RECTANGLE_Y_MARGIN = 5;
-
-  // strings
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
    * @param {Scene} scene - the scene that we'll be taking a snapshot of
@@ -60,7 +56,7 @@ define( function( require ) {
 
     // placeholders, so that snapshotNode has valid bounds
     var equationNode = NO_EQUATION_NODE;
-    var xValueNode = NO_X_VALUE_NODE;
+    var variableValuesNode = NO_VARIABLE_VALUES_NODE;
 
     // parent for the equation and option x value display
     var snapshotNode = new HBox( {
@@ -107,7 +103,7 @@ define( function( require ) {
     // updates the layout of the snapshot, and centers it in the control
     var updateSnapshotLayout = function() {
       if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
-        snapshotNode.children = [ equationNode, xValueNode ];
+        snapshotNode.children = [ equationNode, variableValuesNode ];
       }
       else {
         snapshotNode.children = [ equationNode ];
@@ -135,10 +131,9 @@ define( function( require ) {
           relationalOperatorFontSize: EQUATION_FONT_SIZE
         } );
 
-        // optionally show the value of 'x'
-        if ( options.xVisibleProperty ) {
-          assert && assert( snapshot instanceof SnapshotWithVariable, 'expected a snapshot with variable support' );
-          xValueNode = new VariableValueNode( xString, snapshot.x, { fontSize: EQUATION_FONT_SIZE } );
+        // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
+        if ( snapshot.variables ) {
+          variableValuesNode = new VariableValuesNode( snapshot.variables, { fontSize: EQUATION_FONT_SIZE } );
         }
 
         // add listener that selects the snapshot
@@ -148,7 +143,7 @@ define( function( require ) {
 
         // no associated snapshot
         equationNode = NO_EQUATION_NODE;
-        xValueNode = NO_X_VALUE_NODE;
+        variableValuesNode = NO_VARIABLE_VALUES_NODE;
         self.removeInputListener( upListener );
       }
 

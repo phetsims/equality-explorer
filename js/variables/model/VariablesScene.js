@@ -11,11 +11,10 @@ define( function( require ) {
   // modules
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
-  var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
+  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
+  var Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   // string
@@ -26,31 +25,25 @@ define( function( require ) {
    */
   function VariablesScene() {
 
-    // @public (read-only) range of variable 'x'
-    this.xRange = EqualityExplorerConstants.VARIABLE_RANGE;
+    // @public (read-only)
+    this.xVariable = new Variable( xString );
 
-    // @public (read-only) the value of the variable 'x'
-    this.xProperty = new NumberProperty( this.xRange.defaultValue, {
-      numberType: 'Integer',
-      range: this.xRange
-    } );
-
-    Scene.call( this, 'variables', createTermCreators( this.xProperty ), createTermCreators( this.xProperty ) );
+    Scene.call( this, 'variables', createTermCreators( this.xVariable ), createTermCreators( this.xVariable ) );
   }
 
   equalityExplorer.register( 'VariablesScene', VariablesScene );
 
   /**
    * Creates the term creators for this scene.
-   * @param {NumberProperty} xProperty
+   * @param {Variable} xVariable
    * @returns {TermCreator[]}
    */
-  function createTermCreators( xProperty ) {
+  function createTermCreators( xVariable ) {
 
     return [
 
       // x and -x
-      new VariableTermCreator( xString, xProperty ),
+      new VariableTermCreator( xVariable ),
 
       // 1 and -1
       new ConstantTermCreator()
@@ -64,7 +57,7 @@ define( function( require ) {
      * @override
      */
     reset: function() {
-      this.xProperty.reset();
+      this.xVariable.reset();
       Scene.prototype.reset.call( this );
     },
 
@@ -75,7 +68,9 @@ define( function( require ) {
      * @override
      */
     createSnapshot: function() {
-      return new SnapshotWithVariable( this );
+      return new Snapshot( this, {
+        variables: [ this.xVariable ]
+      } );
     }
   } );
 } );

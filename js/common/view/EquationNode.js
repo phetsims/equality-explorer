@@ -223,7 +223,7 @@ define( function( require ) {
               children.push( new Text( operator, { font: operatorFont } ) );
               coefficient = coefficient.abs();
             }
-            children.push( VariableTermNode.createEquationTermNode( coefficient, termCreator.symbol, {
+            children.push( VariableTermNode.createEquationTermNode( coefficient, termCreator.variable.symbol, {
               integerFont: integerFont,
               fractionFont: fractionFont,
               symbolFont: symbolFont,

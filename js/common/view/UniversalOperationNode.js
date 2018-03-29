@@ -87,7 +87,7 @@ define( function( require ) {
         } );
       }
       else if ( operand instanceof VariableTerm ) {
-        operandNode = VariableTermNode.createEquationTermNode( operand.coefficient, operand.symbol, {
+        operandNode = VariableTermNode.createEquationTermNode( operand.coefficient, operand.variable.symbol, {
           symbolFont: options.symbolFont,
           integerFont: options.integerFont,
           fractionFont: options.fractionFont

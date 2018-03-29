@@ -14,7 +14,6 @@ define( function( require ) {
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RangeWithValue = require( 'DOT/RangeWithValue' );
 
   var EqualityExplorerConstants = {
 
@@ -23,25 +22,22 @@ define( function( require ) {
     SCREEN_VIEW_X_MARGIN: 20,
     SCREEN_VIEW_Y_MARGIN: 20,
 
-    // Fonts
-    ACCORDION_BOX_TITLE_FONT: new PhetFont( 18 ),
-    UNIVERSAL_OPERATION_SYMBOL_FONT: new MathSymbolFont( 24 ),
-    UNIVERSAL_OPERATION_INTEGER_FONT: new PhetFont( 24 ),
-    UNIVERSAL_OPERATION_FRACTION_FONT: new PhetFont( 12 ),
-    SUM_TO_ZERO_BIG_FONT_SIZE: 40, // for sum-to-zero animation that involves a 'big' term on the scale
-    SUM_TO_ZERO_SMALL_FONT_SIZE: 24, // for sum-to-zero animation that involves a 'small' term on the scale
-
-    // model
-    VARIABLE_RANGE: new RangeWithValue( -40, 40, 1 ), // range of variables
-    NUMBER_OF_SNAPSHOTS: 5, // number of snapshots in the Snapshots accordion box
-
-    // universal operators, in the order that they appear in the operator picker
-    OPERATORS: [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ],
-
     // terms
     SMALL_TERM_DIAMETER: 32, // diameter of small terms, like those in the TermsToolbox
     BIG_TERM_DIAMETER: 100, // diameter of big terms, like those on the scale in the Operations screen
-    SHADOW_OPACITY: 0.4 // opacity of the shadow that appears on terms, 0-1 (transparent-opaque)
+    SHADOW_OPACITY: 0.4, // opacity of the shadow that appears on terms, 0-1 (transparent-opaque)
+
+    //TODO convert these to an enum?
+    // universal operators, in the order that they appear in the operator picker
+    OPERATORS: [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ],
+
+    // Fonts
+    ACCORDION_BOX_TITLE_FONT: new PhetFont( 18 ),
+    UNIVERSAL_OPERATION_SYMBOL_FONT: new MathSymbolFont( 24 ), // for anything that's not a number
+    UNIVERSAL_OPERATION_INTEGER_FONT: new PhetFont( 24 ), // for integer numbers
+    UNIVERSAL_OPERATION_FRACTION_FONT: new PhetFont( 12 ), // for fraction numerator and denominator
+    SUM_TO_ZERO_BIG_FONT_SIZE: 40, // for sum-to-zero animation that involves a 'big' term on the scale
+    SUM_TO_ZERO_SMALL_FONT_SIZE: 24// for sum-to-zero animation that involves a 'small' term on the scale
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

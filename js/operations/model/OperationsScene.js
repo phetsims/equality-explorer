@@ -18,12 +18,12 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
-  var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
+  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
   var StringProperty = require( 'AXON/StringProperty' );
+  var Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
@@ -41,14 +41,8 @@ define( function( require ) {
    */
   function OperationsScene() {
 
-    // @public (read-only) range of variable 'x'
-    this.xRange = EqualityExplorerConstants.VARIABLE_RANGE;
-
-    // @public the value of the variable 'x'
-    this.xProperty = new NumberProperty( this.xRange.defaultValue, {
-      numberType: 'Integer',
-      range: this.xRange
-    } );
+    // @public (read-only)
+    this.xVariable = new Variable( xString );
 
     // @public (read-only) emit1( sumToZeroData ) when one or more terms become zero as the result of a universal operation
     this.sumToZeroEmitter = new Emitter();
@@ -77,7 +71,7 @@ define( function( require ) {
       }
       else {
 
-        var variableTermOperand = new VariableTerm( xString, this.xProperty, {
+        var variableTermOperand = new VariableTerm( this.xVariable, {
           coefficient: Fraction.fromInteger( i )
         } );
 
@@ -110,8 +104,8 @@ define( function( require ) {
     } );
 
     Scene.call( this, 'operations',
-      createTermCreators( this.xProperty ),
-      createTermCreators( this.xProperty ), {
+      createTermCreators( this.xVariable ),
+      createTermCreators( this.xVariable ), {
         gridRows: 1,
         gridColumns: 2,
         iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
@@ -122,15 +116,15 @@ define( function( require ) {
 
   /**
    * Creates the term creators for this scene.
-   * @param {NumberProperty} xProperty
+   * @param {Variable} xVariable
    * @returns {TermCreator[]}
    */
-  function createTermCreators( xProperty ) {
+  function createTermCreators( xVariable ) {
 
     return [
 
       // x and -x
-      new VariableTermCreator( xString, xProperty, {
+      new VariableTermCreator( xVariable, {
         likeTermsCellIndex: 0 // cell on the plate that all like terms will occupy
       } ),
 
@@ -148,7 +142,7 @@ define( function( require ) {
      * @override
      */
     reset: function() {
-      this.xProperty.reset();
+      this.xVariable.reset();
       this.operatorProperty.reset();
       this.operandProperty.reset();
       Scene.prototype.reset.call( this );
@@ -156,12 +150,14 @@ define( function( require ) {
 
     /**
      * Creates a snapshot of the scene.
-     * @returns {SnapshotWithVariable}
+     * @returns {Snapshot}
      * @public
      * @override
      */
     createSnapshot: function() {
-      return new SnapshotWithVariable( this );
+      return new Snapshot( this, {
+        variables: [ this.xVariable ]
+      } );
     },
 
     /**
@@ -191,7 +187,7 @@ define( function( require ) {
 
           // Get info about the term, in case it sums to zero and is disposed.
           var cellIndex = termCreator.plate.getCellForTerm( term );
-          var symbol = term.symbol || null; // undefined for some term types
+          var symbol = ( term instanceof VariableTerm ) ? term.variable.symbol : null;
 
           // Apply the operation to the term, returns null if the term became zero.
           var newTerm = termCreator.applyOperationToTerm( operation, term );

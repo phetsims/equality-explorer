@@ -11,11 +11,10 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
-  var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
+  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
+  var Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   // string
@@ -27,24 +26,14 @@ define( function( require ) {
    */
   function XYScene() {
 
-    // @public (read-only) range of variables
-    this.xRange = EqualityExplorerConstants.VARIABLE_RANGE;
-    this.yRange = EqualityExplorerConstants.VARIABLE_RANGE;
-
-    // @public values of the variables
-    this.xProperty = new NumberProperty( this.xRange.defaultValue, {
-      numberType: 'Integer',
-      range: this.xRange
-    } );
-    this.yProperty = new NumberProperty( this.yRange.defaultValue, {
-      numberType: 'Integer',
-      range: this.yRange
-    } );
+    // @public (read-only)
+    this.xVariable = new Variable( xString );
+    this.yVariable = new Variable( yString );
 
     // Use the same query parameters as 'Variables' screen to pre-populate the scale
     Scene.call( this, 'xy',
-      createTermCreators( this.xProperty, this.yProperty ),
-      createTermCreators( this.xProperty, this.yProperty )
+      createTermCreators( this.xVariable, this.yVariable ),
+      createTermCreators( this.xVariable, this.yVariable )
     );
   }
 
@@ -52,19 +41,19 @@ define( function( require ) {
 
   /**
    * Creates the term creators for this scene.
-   * @param {NumberProperty} xProperty
-   * @param {NumberProperty} yProperty
+   * @param {Variable} xVariable
+   * @param {Variable} yVariable
    * @returns {TermCreator[]}
    */
-  function createTermCreators( xProperty, yProperty ) {
+  function createTermCreators( xVariable, yVariable ) {
 
     return [
 
       // x & -x
-      new VariableTermCreator( xString, xProperty ),
+      new VariableTermCreator( xVariable ),
 
       // y & -y
-      new VariableTermCreator( yString, yProperty, {
+      new VariableTermCreator( yVariable, {
         positiveFill: 'rgb( 250, 100, 255 )',
         negativeFill: 'rgb( 240, 140, 255 )'
       } )
@@ -78,8 +67,8 @@ define( function( require ) {
      * @override
      */
     reset: function() {
-      this.xProperty.reset();
-      this.yProperty.reset();
+      this.xVariable.reset();
+      this.yVariable.reset();
       Scene.prototype.reset.call( this );
     },
 
@@ -90,7 +79,9 @@ define( function( require ) {
      * @override
      */
     createSnapshot: function() {
-      return new SnapshotWithVariable( this );
+      return new Snapshot( this, {
+        variables: [ this.xVariable, this.yVariable ]
+      } );
     }
   } );
 } );

@@ -48,7 +48,7 @@ define( function( require ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
-    var contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.symbol,
+    var contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.variable.symbol,
       _.extend( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
     var shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
@@ -66,7 +66,7 @@ define( function( require ) {
     /**
      * Creates the representation of a term that appears on interactive nodes.
      * @param {Fraction} coefficient
-     * @param {string} symbol
+     * @param {string} symbol - the variable's symbol, e.g. 'x'
      * @param {Object} [options] - see DEFAULT_OPTIONS
      * @returns {Node}
      * @public
@@ -110,7 +110,7 @@ define( function( require ) {
      * Creates the representation of a term that is shown in equations.
      * For constant terms, this same representation appears on interactive terms.
      * @param {Fraction} coefficient
-     * @param {string} symbol - the variable symbol
+     * @param {string} symbol - the variable's symbol, e.g. 'x'
      * @param {Object} [options] - see ReducedFractionNode
      * @returns {Node}
      * @public

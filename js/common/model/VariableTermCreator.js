@@ -16,21 +16,16 @@ define( function( require ) {
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   /**
-   * @param {string} symbol
-   * @param {NumberProperty} variableValueProperty
+   * @param {Variable} variable
    * @param {Object} [options]
    * @constructor
    */
-  function VariableTermCreator( symbol, variableValueProperty, options ) {
-
-    assert && assert( variableValueProperty instanceof NumberProperty,
-      'invalid variableValueProperty: ' + variableValueProperty );
+  function VariableTermCreator( variable, options ) {
 
     var self = this;
 
@@ -40,8 +35,7 @@ define( function( require ) {
     }, options );
 
     // @public (read-only)
-    this.symbol = symbol;
-    this.variableValueProperty = variableValueProperty;
+    this.variable = variable;
 
     // @private
     this.defaultCoefficient = Fraction.fromInteger( 1 ); // terms are created with this coefficient by default
@@ -52,7 +46,7 @@ define( function( require ) {
 
     // When the variable values changes, recompute the weight of terms on the scale.
     // dispose not needed.
-    this.variableValueProperty.link( function( variableValue ) {
+    this.variable.valueProperty.link( function( variableValue ) {
       self.updateWeightOnPlateProperty();
     } );
   }
@@ -92,10 +86,11 @@ define( function( require ) {
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
-      return VariableTermNode.createInteractiveTermNode( this.defaultCoefficient.timesInteger( options.sign ), this.symbol, {
-        positiveFill: this.positiveFill,
-        negativeFill: this.negativeFill
-      } );
+      return VariableTermNode.createInteractiveTermNode(
+        this.defaultCoefficient.timesInteger( options.sign ), this.variable.symbol, {
+          positiveFill: this.positiveFill,
+          negativeFill: this.negativeFill
+        } );
     },
 
     /**
@@ -126,7 +121,7 @@ define( function( require ) {
         options.location = this.negativeLocation;
       }
 
-      return new VariableTerm( this.symbol, this.variableValueProperty, options );
+      return new VariableTerm( this.variable, options );
     },
 
     /**
@@ -257,7 +252,7 @@ define( function( require ) {
       }
 
       // operand is not a like term
-      if ( !( operation.operand instanceof VariableTerm && operation.operand.symbol === this.symbol ) ) {
+      if ( !( operation.operand instanceof VariableTerm && operation.operand.variable === this.variable ) ) {
         return null;
       }
 
@@ -286,8 +281,7 @@ define( function( require ) {
      */
     isEquivalentTo: function( termCreator ) {
       return ( termCreator instanceof VariableTermCreator ) &&
-             ( termCreator.variableValueProperty === this.variableValueProperty ) && // same variable
-             ( termCreator.defaultCoefficient.getValue() === this.defaultCoefficient.getValue() ); // same coefficients
+             ( termCreator.variable === this.variable ); // same variable
     },
 
     /**

@@ -58,7 +58,7 @@ define( function( require ) {
     var localBounds = this.globalToLocalBounds( globalBounds );
 
     // Variables accordion box, below the Snapshots accordion box
-    var variableAccordionBox = new VariableAccordionBox( scene.xProperty, scene.xRange, {
+    var variableAccordionBox = new VariableAccordionBox( scene.xVariable, {
       expandedProperty: this.viewProperties.variableAccordionBoxExpandedProperty,
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: localBounds.right,

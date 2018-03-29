@@ -23,6 +23,7 @@ define( function( require ) {
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   /**
    * @param {Node} termNode - Node that the listener is attached to
@@ -351,8 +352,8 @@ define( function( require ) {
       // determine which cell the inverse term appears in
       var cellIndex = this.plate.getCellForTerm( inverseTerm );
 
-      // some things we need before the terms are deleted
-      var symbol = this.term.symbol || null;
+      // some things we need before the terms are disposed
+      var symbol = ( this.term instanceof VariableTerm ) ? this.term.variable.symbol : null;
       var parent = this.termNode.getParent();
 
       // delete the 2 terms that sum to zero

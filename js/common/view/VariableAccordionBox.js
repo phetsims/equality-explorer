@@ -25,15 +25,13 @@ define( function( require ) {
 
   // strings
   var variableString = require( 'string!EQUALITY_EXPLORER/variable' );
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
-   * @param {NumberProperty} variableValueProperty - the value of the variable
-   * @param {Range} valueRange - the range of the variable's alue
+   * @param {Variable} variable - the variable that appears in this accordion box
    * @param {Object} [options]
    * @constructor
    */
-  function VariableAccordionBox( variableValueProperty, valueRange, options ) {
+  function VariableAccordionBox( variable, options ) {
 
     options = _.extend( {
 
@@ -69,7 +67,7 @@ define( function( require ) {
 
     var strut = new HStrut( contentWidth );
 
-    var xText = new Text( xString, {
+    var xText = new Text( variable.symbol, {
       font: new MathSymbolFont( options.fontSize ),
       maxWidth: 0.5 * contentWidth
     } );
@@ -79,7 +77,7 @@ define( function( require ) {
     } );
 
     // NumberPicker.dispose not needed, VariableAccordionBox exists for lifetime of the sim
-    var valuePicker = new NumberPicker( variableValueProperty, new Property( valueRange ), {
+    var valuePicker = new NumberPicker( variable.valueProperty, new Property( variable.range ), {
       color: 'black',
       font: new PhetFont( options.fontSize ),
       xMargin: 6
