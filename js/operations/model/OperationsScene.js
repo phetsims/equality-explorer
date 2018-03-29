@@ -21,8 +21,8 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
-  var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
+  var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var StringProperty = require( 'AXON/StringProperty' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
