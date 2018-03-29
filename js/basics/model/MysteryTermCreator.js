@@ -106,7 +106,9 @@ define( function( require ) {
      * @override
      */
     isEquivalentTo: function( termCreator ) {
-      return false; // there are no equivalents for mystery objects
+
+      // MysteryTermCreators are equivalent if they manage terms for the same mystery object
+      return ( termCreator instanceof MysteryTermCreator ) && ( termCreator.mysteryObject === this.mysteryObject );
     },
 
     /**

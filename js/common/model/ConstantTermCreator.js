@@ -253,8 +253,9 @@ define( function( require ) {
      * @override
      */
     isEquivalentTo: function( termCreator ) {
-      return ( termCreator instanceof ConstantTermCreator ) &&
-             ( termCreator.defaultConstantValue.getValue() === this.defaultConstantValue.getValue() ); // same values
+
+      // all ConstantTermCreators are equivalent
+      return ( termCreator instanceof ConstantTermCreator );
     },
 
     /**

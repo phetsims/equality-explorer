@@ -280,8 +280,9 @@ define( function( require ) {
      * @override
      */
     isEquivalentTo: function( termCreator ) {
-      return ( termCreator instanceof VariableTermCreator ) &&
-             ( termCreator.variable === this.variable ); // same variable
+
+      // VariableTermCreators are equivalent if they manage terms for the same variable.
+      return ( termCreator instanceof VariableTermCreator ) && ( termCreator.variable === this.variable );
     },
 
     /**
