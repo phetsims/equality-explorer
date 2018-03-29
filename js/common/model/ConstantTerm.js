@@ -16,11 +16,10 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {TermCreator} termCreator
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantTerm( termCreator, options ) {
+  function ConstantTerm( options ) {
 
     options = _.extend( {
       constantValue: Fraction.fromInteger( 1 )
@@ -34,7 +33,7 @@ define( function( require ) {
     // @public (read-only) {Fraction}
     this.constantValue = options.constantValue;
 
-    Term.call( this, termCreator, options );
+    Term.call( this, options );
   }
 
   equalityExplorer.register( 'ConstantTerm', ConstantTerm );

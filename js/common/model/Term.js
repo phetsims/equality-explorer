@@ -16,20 +16,15 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
-   * @param {TermCreator} termCreator - the term creator who created and manages this term
    * @param {Object} [options]
    * @constructor
    * @abstract
    */
-  function Term( termCreator, options ) {
+  function Term( options ) {
 
     options = _.extend( {
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
     }, options );
-
-    //TODO would be nice to make this go away
-    // @public (read-only)
-    this.termCreator = termCreator;
 
     // @public (read-only)
     this.diameter = options.diameter;

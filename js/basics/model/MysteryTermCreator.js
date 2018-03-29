@@ -58,7 +58,7 @@ define( function( require ) {
      * @override
      */
     createTermProtected: function( options ) {
-      return new MysteryTerm( this.mysteryObject, this, {
+      return new MysteryTerm( this.mysteryObject, {
         location: this.positiveLocation // all mystery terms have an implicit coefficient of 1
       } );
     },

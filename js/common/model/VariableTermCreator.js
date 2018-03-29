@@ -127,7 +127,7 @@ define( function( require ) {
         options.location = this.negativeLocation;
       }
 
-      return new VariableTerm( this.symbol, this.variableValueProperty, this, options );
+      return new VariableTerm( this.symbol, this.variableValueProperty, options );
     },
 
     /**

@@ -97,7 +97,7 @@ define( function( require ) {
         options.location = this.negativeLocation;
       }
 
-      return new ConstantTerm( this, options );
+      return new ConstantTerm( options );
     },
 
     /**
