@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
-  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
@@ -169,7 +168,7 @@ define( function( require ) {
       assert && assert( this.combineLikeTermsEnabled, 'applyOperationToTerm is only supported when combining like terms' );
       assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
 
-      if ( !( operation.operand instanceof ConstantTermOperand ) ) {
+      if ( !( operation.operand instanceof ConstantTerm ) ) {
         return term; // operand is not applicable to constant terms
       }
 
@@ -226,7 +225,7 @@ define( function( require ) {
       }
 
       // operand is not a like term
-      if ( !( operation.operand instanceof ConstantTermOperand ) ) {
+      if ( !( operation.operand instanceof ConstantTerm ) ) {
         return null;
       }
 

@@ -15,7 +15,7 @@ define( function( require ) {
 
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
+  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
@@ -31,7 +31,7 @@ define( function( require ) {
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
   var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
   var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
-  var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   /**
    * @param {OperationsScene} scene
@@ -79,7 +79,7 @@ define( function( require ) {
 
         // If the operator would result in division by zero, change the operand to 1.
         adjustedOperand = _.find( scene.operands, function( operand ) {
-          return ( operand instanceof ConstantTermOperand ) && ( operand.constantValue.getValue() === 1 );
+          return ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 );
         } );
         assert && assert( adjustedOperand, 'expected to find constant 1' );
         scene.operandProperty.value = adjustedOperand;
@@ -91,7 +91,7 @@ define( function( require ) {
         // E.g. if the operand is '5x', change the operand to '5'.
         var currentCoefficient = currentOperand.coefficient;
         adjustedOperand = _.find( scene.operands, function( operand ) {
-          return ( operand instanceof ConstantTermOperand ) &&
+          return ( operand instanceof ConstantTerm ) &&
                  ( operand.constantValue.getValue() === currentCoefficient.getValue() );
         } );
         assert && assert( adjustedOperand, 'expected to find constant ' + currentCoefficient );
@@ -175,7 +175,7 @@ define( function( require ) {
 
       /**
        * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-       * @param {ConstantTermOperand|VariableTermOperand} operand
+       * @param {Term} operand
        */
       function( operator, operand ) {
 
@@ -183,19 +183,19 @@ define( function( require ) {
         assert && assert( operandIndex !== -1, 'operand not found: ' + operand );
 
         if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) ) {
-          assert && assert( operand instanceof ConstantTermOperand, 'unexpected operand type: ' + operand );
+          assert && assert( operand instanceof ConstantTerm, 'unexpected operand type: ' + operand );
 
           // up arrow is enabled if there are any constant term operands about the current selection
           var upEnabled = false;
           for ( var i = operandIndex + 1; i < scene.operands.length && !upEnabled; i++ ) {
-            upEnabled = ( scene.operands[ i ] instanceof ConstantTermOperand );
+            upEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
           }
           upEnabledProperty.value = upEnabled;
 
           // down arrow is enabled if there are any constant term operands below the current selection
           var downEnabled = false;
           for ( i = operandIndex - 1; i >= 0 && !downEnabled; i-- ) {
-            downEnabled = ( scene.operands[ i ] instanceof ConstantTermOperand );
+            downEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
           }
           downEnabledProperty.value = downEnabled;
         }
@@ -269,30 +269,30 @@ define( function( require ) {
   /**
    * Does this operation result in division by zero?
    * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-   * @param {ConstantTermOperand|VariableTermOperand} operand
+   * @param {Term} operand
    * @returns {boolean}
    */
   function isDivideByZero( operator, operand ) {
     return operator === MathSymbols.DIVIDE &&
-           ( operand instanceof ConstantTermOperand && operand.constantValue.getValue() === 0 );
+           ( operand instanceof ConstantTerm && operand.constantValue.getValue() === 0 );
   }
 
   /**
    * Is the operation invalid an attempt to do something unsupported with a variable term operand?
    * Times and divide are unsupported for variable terms operands.
    * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-   * @param {ConstantTermOperand|VariableTermOperand} operand
+   * @param {Term} operand
    * @returns {boolean}
    */
   function isUnsupportedVariableTermOperation( operator, operand ) {
     return ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
-               operand instanceof VariableTermOperand;
+               operand instanceof VariableTerm;
   }
 
-  /*
+  /**
    * Are the specified operator and operand a supported combination?
    * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-   * @param {ConstantTermOperand|VariableTermOperand} operand - the proposed operand
+   * @param {Term} operand - the proposed operand
    * @returns {boolean}
    */
   function isSupportedOperation( operator, operand ) {

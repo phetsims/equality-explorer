@@ -10,8 +10,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
-  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
@@ -24,8 +24,8 @@ define( function( require ) {
   var SnapshotWithVariable = require( 'EQUALITY_EXPLORER/common/model/SnapshotWithVariable' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var StringProperty = require( 'AXON/StringProperty' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
-  var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
 
   // string
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -61,11 +61,14 @@ define( function( require ) {
       validValues: this.operators
     } );
 
-    // @public (read-only)
+    // @public (read-only) {Term[]} operands that appear in the operand picker.
+    // These are the only Terms that are not created and managed by a TermCreator.
     this.operands = [];
     for ( var i = OPERAND_RANGE.min; i <= OPERAND_RANGE.max; i++ ) {
 
-      var constantTermOperand = new ConstantTermOperand( Fraction.fromInteger( i ) );
+      var constantTermOperand = new ConstantTerm( {
+        constantValue: Fraction.fromInteger( i )
+      } );
 
       if ( i === 0 ) {
 
@@ -73,7 +76,11 @@ define( function( require ) {
         this.operands.push( constantTermOperand );
       }
       else {
-        var variableTermOperand = new VariableTermOperand( Fraction.fromInteger( i ), xString );
+
+        var variableTermOperand = new VariableTerm( xString, this.xProperty, {
+          coefficient: Fraction.fromInteger( i )
+        } );
+
         if ( i < 0 ) {
 
           // for negative numbers, put the variable term before the constant term
@@ -93,11 +100,11 @@ define( function( require ) {
 
     // Start with operand 1
     var defaultOperand = _.find( this.operands, function( operand ) {
-      return ( operand instanceof ConstantTermOperand ) && ( operand.constantValue.getValue() === 1 );
+      return ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 );
     } );
     assert && assert( defaultOperand, 'oops, the default was not found' );
 
-    // @private {Property.<ConstantTermOperator|VariableTermOperator>}
+    // @private {Property.<Term>}
     this.operandProperty = new Property( defaultOperand, {
       validValues: this.operands
     } );

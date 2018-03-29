@@ -9,22 +9,22 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
+  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   /**
    * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-   * @param {ConstantTermOperand|VariableTermOperand} operand
+   * @param {Term} operand
    * @constructor
    */
   function UniversalOperation( operator, operand ) {
 
     assert && assert( _.includes( EqualityExplorerConstants.OPERATORS, operator ),
       'invalid operator: ' + operator );
-    assert && assert( operand instanceof ConstantTermOperand || operand instanceof VariableTermOperand,
+    assert && assert( operand instanceof ConstantTerm || operand instanceof VariableTerm,
       'invalid operand: ' + operand );
 
     // @public (read-only)

@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantTermOperand = require( 'EQUALITY_EXPLORER/common/model/ConstantTermOperand' );
+  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -20,7 +20,6 @@ define( function( require ) {
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
-  var VariableTermOperand = require( 'EQUALITY_EXPLORER/common/model/VariableTermOperand' );
 
   /**
    * @param {string} symbol
@@ -211,16 +210,16 @@ define( function( require ) {
 
       // {Fraction} compute the new coefficient
       var newCoefficient;
-      if ( operation.operator === MathSymbols.PLUS && operation.operand instanceof VariableTermOperand ) {
+      if ( operation.operator === MathSymbols.PLUS && operation.operand instanceof VariableTerm ) {
         newCoefficient = term.coefficient.plus( operation.operand.coefficient ).reduced();
       }
-      else if ( operation.operator === MathSymbols.MINUS && operation.operand instanceof VariableTermOperand ) {
+      else if ( operation.operator === MathSymbols.MINUS && operation.operand instanceof VariableTerm ) {
         newCoefficient = term.coefficient.minus( operation.operand.coefficient ).reduced();
       }
-      else if ( operation.operator === MathSymbols.TIMES && operation.operand instanceof ConstantTermOperand ) {
+      else if ( operation.operator === MathSymbols.TIMES && operation.operand instanceof ConstantTerm ) {
         newCoefficient = term.coefficient.times( operation.operand.constantValue ).reduced();
       }
-      else if ( operation.operator === MathSymbols.DIVIDE && operation.operand instanceof ConstantTermOperand &&
+      else if ( operation.operator === MathSymbols.DIVIDE && operation.operand instanceof ConstantTerm &&
                 operation.operand.constantValue.getValue() !== 0 ) {
         newCoefficient = term.coefficient.divided( operation.operand.constantValue ).reduced();
       }
@@ -258,7 +257,7 @@ define( function( require ) {
       }
 
       // operand is not a like term
-      if ( !( operation.operand instanceof VariableTermOperand && operation.operand.symbol === this.symbol ) ) {
+      if ( !( operation.operand instanceof VariableTerm && operation.operand.symbol === this.symbol ) ) {
         return null;
       }
 
