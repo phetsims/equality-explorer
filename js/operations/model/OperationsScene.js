@@ -164,46 +164,41 @@ define( function( require ) {
      */
     applyOperation: function( operation ) {
 
-      var termCreators = this.leftTermCreators.concat( this.rightTermCreators );
-
-      // Gets all of the terms that are currently on the scale, since applying operations adds/removes terms.
-      var terms = [];
-      termCreators.forEach( function( termCreator ) {
-        terms = terms.concat( termCreator.getTermsOnPlate() );
-      } );
-
-      // Apply the operation to the plate.  This may create terms on the plate.
-      // For example, applying operation '+ 2' to an empty plate will create a '+2' constant term on the plate.
-      termCreators.forEach( function( termCreator ) {
-        termCreator.applyOperationToPlate( operation );
-      } );
-
       // Describes the terms that became zero as the result of applying the operation.
       // {{ plate: Plate, cellIndex: number, symbol: string|null }[]}
       var sumToZeroData = [];
 
-      // Apply the operation to terms that were on the scale when this method was called.
-      for ( var i = 0; i < terms.length; i++ ) {
+      this.leftTermCreators.concat( this.rightTermCreators ).forEach( function( termCreator ) {
 
-        var term = terms[ i ];
+        // Get all of the terms that are currently on the scale, since applying operations adds/removes terms.
+        var terms = termCreator.getTermsOnPlate();
 
-        // Determine where the term was, in case it sums to zero
-        var plate = term.termCreator.plate;
-        var cellIndex = term.termCreator.plate.getCellForTerm( term );
-        var symbol = term.symbol || null; // undefined for some term types
+        // Apply the operation to the plate.  This may create terms on the plate.
+        // For example, applying operation '+ 2' to an empty plate will create a '+2' constant term on the plate.
+        termCreator.applyOperationToPlate( operation );
 
-        // Apply the operation to the term, returns null if the term became zero.
-        var newTerm = term.termCreator.applyOperationToTerm( operation, term );
+        // Apply the operation to terms that were on the scale when this method was called.
+        for ( var i = 0; i < terms.length; i++ ) {
 
-        // The term became zero, save information needed to perform sum-to-zero animation.
-        if ( !newTerm ) {
-          sumToZeroData.push( {
-            plate: plate, // {Plate} the term was on this plate
-            cellIndex: cellIndex, // {number} the term was in this cell in the plate's 2D grid
-            symbol: symbol // {string|null} the term had this associated symbol
-          } );
+          var term = terms[ i ];
+
+          // Get info about the term, in case it sums to zero and is disposed.
+          var cellIndex = termCreator.plate.getCellForTerm( term );
+          var symbol = term.symbol || null; // undefined for some term types
+
+          // Apply the operation to the term, returns null if the term became zero.
+          var newTerm = termCreator.applyOperationToTerm( operation, term );
+
+          // The term became zero, save information needed to perform sum-to-zero animation.
+          if ( !newTerm ) {
+            sumToZeroData.push( {
+              plate: termCreator.plate, // {Plate} the term was on this plate
+              cellIndex: cellIndex, // {number} the term was in this cell in the plate's 2D grid
+              symbol: symbol // {string|null} the term had this associated symbol
+            } );
+          }
         }
-      }
+      } );
 
       // Tell the view which terms summed to zero.
       // Do this after the operation has been fully applied, so that sum-to-zero animations
