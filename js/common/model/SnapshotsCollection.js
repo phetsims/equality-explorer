@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Manages a collection of Snapshots.
+ * Manages a collection of SnapshotsCollection.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -18,7 +18,7 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function Snapshots() {
+  function SnapshotsCollection() {
 
     var self = this;
 
@@ -45,9 +45,9 @@ define( function( require ) {
     } );
   }
 
-  equalityExplorer.register( 'Snapshots', Snapshots );
+  equalityExplorer.register( 'SnapshotsCollection', SnapshotsCollection );
 
-  return inherit( Object, Snapshots, {
+  return inherit( Object, SnapshotsCollection, {
 
     // @public
     reset: function() {

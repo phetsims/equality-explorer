@@ -17,7 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
-  var Snapshots = require( 'EQUALITY_EXPLORER/common/model/Snapshots' );
+  var SnapshotsCollection = require( 'EQUALITY_EXPLORER/common/model/SnapshotsCollection' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -84,7 +84,7 @@ define( function( require ) {
     } );
 
     // @public collection of snapshots, for saving/restoring the state of a Scene
-    this.snapshots = new Snapshots();
+    this.snapshotsCollection = new SnapshotsCollection();
 
     // @public {BooleanProperty|null} locks equivalent terms, null if this feature is not supported
     this.lockedProperty = null;
@@ -141,7 +141,7 @@ define( function( require ) {
       } );
 
       // clears all snapshots
-      this.snapshots.reset();
+      this.snapshotsCollection.reset();
     },
 
     /**

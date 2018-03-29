@@ -83,9 +83,9 @@ define( function( require ) {
     snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
 
     // Create a row for each snapshot
-    for ( var i = 0; i < scene.snapshots.snapshotProperties.length; i++ ) {
+    for ( var i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
       snapshotsVBoxChildren.push( new SnapshotControl(
-        scene, scene.snapshots.snapshotProperties[ i ], scene.snapshots.selectedSnapshotProperty, {
+        scene, scene.snapshotsCollection.snapshotProperties[ i ], scene.snapshotsCollection.selectedSnapshotProperty, {
           xVisibleProperty: options.xVisibleProperty,
           controlWidth: contentWidth
         } ) );
@@ -109,7 +109,7 @@ define( function( require ) {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
       listener: function() {
-        scene.snapshots.selectedSnapshotProperty.value.restore();
+        scene.snapshotsCollection.selectedSnapshotProperty.value.restore();
       }
     } );
 
@@ -123,13 +123,13 @@ define( function( require ) {
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
       listener: function() {
-        scene.snapshots.deleteSelectedSnapshot();
+        scene.snapshotsCollection.deleteSelectedSnapshot();
       }
     } );
 
     // Disables restore and trash buttons when there is no selection.
     // unlink not required.
-    scene.snapshots.selectedSnapshotProperty.link( function( snapshot ) {
+    scene.snapshotsCollection.selectedSnapshotProperty.link( function( snapshot ) {
       var enabled = ( snapshot !== null );
       restoreButton.enabled = enabled;
       trashButton.enabled = enabled;
@@ -165,7 +165,7 @@ define( function( require ) {
     var clickToDeselectListener = {
       down: function( event ) {
         if ( !self.parentToGlobalBounds( self.visibleBounds ).containsPoint( event.pointer.point ) ) {
-          scene.snapshots.selectedSnapshotProperty.value = null;
+          scene.snapshotsCollection.selectedSnapshotProperty.value = null;
         }
       }
     };
@@ -173,7 +173,7 @@ define( function( require ) {
     // Register input listener with the Display only when we have a selected snapshot.
     // This technique was borrowed from circuit-construction-kit-common.CircuitElementNode.
     // unlink not required.
-    scene.snapshots.selectedSnapshotProperty.link( function( selectedSnapshot, oldSelectedSnapshot ) {
+    scene.snapshotsCollection.selectedSnapshotProperty.link( function( selectedSnapshot, oldSelectedSnapshot ) {
       if ( oldSelectedSnapshot ) {
         phet.joist.sim.display.removeInputListener( clickToDeselectListener );
       }
