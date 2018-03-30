@@ -232,15 +232,15 @@ define( function( require ) {
           newCoefficient = termOnPlate.coefficient.divided( operation.operand.constantValue ).reduced();
         }
       }
-      else {
+      else if ( operation.operand instanceof VariableTerm ) {
 
         // there is no term on the plate, create one if the operation is relevant
         if ( operation.operator === MathSymbols.PLUS ) {
           newCoefficient = operation.operand.coefficient;
-         }
-         else if ( operation.operator === MathSymbols.MINUS ) {
+        }
+        else if ( operation.operator === MathSymbols.MINUS ) {
           newCoefficient = operation.operand.coefficient.timesInteger( -1 );
-         }
+        }
       }
 
       if ( newCoefficient ) {
