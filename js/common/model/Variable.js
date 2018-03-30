@@ -14,6 +14,9 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Range = require( 'DOT/Range' );
 
+  // constants
+  var DEFAULT_RANGE = new Range( -40, 40 );
+
   /**
    * @param {string} symbol - the variable's symbol, e.g. 'x'
    * @param {Object} [options]
@@ -23,7 +26,7 @@ define( function( require ) {
 
     options = _.extend( {
       value: 1, // the initial value
-      range: new Range( -40, 40 ) // range of the value
+      range: DEFAULT_RANGE // range of the value
     }, options );
 
     // @public (read-only)

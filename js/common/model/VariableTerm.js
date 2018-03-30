@@ -15,6 +15,9 @@ define( function( require ) {
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   var Util = require( 'DOT/Util' );
 
+  // constants
+  var DEFAULT_COEFFICIENT = Fraction.fromInteger( 1 );
+
   /**
    * @param {Variable} variable - the variable for this term, e.g. 'x'
    * @param {Object} [options]
@@ -23,7 +26,7 @@ define( function( require ) {
   function VariableTerm( variable, options ) {
 
     options = _.extend( {
-      coefficient: Fraction.fromInteger( 1 )
+      coefficient: DEFAULT_COEFFICIENT
     }, options );
 
     assert && assert( options.coefficient instanceof Fraction, 'invalid coefficient: ' + options.coefficient );

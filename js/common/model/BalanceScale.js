@@ -33,7 +33,7 @@ define( function( require ) {
 
     options = _.extend( {
 
-      location: new Vector2( 0, 0 ), // location of the point where the beam balances on the fulcrum
+      location: Vector2.ZERO, // location of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
       maxAngle: Util.toRadians( 22 ), // max angle of the scale, in radians
       maxWeight: 30, // weight at which a plate 'bottoms out'

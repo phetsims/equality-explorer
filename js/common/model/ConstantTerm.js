@@ -15,6 +15,9 @@ define( function( require ) {
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   var Util = require( 'DOT/Util' );
 
+  // constants
+  var DEFAULT_CONSTANT_VALUE = Fraction.fromInteger( 1 );
+
   /**
    * @param {Object} [options]
    * @constructor
@@ -22,7 +25,7 @@ define( function( require ) {
   function ConstantTerm( options ) {
 
     options = _.extend( {
-      constantValue: Fraction.fromInteger( 1 )
+      constantValue: DEFAULT_CONSTANT_VALUE
     }, options );
 
     assert && assert( options.constantValue instanceof Fraction,
