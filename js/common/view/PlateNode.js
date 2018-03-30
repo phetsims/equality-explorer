@@ -29,7 +29,7 @@ define( function( require ) {
   function PlateNode( plate, options ) {
 
     options = _.extend( {
-      color: '#666666', // {Color|string} color of the outside of the plate
+      color: EqualityExplorerColors.PLATE_OUTSIDE_FILL, // {Color|string} color of the outside of the plate
       pivotRadius: 8  // {number} radius of the pivot point that attaches to the balance beam
     }, options );
 
@@ -48,7 +48,7 @@ define( function( require ) {
     // See assets/README.md for more details.
     var insideSVG = 'M243.527,69.984c0,2.25-64.234,8.75-143,8.75c-78.764,0-142.25-5.988-142.25-9.25c0-5.25,63.836-10.462,142.602-10.462S243.527,64.484,243.527,69.984';
     var insideNode = new Path( insideSVG, {
-      fill: '#E4E4E4',
+      fill: EqualityExplorerColors.PLATE_SURFACE_FILL,
       centerX: outsideNode.centerX,
       top: outsideNode.top
     } );
@@ -58,7 +58,7 @@ define( function( require ) {
     // See assets/README.md for more details.
     var wallSVG = 'M251.869,68.484c0,7.364-67.6,13.333-150.99,13.333c-83.389,0-150.988-5.969-150.988-13.333c0-7.363,67.6-13.333,150.988-13.333C184.27,55.151,251.869,61.121,251.869,68.484';
     var wallNode = new Path( wallSVG, {
-      fill: '#B1B1B1',
+      fill: EqualityExplorerColors.PLATE_INSIDE_FILL,
       centerX: outsideNode.centerX,
       bottom: insideNode.bottom
     } );
