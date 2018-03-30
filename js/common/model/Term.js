@@ -26,7 +26,7 @@ define( function( require ) {
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
     }, options );
 
-    // @public (read-only)
+    // @public (read-only) diameter of the term in the view, convenient to store in the model
     this.diameter = options.diameter;
 
     // @public whether the term's shadow is visible
