@@ -31,7 +31,7 @@ define( function( require ) {
   function TermsToolbox( termCreators, plate, termsLayer, options ) {
 
     options = _.extend( {
-      inverseTermsInToolbox: false, // whether to create TermCreatorNodes for both positive and negative terms
+      hasNegativeTermsInToolbox: false, // {boolean} if true, put negative terms in the toolbox, e.g. -x
       spacing: 45, // horizontal space between TermCreatorNodes
 
       // supertype options
@@ -43,8 +43,12 @@ define( function( require ) {
 
     var termCreatorNodes = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
+
+      // creator for positive terms
       termCreatorNodes.push( new TermCreatorNode( termCreators[ i ], plate, termsLayer ) );
-      if ( options.inverseTermsInToolbox ) {
+
+      // optional creator for negative terms
+      if ( options.hasNegativeTermsInToolbox ) {
         termCreatorNodes.push( new TermCreatorNode( termCreators[ i ], plate, termsLayer, {
           sign: -1
         } ) );

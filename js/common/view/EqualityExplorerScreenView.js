@@ -40,8 +40,8 @@ define( function( require ) {
         return new SceneNode( scene, sceneProperty, layoutBounds, options );
       },
 
-      // {boolean} if true, create Nodes for both positive and negative term creation in the toolbox
-      inverseTermsInToolbox: true
+      // {boolean} if true, put negative terms in the toolbox, e.g. -x
+      hasNegativeTermsInToolbox: true
     }, options );
 
     ScreenView.call( this );
@@ -60,7 +60,7 @@ define( function( require ) {
     this.sceneNodes = [];
     model.scenes.forEach( function( scene ) {
       var sceneNode = options.createSceneNode( scene, model.sceneProperty, self.layoutBounds, {
-        inverseTermsInToolbox: options.inverseTermsInToolbox
+        hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox
       } );
       self.sceneNodes.push( sceneNode );
       self.addChild( sceneNode );

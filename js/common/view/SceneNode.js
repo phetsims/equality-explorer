@@ -34,7 +34,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      inverseTermsInToolbox: true, // put positive and negative version of each term in the toolbox, e.g. x and -x
+      hasNegativeTermsInToolbox: true, // {boolean} if true, put negative terms in the toolbox, e.g. -x
       termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale
       xVisibleProperty: null, // {BooleanProperty|null} whether 'x' value is visible in snapshots
       organizeButtonVisible: true // is the organize button visible on the scale?
@@ -57,14 +57,14 @@ define( function( require ) {
     } );
 
     var leftTermsToolbox = new TermsToolbox( leftTermCreators, scale.leftPlate, this.termsLayer, {
-      inverseTermsInToolbox: options.inverseTermsInToolbox,
+      hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
       spacing: options.termsToolboxSpacing,
       centerX: scale.leftPlate.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     var rightTermsToolbox = new TermsToolbox( rightTermCreators, scale.rightPlate, this.termsLayer, {
-      inverseTermsInToolbox: options.inverseTermsInToolbox,
+      hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
       spacing: options.termsToolboxSpacing,
       centerX: scale.rightPlate.locationProperty.value.x,
       bottom: leftTermsToolbox.bottom

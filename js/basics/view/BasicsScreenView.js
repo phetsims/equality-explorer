@@ -20,7 +20,7 @@ define( function( require ) {
    */
   function BasicsScreenView( model ) {
     EqualityExplorerScreenView.call( this, model, {
-      inverseTermsInToolbox: false // create Node for positive terms only in the toolbox
+      hasNegativeTermsInToolbox: false // create Node for positive terms only in the toolbox
     } );
   }
 
