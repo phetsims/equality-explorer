@@ -87,29 +87,6 @@ define( function( require ) {
     },
 
     /**
-     * Applies a universal operation to a term on the plate.
-     * @param {UniversalOperation} operation
-     * @param {Term} term
-     * @returns {Term|null} the new term, null if the the operation resulted in zero
-     * @public
-     * @override
-     */
-    applyOperationToTerm: function( operation, term ) {
-      return term; // operations do not apply to mystery terms
-    },
-
-    /**
-     * Applies a universal operation to the plate.
-     * @param {UniversalOperation} operation
-     * @returns {Term|null} the term created, null if no term was created
-     * @public
-     * @override
-     */
-    applyOperationToPlate: function( operation ) {
-      return null; // operations do not apply to mystery terms
-    },
-
-    /**
      * Is this term creator equivalent to a specified term creator?
      * @param {TermCreator} termCreator
      * @returns {boolean}
@@ -179,6 +156,29 @@ define( function( require ) {
      */
     copyTerm: function( term, options ) {
       throw new Error( 'copyTerm is not supported by MysteryTermCreator' );
+    },
+
+    /**
+     * Applies a universal operation to a term on the plate.
+     * @param {UniversalOperation} operation
+     * @param {Term} term
+     * @returns {Term|null} the new term, null if the the operation resulted in zero
+     * @public
+     * @override
+     */
+    applyOperationToTerm: function( operation, term ) {
+      throw new Error( 'applyOperationToTerm is not supported by MysteryTermCreator' );
+    },
+
+    /**
+     * Applies a universal operation to the plate.
+     * @param {UniversalOperation} operation
+     * @returns {Term|null} the term created, null if no term was created
+     * @public
+     * @override
+     */
+    applyOperationToPlate: function( operation ) {
+      throw new Error( 'applyOperationToPlate is not supported by MysteryTermCreator' );
     }
   } );
 } );
