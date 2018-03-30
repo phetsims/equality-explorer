@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * MysteryTerm has a fixed weight that is exposed to the user.
+ * MysteryTerm has a fixed weight that is hidden from the user.
  * All mystery terms represent 1 mystery object, and have an implicit coefficient of 1.
  * The visual design of interactive mystery terms does not include a coefficient.
  *
