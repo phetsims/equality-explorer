@@ -199,90 +199,70 @@ define( function( require ) {
 
       return new VariableTermNode( this, term, this.plate, options );
     },
-
+    
     /**
-     * Applies a universal operation to a term on the plate.
+     * Applies an operation to terms on the plate.
+     * 
      * @param {UniversalOperation} operation
-     * @param {Term} term
-     * @returns {Term|null} same term if the operation is irrelevant,
-     *                      new term if the operation is relevant,
-     *                      null if the the operation resulted in zero
-     * @public
-     * @override
+     * @returns {boolean} - true if the operation resulted in a term on the plate becoming zero, false otherwise
      */
-    applyOperationToTerm: function( operation, term ) {
-      assert && assert( this.combineLikeTermsEnabled, 'applyOperationToTerm is only supported when combining like terms' );
-      assert && assert( term instanceof VariableTerm, 'invalid term: ' + term );
+    applyOperation: function( operation ) {
+      
+      assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
+      assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate: ' + this.termsOnPlate.length );
+      
+      var summedToZero = false;
+      var termOnPlate = this.plate.getTermInCell( this.likeTermsCellIndex ); // {ConstantTerm}
+      var termDiameter = termOnPlate.diameter;
+      var newCoefficient = null; // {Fraction|null}
 
-      var cellIndex = this.plate.getCellForTerm( term );
+      if ( termOnPlate ) {
 
-      // {Fraction} compute the new coefficient
-      var newCoefficient;
-      if ( operation.operator === MathSymbols.PLUS && operation.operand instanceof VariableTerm ) {
-        newCoefficient = term.coefficient.plus( operation.operand.coefficient ).reduced();
-      }
-      else if ( operation.operator === MathSymbols.MINUS && operation.operand instanceof VariableTerm ) {
-        newCoefficient = term.coefficient.minus( operation.operand.coefficient ).reduced();
-      }
-      else if ( operation.operator === MathSymbols.TIMES && operation.operand instanceof ConstantTerm ) {
-        newCoefficient = term.coefficient.times( operation.operand.constantValue ).reduced();
-      }
-      else if ( operation.operator === MathSymbols.DIVIDE && operation.operand instanceof ConstantTerm &&
-                operation.operand.constantValue.getValue() !== 0 ) {
-        newCoefficient = term.coefficient.divided( operation.operand.constantValue ).reduced();
+        // there is a term on the plate, apply the operation if it's relevant
+        if ( operation.operator === MathSymbols.PLUS && operation.operand instanceof VariableTerm ) {
+          newCoefficient = termOnPlate.coefficient.plus( operation.operand.coefficient ).reduced();
+        }
+        else if ( operation.operator === MathSymbols.MINUS && operation.operand instanceof VariableTerm ) {
+          newCoefficient = termOnPlate.coefficient.minus( operation.operand.coefficient ).reduced();
+        }
+        else if ( operation.operator === MathSymbols.TIMES && operation.operand instanceof ConstantTerm ) {
+          newCoefficient = termOnPlate.coefficient.times( operation.operand.constantValue ).reduced();
+        }
+        else if ( operation.operator === MathSymbols.DIVIDE && operation.operand instanceof ConstantTerm ) {
+          assert && assert( operation.operand.constantValue.getValue() !== 0, 'attempt to divide by zero' );
+          newCoefficient = termOnPlate.coefficient.divided( operation.operand.constantValue ).reduced();
+        }
       }
       else {
-        return term; // operation is not applicable to this term
+
+        // there is no term on the plate, create one if the operation is relevant
+        if ( operation.operator === MathSymbols.PLUS ) {
+          newCoefficient = operation.operand.coefficient;
+         }
+         else if ( operation.operator === MathSymbols.MINUS ) {
+          newCoefficient = operation.operand.coefficient.timesInteger( -1 );
+         }
       }
 
-      // Dispose of the term, has the side-effect of removing it from the plate.
-      term.dispose();
+      if ( newCoefficient ) {
 
-      // If the new coefficient isn't zero, create a new term on the plate.
-      var newTerm = null;
-      if ( newCoefficient.getValue() !== 0 ) {
-        newTerm = this.createTermOnPlate( cellIndex, {
-          coefficient: newCoefficient,
-          diameter: term.diameter
-        } );
-      }
-      return newTerm;
-    },
+        // dispose of the term on the plate
+        termOnPlate && termOnPlate.dispose();
 
-    /**
-     * Applies a universal operation to the plate.
-     * @param {UniversalOperation} operation
-     * @returns {Term|null} the term created, null if no term was created
-     * @public
-     * @override
-     */
-    applyOperationToPlate: function( operation ) {
-      assert && assert( this.combineLikeTermsEnabled, 'applyOperationToPlate is only supported when combining like terms' );
-
-      // operator is not applicable to variable terms
-      if ( operation.operator !== MathSymbols.PLUS && operation.operator !== MathSymbols.MINUS ) {
-        return null;
+        if ( newCoefficient.getValue() === 0 ) {
+          summedToZero = true;
+        }
+        else {
+          
+          // create a new term on the plate
+          this.createTermOnPlate( this.likeTermsCellIndex, {
+            coefficient: newCoefficient,
+            diameter: termDiameter
+          } );
+        }
       }
 
-      // operand is not a like term
-      if ( !( operation.operand instanceof VariableTerm && operation.operand.variable === this.variable ) ) {
-        return null;
-      }
-
-      // the plate already contains one or more like terms
-      if ( this.numberOfTermsOnPlateProperty.value !== 0 ) {
-        return null;
-      }
-
-      // {Fraction} compute the coefficient
-      var coefficient = ( operation.operator === MathSymbols.PLUS ) ?
-                        operation.operand.coefficient : operation.operand.coefficient.timesInteger( -1 );
-
-      // create a new term on the plate
-      return this.createTermOnPlate( this.likeTermsCellIndex, {
-        coefficient: coefficient,
-        diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-      } );
+      return summedToZero;
     },
 
     /**

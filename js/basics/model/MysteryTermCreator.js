@@ -159,26 +159,15 @@ define( function( require ) {
     },
 
     /**
-     * Applies a universal operation to a term on the plate.
+     * Applies an operation to terms on the plate.
+     *
      * @param {UniversalOperation} operation
-     * @param {Term} term
-     * @returns {Term|null} the new term, null if the the operation resulted in zero
+     * @returns {boolean} - true if the operation resulted in a term on the plate becoming zero, false otherwise
      * @public
-     * @override
+     * @abstract
      */
-    applyOperationToTerm: function( operation, term ) {
-      throw new Error( 'applyOperationToTerm is not supported by MysteryTermCreator' );
-    },
-
-    /**
-     * Applies a universal operation to the plate.
-     * @param {UniversalOperation} operation
-     * @returns {Term|null} the term created, null if no term was created
-     * @public
-     * @override
-     */
-    applyOperationToPlate: function( operation ) {
-      throw new Error( 'applyOperationToPlate is not supported by MysteryTermCreator' );
+    applyOperation: function( operation ) {
+      throw new Error( 'applyOperation is not supported by MysteryTermCreator' );
     }
   } );
 } );

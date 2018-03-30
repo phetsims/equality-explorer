@@ -15,12 +15,11 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
-  var Util = require( 'DOT/Util' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
+  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   /**
    * @param {Scene} scene
@@ -86,24 +85,20 @@ define( function( require ) {
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
     scene.sumToZeroEmitter.addListener(
-      // @param {{ plate: Plate, cellIndex: number, symbol: string|null }[]} sumToZeroData
-      function( sumToZeroData ) {
 
-        for ( var i = 0; i < sumToZeroData.length; i++ ) {
+      // @param {TermCreator[]} termCreators - term creators whose term summed to zero
+      function( termCreators ) {
 
-          // data structure that describes a term that became zero
-          var data = sumToZeroData[ i ];
-          assert && assert( data.plate instanceof Plate, 'invalid plate: ' + data.plate );
-          assert && assert( Util.isInteger( data.cellIndex ), 'cellIndex must be an integer: ' + data.cellIndex );
-          assert && assert( ( typeof data.symbol === 'string' ) || ( data.symbol === null ),
-            'invalid symbol: ' + data.symbol );
+        for ( var i = 0; i < termCreators.length; i++ ) {
+
+          var termCreator = termCreators[ i ];
 
           // determine where the cell that contained the term is currently located
-          var cellCenter = data.plate.getLocationOfCell( data.cellIndex );
+          var cellCenter = termCreator.plate.getLocationOfCell( termCreator.likeTermsCellIndex );
 
           // display the animation in that cell
           var sumToZeroNode = new SumToZeroNode( {
-            symbol: data.symbol,
+            symbol: ( termCreator instanceof VariableTermCreator ) ? termCreator.variable.symbol : null,
             center: cellCenter,
             fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
           } );

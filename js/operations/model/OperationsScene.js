@@ -43,7 +43,7 @@ define( function( require ) {
     // @public (read-only)
     this.xVariable = new Variable( xString );
 
-    // @public (read-only) emit1( sumToZeroData ) when one or more terms become zero as the result of a universal operation
+    // @public (read-only) emit1( {TermCreator[]} ) when one or more terms become zero as the result of a universal operation
     this.sumToZeroEmitter = new Emitter();
 
     // @public (read-only)
@@ -166,39 +166,13 @@ define( function( require ) {
      */
     applyOperation: function( operation ) {
 
-      // Describes the terms that became zero as the result of applying the operation.
-      // {{ plate: Plate, cellIndex: number, symbol: string|null }[]}
-      var sumToZeroData = [];
+      // {TermCreator[]} TermCreators whose term summed to zero as the result of applying this operation.
+      var termCreatorsZero = [];
 
       this.leftTermCreators.concat( this.rightTermCreators ).forEach( function( termCreator ) {
-
-        // Get all of the terms that are currently on the scale, since applying operations adds/removes terms.
-        var terms = termCreator.getTermsOnPlate();
-
-        // Apply the operation to the plate.  This may create terms on the plate.
-        // For example, applying operation '+ 2' to an empty plate will create a '+2' constant term on the plate.
-        termCreator.applyOperationToPlate( operation );
-
-        // Apply the operation to terms that were on the scale when this method was called.
-        for ( var i = 0; i < terms.length; i++ ) {
-
-          var term = terms[ i ];
-
-          // Get info about the term, in case it sums to zero and is disposed.
-          var cellIndex = termCreator.plate.getCellForTerm( term );
-          var symbol = ( term instanceof VariableTerm ) ? term.variable.symbol : null;
-
-          // Apply the operation to the term, returns null if the term became zero.
-          var newTerm = termCreator.applyOperationToTerm( operation, term );
-
-          // The term became zero, save information needed to perform sum-to-zero animation.
-          if ( !newTerm ) {
-            sumToZeroData.push( {
-              plate: termCreator.plate, // {Plate} the term was on this plate
-              cellIndex: cellIndex, // {number} the term was in this cell in the plate's 2D grid
-              symbol: symbol // {string|null} the term had this associated symbol
-            } );
-          }
+        var summedToZero = termCreator.applyOperation( operation );
+        if ( summedToZero ) {
+          termCreatorsZero.push( termCreator );
         }
       } );
 
@@ -206,8 +180,8 @@ define( function( require ) {
       // Do this after the operation has been fully applied, so that sum-to-zero animations
       // appear in the cells at the scale's final position, not at the position before the
       // operation was applied, or at some intermediate location as the operation is being applied.
-      if ( sumToZeroData.length > 0 ) {
-        this.sumToZeroEmitter.emit1( sumToZeroData );
+      if ( termCreatorsZero.length > 0 ) {
+        this.sumToZeroEmitter.emit1( termCreatorsZero );
       }
     }
   } );

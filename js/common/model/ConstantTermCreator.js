@@ -170,92 +170,71 @@ define( function( require ) {
     },
 
     /**
-     * Applies a universal operation to a term on the plate.
+     * Applies an operation to terms on the plate.
+     *
      * @param {UniversalOperation} operation
-     * @param {Term} term
-     * @returns {Term|null} the new term, null if the the operation resulted in zero
-     * @public
-     * @override
+     * @returns {boolean} - true if the operation resulted in a term on the plate becoming zero, false otherwise
      */
-    applyOperationToTerm: function( operation, term ) {
-      assert && assert( this.combineLikeTermsEnabled, 'applyOperationToTerm is only supported when combining like terms' );
-      assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
-
-      if ( !( operation.operand instanceof ConstantTerm ) ) {
-        return term; // operand is not applicable to constant terms
-      }
-
-      var constantValue = operation.operand.constantValue; // {Fraction}
-      var cellIndex = this.plate.getCellForTerm( term );
-
-      // compute the new constant value
-      var newConstantValue;
-      if ( operation.operator === MathSymbols.PLUS ) {
-        newConstantValue = term.constantValue.plus( constantValue ).reduced();
-      }
-      else if ( operation.operator === MathSymbols.MINUS ) {
-        newConstantValue = term.constantValue.minus( constantValue ).reduced();
-      }
-      else if ( operation.operator === MathSymbols.TIMES ) {
-        newConstantValue = term.constantValue.times( constantValue ).reduced();
-      }
-      else if ( operation.operator === MathSymbols.DIVIDE && constantValue.getValue() !== 0 ) {
-        newConstantValue = term.constantValue.divided( constantValue ).reduced();
+    applyOperation: function( operation ) {
+      
+      assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
+      assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate: ' + this.termsOnPlate.length );
+      
+      var summedToZero = false;
+      var newConstantValue = null; // {Fraction|null}
+      
+      var termOnPlate = this.plate.getTermInCell( this.likeTermsCellIndex ); // {ConstantTerm}
+      var termDiameter = termOnPlate.diameter;
+      var constantValueOnPlate = termOnPlate.constantValue; // {Fraction}
+      var constantValueOperand = operation.operand.constantValue; // {Fraction}
+        
+      if ( termOnPlate ) {
+        
+        // there is a term on the plate, apply the operation if it's relevant
+        if ( operation.operator === MathSymbols.PLUS ) {
+          newConstantValue = constantValueOnPlate.plus( constantValueOperand ).reduced();
+        }
+        else if ( operation.operator === MathSymbols.MINUS ) {
+          newConstantValue = constantValueOnPlate.minus( constantValueOperand ).reduced();
+        }
+        else if ( operation.operator === MathSymbols.TIMES ) {
+          newConstantValue = constantValueOnPlate.times( constantValueOperand ).reduced();
+        }
+        else if ( operation.operator === MathSymbols.DIVIDE ) {
+          assert && assert( constantValueOperand.getValue() !== 0, 'attempt to divide by zero' );
+          newConstantValue = constantValueOnPlate.divided( constantValueOperand ).reduced();
+        }
       }
       else {
-        return term; // operation is not applicable
+        
+        // there is no term on the plate, create one if the operation is relevant
+        if ( operation.operator === MathSymbols.PLUS ) {
+          newConstantValue = constantValueOperand;
+        } 
+        else if ( operation.operator === MathSymbols.MINUS ) {
+          newConstantValue = constantValueOperand.timesInteger( -1 );
+        }
       }
 
-      // Dispose of the term, has the side-effect of removing it from the plate.
-      term.dispose();
+      if ( newConstantValue ) {
 
-      // If the new constant isn't zero, create a new term on the plate.
-      var newTerm = null;
-      if ( newConstantValue.getValue() !== 0 ) {
-        newTerm = this.createTermOnPlate( cellIndex, {
-          constantValue: newConstantValue,
-          diameter: term.diameter
-        } );
-      }
-      return newTerm;
-    },
+        // dispose of the term on the plate
+        termOnPlate && termOnPlate.dispose();
 
-    /**
-     * Applies a universal operation to the plate.
-     * If there is already a like term on the plate, this is a no-op.
-     * If not, a term is created on the plate.
-     * @param {UniversalOperation} operation
-     * @returns {Term|null} the term created, null if no term was created
-     * @public
-     * @override
-     */
-    applyOperationToPlate: function( operation ) {
-      assert && assert( this.combineLikeTermsEnabled, 'applyOperationToPlate is only supported when combining like terms' );
+        if ( newConstantValue.getValue() === 0 ) {
+          summedToZero = true;
+        }
+        else {
 
-      // operator is not applicable to constant terms
-      if ( operation.operator !== MathSymbols.PLUS && operation.operator !== MathSymbols.MINUS ) {
-        return null;
+          // create a new term on the plate
+          this.createTermOnPlate( this.likeTermsCellIndex, {
+            constantValue: newConstantValue,
+            diameter: termDiameter
+          } );
+        }
       }
 
-      // operand is not a like term
-      if ( !( operation.operand instanceof ConstantTerm ) ) {
-        return null;
-      }
-
-      // the plate already contains one or more like terms
-      if ( this.numberOfTermsOnPlateProperty.value !== 0 ) {
-        return null;
-      }
-
-      // {Fraction} compute the constant value
-      var constantValue = ( operation.operator === MathSymbols.PLUS ) ?
-                          operation.operand.constantValue : operation.operand.constantValue.timesInteger( -1 );
-
-      // create a new term on the plate
-      return this.createTermOnPlate( this.likeTermsCellIndex, {
-        constantValue: constantValue,
-        diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-      } );
+      return summedToZero;
     },
 
     /**

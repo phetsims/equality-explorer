@@ -412,6 +412,7 @@ define( function( require ) {
       throw new Error( 'isNumberLimitExceeded must be implemented by subtype' );
     },
 
+    //TODO is this needed?
     /**
      * Copies the specified term, with possible modifications specified via options.
      * @param {Term} term
@@ -437,26 +438,15 @@ define( function( require ) {
     },
 
     /**
-     * Applies a universal operation to a term on the plate.
+     * Applies an operation to terms on the plate.
+     *
      * @param {UniversalOperation} operation
-     * @param {Term} term
-     * @returns {Term|null} the new term, null if the the operation resulted in zero
+     * @returns {boolean} - true if the operation resulted in a term on the plate becoming zero, false otherwise
      * @public
      * @abstract
      */
-    applyOperationToTerm: function( operation, term ) {
-      throw new Error( 'applyOperationToTerm must be implemented by subtypes' );
-    },
-
-    /**
-     * Applies a universal operation to the plate.
-     * @param {UniversalOperation} operation
-     * @returns {Term|null} the term created, null if no term was created
-     * @public
-     * @abstract
-     */
-    applyOperationToPlate: function( operation ) {
-      throw new Error( 'applyOperationToPlate must be implemented by subtypes' );
+    applyOperation: function( operation ) {
+      throw new Error( 'applyOperation must be implemented by subtypes' );
     },
 
     /**

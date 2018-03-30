@@ -28,6 +28,7 @@ define( function( require ) {
   function SumToZeroNode( options ) {
 
     options = _.extend( {
+      //TODO change symbol to {Variable} variable?
       symbol: null, // optional symbol that appears after the '0', e.g. '0x'
       haloRadius: 20,
       haloBaseColor: 'transparent', // no visible halo, set this if you want to see the halo
