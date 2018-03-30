@@ -20,7 +20,7 @@ define( function( require ) {
   var RichText = require( 'SCENERY/nodes/RichText' );
 
   // images
-  var phetGirlImage = require( 'image!EQUALITY_EXPLORER/phetGirl.png' ); //TODO #48 get the correct PNG file
+  var phetGirlWaggingFingerImage = require( 'image!EQUALITY_EXPLORER/phet-girl-wagging-finger.png' );
 
   // string
   var oopsMessageString = require( 'string!EQUALITY_EXPLORER/oopsMessage' );
@@ -36,7 +36,7 @@ define( function( require ) {
       font: new PhetFont( 20 )
     } );
 
-    var phetGirlNode = new Image( phetGirlImage, {
+    var phetGirlNode = new Image( phetGirlWaggingFingerImage, {
       maxHeight: messageNode.height
     } );
 

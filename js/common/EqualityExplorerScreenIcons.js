@@ -28,7 +28,7 @@ define( function( require ) {
   // images
   var appleBigImage = require( 'image!EQUALITY_EXPLORER/appleBig.png' );
   var orangeBigImage = require( 'image!EQUALITY_EXPLORER/orangeBig.png' );
-  var phetGirlImage = require( 'image!EQUALITY_EXPLORER/phetGirl.png' );
+  var phetGirlJugglingStarsImage = require( 'image!EQUALITY_EXPLORER/phet-girl-juggling-stars.png' );
 
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
@@ -174,7 +174,7 @@ define( function( require ) {
      * @returns {ScreenIcon}
      */
     createSolveItHomeScreenIcon: function() {
-      var iconNode = new Image( phetGirlImage );
+      var iconNode = new Image( phetGirlJugglingStarsImage );
       return new ScreenIcon( iconNode, {
         fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
       } );
