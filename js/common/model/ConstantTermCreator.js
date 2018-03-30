@@ -181,55 +181,59 @@ define( function( require ) {
       assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate: ' + this.termsOnPlate.length );
       
       var summedToZero = false;
-      var newConstantValue = null; // {Fraction|null}
-      
-      var termOnPlate = this.plate.getTermInCell( this.likeTermsCellIndex ); // {ConstantTerm}
-      var constantValueOnPlate = termOnPlate.constantValue; // {Fraction}
-      var constantValueOperand = operation.operand.constantValue; // {Fraction}
-        
-      if ( termOnPlate ) {
-        
-        // there is a term on the plate, apply the operation if it's relevant
-        if ( operation.operator === MathSymbols.PLUS ) {
-          newConstantValue = constantValueOnPlate.plus( constantValueOperand ).reduced();
-        }
-        else if ( operation.operator === MathSymbols.MINUS ) {
-          newConstantValue = constantValueOnPlate.minus( constantValueOperand ).reduced();
-        }
-        else if ( operation.operator === MathSymbols.TIMES ) {
-          newConstantValue = constantValueOnPlate.times( constantValueOperand ).reduced();
-        }
-        else if ( operation.operator === MathSymbols.DIVIDE ) {
-          assert && assert( constantValueOperand.getValue() !== 0, 'attempt to divide by zero' );
-          newConstantValue = constantValueOnPlate.divided( constantValueOperand ).reduced();
-        }
-      }
-      else {
-        
-        // there is no term on the plate, create one if the operation is relevant
-        if ( operation.operator === MathSymbols.PLUS ) {
-          newConstantValue = constantValueOperand;
-        } 
-        else if ( operation.operator === MathSymbols.MINUS ) {
-          newConstantValue = constantValueOperand.timesInteger( -1 );
-        }
-      }
 
-      if ( newConstantValue ) {
+      // only constant operands apply to constant terms
+      if ( operation.operand instanceof ConstantTerm ) {
 
-        // dispose of the term on the plate
-        termOnPlate && termOnPlate.dispose();
+        var newConstantValue = null; // {Fraction|null}
 
-        if ( newConstantValue.getValue() === 0 ) {
-          summedToZero = true;
+        var termOnPlate = this.plate.getTermInCell( this.likeTermsCellIndex ); // {ConstantTerm}
+        var constantValueOperand = operation.operand.constantValue; // {Fraction}
+
+        if ( termOnPlate ) {
+
+          // there is a term on the plate, apply the operation if it's relevant
+          if ( operation.operator === MathSymbols.PLUS ) {
+            newConstantValue = termOnPlate.constantValue.plus( constantValueOperand ).reduced();
+          }
+          else if ( operation.operator === MathSymbols.MINUS ) {
+            newConstantValue = termOnPlate.constantValue.minus( constantValueOperand ).reduced();
+          }
+          else if ( operation.operator === MathSymbols.TIMES ) {
+            newConstantValue = termOnPlate.constantValue.times( constantValueOperand ).reduced();
+          }
+          else if ( operation.operator === MathSymbols.DIVIDE ) {
+            assert && assert( constantValueOperand.getValue() !== 0, 'attempt to divide by zero' );
+            newConstantValue = termOnPlate.constantValue.divided( constantValueOperand ).reduced();
+          }
         }
         else {
 
-          // create a new term on the plate
-          this.createTermOnPlate( this.likeTermsCellIndex, {
-            constantValue: newConstantValue,
-            diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-          } );
+          // there is no term on the plate, create one if the operation is relevant
+          if ( operation.operator === MathSymbols.PLUS ) {
+            newConstantValue = constantValueOperand;
+          }
+          else if ( operation.operator === MathSymbols.MINUS ) {
+            newConstantValue = constantValueOperand.timesInteger( -1 );
+          }
+        }
+
+        if ( newConstantValue ) {
+
+          // dispose of the term on the plate
+          termOnPlate && termOnPlate.dispose();
+
+          if ( newConstantValue.getValue() === 0 ) {
+            summedToZero = true;
+          }
+          else {
+
+            // create a new term on the plate
+            this.createTermOnPlate( this.likeTermsCellIndex, {
+              constantValue: newConstantValue,
+              diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+            } );
+          }
         }
       }
 
