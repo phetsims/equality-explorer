@@ -53,9 +53,6 @@ define( function( require ) {
     this.likeTermsCellIndex = options.likeTermsCellIndex;
     this.combineLikeTermsEnabled = ( options.likeTermsCellIndex !== -1 ); // convenience property
 
-    // @public (read-only) if we're combining like terms, they will be in this cell in the 2D grid
-    this.cellIndex = options.cellIndex;
-
     // @public {read-only) {Bounds2} drag bounds for terms created
     this.dragBounds = options.dragBounds;
 
