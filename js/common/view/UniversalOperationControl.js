@@ -267,6 +267,14 @@ define( function( require ) {
     options.children = [ operatorPicker, operandPicker, goButton ];
 
     HBox.call( this, options );
+
+    // If the number limit is exceeded, stop all universal operations that are in progress
+    var numberLimitExceededListener = function() {
+      self.stopAnimations();
+    };
+    scene.leftTermCreators.concat( scene.rightTermCreators ).forEach( function( termCreator ) {
+      termCreator.numberLimitExceededEmitter.addListener( numberLimitExceededListener ); // removeListener not needed
+    } );
   }
 
   equalityExplorer.register( 'UniversalOperationControl', UniversalOperationControl );
@@ -310,6 +318,15 @@ define( function( require ) {
     reset: function() {
 
       // Stop all animations.
+      this.stopAnimations();
+    },
+
+    /**
+     * Stops all animations that are in progress.
+     * @public
+     */
+    stopAnimations: function() {
+
       // Operate on a copy of the array, since animations remove themselves from the array when stopped.
       var arrayCopy = this.animations.slice( 0 );
       for ( var i = 0; i < arrayCopy.length; i++ ) {
