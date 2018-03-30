@@ -43,8 +43,11 @@ define( function( require ) {
     options = _.extend( {
       wrapEnabled: false, // whether to wrap around at ends of range
       cursor: 'pointer',
-      color: 'blue', // {Color|string} color of arrows, and top/bottom gradient on pointer over
       backgroundColor: 'white', // {Color|string} color of the background when pointer is not over it
+      arrowsColor: 'blue', // {Color|string} color of arrows
+      arrowsPressedColor: null, // {Color|string|null} color of arrows when pressed, computed if null
+      gradientColor: null, // base color of top/bottom gradient on pointer over, defaults to options.arrowsColor if null
+      gradientPressedColor: null, // {Color|string|null} color top/bottom gradient when pressed, computed if null
       cornerRadius: 6,
       xMargin: 3,
       yMargin: 3,
@@ -70,8 +73,9 @@ define( function( require ) {
       downEnabledProperty: null
     }, options );
 
-    // {Color|string} color of arrows and top/bottom gradient when pressed
-    options.pressedColor = options.pressedColor || Color.toColor( options.color ).darkerColor();
+    options.arrowsPressedColor = options.arrowsPressedColor || Color.toColor( options.arrowsColor ).darkerColor();
+    options.gradientColor = options.gradientColor || options.arrowsColor;
+    options.gradientPressedColor = options.gradientPressedColor || Color.toColor( options.gradientColor ).darkerColor();
 
     Node.call( this );
 
@@ -188,16 +192,16 @@ define( function( require ) {
 
     // arrow colors
     var arrowColors = {
-      up: options.color,
-      over: options.color,
-      down: options.pressedColor,
-      out: options.color,
-      disabled: 'rgb(176,176,176)'
+      up: options.arrowsColor,
+      over: options.arrowsColor,
+      down: options.arrowsPressedColor,
+      out: options.arrowsColor,
+      disabled: 'rgb( 176,176,176 )'
     };
 
     // background colors
-    var highlightGradient = createVerticalGradient( options.color, options.backgroundColor, options.color, backgroundHeight );
-    var pressedGradient = createVerticalGradient( options.pressedColor, options.backgroundColor, options.pressedColor, backgroundHeight );
+    var highlightGradient = createVerticalGradient( options.gradientColor, options.backgroundColor, options.gradientColor, backgroundHeight );
+    var pressedGradient = createVerticalGradient( options.gradientPressedColor, options.backgroundColor, options.gradientPressedColor, backgroundHeight );
     var backgroundColors = {
       up: options.backgroundColor,
       over: highlightGradient,
