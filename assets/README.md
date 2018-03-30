@@ -16,7 +16,11 @@ Images for the items in the "Basics" screen are found in `basics-artwork-without
 
 ## Balance Scale
 
-File in the "scale" folder contain the artwork for the balance scale's plates. `PlateNode` is composed of scenery `Paths` that render SVG descriptions of the pieces of the plate, as found in `inside.svg`, `plate.svg` and `wall.svg`. The .svg files were created in Illustrator by selecting pieces (subpaths) of `scale.ai` and doing "Save As" SVG. The contents of the `"d=..."` field from these .svg files were copied to strings in `PlateNode.js`.
+The "scale" folder contains the artwork for the balance scale and its plates.
+`PlateNode` is composed of scenery `Paths` that render SVG descriptions of the pieces of the plate,
+as found in `*.svg` files. The .svg files were created in Illustrator by
+selecting pieces (subpaths) of `scale.ai` and doing "Save As" SVG. The contents of the `"d=..."` field
+from these .svg files were copied to strings in `PlateNode.js`.  Refer to comments in `PlateNode.js`.
 
 ## Organize button
 
