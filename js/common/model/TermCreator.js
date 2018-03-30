@@ -280,10 +280,11 @@ define( function( require ) {
     /**
      * Gets the term that occupies the 'like terms' cell on the plate.
      * @returns {Term|null}
+     * @public
      */
     getLikeTermOnPlate: function() {
       assert && assert( this.combineLikeTermsEnabled, 'getLikeTermOnPlate is only supported when combineLikeTermsEnabled' );
-      assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate' );
+      assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate' );
       return this.plate.getTermInCell( this.likeTermsCellIndex );
     },
 
