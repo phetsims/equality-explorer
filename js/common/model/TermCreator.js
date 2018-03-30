@@ -40,14 +40,14 @@ define( function( require ) {
       likeTermsCellIndex: -1
     }, options );
 
+    // @private {Plate} the plate that this term creator is associated with.
+    // Deferred initialization, see set plate() for notes.
+    this._plate = null;
+    
     // @private {Vector2} locations of the associated positive and negative TermCreatorNodes.
     // Deferred initialization, see set positiveLocation() and set negativeLocation() for notes.
     this._positiveLocation = null;
     this._negativeLocation = null;
-
-    // @private {Plate} the plate that this term creator is associated with.
-    // Deferred initialization, see set plate() for notes.
-    this._plate = null;
 
     // @public (read-only) like terms will be combined in this cell in the plate's 2D grid
     this.likeTermsCellIndex = options.likeTermsCellIndex;
