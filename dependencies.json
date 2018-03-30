@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.0.0-dev.83 Thu Mar 29 2018 18:12:28 GMT-0600 (MDT)",
+  "comment": "# equality-explorer 1.0.0-dev.84 Fri Mar 30 2018 14:17:28 GMT-0600 (MDT)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
@@ -21,11 +21,11 @@
     "branch": "master"
   },
   "equality-explorer": {
-    "sha": "8da21aac33fc241ae8fce4d7bb5392a5688ab73d",
+    "sha": "655a8d0e76b23064707973e0dd9c4771a746009b",
     "branch": "master"
   },
   "joist": {
-    "sha": "bdace378f8cc511ce7f447eec36d65437f6199b9",
+    "sha": "47db3692126ab9c287168354cc4c0f4df10ea2bb",
     "branch": "master"
   },
   "kite": {
@@ -86,6 +86,14 @@
   },
   "twixt": {
     "sha": "b2de1f740958289482c94bad27aeb1767d986ca0",
+    "branch": "master"
+  },
+  "vegas": {
+    "sha": "b8ade2ab91988fd36834cc8d895080a30d8a2d58",
+    "branch": "master"
+  },
+  "vibe": {
+    "sha": "2dc20be7484680b833c4b2458a6c84633e7b7e61",
     "branch": "master"
   }
 }
