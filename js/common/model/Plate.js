@@ -94,7 +94,6 @@ define( function( require ) {
 
     // associate this plate with its term creators
     termCreators.forEach( function( termCreator ) {
-      assert && assert( !termCreator.plate, 'term creator already has an associated plate' );
       termCreator.plate = self;
     } );
   }

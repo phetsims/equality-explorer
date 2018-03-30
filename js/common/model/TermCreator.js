@@ -40,14 +40,14 @@ define( function( require ) {
       likeTermsCellIndex: -1
     }, options );
 
-    // @private {Vector2} locations of the associated positive and negative TermCreatorNodes
-    // See set positiveLocation() and set negativeLocation() for notes.
+    // @private {Vector2} locations of the associated positive and negative TermCreatorNodes.
+    // Deferred initialization, see set positiveLocation() and set negativeLocation() for notes.
     this._positiveLocation = null;
     this._negativeLocation = null;
 
-    // @public (read-only) {Plate} the plate that this term creator is associated with.
-    // This association necessarily occurs after instantiation.
-    this.plate = null;
+    // @private {Plate} the plate that this term creator is associated with.
+    // Deferred initialization, see set plate() for notes.
+    this._plate = null;
 
     // @public (read-only) like terms will be combined in this cell in the plate's 2D grid
     this.likeTermsCellIndex = options.likeTermsCellIndex;
@@ -59,7 +59,7 @@ define( function( require ) {
     // @public {read-only) {Bounds2} drag bounds for terms created
     this.dragBounds = options.dragBounds;
 
-    // @protected {ObservableArray.<Term>} all terms that currently exist
+    // @private {ObservableArray.<Term>} all terms that currently exist
     this.allTerms = new ObservableArray();
 
     // @protected {ObservableArray.<Term>} terms that are on the plate, a subset of allTerms
@@ -123,6 +123,27 @@ define( function( require ) {
   equalityExplorer.register( 'TermCreator', TermCreator );
 
   return inherit( Object, TermCreator, {
+
+    /**
+     * Initializes the plate that this TermCreator is associated with. This association necessarily occurs
+     * after instantiation, since TermCreators are instantiated before Plates, and the association is 2-way.
+     * @param {Plate} value
+     * @public
+     */
+    set plate( value ) {
+      assert && assert( !this._plate, 'attempted to initialize plate twice' );
+      this._plate = value;
+    },
+
+    /**
+     * Gets the plate that this TermCreator is associated with.
+     * @returns {Plate}
+     * @public
+     */
+    get plate() {
+      assert && assert( this._plate, 'attempt to access plate before it was initialized' );
+      return this._plate;
+    },
 
     /**
      * Initializes the location of the positive TermCreatorNode.
