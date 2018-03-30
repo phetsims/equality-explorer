@@ -201,6 +201,10 @@ define( function( require ) {
 
     /**
      * Creates a term.
+     * 
+     * NOTE! Since TermCreator manages Terms throughout their entire lifecycle, it is of utmost importance
+     * that all Terms are created via this method, or a method that calls this method.
+     *
      * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
      * @public
