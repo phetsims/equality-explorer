@@ -102,8 +102,7 @@ define( function( require ) {
     // options common to both pickers
     var pickerOptions = {
       arrowsColor: 'black',
-      gradientColor: 'rgb( 150, 150, 150 )',
-      font: options.integerFont
+      gradientColor: 'rgb( 150, 150, 150 )'
     };
 
     // picker for choosing operator
