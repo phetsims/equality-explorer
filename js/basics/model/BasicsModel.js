@@ -23,7 +23,7 @@ define( function( require ) {
   function BasicsModel() {
     EqualityExplorerModel.call( this, [
 
-      // in the order that they appear (left to right) in the scene control
+      // in the order that they appear (left to right) in the scene control (radio buttons)
       new ShapesScene(),
       new FruitsScene(),
       new CoinsScene(),
