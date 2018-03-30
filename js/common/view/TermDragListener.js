@@ -363,7 +363,7 @@ define( function( require ) {
       var cellIndex = this.plate.getCellForTerm( inverseTerm );
 
       // some things we need before the terms are disposed
-      var symbol = ( this.term instanceof VariableTerm ) ? this.term.variable.symbol : null;
+      var variable = this.term.variable || null;
       var parent = this.termNode.getParent();
 
       // delete the 2 terms that sum to zero
@@ -375,7 +375,7 @@ define( function( require ) {
       var sumToZeroLocation = this.plate.getLocationOfCell( cellIndex );
 
       options = _.extend( {
-        symbol: symbol,
+        variable: variable,
         haloRadius: this.haloRadius,
         center: sumToZeroLocation
       }, options );

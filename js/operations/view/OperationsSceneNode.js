@@ -98,7 +98,7 @@ define( function( require ) {
 
           // display the animation in that cell
           var sumToZeroNode = new SumToZeroNode( {
-            symbol: ( termCreator instanceof VariableTermCreator ) ? termCreator.variable.symbol : null,
+            variable: termCreator.variable || null,
             center: cellCenter,
             fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
           } );

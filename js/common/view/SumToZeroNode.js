@@ -28,8 +28,7 @@ define( function( require ) {
   function SumToZeroNode( options ) {
 
     options = _.extend( {
-      //TODO change symbol to {Variable} variable?
-      symbol: null, // optional symbol that appears after the '0', e.g. '0x'
+      variable: null, // {Variable|null} determines whether we render '0' or '0x' (for example)
       haloRadius: 20,
       haloBaseColor: 'transparent', // no visible halo, set this if you want to see the halo
       fontSize: EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
@@ -40,9 +39,9 @@ define( function( require ) {
     } );
 
     var contentNode = null;
-    if ( options.symbol ) {
+    if ( options.variable ) {
 
-      var symbolNode = new Text( options.symbol, {
+      var symbolNode = new Text( options.variable.symbol, {
         font: new MathSymbolFont( options.fontSize )
       } );
       
@@ -53,7 +52,7 @@ define( function( require ) {
     }
     else {
 
-      // no symbol, just show '0'
+      // no variable, just show '0'
       contentNode = zeroNode;
     }
 
