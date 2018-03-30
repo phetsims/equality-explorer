@@ -2,7 +2,7 @@
 
 /**
  * Dialog displayed when an operation is canceled because EqualityExplorerConstants.LARGEST_INTEGER
- * limit is exceeded.  See See https://github.com/phetsims/equality-explorer/issues/48
+ * limit is exceeded.  See https://github.com/phetsims/equality-explorer/issues/48
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

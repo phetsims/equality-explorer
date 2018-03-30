@@ -48,6 +48,7 @@ define( function( require ) {
 
     // The largest integer value for any numerator, denominator or constant.
     // Any operation that would exceed this value is canceled, and a dialog is shown.
+    // See https://github.com/phetsims/equality-explorer/issues/48
     // For internal use only, not public facing.
     largestInteger: {
       type: 'number',
