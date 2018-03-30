@@ -440,7 +440,6 @@ define( function( require ) {
       throw new Error( 'isNumberLimitExceeded must be implemented by subtype' );
     },
 
-    //TODO is this needed?
     /**
      * Copies the specified term, with possible modifications specified via options.
      * @param {Term} term
