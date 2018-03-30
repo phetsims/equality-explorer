@@ -169,6 +169,7 @@ define( function( require ) {
       // {TermCreator[]} TermCreators whose term summed to zero as the result of applying this operation.
       var termCreatorsZero = [];
 
+      // Apply the operation to each TermCreator
       this.leftTermCreators.concat( this.rightTermCreators ).forEach( function( termCreator ) {
         var summedToZero = termCreator.applyOperation( operation );
         if ( summedToZero ) {
