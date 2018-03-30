@@ -52,7 +52,7 @@ define( function( require ) {
       yMargin: 30
     } );
 
-    //TODO why do I have to click twice?  on close button, on the dialog, outside dialog...
+    //TODO for quite awhile I had to click twice to close, then the problem mysteriously went away
     // Click anywhere on the dialog to dispose of it.
     this.addInputListener( new ButtonListener( {
       fire: function() { self.dispose(); }
