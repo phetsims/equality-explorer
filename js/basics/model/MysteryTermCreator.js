@@ -64,6 +64,17 @@ define( function( require ) {
     },
 
     /**
+     * Does the specified term have a numerator or denominator that exceeds EqualityExplorerConstants.LARGEST_INTEGER?
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isNumberLimitExceeded: function( term ) {
+      return false; // all mystery terms have an implicit coefficient of 1
+    },
+
+    /**
      * Instantiates the Node that corresponds to this term.
      * @param {Term} term
      * @param {Object} options - passed to the MysteryTermNode's constructor

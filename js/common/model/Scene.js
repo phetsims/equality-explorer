@@ -154,15 +154,22 @@ define( function( require ) {
     reset: function() {
 
       // delete all terms
-      this.leftTermCreators.forEach( function( termCreator ) {
-        termCreator.disposeAllTerms();
-      } );
-      this.rightTermCreators.forEach( function( termCreator ) {
+      this.leftTermCreators.concat( this.rightTermCreators ).forEach( function( termCreator ) {
         termCreator.disposeAllTerms();
       } );
 
-      // clears all snapshots
+      // clear all snapshots
       this.snapshotsCollection.reset();
+    },
+
+    /**
+     * Disposes of all terms that are not on the scale.
+     * @public
+     */
+    disposeTermsNotOnScale: function() {
+      this.leftTermCreators.concat( this.rightTermCreators ).forEach( function( termCreator ) {
+        termCreator.disposeTermsNotOnPlate();
+      } );
     },
 
     /**

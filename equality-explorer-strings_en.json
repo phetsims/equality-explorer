@@ -31,5 +31,8 @@
   },
   "questionMark": {
     "value": "?"
+  },
+  "oopsMessage": {
+    "value": "Oops! That will make<br>a number that is<br>too big for the sim.<br><br>Try a different<br>operation!"
   }
 }

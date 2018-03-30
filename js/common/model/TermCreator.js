@@ -84,6 +84,10 @@ define( function( require ) {
     // dispose not required.
     this.termCreatedEmitter = new Emitter();
 
+    // @public emit is called when adding a term to the plate would cause EqualityExplorerConstants.LARGEST_INTEGER
+    // to be exceeded.  See See https://github.com/phetsims/equality-explorer/issues/48
+    this.numberLimitExceededEmitter = new Emitter();
+
     // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
     // This is needed for the lock feature, which involves creating an equivalent term on the opposite side of the scale.
     // Example: When locked, if you drag -x out of the left toolbox, -x must also drag out of the right toolbox.
@@ -395,6 +399,17 @@ define( function( require ) {
      */
     combineTerms: function( term1, term2, options ) {
       throw new Error( 'combineTerms must be implemented by subtype' );
+    },
+
+    /**
+     * Does the specified term have a numerator or denominator that exceeds EqualityExplorerConstants.LARGEST_INTEGER?
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isNumberLimitExceeded: function( term ) {
+      throw new Error( 'isNumberLimitExceeded must be implemented by subtype' );
     },
 
     /**

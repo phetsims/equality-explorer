@@ -224,17 +224,27 @@ define( function( require ) {
 
             if ( combinedTerm ) {
 
-              // dispose of the terms used to create the combined term
-              self.term.dispose();
-              termInCell.dispose();
+              if ( self.termCreator.isNumberLimitExceeded( combinedTerm ) ) {
 
-              // Put the new term on the plate.
-              self.termCreator.putTermOnPlate( combinedTerm, cellIndex );
+                // Notify listeners that the combined term would exceed the number limit
+                // Make no changes to the other terms.
+                self.termCreator.numberLimitExceededEmitter.emit();
+                termInCell.haloVisibleProperty.value = false;
+              }
+              else {
+                // dispose of the terms used to create the combined term
+                self.term.dispose();
+                termInCell.dispose();
+
+                // Put the new term on the plate.
+                self.termCreator.putTermOnPlate( combinedTerm, cellIndex );
+              }
             }
             else {
 
               // Terms sum to zero.
-              self.sumToZero( termInCell ); // no halo, since the terms did not overlap when drag ended
+              // No halo, since the terms did not overlap when drag ended.
+              self.sumToZero( termInCell );
             }
           }
         }

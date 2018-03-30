@@ -127,6 +127,19 @@ define( function( require ) {
     },
 
     /**
+     * Does the specified term have a numerator or denominator that exceeds EqualityExplorerConstants.LARGEST_INTEGER?
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isNumberLimitExceeded: function( term ) {
+      assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
+      return ( Math.abs( term.constantValue.numerator ) > EqualityExplorerConstants.LARGEST_INTEGER ||
+               Math.abs( term.constantValue.denominator ) > EqualityExplorerConstants.LARGEST_INTEGER );
+    },
+
+    /**
      * Copies the specified term, with possible modifications specified via options.
      * @param {Term} term
      * @param {Object} [options] - passed to the new ConstantTerm's constructor

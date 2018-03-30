@@ -17,6 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var OperationCanceledDialog = require( 'EQUALITY_EXPLORER/common/view/OperationCanceledDialog' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var TermsToolbox = require( 'EQUALITY_EXPLORER/common/view/TermsToolbox' );
@@ -128,8 +129,21 @@ define( function( require ) {
         termNode.startDrag( event );
       }
     };
+
+    /**
+     * When the limit EqualityExplorerConstants.LARGEST_INTEGER is exceeded,
+     * dispose of all terms that are not on the scale, and display a dialog.
+     */
+    var numberLimitExceededListener = function() {
+      phet.log && phet.log( 'number limit exceeded' );
+      scene.disposeTermsNotOnScale();
+      var dialog = new OperationCanceledDialog();
+      dialog.show();
+    };
+
     scene.leftTermCreators.concat( scene.rightTermCreators ).forEach( function( termCreator ) {
       termCreator.termCreatedEmitter.addListener( termCreatedListener ); // removeListener not needed
+      termCreator.numberLimitExceededEmitter.addListener( numberLimitExceededListener ); // removeListener not needed
     } );
 
     // Make this scene visible when it's selected.

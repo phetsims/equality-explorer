@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -37,7 +38,11 @@ define( function( require ) {
     UNIVERSAL_OPERATION_INTEGER_FONT: new PhetFont( 24 ), // for integer numbers
     UNIVERSAL_OPERATION_FRACTION_FONT: new PhetFont( 12 ), // for fraction numerator and denominator
     SUM_TO_ZERO_BIG_FONT_SIZE: 40, // for sum-to-zero animation that involves a 'big' term on the scale
-    SUM_TO_ZERO_SMALL_FONT_SIZE: 24// for sum-to-zero animation that involves a 'small' term on the scale
+    SUM_TO_ZERO_SMALL_FONT_SIZE: 24, // for sum-to-zero animation that involves a 'small' term on the scale
+
+    // Largest integer allowed for numerator or denominator. Anything larger results in an error dialog.
+    // See https://github.com/phetsims/equality-explorer/issues/48
+    LARGEST_INTEGER: EqualityExplorerQueryParameters.largestInteger
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

@@ -46,6 +46,14 @@ define( function( require ) {
     // And in case it's not obvious: For internal use only, not public facing.
     goButtonEnabled: { type: 'flag' },
 
+    // The largest integer value for any numerator, denominator or constant.
+    // Any operation that would exceed this value is canceled, and a dialog is shown.
+    // For internal use only, not public facing.
+    largestInteger: {
+      type: 'number',
+      defaultValue: 1E9
+    },
+
     // Number of terms that are initially on the left plate in the Basics screen.
     // This is intended to be used for debugging and testing, not in production situations.
     // Example: ?leftBasics=10,11,12
