@@ -15,7 +15,9 @@
       "../sherpa/lib/Tween-r12.js"
     ],
     "phetLibs": [
-      "twixt"
+      "twixt",
+      "vegas",
+      "vibe"
     ],
     "runnable": true,
     "supportedBrands": [

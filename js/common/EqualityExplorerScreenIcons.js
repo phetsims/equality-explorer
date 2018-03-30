@@ -28,7 +28,7 @@ define( function( require ) {
   // images
   var appleBigImage = require( 'image!EQUALITY_EXPLORER/appleBig.png' );
   var orangeBigImage = require( 'image!EQUALITY_EXPLORER/orangeBig.png' );
-  var phetGirlJugglingStarsImage = require( 'image!EQUALITY_EXPLORER/phet-girl-juggling-stars.png' );
+  var phetGirlJugglingStarsImage = require( 'image!VEGAS/phet-girl-juggling-stars.png' );
 
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
