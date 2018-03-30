@@ -184,7 +184,6 @@ define( function( require ) {
       var newConstantValue = null; // {Fraction|null}
       
       var termOnPlate = this.plate.getTermInCell( this.likeTermsCellIndex ); // {ConstantTerm}
-      var termDiameter = termOnPlate.diameter;
       var constantValueOnPlate = termOnPlate.constantValue; // {Fraction}
       var constantValueOperand = operation.operand.constantValue; // {Fraction}
         
@@ -229,7 +228,7 @@ define( function( require ) {
           // create a new term on the plate
           this.createTermOnPlate( this.likeTermsCellIndex, {
             constantValue: newConstantValue,
-            diameter: termDiameter
+            diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
           } );
         }
       }

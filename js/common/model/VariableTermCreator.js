@@ -213,7 +213,6 @@ define( function( require ) {
       
       var summedToZero = false;
       var termOnPlate = this.plate.getTermInCell( this.likeTermsCellIndex ); // {ConstantTerm}
-      var termDiameter = termOnPlate.diameter;
       var newCoefficient = null; // {Fraction|null}
 
       if ( termOnPlate ) {
@@ -257,7 +256,7 @@ define( function( require ) {
           // create a new term on the plate
           this.createTermOnPlate( this.likeTermsCellIndex, {
             coefficient: newCoefficient,
-            diameter: termDiameter
+            diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
           } );
         }
       }
