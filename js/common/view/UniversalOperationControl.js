@@ -99,26 +99,32 @@ define( function( require ) {
       }
     };
 
-    // picker for choosing operator
-    var operatorPicker = new ObjectPicker( scene.operatorProperty, operatorItems, {
-      wrapEnabled: true, // wrap around when min/max is reached
-      color: 'black',
-      xMargin: 12,
+    // options common to both pickers
+    var pickerOptions = {
+      arrowsColor: 'black',
+      gradientColor: 'rgb( 150, 150, 150 )',
+      font: options.integerFont
+    };
 
-      // when the up button is pressed, change the operand if it's inappropriate for the operator
+    // picker for choosing operator
+    var operatorPicker = new ObjectPicker( scene.operatorProperty, operatorItems, _.extend( {}, pickerOptions, {
+      wrapEnabled: true, // wrap around when min/max is reached
+      xMargin: 18,
+
+      // When the up button is pressed, change the operand if it's inappropriate for the operator
       upFunction: function( index ) {
         var nextIndex = index + 1;
         adjustOperandForOperator( scene.operators[ nextIndex ] );
         return nextIndex;
       },
 
-      // when the down button is pressed, change the operand if it's inappropriate for the operator
+      // When the down button is pressed, change the operand if it's inappropriate for the operator
       downFunction: function( index ) {
         var nextIndex = index - 1;
         adjustOperandForOperator( scene.operators[ nextIndex ] );
         return nextIndex;
       }
-    } );
+    } ) );
 
     // items for the operand picker
     var operandItems = [];
@@ -139,14 +145,14 @@ define( function( require ) {
     var downEnabledProperty = new BooleanProperty( true );
 
     // picker for choosing operand
-    var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, {
-      color: 'black',
-      font: options.integerFont,
+    var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, _.extend( {}, pickerOptions, {
       xMargin: 6,
+
+      // Providing these Properties means that we're responsible for up/down enabled state
       upEnabledProperty: upEnabledProperty,
       downEnabledProperty: downEnabledProperty,
 
-      // when the up button is pressed, skip operands that are inappropriate for the operation
+      // When the up button is pressed, skip operands that are inappropriate for the operation
       upFunction: function( index ) {
         var nextOperandIndex = index + 1;
         var operator = scene.operatorProperty.value;
@@ -157,7 +163,7 @@ define( function( require ) {
         return nextOperandIndex;
       },
 
-      // when the down button is pressed, skip operands that are inappropriate for the operation
+      // When the down button is pressed, skip operands that are inappropriate for the operation
       downFunction: function( index ) {
         var nextOperandIndex = index - 1;
         var operator = scene.operatorProperty.value;
@@ -167,7 +173,7 @@ define( function( require ) {
         }
         return nextOperandIndex;
       }
-    } );
+    } ) );
 
     // Adjust the enabled state of the operand picker's up/down arrows.
     // dispose not needed
