@@ -1,6 +1,5 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
-//TODO duplication with VariablesScene. Should this be a subtype of VariablesScene?
 /**
  * The sole scene in the 'Operations' screen.
  *
