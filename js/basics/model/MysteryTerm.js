@@ -2,7 +2,7 @@
 
 /**
  * MysteryTerm has a fixed weight that is exposed to the user.
- * All mystery terms have an implicit coefficient of 1.
+ * All mystery terms represent 1 mystery object, and have an implicit coefficient of 1.
  * The visual design of interactive mystery terms does not include a coefficient.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -59,7 +59,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the sign of a term.
+     * Gets the sign of a term's significant number, indicating whether the number is positive, negative or zero.
      * @returns {number} ala Math.sign
      * @public
      * @override

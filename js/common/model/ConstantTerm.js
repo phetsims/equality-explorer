@@ -66,7 +66,8 @@ define( function( require ) {
     },
 
     /**
-     * Gets the sign of a term.
+     * Gets the sign of a term's significant number, indicating whether the number is positive, negative or zero.
+     * The 'significant number' for a ContantTerm is its constantValue.
      * @returns {number} ala Math.sign
      * @public
      * @override
