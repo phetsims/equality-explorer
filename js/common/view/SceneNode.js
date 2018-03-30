@@ -111,7 +111,12 @@ define( function( require ) {
       children: children
     } );
 
-    // When a term is created in the model, create the corresponding view.
+    /**
+     * When a term is created in the model, create the corresponding view.
+     * @param {TermCreator} termCreator
+     * @param {Term} term
+     * @param {Event|null} event - event is non-null when the term was created via user interaction
+     */
     var termCreatedListener = function( termCreator, term, event ) {
 
       // create a TermNode
@@ -123,7 +128,6 @@ define( function( require ) {
         termNode.dispose();
       } );
 
-      // event is non-null when the term was created via user interaction with termCreator.
       // start a drag cycle by forwarding the event to termNode.
       if ( event ) {
         termNode.startDrag( event );
