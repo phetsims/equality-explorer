@@ -166,24 +166,60 @@ define( function( require ) {
      */
     applyOperation: function( operation ) {
 
+      // Take a snapshot of terms on the scale, so we can undo the operation if necessary.
+      var snapshot = this.createSnapshot();
+
       // {TermCreator[]} TermCreators whose term summed to zero as the result of applying this operation.
       var termCreatorsZero = [];
 
       // Apply the operation to each TermCreator
-      this.leftTermCreators.concat( this.rightTermCreators ).forEach( function( termCreator ) {
+      var termCreators = this.leftTermCreators.concat( this.rightTermCreators );
+      termCreators.forEach( function( termCreator ) {
         var summedToZero = termCreator.applyOperation( operation );
         if ( summedToZero ) {
           termCreatorsZero.push( termCreator );
         }
       } );
 
-      // Tell the view which terms summed to zero.
-      // Do this after the operation has been fully applied, so that sum-to-zero animations
-      // appear in the cells at the scale's final position, not at the position before the
-      // operation was applied, or at some intermediate location as the operation is being applied.
-      if ( termCreatorsZero.length > 0 ) {
-        this.sumToZeroEmitter.emit1( termCreatorsZero );
+      // If any term exceeds the number limit as the result of applying the operation ...
+      if ( this.isNumberLimitExceeded( termCreators ) ) {
+
+        // ... undo the operation by restoring the snapshot.
+        snapshot.restore();
       }
+      else {
+
+        // Tell the view which terms summed to zero.
+        // Do this after the operation has been fully applied, so that sum-to-zero animations
+        // appear in the cells at the scale's final position, not at the position before the
+        // operation was applied, or at some intermediate location as the operation is being applied.
+        if ( termCreatorsZero.length > 0 ) {
+          this.sumToZeroEmitter.emit1( termCreatorsZero );
+        }
+      }
+    },
+
+    /**
+     * Is the number limit exceeded by any term on the plate?
+     * @param {TermCreator[]} termCreators
+     * @returns {boolean}
+     * @private
+     */
+    isNumberLimitExceeded: function( termCreators ) {
+
+      // Find the first TermCreator that violates the number limit
+      var termCreator = _.find( termCreators, function( termCreator ) {
+
+        // Get the term on the plate
+        var term = termCreator.getLikeTermOnPlate();
+
+        return term && termCreator.isNumberLimitExceeded( term );
+      } );
+
+      // Notify listeners
+      termCreator && termCreator.numberLimitExceededEmitter.emit();
+
+      return (!!termCreator);
     }
   } );
 } );

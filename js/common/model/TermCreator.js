@@ -274,6 +274,16 @@ define( function( require ) {
     },
 
     /**
+     * Gets the term that occupies the 'like terms' cell on the plate.
+     * @returns {Term|null}
+     */
+    getLikeTermOnPlate: function() {
+      assert && assert( this.combineLikeTermsEnabled, 'getLikeTermOnPlate is only supported when combineLikeTermsEnabled' );
+      assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate' );
+      return this.plate.getTermInCell( this.likeTermsCellIndex );
+    },
+
+    /**
      * Puts a term on the plate. ORDER IS VERY IMPORTANT HERE!
      * @param {Term} term
      * @param {number} cellIndex - cell in the associated plate's 2D grid

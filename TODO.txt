@@ -1,6 +1,5 @@
 TODO items for equality-explorer
 
-Number limit for applying universal operations, #48
 Further simplify applying universal operations by mutating term on scale?
 
 Lock feature, #19
