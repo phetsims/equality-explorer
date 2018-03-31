@@ -46,7 +46,23 @@ are treated as equivalent, and no transform is required. (If you don't understan
 testing. All such query parameters are documented in
 [EqualityExplorerQueryParameters](https://github.com/phetsims/equality-explorer/blob/master/js/common/EqualityExplorerQueryParameters.js).
 
-**Memory management**: TODO
+**Memory management**:
+
+Dynamic:
+- Term and its subtypes (MysteryTerm, ConstantTerm, VariableTerm)
+- TermNode and its subtypes (MysteryTermNode, ConstantTermNode, VariableTermNode)
+- TermDragListener
+- EquationNode
+- Snapshot
+- SumToZeroNode
+- OperationCanceledDialog
+- UniversalOperation
+- UniversalOperationNode
+- UniversalOperationAnimation
+- TODO: game types?
+
+Static, exists for lifetime of sim:
+- everything else
 
 ## Model
 
