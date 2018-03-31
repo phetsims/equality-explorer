@@ -54,7 +54,7 @@ define( function( require ) {
 
     // Click anywhere on the dialog to hide it.
     this.addInputListener( new ButtonListener( {
-      fire: function() { self.hide(); }
+      down: function() { self.hide(); }
     } ) );
   }
 
