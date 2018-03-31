@@ -59,7 +59,7 @@ define( function( require ) {
     // @private {ObservableArray.<Term>} all terms that currently exist
     this.allTerms = new ObservableArray();
 
-    // @protected {ObservableArray.<Term>} terms that are on the plate, a subset of allTerms
+    // @protected {ObservableArray.<Term>} terms that are on the plate, a subset of this.allTerms
     this.termsOnPlate = new ObservableArray();
 
     // @public (read-only) so we don't have to expose this.termsOnPlate
@@ -70,6 +70,8 @@ define( function( require ) {
       } );
 
     // @public (read-only) weight of the terms that are on the plate
+    // We can't use a DerivedProperty here because subtypes may have additional Properties
+    // that require updating weightOnPlateProperty.
     this.weightOnPlateProperty = new Property( Fraction.fromInteger( 0 ), {
       valueType: Fraction,
       useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
