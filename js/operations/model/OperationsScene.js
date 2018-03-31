@@ -207,13 +207,14 @@ define( function( require ) {
      */
     isNumberLimitExceeded: function( termCreators ) {
 
-      // Find the first TermCreator that violates the number limit
+      // Find the first TermCreator with a Term that violates the number limit
       var termCreator = _.find( termCreators, function( termCreator ) {
 
         // Get the term on the plate
         var term = termCreator.getLikeTermOnPlate();
 
-        return term && termCreator.isNumberLimitExceeded( term );
+        // Does the term exceed the limit?
+        return term && term.isNumberLimitExceeded();
       } );
 
       // Notify listeners

@@ -92,6 +92,18 @@ define( function( require ) {
     },
 
     /**
+     * Gets the value that is considered 'significant' for the purposes of exceeding the number limit
+     * specified by EqualityExplorerConstants.LARGEST_INTEGER.
+     * See https://github.com/phetsims/equality-explorer/issues/48
+     * @returns {Fraction}
+     * @protected
+     * @override
+     */
+    getSignificantValue: function() {
+      return this.constantValue;
+    },
+
+    /**
      * Creates options that can be passed to the Term's constructor to re-create the Term.
      * @return {Object}
      * @public

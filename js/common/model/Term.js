@@ -13,6 +13,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
@@ -61,6 +62,19 @@ define( function( require ) {
      */
     isInverseTerm: function( term ) {
       return ( this.isLikeTerm( term ) && ( this.sign === -term.sign ) );
+    },
+
+    /**
+     * Does this term have a numerator or denominator that exceeds EqualityExplorerConstants.LARGEST_INTEGER?
+     * See https://github.com/phetsims/equality-explorer/issues/48
+     * @returns {boolean}
+     * @public
+     */
+    isNumberLimitExceeded: function() {
+      var value = this.getSignificantValue();
+      assert && assert( value instanceof Fraction, 'invalid value: ' + value );
+      return ( Math.abs( value.numerator ) > EqualityExplorerConstants.LARGEST_INTEGER ||
+               Math.abs( value.denominator ) > EqualityExplorerConstants.LARGEST_INTEGER );
     },
 
     /**
@@ -115,6 +129,18 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       throw new Error( 'isLikeTerm must be implemented by subtype' );
+    },
+
+    /**
+     * Gets the term's 'significant value', for the purposes of testing number limits and determining sign.
+     * The meaning on 'significant value' is specific to the Term subtype.
+     * See https://github.com/phetsims/equality-explorer/issues/48
+     * @returns {Fraction}
+     * @protected
+     * @abstract
+     */
+    getSignificantValue: function() {
+      throw new Error( 'getSignificantValue must be implemented by subtypes' );
     }
   } );
 } );

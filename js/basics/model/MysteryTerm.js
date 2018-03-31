@@ -15,6 +15,10 @@ define( function( require ) {
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
+  var Util = require( 'DOT/Util' );
+
+  // constants
+  var COEFFICIENT = Fraction.fromInteger( 1 ); // all mystery terms have an implicit coefficient of 1
 
   /**
    * @param {MysteryObject} mysteryObject
@@ -65,7 +69,7 @@ define( function( require ) {
      * @override
      */
     get sign() {
-      return 1; // all mystery terms have an implicit coefficient of +1, so sign is 1
+      return Util.sign( COEFFICIENT.getValue() );
     },
 
     /**
@@ -78,6 +82,18 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       return ( term instanceof MysteryTerm ) && ( term.mysteryObject === this.mysteryObject );
+    },
+
+    /**
+     * Gets the value that is considered 'significant' for the purposes of exceeding the number limit
+     * specified by EqualityExplorerConstants.LARGEST_INTEGER.
+     * See https://github.com/phetsims/equality-explorer/issues/48
+     * @returns {Fraction}
+     * @protected
+     * @override
+     */
+    getSignificantValue: function() {
+      return COEFFICIENT;
     }
   } );
 } );

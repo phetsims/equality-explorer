@@ -223,7 +223,7 @@ define( function( require ) {
 
             if ( combinedTerm ) {
 
-              if ( self.termCreator.isNumberLimitExceeded( combinedTerm ) ) {
+              if ( combinedTerm.isNumberLimitExceeded() ) {
 
                 // Notify listeners that the combined term would exceed the number limit
                 // Make no changes to the other terms.

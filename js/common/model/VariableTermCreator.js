@@ -94,19 +94,6 @@ define( function( require ) {
     },
 
     /**
-     * Does the specified term have a numerator or denominator that exceeds EqualityExplorerConstants.LARGEST_INTEGER?
-     * @param {Term} term
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isNumberLimitExceeded: function( term ) {
-      assert && assert( term instanceof VariableTerm, 'invalid term: ' + term );
-      return ( Math.abs( term.coefficient.numerator ) > EqualityExplorerConstants.LARGEST_INTEGER ||
-               Math.abs( term.coefficient.denominator ) > EqualityExplorerConstants.LARGEST_INTEGER );
-    },
-
-    /**
      * Instantiates a VariableTerm.
      * @param {Object} [options] - passed to the VariableTerm's constructor
      * @returns {Term}
