@@ -78,8 +78,8 @@ define( function( require ) {
     } );
 
     // @public emit3 is called when a term is created.
-    // Callback signature is function( {TermCreator} termCreator, {Term} term, {Event|null} [event] )
-    // event arg will be non-null if the term was created as the result of a user interaction.
+    // Callback signature is function( {TermCreator} termCreator, {Term} term, {Event|null} [event] ),
+    // where event is non-null if the term was created as the result of a user interaction.
     // dispose not required.
     this.termCreatedEmitter = new Emitter();
 
@@ -90,9 +90,11 @@ define( function( require ) {
     // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
     // This is needed for the lock feature, which involves creating an equivalent term on the opposite side of the scale.
     // Example: When locked, if you drag -x out of the left toolbox, -x must also drag out of the right toolbox.
-    this.equivalentTermCreator = null;
+    // Because this is a 2-way association, initialization is deferred until after instantiation.
+    // See set equivalentTermCreator() for notes.
+    this._equivalentTermCreator = null;
 
-    // @public {BooleanProperty|null} indicates whether the term creator is locked to equivalentTermCreator
+    // @public {BooleanProperty|null} indicates whether this term creator is locked to equivalentTermCreator
     this.lockedProperty = new BooleanProperty( false );
 
     // @private called when Term.dispose is called
@@ -168,7 +170,7 @@ define( function( require ) {
     },
 
     /**
-     * Initializes the location of the negative TermCreatorNode.
+     * Initializes the location of the optional negative TermCreatorNode.
      * The value is dependent on the view and is unknowable until the sim has loaded.
      * See TermCreatorNode.frameStartedCallback for initialization.
      * @param {Vector2} value
@@ -181,13 +183,35 @@ define( function( require ) {
     },
 
     /**
-     * Gets the location of the negative TermCreatorNode.
-     * @returns {Vector2}
+     * Gets the location of the optional negative TermCreatorNode.
+     * @returns {Vector2|null}
      * @public
      */
     get negativeLocation() {
       assert && assert( this._negativeLocation, 'attempt to access negativeLocation before it was initialized' );
       return this._negativeLocation;
+    },
+
+    /**
+     * Initializes the optional equivalent TermCreator for the opposite plate, required for the optional 'lock' feature.
+     * This association necessarily occurs after instantiation because it's a 2-way association.
+     * @param {TermCreator} value
+     * @public
+     */
+    set equivalentTermCreator( value ) {
+      assert && assert( !this._equivalentTermCreator, 'attempted to initialize equivalentTermCreator twice' );
+      assert && assert( this.isEquivalentTo( value ), 'value is not an equivalent TermCreator: ' + value );
+      this._equivalentTermCreator = value;
+    },
+
+    /**
+     * Gets the optional equivalent TermCreator for the opposite plate.
+     * @returns {TermCreator|null}
+     * @public
+     */
+    get equivalentTermCreator() {
+      assert && assert( this._equivalentTermCreator, 'attempt to access equivalentTermCreator before it was initialized' );
+      return this._equivalentTermCreator;
     },
 
     /**
