@@ -1,7 +1,9 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * A grid that contains terms. The grid is filled from the bottom up, so that there are no empty cells
+ * 2D grid on a plate on the balance scale.
+ *
+ * A grid contains terms. The grid is filled from the bottom up, so that there are no empty cells
  * below an occupied cell. Origin is at the bottom center.
  *
  * A cell in the grid is identified by an integer index. The client doesn't need to know how to interpret
