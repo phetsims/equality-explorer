@@ -36,8 +36,8 @@ define( function( require ) {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
 
       // {number} like terms will occupy this cell in the plate's 2D grid
-      // -1 means 'no cell', and like terms will not be combined
-      likeTermsCell: -1 //TODO null would be better choice
+      // null means 'no cell', and like terms will not be combined
+      likeTermsCell: null
     }, options );
 
     // @private {Plate} the plate that this term creator is associated with.
@@ -51,7 +51,7 @@ define( function( require ) {
 
     // @public (read-only) like terms will be combined in this cell in the plate's 2D grid
     this.likeTermsCell = options.likeTermsCell;
-    this.combineLikeTermsEnabled = ( options.likeTermsCell !== -1 ); // convenience property //TODO null would be better choice
+    this.combineLikeTermsEnabled = ( options.likeTermsCell !== null ); // convenience property
 
     // @public {read-only) {Bounds2} drag bounds for terms created
     this.dragBounds = options.dragBounds;

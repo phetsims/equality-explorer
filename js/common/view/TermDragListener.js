@@ -259,9 +259,10 @@ define( function( require ) {
     animateToEmptyCell: function() {
       assert && assert( !this.termCreator.combineLikeTermsEnabled, 'should NOT be called when combining like terms' );
 
+      // careful, cell is a {number}
       var cell = this.plate.getClosestEmptyCell( this.term.locationProperty.value );
 
-      if ( cell === -1 ) {
+      if ( cell === null ) {
 
         // Plate is full. Return the term to its toolbox.
         this.animateToToolbox( this.term );

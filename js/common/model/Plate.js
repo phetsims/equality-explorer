@@ -138,7 +138,7 @@ define( function( require ) {
     /**
      * Gets the closest empty cell to a specified location.
      * @param {Vector2} location
-     * @returns {number} the cell's identifier, -1 if the grid is full
+     * @returns {number|null} the cell's identifier, null if the grid is full
      * @public
      */
     getClosestEmptyCell: function( location ) {
@@ -147,7 +147,7 @@ define( function( require ) {
 
     /**
      * Examines the grid from left to right, top to bottom, and returns the first empty cell.
-     * @returns {number} the cell's identifier, -1 if the grid is full
+     * @returns {number|null} the cell's identifier, null if the grid is full
      * @public
      */
     getFirstEmptyCell: function() {
@@ -188,7 +188,7 @@ define( function( require ) {
     /**
      * Gets the cell that a term occupies.
      * @param {Term} term
-     * @returns {number} the cell's identifier, -1 if the term doesn't occupy a cell
+     * @returns {number|null} the cell's identifier, null if the term doesn't occupy a cell
      * @public
      */
     getCellForTerm: function( term ) {

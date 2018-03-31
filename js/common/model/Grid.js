@@ -27,7 +27,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var NO_TERM = null;
+  var NO_TERM = null; // occupies all empty cells in the grid
 
   /**
    * @param {Property.<Vector2>} locationProperty
@@ -96,7 +96,7 @@ define( function( require ) {
 
     /**
      * Is the specified cell empty?
-     * @param {number} cellIdentifier
+     * @param {number} cell
      * @returns {boolean}
      * @public
      */
@@ -140,11 +140,11 @@ define( function( require ) {
     /**
      * Gets the cell that corresponds to a location.
      * @param {Vector2} location
-     * @returns {number} the cell identifier, -1 if the location is outside the grid
+     * @returns {number|null} the cell identifier, null if the location is outside the grid
      * @private
      */
     getCellAtLocation: function( location ) {
-      var cell = -1;
+      var cell = null;
       if ( this.containsLocation( location ) ) {
 
         // row and column of the cell that contains location
@@ -171,12 +171,13 @@ define( function( require ) {
     /**
      * Gets the cell that a term occupies.
      * @param {Term} term
-     * @returns {number} the cell's identifier, -1 if the term doesn't occupy a cell
+     * @returns {number|null} the cell's identifier, null if the term doesn't occupy a cell
      * @public
      */
     getCellForTerm: function( term ) {
       assert && assert( term instanceof Term, 'invalid term' );
-      return this.cells.indexOf( term );
+      var index = this.cells.indexOf( term );
+      return ( index === -1 ) ? null : index;
     },
 
     /**
@@ -199,7 +200,7 @@ define( function( require ) {
     getTermAtLocation: function( location ) {
       var term = null;
       var cell = this.getCellAtLocation( location );
-      if ( cell !== -1 ) {
+      if ( cell !== null ) {
         term = this.getTermInCell( cell );
       }
       return term;
@@ -228,7 +229,7 @@ define( function( require ) {
     removeTerm: function( term ) {
       assert && assert( term instanceof Term, 'invalid term: ' + term );
       var cell = this.getCellForTerm( term );
-      assert && assert( cell !== -1, 'term not found: ' + term );
+      assert && assert( cell !== null, 'term not found: ' + term );
       this.clearCell( cell );
       this.compactColumn( this.cellToColumn( cell ) );
     },
@@ -299,25 +300,26 @@ define( function( require ) {
 
     /**
      * Finds the first empty cell, starting at bottom row, right-to-left.
-     * @returns {number} - the cell's identifier, -1 if the grid is full
+     * @returns {number|null} - the cell's identifier, null if the grid is full
      * @public
      */
     getFirstEmptyCell: function() {
-      return this.cells.lastIndexOf( NO_TERM );
+      var index = this.cells.lastIndexOf( NO_TERM );
+      return ( index === -1 ) ? null : index;
     },
 
     /**
      * Gets the closest empty cell to a specified location.  If the closest cell is in a column with
      * empty cells below it, choose the empty cell that is closest to the bottom of the grid in that column.
      * @param {Vector2} location
-     * @returns {number} - the cell's identifier, -1 if the grid is full
+     * @returns {number|null} - the cell's identifier, null if the grid is full
      * @public
      */
     getClosestEmptyCell: function( location ) {
 
       var closestCell = this.getFirstEmptyCell();
 
-      if ( closestCell !== -1 ) {
+      if ( closestCell !== null ) {
 
         var closestDistance = this.getLocationOfCell( closestCell ).distance( location );
 
