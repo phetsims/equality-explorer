@@ -228,7 +228,7 @@ define( function( require ) {
             for ( var i = 0; i < terms.length; i++ ) {
 
               var term = terms[ i ];
-              var cellIndex = grid.rowColumnToIndex( row, column );
+              var cellIndex = grid.rowColumnToCell( row, column );
               grid.putTerm( term, cellIndex );
 
               numberOfTermsToOrganize--;
@@ -273,13 +273,13 @@ define( function( require ) {
         if ( gridColumnsToShiftRight > 0 ) {
           for ( row = grid.rows - 1; row >= 0; row-- ) {
             for ( column = grid.columns - 1; column >= 0; column-- ) {
-              var cellIndex = grid.rowColumnToIndex( row, column );
+              var cellIndex = grid.rowColumnToCell( row, column );
               var term = grid.getTermInCell( cellIndex );
               if ( term ) {
 
                 // move term 1 column to the right
                 grid.clearCell( cellIndex );
-                var rightIndex = grid.rowColumnToIndex( row, column + gridColumnsToShiftRight );
+                var rightIndex = grid.rowColumnToCell( row, column + gridColumnsToShiftRight );
                 grid.putTerm( term, rightIndex );
               }
             }

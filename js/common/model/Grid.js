@@ -59,7 +59,7 @@ define( function( require ) {
     // @private The 2D grid is stored as a 1D array, in row-major order (left-to-right, top-to-bottom).
     // Each entry in this array is a cell in the grid.  Empty cells contain NO_TERM.
     // Storing as a 1D array makes it easy for snapshots to save/restore the location of terms in the grid.
-    // See rowColumnToIndex, indexToRow, indexToColumn for mapping between index and (row,column).
+    // See rowColumnToCell, cellToRow, cellToColumn for mapping between index and (row,column).
     this.cells = [];
     var numberOfCells = options.rows * options.columns;
     for ( var index = 0; index < numberOfCells; index++ ) {
@@ -133,7 +133,7 @@ define( function( require ) {
     clearColumn: function( column ) {
       assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
        for ( var row = 0; row < this.rows; row++ ) {
-         this.clearCell( this.rowColumnToIndex( row, column ) );
+         this.clearCell( this.rowColumnToCell( row, column ) );
        }
     },
 
@@ -152,7 +152,7 @@ define( function( require ) {
         var row = Math.min( this.rows - 1, Math.floor( ( location.y - this.bounds.minY  ) / this.cellHeight ) );
         var column = Math.min( this.columns - 1, Math.floor( ( location.x - this.bounds.minX ) / this.cellWidth ) );
 
-        index = this.rowColumnToIndex( row, column );
+        index = this.rowColumnToCell( row, column );
       }
       return index;
     },
@@ -217,7 +217,7 @@ define( function( require ) {
       assert && assert( this.isEmptyCell( index ), 'cell is occupied, index: ' + index );
       this.cells[ index ] = term;
       term.moveTo( this.getLocationOfCell( index ) );
-      this.compactColumn( this.indexToColumn( index ) );
+      this.compactColumn( this.cellToColumn( index ) );
     },
 
     /**
@@ -230,7 +230,7 @@ define( function( require ) {
       var index = this.getCellForTerm( term );
       assert && assert( index !== -1, 'term not found: ' + term );
       this.clearCell( index );
-      this.compactColumn( this.indexToColumn( index ) );
+      this.compactColumn( this.cellToColumn( index ) );
     },
 
     /**
@@ -251,7 +251,7 @@ define( function( require ) {
 
       // Get all terms in the column, from top down
       for ( var row = 0; row < this.rows; row++ ) {
-        index = this.rowColumnToIndex( row, column );
+        index = this.rowColumnToCell( row, column );
         term = this.getTermInCell( index );
         if ( term ) {
           terms.push( term );
@@ -273,7 +273,7 @@ define( function( require ) {
         row = this.rows - 1;
         for ( var i = terms.length - 1; i >= 0; i-- ) {
           term = terms[ i ];
-          index = this.rowColumnToIndex( row--, column );
+          index = this.rowColumnToCell( row--, column );
           this.cells[ index ] = term;
           term.moveTo( this.getLocationOfCell( index ) );
         }
@@ -289,8 +289,8 @@ define( function( require ) {
     getLocationOfCell: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
 
-      var row = this.indexToRow( index );
-      var column = this.indexToColumn( index );
+      var row = this.cellToRow( index );
+      var column = this.cellToColumn( index );
 
       var x = this.bounds.minX + ( column * this.cellWidth ) + ( 0.5 * this.cellWidth );
       var y = this.bounds.minY + ( row * this.cellHeight ) + ( 0.5 * this.cellHeight );
@@ -334,10 +334,10 @@ define( function( require ) {
 
         // Now look below the closest cell to see if there are any empty cells in the same column.
         // This makes terms "fall" to the cell that is closest to the bottom of the grid.
-        var closestRow = this.indexToRow( closestIndex );
-        var closestColumn = this.indexToColumn( closestIndex );
+        var closestRow = this.cellToRow( closestIndex );
+        var closestColumn = this.cellToColumn( closestIndex );
         for ( var row = this.rows - 1; row > closestRow; row-- ) {
-          var indexBelow = this.rowColumnToIndex( row, closestColumn );
+          var indexBelow = this.rowColumnToCell( row, closestColumn );
           if ( this.isEmptyCell( indexBelow ) ) {
             closestIndex = indexBelow;
             break;
@@ -364,7 +364,7 @@ define( function( require ) {
      * @returns {number}
      * @private
      */
-    indexToRow: function( index ) {
+    cellToRow: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
       var row = Math.ceil( ( index + 1 ) / this.columns ) - 1;
       assert && assert( row >= 0 && row < this.rows );
@@ -377,7 +377,7 @@ define( function( require ) {
      * @returns {number}
      * @private
      */
-    indexToColumn: function( index ) {
+    cellToColumn: function( index ) {
       assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
       var column = index % this.columns;
       assert && assert( column >= 0 && column < this.columns );
@@ -391,7 +391,7 @@ define( function( require ) {
      * @returns {number}
      * @public
      */
-    rowColumnToIndex: function( row, column ) {
+    rowColumnToCell: function( row, column ) {
       assert && assert( row >= 0 && row < this.rows, 'row out of range: ' + row );
       assert && assert( column >= 0 && column < this.columns, 'column out of range: ' + column );
       var index = ( row * this.columns ) + column;
