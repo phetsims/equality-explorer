@@ -23,7 +23,6 @@ define( function( require ) {
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   /**
    * @param {Node} termNode - Node that the listener is attached to
