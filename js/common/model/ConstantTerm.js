@@ -88,19 +88,6 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       return ( term instanceof ConstantTerm );
-    },
-
-    /**
-     * Is this term the inverse of a specified term?
-     * Two constant terms are inverses if their values are inverses.
-     * @param {Term} term
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isInverseTerm: function( term ) {
-      return ( term instanceof ConstantTerm ) &&
-             ( this.constantValue.getValue() === -term.constantValue.getValue() );
     }
   } );
 } );

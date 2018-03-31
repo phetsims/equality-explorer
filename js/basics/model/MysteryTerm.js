@@ -77,17 +77,6 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       return ( term instanceof MysteryTerm ) && ( term.mysteryObject === this.mysteryObject );
-    },
-
-    /**
-     * Is this term the inverse of a specified term?
-     * @param {Term} term
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isInverseTerm: function( term ) {
-      return false; // there are no inverses for mystery terms
     }
   } );
 } );

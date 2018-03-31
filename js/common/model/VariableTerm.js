@@ -90,20 +90,6 @@ define( function( require ) {
     isLikeTerm: function( term ) {
       return ( term instanceof VariableTerm ) &&
              ( term.variable === this.variable ); // associated with same variable
-    },
-
-    /**
-     * Is this term the inverse of a specified term?
-     * Two variable terms are inverses if they represent the same variable and have inverse coefficients.
-     * @param {Term} term
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isInverseTerm: function( term ) {
-      return ( term instanceof VariableTerm ) &&
-             ( this.variable === term.variable ) &&  // associated with same variable
-             ( this.coefficient.getValue() === -term.coefficient.getValue() ); // inverse coefficients
     }
   } );
 } );

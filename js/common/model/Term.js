@@ -52,6 +52,17 @@ define( function( require ) {
       EqualityExplorerMovable.prototype.dispose.call( this );
     },
 
+    /**
+     * Is this term the inverse of a specified term?
+     * An inverse term is a like term with opposite sign.
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     */
+    isInverseTerm: function( term ) {
+      return ( this.isLikeTerm( term ) && ( this.sign === -term.sign ) );
+    },
+
     //-------------------------------------------------------------------------------------------------
     // Below here are @abstract methods, to be implemented by subtypes
     //-------------------------------------------------------------------------------------------------
@@ -67,7 +78,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the sign of a term's significant number, indicating whether the number is positive, negative or zero.
+     * Gets the sign of the term's significant number, indicating whether the number is positive, negative or zero.
      * The meaning on 'significant number' is specific to the Term subtype.
      * @returns {number} ala Math.sign
      * @public
@@ -78,7 +89,8 @@ define( function( require ) {
     },
 
     /**
-     * Is this term a like term?
+     * Are this term and the specified term 'like terms'?
+     * If you're not familiar with 'like terms', see https://en.wikipedia.org/wiki/Like_terms.
      * @param {Term} term
      * @returns {boolean}
      * @public
@@ -86,17 +98,6 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       throw new Error( 'isLikeTerm must be implemented by subtype' );
-    },
-
-    /**
-     * Is this term the inverse of a specified term?
-     * @param {Term} term
-     * @returns {boolean}
-     * @public
-     * @abstract
-     */
-    isInverseTerm: function( term ) {
-      throw new Error( 'isInverseTerm must be implemented by subtype' );
     }
   } );
 } );
