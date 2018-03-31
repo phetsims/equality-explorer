@@ -105,11 +105,11 @@ define( function( require ) {
     /**
      * Adds a term to the plate, in a specific cell in the grid.
      * @param {Term} term
-     * @param {number} cellIndex
+     * @param {number} cell
      * @public
      */
-    addTerm: function( term, cellIndex ) {
-      this.grid.putTerm( term, cellIndex );
+    addTerm: function( term, cell ) {
+      this.grid.putTerm( term, cell );
       this.numberOfTermsProperty.value++;
       this.contentsChangedEmitter.emit();
     },
@@ -127,18 +127,18 @@ define( function( require ) {
 
     /**
      * Is the specified cell empty?
-     * @param {number} cellIndex
+     * @param {number} cell
      * @returns {boolean}
      * @public
      */
-    isEmptyCell: function( cellIndex ) {
-      return this.grid.isEmptyCell( cellIndex );
+    isEmptyCell: function( cell ) {
+      return this.grid.isEmptyCell( cell );
     },
 
     /**
      * Gets the closest empty cell to a specified location.
      * @param {Vector2} location
-     * @returns {number} cell index, -1 if the grid is full
+     * @returns {number} the cell's identifier, -1 if the grid is full
      * @public
      */
     getClosestEmptyCell: function( location ) {
@@ -147,7 +147,7 @@ define( function( require ) {
 
     /**
      * Examines the grid from left to right, top to bottom, and returns the first empty cell.
-     * @returns {number} cell index, -1 if the grid is full
+     * @returns {number} the cell's identifier, -1 if the grid is full
      * @public
      */
     getFirstEmptyCell: function() {
@@ -157,12 +157,12 @@ define( function( require ) {
     /**
      * Gets the location of a specific cell, in global coordinates.
      * A cell's location is in the center of the cell.
-     * @param {number} cellIndex
+     * @param {number} cell
      * @returns {Vector2}
      * @public
      */
-    getLocationOfCell: function( cellIndex ) {
-      return this.grid.getLocationOfCell( cellIndex );
+    getLocationOfCell: function( cell ) {
+      return this.grid.getLocationOfCell( cell );
     },
 
     /**
@@ -177,18 +177,18 @@ define( function( require ) {
 
     /**
      * Gets the term in a specified cell.
-     * @param {number} cellIndex
+     * @param {number} cell
      * @returns {Term|null} null if the cell is empty
      * @public
      */
-    getTermInCell: function( cellIndex ) {
-      return this.grid.getTermInCell( cellIndex );
+    getTermInCell: function( cell ) {
+      return this.grid.getTermInCell( cell );
     },
 
     /**
-     * Gets the index for the cell that a term occupies.
+     * Gets the cell that a term occupies.
      * @param {Term} term
-     * @returns {number} the cell's index, -1 if the term doesn't occupy a cell
+     * @returns {number} the cell's identifier, -1 if the term doesn't occupy a cell
      * @public
      */
     getCellForTerm: function( term ) {
@@ -228,8 +228,8 @@ define( function( require ) {
             for ( var i = 0; i < terms.length; i++ ) {
 
               var term = terms[ i ];
-              var cellIndex = grid.rowColumnToCell( row, column );
-              grid.putTerm( term, cellIndex );
+              var cell = grid.rowColumnToCell( row, column );
+              grid.putTerm( term, cell );
 
               numberOfTermsToOrganize--;
 
@@ -273,14 +273,14 @@ define( function( require ) {
         if ( gridColumnsToShiftRight > 0 ) {
           for ( row = grid.rows - 1; row >= 0; row-- ) {
             for ( column = grid.columns - 1; column >= 0; column-- ) {
-              var cellIndex = grid.rowColumnToCell( row, column );
-              var term = grid.getTermInCell( cellIndex );
+              var cell = grid.rowColumnToCell( row, column );
+              var term = grid.getTermInCell( cell );
               if ( term ) {
 
                 // move term 1 column to the right
-                grid.clearCell( cellIndex );
-                var rightIndex = grid.rowColumnToCell( row, column + gridColumnsToShiftRight );
-                grid.putTerm( term, rightIndex );
+                grid.clearCell( cell );
+                var rightCell = grid.rowColumnToCell( row, column + gridColumnsToShiftRight );
+                grid.putTerm( term, rightCell );
               }
             }
           }

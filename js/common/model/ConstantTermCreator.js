@@ -187,7 +187,7 @@ define( function( require ) {
 
         var newConstantValue = null; // {Fraction|null}
 
-        var termOnPlate = this.plate.getTermInCell( this.likeTermsCellIndex ); // {ConstantTerm}
+        var termOnPlate = this.plate.getTermInCell( this.likeTermsCell ); // {ConstantTerm}
         var constantValueOperand = operation.operand.constantValue; // {Fraction}
 
         if ( termOnPlate ) {
@@ -229,7 +229,7 @@ define( function( require ) {
           else {
 
             // create a new term on the plate
-            this.createTermOnPlate( this.likeTermsCellIndex, {
+            this.createTermOnPlate( this.likeTermsCell, {
               constantValue: newConstantValue,
               diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
             } );
@@ -256,7 +256,7 @@ define( function( require ) {
     /**
      * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
      * The format of this data structure is specific ConstantTermCreator.
-     * @returns {{cellIndex: number, constantValue: Fraction, diameter: number}[]}
+     * @returns {{cell: number, constantValue: Fraction, diameter: number}[]}
      * @public
      * @override
      */
@@ -267,7 +267,7 @@ define( function( require ) {
         var term = termsOnPlate[ i ];
         assert && assert( term instanceof ConstantTerm, 'invalid term:' + term );
         snapshot.push( {
-          cellIndex: this.plate.getCellForTerm( term ), // {number}
+          cell: this.plate.getCellForTerm( term ), // {number}
           constantValue: term.constantValue, // {Fraction}
           diameter: term.diameter // {number}
         } );
@@ -283,7 +283,7 @@ define( function( require ) {
      */
     restoreSnapshot: function( snapshot ) {
       for ( var i = 0; i < snapshot.length; i++ ) {
-        this.createTermOnPlate( snapshot[ i ].cellIndex, {
+        this.createTermOnPlate( snapshot[ i ].cell, {
           constantValue: snapshot[ i ].constantValue,
           diameter: snapshot[ i ].diameter
         } );

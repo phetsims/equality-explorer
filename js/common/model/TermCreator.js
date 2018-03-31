@@ -35,9 +35,9 @@ define( function( require ) {
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
 
-      // {number} like terms will occupy this cell index in the plate's 2D grid
+      // {number} like terms will occupy this cell in the plate's 2D grid
       // -1 means 'no cell', and like terms will not be combined
-      likeTermsCellIndex: -1
+      likeTermsCell: -1 //TODO null would be better choice
     }, options );
 
     // @private {Plate} the plate that this term creator is associated with.
@@ -50,8 +50,8 @@ define( function( require ) {
     this._negativeLocation = null;
 
     // @public (read-only) like terms will be combined in this cell in the plate's 2D grid
-    this.likeTermsCellIndex = options.likeTermsCellIndex;
-    this.combineLikeTermsEnabled = ( options.likeTermsCellIndex !== -1 ); // convenience property
+    this.likeTermsCell = options.likeTermsCell;
+    this.combineLikeTermsEnabled = ( options.likeTermsCell !== -1 ); // convenience property //TODO null would be better choice
 
     // @public {read-only) {Bounds2} drag bounds for terms created
     this.dragBounds = options.dragBounds;
@@ -235,14 +235,14 @@ define( function( require ) {
 
     /**
      * Creates a term and puts it in a specified cell in the associate plate's 2D grid.
-     * @param {number} cellIndex
+     * @param {number} cell
      * @param {Object} [options] - options passed to createTerm
      * @returns {Term}
      * @public
      */
-    createTermOnPlate: function( cellIndex, options ) {
+    createTermOnPlate: function( cell, options ) {
       var term = this.createTerm( options );
-      this.putTermOnPlate( term, cellIndex );
+      this.putTermOnPlate( term, cell );
       return term;
     },
 
@@ -285,20 +285,20 @@ define( function( require ) {
     getLikeTermOnPlate: function() {
       assert && assert( this.combineLikeTermsEnabled, 'getLikeTermOnPlate is only supported when combineLikeTermsEnabled' );
       assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate' );
-      return this.plate.getTermInCell( this.likeTermsCellIndex );
+      return this.plate.getTermInCell( this.likeTermsCell );
     },
 
     /**
      * Puts a term on the plate. ORDER IS VERY IMPORTANT HERE!
      * @param {Term} term
-     * @param {number} cellIndex - cell in the associated plate's 2D grid
+     * @param {number} cell - cell in the associated plate's 2D grid
      * @public
      */
-    putTermOnPlate: function( term, cellIndex ) {
+    putTermOnPlate: function( term, cell ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
       assert && assert( !this.termsOnPlate.contains( term ), 'term already on plate: ' + term );
       phet.log && phet.log( 'TermCreator.putTermOnPlate: ' + term );
-      this.plate.addTerm( term, cellIndex );
+      this.plate.addTerm( term, cell );
       this.termsOnPlate.push( term );
     },
 

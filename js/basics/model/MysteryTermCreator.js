@@ -102,7 +102,7 @@ define( function( require ) {
     /**
      * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
      * The format of this data structure is specific MysteryTermCreator.
-     * @returns {{cellIndex: number}[]}
+     * @returns {{cell: number}[]}
      * @public
      * @override
      */
@@ -112,7 +112,7 @@ define( function( require ) {
       for ( var i = 0; i < termsOnPlate.length; i++ ) {
         var term = termsOnPlate[ i ];
         assert && assert( term instanceof MysteryTerm, 'invalid term: ' + term );
-        snapshot.push( { cellIndex: this.plate.getCellForTerm( term ) } );
+        snapshot.push( { cell: this.plate.getCellForTerm( term ) } );
       }
       return snapshot;
     },
@@ -125,7 +125,7 @@ define( function( require ) {
      */
     restoreSnapshot: function( snapshot ) {
       for ( var i = 0; i < snapshot.length; i++ ) {
-        this.createTermOnPlate( snapshot[ i ].cellIndex );
+        this.createTermOnPlate( snapshot[ i ].cell );
       }
     },
 

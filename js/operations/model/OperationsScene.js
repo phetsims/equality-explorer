@@ -124,12 +124,14 @@ define( function( require ) {
 
       // x and -x
       new VariableTermCreator( xVariable, {
-        likeTermsCellIndex: 0 // cell on the plate that all like terms will occupy
+        //TODO get this cell using Grid.rowColumnToCell( 0, 0 )
+        likeTermsCell: 0 // cell on the plate that all like terms will occupy
       } ),
 
       // 1 and -1
       new ConstantTermCreator( {
-        likeTermsCellIndex: 1 // cell on the plate that all like terms will occupy
+        //TODO get this cell using Grid.rowColumnToCell( 0, 1 )
+        likeTermsCell: 1 // cell on the plate that all like terms will occupy
       } )
     ];
   }

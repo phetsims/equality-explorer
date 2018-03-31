@@ -93,7 +93,7 @@ define( function( require ) {
           var termCreator = termCreators[ i ];
 
           // determine where the cell that contained the term is currently located
-          var cellCenter = termCreator.plate.getLocationOfCell( termCreator.likeTermsCellIndex );
+          var cellCenter = termCreator.plate.getLocationOfCell( termCreator.likeTermsCell );
 
           // display the animation in that cell
           var sumToZeroNode = new SumToZeroNode( {

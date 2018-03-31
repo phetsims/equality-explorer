@@ -62,8 +62,8 @@ define( function( require ) {
     // See rowColumnToCell, cellToRow, cellToColumn for mapping between index and (row,column).
     this.cells = [];
     var numberOfCells = options.rows * options.columns;
-    for ( var index = 0; index < numberOfCells; index++ ) {
-      this.cells[ index ] = NO_TERM;
+    for ( var i = 0; i < numberOfCells; i++ ) {
+      this.cells[ i ] = NO_TERM;
     }
 
     // @private bounds of the grid, initialized in locationProperty listener
@@ -82,9 +82,9 @@ define( function( require ) {
       );
 
       // move the terms
-      for ( var index = 0; index < self.cells.length; index++ ) {
-        if ( self.cells[ index ] !== NO_TERM ) {
-          self.cells[ index ].moveTo( self.getLocationOfCell( index ) );
+      for ( var i = 0; i < self.cells.length; i++ ) {
+        if ( self.cells[ i ] !== NO_TERM ) {
+          self.cells[ i ].moveTo( self.getLocationOfCell( i ) );
         }
       }
     } );
@@ -96,23 +96,23 @@ define( function( require ) {
 
     /**
      * Is the specified cell empty?
-     * @param {number} index - the cell's index
+     * @param {number} cellIdentifier
      * @returns {boolean}
      * @public
      */
-    isEmptyCell: function( index ) {
-      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      return ( this.cells[ index ] === NO_TERM );
+    isEmptyCell: function( cell ) {
+      assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+      return ( this.getTermInCell( cell ) === NO_TERM );
     },
 
     /**
      * Clears the specified cell
-     * @param index - the cell's index
+     * @param cell
      * @public
      */
-    clearCell: function( index ) {
-      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      this.cells[ index ] = NO_TERM;
+    clearCell: function( cell ) {
+      assert && assert( this.isValidCell( cell ), 'invalid v: ' + cell );
+      this.cells[ cell ] = NO_TERM;
     },
 
     /**
@@ -120,8 +120,8 @@ define( function( require ) {
      * @public
      */
     clearAllCells: function() {
-      for ( var index = 0; index < this.cells.length; index++ ) {
-        this.cells[ index ] = NO_TERM;
+      for ( var i = 0; i < this.cells.length; i++ ) {
+        this.clearCell( i );
       }
     },
 
@@ -138,13 +138,13 @@ define( function( require ) {
     },
 
     /**
-     * Gets the index of the cell that corresponds to a location.
+     * Gets the cell that corresponds to a location.
      * @param {Vector2} location
-     * @returns {number} -1 if the location is outside the grid
+     * @returns {number} the cell identifier, -1 if the location is outside the grid
      * @private
      */
     getCellAtLocation: function( location ) {
-      var index = -1;
+      var cell = -1;
       if ( this.containsLocation( location ) ) {
 
         // row and column of the cell that contains location
@@ -152,9 +152,9 @@ define( function( require ) {
         var row = Math.min( this.rows - 1, Math.floor( ( location.y - this.bounds.minY  ) / this.cellHeight ) );
         var column = Math.min( this.columns - 1, Math.floor( ( location.x - this.bounds.minX ) / this.cellWidth ) );
 
-        index = this.rowColumnToCell( row, column );
+        cell = this.rowColumnToCell( row, column );
       }
-      return index;
+      return cell;
     },
 
     /**
@@ -169,9 +169,9 @@ define( function( require ) {
     },
 
     /**
-     * Gets the index for the cell that a term occupies.
+     * Gets the cell that a term occupies.
      * @param {Term} term
-     * @returns {number} the cell's index, -1 if the term doesn't occupy a cell
+     * @returns {number} the cell's identifier, -1 if the term doesn't occupy a cell
      * @public
      */
     getCellForTerm: function( term ) {
@@ -181,13 +181,13 @@ define( function( require ) {
 
     /**
      * Gets the term that occupies a specified cell.
-     * @param {number} index - the cell's index
+     * @param {number} cell
      * @returns {Term|null} - null if the cell is empty
      * @public
      */
-    getTermInCell: function( index ) {
-      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      return this.cells[ index ];
+    getTermInCell: function( cell ) {
+      assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+      return this.cells[ cell ];
     },
 
     /**
@@ -198,9 +198,9 @@ define( function( require ) {
      */
     getTermAtLocation: function( location ) {
       var term = null;
-      var index = this.getCellAtLocation( location );
-      if ( index !== -1 ) {
-        term = this.getTermInCell( index );
+      var cell = this.getCellAtLocation( location );
+      if ( cell !== -1 ) {
+        term = this.getTermInCell( cell );
       }
       return term;
     },
@@ -208,16 +208,16 @@ define( function( require ) {
     /**
      * Puts a term in the specified cell. The cell must be empty.
      * @param {Term} term
-     * @param {number} index - the cell's index
+     * @param {number} cell
      * @public
      */
-    putTerm: function( term, index ) {
+    putTerm: function( term, cell ) {
       assert && assert( term instanceof Term, 'invalid term' );
-      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      assert && assert( this.isEmptyCell( index ), 'cell is occupied, index: ' + index );
-      this.cells[ index ] = term;
-      term.moveTo( this.getLocationOfCell( index ) );
-      this.compactColumn( this.cellToColumn( index ) );
+      assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+      assert && assert( this.isEmptyCell( cell ), 'cell is occupied, cell: ' + cell );
+      this.cells[ cell ] = term;
+      term.moveTo( this.getLocationOfCell( cell ) );
+      this.compactColumn( this.cellToColumn( cell ) );
     },
 
     /**
@@ -227,10 +227,10 @@ define( function( require ) {
      */
     removeTerm: function( term ) {
       assert && assert( term instanceof Term, 'invalid term: ' + term );
-      var index = this.getCellForTerm( term );
-      assert && assert( index !== -1, 'term not found: ' + term );
-      this.clearCell( index );
-      this.compactColumn( this.cellToColumn( index ) );
+      var cell = this.getCellForTerm( term );
+      assert && assert( cell !== -1, 'term not found: ' + term );
+      this.clearCell( cell );
+      this.compactColumn( this.cellToColumn( cell ) );
     },
 
     /**
@@ -246,13 +246,13 @@ define( function( require ) {
       var terms = []; // terms in the column
 
       var term; // the current term
-      var index; // the current cell index
+      var cell; // the current cell identifier
 
 
       // Get all terms in the column, from top down
       for ( var row = 0; row < this.rows; row++ ) {
-        index = this.rowColumnToCell( row, column );
-        term = this.getTermInCell( index );
+        cell = this.rowColumnToCell( row, column );
+        term = this.getTermInCell( cell );
         if ( term ) {
           terms.push( term );
         }
@@ -273,24 +273,24 @@ define( function( require ) {
         row = this.rows - 1;
         for ( var i = terms.length - 1; i >= 0; i-- ) {
           term = terms[ i ];
-          index = this.rowColumnToCell( row--, column );
-          this.cells[ index ] = term;
-          term.moveTo( this.getLocationOfCell( index ) );
+          cell = this.rowColumnToCell( row--, column );
+          this.cells[ cell ] = term;
+          term.moveTo( this.getLocationOfCell( cell ) );
         }
       }
     },
 
     /**
      * Gets the location of a specific cell. A cell's location is in the center of the cell.
-     * @param {number} index - the cell's index
+     * @param {number} cell
      * @returns {Vector2}
      * @public
      */
-    getLocationOfCell: function( index ) {
-      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
+    getLocationOfCell: function( cell ) {
+      assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
 
-      var row = this.cellToRow( index );
-      var column = this.cellToColumn( index );
+      var row = this.cellToRow( cell );
+      var column = this.cellToColumn( cell );
 
       var x = this.bounds.minX + ( column * this.cellWidth ) + ( 0.5 * this.cellWidth );
       var y = this.bounds.minY + ( row * this.cellHeight ) + ( 0.5 * this.cellHeight );
@@ -299,7 +299,7 @@ define( function( require ) {
 
     /**
      * Finds the first empty cell, starting at bottom row, right-to-left.
-     * @returns {number} - cell index, -1 if the grid is full
+     * @returns {number} - the cell's identifier, -1 if the grid is full
      * @public
      */
     getFirstEmptyCell: function() {
@@ -310,82 +310,82 @@ define( function( require ) {
      * Gets the closest empty cell to a specified location.  If the closest cell is in a column with
      * empty cells below it, choose the empty cell that is closest to the bottom of the grid in that column.
      * @param {Vector2} location
-     * @returns {number} - the cell's index, -1 if the grid is full
+     * @returns {number} - the cell's identifier, -1 if the grid is full
      * @public
      */
     getClosestEmptyCell: function( location ) {
 
-      var closestIndex = this.getFirstEmptyCell();
+      var closestCell = this.getFirstEmptyCell();
 
-      if ( closestIndex !== -1 ) {
+      if ( closestCell !== -1 ) {
 
-        var closestDistance = this.getLocationOfCell( closestIndex ).distance( location );
+        var closestDistance = this.getLocationOfCell( closestCell ).distance( location );
 
         // Find the closest cell based on distance
-        for ( var index = 0; index < this.cells.length; index++ ) {
-          if ( this.isEmptyCell( index ) ) {
-            var currentDistance = this.getLocationOfCell( index ).distance( location );
+        for ( var i = 0; i < this.cells.length; i++ ) {
+          if ( this.isEmptyCell( i ) ) {
+            var currentDistance = this.getLocationOfCell( i ).distance( location );
             if ( currentDistance < closestDistance ) {
               closestDistance = currentDistance;
-              closestIndex = index;
+              closestCell = i;
             }
           }
         }
 
         // Now look below the closest cell to see if there are any empty cells in the same column.
         // This makes terms "fall" to the cell that is closest to the bottom of the grid.
-        var closestRow = this.cellToRow( closestIndex );
-        var closestColumn = this.cellToColumn( closestIndex );
+        var closestRow = this.cellToRow( closestCell );
+        var closestColumn = this.cellToColumn( closestCell );
         for ( var row = this.rows - 1; row > closestRow; row-- ) {
-          var indexBelow = this.rowColumnToCell( row, closestColumn );
-          if ( this.isEmptyCell( indexBelow ) ) {
-            closestIndex = indexBelow;
+          var cellBelow = this.rowColumnToCell( row, closestColumn );
+          if ( this.isEmptyCell( cellBelow ) ) {
+            closestCell = cellBelow;
             break;
           }
         }
       }
 
-      return closestIndex;
+      return closestCell;
     },
 
     /**
-     * Is the specified cell valid?
-     * @param {number} index - the cell's index
+     * Is the specified cell identifier valid?
+     * @param {number} cell
      * @returns {boolean}
      * @private
      */
-    isValidCell: function( index ) {
-      return ( Util.isInteger( index ) && index >= 0 && index < this.cells.length );
+    isValidCell: function( cell ) {
+      return ( Util.isInteger( cell ) && cell >= 0 && cell < this.cells.length );
     },
 
     /**
-     * Converts a cell index to a row number.
-     * @param {number} index
+     * Converts a cell identifier to a row number.
+     * @param {number} cell
      * @returns {number}
      * @private
      */
-    cellToRow: function( index ) {
-      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      var row = Math.ceil( ( index + 1 ) / this.columns ) - 1;
+    cellToRow: function( cell ) {
+      assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+      var row = Math.ceil( ( cell + 1 ) / this.columns ) - 1;
       assert && assert( row >= 0 && row < this.rows );
       return row;
     },
 
     /**
-     * Converts a cell index to a column number.
-     * @param {number} index
+     * Converts a cell identifier to a column number.
+     * @param {number} cell
      * @returns {number}
      * @private
      */
-    cellToColumn: function( index ) {
-      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      var column = index % this.columns;
+    cellToColumn: function( cell ) {
+      assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+      var column = cell % this.columns;
       assert && assert( column >= 0 && column < this.columns );
       return column;
     },
 
     /**
-     * Converts row and column to a cell index.
+     * Converts row and column to a cell identifier.
      * @param {number} row
      * @param {number} column
      * @returns {number}
@@ -394,9 +394,9 @@ define( function( require ) {
     rowColumnToCell: function( row, column ) {
       assert && assert( row >= 0 && row < this.rows, 'row out of range: ' + row );
       assert && assert( column >= 0 && column < this.columns, 'column out of range: ' + column );
-      var index = ( row * this.columns ) + column;
-      assert && assert( this.isValidCell( index ), 'invalid cell index: ' + index );
-      return index;
+      var cell = ( row * this.columns ) + column;
+      assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+      return cell;
     }
   } );
 } );

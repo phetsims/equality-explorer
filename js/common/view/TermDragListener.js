@@ -191,21 +191,21 @@ define( function( require ) {
       assert && assert( this.termCreator.combineLikeTermsEnabled, 'should ONLY be called when combining like terms' );
 
       var self = this;
-      var cellIndex = this.termCreator.likeTermsCellIndex;
-      var cellLocation = this.plate.getLocationOfCell( cellIndex );
+      var cell = this.termCreator.likeTermsCell;
+      var cellLocation = this.plate.getLocationOfCell( cell );
 
       this.term.animateTo( cellLocation, {
 
         // When the term reaches the cell ...
         animationCompletedCallback: function() {
 
-          if ( self.plate.isEmptyCell( cellIndex ) ) {
+          if ( self.plate.isEmptyCell( cell ) ) {
 
             // If the cell is empty, make a 'big' copy of this term and put it in the cell.
             var termCopy = self.termCreator.copyTerm( self.term, {
               diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
             } );
-            self.termCreator.putTermOnPlate( termCopy, cellIndex );
+            self.termCreator.putTermOnPlate( termCopy, cell );
 
             // dispose of the original term
             self.term.dispose();
@@ -214,7 +214,7 @@ define( function( require ) {
 
             // If the cell is occupied...
             // Get the term that occupies the cell.
-            var termInCell = self.plate.getTermInCell( cellIndex );
+            var termInCell = self.plate.getTermInCell( cell );
 
             // Combine the terms to create a new 'big' term.
             var combinedTerm = self.termCreator.combineTerms( self.term, termInCell, {
@@ -236,7 +236,7 @@ define( function( require ) {
                 termInCell.dispose();
 
                 // Put the new term on the plate.
-                self.termCreator.putTermOnPlate( combinedTerm, cellIndex );
+                self.termCreator.putTermOnPlate( combinedTerm, cell );
               }
             }
             else {
@@ -259,9 +259,9 @@ define( function( require ) {
     animateToEmptyCell: function() {
       assert && assert( !this.termCreator.combineLikeTermsEnabled, 'should NOT be called when combining like terms' );
 
-      var cellIndex = this.plate.getClosestEmptyCell( this.term.locationProperty.value );
+      var cell = this.plate.getClosestEmptyCell( this.term.locationProperty.value );
 
-      if ( cellIndex === -1 ) {
+      if ( cell === -1 ) {
 
         // Plate is full. Return the term to its toolbox.
         this.animateToToolbox( this.term );
@@ -269,20 +269,20 @@ define( function( require ) {
       else {
 
         var self = this;
-        var cellLocation = this.plate.getLocationOfCell( cellIndex );
+        var cellLocation = this.plate.getLocationOfCell( cell );
 
         this.term.animateTo( cellLocation, {
 
           // If the target cell has become occupied, choose another cell.
           animationStepCallback: function() {
-            if ( !self.plate.isEmptyCell( cellIndex ) ) {
+            if ( !self.plate.isEmptyCell( cell ) ) {
               self.animateToEmptyCell();
             }
           },
 
           // When the term reaches the cell, put it in the cell.
           animationCompletedCallback: function() {
-            self.termCreator.putTermOnPlate( self.term, cellIndex );
+            self.termCreator.putTermOnPlate( self.term, cell );
           }
         } );
       }
@@ -359,7 +359,7 @@ define( function( require ) {
       assert && assert( this.term.isInverseTerm( inverseTerm ), 'inverseTerm is not an inverse: ' + inverseTerm );
 
       // determine which cell the inverse term appears in
-      var cellIndex = this.plate.getCellForTerm( inverseTerm );
+      var cell = this.plate.getCellForTerm( inverseTerm );
 
       // some things we need before the terms are disposed
       var variable = this.term.variable || null;
@@ -371,7 +371,7 @@ define( function( require ) {
 
       // after the terms have been deleted and the scale has moved,
       // determine the new location of the inverse term's cell
-      var sumToZeroLocation = this.plate.getLocationOfCell( cellIndex );
+      var sumToZeroLocation = this.plate.getLocationOfCell( cell );
 
       options = _.extend( {
         variable: variable,
