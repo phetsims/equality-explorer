@@ -472,7 +472,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates a new term on the plate by combining two terms.
+     * Creates a new term by combining two terms.
      * Careful! When implementing this, the term must be created by calling createTerm, or the term won't be managed.
      * @param {Term} term1
      * @param {Term} term2
