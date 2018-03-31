@@ -7,7 +7,7 @@
  * below an occupied cell. Origin is at the bottom center.
  *
  * A cell in the grid is identified by an integer index. The client doesn't need to know how to interpret
- * this index. It gets an index from the grid, and uses the index to refer to the cell.
+ * this identifier. It gets a cell identifier from the grid, and uses the identifier to refer to the cell.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
