@@ -265,15 +265,14 @@ define( function( require ) {
     },
 
     /**
-     * Is this term creator equivalent to a specified term creator?
+     * Do this term creator and the specified term creator create like terms?
+     * VariableTermCreators are equivalent if they manage terms for the same variable.
      * @param {TermCreator} termCreator
      * @returns {boolean}
      * @public
      * @override
      */
-    isEquivalentTo: function( termCreator ) {
-
-      // VariableTermCreators are equivalent if they manage terms for the same variable.
+    isLikeTermCreator: function( termCreator ) {
       return ( termCreator instanceof VariableTermCreator ) && ( termCreator.variable === this.variable );
     },
 

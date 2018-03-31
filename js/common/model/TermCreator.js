@@ -200,7 +200,7 @@ define( function( require ) {
      */
     set equivalentTermCreator( value ) {
       assert && assert( !this._equivalentTermCreator, 'attempted to initialize equivalentTermCreator twice' );
-      assert && assert( this.isEquivalentTo( value ), 'value is not an equivalent TermCreator: ' + value );
+      assert && assert( this.isLikeTermCreator( value ), 'value is not a like TermCreator: ' + value );
       this._equivalentTermCreator = value;
     },
 
@@ -509,14 +509,14 @@ define( function( require ) {
     },
 
     /**
-     * Is this term creator equivalent to a specified term creator?
+     * Do this term creator and the specified term creator create like terms?
      * @param {TermCreator} termCreator
      * @returns {boolean}
      * @public
      * @abstract
      */
-    isEquivalentTo: function( termCreator ) {
-      throw new Error( 'isEquivalentTo must be implemented by subtype' );
+    isLikeTermCreator: function( termCreator ) {
+      throw new Error( 'isLikeTermCreator must be implemented by subtype' );
     },
 
     /**

@@ -87,15 +87,14 @@ define( function( require ) {
     },
 
     /**
-     * Is this term creator equivalent to a specified term creator?
+     * Do this term creator and the specified term creator create like terms?
+     * MysteryTermCreators are equivalent if they manage terms for the same mystery object.
      * @param {TermCreator} termCreator
      * @returns {boolean}
      * @public
      * @override
      */
-    isEquivalentTo: function( termCreator ) {
-
-      // MysteryTermCreators are equivalent if they manage terms for the same mystery object
+    isLikeTermCreator: function( termCreator ) {
       return ( termCreator instanceof MysteryTermCreator ) && ( termCreator.mysteryObject === this.mysteryObject );
     },
 

@@ -105,12 +105,13 @@ define( function( require ) {
         }
       } );
 
-      // Associate each term creator with its equivalent term creator on the opposite side of the scale.
+      // Associate each term creator with a 'like term' creator on the opposite side of the scale,
+      // for creating equivalent terms when the lock feature is enabled.
       assert && assert( leftTermCreators.length === rightTermCreators.length,
         'the same number of term creators are required on both sides of the scale' );
       for ( var i = 0; i < leftTermCreators.length; i++ ) {
-        assert && assert( leftTermCreators[ i ].isEquivalentTo( rightTermCreators[ i ] ),
-          'equivalent term creators must have the same indices on both sides of the scale' );
+        assert && assert( leftTermCreators[ i ].isLikeTermCreator( rightTermCreators[ i ] ),
+          'like term creators must have the same indices on both sides of the scale' );
         leftTermCreators[ i ].equivalentTermCreator = rightTermCreators[ i ];
         rightTermCreators[ i ].equivalentTermCreator = leftTermCreators[ i ];
       }
@@ -120,8 +121,8 @@ define( function( require ) {
   equalityExplorer.register( 'Scene', Scene );
 
   /**
-   * Verifies that none of the specified term creators are equivalent.
-   * Equivalent term creators are not allowed on the same side of the equation.
+   * Verifies that none of the specified term creators are 'like term' creators.
+   * Like term creators are not allowed on the same side of the equation.
    * For example, there should not be 2 creators for constants, or 2 creators for 'x'.
    * @param {TermCreator[]} termCreators
    */
@@ -131,8 +132,8 @@ define( function( require ) {
         
         // skip comparisons to self
         if ( termCreators[ i ] !== termCreators[ j ] ) {
-          assert && assert( !( termCreators[ i ].isEquivalentTo( termCreators[ j ] ) ),
-            'equivalent term creators are not allowed on the same side of the equation' );
+          assert && assert( !( termCreators[ i ].isLikeTermCreator( termCreators[ j ] ) ),
+            'like term creators are not allowed on the same side of the equation' );
         }
       }
     }

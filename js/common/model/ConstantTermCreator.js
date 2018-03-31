@@ -241,15 +241,14 @@ define( function( require ) {
     },
 
     /**
-     * Is this term creator equivalent to a specified term creator?
+     * Do this term creator and the specified term creator create like terms?
+     * All constant term creators are 'like'.
      * @param {TermCreator} termCreator
      * @returns {boolean}
      * @public
      * @override
      */
-    isEquivalentTo: function( termCreator ) {
-
-      // all ConstantTermCreators are equivalent
+    isLikeTermCreator: function( termCreator ) {
       return ( termCreator instanceof ConstantTermCreator );
     },
 
