@@ -80,6 +80,11 @@ define( function( require ) {
     /**
      * Gets the sign of the term's significant number, indicating whether the number is positive, negative or zero.
      * The meaning on 'significant number' is specific to the Term subtype.
+     *
+     * Note that sign is not related to the term's weight. For example, for variable terms, the 'significant number'
+     * is the coefficient. Consider term '-5x', where x=-2. While the weight is 10 (-5 * -2), the sign is based on
+     * the coefficient -5, and is therefore -1.
+     *
      * @returns {number} ala Math.sign
      * @public
      * @abstract
