@@ -54,7 +54,7 @@ define( function( require ) {
 
     /**
      * Is this term the inverse of a specified term?
-     * An inverse term is a like term with opposite sign. E.g. x and -x, 1 and -1.
+     * Inverse terms are like terms with opposite signs. E.g. x and -x, 1 and -1.
      * @param {Term} term
      * @returns {boolean}
      * @public
