@@ -41,7 +41,7 @@ define( function( require ) {
 
     /**
      * Creates the icon used to represent this term in the TermsToolbox and equations.
-     * @param {Object} [options]
+     * @param {Object} [options] - ignored for this subtype
      * @returns {Node}
      * @public
      * @override
@@ -52,7 +52,7 @@ define( function( require ) {
 
     /**
      * Instantiates a MysteryTerm.
-     * @param {Object} [options] - ignored for this TermCreator subtype
+     * @param {Object} [options]
      * @returns {Term}
      * @protected
      * @override
@@ -123,42 +123,21 @@ define( function( require ) {
     },
 
     //-------------------------------------------------------------------------------------------------
-    // Below here are parts of the TermCreator API that are not supported for mystery terms
+    // Below here are parts of the TermCreator API that are not supported for mystery terms.
+    // These are all related to universal operations, which are not applicable to mystery terms.
     //-------------------------------------------------------------------------------------------------
 
-    /**
-     * Creates a new term by combining this term with another term.
-     * @param {Term} term1
-     * @param {Term} term2
-     * @param {Object} options
-     * @returns {Term|null}
-     * @public
-     * @override
-     */
+    // @public @override see TermCreator
     combineTerms: function( term1, term2, options ) {
       throw new Error( 'combineTerms is not supported by MysteryTermCreator' );
     },
 
-    /**
-     * Copies the specified term, with possible modifications specified via options.
-     * @param {Term} term
-     * @param {Object} [options]
-     * @returns {Term}
-     * @public
-     * @override
-     */
+    // @public @override see TermCreator
     copyTerm: function( term, options ) {
       throw new Error( 'copyTerm is not supported by MysteryTermCreator' );
     },
 
-    /**
-     * Applies an operation to terms on the plate.
-     *
-     * @param {UniversalOperation} operation
-     * @returns {boolean} - true if the operation resulted in a term on the plate becoming zero, false otherwise
-     * @public
-     * @abstract
-     */
+    // @public @override see TermCreator
     applyOperation: function( operation ) {
       throw new Error( 'applyOperation is not supported by MysteryTermCreator' );
     }
