@@ -52,10 +52,9 @@ define( function( require ) {
       yMargin: 30
     } );
 
-    //TODO for quite awhile I had to click twice to close, then the problem mysteriously went away
-    // Click anywhere on the dialog to dispose of it.
+    // Click anywhere on the dialog to hide it.
     this.addInputListener( new ButtonListener( {
-      fire: function() { self.dispose(); }
+      fire: function() { self.hide(); }
     } ) );
   }
 

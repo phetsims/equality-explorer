@@ -138,10 +138,11 @@ define( function( require ) {
      * When the limit EqualityExplorerConstants.LARGEST_INTEGER is exceeded,
      * dispose of all terms that are not on the scale, and display a dialog.
      */
+    var dialog = null; // dialog will be reused
     var numberLimitExceededListener = function() {
       phet.log && phet.log( 'number limit exceeded' );
       scene.disposeTermsNotOnScale();
-      var dialog = new OperationCanceledDialog();
+      dialog = dialog || new OperationCanceledDialog();
       dialog.show();
     };
 
