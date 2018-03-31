@@ -63,6 +63,18 @@ define( function( require ) {
       return ( this.isLikeTerm( term ) && ( this.sign === -term.sign ) );
     },
 
+    /**
+     * Creates options that can be passed to the Term's constructor to re-create the Term.
+     * Subtypes that have additional options to add should override this method and add to the options returned here.
+     * @return {Object|null} - details that are specific to Term subtype
+     * @public
+     */
+    createSnapshot: function() {
+      return {
+        diameter: this.diameter
+      };
+    },
+
     //-------------------------------------------------------------------------------------------------
     // Below here are @abstract methods, to be implemented by subtypes
     //-------------------------------------------------------------------------------------------------

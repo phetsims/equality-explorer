@@ -445,6 +445,36 @@ define( function( require ) {
       return isLike;
     },
 
+    /**
+     * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
+     * The format of the term field is specific to the Term subtype.
+     * @returns {{cell: number, term:Object }[]}
+     * @public
+     */
+    createSnapshot: function() {
+      var snapshot = [];
+      var termsOnPlate = this.getTermsOnPlate();
+      for ( var i = 0; i < termsOnPlate.length; i++ ) {
+        var term = termsOnPlate[ i ];
+        snapshot.push( {
+          cell: this.plate.getCellForTerm( term ), // {number}
+          termOptions: term.createSnapshot() // {Object} options to Term's constructor, specific to subtype
+        } );
+      }
+      return snapshot;
+    },
+
+    /**
+     * Restores a snapshot of terms on the plate for this TermCreator.
+     * @param {*} snapshot - see return value of createSnapshot
+     * @public
+     */
+    restoreSnapshot: function( snapshot ) {
+      for ( var i = 0; i < snapshot.length; i++ ) {
+        this.createTermOnPlate( snapshot[ i ].cell, snapshot[ i ].termOptions );
+      }
+    },
+
     //-------------------------------------------------------------------------------------------------
     // Below here are @abstract methods, to be implemented by subtypes
     //-------------------------------------------------------------------------------------------------
@@ -532,27 +562,6 @@ define( function( require ) {
      */
     applyOperation: function( operation ) {
       throw new Error( 'applyOperation must be implemented by subtypes' );
-    },
-
-    /**
-     * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
-     * The format of this data structure is specific to the TermCreator type.
-     * @returns {*}
-     * @public
-     * @abstract
-     */
-    createSnapshot: function() {
-      throw new Error( 'createSnapshot must be implemented by subtype' );
-    },
-
-    /**
-     * Restores a snapshot of terms on the plate for this TermCreator.
-     * @param {*} snapshot - see createSnapshot
-     * @public
-     * @abstract
-     */
-    restoreSnapshot: function( snapshot ) {
-      throw new Error( 'restoreSnapshot must be implemented by subtype' );
     }
   } );
 } );

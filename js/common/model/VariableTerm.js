@@ -90,6 +90,16 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       return ( term instanceof VariableTerm ) && ( term.variable === this.variable );
+    },
+
+    /**
+     * Creates options that can be passed to the Term's constructor to re-create the Term.
+     * @return {Object}
+     */
+    createSnapshot: function() {
+      return _.extend( Term.prototype.createSnapshot.call( this ), {
+        coefficient: this.coefficient
+      } );
     }
   } );
 } );

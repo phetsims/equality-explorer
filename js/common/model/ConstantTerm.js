@@ -89,6 +89,18 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       return ( term instanceof ConstantTerm );
+    },
+
+    /**
+     * Creates options that can be passed to the Term's constructor to re-create the Term.
+     * @return {Object}
+     * @public
+     * @override
+     */
+    createSnapshot: function() {
+      return _.extend( Term.prototype.createSnapshot.call( this ), {
+        constantValue: this.constantValue
+      } );
     }
   } );
 } );

@@ -92,36 +92,6 @@ define( function( require ) {
       return new MysteryTermNode( this, term, this.plate, options );
     },
 
-    /**
-     * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
-     * The format of this data structure is specific MysteryTermCreator.
-     * @returns {{cell: number}[]}
-     * @public
-     * @override
-     */
-    createSnapshot: function() {
-      var snapshot = [];
-      var termsOnPlate = this.getTermsOnPlate();
-      for ( var i = 0; i < termsOnPlate.length; i++ ) {
-        var term = termsOnPlate[ i ];
-        assert && assert( term instanceof MysteryTerm, 'invalid term: ' + term );
-        snapshot.push( { cell: this.plate.getCellForTerm( term ) } );
-      }
-      return snapshot;
-    },
-
-    /**
-     * Restores a snapshot of terms on the plate for this TermCreator.
-     * @param {*} snapshot - see return value of createSnapshot
-     * @public
-     * @override
-     */
-    restoreSnapshot: function( snapshot ) {
-      for ( var i = 0; i < snapshot.length; i++ ) {
-        this.createTermOnPlate( snapshot[ i ].cell );
-      }
-    },
-
     //-------------------------------------------------------------------------------------------------
     // Below here are parts of the TermCreator API that are not supported for mystery terms.
     // These are all related to universal operations, which are not applicable to mystery terms.

@@ -264,43 +264,6 @@ define( function( require ) {
       }
 
       return summedToZero;
-    },
-
-    /**
-     * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
-     * The format of this data structure is specific VariableTermCreator.
-     * @returns {{cell: number, coefficient: Fraction, diameter: number}[]}
-     * @public
-     * @override
-     */
-    createSnapshot: function() {
-      var snapshot = [];
-      var termsOnPlate = this.getTermsOnPlate();
-      for ( var i = 0; i < termsOnPlate.length; i++ ) {
-        var term = termsOnPlate[ i ];
-        assert && assert( term instanceof VariableTerm, 'invalid term: ' + term );
-        snapshot.push( {
-          cell: this.plate.getCellForTerm( term ), // {number}
-          coefficient: term.coefficient, // {Fraction}
-          diameter: term.diameter // {number}
-        } );
-      }
-      return snapshot;
-    },
-
-    /**
-     * Restores a snapshot of terms on the plate for this TermCreator.
-     * @param {*} snapshot - see return value of createSnapshot
-     * @public
-     * @override
-     */
-    restoreSnapshot: function( snapshot ) {
-      for ( var i = 0; i < snapshot.length; i++ ) {
-        this.createTermOnPlate( snapshot[ i ].cell, {
-          coefficient: snapshot[ i ].coefficient,
-          diameter: snapshot[ i ].diameter
-        } );
-      }
     }
   } );
 } );
