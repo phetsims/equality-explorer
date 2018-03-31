@@ -499,6 +499,7 @@ define( function( require ) {
 
     /**
      * Copies the specified term, with possible modifications specified via options.
+     * Careful! When implementing this, the term must be created by calling createTerm, or the term won't be managed.
      * @param {Term} term
      * @param {Object} [options] - passed to the new Term's constructor
      * @returns {Term}
