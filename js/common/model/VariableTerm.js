@@ -81,15 +81,15 @@ define( function( require ) {
     },
 
     /**
-     * Is this term a like term?
+     * Are this term and the specified term 'like terms'?
+     * Variable terms are 'like' if they are associated with the same variable.
      * @param {Term} term
      * @returns {boolean}
      * @public
      * @override
      */
     isLikeTerm: function( term ) {
-      return ( term instanceof VariableTerm ) &&
-             ( term.variable === this.variable ); // associated with same variable
+      return ( term instanceof VariableTerm ) && ( term.variable === this.variable );
     }
   } );
 } );

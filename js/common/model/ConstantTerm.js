@@ -80,7 +80,8 @@ define( function( require ) {
     },
 
     /**
-     * Is this term a like term?
+     * Are this term and the specified term 'like terms'?
+     * All constant terms are like terms.
      * @param {Term} term
      * @returns {boolean}
      * @public

@@ -69,7 +69,8 @@ define( function( require ) {
     },
 
     /**
-     * Is this term a like term?
+     * Are this term and the specified term 'like terms'?
+     * Mystery terms are 'like' if they are associated with the same mystery object.
      * @param {Term} term
      * @returns {boolean}
      * @public
