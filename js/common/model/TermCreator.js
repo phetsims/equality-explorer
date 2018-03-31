@@ -461,6 +461,18 @@ define( function( require ) {
     },
 
     /**
+     * Does the specified term have a numerator or denominator that exceeds EqualityExplorerConstants.LARGEST_INTEGER?
+     * See https://github.com/phetsims/equality-explorer/issues/48
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     * @override
+     */
+    isNumberLimitExceeded: function( term ) {
+      throw new Error( 'isNumberLimitExceeded must be implemented by subtype' );
+    },
+
+    /**
      * Instantiates a term.
      * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
@@ -483,18 +495,6 @@ define( function( require ) {
      */
     combineTerms: function( term1, term2, options ) {
       throw new Error( 'combineTerms must be implemented by subtype' );
-    },
-
-    /**
-     * Does the specified term have a numerator or denominator that exceeds EqualityExplorerConstants.LARGEST_INTEGER?
-     * See https://github.com/phetsims/equality-explorer/issues/48
-     * @param {Term} term
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isNumberLimitExceeded: function( term ) {
-      throw new Error( 'isNumberLimitExceeded must be implemented by subtype' );
     },
 
     /**
