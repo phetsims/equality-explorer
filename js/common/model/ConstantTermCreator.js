@@ -82,18 +82,20 @@ define( function( require ) {
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
+      // If the constant value wasn't specified, use the default with sign applied.
       if ( !options.constantValue ) {
         options.constantValue = this.defaultConstantValue.timesInteger( options.sign );
       }
 
-      // Choose location based on sign of the constant.
+      // If the location wasn't specified, choose location based on sign of the constant.
       // This determines which TermCreatorNode in the TermToolbox this term will animate to.
-      assert && assert( !options.location, 'ConstantTermCreator sets location' );
-      if ( options.constantValue.sign === 1 ) {
-        options.location = this.positiveLocation;
-      }
-      else {
-        options.location = this.negativeLocation;
+      if( !options.location ) {
+        if ( options.constantValue.sign === 1 ) {
+          options.location = this.positiveLocation;
+        }
+        else {
+          options.location = this.negativeLocation;
+        }
       }
 
       return new ConstantTerm( options );
@@ -238,18 +240,6 @@ define( function( require ) {
       }
 
       return summedToZero;
-    },
-
-    /**
-     * Do this term creator and the specified term creator create like terms?
-     * All constant term creators are 'like'.
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isLikeTermCreator: function( termCreator ) {
-      return ( termCreator instanceof ConstantTermCreator );
     },
 
     /**

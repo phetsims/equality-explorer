@@ -421,6 +421,30 @@ define( function( require ) {
       this.weightOnPlateProperty.value = weight;
     },
 
+    /**
+     * Do this term creator and the specified term creator create like terms?
+     * @param {TermCreator} termCreator
+     * @returns {boolean}
+     * @public
+     */
+    isLikeTermCreator: function( termCreator ) {
+
+      // Create 2 terms via createTermProtected, not createTerm, so that they are not managed.
+      // Specify location because this method is called before positiveLocation and negativeLocation are initialized.
+      var options = { location: Vector2.ZERO };
+      var thisTerm = this.createTermProtected( options );
+      var thatTerm = termCreator.createTermProtected( options );
+
+      // If the 2 terms are 'like' then the creators are 'like'.
+      var isLike = thisTerm.isLikeTerm( thatTerm );
+      
+      // Dispose of the terms.
+      thisTerm.dispose();
+      thatTerm.dispose();
+
+      return isLike;
+    },
+
     //-------------------------------------------------------------------------------------------------
     // Below here are @abstract methods, to be implemented by subtypes
     //-------------------------------------------------------------------------------------------------
@@ -506,17 +530,6 @@ define( function( require ) {
      */
     applyOperation: function( operation ) {
       throw new Error( 'applyOperation must be implemented by subtypes' );
-    },
-
-    /**
-     * Do this term creator and the specified term creator create like terms?
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @abstract
-     */
-    isLikeTermCreator: function( termCreator ) {
-      throw new Error( 'isLikeTermCreator must be implemented by subtype' );
     },
 
     /**

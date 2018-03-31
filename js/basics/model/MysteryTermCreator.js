@@ -58,9 +58,15 @@ define( function( require ) {
      * @override
      */
     createTermProtected: function( options ) {
-      return new MysteryTerm( this.mysteryObject, {
-        location: this.positiveLocation // all mystery terms have an implicit coefficient of 1
-      } );
+
+      options = options || {};
+      
+      // Set this way so we don't access positiveLocation before it has been initialized
+      if ( !options.location ) {
+        options.location  = this.positiveLocation; // all mystery terms are positive
+      }
+
+      return new MysteryTerm( this.mysteryObject, options );
     },
 
     /**
@@ -84,18 +90,6 @@ define( function( require ) {
      */
     createTermNode: function( term, options ) {
       return new MysteryTermNode( this, term, this.plate, options );
-    },
-
-    /**
-     * Do this term creator and the specified term creator create like terms?
-     * MysteryTermCreators are equivalent if they manage terms for the same mystery object.
-     * @param {TermCreator} termCreator
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isLikeTermCreator: function( termCreator ) {
-      return ( termCreator instanceof MysteryTermCreator ) && ( termCreator.mysteryObject === this.mysteryObject );
     },
 
     /**
