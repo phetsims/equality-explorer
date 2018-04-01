@@ -1,6 +1,6 @@
 TODO items for equality-explorer
 
-Further simplify applying universal operations by mutating term on scale?
+Clean up TermCreator hierarchy by using manageTerm.
 
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
