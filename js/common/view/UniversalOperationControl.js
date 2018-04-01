@@ -291,7 +291,7 @@ define( function( require ) {
   }
 
   /**
-   * Is the operation invalid an attempt to do something unsupported with a variable term operand?
+   * Is the operation an attempt to do something that is unsupported with a variable term operand?
    * Times and divide are unsupported for variable terms operands.
    * @param {string} operator - see EqualityExplorerConstants.OPERATORS
    * @param {Term} operand
