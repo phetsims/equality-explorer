@@ -2,8 +2,13 @@
 
 /**
  * Abstract base type for creating and managing terms.
- * Terms are created either by dragging them out of the toolbox below the plate,
+ *
+ * Terms are created in either by dragging them out of the toolbox below the plate,
  * by restoring a snapshot, or by using the 'universal operation' control.
+ *
+ * TermCreators operate in one of two modes, based on {boolean} this.combineLikeTermsEnabled:
+ * true: each term *type* occupies one cell on the scale, and all like terms are combined
+ * false: each term *instance* occupies one cell on the scale, and terms are combined only if they sum to zero
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
