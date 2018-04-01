@@ -75,7 +75,7 @@ define( function( require ) {
     this.termCreators = plate.termCreators;
 
     // @private {*[]} data structure that describes the terms for each termCreator.
-    // Format is specific to TermCreator subtype. See createSnapshot for each TermCreator subtype.
+    // Format is specific to Term subtypes. See createSnapshot for each Term subtype.
     this.snapshotDataStructures = [];
 
     // Create a snapshot data structure for each termCreator
