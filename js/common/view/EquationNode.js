@@ -105,16 +105,14 @@ define( function( require ) {
 
       // dynamic equation
 
-      // {TermCreator[]} all TermCreator instances
-      var termCreators = leftTermCreators.concat( rightTermCreators );
-
       // {Property[]} dependencies that require the relational operator to be updated
       var relationalOperatorDependencies = [];
 
       // {Property[]} dependencies that require the terms to be updated
       var termDependencies = [];
 
-      termCreators.forEach( function( termCreator ) {
+      // Gather dependencies for all term creators...
+      leftTermCreators.concat( rightTermCreators ).forEach( function( termCreator ) {
         relationalOperatorDependencies.push( termCreator.weightOnPlateProperty );
         termDependencies.push( termCreator.numberOfTermsOnPlateProperty );
       } );

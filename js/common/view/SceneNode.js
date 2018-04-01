@@ -146,7 +146,7 @@ define( function( require ) {
       dialog.show();
     };
 
-    scene.leftTermCreators.concat( scene.rightTermCreators ).forEach( function( termCreator ) {
+    scene.allTermCreators.forEach( function( termCreator ) {
       termCreator.termCreatedEmitter.addListener( termCreatedListener ); // removeListener not needed
       termCreator.numberLimitExceededEmitter.addListener( numberLimitExceededListener ); // removeListener not needed
     } );

@@ -62,6 +62,9 @@ define( function( require ) {
     this.leftTermCreators = leftTermCreators;
     this.rightTermCreators = rightTermCreators;
 
+    // @public (read-only) for operations that need to be performed on all term creators
+    this.allTermCreators = leftTermCreators.concat( rightTermCreators );
+
     // @public (read-only)
     this.scale = new BalanceScale( this.leftTermCreators, this.rightTermCreators, {
       location: new Vector2( 355, 420 ), // determined empirically
@@ -99,9 +102,8 @@ define( function( require ) {
       // update the lockedProperty of all term creators.
       // unlink not needed.
       this.lockedProperty.link( function( locked ) {
-        var termCreators = leftTermCreators.concat( rightTermCreators );
-        for ( var i = 0; i < termCreators.length; i++ ) {
-          termCreators[ i ].lockedProperty.value = locked;
+        for ( var i = 0; i < self.allTermCreators.length; i++ ) {
+          self.allTermCreators[ i ].lockedProperty.value = locked;
         }
       } );
 
@@ -155,7 +157,7 @@ define( function( require ) {
     reset: function() {
 
       // delete all terms
-      this.leftTermCreators.concat( this.rightTermCreators ).forEach( function( termCreator ) {
+      this.allTermCreators.forEach( function( termCreator ) {
         termCreator.disposeAllTerms();
       } );
 
@@ -168,7 +170,7 @@ define( function( require ) {
      * @public
      */
     disposeTermsNotOnScale: function() {
-      this.leftTermCreators.concat( this.rightTermCreators ).forEach( function( termCreator ) {
+      this.allTermCreators.forEach( function( termCreator ) {
         termCreator.disposeTermsNotOnPlate();
       } );
     },
@@ -181,10 +183,7 @@ define( function( require ) {
     step: function( dt ) {
 
       // step all terms
-      this.leftTermCreators.forEach( function( termCreator ) {
-        termCreator.step( dt );
-      } );
-      this.rightTermCreators.forEach( function( termCreator ) {
+      this.allTermCreators.forEach( function( termCreator ) {
         termCreator.step( dt );
       } );
     },

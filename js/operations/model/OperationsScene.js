@@ -173,8 +173,7 @@ define( function( require ) {
       var termCreatorsZero = [];
 
       // Apply the operation to each TermCreator
-      var termCreators = this.leftTermCreators.concat( this.rightTermCreators );
-      termCreators.forEach( function( termCreator ) {
+      this.allTermCreators.forEach( function( termCreator ) {
         var summedToZero = termCreator.applyOperation( operation );
         if ( summedToZero ) {
           termCreatorsZero.push( termCreator );
@@ -182,7 +181,7 @@ define( function( require ) {
       } );
 
       // If any term exceeds the number limit as the result of applying the operation ...
-      if ( this.isNumberLimitExceeded( termCreators ) ) {
+      if ( this.isNumberLimitExceeded( this.allTermCreators ) ) {
 
         // ... undo the operation by restoring the snapshot.
         snapshot.restore();

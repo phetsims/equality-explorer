@@ -272,7 +272,7 @@ define( function( require ) {
     var numberLimitExceededListener = function() {
       self.stopAnimations();
     };
-    scene.leftTermCreators.concat( scene.rightTermCreators ).forEach( function( termCreator ) {
+    scene.allTermCreators.forEach( function( termCreator ) {
       termCreator.numberLimitExceededEmitter.addListener( numberLimitExceededListener ); // removeListener not needed
     } );
   }
