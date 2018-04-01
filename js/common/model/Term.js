@@ -15,17 +15,32 @@ define( function( require ) {
   var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Util = require( 'DOT/Util' );
 
   /**
+   * @param {Fraction} significantValue
    * @param {Object} [options]
    * @constructor
    * @abstract
    */
-  function Term( options ) {
+  function Term( significantValue, options ) {
+
+    assert && assert( significantValue instanceof Fraction, 'invalid significantValue: ' + significantValue );
 
     options = _.extend( {
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
     }, options );
+
+    // @private the value that is significant for the purposes of determining sign and number limits.
+    // The value is that significant is specific to the Term subtype.
+    this.significantValue = significantValue;
+
+    // @public (read-only)
+    // Sign of the term's significant number, ala Math.sign.
+    // Note that sign is not related to the term's weight. For example, for variable terms, the 'significant number'
+    // is the coefficient. Consider term '-5x', where x=-2. While the weight is 10 (-5 * -2), the sign is based on
+    // the coefficient -5, and is therefore -1.
+    this.sign = Util.sign( significantValue.getValue() );
 
     // @public (read-only) diameter of the term in the view, convenient to store in the model
     this.diameter = options.diameter;
@@ -71,10 +86,8 @@ define( function( require ) {
      * @public
      */
     isNumberLimitExceeded: function() {
-      var value = this.getSignificantValue();
-      assert && assert( value instanceof Fraction, 'invalid value: ' + value );
-      return ( Math.abs( value.numerator ) > EqualityExplorerConstants.LARGEST_INTEGER ||
-               Math.abs( value.denominator ) > EqualityExplorerConstants.LARGEST_INTEGER );
+      return ( Math.abs( this.significantValue.numerator ) > EqualityExplorerConstants.LARGEST_INTEGER ||
+               Math.abs( this.significantValue.denominator ) > EqualityExplorerConstants.LARGEST_INTEGER );
     },
 
     /**
@@ -104,22 +117,6 @@ define( function( require ) {
     },
 
     /**
-     * Gets the sign of the term's significant number, indicating whether the number is positive, negative or zero.
-     * The meaning on 'significant number' is specific to the Term subtype.
-     *
-     * Note that sign is not related to the term's weight. For example, for variable terms, the 'significant number'
-     * is the coefficient. Consider term '-5x', where x=-2. While the weight is 10 (-5 * -2), the sign is based on
-     * the coefficient -5, and is therefore -1.
-     *
-     * @returns {number} ala Math.sign
-     * @public
-     * @abstract
-     */
-    get sign() {
-      throw new Error( 'sign must be implemented by subtype' );
-    },
-
-    /**
      * Are this term and the specified term 'like terms'?
      * If you're not familiar with 'like terms', see https://en.wikipedia.org/wiki/Like_terms.
      * @param {Term} term
@@ -129,18 +126,6 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       throw new Error( 'isLikeTerm must be implemented by subtype' );
-    },
-
-    /**
-     * Gets the term's 'significant value', for the purposes of testing number limits and determining sign.
-     * The meaning on 'significant value' is specific to the Term subtype.
-     * See https://github.com/phetsims/equality-explorer/issues/48
-     * @returns {Fraction}
-     * @protected
-     * @abstract
-     */
-    getSignificantValue: function() {
-      throw new Error( 'getSignificantValue must be implemented by subtypes' );
     }
   } );
 } );

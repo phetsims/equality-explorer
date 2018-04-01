@@ -15,7 +15,6 @@ define( function( require ) {
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
-  var Util = require( 'DOT/Util' );
 
   // constants
   var COEFFICIENT = Fraction.fromInteger( 1 ); // all mystery terms have an implicit coefficient of 1
@@ -30,7 +29,7 @@ define( function( require ) {
     // @public (read-only)
     this.mysteryObject = mysteryObject;
 
-    Term.call( this, options );
+    Term.call( this, COEFFICIENT, options );
   }
 
   equalityExplorer.register( 'MysteryTerm', MysteryTerm );
@@ -43,8 +42,6 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-
-      // e.g. 'MysteryTerm: turtle 6'
       return 'MysteryTerm: ' + this.mysteryObject.name + ' ' + this.mysteryObject.weight;
     },
 
@@ -63,16 +60,6 @@ define( function( require ) {
     },
 
     /**
-     * Gets the sign of a term's significant number, indicating whether the number is positive, negative or zero.
-     * @returns {number} ala Math.sign
-     * @public
-     * @override
-     */
-    get sign() {
-      return Util.sign( COEFFICIENT.getValue() );
-    },
-
-    /**
      * Are this term and the specified term 'like terms'?
      * Mystery terms are 'like' if they are associated with the same mystery object.
      * @param {Term} term
@@ -82,18 +69,6 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       return ( term instanceof MysteryTerm ) && ( term.mysteryObject === this.mysteryObject );
-    },
-
-    /**
-     * Gets the value that is considered 'significant' for the purposes of exceeding the number limit
-     * specified by EqualityExplorerConstants.LARGEST_INTEGER.
-     * See https://github.com/phetsims/equality-explorer/issues/48
-     * @returns {Fraction}
-     * @protected
-     * @override
-     */
-    getSignificantValue: function() {
-      return COEFFICIENT;
     }
   } );
 } );

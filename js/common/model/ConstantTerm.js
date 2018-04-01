@@ -13,7 +13,6 @@ define( function( require ) {
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
-  var Util = require( 'DOT/Util' );
 
   // constants
   var DEFAULT_CONSTANT_VALUE = Fraction.fromInteger( 1 );
@@ -36,7 +35,7 @@ define( function( require ) {
     // @public (read-only) {Fraction}
     this.constantValue = options.constantValue;
 
-    Term.call( this, options );
+    Term.call( this, this.constantValue, options );
   }
 
   equalityExplorer.register( 'ConstantTerm', ConstantTerm );
@@ -49,8 +48,6 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-
-      // e.g. 'ConstantTerm: 5/3'
       return 'ConstantTerm: ' + this.constantValue;
     },
 
@@ -69,17 +66,6 @@ define( function( require ) {
     },
 
     /**
-     * Gets the sign of a term's significant number, indicating whether the number is positive, negative or zero.
-     * The 'significant number' for a ContantTerm is its constantValue.
-     * @returns {number} ala Math.sign
-     * @public
-     * @override
-     */
-    get sign() {
-      return Util.sign( this.constantValue.getValue() );
-    },
-
-    /**
      * Are this term and the specified term 'like terms'?
      * All constant terms are like terms.
      * @param {Term} term
@@ -89,18 +75,6 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       return ( term instanceof ConstantTerm );
-    },
-
-    /**
-     * Gets the value that is considered 'significant' for the purposes of exceeding the number limit
-     * specified by EqualityExplorerConstants.LARGEST_INTEGER.
-     * See https://github.com/phetsims/equality-explorer/issues/48
-     * @returns {Fraction}
-     * @protected
-     * @override
-     */
-    getSignificantValue: function() {
-      return this.constantValue;
     },
 
     /**
