@@ -9,13 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
@@ -56,11 +53,11 @@ define( function( require ) {
   return inherit( TermCreator, VariableTermCreator, {
 
     /**
-     * Returns the sum of coefficients for all terms on the scale.
+     * Returns the sum of coefficients for all terms on the plate.
      * @returns {RationalNumber}
      * @public
      */
-    sumCoefficientsOnScale: function() {
+    sumCoefficientsOnPlate: function() {
       var sum = Fraction.fromInteger( 0 );
       for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
         sum = sum.plus( this.termsOnPlate.get( i ).coefficient ).reduced();
@@ -112,63 +109,22 @@ define( function( require ) {
         options.coefficient = this.defaultCoefficient.timesInteger( options.sign );
       }
 
-      // If the location wasn't specified, choose location based on sign of the coefficient.
-      // This determines which TermCreatorNode in the TermToolbox this term will animate to.
-      if ( !options.location ) {
-        if ( options.coefficient.sign === 1 ) {
-          options.location = this.positiveLocation;
-        }
-        else {
-          options.location = this.negativeLocation;
-        }
-      }
-
       return new VariableTerm( this.variable, options );
     },
 
     /**
-     * Creates a new term by combining two terms.
-     * @param {Term} term1
-     * @param {Term} term2
-     * @param {Object} options - passed to the combined VariableTerm's constructor
-     * @returns {Term|null} - the combined term, null if the terms sum to zero
-     * @public
-     * @override
-     */
-    combineTerms: function( term1, term2, options ) {
-
-      assert && assert( term1 instanceof VariableTerm, 'invalid term1: ' + term1 );
-      assert && assert( term2 instanceof VariableTerm, 'invalid term2: ' + term2 );
-
-      options = options || {};
-
-      assert && assert( options.coefficient === undefined, 'VariableTermCreator sets coefficient' );
-      options.coefficient = term1.coefficient.plus( term2.coefficient ).reduced();
-
-      // If the coefficient is not zero, create a new term.
-      var combinedTerm = null;
-      if ( options.coefficient.getValue() !== 0 ) {
-        combinedTerm = this.createTerm( options );
-      }
-      return combinedTerm;
-    },
-
-    /**
-     * Copies the specified term, with possible modifications specified via options.
-     * @param {Term} term
-     * @param {Object} [options] - passed to the new VariableTerm's constructor
+     * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
+     * The term is not managed by the TermCreator.
+     * @param {Object} [options] - VariableTerm options
      * @returns {Term}
      * @public
      * @override
      */
-    copyTerm: function( term, options ) {
-      assert && assert( term instanceof VariableTerm, 'invalid term: ' + term );
-
+    createZeroTerm: function( options ) {
       options = options || {};
-      assert && assert( options.coefficient === undefined, 'VariableTermCreator sets coefficient' );
-      options.coefficient = term.coefficient;
-
-      return this.createTerm( options );
+      assert && assert( !options.coefficient, 'VariableTermCreator sets coefficient' );
+      options.coefficient = Fraction.fromInteger( 0 );
+      return this.createTermProtected( options );
     },
 
     /**
@@ -187,70 +143,6 @@ define( function( require ) {
       }, options );
 
       return new VariableTermNode( this, term, this.plate, options );
-    },
-    
-    /**
-     * Applies an operation to terms on the plate.
-     * 
-     * @param {UniversalOperation} operation
-     * @returns {boolean} - true if the operation resulted in a term on the plate becoming zero, false otherwise
-     */
-    applyOperation: function( operation ) {
-      
-      assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
-      assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate: ' + this.termsOnPlate.length );
-      
-      var summedToZero = false;
-      var termOnPlate = this.plate.getTermInCell( this.likeTermsCell ); // {ConstantTerm}
-      var newCoefficient = null; // {Fraction|null}
-
-      if ( termOnPlate ) {
-
-        // there is a term on the plate, apply the operation if it's relevant
-        if ( operation.operator === MathSymbols.PLUS && operation.operand instanceof VariableTerm ) {
-          newCoefficient = termOnPlate.coefficient.plus( operation.operand.coefficient ).reduced();
-        }
-        else if ( operation.operator === MathSymbols.MINUS && operation.operand instanceof VariableTerm ) {
-          newCoefficient = termOnPlate.coefficient.minus( operation.operand.coefficient ).reduced();
-        }
-        else if ( operation.operator === MathSymbols.TIMES && operation.operand instanceof ConstantTerm ) {
-          newCoefficient = termOnPlate.coefficient.times( operation.operand.constantValue ).reduced();
-        }
-        else if ( operation.operator === MathSymbols.DIVIDE && operation.operand instanceof ConstantTerm ) {
-          assert && assert( operation.operand.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-          newCoefficient = termOnPlate.coefficient.divided( operation.operand.constantValue ).reduced();
-        }
-      }
-      else if ( operation.operand instanceof VariableTerm ) {
-
-        // there is no term on the plate, create one if the operation is relevant
-        if ( operation.operator === MathSymbols.PLUS ) {
-          newCoefficient = operation.operand.coefficient;
-        }
-        else if ( operation.operator === MathSymbols.MINUS ) {
-          newCoefficient = operation.operand.coefficient.timesInteger( -1 );
-        }
-      }
-
-      if ( newCoefficient ) {
-
-        // dispose of the term on the plate
-        termOnPlate && termOnPlate.dispose();
-
-        if ( newCoefficient.getValue() === 0 ) {
-          summedToZero = true;
-        }
-        else {
-          
-          // create a new term on the plate
-          this.createTermOnPlate( this.likeTermsCell, {
-            coefficient: newCoefficient,
-            diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-          } );
-        }
-      }
-
-      return summedToZero;
     }
   } );
 } );

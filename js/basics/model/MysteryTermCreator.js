@@ -58,15 +58,19 @@ define( function( require ) {
      * @override
      */
     createTermProtected: function( options ) {
-
-      options = options || {};
-      
-      // Set this way so we don't access positiveLocation before it has been initialized
-      if ( !options.location ) {
-        options.location  = this.positiveLocation; // all mystery terms are positive
-      }
-
       return new MysteryTerm( this.mysteryObject, options );
+    },
+
+    /**
+     * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
+     * The term is not managed by the TermCreator.
+     * @param {Object} [options] - Term constructor options
+     * @returns {Term}
+     * @public
+     * @abstract
+     */
+    createZeroTerm: function( options ) {
+      throw new Error( 'createZeroTerm is not supported for MysteryTermCreator' );
     },
 
     /**
@@ -79,26 +83,6 @@ define( function( require ) {
      */
     createTermNode: function( term, options ) {
       return new MysteryTermNode( this, term, this.plate, options );
-    },
-
-    //-------------------------------------------------------------------------------------------------
-    // Below here are parts of the TermCreator API that are not supported for mystery terms.
-    // These are all related to universal operations, which are not applicable to mystery terms.
-    //-------------------------------------------------------------------------------------------------
-
-    // @public @override see TermCreator
-    combineTerms: function( term1, term2, options ) {
-      throw new Error( 'combineTerms is not supported by MysteryTermCreator' );
-    },
-
-    // @public @override see TermCreator
-    copyTerm: function( term, options ) {
-      throw new Error( 'copyTerm is not supported by MysteryTermCreator' );
-    },
-
-    // @public @override see TermCreator
-    applyOperation: function( operation ) {
-      throw new Error( 'applyOperation is not supported by MysteryTermCreator' );
     }
   } );
 } );

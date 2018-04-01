@@ -211,7 +211,7 @@ define( function( require ) {
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
-          var coefficient = termCreator.sumCoefficientsOnScale();
+          var coefficient = termCreator.sumCoefficientsOnPlate();
 
           if ( coefficient.getValue() !== 0 ) {
 
@@ -231,7 +231,7 @@ define( function( require ) {
         }
         else if ( termCreator instanceof ConstantTermCreator ) {
 
-          var constantValue = termCreator.sumConstantsOnScale();
+          var constantValue = termCreator.sumConstantsOnPlate();
 
           if ( constantValue.getValue() !== 0 ) {
 

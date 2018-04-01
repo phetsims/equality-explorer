@@ -66,6 +66,20 @@ define( function( require ) {
 
   return inherit( Object, EqualityExplorerMovable, {
 
+    /**
+     * Creates the options that would be needed to instantiate a copy of this object.
+     * This is used by subtypes that implement copy.
+     * @returns {Object}
+     * @public
+     */
+    copyOptions: function() {
+      return {
+        location: this.locationProperty.value,
+        dragBounds: this.dragBounds,
+        animationSpeed: this.animationSpeed
+      };
+    },
+
     // @public
     dispose: function() {
       assert && assert( !this.disposed, 'dispose called twice for ' + this );

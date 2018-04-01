@@ -12,10 +12,8 @@ define( function( require ) {
   var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
 
   /**
@@ -35,11 +33,11 @@ define( function( require ) {
   return inherit( TermCreator, ConstantTermCreator, {
 
     /**
-     * Returns the sum of constant values for all terms on the scale.
+     * Returns the sum of constant values for all terms on the plate.
      * @returns {RationalNumber}
      * @public
      */
-    sumConstantsOnScale: function() {
+    sumConstantsOnPlate: function() {
       var sum = Fraction.fromInteger( 0 );
       for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
         sum = sum.plus( this.termsOnPlate.get( i ).constantValue ).reduced();
@@ -87,63 +85,22 @@ define( function( require ) {
         options.constantValue = this.defaultConstantValue.timesInteger( options.sign );
       }
 
-      // If the location wasn't specified, choose location based on sign of the constant.
-      // This determines which TermCreatorNode in the TermToolbox this term will animate to.
-      if( !options.location ) {
-        if ( options.constantValue.sign === 1 ) {
-          options.location = this.positiveLocation;
-        }
-        else {
-          options.location = this.negativeLocation;
-        }
-      }
-
       return new ConstantTerm( options );
     },
 
     /**
-     * Creates a new term by combining two terms.
-     * @param {Term} term1
-     * @param {Term} term2
-     * @param {Object} options - passed to the combined ConstantTerm's constructor
-     * @returns {Term|null} - the combined term, null if the terms sum to zero
-     * @public
-     * @override
-     */
-    combineTerms: function( term1, term2, options ) {
-
-      assert && assert( term1 instanceof ConstantTerm, 'invalid term1: ' + term1 );
-      assert && assert( term2 instanceof ConstantTerm, 'invalid term2: ' + term2 );
-
-      options = options || {};
-
-      assert && assert( !options.constantValue, 'ConstantTermCreator sets constantValue' );
-      options.constantValue = term1.constantValue.plus( term2.constantValue ).reduced();
-
-      // If the constant is not zero, create a new term.
-      var combinedTerm = null;
-      if ( options.constantValue.getValue() !== 0 ) {
-        combinedTerm = this.createTerm( options );
-      }
-      return combinedTerm;
-    },
-
-    /**
-     * Copies the specified term, with possible modifications specified via options.
-     * @param {Term} term
-     * @param {Object} [options] - passed to the new ConstantTerm's constructor
+     * Creates a term whose significant value is zero. The term is not managed by the TermCreator.
+     * This is used when applying an operation to an empty plate.
+     * @param {Object} [options] - ConstantTerm options
      * @returns {Term}
      * @public
      * @override
      */
-    copyTerm: function( term, options ) {
-      assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
-
+    createZeroTerm: function( options ) {
       options = options || {};
-      assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
-      options.constantValue = term.constantValue;
-
-      return this.createTerm( options );
+      assert && assert( !options.constantValue, 'ConstantTermCreator sets constantValue' );
+      options.constantValue = Fraction.fromInteger( 0 );
+      return this.createTermProtected( options );
     },
 
     /**
@@ -156,77 +113,6 @@ define( function( require ) {
      */
     createTermNode: function( term, options ) {
       return new ConstantTermNode( this, term, this.plate, options );
-    },
-
-    /**
-     * Applies an operation to terms on the plate.
-     *
-     * @param {UniversalOperation} operation
-     * @returns {boolean} - true if the operation resulted in a term on the plate becoming zero, false otherwise
-     */
-    applyOperation: function( operation ) {
-      
-      assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
-      assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate: ' + this.termsOnPlate.length );
-      
-      var summedToZero = false;
-
-      // only constant operands apply to constant terms
-      if ( operation.operand instanceof ConstantTerm ) {
-
-        var newConstantValue = null; // {Fraction|null}
-
-        var termOnPlate = this.plate.getTermInCell( this.likeTermsCell ); // {ConstantTerm}
-        var constantValueOperand = operation.operand.constantValue; // {Fraction}
-
-        if ( termOnPlate ) {
-
-          // there is a term on the plate, apply the operation if it's relevant
-          if ( operation.operator === MathSymbols.PLUS ) {
-            newConstantValue = termOnPlate.constantValue.plus( constantValueOperand ).reduced();
-          }
-          else if ( operation.operator === MathSymbols.MINUS ) {
-            newConstantValue = termOnPlate.constantValue.minus( constantValueOperand ).reduced();
-          }
-          else if ( operation.operator === MathSymbols.TIMES ) {
-            newConstantValue = termOnPlate.constantValue.times( constantValueOperand ).reduced();
-          }
-          else if ( operation.operator === MathSymbols.DIVIDE ) {
-            assert && assert( constantValueOperand.getValue() !== 0, 'attempt to divide by zero' );
-            newConstantValue = termOnPlate.constantValue.divided( constantValueOperand ).reduced();
-          }
-        }
-        else {
-
-          // there is no term on the plate, create one if the operation is relevant
-          if ( operation.operator === MathSymbols.PLUS ) {
-            newConstantValue = constantValueOperand;
-          }
-          else if ( operation.operator === MathSymbols.MINUS ) {
-            newConstantValue = constantValueOperand.timesInteger( -1 );
-          }
-        }
-
-        if ( newConstantValue ) {
-
-          // dispose of the term on the plate
-          termOnPlate && termOnPlate.dispose();
-
-          if ( newConstantValue.getValue() === 0 ) {
-            summedToZero = true;
-          }
-          else {
-
-            // create a new term on the plate
-            this.createTermOnPlate( this.likeTermsCell, {
-              constantValue: newConstantValue,
-              diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-            } );
-          }
-        }
-      }
-
-      return summedToZero;
     }
   } );
 } );

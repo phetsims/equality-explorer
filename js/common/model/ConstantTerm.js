@@ -12,6 +12,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   // constants
@@ -29,6 +30,7 @@ define( function( require ) {
 
     assert && assert( options.constantValue instanceof Fraction, 'invalid constantValue: ' + options.constantValue );
     assert && assert( options.constantValue.isReduced(), 'constantValue must be reduced: ' + options.constantValue );
+    assert && assert( !options.coefficient, 'coefficient is a VariableTerm option' );
 
     // @public (read-only) {Fraction}
     this.constantValue = options.constantValue;
@@ -49,9 +51,91 @@ define( function( require ) {
       return 'ConstantTerm: ' + this.constantValue;
     },
 
+    /**
+     * Creates the options that would be needed to instantiate a copy of this object.
+     * @returns {Object}
+     * @protected
+     * @override
+     */
+    copyOptions: function() {
+      var superOptions = Term.prototype.copyOptions.call( this );
+      return _.extend( {
+        constantValue: this.constantValue
+      }, superOptions );
+    },
+
+    /**
+     * Adds a term this term to create a new term.
+     * @param {ConstantTerm} term
+     * @param {Object} [options] - same as constructor
+     * @returns {ConstantTerm}
+     * @public
+     */
+    plus: function( term, options ) {
+      options = options || {};
+      assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
+      return this.copy( {
+        constantValue: this.constantValue.plus( term.constantValue ).reduce()
+      } );
+    },
+
+    /**
+     * Subtracts a term from this term to create a new term.
+     * @param {ConstantTerm} term
+     * @param {Object} [options] - same as constructor
+     * @returns {ConstantTerm}
+     */
+    minus: function( term, options ) {
+      options = options || {};
+      assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
+      return this.copy( {
+        constantValue: this.constantValue.minus( term.constantValue ).reduce()
+      } );
+    },
+
+    /**
+     * Multiplies this term by another term to create a new term.
+     * @param {ConstantTerm} term
+     * @param {Object} [options] - same as constructor
+     * @returns {ConstantTerm}
+     */
+    times: function( term, options ) {
+      options = options || {};
+      assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
+      return this.copy( {
+        constantValue: this.constantValue.times( term.constantValue ).reduce()
+      } );
+    },
+
+    /**
+     * Divides this term by another term to create a new term.
+     * @param {ConstantTerm} term
+     * @param {Object} [options] - same as constructor
+     * @returns {ConstantTerm}
+     */
+    divided: function( term, options ) {
+      options = options || {};
+      assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
+      assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
+      return this.copy( {
+        constantValue: this.constantValue.divided( term.constantValue ).reduce()
+      } );
+    },
+
     //-------------------------------------------------------------------------------------------------
     // Below here is the implementation of the Term API
     //-------------------------------------------------------------------------------------------------
+
+    /**
+     * Creates a copy of this term, with modifications through options.
+     * @param {Object} [options] - same as constructor options
+     * @returns {ConstantTerm}
+     * @public
+     * @override
+     */
+    copy: function( options ) {
+      return new ConstantTerm( _.extend( this.copyOptions(), options ) );
+    },
 
     /**
      * The weight of a constant term is the same as its value.
@@ -85,6 +169,38 @@ define( function( require ) {
       return _.extend( Term.prototype.createSnapshot.call( this ), {
         constantValue: this.constantValue
       } );
+    },
+
+    /**
+     * Applies an operation to this term, resulting in a new term.
+     * @param {UniversalOperation} operation
+     * @param {Object} [options] - same as constructor
+     * @returns {ConstantTerm|null} - null if the operation is not applicable to this term.
+     * @public
+     * @override
+     */
+    applyOperation: function( operation, options ) {
+
+      var term = null;
+
+      // constant operands only
+      if ( operation.operand instanceof ConstantTerm ) {
+
+        if ( operation.operator === MathSymbols.PLUS ) {
+          term = this.plus( operation.operand, options );
+        }
+        else if ( operation.operator === MathSymbols.MINUS ) {
+          term = this.minus( operation.operand, options );
+        }
+        else if ( operation.operator === MathSymbols.TIMES ) {
+          term = this.times( operation.operand, options );
+        }
+        else if ( operation.operator === MathSymbols.DIVIDE ) {
+          term = this.divided( operation.operand, options );
+        }
+      }
+
+      return term;
     }
   } );
 } );

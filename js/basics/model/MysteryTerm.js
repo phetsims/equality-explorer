@@ -26,6 +26,10 @@ define( function( require ) {
    */
   function MysteryTerm( mysteryObject, options ) {
 
+    options = options || {};
+    assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
+    assert && assert( !options.coefficient, 'coefficient is a VariableTerm option' );
+
     // @public (read-only)
     this.mysteryObject = mysteryObject;
 
@@ -50,6 +54,17 @@ define( function( require ) {
     //-------------------------------------------------------------------------------------------------
 
     /**
+     * Creates a copy of this term, with modifications through options.
+     * @param {Object} [options] - same as constructor options
+     * @returns {MysteryTerm}
+     * @public
+     * @override
+     */
+    copy: function( options ) {
+      return new MysteryTerm( this.mysteryObject, _.extend( this.copyOptions(), options ) );
+    },
+
+    /**
      * Gets the weight of this term.
      * @returns {Fraction}
      * @public
@@ -69,6 +84,18 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       return ( term instanceof MysteryTerm ) && ( term.mysteryObject === this.mysteryObject );
+    },
+
+    /**
+     * Applies an operation to this term, resulting in a new term.
+     * @param {UniversalOperation} operation
+     * @param {Object} [options] - same as constructor
+     * @returns {MysteryTerm|null} - null if the operation is not applicable to this term.
+     * @public
+     * @override
+     */
+    applyOperation: function( operation, options ) {
+      return null; // operations are not applicable to mystery terms
     }
   } );
 } );

@@ -16,6 +16,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Event = require( 'SCENERY/input/Event' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -235,11 +236,9 @@ define( function( require ) {
 
       options = _.extend( {
         sign: 1,
-        dragBounds: this.dragBounds,
         event: null // {Event|null} event is non-null if the term is created as the result of a user interaction
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
-      assert && assert( options.event === null || options.event instanceof Event, 'invalid event: ' + options.event );
 
       // create term
       var term = this.createTermProtected( options );
@@ -251,18 +250,28 @@ define( function( require ) {
     },
 
     /**
-     * Tells this term creator to manage a term.
-     *
-     * NOTE! Since TermCreator manages Terms throughout their entire lifecycle, it is of utmost importance
-     * that all Terms are created via this method, or a method that calls this method.
-     *
+     * Tells this term creator to manage a term.  Once managed, a term cannot be unmanaged - it's a life commitment!
      * @param {Term} term
-     * @param {Event|null} event is non-null if term was created as the result of a user interaction
+     * @param {Event|null} [event] is provided if term was created as the result of a user interaction
      * @public
      */
     manageTerm: function( term, event ) {
+      assert && assert( !this.isManagedTerm( term ), 'term is already managed: ' + term );
+      assert && assert( !event || event instanceof Event, 'invalid event: ' + event );
 
       this.allTerms.add( term );
+
+      // set the term's drag bounds
+      term.dragBounds = this.dragBounds;
+
+      // set the term's toolboxLocation, so that it knows how to animate back to the toolbox
+      if ( term.significantValue.getValue() >= 0 ) {
+        term.toolboxLocation = this.positiveLocation;
+      }
+      else {
+        assert && assert( this.negativeLocation, 'negativeLocation has not been initialized' );
+        term.toolboxLocation = this.negativeLocation;
+      }
 
       // Clean up when the term is disposed.
       // removeListener required when the term is disposed, see termWasDisposed.
@@ -274,16 +283,49 @@ define( function( require ) {
     },
 
     /**
-     * Creates a term and puts it in a specified cell in the associate plate's 2D grid.
-     * @param {number} cell
-     * @param {Object} [options] - options passed to createTerm
-     * @returns {Term}
+     * Is the specified term managed by this term creator?
+     * @param {Term} term
+     * @returns {boolean}
+     * @private
+     */
+    isManagedTerm: function( term ) {
+      return this.allTerms.contains( term );
+    },
+
+    /**
+     * Puts a term on the plate. If the term wasn't already managed, it become mananaged.
+     * @param {Term} term
+     * @param {number} cell - cell in the associated plate's 2D grid
      * @public
      */
-    createTermOnPlate: function( cell, options ) {
-      var term = this.createTerm( options );
-      this.putTermOnPlate( term, cell );
-      return term;
+    putTermOnPlate: function( term, cell ) {
+      assert && assert( !this.termsOnPlate.contains( term ), 'term already on plate: ' + term );
+      phet.log && phet.log( 'TermCreator.putTermOnPlate: ' + term );
+
+      // ORDER IS VERY IMPORTANT HERE!
+      if ( !this.isManagedTerm( term ) ) {
+        this.manageTerm( term );
+      }
+      this.plate.addTerm( term, cell );
+      this.termsOnPlate.push( term );
+
+      assert && assert( !this.combineLikeTermsEnabled || this.termsOnPlate.length <= 1,
+        'when combineLikeTermsEnabled, there should be at most 1 term on plate: ' + this.termsOnPlate.length );
+    },
+
+    /**
+     * Removes a term from the plate.
+     * @param {Term} term
+     * @public
+     */
+    removeTermFromPlate: function( term ) {
+      assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
+      assert && assert( this.termsOnPlate.contains( term ), 'term not on plate: ' + term );
+      phet.log && phet.log( 'TermCreator.removeTermFromPlate: ' + term );
+
+      // ORDER IS VERY IMPORTANT HERE!
+      this.plate.removeTerm( term );
+      this.termsOnPlate.remove( term );
     },
 
     /**
@@ -326,33 +368,6 @@ define( function( require ) {
       assert && assert( this.combineLikeTermsEnabled, 'getLikeTermOnPlate is only supported when combineLikeTermsEnabled' );
       assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate' );
       return this.plate.getTermInCell( this.likeTermsCell );
-    },
-
-    /**
-     * Puts a term on the plate. ORDER IS VERY IMPORTANT HERE!
-     * @param {Term} term
-     * @param {number} cell - cell in the associated plate's 2D grid
-     * @public
-     */
-    putTermOnPlate: function( term, cell ) {
-      assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
-      assert && assert( !this.termsOnPlate.contains( term ), 'term already on plate: ' + term );
-      phet.log && phet.log( 'TermCreator.putTermOnPlate: ' + term );
-      this.plate.addTerm( term, cell );
-      this.termsOnPlate.push( term );
-    },
-
-    /**
-     * Removes a term from the plate. ORDER IS VERY IMPORTANT HERE!
-     * @param {Term} term
-     * @public
-     */
-    removeTermFromPlate: function( term ) {
-      assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
-      assert && assert( this.termsOnPlate.contains( term ), 'term not on plate: ' + term );
-      phet.log && phet.log( 'TermCreator.removeTermFromPlate: ' + term );
-      this.plate.removeTerm( term );
-      this.termsOnPlate.remove( term );
     },
 
     /**
@@ -444,10 +459,8 @@ define( function( require ) {
     isLikeTermCreator: function( termCreator ) {
 
       // Create 2 terms via createTermProtected, not createTerm, so that they are not managed.
-      // Specify location because this method is called before positiveLocation and negativeLocation are initialized.
-      var options = { location: Vector2.ZERO };
-      var thisTerm = this.createTermProtected( options );
-      var thatTerm = termCreator.createTermProtected( options );
+      var thisTerm = this.createTermProtected();
+      var thatTerm = termCreator.createTermProtected();
 
       // If the 2 terms are 'like' then the creators are 'like'.
       var isLike = thisTerm.isLikeTerm( thatTerm );
@@ -485,8 +498,53 @@ define( function( require ) {
      */
     restoreSnapshot: function( snapshot ) {
       for ( var i = 0; i < snapshot.length; i++ ) {
-        this.createTermOnPlate( snapshot[ i ].cell, snapshot[ i ].termOptions );
+        var term = this.createTerm( snapshot[ i ].termOptions );
+        this.putTermOnPlate( term, snapshot[ i ].cell );
       }
+    },
+
+    /**
+     * Applies an operation to terms on the plate.
+     * @param {UniversalOperation} operation
+     * @returns {boolean} - true if the operation resulted in a term on the plate becoming zero, false otherwise
+     * @public
+     */
+    applyOperation: function( operation ) {
+
+      assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
+      assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate: ' + this.termsOnPlate.length );
+
+      var summedToZero = false;
+      var plateWasEmpty = false;
+
+      // Get the term on the plate, or use zero term
+      var term = this.plate.getTermInCell( this.likeTermsCell );
+      if ( !term ) {
+        plateWasEmpty = true;
+        term = this.createZeroTerm( {
+          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+        } );
+      }
+
+      // {Term|null} Apply the operation to the term. Returns null if the operation was not applicable to the term.
+      var newTerm = term.applyOperation( operation );
+
+      if ( newTerm ) {
+
+        // dispose of the term
+        term.dispose();
+
+        if ( newTerm.sign === 0 ) {
+          summedToZero = !plateWasEmpty;
+        }
+        else {
+
+          // manage the new term and put it on the plate
+          this.putTermOnPlate( newTerm, this.likeTermsCell );
+        }
+      }
+
+      return summedToZero;
     },
 
     //-------------------------------------------------------------------------------------------------
@@ -516,30 +574,15 @@ define( function( require ) {
     },
 
     /**
-     * Creates a new term by combining two terms.
-     * Careful! When implementing this, the term must be created by calling createTerm, or the term won't be managed.
-     * @param {Term} term1
-     * @param {Term} term2
-     * @param {Object} [options] - passed to the combined Term's constructor
-     * @returns {Term|null} - the combined term, null if the terms sum to zero
-     * @public
-     * @abstract
-     */
-    combineTerms: function( term1, term2, options ) {
-      throw new Error( 'combineTerms must be implemented by subtype' );
-    },
-
-    /**
-     * Copies the specified term, with possible modifications specified via options.
-     * Careful! When implementing this, the term must be created by calling createTerm, or the term won't be managed.
-     * @param {Term} term
-     * @param {Object} [options] - passed to the new Term's constructor
+     * Creates a term whose significant value is zero. The term is not managed by the TermCreator.
+     * This is used when applying an operation to an empty plate.
+     * @param {Object} [options] - Term constructor options
      * @returns {Term}
      * @public
      * @abstract
      */
-    copyTerm: function( term, options ) {
-      throw new Error( 'copyTerm must be implemented by subtype' );
+    createZeroTerm: function( options ) {
+      throw new Error( 'createZeroTerm must be implemented by subtypes' );
     },
 
     /**
@@ -552,18 +595,6 @@ define( function( require ) {
      */
     createTermNode: function( term, options ) {
       throw new Error( 'createTermNode must be implemented by subtypes' );
-    },
-
-    /**
-     * Applies an operation to terms on the plate.
-     *
-     * @param {UniversalOperation} operation
-     * @returns {boolean} - true if the operation resulted in a term on the plate becoming zero, false otherwise
-     * @public
-     * @abstract
-     */
-    applyOperation: function( operation ) {
-      throw new Error( 'applyOperation must be implemented by subtypes' );
     }
   } );
 } );

@@ -29,7 +29,8 @@ define( function( require ) {
     assert && assert( significantValue.isReduced(), 'significantValue must be reduced: ' + significantValue );
 
     options = _.extend( {
-      diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
+      diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
+      toolboxLocation: null // {Vector2|null} location of the associated TermCreatorNode in the toolbox
     }, options );
 
     // @private the value that is significant for the purposes of determining sign and number limits.
@@ -46,6 +47,9 @@ define( function( require ) {
     // @public (read-only) diameter of the term in the view, convenient to store in the model
     this.diameter = options.diameter;
 
+    // @public {Vector2|null} location of this term's corresponding TermCreatorNode in the toolbox
+    this.toolboxLocation = options.toolboxLocation;
+
     // @public whether the term's shadow is visible
     this.shadowVisibleProperty = new BooleanProperty( false );
 
@@ -60,6 +64,20 @@ define( function( require ) {
   return inherit( EqualityExplorerMovable, Term, {
 
     /**
+     * Creates the options that would be needed to instantiate a copy of this object.
+     * This is used by subtypes that implement copy.
+     * @returns {Object}
+     * @protected
+     * @override
+     */
+    copyOptions: function() {
+      var superOptions = EqualityExplorerMovable.prototype.copyOptions.call( this );
+      return _.extend( {
+        diameter: this.diameter
+      }, superOptions );
+    },
+
+    /**
      * @public
      * @override
      */
@@ -71,13 +89,13 @@ define( function( require ) {
 
     /**
      * Is this term the inverse of a specified term?
-     * Inverse terms are like terms with opposite signs. E.g. x and -x, 1 and -1.
+     * Inverse terms are like terms whose significant value as opposite signs. E.g. x and -x, 1 and -1.
      * @param {Term} term
      * @returns {boolean}
      * @public
      */
     isInverseTerm: function( term ) {
-      return ( this.isLikeTerm( term ) && ( this.sign === -term.sign ) );
+      return ( this.isLikeTerm( term ) && ( this.significantValue.getValue() === -term.significantValue.getValue() ) );
     },
 
     /**
@@ -108,6 +126,17 @@ define( function( require ) {
     //-------------------------------------------------------------------------------------------------
 
     /**
+     * Creates a copy of this term, with modifications through options.
+     * @param {Object} [options] - same as constructor options
+     * @returns {Term}
+     * @public
+     * @abstract
+     */
+    copy: function( options ) {
+      throw new Error( 'copy must be implemented by subtype' );
+    },
+
+    /**
      * Gets the weight of this term.
      * @returns {Fraction}
      * @public
@@ -127,6 +156,18 @@ define( function( require ) {
      */
     isLikeTerm: function( term ) {
       throw new Error( 'isLikeTerm must be implemented by subtype' );
+    },
+
+    /**
+     * Applies an operation to this term, resulting in a new term.
+     * @param {UniversalOperation} operation
+     * @param {Object} [options] - same as constructor
+     * @returns {Term|null} - null if the operation is not applicable to this term.
+     * @public
+     * @abstract
+     */
+    applyOperation: function( operation, options ) {
+      throw new Error( 'applyOperation must be implemented by subtype' );
     }
   } );
 } );

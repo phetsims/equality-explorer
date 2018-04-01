@@ -105,11 +105,11 @@ define( function( require ) {
         term.dragging = false;
         term.shadowVisibleProperty.value = false;
 
-        if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
+        if ( self.likeTerm && ( term.plus( self.likeTerm ).sign === 0 ) ) {
 
-          // term overlaps an inverse term, sum to zero
-          self.sumToZero( self.likeTerm, {
-            haloBaseColor: EqualityExplorerColors.HALO // show the halo, since the terms overlap
+          // term overlaps a term on the scale, and they sum to zero
+          self.sumToZero( term, self.likeTerm, {
+            haloBaseColor: EqualityExplorerColors.HALO // show the halo
           } );
         }
         else if ( term.locationProperty.value.y > plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
@@ -159,8 +159,9 @@ define( function( require ) {
      * @private
      */
     animateToToolbox: function() {
+      assert && assert( this.term.toolboxLocation, 'toolboxLocation was not initialized for term: ' + this.term );
       var self = this;
-      this.term.animateTo( this.term.locationProperty.initialValue, {
+      this.term.animateTo( this.term.toolboxLocation, {
         animationCompletedCallback: function() {
           self.term.dispose();
         }
@@ -199,10 +200,12 @@ define( function( require ) {
         // When the term reaches the cell ...
         animationCompletedCallback: function() {
 
-          if ( self.plate.isEmptyCell( cell ) ) {
+          var termInCell = self.plate.getTermInCell( cell );
+
+          if ( !termInCell ) {
 
             // If the cell is empty, make a 'big' copy of this term and put it in the cell.
-            var termCopy = self.termCreator.copyTerm( self.term, {
+            var termCopy = self.term.copy( {
               diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
             } );
             self.termCreator.putTermOnPlate( termCopy, cell );
@@ -212,38 +215,29 @@ define( function( require ) {
           }
           else {
 
-            // If the cell is occupied...
-            // Get the term that occupies the cell.
-            var termInCell = self.plate.getTermInCell( cell );
-
             // Combine the terms to create a new 'big' term.
-            var combinedTerm = self.termCreator.combineTerms( self.term, termInCell, {
-              diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-            } );
+            var combinedTerm = termInCell.plus( self.term );
 
-            if ( combinedTerm ) {
-
-              if ( combinedTerm.isNumberLimitExceeded() ) {
-
-                // Notify listeners that the combined term would exceed the number limit
-                // Make no changes to the other terms.
-                self.termCreator.numberLimitExceededEmitter.emit();
-                termInCell.haloVisibleProperty.value = false;
-              }
-              else {
-                // dispose of the terms used to create the combined term
-                self.term.dispose();
-                termInCell.dispose();
-
-                // Put the new term on the plate.
-                self.termCreator.putTermOnPlate( combinedTerm, cell );
-              }
-            }
-            else {
+            if ( combinedTerm.sign === 0 ) {
 
               // Terms sum to zero.
               // No halo, since the terms did not overlap when drag ended.
-              self.sumToZero( termInCell );
+              self.sumToZero( self.term, termInCell );
+            }
+            else if ( combinedTerm.isNumberLimitExceeded() ) {
+
+              // Notify listeners that the combined term would exceed the number limit
+              // Make no changes to the other terms.
+              self.termCreator.numberLimitExceededEmitter.emit();
+              termInCell.haloVisibleProperty.value = false;
+            }
+            else {
+              // dispose of the terms used to create the combined term
+              self.term.dispose();
+              termInCell.dispose();
+
+              // Put the new term on the plate.
+              self.termCreator.putTermOnPlate( combinedTerm, cell );
             }
           }
         }
@@ -349,28 +343,28 @@ define( function( require ) {
     },
 
     /**
-     * Sums the term and its inverse to zero.
-     * Disposes of both terms, and performs the associated animation.
+     * Handles the animation and cleanup that happens for 2 terms that sum to zero.
      * See equality-explorer#17
-     * @param {Term} {inverseTerm}
+     * @param {Term} termDragging - the term we're dragging
+     * @param {Term} termOnScale - a term on the scale
      * @param {Object} [options] - passed to SumToZero constructor
      * @private
      */
-    sumToZero: function( inverseTerm, options ) {
-      assert && assert( this.term.isInverseTerm( inverseTerm ), 'inverseTerm is not an inverse: ' + inverseTerm );
+    sumToZero: function( termDragging, termOnScale, options ) {
+      assert && assert( termDragging.plus( termOnScale ).sign === 0, 'terms do not sum to zero' );
 
-      // determine which cell the inverse term appears in
-      var cell = this.plate.getCellForTerm( inverseTerm );
+      // determine which cell the term appears in
+      var cell = this.plate.getCellForTerm( termOnScale );
 
       // some things we need before the terms are disposed
-      var variable = this.term.variable || null;
-      var parent = this.termNode.getParent();
+      var variable = termDragging.variable || null;
+      var parent = this.termNode.getParent(); // SumToZeroNode in the same layer as the TermNode we're dragging
 
-      // delete the 2 terms that sum to zero
-      this.term.dispose();
-      inverseTerm.dispose();
+      // dispose of the terms
+      termDragging.dispose();
+      termOnScale.dispose();
 
-      // after the terms have been deleted and the scale has moved,
+      // after the terms have been disposed and the scale has moved,
       // determine the new location of the inverse term's cell
       var sumToZeroLocation = this.plate.getLocationOfCell( cell );
 
