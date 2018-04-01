@@ -334,6 +334,16 @@ define( function( require ) {
     },
 
     /**
+     * Is the specified term on the plate?
+     * @param {Term} term
+     * @returns {boolean}
+     * @public
+     */
+    isTermOnPlate: function( term ) {
+      return this.termsOnPlate.contains( term );
+    },
+
+    /**
      * Gets the terms that are on the plate.
      * @returns {Term[]}
      * @public
@@ -373,16 +383,6 @@ define( function( require ) {
       assert && assert( this.combineLikeTermsEnabled, 'getLikeTermOnPlate is only supported when combineLikeTermsEnabled' );
       assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate' );
       return this.plate.getTermInCell( this.likeTermsCell );
-    },
-
-    /**
-     * Is the specified term on the plate?
-     * @param {Term} term
-     * @returns {boolean}
-     * @public
-     */
-    isTermOnPlate: function( term ) {
-      return this.termsOnPlate.contains( term );
     },
 
     /**
@@ -456,7 +456,7 @@ define( function( require ) {
     },
 
     /**
-     * Do this term creator and the specified term creator create like terms?
+     * Do this TermCreator and the specified TermCreator create like terms?
      * @param {TermCreator} termCreator
      * @returns {boolean}
      * @public
@@ -479,8 +479,9 @@ define( function( require ) {
 
     /**
      * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
-     * The format of the term field is specific to the Term subtype.
-     * @returns {{cell: number, term:Object }[]}
+     * The format of the termOptions field is specific to the Term subtype, and consists of options
+     * to a Term type's constructor.  This data structure is opaque outside of TermCreator.
+     * @returns {{cell: number, termOptions:Object }[]}
      * @public
      */
     createSnapshot: function() {
@@ -489,7 +490,7 @@ define( function( require ) {
       for ( var i = 0; i < termsOnPlate.length; i++ ) {
         var term = termsOnPlate[ i ];
         snapshot.push( {
-          cell: this.plate.getCellForTerm( term ), // {number}
+          cell: this.plate.getCellForTerm( term ), // {number} cell that the Term occupies
           termOptions: term.createSnapshot() // {Object} options to Term's constructor, specific to subtype
         } );
       }

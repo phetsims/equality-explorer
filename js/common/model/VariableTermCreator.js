@@ -136,13 +136,10 @@ define( function( require ) {
      * @override
      */
     createTermNode: function( term, options ) {
-
-      options = _.extend( {
+      return new VariableTermNode( this, term, this.plate, _.extend( {
         positiveFill: this.positiveFill,
         negativeFill: this.negativeFill
-      }, options );
-
-      return new VariableTermNode( this, term, this.plate, options );
+      }, options ) );
     }
   } );
 } );
