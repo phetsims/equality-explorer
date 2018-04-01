@@ -1,7 +1,5 @@
 TODO items for equality-explorer
 
-Clean up TermCreator hierarchy by using manageTerm.
-
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
 - can this feature be separated from TermCreator and TermDragListener?
