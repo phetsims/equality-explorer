@@ -65,7 +65,7 @@ define( function( require ) {
     },
 
     /**
-     * Adds a term this term to create a new term.
+     * Adds a term to this term to create a new term.
      * @param {ConstantTerm} term
      * @param {Object} [options] - same as constructor
      * @returns {ConstantTerm}
@@ -160,7 +160,8 @@ define( function( require ) {
     },
 
     /**
-     * Creates options that can be passed to the Term's constructor to re-create the Term.
+     * Creates a snapshot of this term.
+     * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
      * @return {Object}
      * @public
      * @override

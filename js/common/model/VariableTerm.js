@@ -84,7 +84,7 @@ define( function( require ) {
     },
 
     /**
-     * Adds a variable term to this term to create a new term.
+     * Subtracts a variable term from this term to create a new term.
      * @param {VariableTerm} term
      * @param {Object} [options] - same as constructor
      * @returns {VariableTerm}
@@ -164,8 +164,11 @@ define( function( require ) {
     },
 
     /**
-     * Creates options that can be passed to the Term's constructor to re-create the Term.
+     * Creates a snapshot of this term.
+     * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
      * @return {Object}
+     * @public
+     * @override
      */
     createSnapshot: function() {
       return _.extend( Term.prototype.createSnapshot.call( this ), {

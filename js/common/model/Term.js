@@ -34,7 +34,7 @@ define( function( require ) {
     }, options );
 
     // @private the value that is significant for the purposes of determining sign and number limits.
-    // The value is that significant is specific to the Term subtype.
+    // The value that is significant is specific to the Term subtype.
     this.significantValue = significantValue;
 
     // @public (read-only)
@@ -89,7 +89,7 @@ define( function( require ) {
 
     /**
      * Is this term the inverse of a specified term?
-     * Inverse terms are like terms whose significant value as opposite signs. E.g. x and -x, 1 and -1.
+     * Inverse terms are like terms whose significant value has opposite signs. E.g. x and -x, 1 and -1.
      * @param {Term} term
      * @returns {boolean}
      * @public
@@ -110,9 +110,10 @@ define( function( require ) {
     },
 
     /**
-     * Creates options that can be passed to the Term's constructor to re-create the Term.
-     * Subtypes that have additional options to add should override this method and add to the options returned here.
-     * @return {Object|null} - details that are specific to Term subtype
+     * Creates a snapshot of this term.
+     * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
+     * Subtypes that have additional options should override this method and add to the options returned here.
+     * @return {Object}
      * @public
      */
     createSnapshot: function() {
