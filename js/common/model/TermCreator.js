@@ -227,10 +227,6 @@ define( function( require ) {
 
     /**
      * Creates a term.
-     * 
-     * NOTE! Since TermCreator manages Terms throughout their entire lifecycle, it is of utmost importance
-     * that all Terms are created via this method, or a method that calls this method.
-     *
      * @param {Object} [options] - passed to the Term's constructor
      * @returns {Term}
      * @public
@@ -247,16 +243,34 @@ define( function( require ) {
 
       // create term
       var term = this.createTermProtected( options );
+
+      // manage the term
+      this.manageTerm( term, options.event );
+
+      return term;
+    },
+
+    /**
+     * Tells this term creator to manage a term.
+     *
+     * NOTE! Since TermCreator manages Terms throughout their entire lifecycle, it is of utmost importance
+     * that all Terms are created via this method, or a method that calls this method.
+     *
+     * @param {Term} term
+     * @param {Event|null} event is non-null if term was created as the result of a user interaction
+     * @public
+     */
+    manageTerm: function( term, event ) {
+
       this.allTerms.add( term );
 
       // Clean up when the term is disposed.
       // removeListener required when the term is disposed, see termWasDisposed.
       term.disposedEmitter.addListener( this.termWasDisposedBound );
 
-      // Notify that a term was created
-      this.termCreatedEmitter.emit3( this, term, options.event );
-
-      return term;
+      // Notify listeners that a term was created.
+      // This will result in creation of the corresponding view.
+      this.termCreatedEmitter.emit3( this, term, event );
     },
 
     /**
