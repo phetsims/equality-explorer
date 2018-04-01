@@ -27,10 +27,8 @@ define( function( require ) {
       constantValue: DEFAULT_CONSTANT_VALUE
     }, options );
 
-    assert && assert( options.constantValue instanceof Fraction,
-      'invalid constantValue: ' + options.constantValue );
-    assert && assert( options.constantValue.isReduced(),
-      'constantValue must be reduced: ' + options.constantValue );
+    assert && assert( options.constantValue instanceof Fraction, 'invalid constantValue: ' + options.constantValue );
+    assert && assert( options.constantValue.isReduced(), 'constantValue must be reduced: ' + options.constantValue );
 
     // @public (read-only) {Fraction}
     this.constantValue = options.constantValue;

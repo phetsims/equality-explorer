@@ -26,6 +26,7 @@ define( function( require ) {
   function Term( significantValue, options ) {
 
     assert && assert( significantValue instanceof Fraction, 'invalid significantValue: ' + significantValue );
+    assert && assert( significantValue.isReduced(), 'significantValue must be reduced: ' + significantValue );
 
     options = _.extend( {
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER

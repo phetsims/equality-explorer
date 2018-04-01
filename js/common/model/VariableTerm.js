@@ -30,7 +30,6 @@ define( function( require ) {
 
     assert && assert( options.coefficient instanceof Fraction, 'invalid coefficient: ' + options.coefficient );
     assert && assert( options.coefficient.isReduced(), 'coefficient must be reduced: ' + options.coefficient );
-    assert && assert( options.coefficient.getValue() !== 0, 'coefficient cannot be zero' );
 
     // @public {Fraction}
     this.coefficient = options.coefficient;
