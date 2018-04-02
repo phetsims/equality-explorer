@@ -17,7 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var OperationCanceledDialog = require( 'EQUALITY_EXPLORER/common/view/OperationCanceledDialog' );
+  var OopsDialog = require( 'EQUALITY_EXPLORER/common/view/OopsDialog' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var TermsToolbox = require( 'EQUALITY_EXPLORER/common/view/TermsToolbox' );
@@ -142,7 +142,7 @@ define( function( require ) {
     var numberLimitExceededListener = function() {
       phet.log && phet.log( 'number limit exceeded' );
       scene.disposeTermsNotOnScale();
-      dialog = dialog || new OperationCanceledDialog();
+      dialog = dialog || new OopsDialog();
       dialog.show();
     };
 

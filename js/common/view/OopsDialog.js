@@ -2,7 +2,8 @@
 
 /**
  * Dialog displayed when an operation is canceled because EqualityExplorerConstants.LARGEST_INTEGER
- * limit is exceeded.  See https://github.com/phetsims/equality-explorer/issues/48
+ * limit is exceeded.  So named because the message begins with 'Oops!', so that's how people referred to it.
+ * See https://github.com/phetsims/equality-explorer/issues/48
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -28,7 +29,7 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function OperationCanceledDialog() {
+  function OopsDialog() {
 
     var self = this;
 
@@ -58,8 +59,8 @@ define( function( require ) {
     } ) );
   }
 
-  equalityExplorer.register( 'OperationCanceledDialog', OperationCanceledDialog );
+  equalityExplorer.register( 'OopsDialog', OopsDialog );
 
-  return inherit( Dialog, OperationCanceledDialog );
+  return inherit( Dialog, OopsDialog );
 } );
  
