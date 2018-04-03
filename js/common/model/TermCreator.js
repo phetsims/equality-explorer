@@ -403,6 +403,7 @@ define( function( require ) {
 
       // operate on a copy, since dispose causes the ObservableArray to be modified
       this.disposeTerms( this.termsOnPlate.getArray().slice() );
+      this.hideAllTermHalos();
     },
 
     /**
@@ -411,6 +412,7 @@ define( function( require ) {
      */
     disposeTermsNotOnPlate: function() {
       this.disposeTerms( _.difference( this.allTerms.getArray(), this.termsOnPlate.getArray() ) );
+      this.hideAllTermHalos();
     },
 
     /**
@@ -421,6 +423,18 @@ define( function( require ) {
     disposeTerms: function( terms ) {
       for ( var i = 0; i < terms.length; i++ ) {
         terms[ i ].dispose(); // results in call to termWasDisposed
+      }
+    },
+
+    /**
+     * Hides halos for all terms. This is done as part of disposeTermsOnPlate and disposeTermsNotOnPlate,
+     * so that some term is not left with its halo visible after the term that it overlapped disappears.
+     * See https://github.com/phetsims/equality-explorer/issues/59.
+     * @private
+     */
+    hideAllTermHalos: function() {
+      for ( var i = 0; i < this.allTerms.getArray().length; i++ ) {
+        this.allTerms.get( i ).haloVisibleProperty.value = false;
       }
     },
 
