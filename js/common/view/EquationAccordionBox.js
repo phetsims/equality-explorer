@@ -72,8 +72,8 @@ define( function( require ) {
     equationNode.on( 'bounds', function() {
 
       // Scale the equation if it gets too wide.
-      // This is more complicated than setting maxWidth because the equation's relation operator is
-      // centered in the accordion box, and only one side of the equation may get too wide.
+      // This is more complicated than setting maxWidth because the equation's relation operator
+      // is centered in the accordion box, and only one side of the equation may get too wide.
       var maxSideWidth = contentWidth / 2;
       var leftSideOverflow = Math.max( 0, equationNode.x - equationNode.left - maxSideWidth );
       var rightSideOverflow = Math.max( 0, equationNode.right - equationNode.x - maxSideWidth );
