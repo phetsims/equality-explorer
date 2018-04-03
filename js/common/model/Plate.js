@@ -136,22 +136,13 @@ define( function( require ) {
     },
 
     /**
-     * Gets the closest empty cell to a specified location.
+     * Gets the empty cell that would be the best fit for adding a term to the plate.
      * @param {Vector2} location
      * @returns {number|null} the cell's identifier, null if the grid is full
      * @public
      */
-    getClosestEmptyCell: function( location ) {
-      return this.grid.getClosestEmptyCell( location );
-    },
-
-    /**
-     * Examines the grid from left to right, top to bottom, and returns the first empty cell.
-     * @returns {number|null} the cell's identifier, null if the grid is full
-     * @public
-     */
-    getFirstEmptyCell: function() {
-      return this.grid.getFirstEmptyCell();
+    getBestEmptyCell: function( location ) {
+      return this.grid.getBestEmptyCell( location );
     },
 
     /**

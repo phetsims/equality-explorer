@@ -307,13 +307,14 @@ define( function( require ) {
     },
 
     /**
-     * Gets the closest empty cell to a specified location.  If the closest cell is in a column with
-     * empty cells below it, choose the empty cell that is closest to the bottom of the grid in that column.
+     * Gets the empty cell that would be the best fit for adding a term to the grid.
+     * Start by identifying the closest empty cell.  If that cell is in a column with empty cells below it,
+     * choose the empty cell that is closest to the bottom of the grid in that column.
      * @param {Vector2} location
      * @returns {number|null} - the cell's identifier, null if the grid is full
      * @public
      */
-    getClosestEmptyCell: function( location ) {
+    getBestEmptyCell: function( location ) {
 
       var closestCell = this.getFirstEmptyCell();
 

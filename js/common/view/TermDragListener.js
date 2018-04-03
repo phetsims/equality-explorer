@@ -253,9 +253,9 @@ define( function( require ) {
     animateToEmptyCell: function() {
       assert && assert( !this.termCreator.combineLikeTermsEnabled, 'should NOT be called when combining like terms' );
 
-      // careful, cell is a {number}
-      var cell = this.plate.getClosestEmptyCell( this.term.locationProperty.value );
+      var cell = this.plate.getBestEmptyCell( this.term.locationProperty.value );
 
+      // Careful! cell is a {number}, which might be zero
       if ( cell === null ) {
 
         // Plate is full. Return the term to its toolbox.
@@ -278,7 +278,7 @@ define( function( require ) {
           // When the term reaches the cell, put it in the closest cell.
           // We compute cell again here in case a term has been removed below the cell that we were animating to.
           animationCompletedCallback: function() {
-            var cell = self.plate.getClosestEmptyCell( self.term.locationProperty.value );
+            var cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
             self.termCreator.putTermOnPlate( self.term, cell );
           }
         } );
