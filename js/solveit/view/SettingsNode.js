@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * The user interface for selection game settings in the 'Solve It!' screen.
+ * User interface for game settings in the 'Solve It!' screen.
  * This is where you choose your level, turn sound on/off, etc.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -44,7 +44,8 @@ define( function( require ) {
 
     var textOptions = {
       font: new PhetFont( 50 ),
-      maxWidth: 0.65 * layoutBounds.width
+      maxWidth: 0.65 * layoutBounds.width,
+      buttonListener: function( level ) {}
     };
 
     // 'Solve for x'
@@ -62,24 +63,38 @@ define( function( require ) {
       iconFill: 'rgb( 41, 106, 163 )',
       maxHeight: 0.75 * chooseYourLevelNode.height,
       listener: function() {
-        dialog = dialog || new LevelsDialog();
+        dialog = dialog || new LevelsDialog( model.levelDescriptions );
         dialog.show();
       }
     } );
 
     // Level-selection buttons
-    var buttons = [];
-    for ( var level = 0; level < model.scoreProperties.length; level++ ) {
-      buttons.push( createLevelSelectionItemNode( level, model.scoreProperties[ level ], {
-        listener: function() {
-          //TODO
-        }
-      } ) );
+    var levelButtons = [];
+    for ( var i = 0; i < model.scoreProperties.length; i++ ) {
+
+      // IIFE to create a closure for level
+      ( function( level ) {
+
+        var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level + 1 ), xString, {
+          diameter: 50,
+          margin: 15,
+          showOne: true
+        } );
+
+        var button = LevelSelectionItemNode.createWithScoreDisplayNumberAndStar( icon, model.scoreProperties[ level ], {
+          baseColor: 'rgb( 191, 239, 254 )',
+          listener: function() {
+            options.buttonListener( level );
+          }
+        } );
+
+        levelButtons.push( button );
+      } )( i );
     }
 
     // Layout buttons horizontally
-    var buttonsBox = new HBox( {
-      children: buttons,
+    var levelButtonsBox = new HBox( {
+      children: levelButtons,
       spacing: 40
     } );
 
@@ -95,10 +110,10 @@ define( function( require ) {
     } );
 
     // Layout
-    buttonsBox.centerX = layoutBounds.centerX;
-    buttonsBox.top = layoutBounds.centerY - 25; // top of buttons slightly above center
-    chooseYourLevelNode.centerX = buttonsBox.centerX;
-    chooseYourLevelNode.bottom = buttonsBox.top - 65;
+    levelButtonsBox.centerX = layoutBounds.centerX;
+    levelButtonsBox.top = layoutBounds.centerY - 25; // top of buttons slightly above center
+    chooseYourLevelNode.centerX = levelButtonsBox.centerX;
+    chooseYourLevelNode.bottom = levelButtonsBox.top - 65;
     solveForXNode.centerX = chooseYourLevelNode.centerX;
     solveForXNode.bottom = chooseYourLevelNode.top - 30;
     infoButton.left = chooseYourLevelNode.right + 20;
@@ -113,7 +128,7 @@ define( function( require ) {
       solveForXNode,
       chooseYourLevelNode,
       infoButton,
-      buttonsBox,
+      levelButtonsBox,
       soundButton,
       resetAllButton
     ];
@@ -122,28 +137,6 @@ define( function( require ) {
   }
 
   equalityExplorer.register( 'SettingsNode', SettingsNode );
-
-  /**
-   * Creates a level-selection button
-   * @param {number} level
-   * @param {NumberProperty} scoreProperty
-   * @param {Object} [options]
-   * @returns {LevelSelectionItemNode}
-   */
-  var createLevelSelectionItemNode = function( level, scoreProperty, options ) {
-
-    options = _.extend( {
-      baseColor: 'rgb( 191, 239, 254 )'
-    }, options );
-
-    var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level + 1 ), xString, {
-      diameter: 50,
-      margin: 15,
-      showOne: true
-    } );
-
-    return LevelSelectionItemNode.createWithScoreDisplayNumberAndStar( icon, scoreProperty, options );
-  };
 
   return inherit( Node, SettingsNode );
 } );

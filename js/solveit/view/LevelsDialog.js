@@ -20,10 +20,6 @@ define( function( require ) {
 
   // strings
   var levelsString = require( 'string!EQUALITY_EXPLORER/levels' );
-  var level1String = require( 'string!EQUALITY_EXPLORER/level1' );
-  var level2String = require( 'string!EQUALITY_EXPLORER/level2' );
-  var level3String = require( 'string!EQUALITY_EXPLORER/level3' );
-  var level4String = require( 'string!EQUALITY_EXPLORER/level4' );
 
   // constants
   var TITLE_FONT = new PhetFont( 24 );
@@ -31,18 +27,12 @@ define( function( require ) {
   var MAX_CONTENT_WIDTH = 500;
 
   /**
+   * @param {string[]} levelDescriptions
    * @constructor
    */
-  function LevelsDialog() {
+  function LevelsDialog( levelDescriptions ) {
 
     var self = this;
-
-    var levelDescriptions = [
-      level1String,
-      level2String,
-      level3String,
-      level4String
-    ];
 
     var children = [];
     levelDescriptions.forEach( function( levelDescription ) {

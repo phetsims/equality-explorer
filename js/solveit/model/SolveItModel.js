@@ -15,6 +15,12 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Range = require( 'DOT/Range' );
 
+  // strings
+  var level1String = require( 'string!EQUALITY_EXPLORER/level1' );
+  var level2String = require( 'string!EQUALITY_EXPLORER/level2' );
+  var level3String = require( 'string!EQUALITY_EXPLORER/level3' );
+  var level4String = require( 'string!EQUALITY_EXPLORER/level4' );
+
   /**
    * @constructor
    */
@@ -22,6 +28,14 @@ define( function( require ) {
 
     // @public (read-only)
     this.numberOfLevels = 4;
+
+    // @public (read-only)
+    this.levelDescriptions = [
+      level1String,
+      level2String,
+      level3String,
+      level4String
+    ];
 
     // @public
     this.levelProperty = new NumberProperty( 0, {
