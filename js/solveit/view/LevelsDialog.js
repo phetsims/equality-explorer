@@ -68,7 +68,7 @@ define( function( require ) {
       modal: true,
       hasCloseButton: true,
       xMargin: 30,
-      yMargin: 30
+      yMargin: 20
     } );
 
     // Click anywhere on the dialog to hide it.
