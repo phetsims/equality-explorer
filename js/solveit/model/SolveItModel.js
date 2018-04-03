@@ -9,17 +9,52 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
+  var Range = require( 'DOT/Range' );
 
   /**
    * @constructor
    */
   function SolveItModel() {
-    //TODO
+
+    // @public (read-only)
+    this.numberOfLevels = 4;
+
+    // @public
+    this.levelProperty = new NumberProperty( 0, {
+      numberType: 'Integer',
+      range: new Range( 0, this.numberOfLevels - 1 )
+    } );
+
+    // @public {NumberProperty[]} a score for each level
+    this.scoreProperties = [];
+    for ( var i = 0; i < this.numberOfLevels; i++ ) {
+      this.scoreProperties.push( new NumberProperty( 0, {
+        numberType: 'Integer',
+        isValidValue: function( value ) {
+          return value >= 0;
+        }
+      } ) );
+    }
+
+    // @public
+    this.soundEnabledProperty = new BooleanProperty( false );
   }
 
   equalityExplorer.register( 'SolveItModel', SolveItModel );
 
-  return inherit( Object, SolveItModel );
+  return inherit( Object, SolveItModel, {
+
+    // @public
+    reset: function() {
+      this.levelProperty.reset();
+      this.scoreProperties.forEach( function( scoreProperty ) {
+        scoreProperty.reset();
+      } );
+      this.soundEnabledProperty.reset();
+    }
+  } );
 } );

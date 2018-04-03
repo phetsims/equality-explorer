@@ -34,5 +34,11 @@
   },
   "oopsMessage": {
     "value": "Oops! That will make<br>a number that is<br>too big for the sim.<br><br>Try a different<br>operation!"
+  },
+  "chooseYourLevel": {
+    "value": "Choose Your Level"
+  },
+  "solveFor": {
+    "value": "Solve for {{variable}}"
   }
 }
