@@ -26,6 +26,7 @@ define( function( require ) {
 
   // constants
   var DEFAULT_OPTIONS = {
+    margin: null, // {number|null} margin, determined empirically if null
     positiveFill: EqualityExplorerColors.POSITIVE_X_FILL, // fill of background square for positive coefficient
     negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL, // fill of background square for negative coefficient
     positiveLineDash: [], // solid border for positive coefficient
@@ -34,7 +35,8 @@ define( function( require ) {
     fractionXSpacing: 4, // space between fractional coefficient and variable symbol
     integerFont: new PhetFont( 40 ), // font for integer coefficient
     fractionFont: new PhetFont( 20 ), // font for fractional coefficient
-    symbolFont: new MathSymbolFont( 40 ) // font for variable symbol
+    symbolFont: new MathSymbolFont( 40 ), // font for variable symbol
+    showOne: false // show 1 or -1 coefficient
   };
 
   /**
@@ -82,6 +84,10 @@ define( function( require ) {
         diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       }, DEFAULT_OPTIONS, options );
 
+      if ( options.margin === null ) {
+        options.margin = 0.12 * options.diameter; // determined empirically
+      }
+
       var isPositive = ( coefficient.getValue() >= 0 );
 
       // background square
@@ -91,14 +97,12 @@ define( function( require ) {
         lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
       } );
 
-      var margin = 0.12 * options.diameter; // determined empirically
-
-      var valueNode = VariableTermNode.createEquationTermNode( coefficient, symbol, {
+      var valueNode = VariableTermNode.createEquationTermNode( coefficient, symbol, _.extend( {}, options, {
         align: 'center',
-        maxWidth: squareNode.width - ( 2 * margin ),
-        maxHeight: squareNode.height - ( 2 * margin ),
+        maxWidth: squareNode.width - ( 2 * options.margin ),
+        maxHeight: squareNode.height - ( 2 * options.margin ),
         center: squareNode.center
-      } );
+      } ) );
 
       assert && assert( !options.children, 'VariableTermNode sets children' );
       options.children = [ squareNode, valueNode ];
@@ -129,8 +133,8 @@ define( function( require ) {
       assert && assert( !options.children, 'sets its own children' );
       options.children = [];
 
-      // coefficient, if not 1 or -1. Show 'x' not '1x', '-x' not '-1x'.
-      if ( coefficient.abs().getValue() !== 1 ) {
+      // coefficient, with option to show 1 and -1
+      if ( options.showOne || coefficient.abs().getValue() !== 1 ) {
         var coefficientNode = new ReducedFractionNode( coefficient, {
           fractionFont: options.fractionFont,
           integerFont: options.integerFont
@@ -138,8 +142,8 @@ define( function( require ) {
         options.children.push( coefficientNode );
       }
 
-      // variable's symbol, with negative sign if coefficient is -1
-      var symbolText = ( coefficient.getValue() === -1 ) ? ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
+      // variable's symbol, with option to show 1 and -1
+      var symbolText = ( !options.showOne && coefficient.getValue() === -1 ) ? ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
       var symbolNode = new Text( symbolText, {
         font: options.symbolFont
       } );

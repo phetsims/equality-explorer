@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -23,6 +24,7 @@ define( function( require ) {
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   // strings
   var chooseYourLevelString = require( 'string!EQUALITY_EXPLORER/chooseYourLevel' );
@@ -66,7 +68,6 @@ define( function( require ) {
     var buttons = [];
     for ( var level = 0; level < model.scoreProperties.length; level++ ) {
       buttons.push( createLevelSelectionItemNode( level, model.scoreProperties[ level ], {
-        baseColor: 'rgb( 191, 239, 254 )',
         listener: function() {
           //TODO
         }
@@ -128,10 +129,14 @@ define( function( require ) {
    */
   var createLevelSelectionItemNode = function( level, scoreProperty, options ) {
 
-    //TODO
-    var icon = new Text( ( level + 1 ) + xString, {
-      font: new PhetFont( 60 )
-      //TODO maxWidth
+    options = _.extend( {
+      baseColor: 'rgb( 191, 239, 254 )'
+    }, options );
+
+    var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level + 1 ), xString, {
+      diameter: 50,
+      margin: 15,
+      showOne: true
     } );
 
     return LevelSelectionItemNode.createWithScoreDisplayNumberAndStar( icon, scoreProperty, options );
