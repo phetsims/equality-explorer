@@ -132,9 +132,9 @@ define( function( require ) {
      */
     clearColumn: function( column ) {
       assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
-       for ( var row = 0; row < this.rows; row++ ) {
-         this.clearCell( this.rowColumnToCell( row, column ) );
-       }
+      for ( var row = 0; row < this.rows; row++ ) {
+        this.clearCell( this.rowColumnToCell( row, column ) );
+      }
     },
 
     /**
@@ -149,7 +149,7 @@ define( function( require ) {
 
         // row and column of the cell that contains location
         // Math.min handles the case where location is exactly on bounds.maxX or maxY. See #39.
-        var row = Math.min( this.rows - 1, Math.floor( ( location.y - this.bounds.minY  ) / this.cellHeight ) );
+        var row = Math.min( this.rows - 1, Math.floor( ( location.y - this.bounds.minY ) / this.cellHeight ) );
         var column = Math.min( this.columns - 1, Math.floor( ( location.x - this.bounds.minX ) / this.cellWidth ) );
 
         cell = this.rowColumnToCell( row, column );
