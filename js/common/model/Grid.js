@@ -248,7 +248,6 @@ define( function( require ) {
       var term; // the current term
       var cell; // the current cell identifier
 
-
       // Get all terms in the column, from top down
       for ( var row = 0; row < this.rows; row++ ) {
         cell = this.rowColumnToCell( row, column );
