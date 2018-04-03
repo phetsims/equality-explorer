@@ -297,11 +297,11 @@ define( function( require ) {
     },
 
     /**
-     * Finds the first empty cell, starting at bottom row, right-to-left.
+     * Finds the last empty cell in the array.
      * @returns {number|null} - the cell's identifier, null if the grid is full
-     * @public
+     * @private
      */
-    getFirstEmptyCell: function() {
+    getLastEmptyCell: function() {
       var index = this.cells.lastIndexOf( NO_TERM );
       return ( index === -1 ) ? null : index;
     },
@@ -316,19 +316,22 @@ define( function( require ) {
      */
     getBestEmptyCell: function( location ) {
 
-      var closestCell = this.getFirstEmptyCell();
+      // Start with the last empty cell in the array
+      var closestCell = this.getLastEmptyCell();
 
+      // Careful! closestCell is {number|null}, and might be 0
+      // If the grid is not full...
       if ( closestCell !== null ) {
 
         var closestDistance = this.getLocationOfCell( closestCell ).distance( location );
 
-        // Find the closest cell based on distance.
+        // Find the closest cell based on distance, working backwards from lastEmptyCell.
         // This is brute force, but straightforward, and not a performance issue because the number of cells is small.
-        for ( var i = 0; i < this.cells.length; i++ ) {
+        for ( var i = closestCell - 1; i >= 0; i-- ) {
           if ( this.isEmptyCell( i ) ) {
-            var currentDistance = this.getLocationOfCell( i ).distance( location );
-            if ( currentDistance < closestDistance ) {
-              closestDistance = currentDistance;
+            var distance = this.getLocationOfCell( i ).distance( location );
+            if ( distance < closestDistance ) {
+              closestDistance = distance;
               closestCell = i;
             }
           }
