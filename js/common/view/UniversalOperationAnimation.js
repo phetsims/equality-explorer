@@ -35,7 +35,7 @@ define( function( require ) {
       leftX: 0,
       rightX: 100,
       startY: 0,
-      distance: 65, // how far the operations will fall vertically
+      distance: 55, // how far the operations will fall vertically
       motionDuration: 700, // motion duration, ms
       opacityDuration: 250, // fade duration, in ms
       onComplete: function() {}, // called when the animation completes
