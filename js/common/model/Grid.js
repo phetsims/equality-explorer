@@ -321,7 +321,8 @@ define( function( require ) {
 
         var closestDistance = this.getLocationOfCell( closestCell ).distance( location );
 
-        // Find the closest cell based on distance
+        // Find the closest cell based on distance.
+        // This is brute force, but straightforward, and not a performance issue because the number of cells is small.
         for ( var i = 0; i < this.cells.length; i++ ) {
           if ( this.isEmptyCell( i ) ) {
             var currentDistance = this.getLocationOfCell( i ).distance( location );
