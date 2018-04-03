@@ -63,6 +63,7 @@ define( function( require ) {
       top: localBounds.bottom + 15
     } );
     this.addChild( variableAccordionBox );
+    variableAccordionBox.moveToBack();
 
     // Get the bounds of the Equation accordion box, relative to this ScreenView
     globalBounds = this.equationAccordionBox.parentToGlobalBounds( this.equationAccordionBox.bounds );
