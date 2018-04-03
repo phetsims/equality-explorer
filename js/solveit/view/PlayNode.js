@@ -15,6 +15,7 @@ define( function( require ) {
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var RewardDialog = require( 'VEGAS/RewardDialog' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var StatusBar = require( 'VEGAS/StatusBar' );
@@ -60,8 +61,24 @@ define( function( require ) {
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       centerX: statusBar.centerX,
       top: statusBar.bottom + 30,
+
       listener: function() {
-        scoreProperty.value++;
+        scoreProperty.value++; //TODO temporary
+
+        //TODO crashing when dialog.dispose is called in these callbacks
+        // When the score reaches 10, display a dialog
+        if ( scoreProperty.value === 10 ) {
+          var dialog = new RewardDialog( scoreProperty.value, {
+            keepGoingButtonListener: function() {
+              dialog.hide();
+            },
+            newLevelButtonListener: function() {
+              dialog.hide();
+              options.backButtonListener();
+            }
+          } );
+          dialog.show();
+        }
       }
     } );
 
