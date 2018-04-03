@@ -48,7 +48,6 @@ define( function( require ) {
     var solveForXText = StringUtils.fillIn( solveForString, {
       variable: '<i><font face=\'"Times New Roman", Times, serif\'>' + xString + '</font></i>'
     } );
-    console.log( 'solveForText=' + solveForXText );//XXX
     var solveForXNode = new RichText( solveForXText, textOptions );
 
     // 'Choose Your Level'
