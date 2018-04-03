@@ -255,7 +255,7 @@ define( function( require ) {
 
       var cell = this.plate.getBestEmptyCell( this.term.locationProperty.value );
 
-      // Careful! cell is a {number}, which might be zero
+      // Careful! cell is {number|null}, and might be 0
       if ( cell === null ) {
 
         // Plate is full. Return the term to its toolbox.
