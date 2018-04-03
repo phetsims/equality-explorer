@@ -76,7 +76,6 @@ define( function( require ) {
      * @returns {VariableTerm}
      */
     plus: function( term, options ) {
-      options = options || {};
       assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
       return this.copy( _.extend( {
         coefficient: this.coefficient.plus( term.coefficient ).reduced()
@@ -90,7 +89,6 @@ define( function( require ) {
      * @returns {VariableTerm}
      */
     minus: function( term, options ) {
-      options = options || {};
       assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
       return this.copy( _.extend( {
         coefficient: this.coefficient.minus( term.coefficient ).reduced()
@@ -104,7 +102,6 @@ define( function( require ) {
      * @returns {VariableTerm}
      */
     times: function( term, options ) {
-      options = options || {};
       assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
       return this.copy( _.extend( {
         coefficient: this.coefficient.times( term.constantValue ).reduced()
@@ -118,7 +115,6 @@ define( function( require ) {
      * @returns {VariableTerm}
      */
     divided: function( term, options ) {
-      options = options || {};
       assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
       assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
       return this.copy( _.extend( {
