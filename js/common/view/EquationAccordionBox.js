@@ -74,16 +74,12 @@ define( function( require ) {
       // Scale the equation if it gets too wide.
       // This is more complicated than setting maxWidth because the equation's relation operator
       // is centered in the accordion box, and only one side of the equation may get too wide.
+      // equation.x is the center of the equation's relational operator.
       var maxSideWidth = contentWidth / 2;
       var leftSideOverflow = Math.max( 0, equationNode.x - equationNode.left - maxSideWidth );
       var rightSideOverflow = Math.max( 0, equationNode.right - equationNode.x - maxSideWidth );
       var maxOverflow = Math.max( leftSideOverflow, rightSideOverflow );
-      if ( maxOverflow > 0 ) {
-        equationParent.setScaleMagnitude( maxSideWidth / ( maxSideWidth + maxOverflow ) );
-      }
-      else {
-        equationParent.setScaleMagnitude( 1 );
-      }
+      equationParent.setScaleMagnitude( maxSideWidth / ( maxSideWidth + maxOverflow ) );
 
       // Center the equation
       equationParent.x = invisibleRectangle.centerX;
