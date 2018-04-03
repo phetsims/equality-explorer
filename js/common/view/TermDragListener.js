@@ -275,8 +275,10 @@ define( function( require ) {
             }
           },
 
-          // When the term reaches the cell, put it in the cell.
+          // When the term reaches the cell, put it in the closest cell.
+          // We compute cell again here in case a term has been removed below the cell that we were animating to.
           animationCompletedCallback: function() {
+            var cell = self.plate.getClosestEmptyCell( self.term.locationProperty.value );
             self.termCreator.putTermOnPlate( self.term, cell );
           }
         } );

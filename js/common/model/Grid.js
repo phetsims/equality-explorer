@@ -218,7 +218,6 @@ define( function( require ) {
       assert && assert( this.isEmptyCell( cell ), 'cell is occupied, cell: ' + cell );
       this.cells[ cell ] = term;
       term.moveTo( this.getLocationOfCell( cell ) );
-      this.compactColumn( this.cellToColumn( cell ) );
     },
 
     /**
