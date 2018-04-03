@@ -105,7 +105,7 @@ define( function( require ) {
         term.dragging = false;
         term.shadowVisibleProperty.value = false;
 
-        if ( self.likeTerm && ( term.plus( self.likeTerm ).sign === 0 ) ) {
+        if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
 
           // term overlaps a term on the scale, and they sum to zero
           self.sumToZero( term, self.likeTerm, {
