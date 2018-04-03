@@ -40,5 +40,20 @@
   },
   "solveFor": {
     "value": "Solve for {{variable}}"
+  },
+  "levels": {
+    "value": "Levels"
+  },
+  "level1": {
+    "value": "<b>Level 1</b>  One-step equations"
+  },
+  "level2": {
+    "value": "<b>Level 2</b>  Two-step equations"
+  },
+  "level3": {
+    "value": "<b>Level 3</b>  Multi-step equations"
+  },
+  "level4": {
+    "value": "<b>Level 4</b>  Multi-step equations with variables on both sides"
   }
 }
