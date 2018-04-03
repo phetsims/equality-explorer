@@ -286,6 +286,17 @@ define( function( require ) {
           }
         }
 
+        // Verify that the same terms are on the plate after organizing.
+        assert && assert( _.xor(
+          // terms on the plate before organize
+          _.flatten( termGroups ),
+          // terms on the plate after organize
+          _.flatMap( this.termCreators, function( termCreator ) {
+            return termCreator.getTermsOnPlate();
+          } )
+        ).length === 0, // contain no elements that are different
+          'set of terms is not the same after organize' );
+
         this.contentsChangedEmitter.emit();
       }
     }
