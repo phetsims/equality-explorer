@@ -61,7 +61,6 @@ define( function( require ) {
         //TODO
       }
     } );
-    console.log( 'infoButton.height=' + infoButton.height );//XXX
 
     // Level-selection buttons
     var buttons = [];
