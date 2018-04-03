@@ -55,5 +55,8 @@
   },
   "level4": {
     "value": "<b>Level 4</b>  Multi-step equations with variables on both sides"
+  },
+  "next": {
+    "value": "Next"
   }
 }
