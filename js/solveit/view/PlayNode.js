@@ -38,8 +38,7 @@ define( function( require ) {
   function PlayNode( model, visibleBoundsProperty, options ) {
 
     options = _.extend( {
-      backButtonListener: function() {},
-      spacing: 20
+      backButtonListener: function() {}
     }, options );
 
     var level = model.levelProperty.value;
@@ -53,6 +52,7 @@ define( function( require ) {
     var scoreDisplay = new ScoreDisplayNumberAndStar( scoreProperty );
 
     var statusBar = new StatusBar( visibleBoundsProperty, levelNode, scoreDisplay, {
+      spacing: 20,
       backgroundFill: 'rgb( 252, 150, 152 )',
       backButtonListener: options.backButtonListener
     } );
