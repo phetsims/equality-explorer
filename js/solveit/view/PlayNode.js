@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
@@ -56,10 +57,22 @@ define( function( require ) {
       backButtonListener: options.backButtonListener
     } );
 
+    var refreshButton = new RectangularPushButton( {
+      content: new FontAwesomeNode( 'refresh', { scale: 0.6 } ),
+      baseColor: PhetColorScheme.BUTTON_YELLOW,
+      xMargin: 14,
+      yMargin: 7,
+      right: statusBar.centerX - 20,
+      top: statusBar.bottom + 30,
+      listener: function() {
+        //TODO
+      }
+    } );
+
     var nextButton = new RectangularPushButton( {
       content: new Text( nextString, { font: NEXT_BUTTON_FONT } ),
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
-      centerX: statusBar.centerX,
+      left: statusBar.centerX + 30,
       top: statusBar.bottom + 30,
 
       listener: function() {
@@ -83,7 +96,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'PlayNode sets children' );
-    options.children = [ statusBar, nextButton ];
+    options.children = [ statusBar, refreshButton, nextButton ];
 
     Node.call( this, options );
 
