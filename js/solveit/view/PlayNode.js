@@ -27,7 +27,7 @@ define( function( require ) {
 
   // constants
   var LEVEL_FONT = new PhetFont( 20 );
-  var NEXT_BUTTON_FONT = new PhetFont( 16 );
+  var NEXT_BUTTON_FONT = new PhetFont( 20 );
 
   /**
    * @param {SolveItModel} model
@@ -70,8 +70,13 @@ define( function( require ) {
     } );
 
     var nextButton = new RectangularPushButton( {
-      content: new Text( nextString, { font: NEXT_BUTTON_FONT } ),
+      content: new Text( nextString, {
+        font: NEXT_BUTTON_FONT
+        //TODO maxWidth
+      } ),
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+      xMargin: 12,
+      yMargin: 8,
       left: statusBar.centerX + 30,
       top: statusBar.bottom + 30,
 
