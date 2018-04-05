@@ -43,7 +43,9 @@ define( function( require ) {
 
     var content = new HBox( {
       spacing: 10,
-      children: [ messageNode, phetGirlNode ]
+      children: [ messageNode, phetGirlNode ],
+      maxWidth: 800,
+      maxHeight: 500
     } );
 
     Dialog.call( this, content, {
