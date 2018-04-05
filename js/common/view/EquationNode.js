@@ -44,7 +44,7 @@ define( function( require ) {
       updateEnabled: true,
 
       // fonts sizes, optimized for EquationAccordionBox
-      synbolFontSize: 28,
+      symbolFontSize: 28,
       operatorFontSize: 28,
       integerFontSize: 28,
       fractionFontSize: 16,
@@ -58,7 +58,7 @@ define( function( require ) {
     }, options );
 
     // fonts for various parts of the equation
-    var symbolFont = new MathSymbolFont( options.synbolFontSize );
+    var symbolFont = new MathSymbolFont( options.symbolFontSize );
     var operatorFont = new PhetFont( options.operatorFontSize );
     var relationalOperatorFont = new PhetFont( { size: options.relationalOperatorFontSize, weight: 'bold' } );
     var integerFont = new PhetFont( options.integerFontSize );
