@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Dialog that explains the game levels in the 'Solve It!' screen
+ * Info dialog that explains the game levels in the 'Solve It!' screen
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -30,7 +30,7 @@ define( function( require ) {
    * @param {string[]} levelDescriptions
    * @constructor
    */
-  function LevelsDialog( levelDescriptions ) {
+  function InfoDialog( levelDescriptions ) {
 
     var self = this;
 
@@ -67,7 +67,7 @@ define( function( require ) {
     } ) );
   }
 
-  equalityExplorer.register( 'LevelsDialog', LevelsDialog );
+  equalityExplorer.register( 'InfoDialog', InfoDialog );
 
-  return inherit( Dialog, LevelsDialog );
+  return inherit( Dialog, InfoDialog );
 } );

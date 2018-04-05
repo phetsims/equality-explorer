@@ -16,7 +16,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LevelsDialog = require( 'EQUALITY_EXPLORER/solveit/view/LevelsDialog' );
+  var InfoDialog = require( 'EQUALITY_EXPLORER/solveit/view/InfoDialog' );
   var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -63,7 +63,7 @@ define( function( require ) {
       iconFill: 'rgb( 41, 106, 163 )',
       maxHeight: 0.75 * chooseYourLevelNode.height,
       listener: function() {
-        dialog = dialog || new LevelsDialog( model.levelDescriptions );
+        dialog = dialog || new InfoDialog( model.levelDescriptions );
         dialog.show();
       }
     } );
