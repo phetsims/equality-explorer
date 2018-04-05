@@ -24,11 +24,6 @@ define( function( require ) {
     ScreenView.call( this, model );
 
     var settingsNode = new SettingsNode( model, this.layoutBounds, {
-
-      /**
-       * Level selection button listener
-       * @param {number} level
-       */
       buttonListener: function( level ) {
         model.levelProperty.value = level;
         settingsNode.visible = false;
