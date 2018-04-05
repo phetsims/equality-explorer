@@ -101,9 +101,8 @@ define( function( require ) {
       updateLayout();
     };
 
+    // if the equation is dynamic ...
     if ( options.updateEnabled ) {
-
-      // dynamic equation
 
       // {Property[]} dependencies that require the relational operator to be updated
       var relationalOperatorDependencies = [];
