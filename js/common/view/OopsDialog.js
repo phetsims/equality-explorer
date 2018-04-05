@@ -34,18 +34,18 @@ define( function( require ) {
     var self = this;
 
     var messageNode = new RichText( oopsMessageString, {
-      font: new PhetFont( 20 )
+      font: new PhetFont( 20 ),
+      maxWidth: 600,
+      maxHeight: 400
     } );
 
     var phetGirlNode = new Image( phetGirlWaggingFingerImage, {
-      maxHeight: messageNode.height
+      maxHeight: 132 // determined empirically
     } );
-
+    
     var content = new HBox( {
       spacing: 10,
-      children: [ messageNode, phetGirlNode ],
-      maxWidth: 800,
-      maxHeight: 500
+      children: [ messageNode, phetGirlNode ]
     } );
 
     Dialog.call( this, content, {
