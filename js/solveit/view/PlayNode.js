@@ -13,6 +13,7 @@ define( function( require ) {
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -41,12 +42,16 @@ define( function( require ) {
       backButtonListener: function() {}
     }, options );
 
-    var level = model.levelProperty.value;
-    var scoreProperty = model.scoreProperties[ level ];
-
-    var levelNode = new RichText( model.levelDescriptions[ level ], {
+    var levelNode = new RichText( model.levelDescriptions[ model.levelProperty.value ], {
       font: LEVEL_FONT,
       maxWidth: 650 // determined empirically
+    } );
+
+    var scoreProperty = new NumberProperty( 0, {
+      numberType: 'Integer'
+    } );
+    scoreProperty.link( function( score ) {
+      model.scoreProperties[ model.levelProperty.value ].value = score;
     } );
 
     var scoreDisplay = new ScoreDisplayNumberAndStar( scoreProperty );
@@ -104,6 +109,19 @@ define( function( require ) {
     options.children = [ statusBar, refreshButton, nextButton ];
 
     Node.call( this, options );
+
+    var updateScore = function( score ) {
+      scoreProperty.value = score;
+    };
+
+    // When the level changes, update the level description and listen to the correct score
+    model.levelProperty.link( function( level, oldLevel ) {
+      levelNode.text = model.levelDescriptions[ level ];
+      if ( oldLevel !== null ) {
+        model.scoreProperties[ oldLevel ].unlink( updateScore );
+      }
+      model.scoreProperties[ level ].link( updateScore );
+    } );
 
     // @private
     this.disposePlayNode = function() {

@@ -21,8 +21,6 @@ define( function( require ) {
    */
   function SolveItScreenView( model ) {
 
-    var self = this;
-
     ScreenView.call( this, model );
 
     var settingsNode = new SettingsNode( model, this.layoutBounds, {
@@ -32,24 +30,21 @@ define( function( require ) {
        * @param {number} level
        */
       buttonListener: function( level ) {
-
-        // hide settingsNode
-        settingsNode.visible = false;
-
-        // change the level
         model.levelProperty.value = level;
-
-        // show the game play UI
-        var playNode = new PlayNode( model, self.visibleBoundsProperty, {
-          backButtonListener: function() {
-            playNode.dispose();
-            settingsNode.visible = true;
-          }
-        } );
-        self.addChild( playNode );
+        settingsNode.visible = false;
+        playNode.visible = true;
       }
     } );
     this.addChild( settingsNode );
+
+    var playNode = new PlayNode( model, this.visibleBoundsProperty, {
+      visible: false,
+      backButtonListener: function() {
+        playNode.visible = false;
+        settingsNode.visible = true;
+      }
+    } );
+    this.addChild( playNode );
   }
 
   equalityExplorer.register( 'SolveItScreenView', SolveItScreenView );
