@@ -79,20 +79,23 @@ define( function( require ) {
       var leftSideOverflow = Math.max( 0, equationNode.x - equationNode.left - maxSideWidth );
       var rightSideOverflow = Math.max( 0, equationNode.right - equationNode.x - maxSideWidth );
       var maxOverflow = Math.max( leftSideOverflow, rightSideOverflow );
+      var xScale = maxSideWidth / ( maxSideWidth + maxOverflow );
+
+      // vertical scale
+      var yScale = contentHeight / equationNode.height;
 
       // Scale and center the parent
-      equationParent.setScaleMagnitude( maxSideWidth / ( maxSideWidth + maxOverflow ) );
+      equationParent.setScaleMagnitude( Math.min( xScale, yScale ) );
       equationParent.x = invisibleRectangle.centerX;
       equationParent.centerY = invisibleRectangle.centerY;
     } );
 
     var contentNode = new Node( {
-      children: [ invisibleRectangle, equationParent ],
-      maxWidth: contentWidth,
-      maxHeight: contentHeight
+      children: [ invisibleRectangle, equationParent ]
     } );
 
     AccordionBox.call( this, contentNode, options );
+    console.log( 'contentWidth=' + contentWidth + ', contentXMargin=' + options.contentXMargin + ', width=' + this.width );//XXX
   }
 
   equalityExplorer.register( 'EquationAccordionBox', EquationAccordionBox );
