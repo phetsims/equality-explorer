@@ -88,10 +88,10 @@ define( function( require ) {
         if ( scoreProperty.value === 10 ) {
           var dialog = new RewardDialog( scoreProperty.value, {
             keepGoingButtonListener: function() {
-              dialog.hide();
+              dialog.dispose();
             },
             newLevelButtonListener: function() {
-              dialog.hide();
+              dialog.dispose();
               options.backButtonListener();
             }
           } );
