@@ -15,7 +15,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
+  // var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
   var Node = require( 'SCENERY/nodes/Node' );
   var OopsDialog = require( 'EQUALITY_EXPLORER/common/view/OopsDialog' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -99,13 +99,13 @@ define( function( require ) {
 
     // Some scenes support locking the left and right sides of the equation,
     // such that an action on one side results in an equivalent action on the opposite side.
-    if ( scene.lockedProperty ) {
-      var lockControl = new LockControl( scene.lockedProperty, {
-        x: scale.location.x,
-        y: leftTermsToolbox.centerY - 5 // offset determined empirically
-      } );
-      children.unshift( lockControl ); // add to beginning
-    }
+    // if ( scene.lockedProperty ) {
+    //   var lockControl = new LockControl( scene.lockedProperty, {
+    //     x: scale.location.x,
+    //     y: leftTermsToolbox.centerY - 5 // offset determined empirically
+    //   } );
+    //   children.unshift( lockControl ); // add to beginning
+    // }
 
     Node.call( this, {
       children: children
