@@ -15,7 +15,7 @@ define( function( require ) {
   var OperationsScreen = require( 'EQUALITY_EXPLORER/operations/OperationsScreen' );
   var Sim = require( 'JOIST/Sim' );
   var SimLauncher = require( 'JOIST/SimLauncher' );
-  // var SolveItScreen = require( 'EQUALITY_EXPLORER/solveit/SolveItScreen' );
+  var SolveItScreen = require( 'EQUALITY_EXPLORER/solveit/SolveItScreen' );
   var VariablesScreen = require( 'EQUALITY_EXPLORER/variables/VariablesScreen' );
   var XYScreen = require( 'EQUALITY_EXPLORER/xy/XYScreen' );
 
@@ -42,7 +42,7 @@ define( function( require ) {
       new NumbersScreen(),
       new VariablesScreen(),
       new OperationsScreen(),
-      // new SolveItScreen()
+      new SolveItScreen()
     ];
 
     // non-production screen for testing multi-variable support
