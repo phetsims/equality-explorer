@@ -1,4 +1,4 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * Displays the value of variables in parenthesis, e.g. '(x = 2)' or '(x = 1, y = 3)'.
