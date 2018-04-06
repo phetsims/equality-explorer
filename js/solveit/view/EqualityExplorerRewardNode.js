@@ -25,9 +25,6 @@ define( function( require ) {
    * @constructor
    */
   function EqualityExplorerRewardNode( level ) {
-
-    //TODO different objects for different levels?
-
     RewardNode.call( this, {
       nodes: RewardNode.createRandomNodes( [
         new StarNode(),
