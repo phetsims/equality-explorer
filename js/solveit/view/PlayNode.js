@@ -100,6 +100,9 @@ define( function( require ) {
 
         // When the score reaches a magic number, display a reward dialog
         if ( scoreProperty.value === model.rewardScore ) {
+
+          gameAudioPlayer.gameOverPerfectScore();
+          
           rewardDialog = rewardDialog || new RewardDialog( scoreProperty.value, {
             keepGoingButtonListener: function() {
               rewardDialog.hide();
