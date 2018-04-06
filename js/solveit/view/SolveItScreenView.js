@@ -21,28 +21,40 @@ define( function( require ) {
    */
   function SolveItScreenView( model ) {
 
+    var self = this;
+
     ScreenView.call( this, model );
 
     var settingsNode = new SettingsNode( model, this.layoutBounds, {
       buttonListener: function( level ) {
         model.levelProperty.value = level;
         settingsNode.visible = false;
-        playNode.visible = true;
+        self.playNode.visible = true;
       }
     } );
     this.addChild( settingsNode );
 
-    var playNode = new PlayNode( model, this.visibleBoundsProperty, {
+    // @private
+    this.playNode = new PlayNode( model, this.visibleBoundsProperty, {
       visible: false,
       backButtonListener: function() {
-        playNode.visible = false;
+        self.playNode.visible = false;
         settingsNode.visible = true;
       }
     } );
-    this.addChild( playNode );
+    this.addChild( this.playNode );
   }
 
   equalityExplorer.register( 'SolveItScreenView', SolveItScreenView );
 
-  return inherit( ScreenView, SolveItScreenView );
+  return inherit( ScreenView, SolveItScreenView, {
+
+    /**
+     * @param {number} dt - elapsed time, in seconds
+     * @public
+     */
+    step: function( dt ) {
+      this.playNode.step( dt );
+    }
+  } );
 } );

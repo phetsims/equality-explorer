@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -38,6 +39,8 @@ define( function( require ) {
    * @constructor
    */
   function PlayNode( model, visibleBoundsProperty, options ) {
+
+    var self = this;
 
     options = _.extend( {
       backButtonListener: function() {}
@@ -77,9 +80,12 @@ define( function( require ) {
       }
     } );
 
-    // {RewardDialog} dialog that is displayed when we reach 10 correct answers.
+    // @private {RewardDialog} dialog that is displayed when we reach 10 correct answers.
     // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.
-    var rewardDialog = null;
+    this.rewardDialog = null;
+
+    // @private {EqualityExplorerRewardNode} reward shown while rewardDialog is open
+    this.rewardNode = null;
 
     var nextButton = new RectangularPushButton( {
       content: new Text( nextString, {
@@ -94,25 +100,49 @@ define( function( require ) {
 
       listener: function() {
 
-        //TODO temporarily make the Next button register a correct answer
-        gameAudioPlayer.correctAnswer();
+        //TODO temporary: Next button is a correct answer
         scoreProperty.value++;
 
         // When the score reaches a magic number, display a reward dialog
         if ( scoreProperty.value === model.rewardScore ) {
 
           gameAudioPlayer.gameOverPerfectScore();
-          
-          rewardDialog = rewardDialog || new RewardDialog( scoreProperty.value, {
+
+          // show the reward dialog
+          self.rewardDialog = self.rewardDialog || new RewardDialog( scoreProperty.value, {
+
+            // 'Keep Going' hides the dialog
             keepGoingButtonListener: function() {
-              rewardDialog.hide();
+              self.rewardDialog.hide();
             },
+
+            // 'New Level' has the same effect as the back button in the status bar
             newLevelButtonListener: function() {
-              rewardDialog.hide();
+              self.rewardDialog.hide();
               options.backButtonListener();
+            },
+
+            // When the dialog is shown, show the reward
+            showCallback: function() {
+              assert && assert( !self.rewardNode, 'rewardNode is not supposed to exist' );
+              self.rewardNode = new EqualityExplorerRewardNode( model.levelProperty.value );
+              self.addChild( self.rewardNode );
+            },
+
+            // When the dialog is hidden, dispose of the reward
+            hideCallback: function() {
+              assert && assert( self.rewardNode, 'rewardNode is supposed to exist' );
+              self.removeChild( self.rewardNode );
+              self.rewardNode.dispose();
+              self.rewardNode = null;
             }
           } );
-          rewardDialog.show();
+          self.rewardDialog.show();
+        }
+        else {
+
+          //TODO temporary: Next button is a correct answer
+          gameAudioPlayer.correctAnswer();
         }
       }
     } );
@@ -150,6 +180,14 @@ define( function( require ) {
     dispose: function() {
       this.disposePlayNode();
       Node.prototype.dispose.call( this );
+    },
+
+    /**
+     * @param {number} dt - elapsed time, in seconds
+     * @public
+     */
+    step: function( dt ) {
+      this.rewardNode && this.rewardNode.step( dt );
     }
   } );
 } );
