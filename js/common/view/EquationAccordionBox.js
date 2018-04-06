@@ -95,7 +95,6 @@ define( function( require ) {
     } );
 
     AccordionBox.call( this, contentNode, options );
-    console.log( 'contentWidth=' + contentWidth + ', contentXMargin=' + options.contentXMargin + ', width=' + this.width );//XXX
   }
 
   equalityExplorer.register( 'EquationAccordionBox', EquationAccordionBox );
