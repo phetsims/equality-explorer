@@ -58,7 +58,7 @@ define( function( require ) {
     this.rewardScore = 10;
 
     // @public
-    this.soundEnabledProperty = new BooleanProperty( false );
+    this.soundEnabledProperty = new BooleanProperty( true );
   }
 
   equalityExplorer.register( 'SolveItModel', SolveItModel );
