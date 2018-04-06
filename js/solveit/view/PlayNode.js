@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
+  var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberProperty = require( 'AXON/NumberProperty' );
@@ -42,6 +43,8 @@ define( function( require ) {
       backButtonListener: function() {}
     }, options );
 
+    var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
+
     var levelNode = new RichText( model.levelDescriptions[ model.levelProperty.value ], {
       font: LEVEL_FONT,
       maxWidth: 650 // determined empirically
@@ -70,14 +73,18 @@ define( function( require ) {
       right: statusBar.centerX - 20,
       top: statusBar.bottom + 30,
       listener: function() {
-        //TODO
+        //TODO general a new challenge
       }
     } );
 
+    // {RewardDialog} dialog that is displayed when we reach 10 correct answers.
+    // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.
+    var rewardDialog = null;
+
     var nextButton = new RectangularPushButton( {
       content: new Text( nextString, {
-        font: NEXT_BUTTON_FONT
-        //TODO maxWidth
+        font: NEXT_BUTTON_FONT,
+        maxWidth: 100 // determined empirically
       } ),
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       xMargin: 12,
@@ -86,21 +93,23 @@ define( function( require ) {
       top: statusBar.bottom + 30,
 
       listener: function() {
-        scoreProperty.value++; //TODO temporary
 
-        //TODO crashing when dialog.dispose is called in these callbacks
-        // When the score reaches 10, display a dialog
-        if ( scoreProperty.value === 10 ) {
-          var dialog = new RewardDialog( scoreProperty.value, {
+        //TODO temporarily make the Next button register a correct answer
+        gameAudioPlayer.correctAnswer();
+        scoreProperty.value++;
+
+        // When the score reaches a magic number, display a reward dialog
+        if ( scoreProperty.value === model.rewardScore ) {
+          rewardDialog = rewardDialog || new RewardDialog( scoreProperty.value, {
             keepGoingButtonListener: function() {
-              dialog.dispose();
+              rewardDialog.hide();
             },
             newLevelButtonListener: function() {
-              dialog.dispose();
+              rewardDialog.hide();
               options.backButtonListener();
             }
           } );
-          dialog.show();
+          rewardDialog.show();
         }
       }
     } );

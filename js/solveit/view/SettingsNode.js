@@ -58,13 +58,14 @@ define( function( require ) {
     var chooseYourLevelNode = new Text( chooseYourLevelString, textOptions );
 
     // Info button, to right of 'Choose Your Level'
-    var dialog = null;
+    // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.
+    var infoDialog = null;
     var infoButton = new InfoButton( {
       iconFill: 'rgb( 41, 106, 163 )',
       maxHeight: 0.75 * chooseYourLevelNode.height,
       listener: function() {
-        dialog = dialog || new InfoDialog( model.levelDescriptions );
-        dialog.show();
+        infoDialog = infoDialog || new InfoDialog( model.levelDescriptions );
+        infoDialog.show();
       }
     } );
 

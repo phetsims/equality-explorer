@@ -54,6 +54,9 @@ define( function( require ) {
       } ) );
     }
 
+    // @public Getting to this score results in a reward.
+    this.rewardScore = 10;
+
     // @public
     this.soundEnabledProperty = new BooleanProperty( false );
   }
