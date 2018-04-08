@@ -54,7 +54,7 @@ define( function( require ) {
 
     var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
-    var levelNode = new RichText( model.levelDescriptions[ model.levelProperty.value ], {
+    var levelNode = new RichText( model.levelProperty.value.description, {
       font: LEVEL_FONT,
       maxWidth: 650 // determined empirically
     } );
@@ -63,7 +63,7 @@ define( function( require ) {
       numberType: 'Integer'
     } );
     scoreProperty.link( function( score ) {
-      model.scoreProperties[ model.levelProperty.value ].value = score;
+      model.levelProperty.value.scoreProperty.value = score;
     } );
 
     var scoreDisplay = new ScoreDisplayNumberAndStar( scoreProperty );
@@ -131,7 +131,7 @@ define( function( require ) {
             // When the dialog is shown, show the reward
             showCallback: function() {
               assert && assert( !self.rewardNode, 'rewardNode is not supposed to exist' );
-              self.rewardNode = new EqualityExplorerRewardNode( model.levelProperty.value );
+              self.rewardNode = new EqualityExplorerRewardNode( model.levelProperty.value.levelNumber );
               self.addChild( self.rewardNode );
             },
 
@@ -178,11 +178,11 @@ define( function( require ) {
 
     // When the level changes, update the level description and listen to the correct score
     model.levelProperty.link( function( level, oldLevel ) {
-      levelNode.text = model.levelDescriptions[ level ];
+      levelNode.text = level.description;
       if ( oldLevel !== null ) {
-        model.scoreProperties[ oldLevel ].unlink( updateScore );
+        oldLevel.scoreProperty.unlink( updateScore );
       }
-      model.scoreProperties[ level ].link( updateScore );
+      level.scoreProperty.link( updateScore );
     } );
 
     // @private

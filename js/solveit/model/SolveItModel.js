@@ -11,9 +11,9 @@ define( function( require ) {
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var GameLevel = require( 'EQUALITY_EXPLORER/solveit/model/GameLevel' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var Range = require( 'DOT/Range' );
+  var Property = require( 'AXON/Property' );
 
   // strings
   var level1String = require( 'string!EQUALITY_EXPLORER/level1' );
@@ -29,7 +29,7 @@ define( function( require ) {
     // @public (read-only)
     this.numberOfLevels = 4;
 
-    // @public (read-only)
+    // @public (read-only) ordered by ascending level number
     this.levelDescriptions = [
       level1String,
       level2String,
@@ -37,24 +37,18 @@ define( function( require ) {
       level4String
     ];
 
-    // @public game levels are numbered from 0 in the model, from 1 in the view
-    this.levelProperty = new NumberProperty( 0, {
-      numberType: 'Integer',
-      range: new Range( 0, this.numberOfLevels - 1 )
-    } );
-
-    // @public {NumberProperty[]} a score for each level
-    this.scoreProperties = [];
+    // @public (read-only)
+    this.levels = [];
     for ( var i = 0; i < this.numberOfLevels; i++ ) {
-      this.scoreProperties.push( new NumberProperty( 0, {
-        numberType: 'Integer',
-        isValidValue: function( value ) {
-          return value >= 0;
-        }
-      } ) );
+      this.levels.push( new GameLevel( i, this.levelDescriptions[ i ] ) );
     }
 
-    // @public Getting to this score results in a reward.
+    // @public the selected level
+    this.levelProperty = new Property( this.levels[ 0 ], {
+      validValues: this.levels
+    } );
+
+    // @public (read-only) reaching this score results in a reward
     this.rewardScore = 10;
 
     // @public
@@ -67,10 +61,10 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.levelProperty.reset();
-      this.scoreProperties.forEach( function( scoreProperty ) {
-        scoreProperty.reset();
+      this.levels.forEach( function( level ) {
+        level.reset();
       } );
+      this.levelProperty.reset();
       this.soundEnabledProperty.reset();
     }
   } );

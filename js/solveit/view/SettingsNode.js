@@ -72,18 +72,19 @@ define( function( require ) {
 
     // Level-selection buttons
     var levelButtons = [];
-    for ( var i = 0; i < model.scoreProperties.length; i++ ) {
+    for ( var i = 0; i < model.levels.length; i++ ) {
 
       // IIFE to create a closure for level
+      // @param {GameLevel} level
       ( function( level ) {
 
-        var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level + 1 ), xString, {
+        var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level.levelNumber + 1 ), xString, {
           diameter: 50,
           margin: 15,
           showOne: true
         } );
 
-        var button = LevelSelectionItemNode.createWithScoreDisplayNumberAndStar( icon, model.scoreProperties[ level ], {
+        var button = LevelSelectionItemNode.createWithScoreDisplayNumberAndStar( icon, level.scoreProperty, {
           baseColor: 'rgb( 191, 239, 254 )',
           listener: function() {
             options.buttonListener( level );
@@ -91,7 +92,7 @@ define( function( require ) {
         } );
 
         levelButtons.push( button );
-      } )( i );
+      } )( model.levels[ i ] );
     }
 
     // Layout buttons horizontally
