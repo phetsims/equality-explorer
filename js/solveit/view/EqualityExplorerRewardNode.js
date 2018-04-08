@@ -40,7 +40,7 @@ define( function( require ) {
         STAR_NODE,
         FACE_NODE,
 
-        // 'x' term, with level number as coefficient
+        // 'x' term with level number as coefficient
         VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level + 1 ), xString, {
           diameter: DIAMETER,
           showOne: true
