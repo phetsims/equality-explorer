@@ -14,7 +14,7 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
 
   /**
-   * @param {number} levelNumber
+   * @param {number} levelNumber - numbered from 0 in the model, from 1 in the view
    * @param {string} description
    * @constructor
    */
