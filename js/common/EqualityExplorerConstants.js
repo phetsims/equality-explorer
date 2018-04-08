@@ -28,7 +28,6 @@ define( function( require ) {
     BIG_TERM_DIAMETER: 100, // diameter of big terms, like those on the scale in the Operations screen
     SHADOW_OPACITY: 0.4, // opacity of the shadow that appears on terms, 0-1 (transparent-opaque)
 
-    //TODO convert these to an enum?
     // universal operators, in the order that they appear in the operator picker
     OPERATORS: [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ],
 
