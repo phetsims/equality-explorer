@@ -18,6 +18,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var InfoDialog = require( 'EQUALITY_EXPLORER/solveit/view/InfoDialog' );
   var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
+  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -50,7 +51,7 @@ define( function( require ) {
 
     // 'Solve for x'
     var solveForXText = StringUtils.fillIn( solveForString, {
-      variable: '<i><font face=\'"Times New Roman", Times, serif\'>' + xString + '</font></i>'
+      variable: MathSymbolFont.getRichTextMarkup( xString )
     } );
     var solveForXNode = new RichText( solveForXText, textOptions );
 

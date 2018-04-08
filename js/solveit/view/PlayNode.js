@@ -10,10 +10,13 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
@@ -23,10 +26,12 @@ define( function( require ) {
   var RichText = require( 'SCENERY/nodes/RichText' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var StatusBar = require( 'VEGAS/StatusBar' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
   var nextString = require( 'string!EQUALITY_EXPLORER/next' );
+  var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
   var LEVEL_FONT = new PhetFont( 20 );
@@ -34,11 +39,12 @@ define( function( require ) {
 
   /**
    * @param {SolveItModel} model
+   * @param {Bounds2} layoutBounds
    * @param {Property.<Bounds2>} visibleBoundsProperty - visible bounds of this node's parent ScreenView
    * @param {Object} [options]
    * @constructor
    */
-  function PlayNode( model, visibleBoundsProperty, options ) {
+  function PlayNode( model, layoutBounds, visibleBoundsProperty, options ) {
 
     var self = this;
 
@@ -76,7 +82,7 @@ define( function( require ) {
       right: statusBar.centerX - 20,
       top: statusBar.bottom + 30,
       listener: function() {
-        //TODO general a new challenge
+        //TODO generate a new challenge
       }
     } );
 
@@ -149,6 +155,20 @@ define( function( require ) {
 
     assert && assert( !options.children, 'PlayNode sets children' );
     options.children = [ statusBar, refreshButton, nextButton ];
+
+    // @private {RichText|null} shows the answer for debugging/testing
+    this.answerNode = null;
+    if ( EqualityExplorerQueryParameters.showAnswers ) {
+      var answerText = StringUtils.fillIn( '{{x}} = {{value}}', {
+        x: MathSymbolFont.getRichTextMarkup( xString ),
+        value: '?' //TODO show value of x, update when challenge changes
+      } );
+      this.answerNode = new RichText( answerText, {
+        right: layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
+        bottom: layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
+      } );
+      options.children.push( this.answerNode );
+    }
 
     Node.call( this, options );
 

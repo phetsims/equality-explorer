@@ -35,7 +35,7 @@ define( function( require ) {
     this.addChild( settingsNode );
 
     // @private
-    this.playNode = new PlayNode( model, this.visibleBoundsProperty, {
+    this.playNode = new PlayNode( model, this.layoutBounds, this.visibleBoundsProperty, {
       visible: false,
       backButtonListener: function() {
         self.playNode.visible = false;
