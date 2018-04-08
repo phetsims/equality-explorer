@@ -2,7 +2,7 @@
 
 /**
  * User interface for game settings in the 'Solve It!' screen.
- * This is where you choose your level, turn sound on/off, etc.
+ * This is where you choose your level, turn sound on/off, reset the game, etc.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
