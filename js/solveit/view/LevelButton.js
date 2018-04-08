@@ -20,9 +20,9 @@ define( function( require ) {
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
-   * @param {GameLevel} level
-   * @param {Property.<GameLevel>} levelProperty
-   * @param {StringProperty} stateProperty
+   * @param {GameLevel} level - the level for this button
+   * @param {Property.<GameLevel>} levelProperty - the selected level
+   * @param {StringProperty} stateProperty - the state of the game
    * @constructor
    */
   function LevelButton( level, levelProperty, stateProperty ) {
