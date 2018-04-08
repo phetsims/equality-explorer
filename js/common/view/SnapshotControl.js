@@ -124,7 +124,7 @@ define( function( require ) {
         // create the equation for the snapshot
         equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, {
           updateEnabled: false, // equation is static
-          synbolFontSize: EQUATION_FONT_SIZE,
+          symbolFontSize: EQUATION_FONT_SIZE,
           operatorFontSize: EQUATION_FONT_SIZE,
           integerFontSize: EQUATION_FONT_SIZE,
           fractionFontSize: FRACTION_FONT_SIZE,
