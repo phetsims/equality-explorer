@@ -174,6 +174,7 @@ define( function( require ) {
     return relationalOperator;
   }
 
+  //TODO code for creating operator is duplicated 3x in this method
   /**
    * Creates one side of the equation.
    * @param {TermCreator[]} termCreators
