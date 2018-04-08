@@ -174,7 +174,6 @@ define( function( require ) {
     return relationalOperator;
   }
 
-  //TODO code for creating operator is duplicated 3x in this method
   /**
    * Creates one side of the equation.
    * @param {TermCreator[]} termCreators
@@ -198,9 +197,9 @@ define( function( require ) {
 
         if ( termCreator instanceof MysteryTermCreator ) {
 
-          // mystery terms are displayed as a coefficient and icon
+          // if there were previous terms, add an operator
           if ( children.length > 0 ) {
-            children.push( new Text( MathSymbols.PLUS, { font: operatorFont } ) );
+            children.push( valueToOperatorNode( numberOfTermsOnPlate, operatorFont ) );
           }
 
           // Each mystery term has an implicit coefficient of 1, so use the number of terms as the coefficient.
@@ -217,10 +216,10 @@ define( function( require ) {
 
             // if there were previous terms, replace the coefficient's sign with an operator
             if ( children.length > 0 ) {
-              var operator = ( coefficient.getValue() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
-              children.push( new Text( operator, { font: operatorFont } ) );
+              children.push( valueToOperatorNode( coefficient.getValue(), operatorFont ) );
               coefficient = coefficient.abs();
             }
+
             children.push( VariableTermNode.createEquationTermNode( coefficient, termCreator.variable.symbol, {
               integerFont: integerFont,
               fractionFont: fractionFont,
@@ -237,8 +236,7 @@ define( function( require ) {
 
             // if there were previous terms, replace the constant's sign with an operator
             if ( children.length > 0 ) {
-              operator = ( constantValue.getValue() > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
-              children.push( new Text( operator, { font: operatorFont } ) );
+              children.push( valueToOperatorNode( constantValue.getValue(), operatorFont ) );
               constantValue = constantValue.abs();
             }
 
@@ -263,6 +261,18 @@ define( function( require ) {
       spacing: plusSpacing,
       children: children
     } );
+  }
+
+  /**
+   * Given the value that determines a term's sign, create the corresponding operator node.
+   * @param {number} value
+   * @param {Font} operatorFont
+   * @returns {Node}
+   */
+  function valueToOperatorNode( value, operatorFont ) {
+    assert && assert( typeof value === 'number', 'invalid value: ' + value );
+    var operator = ( value > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
+    return new Text( operator, { font: operatorFont } );
   }
 
   return inherit( Node, EquationNode, {
