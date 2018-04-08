@@ -37,7 +37,7 @@ define( function( require ) {
       level4String
     ];
 
-    // @public
+    // @public game levels are numbered from 0 in the model, from 1 in the view
     this.levelProperty = new NumberProperty( 0, {
       numberType: 'Integer',
       range: new Range( 0, this.numberOfLevels - 1 )
