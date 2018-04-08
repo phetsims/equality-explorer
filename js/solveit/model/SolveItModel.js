@@ -51,6 +51,7 @@ define( function( require ) {
     // @public (read-only) reaching this score results in a reward
     this.rewardScore = 10;
 
+    //TODO move soundEnabledProperty to the view? It's convenient to have it here.
     // @public
     this.soundEnabledProperty = new BooleanProperty( true );
   }
