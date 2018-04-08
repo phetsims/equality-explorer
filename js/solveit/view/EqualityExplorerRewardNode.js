@@ -20,6 +20,16 @@ define( function( require ) {
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
+  // constants
+  var DIAMETER = 40;
+  var STAR_NODE = new StarNode( {
+    innerRadius: DIAMETER / 4,
+    outerRadius: DIAMETER / 2
+  } );
+  var FACE_NODE = new FaceNode( DIAMETER, {
+    headStroke: 'black'
+  } );
+
   /**
    * @param {number} level - the game level
    * @constructor
@@ -27,26 +37,19 @@ define( function( require ) {
   function EqualityExplorerRewardNode( level ) {
     RewardNode.call( this, {
       nodes: RewardNode.createRandomNodes( [
-        new StarNode(),
-        new FaceNode( 40, { headStroke: 'black' } ),
-        createVariableIcon( level + 1 )
+        STAR_NODE,
+        FACE_NODE,
+
+        // 'x' term, with level number as coefficient
+        VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level + 1 ), xString, {
+          diameter: DIAMETER,
+          showOne: true
+        } )
       ], 150 /* count */ )
     } );
   }
 
   equalityExplorer.register( 'EqualityExplorerRewardNode', EqualityExplorerRewardNode );
-
-  /**
-   * Creates an icon for a variable with a specific coefficient.
-   * @param {number} coefficient
-   * @returns {Node}
-   */
-  function createVariableIcon( coefficient ) {
-    return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), xString, {
-      diameter: 35,
-      showOne: true
-    } );
-  }
 
   return inherit( RewardNode, EqualityExplorerRewardNode );
 } );
