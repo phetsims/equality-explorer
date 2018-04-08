@@ -43,7 +43,7 @@ define( function( require ) {
         // 'x' term with level number as coefficient
         VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level + 1 ), xString, {
           diameter: DIAMETER,
-          showOne: true
+          showOne: true // show coefficient for '1x'
         } )
       ], 150 /* count */ )
     } );
