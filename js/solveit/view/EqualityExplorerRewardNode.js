@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Shows a bunch of objects related to this sim falling.
+ * This is the reward that's shown behind RewardDialog when the user gets to 10 stars.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
