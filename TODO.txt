@@ -26,9 +26,9 @@ Lock feature scenarios:
 - animate to scale, ghost's plate has become full, return both to toolbox
 
 Solve It! screen
-- vegas game components
+- make each level a SolveItScene subtype of OperationsScene
+- reuse bits of OperationsSceneNode for SolveItSceneNode
 - challenge generation engine
-- reuse parts of Operations screen
 
 Cleanup
 - grunt update-copyright-dates
