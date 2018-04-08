@@ -41,16 +41,11 @@ define( function( require ) {
    * @param {SolveItModel} model
    * @param {Bounds2} layoutBounds
    * @param {Property.<Bounds2>} visibleBoundsProperty - visible bounds of this node's parent ScreenView
-   * @param {Object} [options]
    * @constructor
    */
-  function PlayNode( model, layoutBounds, visibleBoundsProperty, options ) {
+  function PlayingNode( model, layoutBounds, visibleBoundsProperty ) {
 
     var self = this;
-
-    options = _.extend( {
-      backButtonListener: function() {}
-    }, options );
 
     var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
@@ -68,10 +63,14 @@ define( function( require ) {
 
     var scoreDisplay = new ScoreDisplayNumberAndStar( scoreProperty );
 
+    var backButtonListener = function() {
+      model.stateProperty.value = 'settings';
+    };
+
     var statusBar = new StatusBar( visibleBoundsProperty, levelNode, scoreDisplay, {
       spacing: 20,
       backgroundFill: 'rgb( 252, 150, 152 )',
-      backButtonListener: options.backButtonListener
+      backButtonListener: backButtonListener
     } );
 
     var refreshButton = new RectangularPushButton( {
@@ -125,7 +124,7 @@ define( function( require ) {
             // 'New Level' has the same effect as the back button in the status bar
             newLevelButtonListener: function() {
               self.rewardDialog.hide();
-              options.backButtonListener();
+              backButtonListener();
             },
 
             // When the dialog is shown, show the reward
@@ -153,8 +152,7 @@ define( function( require ) {
       }
     } );
 
-    assert && assert( !options.children, 'PlayNode sets children' );
-    options.children = [ statusBar, refreshButton, nextButton ];
+    var children = [ statusBar, refreshButton, nextButton ];
 
     // @private {RichText|null} shows the answer for debugging/testing
     this.answerNode = null;
@@ -167,10 +165,12 @@ define( function( require ) {
         right: layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
         bottom: layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
       } );
-      options.children.push( this.answerNode );
+      children.push( this.answerNode );
     }
 
-    Node.call( this, options );
+    Node.call( this, {
+      children: children
+    } );
 
     var updateScore = function( score ) {
       scoreProperty.value = score;
@@ -186,19 +186,19 @@ define( function( require ) {
     } );
 
     // @private
-    this.disposePlayNode = function() {
+    this.disposePlayingNode = function() {
       scoreDisplay.dispose();
       statusBar.dispose();
     };
   }
 
-  equalityExplorer.register( 'PlayNode', PlayNode );
+  equalityExplorer.register( 'PlayingNode', PlayingNode );
 
-  return inherit( Node, PlayNode, {
+  return inherit( Node, PlayingNode, {
 
     // @public
     dispose: function() {
-      this.disposePlayNode();
+      this.disposePlayingNode();
       Node.prototype.dispose.call( this );
     },
 

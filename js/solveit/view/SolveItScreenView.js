@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PlayNode = require( 'EQUALITY_EXPLORER/solveit/view/PlayNode' );
+  var PlayingNode = require( 'EQUALITY_EXPLORER/solveit/view/PlayingNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SettingsNode = require( 'EQUALITY_EXPLORER/solveit/view/SettingsNode' );
 
@@ -25,24 +25,17 @@ define( function( require ) {
 
     ScreenView.call( this, model );
 
-    var settingsNode = new SettingsNode( model, this.layoutBounds, {
-      buttonListener: function( level ) {
-        model.levelProperty.value = level;
-        settingsNode.visible = false;
-        self.playNode.visible = true;
-      }
-    } );
+    var settingsNode = new SettingsNode( model, this.layoutBounds );
     this.addChild( settingsNode );
 
     // @private
-    this.playNode = new PlayNode( model, this.layoutBounds, this.visibleBoundsProperty, {
-      visible: false,
-      backButtonListener: function() {
-        self.playNode.visible = false;
-        settingsNode.visible = true;
-      }
+    this.playingNode = new PlayingNode( model, this.layoutBounds, this.visibleBoundsProperty );
+    this.addChild( this.playingNode );
+
+    model.stateProperty.link( function( state ) {
+      settingsNode.visible = ( state === 'settings' );
+      self.playingNode.visible = ( state === 'playing' );
     } );
-    this.addChild( this.playNode );
   }
 
   equalityExplorer.register( 'SolveItScreenView', SolveItScreenView );
@@ -54,7 +47,7 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
-      this.playNode.step( dt );
+      this.playingNode.step( dt );
     }
   } );
 } );

@@ -12,12 +12,11 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InfoDialog = require( 'EQUALITY_EXPLORER/solveit/view/InfoDialog' );
-  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
+  var LevelButton = require( 'EQUALITY_EXPLORER/solveit/view/LevelButton' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -26,7 +25,6 @@ define( function( require ) {
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   // strings
   var chooseYourLevelString = require( 'string!EQUALITY_EXPLORER/chooseYourLevel' );
@@ -36,17 +34,13 @@ define( function( require ) {
   /**
    * @param {SolveItModel} model
    * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
    * @constructor
    */
-  function SettingsNode( model, layoutBounds, options ) {
-
-    options = options || {};
+  function SettingsNode( model, layoutBounds ) {
 
     var textOptions = {
       font: new PhetFont( 50 ),
-      maxWidth: 0.65 * layoutBounds.width,
-      buttonListener: function( level ) {}
+      maxWidth: 0.65 * layoutBounds.width
     };
 
     // 'Solve for x'
@@ -72,28 +66,9 @@ define( function( require ) {
 
     // Level-selection buttons
     var levelButtons = [];
-    for ( var i = 0; i < model.levels.length; i++ ) {
-
-      // IIFE to create a closure for level
-      // @param {GameLevel} level
-      ( function( level ) {
-
-        var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level.levelNumber + 1 ), xString, {
-          diameter: 50,
-          margin: 15,
-          showOne: true
-        } );
-
-        var button = LevelSelectionItemNode.createWithScoreDisplayNumberAndStar( icon, level.scoreProperty, {
-          baseColor: 'rgb( 191, 239, 254 )',
-          listener: function() {
-            options.buttonListener( level );
-          }
-        } );
-
-        levelButtons.push( button );
-      } )( model.levels[ i ] );
-    }
+    model.levels.forEach( function( level ) {
+      levelButtons.push( new LevelButton( level, model.levelProperty, model.stateProperty ) );
+    } );
 
     // Layout buttons horizontally
     var levelButtonsBox = new HBox( {
@@ -126,17 +101,16 @@ define( function( require ) {
     resetAllButton.right = layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN;
     resetAllButton.bottom = layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN;
 
-    assert && assert( !options.children, 'SettingsNode sets children' );
-    options.children = [
-      solveForXNode,
-      chooseYourLevelNode,
-      infoButton,
-      levelButtonsBox,
-      soundButton,
-      resetAllButton
-    ];
-
-    Node.call( this, options );
+    Node.call( this, {
+      children: [
+        solveForXNode,
+        chooseYourLevelNode,
+        infoButton,
+        levelButtonsBox,
+        soundButton,
+        resetAllButton
+      ]
+    } );
   }
 
   equalityExplorer.register( 'SettingsNode', SettingsNode );

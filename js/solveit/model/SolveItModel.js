@@ -14,6 +14,7 @@ define( function( require ) {
   var GameLevel = require( 'EQUALITY_EXPLORER/solveit/model/GameLevel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
+  var StringProperty = require( 'AXON/StringProperty' );
 
   // strings
   var level1String = require( 'string!EQUALITY_EXPLORER/level1' );
@@ -21,10 +22,18 @@ define( function( require ) {
   var level3String = require( 'string!EQUALITY_EXPLORER/level3' );
   var level4String = require( 'string!EQUALITY_EXPLORER/level4' );
 
+  // constants
+  var VALID_STATES = [ 'settings', 'playing' ];
+
   /**
    * @constructor
    */
   function SolveItModel() {
+
+    // @public
+    this.stateProperty = new StringProperty( 'settings', {
+      validValues: VALID_STATES
+    } );
 
     // @public (read-only)
     this.numberOfLevels = 4;
@@ -61,6 +70,7 @@ define( function( require ) {
 
     // @public
     reset: function() {
+      this.stateProperty.reset();
       this.levels.forEach( function( level ) {
         level.reset();
       } );
