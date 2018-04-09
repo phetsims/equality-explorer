@@ -218,9 +218,9 @@ define( function( require ) {
     // When the 'go' button is pressed, animate operations, then apply operations to terms.
     var goButtonListener = function() {
 
-      // Go button is disabled until the animation completes, so that students don't press the button in rapid-fire.
-      // See https://github.com/phetsims/equality-explorer/issues/48#issuecomment-375807008
-      goButton.enabled = EqualityExplorerQueryParameters.goButtonEnabled;
+      // Go button is disabled until the animation completes, so that students don't press the button rapid-fire.
+      // See https://github.com/phetsims/equality-explorer/issues/48
+      goButton.enabled = false;
 
       var operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
 

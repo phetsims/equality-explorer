@@ -60,13 +60,6 @@ define( function( require ) {
       defaultValue: 18
     },
 
-    // After pressing the universal operator's 'go' button, it is normally disabled until the operation is applied.
-    // This prevents users from abusing the button by pressing it repeatedly (rapid-fire), which could
-    // cause them to reach the numeric limits of the sim very quickly.  Setting this flag keeps the 'go'
-    // button enabled at all times, allowing you to press it repeatedly, for the purposes of testing sim limits.
-    // And in case it's not obvious: For internal use only, not public facing.
-    goButtonEnabled: { type: 'flag' },
-
     // The largest integer value for any numerator, denominator or constant.
     // Any operation that would exceed this value is canceled, and a dialog is shown.
     // See https://github.com/phetsims/equality-explorer/issues/48
