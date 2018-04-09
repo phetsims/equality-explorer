@@ -105,7 +105,7 @@ define( function( require ) {
         scene.scoreProperty.value++;
 
         // When the score reaches a magic number, display a reward dialog
-        if ( scene.scoreProperty.value === model.rewardScore ) {
+        if ( scene.scoreProperty.value === EqualityExplorerConstants.GAME_REWARD_SCORE ) {
 
           gameAudioPlayer.gameOverPerfectScore();
 

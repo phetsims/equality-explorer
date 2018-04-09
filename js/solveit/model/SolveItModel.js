@@ -43,9 +43,6 @@ define( function( require ) {
     // @public {SolveItScene|null} the selected scene, null if no scene is currently selected
     this.sceneProperty = new Property( null );
 
-    // @public (read-only) reaching this score results in a reward
-    this.rewardScore = 10;
-
     // @public technically a view Property, but convenient to put it in the model
     this.soundEnabledProperty = new BooleanProperty( true );
   }
