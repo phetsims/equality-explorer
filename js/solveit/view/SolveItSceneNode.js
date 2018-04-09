@@ -78,13 +78,6 @@ define( function( require ) {
       }
     } );
 
-    // @private {RewardDialog} dialog that is displayed when we reach 10 correct answers.
-    // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.
-    this.rewardDialog = null;
-
-    // @private {EqualityExplorerRewardNode} reward shown while rewardDialog is open
-    this.rewardNode = null;
-
     // Next button takes us to the next challenge
     var nextButton = new RectangularPushButton( {
       content: new Text( nextString, {
@@ -101,48 +94,7 @@ define( function( require ) {
 
         //TODO temporary: Next button is a correct answer
         scene.scoreProperty.value++;
-
-        // When the score reaches a magic number, display a reward dialog
-        if ( scene.scoreProperty.value === EqualityExplorerConstants.GAME_REWARD_SCORE ) {
-
-          gameAudioPlayer.gameOverPerfectScore();
-
-          // show the reward dialog
-          self.rewardDialog = self.rewardDialog || new RewardDialog( scene.scoreProperty.value, {
-
-            // 'Keep Going' hides the dialog
-            keepGoingButtonListener: function() {
-              self.rewardDialog.hide();
-            },
-
-            // 'New Level' has the same effect as the back button in the status bar
-            newLevelButtonListener: function() {
-              self.rewardDialog.hide();
-              backButtonListener();
-            },
-
-            // When the dialog is shown, show the reward
-            showCallback: function() {
-              assert && assert( !self.rewardNode, 'rewardNode is not supposed to exist' );
-              self.rewardNode = new EqualityExplorerRewardNode( scene.levelNumber );
-              self.addChild( self.rewardNode );
-            },
-
-            // When the dialog is hidden, dispose of the reward
-            hideCallback: function() {
-              assert && assert( self.rewardNode, 'rewardNode is supposed to exist' );
-              self.removeChild( self.rewardNode );
-              self.rewardNode.dispose();
-              self.rewardNode = null;
-            }
-          } );
-          self.rewardDialog.show();
-        }
-        else {
-
-          //TODO temporary: Next button is a correct answer
-          gameAudioPlayer.correctAnswer();
-        }
+        gameAudioPlayer.correctAnswer();
       }
     } );
 
@@ -170,6 +122,53 @@ define( function( require ) {
     // unlink not needed
     model.sceneProperty.link( function( selectedScene ) {
       self.visible = ( scene === selectedScene );
+    } );
+
+    // @private {RewardDialog} dialog that is displayed when we reach 10 correct answers.
+    // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.
+    this.rewardDialog = null;
+
+    // @private {EqualityExplorerRewardNode} reward shown while rewardDialog is open
+    this.rewardNode = null;
+
+    // When the score reaches a magic number, display the reward
+    scene.scoreProperty.link( function( score ) {
+
+      if ( score === EqualityExplorerConstants.GAME_REWARD_SCORE ) {
+
+        gameAudioPlayer.gameOverPerfectScore();
+
+        // show the reward dialog
+        self.rewardDialog = self.rewardDialog || new RewardDialog( scene.scoreProperty.value, {
+
+          // 'Keep Going' hides the dialog
+          keepGoingButtonListener: function() {
+            self.rewardDialog.hide();
+          },
+
+          // 'New Level' has the same effect as the back button in the status bar
+          newLevelButtonListener: function() {
+            self.rewardDialog.hide();
+            backButtonListener();
+          },
+
+          // When the dialog is shown, show the reward
+          showCallback: function() {
+            assert && assert( !self.rewardNode, 'rewardNode is not supposed to exist' );
+            self.rewardNode = new EqualityExplorerRewardNode( scene.levelNumber );
+            self.addChild( self.rewardNode );
+          },
+
+          // When the dialog is hidden, dispose of the reward
+          hideCallback: function() {
+            assert && assert( self.rewardNode, 'rewardNode is supposed to exist' );
+            self.removeChild( self.rewardNode );
+            self.rewardNode.dispose();
+            self.rewardNode = null;
+          }
+        } );
+        self.rewardDialog.show();
+      }
     } );
   }
 
