@@ -124,7 +124,7 @@ define( function( require ) {
       self.visible = ( scene === selectedScene );
     } );
 
-    // @private {RewardDialog} dialog that is displayed when we reach 10 correct answers.
+    // @private {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
     // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.
     this.rewardDialog = null;
 
