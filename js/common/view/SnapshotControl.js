@@ -42,7 +42,9 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      xVisibleProperty: null, // whether value of 'x' is displayed with the equation
+
+      // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
+      variableValuesVisibleProperty: null,
       controlWidth: 100,
       controlHeight: 50
     }, options );
@@ -102,7 +104,7 @@ define( function( require ) {
 
     // updates the layout of the snapshot, and centers it in the control
     var updateSnapshotLayout = function() {
-      if ( options.xVisibleProperty && options.xVisibleProperty.value ) {
+      if ( options.variableValuesVisibleProperty && options.variableValuesVisibleProperty.value ) {
         snapshotNode.children = [ equationNode, variableValuesNode ];
       }
       else {
@@ -157,11 +159,11 @@ define( function( require ) {
       selectionRectangle.stroke = isSelected ? EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE : 'transparent';
     } );
 
-    if ( options.xVisibleProperty ) {
+    if ( options.variableValuesVisibleProperty ) {
 
-      // Shows/hides the value of 'x'.
+      // Shows/hides variable values.
       // unlink not required
-      options.xVisibleProperty.link( function( xVisible ) {
+      options.variableValuesVisibleProperty.link( function( visible ) {
         updateSnapshotLayout();
       } );
     }

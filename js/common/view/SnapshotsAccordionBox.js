@@ -46,9 +46,8 @@ define( function( require ) {
       // this accordion box is designed to be a fixed width, regardless of its content
       fixedWidth: 100,
 
-      // {BooleanProperty|null} whether 'x' value is visible in snapshots
-      // null indicates that showing 'x' value is not supported.
-      xVisibleProperty: null,
+      // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
+      variableValuesVisibleProperty: null,
 
       // supertype options
       resize: false,
@@ -86,7 +85,7 @@ define( function( require ) {
     for ( var i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
       snapshotsVBoxChildren.push( new SnapshotControl(
         scene, scene.snapshotsCollection.snapshotProperties[ i ], scene.snapshotsCollection.selectedSnapshotProperty, {
-          xVisibleProperty: options.xVisibleProperty,
+          variableValuesVisibleProperty: options.variableValuesVisibleProperty,
           controlWidth: contentWidth
         } ) );
     }
@@ -138,8 +137,8 @@ define( function( require ) {
     var buttonGroupChildren = [ restoreButton, trashButton ];
 
     // Checkbox for making 'x' visible
-    if ( options.xVisibleProperty ) {
-      var xCheckbox = new VariableCheckbox( xString, options.xVisibleProperty, {
+    if ( options.variableValuesVisibleProperty ) {
+      var xCheckbox = new VariableCheckbox( xString, options.variableValuesVisibleProperty, {
         touchAreaXDilation: 5,
         touchAreaYDilation: 5
       } );

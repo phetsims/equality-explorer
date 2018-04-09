@@ -36,8 +36,10 @@ define( function( require ) {
     options = _.extend( {
       hasNegativeTermsInToolbox: true, // {boolean} if true, put negative terms in the toolbox, e.g. -x
       termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale
-      xVisibleProperty: null, // {BooleanProperty|null} whether 'x' value is visible in snapshots
-      organizeButtonVisible: true // is the organize button visible on the scale?
+      organizeButtonVisible: true, // is the organize button visible on the scale?
+
+      // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
+      variableValuesVisibleProperty: null
     }, options );
 
     // @public view-specific Properties
@@ -81,7 +83,7 @@ define( function( require ) {
     } );
 
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
-      xVisibleProperty: options.xVisibleProperty,
+      variableValuesVisibleProperty: options.variableValuesVisibleProperty,
       fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,

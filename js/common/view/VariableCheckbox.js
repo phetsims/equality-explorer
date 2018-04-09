@@ -26,11 +26,11 @@ define( function( require ) {
 
   /**
    * @param {string} symbol - the variable's symbol, e.g. 'x'
-   * @param {BooleanProperty} variableVisibleProperty - whether the variable is visible
+   * @param {BooleanProperty} variableValueVisibleProperty - whether the variable value is visible
    * @param {Object} [options]
    * @constructor
    */
-  function VariableCheckbox( symbol, variableVisibleProperty, options ) {
+  function VariableCheckbox( symbol, variableValueVisibleProperty, options ) {
 
     // the variable's symbol, in math font
     var symbolNode = new Text( symbol, {
@@ -47,7 +47,7 @@ define( function( require ) {
       maxWidth: 100
     } );
 
-    Checkbox.call( this, contentNode, variableVisibleProperty, options );
+    Checkbox.call( this, contentNode, variableValueVisibleProperty, options );
   }
 
   equalityExplorer.register( 'VariableCheckbox', VariableCheckbox );

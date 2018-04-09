@@ -31,11 +31,11 @@ define( function( require ) {
     // @private whether the Variable accordion box is expanded or collapsed
     this.variableAccordionBoxExpandedProperty = new BooleanProperty( true );
 
-    // @private whether 'x' value is visible in snapshots
-    this.xVisibleProperty = new BooleanProperty( true );
+    // @private whether variable values are visible in snapshots
+    this.variableValuesVisibleProperty = new BooleanProperty( true );
 
-    assert && assert( !options.xVisibleProperty, 'VariablesSceneNode sets xVisibleProperty' );
-    options.xVisibleProperty = this.xVisibleProperty;
+    assert && assert( !options.variableValuesVisibleProperty, 'VariablesSceneNode sets variableValuesVisibleProperty' );
+    options.variableValuesVisibleProperty = this.variableValuesVisibleProperty;
 
     SceneNode.call( this, scene, sceneProperty, layoutBounds, options );
 
@@ -63,7 +63,7 @@ define( function( require ) {
      */
     reset: function() {
       this.variableAccordionBoxExpandedProperty.reset();
-      this.xVisibleProperty.reset();
+      this.variableValuesVisibleProperty.reset();
       SceneNode.prototype.reset.call( this );
     }
   } );
