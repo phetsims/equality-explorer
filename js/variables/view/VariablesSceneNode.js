@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * A scene in the Variables screen.
+ * View of a scene in the 'Variables' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

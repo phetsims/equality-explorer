@@ -1,8 +1,8 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
-//TODO duplication with VariablesSceneNode. Should this be a subtype of VariablesSceneNode?
 /**
- * A scene in the Operations screen.
+ * View of a scene in the 'Operations' screen.
+ * Like the scene in the 'Variables' screen, but with an added control for applying a universal operation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -10,15 +10,13 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
-  var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
+  var VariablesSceneNode = require( 'EQUALITY_EXPLORER/variables/view/VariablesSceneNode' );
 
   /**
    * @param {Scene} scene
@@ -32,42 +30,14 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      termsToolboxSpacing: 30, // horizontal space between terms in the toolboxes
       organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
     }, options );
 
-    // @private view-specific Properties
-    this.viewProperties = {
-
-      // whether the Variable accordion box is expanded or collapsed
-      variableAccordionBoxExpandedProperty: new BooleanProperty( true ),
-
-      // whether 'x' value is visible in snapshots
-      xVisibleProperty: new BooleanProperty( true )
-    };
-
-    assert && assert( !options.xVisibleProperty, 'OperationsSceneNode sets xVisibleProperty' );
-    options.xVisibleProperty = this.viewProperties.xVisibleProperty;
-
-    SceneNode.call( this, scene, sceneProperty, layoutBounds, options );
-
-    // Get the bounds of the Snapshot accordion box, relative to this ScreenView
-    var globalBounds = this.snapshotsAccordionBox.parentToGlobalBounds( this.snapshotsAccordionBox.bounds );
-    var localBounds = this.globalToLocalBounds( globalBounds );
-
-    // Variables accordion box, below the Snapshots accordion box
-    var variableAccordionBox = new VariableAccordionBox( scene.xVariable, {
-      expandedProperty: this.viewProperties.variableAccordionBoxExpandedProperty,
-      fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
-      right: localBounds.right,
-      top: localBounds.bottom + 15
-    } );
-    this.addChild( variableAccordionBox );
-    variableAccordionBox.moveToBack();
+    VariablesSceneNode.call( this, scene, sceneProperty, layoutBounds, options );
 
     // Get the bounds of the Equation accordion box, relative to this ScreenView
-    globalBounds = this.equationAccordionBox.parentToGlobalBounds( this.equationAccordionBox.bounds );
-    localBounds = this.globalToLocalBounds( globalBounds );
+    var globalBounds = this.equationAccordionBox.parentToGlobalBounds( this.equationAccordionBox.bounds );
+    var localBounds = this.globalToLocalBounds( globalBounds );
 
     // Layer when universal operation animation occurs
     var operationAnimationLayer = new Node();
@@ -110,7 +80,7 @@ define( function( require ) {
 
   equalityExplorer.register( 'OperationsSceneNode', OperationsSceneNode );
 
-  return inherit( SceneNode, OperationsSceneNode, {
+  return inherit( VariablesSceneNode, OperationsSceneNode, {
 
     /**
      * @public
@@ -118,17 +88,10 @@ define( function( require ) {
      */
     reset: function() {
 
-      // reset all view-specific Properties
-      for ( var property in this.viewProperties ) {
-        if ( this.viewProperties.hasOwnProperty( property ) ) {
-          this.viewProperties[ property ].reset();
-        }
-      }
-
       // universal operation control has Properties and animations that may be in progress
       this.universalOperationControl.reset();
 
-      SceneNode.prototype.reset.call( this );
+      VariablesSceneNode.prototype.reset.call( this );
     }
   } );
 } );

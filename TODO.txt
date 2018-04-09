@@ -1,6 +1,5 @@
 TODO items for equality-explorer
 
-OperationsSceneNode extends VariablesSceneNode
 Fix handling of xVisibleProperty throughout
 
 Lock feature, #19
