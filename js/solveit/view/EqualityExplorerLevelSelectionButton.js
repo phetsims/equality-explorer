@@ -12,7 +12,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LevelSelectionItemNode = require( 'VEGAS/LevelSelectionItemNode' );
+  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {StringProperty} stateProperty - the state of the game
    * @constructor
    */
-  function LevelButton( level, levelProperty, stateProperty ) {
+  function EqualityExplorerLevelSelectionButton( level, levelProperty, stateProperty ) {
 
     // 'x' term with level number as coefficient
     var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level.levelNumber + 1 ), xString, {
@@ -36,7 +36,7 @@ define( function( require ) {
 
     var scoreDisplay = new ScoreDisplayNumberAndStar( level.scoreProperty );
 
-    LevelSelectionItemNode.call( this, icon, scoreDisplay, {
+    LevelSelectionButton.call( this, icon, scoreDisplay, {
       baseColor: 'rgb( 191, 239, 254 )',
       listener: function() {
         levelProperty.value = level;
@@ -45,7 +45,7 @@ define( function( require ) {
     } );
   }
 
-  equalityExplorer.register( 'LevelButton', LevelButton );
+  equalityExplorer.register( 'EqualityExplorerLevelSelectionButton', EqualityExplorerLevelSelectionButton );
 
-  return inherit( LevelSelectionItemNode, LevelButton );
+  return inherit( LevelSelectionButton, EqualityExplorerLevelSelectionButton );
 } );

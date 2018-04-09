@@ -12,11 +12,11 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerLevelSelectionButton = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerLevelSelectionButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InfoDialog = require( 'EQUALITY_EXPLORER/solveit/view/InfoDialog' );
-  var LevelButton = require( 'EQUALITY_EXPLORER/solveit/view/LevelButton' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -65,14 +65,14 @@ define( function( require ) {
     } );
 
     // Level-selection buttons
-    var levelButtons = [];
+    var levelSelectionButtons = [];
     model.levels.forEach( function( level ) {
-      levelButtons.push( new LevelButton( level, model.levelProperty, model.stateProperty ) );
+      levelSelectionButtons.push( new EqualityExplorerLevelSelectionButton( level, model.levelProperty, model.stateProperty ) );
     } );
 
     // Layout buttons horizontally
-    var levelButtonsBox = new HBox( {
-      children: levelButtons,
+    var levelSelectionButtonsBox = new HBox( {
+      children: levelSelectionButtons,
       spacing: 40
     } );
 
@@ -88,10 +88,10 @@ define( function( require ) {
     } );
 
     // Layout
-    levelButtonsBox.centerX = layoutBounds.centerX;
-    levelButtonsBox.top = layoutBounds.centerY - 25; // top of buttons slightly above center
-    chooseYourLevelNode.centerX = levelButtonsBox.centerX;
-    chooseYourLevelNode.bottom = levelButtonsBox.top - 65;
+    levelSelectionButtonsBox.centerX = layoutBounds.centerX;
+    levelSelectionButtonsBox.top = layoutBounds.centerY - 25; // top of buttons slightly above center
+    chooseYourLevelNode.centerX = levelSelectionButtonsBox.centerX;
+    chooseYourLevelNode.bottom = levelSelectionButtonsBox.top - 65;
     solveForXNode.centerX = chooseYourLevelNode.centerX;
     solveForXNode.bottom = chooseYourLevelNode.top - 30;
     infoButton.left = chooseYourLevelNode.right + 20;
@@ -106,7 +106,7 @@ define( function( require ) {
         solveForXNode,
         chooseYourLevelNode,
         infoButton,
-        levelButtonsBox,
+        levelSelectionButtonsBox,
         soundButton,
         resetAllButton
       ]
