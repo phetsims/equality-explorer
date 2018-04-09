@@ -67,7 +67,7 @@ define( function( require ) {
       model.stateProperty.value = 'settings';
     };
 
-    var statusBar = new StatusBar( visibleBoundsProperty, levelNode, scoreDisplay, {
+    var statusBar = new StatusBar( layoutBounds, visibleBoundsProperty, levelNode, scoreDisplay, {
       spacing: 20,
       backgroundFill: 'rgb( 252, 150, 152 )',
       backButtonListener: backButtonListener
