@@ -14,7 +14,6 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
-  var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -41,13 +40,12 @@ define( function( require ) {
    * @param {SolveItModel} model
    * @param {Bounds2} layoutBounds
    * @param {Property.<Bounds2>} visibleBoundsProperty - visible bounds of this node's parent ScreenView
+   * @param {GameAudioPlayer} gameAudioPlayer
    * @constructor
    */
-  function SolveItSceneNode( scene, model, layoutBounds, visibleBoundsProperty ) {
+  function SolveItSceneNode( scene, model, layoutBounds, visibleBoundsProperty, gameAudioPlayer ) {
 
     var self = this;
-
-    var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
     var levelNode = new RichText( scene.description, {
       font: LEVEL_FONT,

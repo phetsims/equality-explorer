@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SettingsNode = require( 'EQUALITY_EXPLORER/solveit/view/SettingsNode' );
@@ -23,6 +24,8 @@ define( function( require ) {
 
     ScreenView.call( this, model );
 
+    var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
+
     // UI for game settings
     var settingsNode = new SettingsNode( model, this.layoutBounds );
     this.addChild( settingsNode );
@@ -30,7 +33,8 @@ define( function( require ) {
     // @private {SolveItSceneNode[]} a scene for each level of the game
     this.sceneNodes = [];
     for ( var i = 0; i < model.scenes.length; i++ ) {
-      this.addChild( new SolveItSceneNode( model.scenes[ i ], model, this.layoutBounds, this.visibleBoundsProperty ) );
+      this.addChild( new SolveItSceneNode( model.scenes[ i ], model,
+        this.layoutBounds, this.visibleBoundsProperty, gameAudioPlayer ) );
     }
   }
 
