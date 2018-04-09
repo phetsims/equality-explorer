@@ -28,18 +28,14 @@ define( function( require ) {
       termsToolboxSpacing: 30 // horizontal spacing between terms in the toolbox
     }, options );
 
-    // @private view-specific Properties
-    this.viewProperties = {
+    // @private whether the Variable accordion box is expanded or collapsed
+    this.variableAccordionBoxExpandedProperty = new BooleanProperty( true );
 
-      // whether the Variable accordion box is expanded or collapsed
-      variableAccordionBoxExpandedProperty: new BooleanProperty( true ),
-
-      // whether 'x' value is visible in snapshots
-      xVisibleProperty: new BooleanProperty( true )
-    };
+    // @private whether 'x' value is visible in snapshots
+    this.xVisibleProperty = new BooleanProperty( true );
 
     assert && assert( !options.xVisibleProperty, 'VariablesSceneNode sets xVisibleProperty' );
-    options.xVisibleProperty = this.viewProperties.xVisibleProperty;
+    options.xVisibleProperty = this.xVisibleProperty;
 
     SceneNode.call( this, scene, sceneProperty, layoutBounds, options );
 
@@ -49,7 +45,7 @@ define( function( require ) {
 
     // Variable accordion box, below the Snapshots accordion box
     var variableAccordionBox = new VariableAccordionBox( scene.xVariable, {
-      expandedProperty: this.viewProperties.variableAccordionBoxExpandedProperty,
+      expandedProperty: this.variableAccordionBoxExpandedProperty,
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: localBounds.right,
       top: localBounds.bottom + 15
@@ -66,14 +62,8 @@ define( function( require ) {
      * @override
      */
     reset: function() {
-
-      // reset all view-specific Properties
-      for ( var property in this.viewProperties ) {
-        if ( this.viewProperties.hasOwnProperty( property ) ) {
-          this.viewProperties[ property ].reset();
-        }
-      }
-
+      this.variableAccordionBoxExpandedProperty.reset();
+      this.xVisibleProperty.reset();
       SceneNode.prototype.reset.call( this );
     }
   } );
