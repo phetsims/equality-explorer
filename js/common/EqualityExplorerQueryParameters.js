@@ -26,7 +26,7 @@ define( function( require ) {
     // For internal use only, not public facing.
     showGrid: { type: 'flag' },
 
-    // Number of rows in the grid.
+    // Number of rows in the grid on each plate in the 'Basics', 'Numbers' and 'Variables' screens.
     // Set this to a smaller number so you can fill up the plate faster.
     // For internal use only, not public facing.
     rows: {
@@ -37,7 +37,7 @@ define( function( require ) {
       }
     },
 
-    // Number of columns in the grid.
+    // Number of columns in the grid on each plate in the 'Basics', 'Numbers' and 'Variables' screens.
     // Set this to a smaller number so you can fill up the plate faster.
     // For internal use only, not public facing.
     columns: {
