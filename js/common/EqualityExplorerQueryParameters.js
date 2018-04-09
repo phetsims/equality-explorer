@@ -27,6 +27,28 @@ define( function( require ) {
     // For internal use only, not public facing.
     showGrid: { type: 'flag' },
 
+    // Number of rows in the grid.
+    // Set this to a smaller number so you can fill up the plate faster.
+    // For internal use only, not public facing.
+    rows: {
+      type: 'number',
+      defaultValue: 6,
+      isValidValue: function( value ) {
+        return value > 0 && value <= 6;
+      }
+    },
+
+    // Number of columns in the grid.
+    // Set this to a smaller number so you can fill up the plate faster.
+    // For internal use only, not public facing.
+    columns: {
+      type: 'number',
+      defaultValue: 6,
+      isValidValue: function( value ) {
+        return value > 0 && value <= 6;
+      }
+    },
+
     // Add the 'x & y' screen, for testing multi-variable support.
     // For internal use only, not public facing.
     xy: { type: 'flag' },
