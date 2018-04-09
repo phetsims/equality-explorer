@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * User interface for playing the game in the 'Solve It!' screen.
+ * Display a scene in the 'Solve It!' screen.  Each scene corresponds to a game level.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -18,7 +18,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -38,41 +37,37 @@ define( function( require ) {
   var NEXT_BUTTON_FONT = new PhetFont( 20 );
 
   /**
+   * @param {SolveItScene} scene - the scene associated with this Node
    * @param {SolveItModel} model
    * @param {Bounds2} layoutBounds
    * @param {Property.<Bounds2>} visibleBoundsProperty - visible bounds of this node's parent ScreenView
    * @constructor
    */
-  function PlayingNode( model, layoutBounds, visibleBoundsProperty ) {
+  function SolveItSceneNode( scene, model, layoutBounds, visibleBoundsProperty ) {
 
     var self = this;
 
     var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
-    var levelNode = new RichText( model.levelProperty.value.description, {
+    var levelNode = new RichText( scene.description, {
       font: LEVEL_FONT,
       maxWidth: 650 // determined empirically
     } );
 
-    var scoreProperty = new NumberProperty( 0, {
-      numberType: 'Integer'
-    } );
-    scoreProperty.link( function( score ) {
-      model.levelProperty.value.scoreProperty.value = score;
-    } );
-
-    var scoreDisplay = new ScoreDisplayNumberAndStar( scoreProperty );
+    var scoreDisplay = new ScoreDisplayNumberAndStar( scene.scoreProperty );
 
     var backButtonListener = function() {
-      model.stateProperty.value = 'settings';
+      model.sceneProperty.value = null; // back to the SettingsNode, where no scene is selected
     };
 
+    // Bar across the top of the screen
     var statusBar = new StatusBar( layoutBounds, visibleBoundsProperty, levelNode, scoreDisplay, {
       spacing: 20,
       backgroundFill: 'rgb( 252, 150, 152 )',
       backButtonListener: backButtonListener
     } );
 
+    // Refresh button generates a new challenge, effectively skipping the current challenge
     var refreshButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'refresh', { scale: 0.6 } ),
       baseColor: PhetColorScheme.BUTTON_YELLOW,
@@ -92,6 +87,7 @@ define( function( require ) {
     // @private {EqualityExplorerRewardNode} reward shown while rewardDialog is open
     this.rewardNode = null;
 
+    // Next button takes us to the next challenge
     var nextButton = new RectangularPushButton( {
       content: new Text( nextString, {
         font: NEXT_BUTTON_FONT,
@@ -106,15 +102,15 @@ define( function( require ) {
       listener: function() {
 
         //TODO temporary: Next button is a correct answer
-        scoreProperty.value++;
+        scene.scoreProperty.value++;
 
         // When the score reaches a magic number, display a reward dialog
-        if ( scoreProperty.value === model.rewardScore ) {
+        if ( scene.scoreProperty.value === model.rewardScore ) {
 
           gameAudioPlayer.gameOverPerfectScore();
 
           // show the reward dialog
-          self.rewardDialog = self.rewardDialog || new RewardDialog( scoreProperty.value, {
+          self.rewardDialog = self.rewardDialog || new RewardDialog( scene.scoreProperty.value, {
 
             // 'Keep Going' hides the dialog
             keepGoingButtonListener: function() {
@@ -130,7 +126,7 @@ define( function( require ) {
             // When the dialog is shown, show the reward
             showCallback: function() {
               assert && assert( !self.rewardNode, 'rewardNode is not supposed to exist' );
-              self.rewardNode = new EqualityExplorerRewardNode( model.levelProperty.value.levelNumber );
+              self.rewardNode = new EqualityExplorerRewardNode( scene.levelNumber );
               self.addChild( self.rewardNode );
             },
 
@@ -172,35 +168,16 @@ define( function( require ) {
       children: children
     } );
 
-    var updateScore = function( score ) {
-      scoreProperty.value = score;
-    };
-
-    // When the level changes, update the level description and listen to the correct score
-    model.levelProperty.link( function( level, oldLevel ) {
-      levelNode.text = level.description;
-      if ( oldLevel !== null ) {
-        oldLevel.scoreProperty.unlink( updateScore );
-      }
-      level.scoreProperty.link( updateScore );
+    // Make this node visible when its associated scene is selected.
+    // unlink not needed
+    model.sceneProperty.link( function( selectedScene ) {
+      self.visible = ( scene === selectedScene );
     } );
-
-    // @private
-    this.disposePlayingNode = function() {
-      scoreDisplay.dispose();
-      statusBar.dispose();
-    };
   }
 
-  equalityExplorer.register( 'PlayingNode', PlayingNode );
+  equalityExplorer.register( 'SolveItSceneNode', SolveItSceneNode );
 
-  return inherit( Node, PlayingNode, {
-
-    // @public
-    dispose: function() {
-      this.disposePlayingNode();
-      Node.prototype.dispose.call( this );
-    },
+  return inherit( Node, SolveItSceneNode, {
 
     /**
      * @param {number} dt - elapsed time, in seconds

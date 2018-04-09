@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * A game level button in the 'Solve It!' screen.
+ * Level (scene) selection button in the 'Solve It!' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -20,27 +20,25 @@ define( function( require ) {
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
-   * @param {GameLevel} level - the level for this button
-   * @param {Property.<GameLevel>} levelProperty - the selected level
-   * @param {StringProperty} stateProperty - the state of the game
+   * @param {SolveItScene} scene - the scene that will be selected by pressing this button
+   * @param {Property.<SolveItScene>} sceneProperty - the selected scene
    * @constructor
    */
-  function EqualityExplorerLevelSelectionButton( level, levelProperty, stateProperty ) {
+  function EqualityExplorerLevelSelectionButton( scene, sceneProperty ) {
 
     // 'x' term with level number as coefficient
-    var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level.levelNumber + 1 ), xString, {
+    var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( scene.levelNumber + 1 ), xString, {
       diameter: 50,
       margin: 15,
       showOne: true
     } );
 
-    var scoreDisplay = new ScoreDisplayNumberAndStar( level.scoreProperty );
+    var scoreDisplay = new ScoreDisplayNumberAndStar( scene.scoreProperty );
 
     LevelSelectionButton.call( this, icon, scoreDisplay, {
       baseColor: 'rgb( 191, 239, 254 )',
       listener: function() {
-        levelProperty.value = level;
-        stateProperty.value = 'playing';
+        sceneProperty.value = scene;
       }
     } );
   }

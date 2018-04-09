@@ -11,9 +11,9 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PlayingNode = require( 'EQUALITY_EXPLORER/solveit/view/PlayingNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SettingsNode = require( 'EQUALITY_EXPLORER/solveit/view/SettingsNode' );
+  var SolveItSceneNode = require( 'EQUALITY_EXPLORER/solveit/view/SolveItSceneNode' );
 
   /**
    * @param {SolveItModel} model
@@ -21,21 +21,17 @@ define( function( require ) {
    */
   function SolveItScreenView( model ) {
 
-    var self = this;
-
     ScreenView.call( this, model );
 
+    // UI for game settings
     var settingsNode = new SettingsNode( model, this.layoutBounds );
     this.addChild( settingsNode );
 
-    // @private
-    this.playingNode = new PlayingNode( model, this.layoutBounds, this.visibleBoundsProperty );
-    this.addChild( this.playingNode );
-
-    model.stateProperty.link( function( state ) {
-      settingsNode.visible = ( state === 'settings' );
-      self.playingNode.visible = ( state === 'playing' );
-    } );
+    // @private {SolveItSceneNode[]} a scene for each level of the game
+    this.sceneNodes = [];
+    for ( var i = 0; i < model.scenes.length; i++ ) {
+      this.addChild( new SolveItSceneNode( model.scenes[ i ], model, this.layoutBounds, this.visibleBoundsProperty ) );
+    }
   }
 
   equalityExplorer.register( 'SolveItScreenView', SolveItScreenView );
@@ -43,11 +39,16 @@ define( function( require ) {
   return inherit( ScreenView, SolveItScreenView, {
 
     /**
+     * Steps the SolveItSceneNode that is currently visible.
      * @param {number} dt - elapsed time, in seconds
      * @public
      */
     step: function( dt ) {
-      this.playingNode.step( dt );
+      for ( var i = 0; i < this.sceneNodes.length; i++ ) {
+        if ( this.sceneNodes[ i ].visible ) {
+          this.sceneNodes[ i ].step( dt );
+        }
+      }
     }
   } );
 } );

@@ -38,6 +38,8 @@ define( function( require ) {
    */
   function SettingsNode( model, layoutBounds ) {
 
+    var self = this;
+
     var textOptions = {
       font: new PhetFont( 50 ),
       maxWidth: 0.65 * layoutBounds.width
@@ -66,8 +68,8 @@ define( function( require ) {
 
     // Level-selection buttons
     var levelSelectionButtons = [];
-    model.levels.forEach( function( level ) {
-      levelSelectionButtons.push( new EqualityExplorerLevelSelectionButton( level, model.levelProperty, model.stateProperty ) );
+    model.scenes.forEach( function( scene ) {
+      levelSelectionButtons.push( new EqualityExplorerLevelSelectionButton( scene, model.sceneProperty ) );
     } );
 
     // Layout buttons horizontally
@@ -110,6 +112,11 @@ define( function( require ) {
         soundButton,
         resetAllButton
       ]
+    } );
+
+    // When no scene is selected, make the Settings UI visible
+    model.sceneProperty.link( function( scene ) {
+      self.visible = ( scene === null );
     } );
   }
 

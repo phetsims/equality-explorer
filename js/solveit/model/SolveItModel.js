@@ -11,10 +11,9 @@ define( function( require ) {
   // modules
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var GameLevel = require( 'EQUALITY_EXPLORER/solveit/model/GameLevel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var StringProperty = require( 'AXON/StringProperty' );
+  var SolveItScene = require( 'EQUALITY_EXPLORER/solveit/model/SolveItScene' );
 
   // strings
   var level1String = require( 'string!EQUALITY_EXPLORER/level1' );
@@ -22,21 +21,10 @@ define( function( require ) {
   var level3String = require( 'string!EQUALITY_EXPLORER/level3' );
   var level4String = require( 'string!EQUALITY_EXPLORER/level4' );
 
-  // constants
-  var VALID_STATES = [ 'settings', 'playing' ];
-
   /**
    * @constructor
    */
   function SolveItModel() {
-
-    // @public
-    this.stateProperty = new StringProperty( 'settings', {
-      validValues: VALID_STATES
-    } );
-
-    // @public (read-only)
-    this.numberOfLevels = 4;
 
     // @public (read-only) ordered by ascending level number
     this.levelDescriptions = [
@@ -46,16 +34,14 @@ define( function( require ) {
       level4String
     ];
 
-    // @public (read-only)
-    this.levels = [];
-    for ( var i = 0; i < this.numberOfLevels; i++ ) {
-      this.levels.push( new GameLevel( i, this.levelDescriptions[ i ] ) );
+    // @public (read-only) {SolveItScene[]} a scene for each level
+    this.scenes = [];
+    for ( var i = 0; i < this.levelDescriptions.length; i++ ) {
+      this.scenes.push( new SolveItScene( i, this.levelDescriptions[ i ] ) );
     }
 
-    // @public the selected level
-    this.levelProperty = new Property( this.levels[ 0 ], {
-      validValues: this.levels
-    } );
+    // @public {SolveItScene|null} the selected scene, null if no scene is currently selected
+    this.sceneProperty = new Property( null );
 
     // @public (read-only) reaching this score results in a reward
     this.rewardScore = 10;
@@ -70,11 +56,10 @@ define( function( require ) {
 
     // @public
     reset: function() {
-      this.stateProperty.reset();
-      this.levels.forEach( function( level ) {
-        level.reset();
+      this.scenes.forEach( function( scene ) {
+        scene.reset();
       } );
-      this.levelProperty.reset();
+      this.sceneProperty.reset();
       this.soundEnabledProperty.reset();
     }
   } );
