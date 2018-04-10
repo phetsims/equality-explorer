@@ -136,6 +136,9 @@ define( function( require ) {
       centerY: challengeNode.centerY,
       listener: function() {
         //TODO generate a new challenge
+        //TODO temporarily register a correct answer
+        scene.scoreProperty.value++;
+        gameAudioPlayer.correctAnswer();
       }
     } );
 
@@ -153,10 +156,7 @@ define( function( require ) {
       centerY: challengeNode.centerY,
 
       listener: function() {
-
-        //TODO temporary: Next button is a correct answer
-        scene.scoreProperty.value++;
-        gameAudioPlayer.correctAnswer();
+        //TODO generate next challenge
       }
     } );
 
