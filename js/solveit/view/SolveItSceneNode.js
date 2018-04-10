@@ -202,7 +202,10 @@ define( function( require ) {
     }
 
     SceneNode.call( this, scene, sceneProperty, termsLayer, {
-      children: children
+      children: children,
+
+      // terms are not interactive in this screen, all interaction is with the universal operation control
+      termNodesPickable: false
     } );
 
     // @private {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
