@@ -38,5 +38,15 @@ define( function( require ) {
 
   equalityExplorer.register( 'SolveItScene', SolveItScene );
 
-  return inherit( OperationsScene, SolveItScene );
+  return inherit( OperationsScene, SolveItScene, {
+
+    /**
+     * @public
+     * @override
+     */
+    reset: function() {
+      this.scoreProperty.reset();
+      OperationsScene.prototype.reset.call( this );
+    }
+  } );
 } );
