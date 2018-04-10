@@ -22,6 +22,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
+  var DEFAULT_SCALE_LOCATION = new Vector2( 355, 420 );
   var DRAG_BOUNDS_X_MARGIN = 20;
   var DRAG_BOUNDS_Y_MARGIN = 10;
   var DRAG_BOUNDS_MIN_Y = 100;
@@ -39,6 +40,7 @@ define( function( require ) {
 
     options = _.extend( {
       debugName: null, // internal name, not displayed to the user
+      scaleLocation: DEFAULT_SCALE_LOCATION, // determined empirically
       lockable: true, // is the lock feature supported for this scene?
       icon: null, // {Node|null} optional icon used to represent the scene in the scene control (radio buttons)
       maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
@@ -67,7 +69,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.scale = new BalanceScale( this.leftTermCreators, this.rightTermCreators, {
-      location: new Vector2( 355, 420 ), // determined empirically
+      location: options.scaleLocation,
       gridRows: options.gridRows,
       gridColumns: options.gridColumns,
       iconSize: options.iconSize,
