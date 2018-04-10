@@ -15,7 +15,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
-  var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
+  var EquationPanel = require( 'EQUALITY_EXPLORER/common/view/EquationPanel' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -23,7 +23,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RewardDialog = require( 'VEGAS/RewardDialog' );
   var RichText = require( 'SCENERY/nodes/RichText' );
@@ -84,9 +83,11 @@ define( function( require ) {
       backButtonListener: backButtonListener
     } );
 
-    //TODO challenge is displayed here
-    var challengeNode = new Rectangle( 0, 0, 540, 60, {
-      stroke: 'rgb( 200, 200, 200 )',
+    //TODO pass different term creators to this panel
+    var challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, {
+      contentWidth: 540, // determined empirically, based on design mockups
+      stroke: null,
+      fill: null,
       centerX: scene.scale.location.x,
       top: statusBar.bottom + 15
     } );
@@ -98,17 +99,18 @@ define( function( require ) {
     } );
     var solveForXNode = new RichText( solveForXText, {
       font: new PhetFont( { size: 20, weight: 'bold' } ),
-      left: challengeNode.left,
-      centerY: challengeNode.centerY,
+      left: challengePanel.left,
+      centerY: challengePanel.centerY,
       maxWidth: 125 // determined empirically
     } );
 
-    //TODO factor EquationPanel out of EquationAccordionBox, use it here so we don't have expand/collapse button
     // Equation that reflects what is currently on the scale
-    var equationAccordionBox = new EquationAccordionBox( scene.leftTermCreators, scene.rightTermCreators, {
-      fixedWidth: challengeNode.width, // determined empirically, based on design mockups
-      centerX: challengeNode.centerX,
-      top: challengeNode.bottom + 15
+    var equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, {
+      contentWidth: challengePanel.width, // determined empirically, based on design mockups
+      stroke: 'black',
+      fill: 'white',
+      centerX: challengePanel.centerX,
+      top: challengePanel.bottom + 15
     } );
 
     // Layer when universal operation animation occurs
@@ -117,7 +119,7 @@ define( function( require ) {
     // Universal Operation control
     var universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
       centerX: scene.scale.location.x, // centered on the scale
-      top: equationAccordionBox.bottom + 10
+      top: equationPanel.bottom + 10
     } );
 
     // Scale
@@ -139,8 +141,8 @@ define( function( require ) {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 14,
       yMargin: 7,
-      right: challengeNode.right,
-      centerY: challengeNode.centerY,
+      right: challengePanel.right,
+      centerY: challengePanel.centerY,
       listener: function() {
         //TODO generate a new challenge
         //TODO temporarily register a correct answer
@@ -159,8 +161,8 @@ define( function( require ) {
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       xMargin: 12,
       yMargin: 8,
-      right: challengeNode.right,
-      centerY: challengeNode.centerY,
+      right: challengePanel.right,
+      centerY: challengePanel.centerY,
 
       listener: function() {
         //TODO generate next challenge
@@ -180,9 +182,9 @@ define( function( require ) {
 
     var children = [
       statusBar,
-      challengeNode,
+      challengePanel,
       solveForXNode,
-      equationAccordionBox,
+      equationPanel,
       scaleNode,
       snapshotsAccordionBox,
       refreshButton,
