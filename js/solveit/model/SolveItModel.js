@@ -26,7 +26,7 @@ define( function( require ) {
    */
   function SolveItModel() {
 
-    // @public (read-only) ordered by ascending level number
+    // @public (read-only) descriptions for each game level, ordered by ascending level number
     this.levelDescriptions = [
       level1String,
       level2String,
