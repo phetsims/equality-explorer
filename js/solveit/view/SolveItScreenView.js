@@ -33,8 +33,10 @@ define( function( require ) {
     // @private {SolveItSceneNode[]} a scene for each level of the game
     this.sceneNodes = [];
     for ( var i = 0; i < model.scenes.length; i++ ) {
-      this.addChild( new SolveItSceneNode( model.scenes[ i ], model,
-        this.layoutBounds, this.visibleBoundsProperty, gameAudioPlayer ) );
+      var sceneNode = new SolveItSceneNode( model.scenes[ i ], model,
+        this.layoutBounds, this.visibleBoundsProperty, gameAudioPlayer );
+      this.sceneNodes.push( sceneNode );
+      this.addChild( sceneNode );
     }
   }
 
