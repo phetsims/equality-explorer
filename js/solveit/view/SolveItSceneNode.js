@@ -9,6 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
@@ -23,6 +25,7 @@ define( function( require ) {
   var RewardDialog = require( 'VEGAS/RewardDialog' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
+  var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -46,6 +49,9 @@ define( function( require ) {
   function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProperty, gameAudioPlayer ) {
 
     var self = this;
+
+    // @private view Properties
+    this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( true );
 
     var levelNode = new RichText( scene.description, {
       font: LEVEL_FONT,
@@ -98,7 +104,19 @@ define( function( require ) {
       }
     } );
 
-    var children = [ statusBar, refreshButton, nextButton ];
+    var scaleNode = new BalanceScaleNode( scene.scale, {
+      organizeButtonVisible: false
+    } );
+
+    // Snapshots
+    var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
+      fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
+      expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
+      right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
+      top: statusBar.bottom + 20
+    } );
+
+    var children = [ statusBar, scaleNode, snapshotsAccordionBox, refreshButton, nextButton ];
 
     // @private {RichText|null} shows the answer for debugging/testing
     this.answerNode = null;
@@ -176,6 +194,11 @@ define( function( require ) {
   equalityExplorer.register( 'SolveItSceneNode', SolveItSceneNode );
 
   return inherit( Node, SolveItSceneNode, {
+
+    // @public
+    reset: function() {
+      this.snapshotsAccordionBoxExpandedProperty.reset();
+    },
 
     /**
      * @param {number} dt - elapsed time, in seconds

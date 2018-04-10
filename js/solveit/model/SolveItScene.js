@@ -13,6 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @param {number} levelNumber - game level, numbered from 0 in the model, from 1 in the view
@@ -22,7 +23,8 @@ define( function( require ) {
   function SolveItScene( levelNumber, description ) {
 
     OperationsScene.call( this, {
-      debugName: 'level ' + levelNumber
+      debugName: 'level ' + levelNumber,
+      scaleLocation: new Vector2( 355, 500 ) // determined empirically
     } );
 
     // @public (read-only)
