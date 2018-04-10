@@ -37,13 +37,13 @@ define( function( require ) {
 
   /**
    * @param {SolveItScene} scene - the scene associated with this Node
-   * @param {SolveItModel} model
+   * @param {Property.<SolveItScene|null>} sceneProperty - the selected scene
    * @param {Bounds2} layoutBounds
    * @param {Property.<Bounds2>} visibleBoundsProperty - visible bounds of this node's parent ScreenView
    * @param {GameAudioPlayer} gameAudioPlayer
    * @constructor
    */
-  function SolveItSceneNode( scene, model, layoutBounds, visibleBoundsProperty, gameAudioPlayer ) {
+  function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProperty, gameAudioPlayer ) {
 
     var self = this;
 
@@ -55,7 +55,7 @@ define( function( require ) {
     var scoreDisplay = new ScoreDisplayNumberAndStar( scene.scoreProperty );
 
     var backButtonListener = function() {
-      model.sceneProperty.value = null; // back to the SettingsNode, where no scene is selected
+      sceneProperty.value = null; // back to the SettingsNode, where no scene is selected
     };
 
     // Bar across the top of the screen
@@ -120,7 +120,7 @@ define( function( require ) {
 
     // Make this node visible when its associated scene is selected.
     // unlink not needed
-    model.sceneProperty.link( function( selectedScene ) {
+    sceneProperty.link( function( selectedScene ) {
       self.visible = ( scene === selectedScene );
     } );
 
@@ -131,7 +131,8 @@ define( function( require ) {
     // @private {EqualityExplorerRewardNode} reward shown while rewardDialog is open
     this.rewardNode = null;
 
-    // When the score reaches a magic number, display the reward
+    // When the score reaches a magic number, display the reward.
+    // unlink not needed.
     scene.scoreProperty.link( function( score ) {
 
       if ( score === EqualityExplorerConstants.GAME_REWARD_SCORE ) {
