@@ -75,7 +75,7 @@ define( function( require ) {
 
     /**
      * Creates a snapshot of the scene.
-     * @returns {SnapshotWithVariable}
+     * @returns {Snapshot}
      * @public
      * @override
      */
