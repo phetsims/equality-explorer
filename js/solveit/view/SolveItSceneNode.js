@@ -168,6 +168,9 @@ define( function( require ) {
       top: universalOperationControl.bottom + 25
     } );
 
+    // terms live in this layer
+    var termsLayer = new Node();
+
     var children = [
       statusBar,
       challengeNode,
@@ -179,6 +182,7 @@ define( function( require ) {
       nextButton,
       faceNode,
       universalOperationControl,
+      termsLayer,
       operationAnimationLayer
     ];
 
@@ -202,8 +206,8 @@ define( function( require ) {
 
     // Make this node visible when its associated scene is selected.
     // unlink not needed
-    sceneProperty.link( function( selectedScene ) {
-      self.visible = ( scene === selectedScene );
+    sceneProperty.link( function( newScene ) {
+      self.visible = ( newScene === scene );
     } );
 
     // @private {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
