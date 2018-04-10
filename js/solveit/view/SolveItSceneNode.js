@@ -15,6 +15,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
+  var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -73,6 +74,19 @@ define( function( require ) {
       backButtonListener: backButtonListener
     } );
 
+    //TODO factor EquationPanel out of EquationAccordionBox, use it here so we don't have expand/collapse button
+    // Equation that reflects what is currently on the scale
+    var equationAccordionBox = new EquationAccordionBox( scene.leftTermCreators, scene.rightTermCreators, {
+
+      // determined empirically, based on design mockups
+      fixedWidth: 520,
+
+      // Slightly off center, so that the equation's relational operator is horizontally centered
+      // above the scale's arrow. The offset was determined empirically.
+      centerX: scene.scale.location.x - 15,
+      top: statusBar.bottom + 20
+    } );
+
     // Scale
     var scaleNode = new BalanceScaleNode( scene.scale, {
       organizeButtonVisible: false
@@ -127,7 +141,15 @@ define( function( require ) {
       centerY: scene.scale.leftPlate.locationProperty.value.y
     } );
 
-    var children = [ statusBar, scaleNode, snapshotsAccordionBox, refreshButton, nextButton, faceNode ];
+    var children = [
+      statusBar,
+      equationAccordionBox,
+      scaleNode,
+      snapshotsAccordionBox,
+      refreshButton,
+      nextButton,
+      faceNode
+    ];
 
     // @private {RichText|null} shows the answer for debugging/testing
     this.answerNode = null;
