@@ -52,7 +52,8 @@ define( function( require ) {
   function BalanceScaleNode( scale, options ) {
 
     options = _.extend( {
-      organizeButtonVisible: true
+      organizeButtonVisible: true,
+      clearScaleButtonVisible: true
     }, options );
 
     options.x = scale.location.x;
@@ -127,7 +128,9 @@ define( function( require ) {
     } );
 
     // pressing this button clears all terms from the scale
-    var clearScaleButton = new ClearScaleButton( scale );
+    var clearScaleButton = new ClearScaleButton( scale, {
+      visible: options.clearScaleButtonVisible
+    } );
 
     // pressing this button organizes terms on the scale, grouping like terms together
     var organizeButton = new OrganizeButton( scale, {

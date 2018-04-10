@@ -124,7 +124,8 @@ define( function( require ) {
 
     // Scale
     var scaleNode = new BalanceScaleNode( scene.scale, {
-      organizeButtonVisible: false
+      organizeButtonVisible: false,
+      clearScaleButtonVisible: false
     } );
 
     // Snapshots
