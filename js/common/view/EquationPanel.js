@@ -1,9 +1,9 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Fixed-size panel that displays an equation.
+ * Fixed-size panel that displays an equation or inequality.
  * The equation is scaled to fix the panel.
- * The equation's relational operator remains horiztonally centered in the panel.
+ * The equation's relational operator remains horizontally centered in the panel.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
