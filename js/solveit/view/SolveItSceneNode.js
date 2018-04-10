@@ -15,6 +15,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
+  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
@@ -53,7 +54,8 @@ define( function( require ) {
     // @private view Properties
     this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( true );
 
-    var levelNode = new RichText( scene.description, {
+    // Level description, displayed in the status bar
+    var levelDescriptionNode = new RichText( scene.description, {
       font: LEVEL_FONT,
       maxWidth: 650 // determined empirically
     } );
@@ -65,13 +67,26 @@ define( function( require ) {
     };
 
     // Bar across the top of the screen
-    var statusBar = new StatusBar( layoutBounds, visibleBoundsProperty, levelNode, scoreDisplay, {
+    var statusBar = new StatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode, scoreDisplay, {
       spacing: 20,
       backgroundFill: 'rgb( 252, 150, 152 )',
       backButtonListener: backButtonListener
     } );
 
-    // Refresh button generates a new challenge, effectively skipping the current challenge
+    // Scale
+    var scaleNode = new BalanceScaleNode( scene.scale, {
+      organizeButtonVisible: false
+    } );
+
+    // Snapshots
+    var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
+      fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
+      expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
+      right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
+      top: statusBar.bottom + 20
+    } );
+
+    // Refresh button, generates a new challenge, effectively skipping the current challenge
     var refreshButton = new RectangularPushButton( {
       content: new FontAwesomeNode( 'refresh', { scale: 0.6 } ),
       baseColor: PhetColorScheme.BUTTON_YELLOW,
@@ -84,7 +99,7 @@ define( function( require ) {
       }
     } );
 
-    // Next button takes us to the next challenge
+    // Next button, takes us to the next challenge
     var nextButton = new RectangularPushButton( {
       content: new Text( nextString, {
         font: NEXT_BUTTON_FONT,
@@ -104,19 +119,15 @@ define( function( require ) {
       }
     } );
 
-    var scaleNode = new BalanceScaleNode( scene.scale, {
-      organizeButtonVisible: false
+    //TODO set face location so it doesn't obscure solution
+    // Smiley face, displayed when the challenge has been solved
+    var faceNode = new FaceNode( 225, {
+      opacity: 0.5,
+      centerX: scaleNode.centerX,
+      centerY: scene.scale.leftPlate.locationProperty.value.y
     } );
 
-    // Snapshots
-    var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
-      fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
-      expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
-      right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
-      top: statusBar.bottom + 20
-    } );
-
-    var children = [ statusBar, scaleNode, snapshotsAccordionBox, refreshButton, nextButton ];
+    var children = [ statusBar, scaleNode, snapshotsAccordionBox, refreshButton, nextButton, faceNode ];
 
     // @private {RichText|null} shows the answer for debugging/testing
     this.answerNode = null;
