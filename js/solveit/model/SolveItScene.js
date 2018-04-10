@@ -38,6 +38,13 @@ define( function( require ) {
         return value >= 0;
       }
     } );
+
+    // Initialize locations of term creators.
+    // This can be any value, since terms in this screen never return to a toolbox.
+    this.allTermCreators.forEach( function( termCreator ) {
+      termCreator.positiveLocation = Vector2.ZERO;
+      termCreator.negativeLocation = Vector2.ZERO;
+    } );
   }
 
   equalityExplorer.register( 'SolveItScene', SolveItScene );

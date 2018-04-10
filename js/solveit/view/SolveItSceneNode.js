@@ -23,6 +23,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RewardDialog = require( 'VEGAS/RewardDialog' );
   var RichText = require( 'SCENERY/nodes/RichText' );
@@ -31,6 +32,7 @@ define( function( require ) {
   var StatusBar = require( 'VEGAS/StatusBar' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
 
   // strings
   var nextString = require( 'string!EQUALITY_EXPLORER/next' );
@@ -74,17 +76,28 @@ define( function( require ) {
       backButtonListener: backButtonListener
     } );
 
+    //TODO challenge is displayed here
+    var challengeNode = new Rectangle( 0, 0, 520, 60, {
+      stroke: 'rgb( 200, 200, 200 )',
+      centerX: scene.scale.location.x,
+      top: statusBar.bottom + 15
+    } );
+
     //TODO factor EquationPanel out of EquationAccordionBox, use it here so we don't have expand/collapse button
     // Equation that reflects what is currently on the scale
     var equationAccordionBox = new EquationAccordionBox( scene.leftTermCreators, scene.rightTermCreators, {
+      fixedWidth: challengeNode.width, // determined empirically, based on design mockups
+      centerX: challengeNode.centerX,
+      top: challengeNode.bottom + 15
+    } );
 
-      // determined empirically, based on design mockups
-      fixedWidth: 520,
+    // Layer when universal operation animation occurs
+    var operationAnimationLayer = new Node();
 
-      // Slightly off center, so that the equation's relational operator is horizontally centered
-      // above the scale's arrow. The offset was determined empirically.
-      centerX: scene.scale.location.x - 15,
-      top: statusBar.bottom + 20
+    // Universal Operation control
+    var universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
+      centerX: scene.scale.location.x, // centered on the scale
+      top: equationAccordionBox.bottom + 10
     } );
 
     // Scale
@@ -106,8 +119,8 @@ define( function( require ) {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 14,
       yMargin: 7,
-      right: statusBar.centerX - 20,
-      top: statusBar.bottom + 30,
+      right: challengeNode.right,
+      centerY: challengeNode.centerY,
       listener: function() {
         //TODO generate a new challenge
       }
@@ -115,6 +128,7 @@ define( function( require ) {
 
     // Next button, takes us to the next challenge
     var nextButton = new RectangularPushButton( {
+      visible: false,
       content: new Text( nextString, {
         font: NEXT_BUTTON_FONT,
         maxWidth: 100 // determined empirically
@@ -122,8 +136,8 @@ define( function( require ) {
       baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
       xMargin: 12,
       yMargin: 8,
-      left: statusBar.centerX + 30,
-      top: statusBar.bottom + 30,
+      right: challengeNode.right,
+      centerY: challengeNode.centerY,
 
       listener: function() {
 
@@ -138,17 +152,20 @@ define( function( require ) {
     var faceNode = new FaceNode( 225, {
       opacity: 0.5,
       centerX: scaleNode.centerX,
-      centerY: scene.scale.leftPlate.locationProperty.value.y
+      top: universalOperationControl.bottom + 25
     } );
 
     var children = [
       statusBar,
+      challengeNode,
       equationAccordionBox,
       scaleNode,
       snapshotsAccordionBox,
       refreshButton,
       nextButton,
-      faceNode
+      faceNode,
+      universalOperationControl,
+      operationAnimationLayer
     ];
 
     // @private {RichText|null} shows the answer for debugging/testing
