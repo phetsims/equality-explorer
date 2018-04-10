@@ -2,7 +2,6 @@
 
 /**
  * View for the 'Numbers' screen.
- * Adds no new functionality. Provided for symmetry, so that every screen has ScreenView and model types.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -13,13 +12,18 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerScreenView = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumbersSceneNode = require( 'EQUALITY_EXPLORER/numbers/view/NumbersSceneNode' );
 
   /**
    * @param {NumbersModel} model
    * @constructor
    */
   function NumbersScreenView( model ) {
-    EqualityExplorerScreenView.call( this, model );
+    EqualityExplorerScreenView.call( this, model, {
+      createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
+        return new NumbersSceneNode( scene, sceneProperty, layoutBounds, options );
+      }
+    } );
   }
 
   equalityExplorer.register( 'NumbersScreenView', NumbersScreenView );

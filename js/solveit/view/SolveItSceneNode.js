@@ -28,6 +28,7 @@ define( function( require ) {
   var RewardDialog = require( 'VEGAS/RewardDialog' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
+  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var StatusBar = require( 'VEGAS/StatusBar' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -200,14 +201,8 @@ define( function( require ) {
       children.push( this.answerNode );
     }
 
-    Node.call( this, {
+    SceneNode.call( this, scene, sceneProperty, termsLayer, {
       children: children
-    } );
-
-    // Make this node visible when its associated scene is selected.
-    // unlink not needed
-    sceneProperty.link( function( newScene ) {
-      self.visible = ( newScene === scene );
     } );
 
     // @private {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.

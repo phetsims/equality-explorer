@@ -2,6 +2,7 @@
 
 /**
  * View of a scene in the 'Variables' screen.
+ * Same as the 'Basics' screen, but with the Universal Operation control added.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -9,10 +10,10 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BasicsSceneNode = require( 'EQUALITY_EXPLORER/basics/view/BasicsSceneNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
 
   /**
@@ -37,7 +38,7 @@ define( function( require ) {
     assert && assert( !options.variableValuesVisibleProperty, 'VariablesSceneNode sets variableValuesVisibleProperty' );
     options.variableValuesVisibleProperty = this.variableValuesVisibleProperty;
 
-    SceneNode.call( this, scene, sceneProperty, layoutBounds, options );
+    BasicsSceneNode.call( this, scene, sceneProperty, layoutBounds, options );
 
     // Variable accordion box, below the Snapshots accordion box
     var variableAccordionBox = new VariableAccordionBox( scene.xVariable, {
@@ -51,7 +52,7 @@ define( function( require ) {
 
   equalityExplorer.register( 'VariablesSceneNode', VariablesSceneNode );
 
-  return inherit( SceneNode, VariablesSceneNode, {
+  return inherit( BasicsSceneNode, VariablesSceneNode, {
 
     /**
      * @public
@@ -60,7 +61,7 @@ define( function( require ) {
     reset: function() {
       this.variableAccordionBoxExpandedProperty.reset();
       this.variableValuesVisibleProperty.reset();
-      SceneNode.prototype.reset.call( this );
+      BasicsSceneNode.prototype.reset.call( this );
     }
   } );
 } );

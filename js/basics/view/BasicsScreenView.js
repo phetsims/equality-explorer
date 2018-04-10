@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BasicsSceneNode = require( 'EQUALITY_EXPLORER/basics/view/BasicsSceneNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerScreenView = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -20,6 +21,9 @@ define( function( require ) {
    */
   function BasicsScreenView( model ) {
     EqualityExplorerScreenView.call( this, model, {
+      createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
+        return new BasicsSceneNode( scene, sceneProperty, layoutBounds, options );
+      },
       hasNegativeTermsInToolbox: false // create Node for positive terms only in the toolbox
     } );
   }
