@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * A scene in the 'Solve It!' screen.  Each scene corresponds to a level in the game.
+ * A scene in the 'Solve It!' screen.  A scene is created for each level in the game.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
