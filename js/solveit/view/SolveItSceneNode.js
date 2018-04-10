@@ -36,6 +36,7 @@ define( function( require ) {
 
   // strings
   var nextString = require( 'string!EQUALITY_EXPLORER/next' );
+  var solveForString = require( 'string!EQUALITY_EXPLORER/solveFor' );
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
@@ -77,10 +78,22 @@ define( function( require ) {
     } );
 
     //TODO challenge is displayed here
-    var challengeNode = new Rectangle( 0, 0, 520, 60, {
+    var challengeNode = new Rectangle( 0, 0, 540, 60, {
       stroke: 'rgb( 200, 200, 200 )',
       centerX: scene.scale.location.x,
       top: statusBar.bottom + 15
+    } );
+
+    //TODO do we need an additional string here with colon on end? 'Solve for x:'
+    // 'Solve for x'
+    var solveForXText = StringUtils.fillIn( solveForString, {
+      variable: MathSymbolFont.getRichTextMarkup( xString )
+    } );
+    var solveForXNode = new RichText( solveForXText, {
+      font: new PhetFont( { size: 20, weight: 'bold' } ),
+      left: challengeNode.left,
+      centerY: challengeNode.centerY,
+      maxWidth: 125 // determined empirically
     } );
 
     //TODO factor EquationPanel out of EquationAccordionBox, use it here so we don't have expand/collapse button
@@ -128,7 +141,7 @@ define( function( require ) {
 
     // Next button, takes us to the next challenge
     var nextButton = new RectangularPushButton( {
-      visible: false,
+      visible: false, //TODO delete this when it's controlled by a listener
       content: new Text( nextString, {
         font: NEXT_BUTTON_FONT,
         maxWidth: 100 // determined empirically
@@ -147,9 +160,9 @@ define( function( require ) {
       }
     } );
 
-    //TODO set face location so it doesn't obscure solution
     // Smiley face, displayed when the challenge has been solved
     var faceNode = new FaceNode( 225, {
+      visible: false, //TODO delete this when it's controlled by a listener
       opacity: 0.5,
       centerX: scaleNode.centerX,
       top: universalOperationControl.bottom + 25
@@ -158,6 +171,7 @@ define( function( require ) {
     var children = [
       statusBar,
       challengeNode,
+      solveForXNode,
       equationAccordionBox,
       scaleNode,
       snapshotsAccordionBox,
