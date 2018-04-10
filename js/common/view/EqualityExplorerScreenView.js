@@ -70,14 +70,12 @@ define( function( require ) {
     if ( model.scenes.length > 1 ) {
 
       // Get the bounds of the Snapshot accordion box, relative to this ScreenView
-      var sceneNode = this.sceneNodes[ 0 ];
-      var globalBounds = sceneNode.snapshotsAccordionBox.parentToGlobalBounds( sceneNode.snapshotsAccordionBox.bounds );
-      var localBounds = this.globalToLocalBounds( globalBounds );
+      var snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
 
       // Center the scene control in the space below the Snapshots accordion box
       var sceneControl = new SceneControl( model.scenes, model.sceneProperty, {
-        centerX: localBounds.centerX,
-        centerY: localBounds.bottom + ( resetAllButton.top - localBounds.bottom ) / 2
+        centerX: snapshotsAccordionBox.centerX,
+        centerY: snapshotsAccordionBox.bottom + ( resetAllButton.top - snapshotsAccordionBox.bottom ) / 2
       } );
       this.addChild( sceneControl );
     }

@@ -35,17 +35,13 @@ define( function( require ) {
 
     VariablesSceneNode.call( this, scene, sceneProperty, layoutBounds, options );
 
-    // Get the bounds of the Equation accordion box, relative to this ScreenView
-    var globalBounds = this.equationAccordionBox.parentToGlobalBounds( this.equationAccordionBox.bounds );
-    var localBounds = this.globalToLocalBounds( globalBounds );
-
     // Layer when universal operation animation occurs
     var operationAnimationLayer = new Node();
 
     // @private Universal Operation, below Equation accordion box
     this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
       centerX: scene.scale.location.x, // centered on the scale
-      top: localBounds.bottom + 10
+      top: this.equationAccordionBox.bottom + 10
     } );
     this.addChild( this.universalOperationControl );
     this.universalOperationControl.moveToBack();
