@@ -17,6 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var TermsToolbox = require( 'EQUALITY_EXPLORER/common/view/TermsToolbox' );
@@ -104,6 +105,13 @@ define( function( require ) {
         y: leftTermsToolbox.centerY - 5 // offset determined empirically
       } );
       children.unshift( lockControl ); // add to beginning
+    }
+
+    // Render the drag bounds for the left and right plates
+    if ( phet.chipper.queryParameters.dev ) {
+      var dragBoundsOption = { stroke: 'red', lineWidth: 0.25 };
+      children.push( new Rectangle( scene.leftDragBounds, dragBoundsOption ) );
+      children.push( new Rectangle( scene.rightDragBounds, dragBoundsOption ) );
     }
 
     SceneNode.call( this, scene, sceneProperty, this.termsLayer, {

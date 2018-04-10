@@ -52,9 +52,15 @@ define( function( require ) {
    * @param {GameAudioPlayer} gameAudioPlayer
    * @constructor
    */
-  function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProperty, gameAudioPlayer ) {
+  function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProperty, gameAudioPlayer, options ) {
 
     var self = this;
+
+    options = _.extend( {
+
+      // terms are not interactive in this screen, all interaction is with the universal operation control
+      termNodesPickable: false
+    }, options );
 
     // @private view Properties
     this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( true );
@@ -201,12 +207,10 @@ define( function( require ) {
       children.push( this.answerNode );
     }
 
-    SceneNode.call( this, scene, sceneProperty, termsLayer, {
-      children: children,
+    assert && assert( !options.children, 'SolveItSceneNode sets children' );
+    options.children = children;
 
-      // terms are not interactive in this screen, all interaction is with the universal operation control
-      termNodesPickable: false
-    } );
+    SceneNode.call( this, scene, sceneProperty, termsLayer, options );
 
     // @private {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
     // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.

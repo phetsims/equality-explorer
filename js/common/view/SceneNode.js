@@ -13,7 +13,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var OopsDialog = require( 'EQUALITY_EXPLORER/common/view/OopsDialog' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   /**
    * @param {Scene} scene
@@ -78,13 +77,6 @@ define( function( require ) {
       termCreator.termCreatedEmitter.addListener( termCreatedListener ); // removeListener not needed
       termCreator.numberLimitExceededEmitter.addListener( numberLimitExceededListener ); // removeListener not needed
     } );
-
-    // Render the drag bounds for the left and right plates
-    if ( phet.chipper.queryParameters.dev ) {
-      var dragBoundsOption = { stroke: 'red', lineWidth: 0.25 };
-      this.addChild( new Rectangle( scene.leftDragBounds, dragBoundsOption ) );
-      this.addChild( new Rectangle( scene.rightDragBounds, dragBoundsOption ) );
-    }
 
     this.mutate( options );
   }
