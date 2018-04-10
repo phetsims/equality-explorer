@@ -15,18 +15,18 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {string} name - internal name for the mystery object type, not visible to the user
+   * @param {string} debugName - internal name for the mystery object type, not visible to the user
    * @param {number} weight - integer weight of 1 mystery object
    * @param {HTMLImageElement} image - image that represents the mystery object
    * @param {HTMLImageElement} shadow - shadow shown while dragging
    * @constructor
    */
-  function MysteryObject( name, weight, image, shadow ) {
+  function MysteryObject( debugName, weight, image, shadow ) {
 
     assert && assert( Util.isInteger( weight ), 'weight must be an integer: ' + weight );
 
     // @public (read-only)
-    this.name = name;
+    this.debugName = debugName;
     this.weight = weight;
     this.image = image;
     this.shadow = shadow;

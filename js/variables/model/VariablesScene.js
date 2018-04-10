@@ -28,7 +28,9 @@ define( function( require ) {
     // @public (read-only)
     this.xVariable = new Variable( xString );
 
-    Scene.call( this, 'variables', createTermCreators( this.xVariable ), createTermCreators( this.xVariable ) );
+    Scene.call( this, createTermCreators( this.xVariable ), createTermCreators( this.xVariable ), {
+      debugName: 'variables'
+    } );
   }
 
   equalityExplorer.register( 'VariablesScene', VariablesScene );

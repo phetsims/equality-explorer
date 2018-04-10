@@ -18,7 +18,9 @@ define( function( require ) {
    * @constructor
    */
   function NumbersScene() {
-    Scene.call( this, 'numbers', [ new ConstantTermCreator() ], [ new ConstantTermCreator() ] );
+    Scene.call( this, [ new ConstantTermCreator() ], [ new ConstantTermCreator() ], {
+      debugName: 'numbers'
+    } );
   }
 
   equalityExplorer.register( 'NumbersScene', NumbersScene );

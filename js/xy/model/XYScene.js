@@ -31,10 +31,11 @@ define( function( require ) {
     this.yVariable = new Variable( yString );
 
     // Use the same query parameters as 'Variables' screen to pre-populate the scale
-    Scene.call( this, 'xy',
+    Scene.call( this,
       createTermCreators( this.xVariable, this.yVariable ),
-      createTermCreators( this.xVariable, this.yVariable )
-    );
+      createTermCreators( this.xVariable, this.yVariable ), {
+        debugName: 'xy'
+      } );
   }
 
   equalityExplorer.register( 'XYScene', XYScene );

@@ -16,13 +16,12 @@ define( function( require ) {
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
-   * @param {string} debugName - internal name, not displayed to the user, no i18n required
    * @param {MysteryObject[]} mysteryObjects
    * @param {Object} [options]
    * @constructor
    * @abstract
    */
-  function BasicsScene( debugName, mysteryObjects, options ) {
+  function BasicsScene( mysteryObjects, options ) {
 
     options = _.extend( {
       hasConstantTerms: false // does this scene allow you to create constant terms?
@@ -32,7 +31,7 @@ define( function( require ) {
     assert && assert( options.lockable === undefined, 'BasicsScene sets lockable' );
     options.lockable = false;
 
-    Scene.call( this, debugName,
+    Scene.call( this,
       createTermCreators( mysteryObjects, options.hasConstantTerms ),
       createTermCreators( mysteryObjects, options.hasConstantTerms ),
       options );

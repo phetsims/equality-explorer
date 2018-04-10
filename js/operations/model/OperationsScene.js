@@ -38,7 +38,14 @@ define( function( require ) {
   /**
    * @constructor
    */
-  function OperationsScene() {
+  function OperationsScene( options ) {
+
+    options = _.extend( {
+      debugName: 'operations',
+      gridRows: 1,
+      gridColumns: 2,
+      iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
+    }, options );
 
     // @public (read-only)
     this.xVariable = new Variable( xString );
@@ -102,13 +109,7 @@ define( function( require ) {
       validValues: this.operands
     } );
 
-    Scene.call( this, 'operations',
-      createTermCreators( this.xVariable ),
-      createTermCreators( this.xVariable ), {
-        gridRows: 1,
-        gridColumns: 2,
-        iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
-      } );
+    Scene.call( this, createTermCreators( this.xVariable ), createTermCreators( this.xVariable ), options );
   }
 
   equalityExplorer.register( 'OperationsScene', OperationsScene );

@@ -23,7 +23,7 @@ define( function( require ) {
    */
   function MysteryTermCreator( mysteryObject, options ) {
 
-    phet.log && phet.log( 'MysteryTermCreator name=' + mysteryObject.name + ', weight=' + mysteryObject.weight );
+    phet.log && phet.log( 'MysteryTermCreator: ' + mysteryObject.debugName + ', weight=' + mysteryObject.weight );
 
     // @public (read-only)
     this.mysteryObject = mysteryObject;

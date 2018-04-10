@@ -21,7 +21,9 @@ define( function( require ) {
    */
   function SolveItScene( levelNumber, description ) {
 
-    OperationsScene.call( this );
+    OperationsScene.call( this, {
+      debugName: 'level ' + levelNumber
+    } );
 
     // @public (read-only)
     this.levelNumber = levelNumber;

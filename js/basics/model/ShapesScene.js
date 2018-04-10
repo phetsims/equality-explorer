@@ -35,7 +35,9 @@ define( function( require ) {
       new MysteryObject( 'square', 3, squareImage, squareShadowImage )
     ];
 
-    BasicsScene.call( this, 'shapes', mysteryObjects, {
+    BasicsScene.call( this, mysteryObjects, {
+
+      debugName: 'shapes',
 
       // icon used to represent this scene in the scene control (radio buttons)
       icon: ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) ),

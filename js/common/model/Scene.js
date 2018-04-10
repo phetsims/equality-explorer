@@ -28,17 +28,17 @@ define( function( require ) {
   var DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.maxY - DRAG_BOUNDS_Y_MARGIN;
 
   /**
-   * @param {string} debugName - internal name, not displayed to the user
    * @param {TermCreator[]} leftTermCreators - in the order that they appear in the left toolbox and left side of equations
    * @param {TermCreator[]} rightTermCreators - in the order that they appear in the right toolbox and right side of equations
    * @param {Object} [options]
    * @constructor
    */
-  function Scene( debugName, leftTermCreators, rightTermCreators, options ) {
+  function Scene( leftTermCreators, rightTermCreators, options ) {
 
     var self = this;
 
     options = _.extend( {
+      debugName: null, // internal name, not displayed to the user
       lockable: true, // is the lock feature supported for this scene?
       icon: null, // {Node|null} optional icon used to represent the scene in the scene control (radio buttons)
       maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
@@ -47,10 +47,9 @@ define( function( require ) {
       iconSize: null // {Dimension2|null} size of term icons on the scale, computed if null
     }, options );
 
-    phet.log && phet.log( debugName + ': maxWeight=' + options.maxWeight );
-
     // @public (read-only)
-    this.debugName = debugName;
+    this.debugName = options.debugName;
+    phet.log && phet.log( 'Scene: ' + this.debugName + ', maxWeight=' + options.maxWeight );
 
     // @private {Node|null} used to represent the scene. See ES5 getter.
     this._icon = options.icon;

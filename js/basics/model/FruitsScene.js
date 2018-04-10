@@ -38,7 +38,9 @@ define( function( require ) {
       new MysteryObject( 'orange', 2, orangeImage, orangeShadowImage )
     ];
 
-    BasicsScene.call( this, 'fruits', mysteryObjects, {
+    BasicsScene.call( this, mysteryObjects, {
+
+      debugName: 'fruits',
 
       // icon used to represent this scene in the scene control (radio buttons)
       icon: new Image( appleImage, {
