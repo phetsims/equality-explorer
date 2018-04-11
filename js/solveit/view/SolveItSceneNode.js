@@ -83,8 +83,8 @@ define( function( require ) {
       backButtonListener: backButtonListener
     } );
 
-    //TODO pass different term creators to this panel
-    var challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, {
+    // Challenge equation
+    var challengePanel = new EquationPanel( scene.challengeLeftTermCreators, scene.challengeRightTermCreators, {
       contentWidth: 540, // determined empirically, based on design mockups
       stroke: null,
       fill: null,

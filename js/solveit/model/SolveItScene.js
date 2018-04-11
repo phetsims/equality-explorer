@@ -9,10 +9,14 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
+  var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
+  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -39,9 +43,36 @@ define( function( require ) {
       }
     } );
 
+    //TODO default to Vector2.ZERO so that this is unnecessary?
     // Initialize locations of term creators.
     // This can be any value, since terms in this screen never return to a toolbox.
     this.allTermCreators.forEach( function( termCreator ) {
+      termCreator.positiveLocation = Vector2.ZERO;
+      termCreator.negativeLocation = Vector2.ZERO;
+    } );
+
+    var leftVariableTermCreator = new VariableTermCreator( this.xVariable );
+    var leftConstantTermCreator = new ConstantTermCreator();
+    var rightVariableTermCreator = new VariableTermCreator( this.xVariable );
+    var rightConstantTermCreator = new ConstantTermCreator();
+
+    // @public (read-only) term creators that hold terms for the challenge
+    this.challengeLeftTermCreators = [ leftVariableTermCreator, leftConstantTermCreator ];
+    this.challengeRightTermCreators = [ rightVariableTermCreator, rightConstantTermCreator ];
+
+    //TODO we need invisible Plates for the challenge
+    var plateOptions = {
+      gridRows: 1,
+      gridColumns: 2
+    };
+    var challengeLeftPlate = new Plate( this.challengeLeftTermCreators, plateOptions );
+    var challengeRightPlate = new Plate( this.challengeRightTermCreators, plateOptions );
+    assert && assert( challengeLeftPlate && challengeRightPlate, 'to silence lint' );//TODO hack
+
+    //TODO default to Vector2.ZERO so that this is unnecessary?
+    // Initialize locations of term creators.
+    // This can be any value, since terms in this screen never return to a toolbox.
+    this.challengeLeftTermCreators.concat( this.challengeRightTermCreators ).forEach( function( termCreator ) {
       termCreator.positiveLocation = Vector2.ZERO;
       termCreator.negativeLocation = Vector2.ZERO;
     } );
