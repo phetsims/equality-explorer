@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
