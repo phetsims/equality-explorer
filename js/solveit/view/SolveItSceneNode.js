@@ -17,13 +17,13 @@ define( function( require ) {
   var EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
   var EquationPanel = require( 'EQUALITY_EXPLORER/common/view/EquationPanel' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
   var RewardDialog = require( 'VEGAS/RewardDialog' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
@@ -137,9 +137,8 @@ define( function( require ) {
     } );
 
     // Refresh button, generates a new challenge, effectively skipping the current challenge
-    var refreshButton = new RectangularPushButton( {
-      content: new FontAwesomeNode( 'refresh', { scale: 0.6 } ),
-      baseColor: PhetColorScheme.BUTTON_YELLOW,
+    var refreshButton = new RefreshButton( {
+      iconScale: 0.6,
       xMargin: 14,
       yMargin: 7,
       right: challengePanel.right,
