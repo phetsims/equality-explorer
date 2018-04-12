@@ -159,7 +159,7 @@ define( function( require ) {
         font: NEXT_BUTTON_FONT,
         maxWidth: 100 // determined empirically
       } ),
-      baseColor: PhetColorScheme.PHET_LOGO_YELLOW,
+      baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 12,
       yMargin: 8,
       right: challengePanel.right,
