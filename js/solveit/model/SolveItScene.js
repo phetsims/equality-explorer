@@ -59,7 +59,8 @@ define( function( require ) {
     this.challengeLeftTermCreators = [ leftVariableTermCreator, leftConstantTermCreator ];
     this.challengeRightTermCreators = [ rightVariableTermCreator, rightConstantTermCreator ];
 
-    // We need a scale for challenge term creators to put terms on.  It is otherwise not used.
+    // Challenge term creators must be associated with a scale, so that they have plates to put terms on,
+    // since only the terms that are on a plate will appear in an equation. This scale is otherwise not used.
     new BalanceScale( this.challengeLeftTermCreators, this.challengeRightTermCreators ); // eslint-disable-line
 
     //TODO default to Vector2.ZERO so that this is unnecessary?
