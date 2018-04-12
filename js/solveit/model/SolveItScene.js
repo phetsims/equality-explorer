@@ -9,12 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BalanceScale = require( 'EQUALITY_EXPLORER/common/model/BalanceScale' );
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
-  var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -59,10 +59,8 @@ define( function( require ) {
     this.challengeLeftTermCreators = [ leftVariableTermCreator, leftConstantTermCreator ];
     this.challengeRightTermCreators = [ rightVariableTermCreator, rightConstantTermCreator ];
 
-    //TODO we need invisible Plates for the challenge
-    var challengeLeftPlate = new Plate( this.challengeLeftTermCreators );
-    var challengeRightPlate = new Plate( this.challengeRightTermCreators );
-    assert && assert( challengeLeftPlate && challengeRightPlate, 'to silence lint' );//TODO hack
+    // We need a scale for challenge term creators to put terms on.  It is otherwise not used.
+    new BalanceScale( this.challengeLeftTermCreators, this.challengeRightTermCreators ); // eslint-disable-line
 
     //TODO default to Vector2.ZERO so that this is unnecessary?
     // Initialize locations of term creators.
