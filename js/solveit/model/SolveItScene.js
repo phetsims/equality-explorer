@@ -60,12 +60,8 @@ define( function( require ) {
     this.challengeRightTermCreators = [ rightVariableTermCreator, rightConstantTermCreator ];
 
     //TODO we need invisible Plates for the challenge
-    var plateOptions = {
-      gridRows: 1,
-      gridColumns: 2
-    };
-    var challengeLeftPlate = new Plate( this.challengeLeftTermCreators, plateOptions );
-    var challengeRightPlate = new Plate( this.challengeRightTermCreators, plateOptions );
+    var challengeLeftPlate = new Plate( this.challengeLeftTermCreators );
+    var challengeRightPlate = new Plate( this.challengeRightTermCreators );
     assert && assert( challengeLeftPlate && challengeRightPlate, 'to silence lint' );//TODO hack
 
     //TODO default to Vector2.ZERO so that this is unnecessary?
