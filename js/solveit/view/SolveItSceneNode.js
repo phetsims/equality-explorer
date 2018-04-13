@@ -79,7 +79,7 @@ define( function( require ) {
     // Bar across the top of the screen
     var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode, scoreDisplay, {
       spacing: 20,
-      backgroundFill: 'rgb( 252, 150, 152 )',
+      barFill: 'rgb( 252, 150, 152 )',
       backButtonListener: backButtonListener
     } );
 
