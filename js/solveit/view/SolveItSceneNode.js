@@ -17,6 +17,7 @@ define( function( require ) {
   var EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
   var EquationPanel = require( 'EQUALITY_EXPLORER/common/view/EquationPanel' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  var InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -29,7 +30,6 @@ define( function( require ) {
   var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
-  var StatusBar = require( 'VEGAS/StatusBar' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
@@ -77,7 +77,7 @@ define( function( require ) {
     };
 
     // Bar across the top of the screen
-    var statusBar = new StatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode, scoreDisplay, {
+    var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode, scoreDisplay, {
       spacing: 20,
       backgroundFill: 'rgb( 252, 150, 152 )',
       backButtonListener: backButtonListener
