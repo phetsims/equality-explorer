@@ -33,6 +33,7 @@ define( function( require ) {
 
     /**
      * Generates the next challenge.
+     *
      * Form: ax + b = c
      * Let x be a random integer between [-40,40], x !== 0
      * Let a be a random integer between [-10,10], a !== 0
