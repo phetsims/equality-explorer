@@ -66,7 +66,7 @@ define( function( require ) {
     },
 
     /**
-     * Gets the next integer between min and max, excluding zero and an optional previous value.
+     * Gets the next integer in a range, excluding zero and an optional previous value.
      * @param {Range} range
      * @param {number} [previousValue]
      * @returns {number}
@@ -78,6 +78,17 @@ define( function( require ) {
         value = this.random.nextIntBetween( range.min, range.max );
       }
       return value;
+    },
+
+    /**
+     * Gets the next value of x in a range, excluding zero and the previous value of x.
+     * @param range
+     * @returns {number}
+     */
+    nextXInRange: function( range ) {
+      var x = this.nextIntInRange( range, this.xPrevious );
+      this.xPrevious = x;
+      return x;
     }
   } );
 } );

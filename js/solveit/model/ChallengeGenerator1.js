@@ -45,21 +45,21 @@ define( function( require ) {
     nextChallengeProtected: function() {
       var challenge;
       if ( this.numberOfChallenges < 3 ) {
-        challenge = this.nextChallengeOfType( this.numberOfChallenges + 1 );
+        challenge = this.nextChallengeForType( this.numberOfChallenges + 1 );
       }
       else {
-        challenge = this.nextChallengeOfType( this.random.nextIntBetween( 1, 3 ) );
+        challenge = this.nextChallengeForType( this.random.nextIntBetween( 1, 3 ) );
       }
       return challenge;
     },
 
     /**
-     * Generates 3 types of challenge, as identified in the design document.
+     * Generates the next challenge for one of the 'types' identified in the design document.
      * @param {number} type - 1, 2 or 3
      * @returns {Challenge}
      * @private
      */
-    nextChallengeOfType: function( type ) {
+    nextChallengeForType: function( type ) {
       if ( type === 1 ) {
         return this.nextType1();
       }
@@ -87,7 +87,7 @@ define( function( require ) {
      */
     nextType1: function() {
 
-      var x = this.nextIntInRange( X_RANGE, this.xPrevious );
+      var x = this.nextXInRange( X_RANGE );
       var a = this.nextIntInRange( A_RANGE );
       var c = a * x;
 
@@ -116,7 +116,7 @@ define( function( require ) {
      */
     nextType2: function() {
 
-      var x = this.nextIntInRange( X_RANGE, this.xPrevious );
+      var x = this.nextXInRange( X_RANGE );
       var b = this.nextIntInRange( B_RANGE );
       var c = x + b;
 

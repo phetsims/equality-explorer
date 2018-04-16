@@ -49,7 +49,7 @@ define( function( require ) {
      */
     nextChallengeProtected: function() {
 
-      var x = this.nextIntInRange( X_RANGE, this.xPrevious );
+      var x = this.nextXInRange( X_RANGE );
       var a = this.nextIntInRange( A_RANGE );
       var b = this.nextIntInRange( B_RANGE );
       var c = ( a * x ) + b;
