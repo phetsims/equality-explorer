@@ -73,8 +73,8 @@ define( function( require ) {
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
       phet.log && phet.log(
-        'ChallengeGenerator3, type1: ' +
-        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}} d={{d}}', {
+        'ChallengeGenerator3, type 1, (a/d)x + b = c, ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c={{c}}', {
           x: x,
           a: a,
           b: b,
@@ -108,8 +108,8 @@ define( function( require ) {
       var c = new Fraction( ( a * x ) + b, d ).reduce();
 
       phet.log && phet.log(
-        'ChallengeGenerator3, type2: ' +
-        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}} d={{d}}', {
+        'ChallengeGenerator3, type 2, (a/d)x + (b/d) = c, ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c={{c}}', {
           x: x,
           a: a,
           b: b,

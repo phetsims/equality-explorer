@@ -55,7 +55,7 @@ define( function( require ) {
       var c = ( a * x ) + b;
 
       phet.log && phet.log(
-        'ChallengeGenerator2: ' +
+        'ChallengeGenerator2, ax + b = c, ' +
         StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}}', {
           x: x,
           a: a,

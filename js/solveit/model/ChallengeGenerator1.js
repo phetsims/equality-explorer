@@ -92,7 +92,7 @@ define( function( require ) {
       var c = a * x;
 
       phet.log && phet.log(
-        'ChallengeGenerator1, type1: ' +
+        'ChallengeGenerator1, type 1, ax = c, ' +
         StringUtils.fillIn( 'x={{x}} a={{a}} c={{c}}', {
           x: x,
           a: a,
@@ -121,7 +121,7 @@ define( function( require ) {
       var c = x + b;
 
       phet.log && phet.log(
-        'ChallengeGenerator1, type2: ' +
+        'ChallengeGenerator1, type 2, x + b = c, ' +
         StringUtils.fillIn( 'x={{x}} b={{b}} c={{c}}', {
           x: x,
           b: b,
@@ -156,7 +156,7 @@ define( function( require ) {
       this.xPrevious = x;
 
       phet.log && phet.log(
-        'ChallengeGenerator1, type3: ' +
+        'ChallengeGenerator1, type 3, x/d = c, ' +
         StringUtils.fillIn( 'x: {{x}} c: {{c}} d: {{d}}', {
           x: x,
           c: c,
