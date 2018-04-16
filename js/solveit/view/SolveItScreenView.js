@@ -48,6 +48,7 @@ define( function( require ) {
       return ( scene === null );
     } );
 
+    // Handles animated 'wipe' transitions between level-selection and challenges
     this.slidingScreen = new SlidingScreen( levelSelectionNode, scenesParent,
       this.visibleBoundsProperty, showingLevelSelectionProperty );
     this.addChild( this.slidingScreen );
