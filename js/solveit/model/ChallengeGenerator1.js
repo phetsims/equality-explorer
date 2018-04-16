@@ -91,11 +91,13 @@ define( function( require ) {
       var a = this.nextIntInRange( A_RANGE );
       var c = a * x;
 
-      phet.log && phet.log( 'ChallengeGenerator1, type1: ' + StringUtils.fillIn( 'x={{x}} a={{a}} c={{c}}', {
-        x: x,
-        a: a,
-        c: c
-      } ) );
+      phet.log && phet.log(
+        'ChallengeGenerator1, type1: ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} c={{c}}', {
+          x: x,
+          a: a,
+          c: c
+        } ) );
 
       // ax + 0 = 0x + c
       return new Challenge( x, Fraction.fromInteger( a ), Fraction.ZERO, Fraction.ZERO, Fraction.fromInteger( c ) );
@@ -118,11 +120,13 @@ define( function( require ) {
       var b = this.nextIntInRange( B_RANGE );
       var c = x + b;
 
-      phet.log && phet.log( 'ChallengeGenerator1, type2: ' + StringUtils.fillIn( 'x={{x}} b={{b}} c={{c}}', {
-        x: x,
-        b: b,
-        c: c
-      } ) );
+      phet.log && phet.log(
+        'ChallengeGenerator1, type2: ' +
+        StringUtils.fillIn( 'x={{x}} b={{b}} c={{c}}', {
+          x: x,
+          b: b,
+          c: c
+        } ) );
 
       // 1x + b = 0x + c
       return new Challenge( x,
@@ -151,11 +155,13 @@ define( function( require ) {
       }
       this.xPrevious = x;
 
-      phet.log && phet.log( 'ChallengeGenerator1, type3: ' + StringUtils.fillIn( 'x: {{x}} c: {{c}} d: {{d}}', {
-        x: x,
-        c: c,
-        d: d
-      } ) );
+      phet.log && phet.log(
+        'ChallengeGenerator1, type3: ' +
+        StringUtils.fillIn( 'x: {{x}} c: {{c}} d: {{d}}', {
+          x: x,
+          c: c,
+          d: d
+        } ) );
 
       // (1/d)x + 0 = 0x + c
       return new Challenge( x,

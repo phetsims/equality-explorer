@@ -60,13 +60,15 @@ define( function( require ) {
       }
       var n = ( ( a - m ) * x ) + b;
 
-      phet.log && phet.log( 'ChallengeGenerator4: ' + StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} m={{m}} n={{n}}', {
-        x: x,
-        a: a,
-        b: b,
-        m: m,
-        n: n
-      } ) );
+      phet.log && phet.log(
+        'ChallengeGenerator4: ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} m={{m}} n={{n}}', {
+          x: x,
+          a: a,
+          b: b,
+          m: m,
+          n: n
+        } ) );
 
       // ax + b = mx + n
       return new Challenge( x,

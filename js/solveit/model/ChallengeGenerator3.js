@@ -72,13 +72,15 @@ define( function( require ) {
       var d = this.nextIntInRange( D_RANGE );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
-      phet.log && phet.log( 'ChallengeGenerator3, type1: ' + StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}} d={{d}}', {
-        x: x,
-        a: a,
-        b: b,
-        c: c,
-        d: d
-      } ) );
+      phet.log && phet.log(
+        'ChallengeGenerator3, type1: ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}} d={{d}}', {
+          x: x,
+          a: a,
+          b: b,
+          c: c,
+          d: d
+        } ) );
 
       // (a/d)x + b = 0x + c
       return new Challenge( x, new Fraction( a, d ).reduce(), Fraction.fromInteger( b ), Fraction.ZERO, c );
@@ -105,13 +107,15 @@ define( function( require ) {
       var d = this.nextIntInRange( D_RANGE );
       var c = new Fraction( ( a * x ) + b, d ).reduce();
 
-      phet.log && phet.log( 'ChallengeGenerator3, type2: ' + StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}} d={{d}}', {
-        x: x,
-        a: a,
-        b: b,
-        c: c,
-        d: d
-      } ) );
+      phet.log && phet.log(
+        'ChallengeGenerator3, type2: ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}} d={{d}}', {
+          x: x,
+          a: a,
+          b: b,
+          c: c,
+          d: d
+        } ) );
 
       // (a/d)x + (b/d) = 0x + c
       return new Challenge( x, new Fraction( a, d ).reduce(), new Fraction( b, d ).reduce(), Fraction.ZERO, c );

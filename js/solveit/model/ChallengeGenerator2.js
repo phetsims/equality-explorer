@@ -54,12 +54,14 @@ define( function( require ) {
       var b = this.nextIntInRange( B_RANGE );
       var c = ( a * x ) + b;
 
-      phet.log && phet.log( 'ChallengeGenerator2: ' + StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}}', {
-        x: x,
-        a: a,
-        b: b,
-        c: c
-      } ) );
+      phet.log && phet.log(
+        'ChallengeGenerator2: ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}}', {
+          x: x,
+          a: a,
+          b: b,
+          c: c
+        } ) );
 
       // ax + b = 0x + c
       return new Challenge( x,
