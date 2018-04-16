@@ -14,14 +14,10 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
-   * @param {number} level
    * @constructor
    * @abstract
    */
-  function ChallengeGenerator( level ) {
-
-    // @public (read-only)
-    this.level = level;
+  function ChallengeGenerator() {
 
     // @public (read-only) number of challenges generated
     this.numberOfChallenges = 0;

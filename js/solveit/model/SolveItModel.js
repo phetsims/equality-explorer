@@ -45,6 +45,8 @@ define( function( require ) {
       new ChallengeGenerator3(),
       new ChallengeGenerator4()
     ];
+    assert && assert( this.challengeGenerators.length === this.levelDescriptions.length,
+      'levelDescriptions and challengeGenerators must have the same number of elements' );
 
     // @public (read-only) {SolveItScene[]} a scene for each level
     this.scenes = [];

@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Challenge generator for level 3.
+ * Challenge generator for game level 3.
  * See specification in https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo/edit.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -28,7 +28,7 @@ define( function( require ) {
    * @constructor
    */
   function ChallengeGenerator3() {
-    ChallengeGenerator.call( this, 3 /* level */ );
+    ChallengeGenerator.call( this );
   }
 
   equalityExplorer.register( 'ChallengeGenerator3', ChallengeGenerator3 );
