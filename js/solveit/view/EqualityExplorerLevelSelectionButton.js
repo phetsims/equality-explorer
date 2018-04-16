@@ -33,10 +33,9 @@ define( function( require ) {
       showOne: true
     } );
 
-    var scoreDisplay = new ScoreDisplayNumberAndStar( scene.scoreProperty );
-
-    LevelSelectionButton.call( this, icon, scoreDisplay, {
+    LevelSelectionButton.call( this, icon, scene.scoreProperty, {
       baseColor: 'rgb( 191, 239, 254 )',
+      scoreDisplayConstructor: ScoreDisplayNumberAndStar,
       listener: function() {
         sceneProperty.value = scene;
       }
