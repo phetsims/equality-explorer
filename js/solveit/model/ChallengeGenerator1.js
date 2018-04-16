@@ -92,7 +92,7 @@ define( function( require ) {
       var c = a * x;
 
       var debugOrigin = 'level 1, type 1, ax = c';
-      var debugDescription = StringUtils.fillIn( 'x={{x}} a={{a}} c=a*x={{c}}', {
+      var debugDerivation = StringUtils.fillIn( 'x={{x}} a={{a}} c=a*x={{c}}', {
         x: x,
         a: a,
         c: c
@@ -102,7 +102,7 @@ define( function( require ) {
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.ZERO,
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugOrigin, debugDescription );
+        debugOrigin, debugDerivation );
     },
 
     /**
@@ -124,7 +124,7 @@ define( function( require ) {
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 1, type 2, x + b = c';
-      var debugDescription = StringUtils.fillIn( 'x={{x}} b={{b}} c=x+b={{c}}', {
+      var debugDerivation = StringUtils.fillIn( 'x={{x}} b={{b}} c=x+b={{c}}', {
         x: x,
         b: b,
         c: c
@@ -134,7 +134,7 @@ define( function( require ) {
       return new Challenge( x,
         Fraction.fromInteger( 1 ), Fraction.fromInteger( b ),
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugOrigin, debugDescription );
+        debugOrigin, debugDerivation );
     },
 
     /**
@@ -160,7 +160,7 @@ define( function( require ) {
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 1, type 3, x/d = c';
-      var debugDescription = StringUtils.fillIn( 'c={{c}} d={{d}} x=c*d={{x}} ', {
+      var debugDerivation = StringUtils.fillIn( 'c={{c}} d={{d}} x=c*d={{x}} ', {
         x: x,
         c: c,
         d: d
@@ -170,7 +170,7 @@ define( function( require ) {
       return new Challenge( x,
         new Fraction( 1, d ), Fraction.ZERO,
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugOrigin, debugDescription );
+        debugOrigin, debugDerivation );
     }
   } );
 } );

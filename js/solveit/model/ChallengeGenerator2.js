@@ -56,7 +56,7 @@ define( function( require ) {
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 2, ax + b = c';
-      var debugDescription = StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c=ax+b={{c}}', {
+      var debugDerivation = StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c=ax+b={{c}}', {
         x: x,
         a: a,
         b: b,
@@ -67,7 +67,7 @@ define( function( require ) {
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.fromInteger( b ),
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugOrigin, debugDescription );
+        debugOrigin, debugDerivation );
     }
   } );
 } );

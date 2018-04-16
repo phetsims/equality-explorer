@@ -28,11 +28,11 @@ define( function( require ) {
    * @param {Fraction} b
    * @param {Fraction} m
    * @param {Fraction} n
-   * @param {string} debugOrigin
-   * @param {string} debugDescription
+   * @param {string} debugOrigin - identifies the level, type and form of the challenge
+   * @param {string} debugDerivation - identifies the derived values that were used to create the challenge
    * @constructor
    */
-  function Challenge( x, a, b, m, n, debugOrigin, debugDescription ) {
+  function Challenge( x, a, b, m, n, debugOrigin, debugDerivation ) {
 
     assert && assert( typeof x === 'number', 'invalid x: ' + x );
     assert && assert( a instanceof Fraction && a.isReduced(), 'invalid a: ' + a );
@@ -49,7 +49,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.debugOrigin = debugOrigin;
-    this.debugDescription = debugDescription;
+    this.debugDerivation = debugDerivation;
     this.debugEquation = '' +
                          this.leftVariableTerm.coefficient + ' ' + xString + ' + ' +
                          this.leftConstantTerm.constantValue +
@@ -64,7 +64,7 @@ define( function( require ) {
 
     // @public for debugging, do not rely on format
     toRichText: function() {
-      return this.debugOrigin + '<br>' + this.debugDescription + '<br>' + this.debugEquation;
+      return this.debugOrigin + '<br>' + this.debugDerivation + '<br>' + this.debugEquation;
     }
   } );
 } ); 

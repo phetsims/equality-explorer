@@ -74,7 +74,7 @@ define( function( require ) {
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 1, (a/d)x + b = c';
-      var debugDescription = StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c=(a/d)x+b={{c}}', {
+      var debugDerivation = StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c=(a/d)x+b={{c}}', {
         x: x,
         a: a,
         b: b,
@@ -86,7 +86,7 @@ define( function( require ) {
       return new Challenge( x,
         new Fraction( a, d ).reduce(), Fraction.fromInteger( b ),
         Fraction.ZERO, c,
-        debugOrigin, debugDescription );
+        debugOrigin, debugDerivation );
     },
 
     /**
@@ -112,7 +112,7 @@ define( function( require ) {
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 2, (a/d)x + (b/d) = c';
-      var debugDescription = StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c=(ax+b)/d={{c}}', {
+      var debugDerivation = StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c=(ax+b)/d={{c}}', {
         x: x,
         a: a,
         b: b,
@@ -124,7 +124,7 @@ define( function( require ) {
       return new Challenge( x,
         new Fraction( a, d ).reduce(), new Fraction( b, d ).reduce(),
         Fraction.ZERO, c,
-        debugOrigin, debugDescription );
+        debugOrigin, debugDerivation );
     }
   } );
 } );
