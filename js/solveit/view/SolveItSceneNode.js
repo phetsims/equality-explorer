@@ -147,7 +147,10 @@ define( function( require ) {
         gameAudioPlayer.correctAnswer();
 
         //TODO generate a new challenge
-        scene.challengeGenerator.nextChallenge();
+        var challenge = scene.challengeGenerator.nextChallenge();
+        if ( self.answerNode ) {
+          self.answerNode.text = challenge.toString();
+        }
       }
     } );
 
@@ -198,12 +201,11 @@ define( function( require ) {
     // @private {RichText|null} shows the answer for debugging/testing
     this.answerNode = null;
     if ( EqualityExplorerQueryParameters.showAnswers ) {
-      var answerText = StringUtils.fillIn( '{{x}} = {{value}}', {
-        x: MathSymbolFont.getRichTextMarkup( xString ),
-        value: '?' //TODO show value of x, update when challenge changes
-      } );
-      this.answerNode = new RichText( answerText, {
-        centerX: snapshotsAccordionBox.centerX,
+
+      // workaround for https://github.com/phetsims/scenery/issues/769
+      this.answerNode = new RichText( '\u00A0', {
+        font: new PhetFont( 14 ),
+        left: layoutBounds.centerX,
         bottom: layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
       } );
       children.push( this.answerNode );
