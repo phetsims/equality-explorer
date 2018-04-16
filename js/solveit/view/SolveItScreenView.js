@@ -13,9 +13,9 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LevelSelectionNode = require( 'EQUALITY_EXPLORER/solveit/view/LevelSelectionNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var SettingsNode = require( 'EQUALITY_EXPLORER/solveit/view/SettingsNode' );
   var SlidingScreen = require( 'TWIXT/SlidingScreen' );
   var SolveItSceneNode = require( 'EQUALITY_EXPLORER/solveit/view/SolveItSceneNode' );
 
@@ -30,7 +30,7 @@ define( function( require ) {
     var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
     // UI for game settings
-    var settingsNode = new SettingsNode( model, this.layoutBounds );
+    var settingsNode = new LevelSelectionNode( model, this.layoutBounds );
 
     // @private {SolveItSceneNode[]} a scene for each level of the game
     this.sceneNodes = [];

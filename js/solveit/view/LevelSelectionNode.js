@@ -2,7 +2,7 @@
 
 /**
  * User interface for game settings in the 'Solve It!' screen.
- * This is where you choose your level, turn sound on/off, reset the game, etc.
+ * This is where you select your level, turn sound on/off, reset the game, etc.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -36,9 +36,7 @@ define( function( require ) {
    * @param {Bounds2} layoutBounds
    * @constructor
    */
-  function SettingsNode( model, layoutBounds ) {
-
-    var self = this;
+  function LevelSelectionNode( model, layoutBounds ) {
 
     var textOptions = {
       font: new PhetFont( 50 ),
@@ -115,8 +113,8 @@ define( function( require ) {
     } );
   }
 
-  equalityExplorer.register( 'SettingsNode', SettingsNode );
+  equalityExplorer.register( 'LevelSelectionNode', LevelSelectionNode );
 
-  return inherit( Node, SettingsNode );
+  return inherit( Node, LevelSelectionNode );
 } );
 
