@@ -45,8 +45,8 @@ define( function( require ) {
   /**
    * @param {SolveItScene} scene - the scene associated with this Node
    * @param {Property.<SolveItScene|null>} sceneProperty - the selected scene
-   * @param {Bounds2} layoutBounds
-   * @param {Property.<Bounds2>} visibleBoundsProperty - visible bounds of this node's parent ScreenView
+   * @param {Bounds2} layoutBounds - of the parent ScreenView
+   * @param {Property.<Bounds2>} visibleBoundsProperty - of the parent ScreenView
    * @param {GameAudioPlayer} gameAudioPlayer
    * @param {Object} [options]
    * @constructor
