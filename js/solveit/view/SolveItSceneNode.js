@@ -203,7 +203,7 @@ define( function( require ) {
         value: '?' //TODO show value of x, update when challenge changes
       } );
       this.answerNode = new RichText( answerText, {
-        right: layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
+        centerX: snapshotsAccordionBox.centerX,
         bottom: layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
       } );
       children.push( this.answerNode );
