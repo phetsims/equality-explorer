@@ -145,6 +145,9 @@ define( function( require ) {
         //TODO temporarily register a correct answer
         scene.scoreProperty.value++;
         gameAudioPlayer.correctAnswer();
+
+        var challenge = scene.challengeGenerator.nextChallenge();
+        console.log( challenge ); //TODO
       }
     } );
 

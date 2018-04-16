@@ -21,9 +21,10 @@ define( function( require ) {
   /**
    * @param {number} level - game level, numbered from 1 in the model and view
    * @param {string} description
+   * @param {ChallengeGenerator} challengeGenerator
    * @constructor
    */
-  function SolveItScene( level, description ) {
+  function SolveItScene( level, description, challengeGenerator ) {
 
     assert && assert( level > 0, 'invalid level, numbering starts with 1: ' + level );
 
@@ -35,6 +36,7 @@ define( function( require ) {
     // @public (read-only)
     this.level = level;
     this.description = description;
+    this.challengeGenerator = challengeGenerator;
 
     // @public
     this.scoreProperty = new NumberProperty( 0, {
