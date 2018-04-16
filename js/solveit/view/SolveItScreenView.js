@@ -25,6 +25,8 @@ define( function( require ) {
    */
   function SolveItScreenView( model ) {
 
+    var self = this;
+
     ScreenView.call( this, model );
 
     var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
@@ -49,9 +51,20 @@ define( function( require ) {
     } );
 
     // Handles animated 'wipe' transitions between level-selection and challenges
-    this.slidingScreen = new SlidingScreen( levelSelectionNode, scenesParent,
+    this.wipeNode = new SlidingScreen( levelSelectionNode, scenesParent,
       this.visibleBoundsProperty, showingLevelSelectionProperty );
-    this.addChild( this.slidingScreen );
+    this.addChild( this.wipeNode );
+
+    // Make the selected scene (level) visible. unlink not needed.
+    model.sceneProperty.link( function( scene ) {
+
+      // Skip null (no scene selected), so that scene is shown during wipe transition
+      if ( scene !== null ) {
+        for ( var i = 0; i < self.sceneNodes.length; i++ ) {
+          self.sceneNodes[ i ].visible = ( self.sceneNodes[ i ].scene === scene );
+        }
+      }
+    } );
   }
 
   equalityExplorer.register( 'SolveItScreenView', SolveItScreenView );
@@ -63,7 +76,7 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
-      this.slidingScreen.step( dt );
+      this.wipeNode.step( dt );
       for ( var i = 0; i < this.sceneNodes.length; i++ ) {
         if ( this.sceneNodes[ i ].visible ) {
           this.sceneNodes[ i ].step( dt );
