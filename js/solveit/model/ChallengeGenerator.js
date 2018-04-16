@@ -45,7 +45,7 @@ define( function( require ) {
 
     /**
      * Generates the next challenge for this level.
-     * @returns {Object}
+     * @returns {Challenge}
      * @public
      */
     nextChallenge: function() {
@@ -56,7 +56,7 @@ define( function( require ) {
 
     /**
      * Generates the next challenge for this level.
-     * @returns {Object}
+     * @returns {Challenge}
      * @protected
      * @abstract
      */

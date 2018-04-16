@@ -147,7 +147,7 @@ define( function( require ) {
         gameAudioPlayer.correctAnswer();
 
         //TODO generate a new challenge
-        console.log( scene.challengeGenerator.nextChallenge() );
+        scene.challengeGenerator.nextChallenge();
       }
     } );
 

@@ -10,10 +10,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
   var ChallengeGenerator = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Range = require( 'DOT/Range' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // constants
   var X_RANGE = new Range( -40, 40 );
@@ -40,25 +43,28 @@ define( function( require ) {
      * Let b be a random integer between [-10,10], c !== 0
      * Let c = ax + b
      *
-     * @returns {{level: number, x: number, a: number, b: number}}
+     * @returns {Challenge}
      * @protected
      * @override
      */
     nextChallengeProtected: function() {
 
-      var x = this.xPrevious;
-      while ( x === this.xPrevious ) {
-        x = this.nextIntInRange( X_RANGE );
-      }
-      this.xPrevious = x;
-
+      var x = this.nextIntInRange( X_RANGE, this.xPrevious );
       var a = this.nextIntInRange( A_RANGE );
-
       var b = this.nextIntInRange( B_RANGE );
-
       var c = ( a * x ) + b;
 
-      return { level: this.level, x: x, a: a, b: b, c: c };
+      phet.log && phet.log( 'ChallengeGenerator2: ' + StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}}', {
+        x: x,
+        a: a,
+        b: b,
+        c: c
+      } ) );
+
+      // ax + b = 0x + c
+      return new Challenge( x,
+        Fraction.fromInteger( a ), Fraction.fromInteger( b ),
+        Fraction.ZERO, Fraction.fromInteger( c ) );
     }
   } );
 } );

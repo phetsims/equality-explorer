@@ -10,10 +10,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
   var ChallengeGenerator = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Range = require( 'DOT/Range' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // constants
   var X_RANGE = new Range( -40, 40 );
@@ -42,7 +45,7 @@ define( function( require ) {
      * Let m be a random integer between [-10,10], m !== 0, m !== a
      * Let n = (a – m)x + b
      *
-     * @returns {{level: number, x: number, a: number, b: number, m: number, n: number}}
+     * @returns {Challenge}
      * @protected
      * @override
      */
@@ -57,7 +60,18 @@ define( function( require ) {
       }
       var n = ( ( a - m ) * x ) + b;
 
-      return { level: this.level, x: x, a: a, b: b, m: m, n: n };
+      phet.log && phet.log( 'ChallengeGenerator4: ' + StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} m={{m}} n={{n}}', {
+        x: x,
+        a: a,
+        b: b,
+        m: m,
+        n: n
+      } ) );
+
+      // ax + b = mx + n
+      return new Challenge( x,
+        Fraction.fromInteger( a ), Fraction.fromInteger( b ),
+        Fraction.fromInteger( m ), Fraction.fromInteger( n ) );
     }
   } );
 } );

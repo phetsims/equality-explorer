@@ -10,10 +10,13 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
   var ChallengeGenerator = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Range = require( 'DOT/Range' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // constants
   var X_RANGE = new Range( -40, 40 );
@@ -35,7 +38,7 @@ define( function( require ) {
 
     /**
      * Generates the next challenge.
-     * @returns {Object}
+     * @returns {Challenge}
      * @protected
      * @override
      */
@@ -53,7 +56,7 @@ define( function( require ) {
     /**
      * Generates 3 types of challenge, as identified in the design document.
      * @param {number} type - 1, 2 or 3
-     * @returns {Object}
+     * @returns {Challenge}
      * @private
      */
     nextChallengeOfType: function( type ) {
@@ -79,7 +82,7 @@ define( function( require ) {
      * Let a be a random integer between [-10, 10], a !== 0
      * Let c = a•x
      *
-     * @returns {{level: number, type: number, x: number, a: number, c: number}}
+     * @returns {Challenge}
      * @private
      */
     nextType1: function() {
@@ -88,7 +91,14 @@ define( function( require ) {
       var a = this.nextIntInRange( A_RANGE );
       var c = a * x;
 
-      return { level: this.level, type: 1, x: x, a: a, c: c };
+      phet.log && phet.log( 'ChallengeGenerator1, type1: ' + StringUtils.fillIn( 'x={{x}} a={{a}} c={{c}}', {
+        x: x,
+        a: a,
+        c: c
+      } ) );
+
+      // ax + 0 = 0x + c
+      return new Challenge( x, Fraction.fromInteger( a ), Fraction.ZERO, Fraction.ZERO, Fraction.fromInteger( c ) );
     },
 
     /**
@@ -99,7 +109,7 @@ define( function( require ) {
      * Let b be a random integer between [-10, 10], b !== 0
      * Let c = x + b
      *
-     * @returns {{level: number, type: number, x: number, b: number, c: number}}
+     * @returns {Challenge}
      * @private
      */
     nextType2: function() {
@@ -108,7 +118,16 @@ define( function( require ) {
       var b = this.nextIntInRange( B_RANGE );
       var c = x + b;
 
-      return { level: this.level, type: 2, x: x, b: b, c: c };
+      phet.log && phet.log( 'ChallengeGenerator1, type2: ' + StringUtils.fillIn( 'x={{x}} b={{b}} c={{c}}', {
+        x: x,
+        b: b,
+        c: c
+      } ) );
+
+      // 1x + b = 0x + c
+      return new Challenge( x,
+        Fraction.fromInteger( 1 ), Fraction.fromInteger( b ),
+        Fraction.ZERO, Fraction.fromInteger( c ) );
     },
 
     /**
@@ -119,7 +138,7 @@ define( function( require ) {
      * Let d be a random integer between [-10, 10], d !== 0
      * Let x = c * d
      *
-     * @returns {{level: number, type: number, x: number, c: number, d: number}}
+     * @returns {Challenge}
      * @private
      */
     nextType3: function() {
@@ -132,7 +151,16 @@ define( function( require ) {
       }
       this.xPrevious = x;
 
-      return { level: this.level, type: 3, x: x, c: c, d: d };
+      phet.log && phet.log( 'ChallengeGenerator1.nextType3: ' + StringUtils.fillIn( 'x: {{x}} c: {{c}} d: {{d}}', {
+        x: x,
+        c: c,
+        d: d
+      } ) );
+
+      // (1/d)x + 0 = 0x + c
+      return new Challenge( x,
+        new Fraction( 1, d ), Fraction.ZERO,
+        Fraction.ZERO, Fraction.fromInteger( c ) );
     }
   } );
 } );
