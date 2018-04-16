@@ -149,7 +149,7 @@ define( function( require ) {
         //TODO generate a new challenge
         var challenge = scene.challengeGenerator.nextChallenge();
         if ( self.answerNode ) {
-          self.answerNode.text = challenge.toString();
+          self.answerNode.text = challenge.toRichText();
         }
       }
     } );
@@ -204,9 +204,9 @@ define( function( require ) {
 
       // workaround for https://github.com/phetsims/scenery/issues/769
       this.answerNode = new RichText( '\u00A0', {
-        font: new PhetFont( 14 ),
-        left: layoutBounds.centerX,
-        bottom: layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
+        font: new PhetFont( 16 ),
+        left: snapshotsAccordionBox.left,
+        top: snapshotsAccordionBox.bottom + 25
       } );
       children.push( this.answerNode );
     }

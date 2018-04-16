@@ -28,10 +28,11 @@ define( function( require ) {
    * @param {Fraction} b
    * @param {Fraction} m
    * @param {Fraction} n
-   * @param {string} debugDescription - debugging description
+   * @param {string} debugOrigin
+   * @param {string} debugDescription
    * @constructor
    */
-  function Challenge( x, a, b, m, n, debugDescription ) {
+  function Challenge( x, a, b, m, n, debugOrigin, debugDescription ) {
 
     assert && assert( typeof x === 'number', 'invalid x: ' + x );
     assert && assert( a instanceof Fraction && a.isReduced(), 'invalid a: ' + a );
@@ -45,26 +46,25 @@ define( function( require ) {
     this.leftConstantTerm = new ConstantTerm( { constantValue: b } );
     this.rightVariableTerm = new VariableTerm( this.variable, { coefficient: m } );
     this.rightConstantTerm = new ConstantTerm( { constantValue: n } );
-    this.debugDescription = debugDescription;
 
-    phet.log && phet.log( 'Challenge: ' + this.toString() );
+    // @public (read-only)
+    this.debugOrigin = debugOrigin;
+    this.debugDescription = debugDescription;
+    this.debugEquation = '' +
+                         this.leftVariableTerm.coefficient + ' ' + xString + ' + ' +
+                         this.leftConstantTerm.constantValue +
+                         ' = ' +
+                         this.rightVariableTerm.coefficient + ' ' + xString + ' + ' +
+                         this.rightConstantTerm.constantValue;
   }
 
   equalityExplorer.register( 'Challenge', Challenge );
 
   return inherit( Object, Challenge, {
 
-    /**
-     * For debugging only, do not rely on the format of toString!
-     * @returns {string}
-     */
-    toString: function() {
-      return '' + this.debugDescription + ', ' +
-             this.leftVariableTerm.coefficient + ' ' + xString + ' + ' +
-             this.leftConstantTerm.constantValue +
-             ' = ' +
-             this.rightVariableTerm.coefficient + ' ' + xString + ' + ' +
-             this.rightConstantTerm.constantValue;
+    // @public for debugging, do not rely on format
+    toRichText: function() {
+      return this.debugOrigin + '<br>' + this.debugDescription + '<br>' + this.debugEquation;
     }
   } );
 } ); 

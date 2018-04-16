@@ -61,21 +61,20 @@ define( function( require ) {
       var n = ( ( a - m ) * x ) + b;
 
       // derivation that corresponds to design doc
-      var debugDescription =
-        'ChallengeGenerator4, ax + b = mx + n, ' +
-        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} m={{m}} n=(a–m)x+b={{n}}', {
-          x: x,
-          a: a,
-          b: b,
-          m: m,
-          n: n
-        } );
+      var debugOrigin = 'level 4, ax + b = mx + n';
+      var debugDescription = StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} m={{m}} n=(a–m)x+b={{n}}', {
+        x: x,
+        a: a,
+        b: b,
+        m: m,
+        n: n
+      } );
 
       // ax + b = mx + n
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.fromInteger( b ),
         Fraction.fromInteger( m ), Fraction.fromInteger( n ),
-        debugDescription );
+        debugOrigin, debugDescription );
     }
   } );
 } );

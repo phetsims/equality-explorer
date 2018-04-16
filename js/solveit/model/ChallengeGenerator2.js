@@ -55,20 +55,19 @@ define( function( require ) {
       var c = ( a * x ) + b;
 
       // derivation that corresponds to design doc
-      var debugDescription =
-        'level 2, ax + b = c, ' +
-        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c=ax+b={{c}}', {
-          x: x,
-          a: a,
-          b: b,
-          c: c
-        } );
+      var debugOrigin = 'level 2, ax + b = c';
+      var debugDescription = StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c=ax+b={{c}}', {
+        x: x,
+        a: a,
+        b: b,
+        c: c
+      } );
 
       // ax + b = 0x + c
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.fromInteger( b ),
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugDescription );
+        debugOrigin, debugDescription );
     }
   } );
 } );

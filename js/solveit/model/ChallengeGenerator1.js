@@ -91,19 +91,18 @@ define( function( require ) {
       var a = this.nextIntInRange( A_RANGE );
       var c = a * x;
 
-      var debugDescription =
-        'level 1, type 1, ax = c, ' +
-        StringUtils.fillIn( 'x={{x}} a={{a}} c=a*x={{c}}', {
-          x: x,
-          a: a,
-          c: c
-        } );
+      var debugOrigin = 'level 1, type 1, ax = c';
+      var debugDescription = StringUtils.fillIn( 'x={{x}} a={{a}} c=a*x={{c}}', {
+        x: x,
+        a: a,
+        c: c
+      } );
 
       // ax + 0 = 0x + c
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.ZERO,
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugDescription );
+        debugOrigin, debugDescription );
     },
 
     /**
@@ -124,19 +123,18 @@ define( function( require ) {
       var c = x + b;
 
       // derivation that corresponds to design doc
-      var debugDescription =
-        'level 1, type 2, x + b = c, ' +
-        StringUtils.fillIn( 'x={{x}} b={{b}} c=x+b={{c}}', {
-          x: x,
-          b: b,
-          c: c
-        } );
+      var debugOrigin = 'level 1, type 2, x + b = c';
+      var debugDescription = StringUtils.fillIn( 'x={{x}} b={{b}} c=x+b={{c}}', {
+        x: x,
+        b: b,
+        c: c
+      } );
 
       // 1x + b = 0x + c
       return new Challenge( x,
         Fraction.fromInteger( 1 ), Fraction.fromInteger( b ),
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugDescription );
+        debugOrigin, debugDescription );
     },
 
     /**
@@ -161,19 +159,18 @@ define( function( require ) {
       this.xPrevious = x;
 
       // derivation that corresponds to design doc
-      var debugDescription =
-        'level 1, type 3, x/d = c, ' +
-        StringUtils.fillIn( 'c={{c}} d={{d}} x=c*d={{x}} ', {
-          x: x,
-          c: c,
-          d: d
-        } );
+      var debugOrigin = 'level 1, type 3, x/d = c';
+      var debugDescription = StringUtils.fillIn( 'c={{c}} d={{d}} x=c*d={{x}} ', {
+        x: x,
+        c: c,
+        d: d
+      } );
 
       // (1/d)x + 0 = 0x + c
       return new Challenge( x,
         new Fraction( 1, d ), Fraction.ZERO,
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugDescription );
+        debugOrigin, debugDescription );
     }
   } );
 } );
