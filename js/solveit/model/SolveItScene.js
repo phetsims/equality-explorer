@@ -19,19 +19,21 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
-   * @param {number} levelNumber - game level, numbered from 0 in the model, from 1 in the view
+   * @param {number} level - game level, numbered from 1 in the model and view
    * @param {string} description
    * @constructor
    */
-  function SolveItScene( levelNumber, description ) {
+  function SolveItScene( level, description ) {
+
+    assert && assert( level > 0, 'invalid level, numbering starts with 1: ' + level );
 
     OperationsScene.call( this, {
-      debugName: 'level ' + levelNumber,
+      debugName: 'level ' + level,
       scaleLocation: new Vector2( 355, 500 ) // determined empirically
     } );
 
     // @public (read-only)
-    this.levelNumber = levelNumber;
+    this.level = level;
     this.description = description;
 
     // @public

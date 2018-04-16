@@ -36,8 +36,8 @@ define( function( require ) {
 
     // @public (read-only) {SolveItScene[]} a scene for each level
     this.scenes = [];
-    for ( var i = 0; i < this.levelDescriptions.length; i++ ) {
-      this.scenes.push( new SolveItScene( i, this.levelDescriptions[ i ] ) );
+    for ( var level = 1; level <= this.levelDescriptions.length; level++ ) {
+      this.scenes.push( new SolveItScene( level, this.levelDescriptions[ level - 1 ] ) );
     }
 
     // @public {SolveItScene|null} the selected scene, null if no scene is currently selected

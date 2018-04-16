@@ -41,7 +41,7 @@ define( function( require ) {
         FACE_NODE,
 
         // 'x' term with level number as coefficient
-        VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level + 1 ), xString, {
+        VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( level ), xString, {
           diameter: DIAMETER,
           showOne: true // show coefficient for '1x'
         } )

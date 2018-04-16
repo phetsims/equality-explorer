@@ -243,7 +243,7 @@ define( function( require ) {
           // When the dialog is shown, show the reward
           showCallback: function() {
             assert && assert( !self.rewardNode, 'rewardNode is not supposed to exist' );
-            self.rewardNode = new EqualityExplorerRewardNode( scene.levelNumber );
+            self.rewardNode = new EqualityExplorerRewardNode( scene.level );
             self.addChild( self.rewardNode );
           },
 

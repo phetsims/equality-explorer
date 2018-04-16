@@ -27,7 +27,7 @@ define( function( require ) {
   function EqualityExplorerLevelSelectionButton( scene, sceneProperty ) {
 
     // 'x' term with level number as coefficient
-    var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( scene.levelNumber + 1 ), xString, {
+    var icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( scene.level ), xString, {
       diameter: 50,
       margin: 15,
       showOne: true
