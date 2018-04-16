@@ -89,7 +89,6 @@ define( function( require ) {
       top: statusBar.bottom + 15
     } );
 
-    //TODO do we need an additional string here with colon on end? 'Solve for x:'
     // 'Solve for x'
     var solveForXText = StringUtils.fillIn( solveForString, {
       variable: MathSymbolFont.getRichTextMarkup( xString )
