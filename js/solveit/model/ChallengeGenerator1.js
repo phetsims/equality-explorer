@@ -84,7 +84,7 @@ define( function( require ) {
      */
     nextType1: function() {
 
-      var x = this.nextXInRange( X_RANGE );
+      var x = this.nextIntInRange( X_RANGE, this.xPrevious );
       var a = this.nextIntInRange( A_RANGE );
       var c = a * x;
 
@@ -104,7 +104,7 @@ define( function( require ) {
      */
     nextType2: function() {
 
-      var x = this.nextXInRange( X_RANGE );
+      var x = this.nextIntInRange( X_RANGE, this.xPrevious );
       var b = this.nextIntInRange( B_RANGE );
       var c = x + b;
 

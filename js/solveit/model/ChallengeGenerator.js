@@ -65,30 +65,18 @@ define( function( require ) {
     },
 
     /**
-     * Gets the next integer between min and max, excluding zero.
+     * Gets the next integer between min and max, excluding zero and an optional previous value.
      * @param {Range} range
+     * @param {number} [previousValue]
      * @returns {number}
      */
-    nextIntInRange: function( range ) {
+    nextIntInRange: function( range, previousValue ) {
+      previousValue = previousValue || 0;
       var value = 0;
-      while ( value === 0 ) {
+      while ( value === 0 && value === previousValue ) {
         value = this.random.nextIntBetween( range.min, range.max );
       }
       return value;
-    },
-
-    /**
-     * Gets the next x value between min and max, excluding zero and the previous x value.
-     * @param {Range} range
-     * @returns {number}
-     */
-    nextXInRange: function( range ) {
-      var x = 0;
-      while ( x === 0 || x === this.xPrevious ) {
-        x = this.random.nextIntBetween( range.min, range.max );
-      }
-      this.xPrevious = x;
-      return x;
     }
   } );
 } );
