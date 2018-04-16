@@ -1,8 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * User interface for game settings in the 'Solve It!' screen.
- * This is where you select your level, turn sound on/off, reset the game, etc.
+ * User interface for level selection and other game settings in the 'Solve It!' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

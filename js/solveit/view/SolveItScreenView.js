@@ -29,8 +29,8 @@ define( function( require ) {
 
     var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
-    // UI for game settings
-    var settingsNode = new LevelSelectionNode( model, this.layoutBounds );
+    // UI for level selection and other game settings
+    var levelSelectionNode = new LevelSelectionNode( model, this.layoutBounds );
 
     // @private {SolveItSceneNode[]} a scene for each level of the game
     this.sceneNodes = [];
@@ -42,11 +42,12 @@ define( function( require ) {
       scenesNodesParent.addChild( sceneNode );
     }
 
-    var showingLeftProperty = new DerivedProperty( [ model.sceneProperty ], function( scene ) {
-      return scene === null;
+    // Are we showing the level-selection UI?
+    var showingLevelSelectionProperty = new DerivedProperty( [ model.sceneProperty ], function( scene ) {
+      return ( scene === null );
     } );
 
-    this.slidingScreen = new SlidingScreen( settingsNode, scenesNodesParent, this.visibleBoundsProperty, showingLeftProperty );
+    this.slidingScreen = new SlidingScreen( levelSelectionNode, scenesNodesParent, this.visibleBoundsProperty, showingLevelSelectionProperty );
     this.addChild( this.slidingScreen );
   }
 
