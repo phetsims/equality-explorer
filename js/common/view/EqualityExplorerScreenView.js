@@ -79,6 +79,13 @@ define( function( require ) {
       } );
       this.addChild( sceneControl );
     }
+
+    // Make the selected scene visible. unlink not needed.
+    model.sceneProperty.link( function( scene ) {
+      for ( var i = 0; i < self.sceneNodes.length; i++ ) {
+        self.sceneNodes[ i ].visible = ( self.sceneNodes[ i ].scene === scene );
+      }
+    } );
   }
 
   equalityExplorer.register( 'EqualityExplorerScreenView', EqualityExplorerScreenView );

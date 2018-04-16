@@ -27,15 +27,10 @@ define( function( require ) {
       termNodesPickable: true // are TermNodes pickable?
     }, options );
 
-    var self = this;
+    // @public (read-only)
+    this.scene = scene;
 
     Node.call( this );
-
-    // Make this scene visible when it's selected.
-    // unlink not required
-    sceneProperty.link( function( newScene ) {
-      self.visible = ( newScene === scene );
-    } );
 
     /**
      * When a term is created in the model, create the corresponding view.
