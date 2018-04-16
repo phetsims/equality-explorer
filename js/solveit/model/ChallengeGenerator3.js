@@ -59,6 +59,7 @@ define( function( require ) {
      * Let d be a random integer between [-10, 10], d !== 0
      * Let c = (a/d)x + b
      *
+     * @returns {{level: number, type: number, x: number, a: number, b: number, d: number, c: Fraction}}
      * @private
      */
     nextType1: function() {
@@ -81,6 +82,9 @@ define( function( require ) {
      * Let b be a random integer between [-10,10], b !== 0
      * Let d be a random integer between [-10, 10], d !== 0
      * Let c = ( ax + b )/d
+     *
+     * @returns @returns {{level: number, type: number, x: number, a: number, b: number, d: number, c: Fraction}}
+     * @private
      */
     nextType2: function() {
 

@@ -13,6 +13,13 @@ define( function( require ) {
   var ChallengeGenerator = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Range = require( 'DOT/Range' );
+
+  // constants
+  var X_RANGE = new Range( -40, 40 );
+  var A_RANGE = new Range( -10, 10 );
+  var B_RANGE = new Range( -10, 10 );
+  var M_RANGE = new Range( -10, 10 );
 
   /**
    * @constructor
@@ -27,13 +34,30 @@ define( function( require ) {
 
     /**
      * Generates the next challenge.
-     * @returns {Object}
+     *
+     * Form: ax + b = mx + n
+     * Let x be a random integer between [-40,40], x !== 0
+     * Let a be a random integer between [-10,10], a !== 0
+     * Let b be a random integer between [-10,10], b !== 0
+     * Let m be a random integer between [-10,10], m !== 0, m !== a
+     * Let n = (a – m)x + b
+     *
+     * @returns {{level: number, x: number, a: number, b: number, m: number, n: number}}
      * @protected
      * @override
      */
     nextChallengeProtected: function() {
-      //TODO
-      return { level: this.level };
+
+      var x = this.nextXInRange( X_RANGE );
+      var a = this.nextIntInRange( A_RANGE );
+      var b = this.nextIntInRange( B_RANGE );
+      var m = a;
+      while ( m === a ) {
+        m = this.nextIntInRange( M_RANGE );
+      }
+      var n = ( ( a - m ) * x ) + b;
+
+      return { level: this.level, x: x, a: a, b: b, m: m, n: n };
     }
   } );
 } );
