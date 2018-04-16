@@ -151,7 +151,7 @@ define( function( require ) {
       }
       this.xPrevious = x;
 
-      phet.log && phet.log( 'ChallengeGenerator1.nextType3: ' + StringUtils.fillIn( 'x: {{x}} c: {{c}} d: {{d}}', {
+      phet.log && phet.log( 'ChallengeGenerator1, type3: ' + StringUtils.fillIn( 'x: {{x}} c: {{c}} d: {{d}}', {
         x: x,
         c: c,
         d: d
