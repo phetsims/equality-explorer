@@ -141,13 +141,14 @@ define( function( require ) {
       right: challengePanel.right,
       centerY: challengePanel.centerY,
       listener: function() {
-        //TODO generate a new challenge
+
         //TODO temporarily register a correct answer
         scene.scoreProperty.value++;
         gameAudioPlayer.correctAnswer();
 
+        //TODO generate a new challenge
         var challenge = scene.challengeGenerator.nextChallenge();
-        console.log( challenge ); //TODO
+        console.log( challenge );
       }
     } );
 
