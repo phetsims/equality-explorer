@@ -34,20 +34,22 @@ define( function( require ) {
 
     // @private {SolveItSceneNode[]} a scene for each level of the game
     this.sceneNodes = [];
-    var scenesNodesParent = new Node();
     for ( var i = 0; i < model.scenes.length; i++ ) {
       var sceneNode = new SolveItSceneNode( model.scenes[ i ], model.sceneProperty,
         this.layoutBounds, this.visibleBoundsProperty, gameAudioPlayer );
       this.sceneNodes.push( sceneNode );
-      scenesNodesParent.addChild( sceneNode );
     }
+    var scenesParent = new Node( {
+      children: this.sceneNodes
+    } );
 
     // Are we showing the level-selection UI?
     var showingLevelSelectionProperty = new DerivedProperty( [ model.sceneProperty ], function( scene ) {
       return ( scene === null );
     } );
 
-    this.slidingScreen = new SlidingScreen( levelSelectionNode, scenesNodesParent, this.visibleBoundsProperty, showingLevelSelectionProperty );
+    this.slidingScreen = new SlidingScreen( levelSelectionNode, scenesParent,
+      this.visibleBoundsProperty, showingLevelSelectionProperty );
     this.addChild( this.slidingScreen );
   }
 
