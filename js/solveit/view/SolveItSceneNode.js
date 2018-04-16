@@ -48,6 +48,7 @@ define( function( require ) {
    * @param {Bounds2} layoutBounds
    * @param {Property.<Bounds2>} visibleBoundsProperty - visible bounds of this node's parent ScreenView
    * @param {GameAudioPlayer} gameAudioPlayer
+   * @param {Object} [options]
    * @constructor
    */
   function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProperty, gameAudioPlayer, options ) {
