@@ -80,7 +80,7 @@ define( function( require ) {
      * Form: ax = c
      * Let x be a random integer between [-40,40], x !== 0
      * Let a be a random integer between [-10, 10], a !== 0
-     * Let c = a•x
+     * Let c = a*x
      *
      * @returns {Challenge}
      * @private
@@ -91,16 +91,19 @@ define( function( require ) {
       var a = this.nextIntInRange( A_RANGE );
       var c = a * x;
 
-      phet.log && phet.log(
-        'ChallengeGenerator1, type 1, ax = c, ' +
-        StringUtils.fillIn( 'x={{x}} a={{a}} c={{c}}', {
+      var debugDescription =
+        'level 1, type 1, ax = c, ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} c=a*x={{c}}', {
           x: x,
           a: a,
           c: c
-        } ) );
+        } );
 
       // ax + 0 = 0x + c
-      return new Challenge( x, Fraction.fromInteger( a ), Fraction.ZERO, Fraction.ZERO, Fraction.fromInteger( c ) );
+      return new Challenge( x,
+        Fraction.fromInteger( a ), Fraction.ZERO,
+        Fraction.ZERO, Fraction.fromInteger( c ),
+        debugDescription );
     },
 
     /**
@@ -120,18 +123,20 @@ define( function( require ) {
       var b = this.nextIntInRange( B_RANGE );
       var c = x + b;
 
-      phet.log && phet.log(
-        'ChallengeGenerator1, type 2, x + b = c, ' +
-        StringUtils.fillIn( 'x={{x}} b={{b}} c={{c}}', {
+      // derivation that corresponds to design doc
+      var debugDescription =
+        'level 1, type 2, x + b = c, ' +
+        StringUtils.fillIn( 'x={{x}} b={{b}} c=x+b={{c}}', {
           x: x,
           b: b,
           c: c
-        } ) );
+        } );
 
       // 1x + b = 0x + c
       return new Challenge( x,
         Fraction.fromInteger( 1 ), Fraction.fromInteger( b ),
-        Fraction.ZERO, Fraction.fromInteger( c ) );
+        Fraction.ZERO, Fraction.fromInteger( c ),
+        debugDescription );
     },
 
     /**
@@ -155,18 +160,20 @@ define( function( require ) {
       }
       this.xPrevious = x;
 
-      phet.log && phet.log(
-        'ChallengeGenerator1, type 3, x/d = c, ' +
-        StringUtils.fillIn( 'x: {{x}} c: {{c}} d: {{d}}', {
+      // derivation that corresponds to design doc
+      var debugDescription =
+        'level 1, type 3, x/d = c, ' +
+        StringUtils.fillIn( 'c={{c}} d={{d}} x=c*d={{x}} ', {
           x: x,
           c: c,
           d: d
-        } ) );
+        } );
 
       // (1/d)x + 0 = 0x + c
       return new Challenge( x,
         new Fraction( 1, d ), Fraction.ZERO,
-        Fraction.ZERO, Fraction.fromInteger( c ) );
+        Fraction.ZERO, Fraction.fromInteger( c ),
+        debugDescription );
     }
   } );
 } );

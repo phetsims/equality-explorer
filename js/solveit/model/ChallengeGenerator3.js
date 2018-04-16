@@ -72,18 +72,22 @@ define( function( require ) {
       var d = this.nextIntInRange( D_RANGE );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
-      phet.log && phet.log(
-        'ChallengeGenerator3, type 1, (a/d)x + b = c, ' +
-        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c={{c}}', {
+      // derivation that corresponds to design doc
+      var debugDescription =
+        'level 3, type 1, (a/d)x + b = c, ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c=(a/d)x+b={{c}}', {
           x: x,
           a: a,
           b: b,
           c: c,
           d: d
-        } ) );
+        } );
 
       // (a/d)x + b = 0x + c
-      return new Challenge( x, new Fraction( a, d ).reduce(), Fraction.fromInteger( b ), Fraction.ZERO, c );
+      return new Challenge( x,
+        new Fraction( a, d ).reduce(), Fraction.fromInteger( b ),
+        Fraction.ZERO, c,
+        debugDescription );
     },
 
     /**
@@ -107,18 +111,22 @@ define( function( require ) {
       var d = this.nextIntInRange( D_RANGE );
       var c = new Fraction( ( a * x ) + b, d ).reduce();
 
-      phet.log && phet.log(
-        'ChallengeGenerator3, type 2, (a/d)x + (b/d) = c, ' +
-        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c={{c}}', {
+      // derivation that corresponds to design doc
+      var debugDescription =
+        'level 3, type 2, (a/d)x + (b/d) = c, ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c=(ax+b)/d={{c}}', {
           x: x,
           a: a,
           b: b,
           c: c,
           d: d
-        } ) );
+        } );
 
       // (a/d)x + (b/d) = 0x + c
-      return new Challenge( x, new Fraction( a, d ).reduce(), new Fraction( b, d ).reduce(), Fraction.ZERO, c );
+      return new Challenge( x,
+        new Fraction( a, d ).reduce(), new Fraction( b, d ).reduce(),
+        Fraction.ZERO, c,
+        debugDescription );
     }
   } );
 } );

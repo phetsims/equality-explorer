@@ -60,20 +60,22 @@ define( function( require ) {
       }
       var n = ( ( a - m ) * x ) + b;
 
-      phet.log && phet.log(
+      // derivation that corresponds to design doc
+      var debugDescription =
         'ChallengeGenerator4, ax + b = mx + n, ' +
-        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} m={{m}} n={{n}}', {
+        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} m={{m}} n=(a–m)x+b={{n}}', {
           x: x,
           a: a,
           b: b,
           m: m,
           n: n
-        } ) );
+        } );
 
       // ax + b = mx + n
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.fromInteger( b ),
-        Fraction.fromInteger( m ), Fraction.fromInteger( n ) );
+        Fraction.fromInteger( m ), Fraction.fromInteger( n ),
+        debugDescription );
     }
   } );
 } );

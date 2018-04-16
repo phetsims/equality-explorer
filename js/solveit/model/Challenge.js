@@ -28,9 +28,10 @@ define( function( require ) {
    * @param {Fraction} b
    * @param {Fraction} m
    * @param {Fraction} n
+   * @param {string} debugDescription - debugging description
    * @constructor
    */
-  function Challenge( x, a, b, m, n ) {
+  function Challenge( x, a, b, m, n, debugDescription ) {
 
     assert && assert( typeof x === 'number', 'invalid x: ' + x );
     assert && assert( a instanceof Fraction && a.isReduced(), 'invalid a: ' + a );
@@ -44,6 +45,7 @@ define( function( require ) {
     this.leftConstantTerm = new ConstantTerm( { constantValue: b } );
     this.rightVariableTerm = new VariableTerm( this.variable, { coefficient: m } );
     this.rightConstantTerm = new ConstantTerm( { constantValue: n } );
+    this.debugDescription = debugDescription;
 
     phet.log && phet.log( 'Challenge: ' + this.toString() );
   }
@@ -57,7 +59,7 @@ define( function( require ) {
      * @returns {string}
      */
     toString: function() {
-      return '' +
+      return '' + this.debugDescription + ', ' +
              this.leftVariableTerm.coefficient + ' ' + xString + ' + ' +
              this.leftConstantTerm.constantValue +
              ' = ' +

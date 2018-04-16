@@ -54,19 +54,21 @@ define( function( require ) {
       var b = this.nextIntInRange( B_RANGE );
       var c = ( a * x ) + b;
 
-      phet.log && phet.log(
-        'ChallengeGenerator2, ax + b = c, ' +
-        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c={{c}}', {
+      // derivation that corresponds to design doc
+      var debugDescription =
+        'level 2, ax + b = c, ' +
+        StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} c=ax+b={{c}}', {
           x: x,
           a: a,
           b: b,
           c: c
-        } ) );
+        } );
 
       // ax + b = 0x + c
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.fromInteger( b ),
-        Fraction.ZERO, Fraction.fromInteger( c ) );
+        Fraction.ZERO, Fraction.fromInteger( c ),
+        debugDescription );
     }
   } );
 } );
