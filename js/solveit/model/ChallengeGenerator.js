@@ -74,7 +74,7 @@ define( function( require ) {
     nextIntInRange: function( range, previousValue ) {
       previousValue = previousValue || 0;
       var value = 0;
-      while ( value === 0 && value === previousValue ) {
+      while ( value === 0 || value === previousValue ) {
         value = this.random.nextIntBetween( range.min, range.max );
       }
       return value;
