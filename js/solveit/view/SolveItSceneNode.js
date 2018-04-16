@@ -27,7 +27,6 @@ define( function( require ) {
   var RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
   var RewardDialog = require( 'VEGAS/RewardDialog' );
   var RichText = require( 'SCENERY/nodes/RichText' );
-  var ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
   var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -70,14 +69,12 @@ define( function( require ) {
       maxWidth: 650 // determined empirically
     } );
 
-    var scoreDisplay = new ScoreDisplayNumberAndStar( scene.scoreProperty );
-
     var backButtonListener = function() {
       sceneProperty.value = null; // back to the SettingsNode, where no scene is selected
     };
 
     // Bar across the top of the screen
-    var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode, scoreDisplay, {
+    var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode, scene.scoreProperty, {
       spacing: 20,
       barFill: 'rgb( 252, 150, 152 )',
       backButtonListener: backButtonListener
