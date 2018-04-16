@@ -113,11 +113,6 @@ define( function( require ) {
         resetAllButton
       ]
     } );
-
-    // When no scene is selected, make the Settings UI visible
-    model.sceneProperty.link( function( scene ) {
-      self.visible = ( scene === null );
-    } );
   }
 
   equalityExplorer.register( 'SettingsNode', SettingsNode );
