@@ -43,7 +43,7 @@ define( function( require ) {
      * Let a be a random integer between [-10,10], a !== 0
      * Let b be a random integer between [-10,10], b !== 0
      * Let m be a random integer between [-10,10], m !== 0, m !== a
-     * Let n = (a – m)x + b
+     * Let n = (a – m)x + b, n == 0 is OK
      *
      * @returns {Challenge}
      * @protected

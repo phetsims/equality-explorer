@@ -59,7 +59,7 @@ define( function( require ) {
      * Let a be a random integer between [-10,10], a !== 0
      * Let b be a random integer between [-10,10], b !== 0
      * Let d be a random integer between [-10, 10], d !== 0
-     * Let c = (a/d)x + b
+     * Let c = (a/d)x + b, c == 0 is OK
      *
      * @returns {Challenge}
      * @private
@@ -103,7 +103,7 @@ define( function( require ) {
      * Let a be a random integer between [-10,10], a !== 0
      * Let b be a random integer between [-10,10], b !== 0
      * Let d be a random integer between [-10, 10], d !== 0
-     * Let c = ( ax + b )/d
+     * Let c = ( ax + b )/d, c == 0 is OK
      *
      * @returns @returns {Challenge}
      * @private

@@ -80,7 +80,7 @@ define( function( require ) {
      * Form: ax = c
      * Let x be a random integer between [-40,40], x !== 0
      * Let a be a random integer between [-10, 10], a !== 0
-     * Let c = a*x
+     * Let c = a*x, c !== 0
      *
      * @returns {Challenge}
      * @private
@@ -94,6 +94,7 @@ define( function( require ) {
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
       assert && assert( a !== 0, 'a is 0' );
+      assert && assert( c !== 0, 'c is 0' );
 
       var debugOrigin = 'level 1, type 1, ax = c';
       var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, c=a*x={{c}}', {
@@ -115,7 +116,7 @@ define( function( require ) {
      * Form: x + b = c
      * Let x be a random integer between [-40,40], x !== 0
      * Let b be a random integer between [-10, 10], b !== 0
-     * Let c = x + b
+     * Let c = x + b, c == 0 is OK
      *
      * @returns {Challenge}
      * @private
@@ -151,7 +152,7 @@ define( function( require ) {
      * Form: x/d = c
      * Let c be a random integer between [-10,10], c !== 0
      * Let d be a random integer between [-10, 10], d !== 0
-     * Let x = c * d
+     * Let x = c * d, x !== 0
      *
      * @returns {Challenge}
      * @private

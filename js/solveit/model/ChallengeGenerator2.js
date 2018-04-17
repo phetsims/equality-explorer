@@ -41,7 +41,7 @@ define( function( require ) {
      * Let x be a random integer between [-40,40], x !== 0
      * Let a be a random integer between [-10,10], a !== 0
      * Let b be a random integer between [-10,10], b !== 0
-     * Let c = ax + b
+     * Let c = ax + b, c == 0 is OK
      *
      * @returns {Challenge}
      * @protected
