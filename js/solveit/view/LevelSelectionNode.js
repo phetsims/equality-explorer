@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Dialog = require( 'SUN/Dialog' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerLevelSelectionButton = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerLevelSelectionButton' );
@@ -116,7 +117,12 @@ define( function( require ) {
       var testButton = new RectangularPushButton( {
         content: new Text( 'test challenge generators', { fill: 'white', font: new PhetFont( 20 ) } ),
         baseColor: 'red',
-        listener: model.testChallengeGenerators.bind( model ),
+        listener: function() {
+          model.testChallengeGenerators();
+          var messageNode = new RichText( 'Test completed.<br>See results in browser console.' );
+          var dialog = new Dialog( messageNode );
+          dialog.show();
+        },
         centerX: layoutBounds.centerX,
         bottom: layoutBounds.bottom - 20
       } );
