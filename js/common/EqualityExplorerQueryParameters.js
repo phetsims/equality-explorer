@@ -69,7 +69,8 @@ define( function( require ) {
       defaultValue: 1E9
     },
 
-    // Shows answers to challenges in the 'Solve It!' screen
+    // Shows answers to challenges in the 'Solve It!' screen.
+    // Also adds a 'test challenge generators' button to the level-selection UI.
     // For internal use only, not public facing.
     showAnswers: { type: 'flag' }
   } );
