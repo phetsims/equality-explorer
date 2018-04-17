@@ -62,7 +62,7 @@ define( function( require ) {
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 4, ax + b = mx + n';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} m={{m}} n=(a–m)x+b={{n}}', {
+      var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, b={{b}}, m={{m}}, n=(a–m)x+b={{n}}', {
         x: x,
         a: a,
         b: b,

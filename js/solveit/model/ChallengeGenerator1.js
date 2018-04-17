@@ -92,7 +92,7 @@ define( function( require ) {
       var c = a * x;
 
       var debugOrigin = 'level 1, type 1, ax = c';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}} a={{a}} c=a*x={{c}}', {
+      var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, c=a*x={{c}}', {
         x: x,
         a: a,
         c: c
@@ -124,7 +124,7 @@ define( function( require ) {
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 1, type 2, x + b = c';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}} b={{b}} c=x+b={{c}}', {
+      var debugDerivation = StringUtils.fillIn( 'x={{x}}, b={{b}}, c=x+b={{c}}', {
         x: x,
         b: b,
         c: c
@@ -160,7 +160,7 @@ define( function( require ) {
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 1, type 3, x/d = c';
-      var debugDerivation = StringUtils.fillIn( 'c={{c}} d={{d}} x=c*d={{x}} ', {
+      var debugDerivation = StringUtils.fillIn( 'c={{c}}, d={{d}}, x=c*d={{x}} ', {
         x: x,
         c: c,
         d: d
