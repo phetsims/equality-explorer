@@ -12,6 +12,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerLevelSelectionButton = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerLevelSelectionButton' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -19,6 +20,7 @@ define( function( require ) {
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
@@ -100,16 +102,28 @@ define( function( require ) {
     resetAllButton.right = layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN;
     resetAllButton.bottom = layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN;
 
-    Node.call( this, {
-      children: [
-        solveForXNode,
-        chooseYourLevelNode,
-        infoButton,
-        levelSelectionButtonsBox,
-        soundButton,
-        resetAllButton
-      ]
-    } );
+    var children = [
+      solveForXNode,
+      chooseYourLevelNode,
+      infoButton,
+      levelSelectionButtonsBox,
+      soundButton,
+      resetAllButton
+    ];
+
+    // Press this button to test challenge generators. See output in console.
+    if ( EqualityExplorerQueryParameters.showAnswers ) {
+      var testButton = new RectangularPushButton( {
+        content: new Text( 'test challenge generators', { fill: 'white', font: new PhetFont( 20 ) } ),
+        baseColor: 'red',
+        listener: model.testChallengeGenerators.bind( model ),
+        centerX: layoutBounds.centerX,
+        bottom: layoutBounds.bottom - 20
+      } );
+      children.push( testButton );
+    }
+
+    Node.call( this, { children: children } );
   }
 
   equalityExplorer.register( 'LevelSelectionNode', LevelSelectionNode );

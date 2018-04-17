@@ -78,6 +78,24 @@ define( function( require ) {
 
       this.sceneProperty.reset();
       this.soundEnabledProperty.reset();
+    },
+
+    /**
+     * Tests challenge generators by generating a large number of challenges.
+     * Each challenge is printed to the browser console.
+     * @public (debug)
+     */
+    testChallengeGenerators: function() {
+      var testsPerLevel = 100;
+      for ( var i = 1; i < this.challengeGenerators.length; i++ ) {
+        console.log( '>>> Testing level ' + ( i + 1 ) );
+        var challengeGenerator = this.challengeGenerators[ i ];
+        for ( var j = 0; j < testsPerLevel; j++ ) {
+          var challenge = challengeGenerator.nextChallenge();
+          console.log( j + ': ' + challenge.toString() );
+        }
+      }
+      console.log( '>>> Tests passed for all levels' );
     }
   } );
 } );

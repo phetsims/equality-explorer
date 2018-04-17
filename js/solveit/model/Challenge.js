@@ -50,12 +50,6 @@ define( function( require ) {
     // @public (read-only)
     this.debugOrigin = debugOrigin;
     this.debugDerivation = debugDerivation;
-    this.debugEquation = '' +
-                         this.leftVariableTerm.coefficient + ' ' + xString + ' + ' +
-                         this.leftConstantTerm.constantValue +
-                         ' = ' +
-                         this.rightVariableTerm.coefficient + ' ' + xString + ' + ' +
-                         this.rightConstantTerm.constantValue;
   }
 
   equalityExplorer.register( 'Challenge', Challenge );
@@ -64,7 +58,17 @@ define( function( require ) {
 
     // @public for debugging, do not rely on format
     toRichText: function() {
-      return this.debugOrigin + '<br>' + this.debugDerivation + '<br>' + this.debugEquation;
+      return this.debugOrigin + '<br>' + this.debugDerivation + '<br>' + this.toString();
+    },
+
+    // @public for debugging only, do not reply on format
+    toString: function() {
+      return '' +
+             this.leftVariableTerm.coefficient + ' ' + xString + ' + ' +
+             this.leftConstantTerm.constantValue +
+             ' = ' +
+             this.rightVariableTerm.coefficient + ' ' + xString + ' + ' +
+             this.rightConstantTerm.constantValue;
     }
   } );
 } ); 
