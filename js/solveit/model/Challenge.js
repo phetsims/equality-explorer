@@ -1,6 +1,5 @@
 // Copyright 2018, University of Colorado Boulder
 
-//TODO generalize this to Equation and use for EquationNode?
 /**
  * A challenge, in the form of an equation involving 1 variable.
  *
@@ -10,15 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
-
-  // strings
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   /**
    * Form: ax + b = mx + n
@@ -42,10 +36,10 @@ define( function( require ) {
 
     // @public (read-only)
     this.x = x;
-    this.leftVariableTerm = new VariableTerm( this.variable, { coefficient: a } );
-    this.leftConstantTerm = new ConstantTerm( { constantValue: b } );
-    this.rightVariableTerm = new VariableTerm( this.variable, { coefficient: m } );
-    this.rightConstantTerm = new ConstantTerm( { constantValue: n } );
+    this.a = a;
+    this.b = b;
+    this.m = m;
+    this.n = n;
 
     // @public (read-only)
     this.debugOrigin = debugOrigin;
@@ -56,19 +50,20 @@ define( function( require ) {
 
   return inherit( Object, Challenge, {
 
-    // @public for debugging, do not rely on format
+    // @public (debug) do not rely on format!
     toRichText: function() {
       return this.debugOrigin + '<br>' + this.debugDerivation + '<br>' + this.toString();
     },
 
-    // @public for debugging only, do not reply on format
+    // @public (debug) do not rely on format!
     toString: function() {
-      return 'x=' + this.x + ', ' +
-             this.leftVariableTerm.coefficient + ' ' + xString + ' + ' +
-             this.leftConstantTerm.constantValue +
-             ' = ' +
-             this.rightVariableTerm.coefficient + ' ' + xString + ' + ' +
-             this.rightConstantTerm.constantValue;
+      return StringUtils.fillIn( 'x={{x}}, {{a}} x + {{b}} = {{m}} x + {{n}}', {
+        x: this.x,
+        a: this.a,
+        b: this.b,
+        m: this.m,
+        n: this.n
+      } );
     }
   } );
 } ); 
