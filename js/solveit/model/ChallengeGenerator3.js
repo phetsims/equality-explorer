@@ -72,6 +72,11 @@ define( function( require ) {
       var d = this.nextIntInRange( D_RANGE );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
+      assert && assert( x !== 0 );
+      assert && assert( a !== 0 );
+      assert && assert( b !== 0 );
+      assert && assert( d !== 0 );
+
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 1, (a/d)x + b = c';
       var debugDerivation = StringUtils.fillIn( 'x={{x}} a={{a}} b={{b}} d={{d}} c=(a/d)x+b={{c}}', {
@@ -109,6 +114,11 @@ define( function( require ) {
       var b = this.nextIntInRange( B_RANGE );
       var d = this.nextIntInRange( D_RANGE );
       var c = new Fraction( ( a * x ) + b, d ).reduce();
+
+      assert && assert( x !== 0 );
+      assert && assert( a !== 0 );
+      assert && assert( b !== 0 );
+      assert && assert( d !== 0 );
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 2, (a/d)x + (b/d) = c';

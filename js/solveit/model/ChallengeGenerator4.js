@@ -60,6 +60,12 @@ define( function( require ) {
       }
       var n = ( ( a - m ) * x ) + b;
 
+      assert && assert( x !== 0 );
+      assert && assert( a !== 0 );
+      assert && assert( b !== 0 );
+      assert && assert( m !== 0 );
+      assert && assert( m !== a );
+
       // derivation that corresponds to design doc
       var debugOrigin = 'level 4, ax + b = mx + n';
       var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, b={{b}}, m={{m}}, n=(a–m)x+b={{n}}', {

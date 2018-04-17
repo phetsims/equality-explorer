@@ -40,7 +40,7 @@ define( function( require ) {
      * Form: ax + b = c
      * Let x be a random integer between [-40,40], x !== 0
      * Let a be a random integer between [-10,10], a !== 0
-     * Let b be a random integer between [-10,10], c !== 0
+     * Let b be a random integer between [-10,10], b !== 0
      * Let c = ax + b
      *
      * @returns {Challenge}
@@ -53,6 +53,10 @@ define( function( require ) {
       var a = this.nextIntInRange( A_RANGE );
       var b = this.nextIntInRange( B_RANGE );
       var c = ( a * x ) + b;
+
+      assert && assert( x !== 0 );
+      assert && assert( a !== 0 );
+      assert && assert( b !== 0 );
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 2, ax + b = c';

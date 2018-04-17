@@ -122,6 +122,9 @@ define( function( require ) {
       var b = this.nextIntInRange( B_RANGE );
       var c = x + b;
 
+      assert && assert( x !== 0 );
+      assert && assert( b !== 0 );
+
       // derivation that corresponds to design doc
       var debugOrigin = 'level 1, type 2, x + b = c';
       var debugDerivation = StringUtils.fillIn( 'x={{x}}, b={{b}}, c=x+b={{c}}', {

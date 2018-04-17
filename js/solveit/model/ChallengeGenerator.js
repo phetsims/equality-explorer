@@ -29,7 +29,7 @@ define( function( require ) {
     // challenges.
     this.xPrevious = 0;
 
-    // @protected {Random}
+    // @protected (read-only) {Random}
     this.random = phet.joist.random;
   }
 
@@ -77,6 +77,8 @@ define( function( require ) {
       while ( value === 0 || value === previousValue ) {
         value = this.random.nextIntBetween( range.min, range.max );
       }
+      assert && assert( range.contains( value ) );
+      assert && assert( value !== 0 );
       return value;
     },
 
@@ -87,6 +89,9 @@ define( function( require ) {
      */
     nextXInRange: function( range ) {
       var x = this.nextIntInRange( range, this.xPrevious );
+      assert && assert( range.contains( x ) );
+      assert && assert( x !== 0 );
+      assert && assert( x !== this.xPrevious );
       this.xPrevious = x;
       return x;
     }
