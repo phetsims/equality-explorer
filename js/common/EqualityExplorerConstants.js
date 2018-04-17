@@ -18,6 +18,17 @@ define( function( require ) {
 
   var EqualityExplorerConstants = {
 
+    //TODO fill in credits, https://github.com/phetsims/equality-explorer/issues/2
+    // credits, applied to both equality-explorer and equality-explorer-basics
+    CREDITS: {
+      leadDesign: 'Amanda McGarry',
+      softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
+      team: 'Diana Berenice L\u00f3pez Tavares, Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
+      qualityAssurance: '',
+      graphicArts: 'Mariah Hermsmeyer, Cheryl McCutchan',
+      thanks: ''
+    },
+
     // ScreenView
     SCREEN_VIEW_LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     SCREEN_VIEW_X_MARGIN: 20,

@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var BasicsScreen = require( 'EQUALITY_EXPLORER/basics/BasicsScreen' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var NumbersScreen = require( 'EQUALITY_EXPLORER/numbers/NumbersScreen' );
   var OperationsScreen = require( 'EQUALITY_EXPLORER/operations/OperationsScreen' );
@@ -21,18 +22,6 @@ define( function( require ) {
 
   // strings
   var equalityExplorerTitleString = require( 'string!EQUALITY_EXPLORER/equality-explorer.title' );
-
-  var options = {
-    credits: {
-      //TODO fill in credits, https://github.com/phetsims/equality-explorer/issues/2
-      leadDesign: 'Amanda McGarry',
-      softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
-      team: 'Diana Berenice L\u00f3pez Tavares, Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
-      qualityAssurance: '',
-      graphicArts: 'Mariah Hermsmeyer, Cheryl McCutchan',
-      thanks: ''
-    }
-  };
 
   SimLauncher.launch( function() {
 
@@ -50,7 +39,9 @@ define( function( require ) {
       screens.push( new XYScreen() );
     }
 
-    var sim = new Sim( equalityExplorerTitleString, screens, options );
+    var sim = new Sim( equalityExplorerTitleString, screens, {
+      credits: EqualityExplorerConstants.CREDITS
+    } );
     sim.start();
   } );
 } );
