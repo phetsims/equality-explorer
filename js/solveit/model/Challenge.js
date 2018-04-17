@@ -41,7 +41,7 @@ define( function( require ) {
     assert && assert( n instanceof Fraction && n.isReduced(), 'invalid n: ' + n );
 
     // @public (read-only)
-    this.variable = new Variable( xString, { value: x } );
+    this.x = x;
     this.leftVariableTerm = new VariableTerm( this.variable, { coefficient: a } );
     this.leftConstantTerm = new ConstantTerm( { constantValue: b } );
     this.rightVariableTerm = new VariableTerm( this.variable, { coefficient: m } );
@@ -63,7 +63,7 @@ define( function( require ) {
 
     // @public for debugging only, do not reply on format
     toString: function() {
-      return '' +
+      return 'x=' + this.x + ', ' +
              this.leftVariableTerm.coefficient + ' ' + xString + ' + ' +
              this.leftConstantTerm.constantValue +
              ' = ' +
