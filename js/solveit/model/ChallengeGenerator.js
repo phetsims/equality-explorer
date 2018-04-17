@@ -66,15 +66,15 @@ define( function( require ) {
     },
 
     /**
-     * Gets the next integer in a range, excluding zero and an optional previous value.
+     * Gets the next integer in a range, excluding zero and one additional (optional) value.
      * @param {Range} range
-     * @param {number} [previousValue]
+     * @param {number} [excludedValue]
      * @returns {number}
      */
-    nextIntInRange: function( range, previousValue ) {
-      previousValue = previousValue || 0;
+    nextIntInRange: function( range, excludedValue ) {
+      excludedValue = excludedValue || 0;
       var value = 0;
-      while ( value === 0 || value === previousValue ) {
+      while ( value === 0 || value === excludedValue ) {
         value = this.random.nextIntBetween( range.min, range.max );
       }
       assert && assert( range.contains( value ), 'value is out of range: ' + value );
