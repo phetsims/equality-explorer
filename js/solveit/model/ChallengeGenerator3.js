@@ -72,6 +72,7 @@ define( function( require ) {
       var d = this.nextIntInRange( D_RANGE );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
+      // Verify that computations meeting design requirements. No need for assertion messages here.
       assert && assert( x !== 0 );
       assert && assert( a !== 0 );
       assert && assert( b !== 0 );
@@ -115,6 +116,7 @@ define( function( require ) {
       var d = this.nextIntInRange( D_RANGE );
       var c = new Fraction( ( a * x ) + b, d ).reduce();
 
+      // Verify that computations meeting design requirements. No need for assertion messages here.
       assert && assert( x !== 0 );
       assert && assert( a !== 0 );
       assert && assert( b !== 0 );

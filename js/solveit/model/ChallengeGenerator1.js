@@ -91,6 +91,10 @@ define( function( require ) {
       var a = this.nextIntInRange( A_RANGE );
       var c = a * x;
 
+      // Verify that computations meeting design requirements. No need for assertion messages here.
+      assert && assert( x !== 0 );
+      assert && assert( a !== 0 );
+
       var debugOrigin = 'level 1, type 1, ax = c';
       var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, c=a*x={{c}}', {
         x: x,
@@ -122,6 +126,7 @@ define( function( require ) {
       var b = this.nextIntInRange( B_RANGE );
       var c = x + b;
 
+      // Verify that computations meeting design requirements. No need for assertion messages here.
       assert && assert( x !== 0 );
       assert && assert( b !== 0 );
 
@@ -159,6 +164,11 @@ define( function( require ) {
         var d = this.nextIntInRange( D_RANGE );
         x = c * d;
       }
+
+      // Verify that computations meeting design requirements. No need for assertion messages here.
+      assert && assert( c !== 0 );
+      assert && assert( d !== 0 );
+      assert && assert( x !== this.xPrevious );
       this.xPrevious = x;
 
       // derivation that corresponds to design doc
