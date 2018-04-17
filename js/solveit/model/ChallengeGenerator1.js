@@ -91,9 +91,9 @@ define( function( require ) {
       var a = this.nextIntInRange( A_RANGE );
       var c = a * x;
 
-      // Verify that computations meeting design requirements. No need for assertion messages here.
-      assert && assert( x !== 0 );
-      assert && assert( a !== 0 );
+      // Verify that computations meeting design requirements.
+      assert && assert( x !== 0, 'x is 0' );
+      assert && assert( a !== 0, 'a is 0' );
 
       var debugOrigin = 'level 1, type 1, ax = c';
       var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, c=a*x={{c}}', {
@@ -126,9 +126,9 @@ define( function( require ) {
       var b = this.nextIntInRange( B_RANGE );
       var c = x + b;
 
-      // Verify that computations meeting design requirements. No need for assertion messages here.
-      assert && assert( x !== 0 );
-      assert && assert( b !== 0 );
+      // Verify that computations meeting design requirements.
+      assert && assert( x !== 0, 'x is 0' );
+      assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 1, type 2, x + b = c';
@@ -165,10 +165,10 @@ define( function( require ) {
         x = c * d;
       }
 
-      // Verify that computations meeting design requirements. No need for assertion messages here.
-      assert && assert( c !== 0 );
-      assert && assert( d !== 0 );
-      assert && assert( x !== this.xPrevious );
+      // Verify that computations meeting design requirements.
+      assert && assert( c !== 0, 'c is 0' );
+      assert && assert( d !== 0, 'd is 0' );
+      assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
       this.xPrevious = x;
 
       // derivation that corresponds to design doc

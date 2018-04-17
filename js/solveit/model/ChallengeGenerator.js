@@ -77,8 +77,8 @@ define( function( require ) {
       while ( value === 0 || value === previousValue ) {
         value = this.random.nextIntBetween( range.min, range.max );
       }
-      assert && assert( range.contains( value ) );
-      assert && assert( value !== 0 );
+      assert && assert( range.contains( value ), 'value is out of range: ' + value );
+      assert && assert( value !== 0, 'value is 0' );
       return value;
     },
 
@@ -89,9 +89,9 @@ define( function( require ) {
      */
     nextXInRange: function( range ) {
       var x = this.nextIntInRange( range, this.xPrevious );
-      assert && assert( range.contains( x ) );
-      assert && assert( x !== 0 );
-      assert && assert( x !== this.xPrevious );
+      assert && assert( range.contains( x ), 'x is out of range: ' + x );
+      assert && assert( x !== 0, 'x is 0' );
+      assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
       this.xPrevious = x;
       return x;
     }

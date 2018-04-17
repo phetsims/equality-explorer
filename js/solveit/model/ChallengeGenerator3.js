@@ -72,11 +72,11 @@ define( function( require ) {
       var d = this.nextIntInRange( D_RANGE );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
-      // Verify that computations meeting design requirements. No need for assertion messages here.
-      assert && assert( x !== 0 );
-      assert && assert( a !== 0 );
-      assert && assert( b !== 0 );
-      assert && assert( d !== 0 );
+      // Verify that computations meeting design requirements.
+      assert && assert( x !== 0, 'x is 0' );
+      assert && assert( a !== 0, 'a is 0' );
+      assert && assert( b !== 0, 'b is 0' );
+      assert && assert( d !== 0, 'd is 0' );
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 1, (a/d)x + b = c';
@@ -116,11 +116,11 @@ define( function( require ) {
       var d = this.nextIntInRange( D_RANGE );
       var c = new Fraction( ( a * x ) + b, d ).reduce();
 
-      // Verify that computations meeting design requirements. No need for assertion messages here.
-      assert && assert( x !== 0 );
-      assert && assert( a !== 0 );
-      assert && assert( b !== 0 );
-      assert && assert( d !== 0 );
+      // Verify that computations meeting design requirements.
+      assert && assert( x !== 0, 'x is 0' );
+      assert && assert( a !== 0, 'a is 0' );
+      assert && assert( b !== 0, 'b is 0' );
+      assert && assert( d !== 0, 'd is 0' );
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 2, (a/d)x + (b/d) = c';

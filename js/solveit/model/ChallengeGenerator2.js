@@ -54,10 +54,10 @@ define( function( require ) {
       var b = this.nextIntInRange( B_RANGE );
       var c = ( a * x ) + b;
 
-      // Verify that computations meeting design requirements. No need for assertion messages here.
-      assert && assert( x !== 0 );
-      assert && assert( a !== 0 );
-      assert && assert( b !== 0 );
+      // Verify that computations meeting design requirements.
+      assert && assert( x !== 0, 'x is 0' );
+      assert && assert( a !== 0, 'a is 0' );
+      assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 2, ax + b = c';
