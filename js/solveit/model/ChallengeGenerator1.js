@@ -88,7 +88,7 @@ define( function( require ) {
     nextType1: function() {
 
       var x = this.nextXInRange( X_RANGE );
-      var a = this.nextIntInRange( A_RANGE );
+      var a = this.nextIntInRange( A_RANGE, [ 0 ] );
       var c = a * x;
 
       // Verify that computations meeting design requirements.
@@ -123,7 +123,7 @@ define( function( require ) {
     nextType2: function() {
 
       var x = this.nextXInRange( X_RANGE );
-      var b = this.nextIntInRange( B_RANGE );
+      var b = this.nextIntInRange( B_RANGE, [ 0 ] );
       var c = x + b;
 
       // Verify that computations meeting design requirements.
@@ -160,14 +160,15 @@ define( function( require ) {
 
       var x = this.xPrevious;
       while ( x === this.xPrevious ) {
-        var c = this.nextIntInRange( C_RANGE );
-        var d = this.nextIntInRange( D_RANGE );
+        var c = this.nextIntInRange( C_RANGE, [ 0 ] );
+        var d = this.nextIntInRange( D_RANGE, [ 0 ] );
         x = c * d;
       }
 
       // Verify that computations meeting design requirements.
       assert && assert( c !== 0, 'c is 0' );
       assert && assert( d !== 0, 'd is 0' );
+      assert && assert( x !== 0, 'x is 0' );
       assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
       this.xPrevious = x;
 

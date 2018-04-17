@@ -67,9 +67,9 @@ define( function( require ) {
     nextType1: function() {
 
       var x = this.nextXInRange( X_RANGE );
-      var a = this.nextIntInRange( A_RANGE );
-      var b = this.nextIntInRange( B_RANGE );
-      var d = this.nextIntInRange( D_RANGE );
+      var a = this.nextIntInRange( A_RANGE, [ 0 ] );
+      var b = this.nextIntInRange( B_RANGE, [ 0 ] );
+      var d = this.nextIntInRange( D_RANGE, [ 0 ] );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
       // Verify that computations meeting design requirements.
@@ -111,9 +111,9 @@ define( function( require ) {
     nextType2: function() {
 
       var x = this.nextXInRange( X_RANGE );
-      var a = this.nextIntInRange( A_RANGE );
-      var b = this.nextIntInRange( B_RANGE );
-      var d = this.nextIntInRange( D_RANGE );
+      var a = this.nextIntInRange( A_RANGE, [ 0 ] );
+      var b = this.nextIntInRange( B_RANGE, [ 0 ] );
+      var d = this.nextIntInRange( D_RANGE, [ 0 ] );
       var c = new Fraction( ( a * x ) + b, d ).reduce();
 
       // Verify that computations meeting design requirements.

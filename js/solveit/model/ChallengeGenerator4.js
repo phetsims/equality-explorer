@@ -52,12 +52,9 @@ define( function( require ) {
     nextChallengeProtected: function() {
 
       var x = this.nextXInRange( X_RANGE );
-      var a = this.nextIntInRange( A_RANGE );
-      var b = this.nextIntInRange( B_RANGE );
-      var m = a;
-      while ( m === a ) {
-        m = this.nextIntInRange( M_RANGE );
-      }
+      var a = this.nextIntInRange( A_RANGE, [ 0 ] );
+      var b = this.nextIntInRange( B_RANGE, [ 0 ] );
+      var m = this.nextIntInRange( M_RANGE, [ 0, a ] );
       var n = ( ( a - m ) * x ) + b;
 
       // Verify that computations meeting design requirements.

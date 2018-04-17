@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @constructor
@@ -66,19 +67,18 @@ define( function( require ) {
     },
 
     /**
-     * Gets the next integer in a range, excluding zero and one additional (optional) value.
+     * Gets the next integer in a range, with optional values to be excluded.
      * @param {Range} range
-     * @param {number} [excludedValue]
+     * @param {number[]} [excludedValues]
      * @returns {number}
      */
-    nextIntInRange: function( range, excludedValue ) {
-      excludedValue = excludedValue || 0;
+    nextIntInRange: function( range, excludedValues ) {
+      excludedValues = excludedValues || [];
+      assert && assert( this.rangeToArray( range, excludedValues ).length > 0, 'set of values is empty' );
       var value = 0;
-      while ( value === 0 || value === excludedValue ) {
+      while ( _.includes( excludedValues, value ) ) {
         value = this.random.nextIntBetween( range.min, range.max );
       }
-      assert && assert( range.contains( value ), 'value is out of range: ' + value );
-      assert && assert( value !== 0, 'value is 0' );
       return value;
     },
 
@@ -88,12 +88,33 @@ define( function( require ) {
      * @returns {number}
      */
     nextXInRange: function( range ) {
-      var x = this.nextIntInRange( range, this.xPrevious );
+      var x = this.nextIntInRange( range, [ 0, this.xPrevious ] );
       assert && assert( range.contains( x ), 'x is out of range: ' + x );
       assert && assert( x !== 0, 'x is 0' );
       assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
       this.xPrevious = x;
       return x;
+    },
+
+    /**
+     * Converts a range to an array of integer values, with some values optionally excluded.
+     * @param {Range} range
+     * @param {number[]} excludedValues
+     * @returns {number[]}
+     */
+    rangeToArray: function( range, excludedValues ) {
+      assert && assert( Util.isInteger( range.min ), 'range.min must be an integer: ' + range.min );
+      assert && assert( Util.isInteger( range.max ), 'range.max must be an integer: ' + range.max );
+      excludedValues = excludedValues || [];
+
+      var values = []; // {number[]}
+      for ( var i = range.min; i <= range.max; i++ ) {
+        values.push( i );
+      }
+
+      return _.filter( values, function( value ) {
+        return !_.includes( excludedValues, value );
+      } );
     }
   } );
 } );
