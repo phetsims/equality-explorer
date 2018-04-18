@@ -81,8 +81,9 @@ define( function( require ) {
       backButtonListener: backButtonListener
     } );
 
+    //TODO replace this each time the challenge changes, use EquationNode.updateEnabled:false
     // Challenge equation
-    var challengePanel = new EquationPanel( scene.challengeLeftTermCreators, scene.challengeRightTermCreators, {
+    var challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, {
       contentWidth: 540, // determined empirically, based on design mockups
       stroke: null,
       fill: null,
