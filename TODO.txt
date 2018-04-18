@@ -1,7 +1,6 @@
 TODO items for equality-explorer
 
 Solve It! screen
-- make view create nodes for any terms that exist initially in the model
 - replace the challenge equation view each time the challenge changes (EquationNode.updateEnabled:false)
 - fix universal operation control, top/bottom not pickable?
 - observe the state of what's on the scale, determine when answer is correct, update score/faceNode/nextButton

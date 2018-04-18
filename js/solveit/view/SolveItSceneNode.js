@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var DebugChallengeNode = require( 'EQUALITY_EXPLORER/solveit/view/DebugChallengeNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
@@ -195,22 +196,12 @@ define( function( require ) {
       operationAnimationLayer
     ];
 
-    // @private {RichText|null} shows the answer for debugging/testing
-    this.answerNode = null;
+    // show debugging info related to the challenge
     if ( EqualityExplorerQueryParameters.showAnswers ) {
-
-      // workaround for https://github.com/phetsims/scenery/issues/769
-      this.answerNode = new RichText( '\u00A0', {
-        font: new PhetFont( 16 ),
+      children.push( new DebugChallengeNode( scene.challengeProperty, {
         left: snapshotsAccordionBox.left,
         top: snapshotsAccordionBox.bottom + 25
-      } );
-      children.push( this.answerNode );
-
-      // update the answer, unlink not needed.
-      scene.challengeProperty.link( function( challenge ) {
-        self.answerNode.text = challenge.toRichText();
-      } );
+      } ) );
     }
 
     assert && assert( !options.children, 'SolveItSceneNode sets children' );

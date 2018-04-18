@@ -59,9 +59,11 @@ define( function( require ) {
       termCreator.negativeLocation = Vector2.ZERO;
     } );
 
-    // @public
-    this.challengeProperty = new Property( this.challengeGenerator.nextChallenge(), {
-      valueType: Challenge
+    // @public (read-only) {Property.<Challenge|null>} the current challenge, set by nextChallenge
+    this.challengeProperty = new Property( null, {
+      isValidValue: function( value ) {
+        return ( value instanceof Challenge ) || ( value === null );
+      }
     } );
 
     //TODO observe what's on the scale and determine when it's of the form x = N.
@@ -77,6 +79,7 @@ define( function( require ) {
      */
     reset: function() {
       this.scoreProperty.reset();
+      this.challengeProperty.reset();
       OperationsScene.prototype.reset.call( this );
     },
 

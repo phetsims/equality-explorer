@@ -60,6 +60,13 @@ define( function( require ) {
 
       // Skip null (no scene selected), so that scene is shown during wipe transition
       if ( scene !== null ) {
+
+        // if the scene doesn't have an associated challenge, create one
+        if ( !scene.challengeProperty.value ) {
+          scene.nextChallenge();
+        }
+
+        // make the selected scene visible
         for ( var i = 0; i < self.sceneNodes.length; i++ ) {
           self.sceneNodes[ i ].visible = ( self.sceneNodes[ i ].scene === scene );
         }
