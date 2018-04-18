@@ -183,9 +183,9 @@ define( function( require ) {
       refreshButton,
       nextButton,
       universalOperationControl,
-      termsLayer,
-      operationAnimationLayer,
-      faceNode
+      termsLayer, // terms in from of all of the above
+      operationAnimationLayer, // operations in front of terms
+      faceNode // face in front of everything
     ];
 
     // show debugging info related to the challenge
