@@ -89,7 +89,7 @@ define( function( require ) {
 
       var testsPerLevel = 100;
 
-      for ( var i = 1; i < this.challengeGenerators.length; i++ ) {
+      for ( var i = 0; i < this.challengeGenerators.length; i++ ) {
 
         console.log( '>>> Testing level ' + ( i + 1 ) );
         var challengeGenerator = this.challengeGenerators[ i ];
