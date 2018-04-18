@@ -300,12 +300,17 @@ define( function( require ) {
     /**
      * Puts a term on the plate. If the term wasn't already managed, it become mananaged.
      * @param {Term} term
-     * @param {number} cell - cell in the associated plate's 2D grid
+     * @param {number} [cell] - cell in the plate's 2D grid, defaults to this.likeTermsCell when combining like terms
      * @public
      */
     putTermOnPlate: function( term, cell ) {
       assert && assert( !this.termsOnPlate.contains( term ), 'term already on plate: ' + term );
       phet.log && phet.log( 'TermCreator.putTermOnPlate: ' + term );
+
+      if ( cell === undefined && this.combineLikeTermsEnabled ) {
+        cell = this.likeTermsCell;
+      }
+      assert && assert( cell !== undefined, 'cell is undefined' );
 
       // ORDER IS VERY IMPORTANT HERE!
       if ( !this.isManagedTerm( term ) ) {
