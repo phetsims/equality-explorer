@@ -34,7 +34,12 @@ define( function( require ) {
     RichText.call( this, RICH_TEXT_SPACE, options );
 
     challengeProperty.link( function( challenge ) {
-      self.text = challenge ? challenge.toRichText() : RICH_TEXT_SPACE;
+      if ( challenge ) {
+        self.text = '<b>Challenge debug:</b><br>' + challenge.debugOrigin + '<br>' + challenge.debugDerivation;
+      }
+      else {
+        self.text = RICH_TEXT_SPACE;
+      }
     } );
   }
 

@@ -80,7 +80,7 @@ define( function( require ) {
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 1, (a/d)x + b = c';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, b={{b}}, d={{d}}, c=(a/d)x+b={{c}}', {
+      var debugDerivation = StringUtils.fillIn( 'x={{x}}, d={{d}}, a={{a}}, b={{b}}, c=(a/d)x+b={{c}}', {
         x: x,
         a: a,
         b: b,
@@ -126,7 +126,7 @@ define( function( require ) {
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 2, (a/d)x + (b/d) = c';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, b={{b}}, d={{d}}, c=(ax+b)/d={{c}}', {
+      var debugDerivation = StringUtils.fillIn( 'x={{x}}, d={{d}}, a={{a}}, b={{b}}, c=(ax+b)/d={{c}}', {
         x: x,
         a: a,
         b: b,

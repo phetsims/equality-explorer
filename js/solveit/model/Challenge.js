@@ -26,7 +26,7 @@ define( function( require ) {
    * @param {Fraction} m
    * @param {Fraction} n
    * @param {string} debugOrigin - identifies the level, type and form of the challenge
-   * @param {string} debugDerivation - identifies the derived values that were used to create the challenge
+   * @param {string} debugDerivation - identifies the values derived by the ChallengeGenerator
    * @constructor
    */
   function Challenge( x, a, b, m, n, debugOrigin, debugDerivation ) {
@@ -52,16 +52,6 @@ define( function( require ) {
   equalityExplorer.register( 'Challenge', Challenge );
 
   return inherit( Object, Challenge, {
-
-    /**
-     * When the 'showAnswers' query parameter is provided, this representation is displayed using RichText.
-     * Do not rely on the format of this string!
-     * @returns {string}
-     * @public (debug)
-     */
-    toRichText: function() {
-      return this.debugOrigin + '<br>' + this.debugDerivation + '<br>' + this.toString();
-    },
 
     // @public (debug) do not rely on format!
     toString: function() {
