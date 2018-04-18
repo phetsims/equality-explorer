@@ -58,7 +58,7 @@ define( function( require ) {
      * Let x be a random integer between [-40,40], x !== 0
      * Let a be a random integer between [-10,10], a !== 0
      * Let b be a random integer between [-10,10], b !== 0
-     * Let d be a random integer between [-10, 10], d !== [0, a]
+     * Let d be a random integer between [-10, 10], d !== [0, a, -a]
      * Let c = (a/d)x + b, c == 0 is OK
      *
      * @returns {Challenge}
@@ -69,7 +69,7 @@ define( function( require ) {
       var x = this.nextXInRange( X_RANGE );
       var a = this.nextIntInRange( A_RANGE, [ 0 ] );
       var b = this.nextIntInRange( B_RANGE, [ 0 ] );
-      var d = this.nextIntInRange( D_RANGE, [ 0, a ] );
+      var d = this.nextIntInRange( D_RANGE, [ 0, a, -a ] );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
       // Verify that computations meeting design requirements.
@@ -78,6 +78,7 @@ define( function( require ) {
       assert && assert( b !== 0, 'b is 0' );
       assert && assert( d !== 0, 'd is 0' );
       assert && assert( d !== a, 'd === a: ' + d );
+      assert && assert( d !== -a, 'd === -a: ' + d );
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 1, (a/d)x + b = c';
