@@ -109,31 +109,27 @@ define( function( require ) {
       validValues: this.operands
     } );
 
-    Scene.call( this, createTermCreators( this.xVariable ), createTermCreators( this.xVariable ), options );
+    // Variable and constant terms will combined in specific cells in the plate's grid.
+    var variableTermCreatorOptions = {
+      likeTermsCell: 0 // cell on the plate that all like terms will occupy
+    };
+    var constantTermCreatorOptions = {
+      likeTermsCell: 1 // cell on the plate that all like terms will occupy
+    };
+
+    // @protected
+    this.leftVariableTermCreator = new VariableTermCreator( this.xVariable, variableTermCreatorOptions );
+    this.leftConstantTermCreator = new ConstantTermCreator( constantTermCreatorOptions );
+    this.rightVariableTermCreator = new VariableTermCreator( this.xVariable, variableTermCreatorOptions );
+    this.rightConstantTermCreator = new ConstantTermCreator( constantTermCreatorOptions );
+
+    Scene.call( this,
+      [ this.leftVariableTermCreator, this.leftConstantTermCreator ],
+      [ this.rightVariableTermCreator, this.rightConstantTermCreator ],
+      options );
   }
 
   equalityExplorer.register( 'OperationsScene', OperationsScene );
-
-  /**
-   * Creates the term creators for this scene.
-   * @param {Variable} xVariable
-   * @returns {TermCreator[]}
-   */
-  function createTermCreators( xVariable ) {
-
-    return [
-
-      // x and -x
-      new VariableTermCreator( xVariable, {
-        likeTermsCell: 0 // cell on the plate that all like terms will occupy
-      } ),
-
-      // 1 and -1
-      new ConstantTermCreator( {
-        likeTermsCell: 1 // cell on the plate that all like terms will occupy
-      } )
-    ];
-  }
 
   return inherit( Scene, OperationsScene, {
 
@@ -220,7 +216,7 @@ define( function( require ) {
       // Notify listeners
       termCreator && termCreator.numberLimitExceededEmitter.emit();
 
-      return (!!termCreator);
+      return ( !!termCreator );
     }
   } );
 } );
