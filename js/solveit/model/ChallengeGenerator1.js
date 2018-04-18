@@ -79,7 +79,7 @@ define( function( require ) {
      *
      * Form: ax = c
      * Let x be a random integer between [-40,40], x !== 0
-     * Let a be a random integer between [-10, 10], a !== 0
+     * Let a be a random integer between [-10, 10], a !== [0, 1]
      * Let c = a*x, c !== 0
      *
      * @returns {Challenge}
@@ -88,11 +88,12 @@ define( function( require ) {
     nextType1: function() {
 
       var x = this.nextXInRange( X_RANGE );
-      var a = this.nextIntInRange( A_RANGE, [ 0 ] );
+      var a = this.nextIntInRange( A_RANGE, [ 0, 1, -1 ] );
       var c = a * x;
 
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
+      assert && assert( x !== 1, 'x is 1' );
       assert && assert( a !== 0, 'a is 0' );
       assert && assert( c !== 0, 'c is 0' );
 
@@ -151,7 +152,7 @@ define( function( require ) {
      *
      * Form: x/d = c
      * Let c be a random integer between [-10,10], c !== 0
-     * Let d be a random integer between [-10, 10], d !== 0
+     * Let d be a random integer between [-10, 10], d !== [0, 1]
      * Let x = c * d, x !== 0
      *
      * @returns {Challenge}
@@ -162,13 +163,14 @@ define( function( require ) {
       var x = this.xPrevious;
       while ( x === this.xPrevious ) {
         var c = this.nextIntInRange( C_RANGE, [ 0 ] );
-        var d = this.nextIntInRange( D_RANGE, [ 0 ] );
+        var d = this.nextIntInRange( D_RANGE, [ 0, 1 ] );
         x = c * d;
       }
 
       // Verify that computations meeting design requirements.
       assert && assert( c !== 0, 'c is 0' );
       assert && assert( d !== 0, 'd is 0' );
+      assert && assert( d !== 1, 'd is 1' );
       assert && assert( x !== 0, 'x is 0' );
       assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
       this.xPrevious = x;
