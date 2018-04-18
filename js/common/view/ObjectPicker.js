@@ -97,7 +97,9 @@ define( function( require ) {
     var backgroundCornerRadius = options.cornerRadius;
 
     // parent for value, to maintain rendering order and simplify centering
-    var valueParentNode = new Rectangle( 0, 0, backgroundWidth, backgroundHeight );
+    var valueParentNode = new Rectangle( 0, 0, backgroundWidth, backgroundHeight, {
+      pickable: false
+    } );
 
     // top half of the background, for 'up'. Shape computed starting at upper-left, going clockwise.
     var upShape = new Shape()
