@@ -193,7 +193,24 @@ define( function( require ) {
      * @private
      */
     isXIsolated: function() {
-      return phet.joist.random.nextBoolean(); //TODO
+
+      var xIsIsolated = false;
+
+      var leftVariableTerm = this.leftVariableTermCreator.getLikeTermOnPlate();
+      var leftConstantTerm = this.leftConstantTermCreator.getLikeTermOnPlate();
+      var rightVariableTerm = this.rightVariableTermCreator.getLikeTermOnPlate();
+      var rightConstantTerm = this.rightConstantTermCreator.getLikeTermOnPlate();
+
+      if ( ( leftVariableTerm && !leftConstantTerm && !rightVariableTerm && rightConstantTerm ) ) {
+        // x = N
+        xIsIsolated = ( leftVariableTerm.coefficient.getValue() === 1 );
+      }
+      else if ( !leftVariableTerm && leftConstantTerm && rightVariableTerm && !rightConstantTerm ) {
+        // N = x
+        xIsIsolated = ( rightVariableTerm.coefficient.getValue() === 1 );
+      }
+
+      return xIsIsolated;
     }
   } );
 } );
