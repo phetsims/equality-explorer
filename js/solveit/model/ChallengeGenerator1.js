@@ -93,7 +93,6 @@ define( function( require ) {
 
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
-      assert && assert( x !== 1, 'x is 1' );
       assert && assert( a !== 0, 'a is 0' );
       assert && assert( c !== 0, 'c is 0' );
 
