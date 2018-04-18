@@ -119,6 +119,10 @@ define( function( require ) {
      */
     nextChallenge: function() {
 
+      // reset the universal operation control
+      this.operatorProperty.reset();
+      this.operandProperty.reset();
+
       // dispose of all terms
       this.allTermCreators.forEach( function( termCreator ) {
         termCreator.disposeAllTerms();
