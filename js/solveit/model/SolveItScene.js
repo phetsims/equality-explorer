@@ -98,11 +98,11 @@ define( function( require ) {
       this.xVariable.valueProperty.value = challenge.x;
 
       // randomize whether the scale shows 'ax + b = mx + n' or 'mx + n = ax + b'
-      var swap = phet.joist.random.nextBoolean();
-      var aTermCreator = swap ? this.leftVariableTermCreator : this.rightVariableTermCreator;
-      var bTermCreator = swap ? this.leftConstantTermCreator : this.rightConstantTermCreator;
-      var mTermCreator = swap ? this.rightVariableTermCreator : this.leftVariableTermCreator;
-      var nTermCreator = swap ? this.rightConstantTermCreator : this.leftConstantTermCreator;
+      var reflect = phet.joist.random.nextBoolean();
+      var aTermCreator = reflect ? this.leftVariableTermCreator : this.rightVariableTermCreator;
+      var bTermCreator = reflect ? this.leftConstantTermCreator : this.rightConstantTermCreator;
+      var mTermCreator = reflect ? this.rightVariableTermCreator : this.leftVariableTermCreator;
+      var nTermCreator = reflect ? this.rightConstantTermCreator : this.leftConstantTermCreator;
 
       // Create terms on the scale that correspond to the challenge.
       this.createVariableTermOnPlate( aTermCreator, challenge.a );
