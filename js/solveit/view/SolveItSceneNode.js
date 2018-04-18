@@ -22,6 +22,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var OpacityTo = require( 'TWIXT/OpacityTo' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -42,6 +43,7 @@ define( function( require ) {
   // constants
   var LEVEL_FONT = new PhetFont( 20 );
   var NEXT_BUTTON_FONT = new PhetFont( 20 );
+  var FACE_OPACITY = 0.8;
 
   /**
    * @param {SolveItScene} scene - the scene associated with this Node
@@ -144,18 +146,11 @@ define( function( require ) {
       yMargin: 7,
       right: challengePanel.right,
       centerY: challengePanel.centerY,
-      listener: function() {
-        scene.nextChallenge();
-
-        //TODO temporarily register a correct answer
-        scene.scoreProperty.value++;
-        gameAudioPlayer.correctAnswer();
-      }
+      listener: scene.nextChallenge.bind( scene )
     } );
 
     // Next button, takes us to the next challenge
     var nextButton = new RectangularPushButton( {
-      visible: false, //TODO delete this when it's controlled by a listener
       content: new Text( nextString, {
         font: NEXT_BUTTON_FONT,
         maxWidth: 100 // determined empirically
@@ -165,16 +160,12 @@ define( function( require ) {
       yMargin: 8,
       right: challengePanel.right,
       centerY: challengePanel.centerY,
-
-      listener: function() {
-        scene.nextChallenge();
-      }
+      listener: scene.nextChallenge.bind( scene )
     } );
 
     // Smiley face, displayed when the challenge has been solved
     var faceNode = new FaceNode( 225, {
-      visible: false, //TODO delete this when it's controlled by a listener
-      opacity: 0.5,
+      opacity: FACE_OPACITY,
       centerX: scaleNode.centerX,
       top: universalOperationControl.bottom + 25
     } );
@@ -191,10 +182,10 @@ define( function( require ) {
       snapshotsAccordionBox,
       refreshButton,
       nextButton,
-      faceNode,
       universalOperationControl,
       termsLayer,
-      operationAnimationLayer
+      operationAnimationLayer,
+      faceNode
     ];
 
     // show debugging info related to the challenge
@@ -258,12 +249,45 @@ define( function( require ) {
       }
     } );
 
-    // When the challenge changes, update the challengePanel to display it.
+    // When the challenge changes...
+    // unlink not needed.
     scene.challengeProperty.link( function( challenge ) {
+
+      // update the challengePanel to display the challenge equation
       self.removeChild( challengePanel );
       challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
       self.addChild( challengePanel );
       challengePanel.moveToBack();
+
+      // show the correct controls
+      refreshButton.visible = true;
+      nextButton.visible = false;
+      faceNode.visible = false;
+    } );
+
+    // This notification occurs that first time that a challenge is solved.
+    // If the user choose to continue playing with the challenge, there is no subsequent feedback.
+    // removeListener not needed.
+    scene.challengeSolvedEmitter.addListener( function() {
+
+      refreshButton.visible = false;
+      nextButton.visible = true;
+
+      gameAudioPlayer.correctAnswer();
+
+      // Show face node, then fade it out.
+      // The design requirement was 'like Arithmetic, but slightly longer'.
+      faceNode.opacity = FACE_OPACITY;
+      faceNode.visible = true;
+      var faceAnimation = new OpacityTo( faceNode, {
+        endOpacity: 0,
+        delay: 1000,
+        duration: 1200, // fade out time, ms
+        easing: TWEEN.Easing.Linear.None,
+        onStart: function() { faceNode.visible = true; },
+        onComplete: function() { faceNode.visible = false; }
+      } );
+      faceAnimation.start( phet.joist.elapsedTime );
     } );
   }
 

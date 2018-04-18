@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
+  var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
@@ -21,6 +22,9 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
+  // constants
+  var POINTS_PER_CHALLENGE = 1;
+
   /**
    * @param {number} level - game level, numbered from 1 in the model and view
    * @param {string} description
@@ -30,6 +34,8 @@ define( function( require ) {
   function SolveItScene( level, description, challengeGenerator ) {
 
     assert && assert( level > 0, 'invalid level, numbering starts with 1: ' + level );
+
+    var self = this;
 
     OperationsScene.call( this, {
       debugName: 'level ' + level,
@@ -66,7 +72,31 @@ define( function( require ) {
       }
     } );
 
-    //TODO observe what's on the scale and determine when it's of the form x = N.
+    // @private has the current challenge has been solved?
+    this.challengeHasBeenSolved = false;
+
+    // @public (read-only) emit is called the first time that the current challenge is solved
+    this.challengeSolvedEmitter = new Emitter();
+
+    // Gather dependencies for all term creators...
+    var termDependencies = [];
+    this.allTermCreators.forEach( function( termCreator ) {
+      termDependencies.push( termCreator.numberOfTermsOnPlateProperty );
+    } );
+
+    // dispose not required
+    Property.multilink( termDependencies, function() {
+
+      // challenge is in a 'solved' state if x has been isolated on the scale.
+      var solved = self.isXIsolated();
+
+      // The first time that the challenge has been solved, award points and notify listeners.
+      if ( solved && !self.challengeHasBeenSolved ) {
+        self.challengeHasBeenSolved = true;
+        self.scoreProperty.value = self.scoreProperty.value + POINTS_PER_CHALLENGE;
+        self.challengeSolvedEmitter.emit();
+      }
+    } );
   }
 
   equalityExplorer.register( 'SolveItScene', SolveItScene );
@@ -113,6 +143,9 @@ define( function( require ) {
       this.createVariableTermOnPlate( mTermCreator, challenge.m );
       this.createConstantTermOnPlate( nTermCreator, challenge.n );
 
+      // The new challenge is has not been solved
+      this.challengeHasBeenSolved = false;
+
       // Finally, set challengeProperty, to notify listeners that the challenge has changed.
       this.challengeProperty.value = challenge;
     },
@@ -151,6 +184,16 @@ define( function( require ) {
         } );
         termCreator.putTermOnPlate( term );
       }
+    },
+
+    /**
+     * Determines whether the value of x has been isolated on the scale.
+     * This means that the scale contains either 'x = N' or 'N = x', where N is the value of x.
+     * @returns {boolean}
+     * @private
+     */
+    isXIsolated: function() {
+      return phet.joist.random.nextBoolean(); //TODO
     }
   } );
 } );
