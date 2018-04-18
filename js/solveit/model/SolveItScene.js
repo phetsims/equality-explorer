@@ -10,14 +10,12 @@ define( function( require ) {
 
   // modules
   var Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
   var Property = require( 'AXON/Property' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -50,19 +48,15 @@ define( function( require ) {
       }
     } );
 
-    //TODO default to Vector2.ZERO so that this is unnecessary?
     // Initialize locations of term creators.
-    // This can be any value, since terms in this screen never return to a toolbox.
+    // This is necessary because this screen has no TermToolboxes.
+    // Locations can be any value, since terms in this screen never return to a toolbox.
+    // This is preferable to using a default value, since initialization order is important in other screens.
+    // See for example frameStartedCallback in TermCreatorNode.
     this.allTermCreators.forEach( function( termCreator ) {
       termCreator.positiveLocation = Vector2.ZERO;
       termCreator.negativeLocation = Vector2.ZERO;
     } );
-
-    //TODO make this less hardcoded, or assert that types are as expected
-    var leftVariableTermCreator = this.leftTermCreators[ 0 ];
-    var leftConstantTermCreator = this.leftTermCreators[ 1 ];
-    var rightVariableTermCreator = this.rightTermCreators[ 0 ];
-    var rightConstantTermCreator = this.rightTermCreators[ 1 ];
 
     // @public
     this.challengeProperty = new Property( this.challengeGenerator.nextChallenge(), {
@@ -71,54 +65,7 @@ define( function( require ) {
 
     // unlink not needed
     this.challengeProperty.link( function( challenge ) {
-
-      self.xVariable.valueProperty.value = challenge.x;
-
-      // dispose of all terms
-      self.allTermCreators.forEach( function( termCreator ) {
-        termCreator.disposeAllTerms();
-      } );
-
-      // Create terms that correspond to the challenge, and put them on the scale.
-      // challenge form is: ax + b = mx + n
-      var term;
-
-      // a
-      if ( challenge.a.getValue() !== 0 ) {
-        term = new VariableTerm( self.xVariable, {
-          coefficient: challenge.a,
-          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-        } );
-        //TODO default to cell=likeTermsCell when termCreator.combineLikeTermsEnabled, since nothing else should be specified
-        leftVariableTermCreator.putTermOnPlate( term, leftVariableTermCreator.likeTermsCell );
-      }
-
-      // b
-      if ( challenge.b.getValue() !== 0 ) {
-        term = new ConstantTerm( {
-          constantValue: challenge.b,
-          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-        } );
-        leftConstantTermCreator.putTermOnPlate( term, leftConstantTermCreator.likeTermsCell );
-      }
-
-      // m
-      if ( challenge.m.getValue() !== 0 ) {
-        term = new VariableTerm( self.xVariable, {
-          coefficient: challenge.m,
-          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-        } );
-        rightVariableTermCreator.putTermOnPlate( term, rightVariableTermCreator.likeTermsCell );
-      }
-
-      // n
-      if ( challenge.n.getValue() !== 0 ) {
-        term = new ConstantTerm( {
-          constantValue: challenge.n,
-          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-        } );
-        rightConstantTermCreator.putTermOnPlate( term, rightConstantTermCreator.likeTermsCell );
-      }
+      self.applyChallenge( challenge );
     } );
 
     //TODO observe what's on the scale and determine when it's of the form x = N.
@@ -143,6 +90,60 @@ define( function( require ) {
      */
     nextChallenge: function() {
       this.challengeProperty.value = this.challengeGenerator.nextChallenge();
+    },
+
+    /**
+     * Applies a challenge to the scene.
+     * This maps a challenge to terms on the scale, created and managed by term creators.
+     * @param {Challenge} challenge
+     */
+    applyChallenge: function( challenge ) {
+
+      this.xVariable.valueProperty.value = challenge.x;
+
+      // dispose of all terms
+      this.allTermCreators.forEach( function( termCreator ) {
+        termCreator.disposeAllTerms();
+      } );
+
+      // challenge form is: ax + b = mx + n
+      var term;
+
+      // a
+      if ( challenge.a.getValue() !== 0 ) {
+        term = this.leftVariableTermCreator.createTerm( {
+          coefficient: challenge.a,
+          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+        } );
+        this.leftVariableTermCreator.putTermOnPlate( term );
+      }
+
+      // b
+      if ( challenge.b.getValue() !== 0 ) {
+        term = this.leftConstantTermCreator.createTerm( {
+          constantValue: challenge.b,
+          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+        } );
+        this.leftConstantTermCreator.putTermOnPlate( term );
+      }
+
+      // m
+      if ( challenge.m.getValue() !== 0 ) {
+        term = this.rightVariableTermCreator.createTerm( {
+          coefficient: challenge.m,
+          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+        } );
+        this.rightVariableTermCreator.putTermOnPlate( term );
+      }
+
+      // n
+      if ( challenge.n.getValue() !== 0 ) {
+        term = this.rightConstantTermCreator.createTerm( {
+          constantValue: challenge.n,
+          diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+        } );
+        this.rightConstantTermCreator.putTermOnPlate( term );
+      }
     }
   } );
 } );
