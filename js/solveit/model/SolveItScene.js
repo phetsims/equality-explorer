@@ -10,11 +10,13 @@ define( function( require ) {
 
   // modules
   var BalanceScale = require( 'EQUALITY_EXPLORER/common/model/BalanceScale' );
+  var Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
+  var Property = require( 'AXON/Property' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -27,6 +29,8 @@ define( function( require ) {
   function SolveItScene( level, description, challengeGenerator ) {
 
     assert && assert( level > 0, 'invalid level, numbering starts with 1: ' + level );
+
+    var self = this;
 
     OperationsScene.call( this, {
       debugName: 'level ' + level,
@@ -74,6 +78,21 @@ define( function( require ) {
       termCreator.positiveLocation = Vector2.ZERO;
       termCreator.negativeLocation = Vector2.ZERO;
     } );
+
+    // @public
+    this.challengeProperty = new Property( this.challengeGenerator.nextChallenge(), {
+      valueType: Challenge
+    } );
+
+    // unlink not needed
+    this.challengeProperty.link( function( challenge ) {
+
+      self.xVariable.valueProperty.value = challenge.x;
+
+      //TODO clear and update termCreators
+    } );
+
+    //TODO observe what's on the scale and determine when it's of the form x = N.
   }
 
   equalityExplorer.register( 'SolveItScene', SolveItScene );
@@ -87,6 +106,14 @@ define( function( require ) {
     reset: function() {
       this.scoreProperty.reset();
       OperationsScene.prototype.reset.call( this );
+    },
+
+    /**
+     * Generates the next challenge.
+     * @public
+     */
+    nextChallenge: function() {
+      this.challengeProperty.value = this.challengeGenerator.nextChallenge();
     }
   } );
 } );

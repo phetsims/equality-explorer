@@ -141,16 +141,11 @@ define( function( require ) {
       right: challengePanel.right,
       centerY: challengePanel.centerY,
       listener: function() {
+        scene.nextChallenge();
 
         //TODO temporarily register a correct answer
         scene.scoreProperty.value++;
         gameAudioPlayer.correctAnswer();
-
-        //TODO generate a new challenge
-        var challenge = scene.challengeGenerator.nextChallenge();
-        if ( self.answerNode ) {
-          self.answerNode.text = challenge.toRichText();
-        }
       }
     } );
 
@@ -168,7 +163,7 @@ define( function( require ) {
       centerY: challengePanel.centerY,
 
       listener: function() {
-        //TODO generate next challenge
+        scene.nextChallenge();
       }
     } );
 
@@ -209,6 +204,11 @@ define( function( require ) {
         top: snapshotsAccordionBox.bottom + 25
       } );
       children.push( this.answerNode );
+
+      // update the answer, unlink not needed.
+      scene.challengeProperty.link( function( challenge ) {
+        self.answerNode.text = challenge.toRichText();
+      } );
     }
 
     assert && assert( !options.children, 'SolveItSceneNode sets children' );
