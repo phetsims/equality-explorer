@@ -13,6 +13,7 @@ define( function( require ) {
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * Form: ax + b = mx + n
@@ -28,7 +29,7 @@ define( function( require ) {
    */
   function Challenge( x, a, b, m, n, debugOrigin, debugDerivation ) {
 
-    assert && assert( typeof x === 'number', 'invalid x: ' + x );
+    assert && assert( Util.isInteger( x ), 'invalid x: ' + x );
     assert && assert( a instanceof Fraction && a.isReduced(), 'invalid a: ' + a );
     assert && assert( b instanceof Fraction && a.isReduced(), 'invalid b: ' + b );
     assert && assert( m instanceof Fraction && a.isReduced(), 'invalid m: ' + m );
@@ -50,7 +51,12 @@ define( function( require ) {
 
   return inherit( Object, Challenge, {
 
-    // @public (debug) do not rely on format!
+    /**
+     * When the 'showAnswers' query parameter is provided, this representation is displayed using RichText.
+     * Do not rely on the format of this string!
+     * @returns {string}
+     * @public (debug)
+     */
     toRichText: function() {
       return this.debugOrigin + '<br>' + this.debugDerivation + '<br>' + this.toString();
     },
