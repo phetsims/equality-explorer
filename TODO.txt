@@ -5,7 +5,6 @@ Solve It! screen
 - replace the challenge equation view each time the challenge changes (EquationNode.updateEnabled:false)
 - fix universal operation control, top/bottom not pickable?
 - observe the state of what's on the scale, determine when answer is correct, update score/faceNode/nextButton
-- randomize whether the scale shows 'ax + b = mx + n' or 'mx + n = ax + b'
 
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
