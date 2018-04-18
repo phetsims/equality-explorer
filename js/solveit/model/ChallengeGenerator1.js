@@ -15,15 +15,14 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Range = require( 'DOT/Range' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // constants
-  var X_RANGE = new Range( -40, 40 );
-  var A_RANGE = new Range( -10, 10 );
-  var B_RANGE = new Range( -10, 10 );
-  var C_RANGE = new Range( -10, 10 );
-  var D_RANGE = new Range( -10, 10 );
+  var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
+  var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  var B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  var C_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  var D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
   /**
    * @constructor
@@ -87,8 +86,8 @@ define( function( require ) {
      */
     nextType1: function() {
 
-      var x = this.nextXInRange( X_RANGE );
-      var a = this.nextIntInRange( A_RANGE, [ 0, 1, -1 ] );
+      var x = this.nextX( X_VALUES );
+      var a = this.nextValue( A_VALUES, [ 0, 1, -1 ] );
       var c = a * x;
 
       // Verify that computations meeting design requirements.
@@ -123,8 +122,8 @@ define( function( require ) {
      */
     nextType2: function() {
 
-      var x = this.nextXInRange( X_RANGE );
-      var b = this.nextIntInRange( B_RANGE, [ 0 ] );
+      var x = this.nextX( X_VALUES );
+      var b = this.nextValue( B_VALUES, [ 0 ] );
       var c = x + b;
 
       // Verify that computations meeting design requirements.
@@ -161,8 +160,8 @@ define( function( require ) {
 
       var x = this.xPrevious;
       while ( x === this.xPrevious ) {
-        var c = this.nextIntInRange( C_RANGE, [ 0 ] );
-        var d = this.nextIntInRange( D_RANGE, [ 0, 1 ] );
+        var c = this.nextValue( C_VALUES, [ 0 ] );
+        var d = this.nextValue( D_VALUES, [ 0, 1 ] );
         x = c * d;
       }
 

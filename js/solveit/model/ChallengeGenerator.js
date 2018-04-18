@@ -68,53 +68,48 @@ define( function( require ) {
 
     /**
      * Gets the next integer in a range, with optional values to be excluded.
-     * @param {Range} range
+     * @param {number[]} values
      * @param {number[]} [excludedValues]
      * @returns {number}
      */
-    nextIntInRange: function( range, excludedValues ) {
-      excludedValues = excludedValues || [];
-      assert && assert( this.rangeToArray( range, excludedValues ).length > 0, 'set of values is empty' );
-      var value = 0;
-      while ( _.includes( excludedValues, value ) ) {
-        value = this.random.nextIntBetween( range.min, range.max );
-      }
-      return value;
+    nextValue: function( values, excludedValues ) {
+      var difference = _.difference( values, excludedValues );
+      assert && assert( difference.length > 0, 'all values were excluded' );
+      return this.random.sample( difference );
     },
 
     /**
-     * Gets the next value of x in a range, excluding zero and the previous value of x.
-     * @param range
+     * Gets the next value of x from a set of values, excluding zero and the previous value of x.
+     * @param {number[]} values
      * @returns {number}
      */
-    nextXInRange: function( range ) {
-      var x = this.nextIntInRange( range, [ 0, this.xPrevious ] );
-      assert && assert( range.contains( x ), 'x is out of range: ' + x );
+    nextX: function( values ) {
+      var x = this.nextValue( values, [ 0, this.xPrevious ] );
       assert && assert( x !== 0, 'x is 0' );
       assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
       this.xPrevious = x;
       return x;
-    },
+    }
+  }, {
 
     /**
-     * Converts a range to an array of integer values, with some values optionally excluded.
-     * @param {Range} range
-     * @param {number[]} excludedValues
+     * Converts an integer range to an array of integer values.
+     * @param {number} min
+     * @param {number} max
      * @returns {number[]}
+     * @public
+     * @static
      */
-    rangeToArray: function( range, excludedValues ) {
-      assert && assert( Util.isInteger( range.min ), 'range.min must be an integer: ' + range.min );
-      assert && assert( Util.isInteger( range.max ), 'range.max must be an integer: ' + range.max );
-      excludedValues = excludedValues || [];
+    rangeToArray: function( min, max ) {
+
+      assert && assert( Util.isInteger( min ), 'min must be an integer: ' + min );
+      assert && assert( Util.isInteger( max ), 'max must be an integer: ' + max );
 
       var values = []; // {number[]}
-      for ( var i = range.min; i <= range.max; i++ ) {
+      for ( var i = min; i <= max; i++ ) {
         values.push( i );
       }
-
-      return _.filter( values, function( value ) {
-        return !_.includes( excludedValues, value );
-      } );
+      return values;
     }
   } );
 } );

@@ -15,13 +15,12 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Range = require( 'DOT/Range' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // constants
-  var X_RANGE = new Range( -40, 40 );
-  var A_RANGE = new Range( -10, 10 );
-  var B_RANGE = new Range( -10, 10 );
+  var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
+  var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  var B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
   /**
    * @constructor
@@ -49,9 +48,9 @@ define( function( require ) {
      */
     nextChallengeProtected: function() {
 
-      var x = this.nextXInRange( X_RANGE );
-      var a = this.nextIntInRange( A_RANGE, [ 0 ] );
-      var b = this.nextIntInRange( B_RANGE, [ 0 ] );
+      var x = this.nextX( X_VALUES );
+      var a = this.nextValue( A_VALUES, [ 0 ] );
+      var b = this.nextValue( B_VALUES, [ 0 ] );
       var c = ( a * x ) + b;
 
       // Verify that computations meeting design requirements.
