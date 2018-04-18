@@ -17,6 +17,8 @@ define( function( require ) {
 
   /**
    * Form: ax + b = mx + n
+   * These letters correspond to the design specification, see
+   * https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo/edit.
    *
    * @param {number} x
    * @param {Fraction} a
