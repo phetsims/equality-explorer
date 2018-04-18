@@ -65,10 +65,10 @@ define( function( require ) {
      */
     nextType1: function() {
 
-      var x = this.nextX( X_VALUES );
-      var d = this.nextValue( D_VALUES, [ 0, 1, -1 ] );
-      var a = this.nextValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
-      var b = this.nextValue( B_VALUES, [ 0 ] );
+      var x = this.randomX( X_VALUES );
+      var d = this.randomValue( D_VALUES, [ 0, 1, -1 ] );
+      var a = this.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
+      var b = this.randomValue( B_VALUES, [ 0 ] );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
       // Verify that computations meeting design requirements.
@@ -110,10 +110,10 @@ define( function( require ) {
      */
     nextType2: function() {
 
-      var x = this.nextX( X_VALUES );
-      var d = this.nextValue( D_VALUES, [ 0, 1, -1 ] );
-      var a = this.nextValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
-      var b = this.nextValueBy( B_VALUES, function( b ) { return ( b % d !== 0 ); } );
+      var x = this.randomX( X_VALUES );
+      var d = this.randomValue( D_VALUES, [ 0, 1, -1 ] );
+      var a = this.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
+      var b = this.randomValueBy( B_VALUES, function( b ) { return ( b % d !== 0 ); } );
       var c = new Fraction( ( a * x ) + b, d ).reduce();
 
       // Verify that computations meeting design requirements.

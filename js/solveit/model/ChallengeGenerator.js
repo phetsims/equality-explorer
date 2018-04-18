@@ -67,36 +67,36 @@ define( function( require ) {
     },
 
     /**
-     * Gets the next value from a set of values, after filtering out values that don't meet some predicate.
+     * Randomly samples a value from a set of values, after filtering out values that don't meet some predicate.
      * @param {number[]} values
      * @param {function(number)} predicate - values that don't satisfy this predicate will be filtered out
      * @returns {number}
      */
-    nextValueBy: function( values, predicate ) {
+    randomValueBy: function( values, predicate ) {
       var filteredValues = _.filter( values, predicate );
       assert && assert( filteredValues.length > 0, 'all values were excluded' );
       return this.random.sample( filteredValues );
     },
 
     /**
-     * Gets the next integer in a range, with optional values to be excluded.
+     * Randomly samples a value from a set of values, after excluding an optional set of values.
      * @param {number[]} values
      * @param {number[]} [excludedValues]
      * @returns {number}
      */
-    nextValue: function( values, excludedValues ) {
-      return this.nextValueBy( values, function( value ) {
+    randomValue: function( values, excludedValues ) {
+      return this.randomValueBy( values, function( value ) {
         return !_.includes( excludedValues, value );
       } );
     },
 
     /**
-     * Gets the next value of x from a set of values, excluding zero and the previous value of x.
+     * Randomly samples a value for x from a set of values, excluding zero and the previous value of x.
      * @param {number[]} values
      * @returns {number}
      */
-    nextX: function( values ) {
-      var x = this.nextValue( values, [ 0, this.xPrevious ] );
+    randomX: function( values ) {
+      var x = this.randomValue( values, [ 0, this.xPrevious ] );
       assert && assert( x !== 0, 'x is 0' );
       assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
       this.xPrevious = x;

@@ -86,8 +86,8 @@ define( function( require ) {
      */
     nextType1: function() {
 
-      var x = this.nextX( X_VALUES );
-      var a = this.nextValue( A_VALUES, [ 0, 1, -1 ] );
+      var x = this.randomX( X_VALUES );
+      var a = this.randomValue( A_VALUES, [ 0, 1, -1 ] );
       var c = a * x;
 
       // Verify that computations meeting design requirements.
@@ -122,8 +122,8 @@ define( function( require ) {
      */
     nextType2: function() {
 
-      var x = this.nextX( X_VALUES );
-      var b = this.nextValue( B_VALUES, [ 0 ] );
+      var x = this.randomX( X_VALUES );
+      var b = this.randomValue( B_VALUES, [ 0 ] );
       var c = x + b;
 
       // Verify that computations meeting design requirements.
@@ -160,8 +160,8 @@ define( function( require ) {
 
       var x = this.xPrevious;
       while ( x === this.xPrevious ) {
-        var c = this.nextValue( C_VALUES, [ 0 ] );
-        var d = this.nextValue( D_VALUES, [ 0, 1 ] );
+        var c = this.randomValue( C_VALUES, [ 0 ] );
+        var d = this.randomValue( D_VALUES, [ 0, 1 ] );
         x = c * d;
       }
 

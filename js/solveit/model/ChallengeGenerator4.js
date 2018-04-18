@@ -50,10 +50,10 @@ define( function( require ) {
      */
     nextChallengeProtected: function() {
 
-      var x = this.nextX( X_VALUES );
-      var a = this.nextValue( A_VALUES, [ 0 ] );
-      var b = this.nextValue( B_VALUES, [ 0 ] );
-      var m = this.nextValue( M_VALUES, [ 0, a ] );
+      var x = this.randomX( X_VALUES );
+      var a = this.randomValue( A_VALUES, [ 0 ] );
+      var b = this.randomValue( B_VALUES, [ 0 ] );
+      var m = this.randomValue( M_VALUES, [ 0, a ] );
       var n = ( ( a - m ) * x ) + b;
 
       // Verify that computations meeting design requirements.
