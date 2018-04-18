@@ -1,5 +1,12 @@
 TODO items for equality-explorer
 
+Solve It! screen
+- make view create nodes for any terms that exist initially in the model
+- replace the challenge equation view each time the challenge changes (EquationNode.updateEnabled:false)
+- fix universal operation control, top/bottom not pickable?
+- observe the state of what's on the scale, determine when answer is correct, update score/faceNode/nextButton
+- randomize whether the scale shows 'ax + b = mx + n' or 'mx + n = ax + b'
+
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
 - can this feature be separated from TermCreator and TermDragListener?
@@ -24,11 +31,6 @@ Lock feature scenarios:
 - term dragged from scale to toolbox, ghost requires creating inverse on scale, inverse removed from scale
 - animate to scale, term's plate has become full, return both to toolbox
 - animate to scale, ghost's plate has become full, return both to toolbox
-
-Solve It! screen
-- make each level a SolveItScene subtype of OperationsScene
-- reuse bits of OperationsSceneNode for SolveItSceneNode
-- challenge generation engine
 
 Cleanup
 - grunt update-copyright-dates
