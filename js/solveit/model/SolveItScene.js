@@ -123,6 +123,9 @@ define( function( require ) {
       this.operatorProperty.reset();
       this.operandProperty.reset();
 
+      // clear snapshots
+      this.snapshotsCollection.reset();
+
       // dispose of all terms
       this.allTermCreators.forEach( function( termCreator ) {
         termCreator.disposeAllTerms();
