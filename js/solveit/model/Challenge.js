@@ -59,11 +59,17 @@ define( function( require ) {
     toString: function() {
       return StringUtils.fillIn( 'x={{x}}, {{a}} x + {{b}} = {{m}} x + {{n}}', {
         x: this.x,
-        a: this.a,
-        b: this.b,
-        m: this.m,
-        n: this.n
+        a: this.fractionToString( this.a ),
+        b: this.fractionToString( this.b ),
+        m: this.fractionToString( this.m ),
+        n: this.fractionToString( this.n )
       } );
+    },
+
+    // @private
+    fractionToString: function( f ) {
+      assert && assert( f instanceof Fraction, 'invalid f: ' + f );
+      return ( f.isInteger() ? f.getValue() : f.toString() );
     }
   } );
 } ); 
