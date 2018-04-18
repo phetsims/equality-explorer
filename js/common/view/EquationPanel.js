@@ -32,6 +32,9 @@ define( function( require ) {
       contentWidth: 100,
       contentHeight: 60,
 
+      // options passed to EquationNode constructor
+      equationNodeOptions: null,
+
       // supertype options
       xMargin: 0,
       yMargin: 0,
@@ -44,7 +47,7 @@ define( function( require ) {
     // use an invisible rectangle to enforce fixed content size
     var invisibleRectangle = new Rectangle( 0, 0, options.contentWidth, options.contentHeight );
 
-    var equationNode = new EquationNode( leftTermCreators, rightTermCreators );
+    var equationNode = new EquationNode( leftTermCreators, rightTermCreators, options.equationNodeOptions );
 
     // wrapper to avoid exceeding stack size when bounds of equationNode changes
     var equationParent = new Node( { children: [ equationNode ] } );

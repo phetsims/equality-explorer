@@ -82,12 +82,18 @@ define( function( require ) {
       backButtonListener: backButtonListener
     } );
 
-    //TODO replace this each time the challenge changes, use EquationNode.updateEnabled:false
     // Challenge equation
-    var challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, {
+    var challengePanelOptions = {
       contentWidth: 540, // determined empirically, based on design mockups
       stroke: null,
       fill: null,
+      equationNodeOptions: { updateEnabled: false } // static equation, to display the challenge
+    };
+    var challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
+
+    // To preserve rendering order, since challengePanel is replaced when the challenge changes.
+    var challengePanelParent = new Node( {
+      children: [ challengePanel ],
       centerX: scene.scale.location.x,
       top: statusBar.bottom + 15
     } );
@@ -98,18 +104,18 @@ define( function( require ) {
     } );
     var solveForXNode = new RichText( solveForXText, {
       font: new PhetFont( { size: 20, weight: 'bold' } ),
-      left: challengePanel.left,
-      centerY: challengePanel.centerY,
+      left: challengePanelParent.left,
+      centerY: challengePanelParent.centerY,
       maxWidth: 125 // determined empirically
     } );
 
     // Equation that reflects what is currently on the scale
     var equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, {
-      contentWidth: challengePanel.width, // determined empirically, based on design mockups
+      contentWidth: challengePanelParent.width, // determined empirically, based on design mockups
       stroke: 'black',
       fill: 'white',
-      centerX: challengePanel.centerX,
-      top: challengePanel.bottom + 15
+      centerX: challengePanelParent.centerX,
+      top: challengePanelParent.bottom + 15
     } );
 
     // Layer when universal operation animation occurs
@@ -141,8 +147,8 @@ define( function( require ) {
       iconScale: 0.6,
       xMargin: 14,
       yMargin: 7,
-      right: challengePanel.right,
-      centerY: challengePanel.centerY,
+      right: challengePanelParent.right,
+      centerY: challengePanelParent.centerY,
       listener: function() {
         scene.nextChallenge();
 
@@ -162,8 +168,8 @@ define( function( require ) {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 12,
       yMargin: 8,
-      right: challengePanel.right,
-      centerY: challengePanel.centerY,
+      right: challengePanelParent.right,
+      centerY: challengePanelParent.centerY,
 
       listener: function() {
         scene.nextChallenge();
@@ -183,7 +189,7 @@ define( function( require ) {
 
     var children = [
       statusBar,
-      challengePanel,
+      challengePanelParent,
       solveForXNode,
       equationPanel,
       scaleNode,
@@ -255,6 +261,13 @@ define( function( require ) {
         } );
         self.rewardDialog.show();
       }
+    } );
+
+    // When the challenge changes, update the challengePanel to display it.
+    scene.challengeProperty.link( function( challenge ) {
+      challengePanelParent.removeChild( challengePanel );
+      challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
+      challengePanelParent.addChild( challengePanel );
     } );
   }
 
