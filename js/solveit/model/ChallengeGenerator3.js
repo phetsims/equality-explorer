@@ -55,9 +55,9 @@ define( function( require ) {
      *
      * Form: (a/d)x + b = c
      * Let x be a random integer between [-40,40], x !== 0
-     * Let a be a random integer between [-10,10], a !== 0
+     * Let d be a random integer between [-10, 10], d !== 0
+     * Let a be a random integer between [-10,10], a !== 0, a % d !== 0
      * Let b be a random integer between [-10,10], b !== 0
-     * Let d be a random integer between [-10, 10], d !== [0, a, -a]
      * Let c = (a/d)x + b, c == 0 is OK
      *
      * @returns {Challenge}
@@ -66,18 +66,17 @@ define( function( require ) {
     nextType1: function() {
 
       var x = this.nextX( X_VALUES );
-      var a = this.nextValue( A_VALUES, [ 0 ] );
+      var d = this.nextValue( D_VALUES, [ 0, 1, -1 ] );
+      var a = this.nextValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
       var b = this.nextValue( B_VALUES, [ 0 ] );
-      var d = this.nextValue( D_VALUES, [ 0, a, -a ] );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
-      assert && assert( a !== 0, 'a is 0' );
-      assert && assert( b !== 0, 'b is 0' );
       assert && assert( d !== 0, 'd is 0' );
-      assert && assert( d !== a, 'd === a: ' + d );
-      assert && assert( d !== -a, 'd === -a: ' + d );
+      assert && assert( a !== 0, 'a is 0' );
+      assert && assert( a % d !== 0, 'a/d reduces to an integer, a=' + a + ', d=' + d );
+      assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 1, (a/d)x + b = c';
@@ -101,9 +100,9 @@ define( function( require ) {
      *
      * Form: (a/d)x + (b/d) = c
      * Let x be a random integer between [-40,40], x !== 0
-     * Let a be a random integer between [-10,10], a !== 0
-     * Let b be a random integer between [-10,10], b !== 0
-     * Let d be a random integer between [-10, 10], d !== 0
+     * Let d be a random integer between [-10, 10], d !== [0, 1, -1]
+     * Let a be a random integer between [-10,10], a !== 0, a % d !== 0
+     * Let b be a random integer between [-10,10], b !== 0, b % d !== 0
      * Let c = ( ax + b )/d, c == 0 is OK
      *
      * @returns @returns {Challenge}
@@ -112,16 +111,18 @@ define( function( require ) {
     nextType2: function() {
 
       var x = this.nextX( X_VALUES );
-      var a = this.nextValue( A_VALUES, [ 0 ] );
-      var b = this.nextValue( B_VALUES, [ 0 ] );
-      var d = this.nextValue( D_VALUES, [ 0 ] );
+      var d = this.nextValue( D_VALUES, [ 0, 1, -1 ] );
+      var a = this.nextValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
+      var b = this.nextValueBy( B_VALUES, function( b ) { return ( b % d !== 0 ); } );
       var c = new Fraction( ( a * x ) + b, d ).reduce();
 
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
-      assert && assert( a !== 0, 'a is 0' );
-      assert && assert( b !== 0, 'b is 0' );
       assert && assert( d !== 0, 'd is 0' );
+      assert && assert( a !== 0, 'a is 0' );
+      assert && assert( a % d !== 0, 'a/d reduces to an integer, a=' + a + ', d=' + d );
+      assert && assert( b !== 0, 'b is 0' );
+      assert && assert( b % d !== 0, 'b/d reduces to an integer, b=' + b + ', d=' + d );
 
       // derivation that corresponds to design doc
       var debugOrigin = 'level 3, type 2, (a/d)x + (b/d) = c';

@@ -67,15 +67,27 @@ define( function( require ) {
     },
 
     /**
+     * Gets the next value from a set of values, after filtering out values that don't meet some predicate.
+     * @param {number[]} values
+     * @param {function(number)} predicate - values that don't satisfy this predicate will be filtered out
+     * @returns {number}
+     */
+    nextValueBy: function( values, predicate ) {
+      var filteredValues = _.filter( values, predicate );
+      assert && assert( filteredValues.length > 0, 'all values were excluded' );
+      return this.random.sample( filteredValues );
+    },
+
+    /**
      * Gets the next integer in a range, with optional values to be excluded.
      * @param {number[]} values
      * @param {number[]} [excludedValues]
      * @returns {number}
      */
     nextValue: function( values, excludedValues ) {
-      var difference = _.difference( values, excludedValues );
-      assert && assert( difference.length > 0, 'all values were excluded' );
-      return this.random.sample( difference );
+      return this.nextValueBy( values, function( value ) {
+        return !_.includes( excludedValues, value );
+      } );
     },
 
     /**
