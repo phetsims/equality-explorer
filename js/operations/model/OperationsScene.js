@@ -109,6 +109,9 @@ define( function( require ) {
       validValues: this.operands
     } );
 
+    // @protected (read-only) emit is called when a universal operation has completed
+    this.operationCompletedEmitter = new Emitter();
+
     // Variable and constant terms will combined in specific cells in the plate's grid.
     var variableTermCreatorOptions = {
       likeTermsCell: 0 // cell on the plate that all like terms will occupy
@@ -193,6 +196,9 @@ define( function( require ) {
           this.sumToZeroEmitter.emit1( termCreatorsZero );
         }
       }
+
+      // notify listeners
+      this.operationCompletedEmitter.emit();
     },
 
     /**

@@ -78,14 +78,8 @@ define( function( require ) {
     // @public (read-only) emit is called the first time that the current challenge is solved
     this.challengeSolvedEmitter = new Emitter();
 
-    // Gather dependencies for all term creators...
-    var termDependencies = [];
-    this.allTermCreators.forEach( function( termCreator ) {
-      termDependencies.push( termCreator.numberOfTermsOnPlateProperty );
-    } );
-
-    // dispose not required
-    Property.multilink( termDependencies, function() {
+    // When a universal operation is completed, determine if the challenge is solved
+    this.operationCompletedEmitter.addListener( function() {
 
       // challenge is in a 'solved' state if x has been isolated on the scale.
       var solved = self.isXIsolated();
