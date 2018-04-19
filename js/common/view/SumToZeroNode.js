@@ -55,6 +55,7 @@ define( function( require ) {
       // no variable, just show '0'
       contentNode = zeroNode;
     }
+    contentNode.maxWidth = 2 * options.haloRadius;
 
     var haloNode = new HaloNode( options.haloRadius, {
       baseColor: options.haloBaseColor,
