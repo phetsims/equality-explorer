@@ -90,7 +90,8 @@ define( function( require ) {
         operandNode = VariableTermNode.createEquationTermNode( operand.coefficient, operand.variable.symbol, {
           symbolFont: options.symbolFont,
           integerFont: options.integerFont,
-          fractionFont: options.fractionFont
+          fractionFont: options.fractionFont,
+          maxWidth: 50 // determined empirically
         } );
       }
       else {
