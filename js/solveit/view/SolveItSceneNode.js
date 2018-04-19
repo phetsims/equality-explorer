@@ -42,7 +42,7 @@ define( function( require ) {
 
   // constants
   var LEVEL_FONT = new PhetFont( 20 );
-  var NEXT_BUTTON_FONT = new PhetFont( 20 );
+  var NEXT_BUTTON_FONT = new PhetFont( 30 );
   var FACE_OPACITY = 0.8;
 
   /**
@@ -158,8 +158,8 @@ define( function( require ) {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 12,
       yMargin: 8,
-      right: challengePanel.right,
-      centerY: challengePanel.centerY,
+      centerX: scene.scale.location.x,
+      top: universalOperationControl.bottom + 45, // determined empirically
       listener: scene.nextChallenge.bind( scene )
     } );
 
