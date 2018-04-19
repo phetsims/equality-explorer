@@ -1,7 +1,7 @@
 TODO items for equality-explorer
 
 Solve It! screen
-- fix universal operation control, top/bottom not pickable?
+- intermediate steps of applying universal operator and restoring a snapshot are resulting in false 'solved' results
 
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
