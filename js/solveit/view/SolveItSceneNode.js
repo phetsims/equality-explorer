@@ -263,29 +263,33 @@ define( function( require ) {
       refreshButton.visible = true;
       nextButton.visible = false;
       faceNode.visible = false;
+      faceAnimation && faceAnimation.stop();
     } );
 
     // This notification occurs that first time that a challenge is solved.
     // If the user choose to continue playing with the challenge, there is no subsequent feedback.
     // removeListener not needed.
+    var faceAnimation;
     scene.challengeSolvedEmitter.addListener( function() {
 
       refreshButton.visible = false;
       nextButton.visible = true;
 
+      // ding!
       gameAudioPlayer.correctAnswer();
 
       // Show face node, then fade it out.
       // The design requirement was 'like Arithmetic, but slightly longer'.
       faceNode.opacity = FACE_OPACITY;
       faceNode.visible = true;
-      var faceAnimation = new OpacityTo( faceNode, {
+      faceAnimation = new OpacityTo( faceNode, {
         endOpacity: 0,
         delay: 1000,
         duration: 1200, // fade out time, ms
         easing: TWEEN.Easing.Linear.None,
         onStart: function() { faceNode.visible = true; },
-        onComplete: function() { faceNode.visible = false; }
+        onComplete: function() { faceNode.visible = false; },
+        onStop: function() { faceNode.visible = false; }
       } );
       faceAnimation.start( phet.joist.elapsedTime );
     } );
