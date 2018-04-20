@@ -18,18 +18,17 @@ define( function( require ) {
   /**
    * Form: ax + b = mx + n
    * These letters correspond to the design specification, see
-   * https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo/edit.
+   * https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo
    *
    * @param {number} x
    * @param {Fraction} a
    * @param {Fraction} b
    * @param {Fraction} m
    * @param {Fraction} n
-   * @param {string} debugOrigin - identifies the level, type and form of the challenge
-   * @param {string} debugDerivation - identifies the values derived by the ChallengeGenerator
+   * @param {string} debugDerivation - derivation details provided by ChallengeGenerator, contains RichText markup
    * @constructor
    */
-  function Challenge( x, a, b, m, n, debugOrigin, debugDerivation ) {
+  function Challenge( x, a, b, m, n, debugDerivation ) {
 
     assert && assert( Util.isInteger( x ), 'invalid x: ' + x );
     assert && assert( a instanceof Fraction && a.isReduced(), 'invalid a: ' + a );
@@ -44,8 +43,11 @@ define( function( require ) {
     this.m = m;
     this.n = n;
 
-    // @public (read-only)
-    this.debugOrigin = debugOrigin;
+    // @public (read-only) details about how the challenge was derived, for debugging.
+    // With the 'showAnswers' query parameter, this information is displayed in the sim.
+    // This information is provided by the ChallengeGenerator, contains RichText markup,
+    // and corresponds to the challenge specification in the design document, see
+    // https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo
     this.debugDerivation = debugDerivation;
   }
 

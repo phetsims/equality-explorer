@@ -15,7 +15,7 @@ define( function( require ) {
   var RichText = require( 'SCENERY/nodes/RichText' );
 
   // constants
-  var DEFAULT_FONT = new PhetFont( 16 );
+  var DEFAULT_FONT = new PhetFont( 14 );
   var RICH_TEXT_SPACE = '\u00A0'; // workaround for https://github.com/phetsims/scenery/issues/769
 
   /**
@@ -34,12 +34,7 @@ define( function( require ) {
     RichText.call( this, RICH_TEXT_SPACE, options );
 
     challengeProperty.link( function( challenge ) {
-      if ( challenge ) {
-        self.text = '<b>Challenge debug:</b><br>' + challenge.debugOrigin + '<br>' + challenge.debugDerivation;
-      }
-      else {
-        self.text = RICH_TEXT_SPACE;
-      }
+      self.text = ( challenge ? challenge.debugDerivation : RICH_TEXT_SPACE );
     } );
   }
 

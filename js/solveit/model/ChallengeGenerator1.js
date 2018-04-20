@@ -95,8 +95,9 @@ define( function( require ) {
       assert && assert( a !== 0, 'a is 0' );
       assert && assert( c !== 0, 'c is 0' );
 
-      var debugOrigin = 'level 1, type 1, ax = c';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, c=a*x={{c}}', {
+      // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
+      var pattern = 'level 1, type 1, ax = c<br>x = {{x}}<br>a = {{a}}<br>c = a*x = {{c}}';
+      var debugDerivation = StringUtils.fillIn( pattern, {
         x: x,
         a: a,
         c: c
@@ -106,7 +107,7 @@ define( function( require ) {
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.ZERO,
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugOrigin, debugDerivation );
+        debugDerivation );
     },
 
     /**
@@ -130,9 +131,9 @@ define( function( require ) {
       assert && assert( x !== 0, 'x is 0' );
       assert && assert( b !== 0, 'b is 0' );
 
-      // derivation that corresponds to design doc
-      var debugOrigin = 'level 1, type 2, x + b = c';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}}, b={{b}}, c=x+b={{c}}', {
+      // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
+      var pattern = 'level 1, type 2, x + b = c<br>x = {{x}}<br>b = {{b}}<br>c = x + b = {{c}}';
+      var debugDerivation = StringUtils.fillIn( pattern, {
         x: x,
         b: b,
         c: c
@@ -142,7 +143,7 @@ define( function( require ) {
       return new Challenge( x,
         Fraction.fromInteger( 1 ), Fraction.fromInteger( b ),
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugOrigin, debugDerivation );
+        debugDerivation );
     },
 
     /**
@@ -173,9 +174,9 @@ define( function( require ) {
       assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
       this.xPrevious = x;
 
-      // derivation that corresponds to design doc
-      var debugOrigin = 'level 1, type 3, x/d = c';
-      var debugDerivation = StringUtils.fillIn( 'c={{c}}, d={{d}}, x=c*d={{x}} ', {
+      // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
+      var pattern = 'level 1, type 3, x/d = c<br>c = {{c}}<br>d = {{d}}<br>x = c*d = {{x}} ';
+      var debugDerivation = StringUtils.fillIn( pattern, {
         x: x,
         c: c,
         d: d
@@ -185,7 +186,7 @@ define( function( require ) {
       return new Challenge( x,
         new Fraction( 1, d ), Fraction.ZERO,
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugOrigin, debugDerivation );
+        debugDerivation );
     }
   } );
 } );

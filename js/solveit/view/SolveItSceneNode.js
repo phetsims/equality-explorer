@@ -195,7 +195,7 @@ define( function( require ) {
     if ( EqualityExplorerQueryParameters.showAnswers ) {
       children.push( new DebugChallengeNode( scene.challengeProperty, {
         left: snapshotsAccordionBox.left,
-        top: snapshotsAccordionBox.bottom + 25
+        top: snapshotsAccordionBox.bottom + 5
       } ) );
     }
 

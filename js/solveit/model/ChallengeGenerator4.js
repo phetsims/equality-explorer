@@ -63,9 +63,9 @@ define( function( require ) {
       assert && assert( m !== 0, 'm is 0' );
       assert && assert( m !== a, 'm === a: ' + m );
 
-      // derivation that corresponds to design doc
-      var debugOrigin = 'level 4, ax + b = mx + n';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, b={{b}}, m={{m}}, n=(a–m)x+b={{n}}', {
+      // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
+      var pattern = 'level 4, ax + b = mx + n<br>x = {{x}}<br>a = {{a}}<br>b = {{b}}<br>m = {{m}}<br>n = (a–m)x + b = {{n}}';
+      var debugDerivation = StringUtils.fillIn( pattern, {
         x: x,
         a: a,
         b: b,
@@ -77,7 +77,7 @@ define( function( require ) {
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.fromInteger( b ),
         Fraction.fromInteger( m ), Fraction.fromInteger( n ),
-        debugOrigin, debugDerivation );
+        debugDerivation );
     }
   } );
 } );

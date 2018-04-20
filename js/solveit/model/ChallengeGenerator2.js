@@ -58,9 +58,9 @@ define( function( require ) {
       assert && assert( a !== 0, 'a is 0' );
       assert && assert( b !== 0, 'b is 0' );
 
-      // derivation that corresponds to design doc
-      var debugOrigin = 'level 2, ax + b = c';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}}, a={{a}}, b={{b}}, c=ax+b={{c}}', {
+      // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
+      var pattern = 'level 2, ax + b = c<br>x = {{x}}<br>a = {{a}}<br>b = {{b}}<br>c = ax + b = {{c}}';
+      var debugDerivation = StringUtils.fillIn( pattern, {
         x: x,
         a: a,
         b: b,
@@ -71,7 +71,7 @@ define( function( require ) {
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.fromInteger( b ),
         Fraction.ZERO, Fraction.fromInteger( c ),
-        debugOrigin, debugDerivation );
+        debugDerivation );
     }
   } );
 } );

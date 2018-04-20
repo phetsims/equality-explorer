@@ -78,9 +78,9 @@ define( function( require ) {
       assert && assert( a % d !== 0, 'a/d reduces to an integer, a=' + a + ', d=' + d );
       assert && assert( b !== 0, 'b is 0' );
 
-      // derivation that corresponds to design doc
-      var debugOrigin = 'level 3, type 1, (a/d)x + b = c';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}}, d={{d}}, a={{a}}, b={{b}}, c=(a/d)x+b={{c}}', {
+      // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
+      var pattern = 'level 3, type 1, (a/d)x + b = c<br>x = {{x}}<br>d = {{d}}<br>a = {{a}}<br>b = {{b}}, c = (a/d)x + b = {{c}}';
+      var debugDerivation = StringUtils.fillIn( pattern, {
         x: x,
         a: a,
         b: b,
@@ -89,10 +89,8 @@ define( function( require ) {
       } );
 
       // (a/d)x + b = 0x + c
-      return new Challenge( x,
-        new Fraction( a, d ).reduce(), Fraction.fromInteger( b ),
-        Fraction.ZERO, c,
-        debugOrigin, debugDerivation );
+      return new Challenge( x, new Fraction( a, d ).reduce(), Fraction.fromInteger( b ), Fraction.ZERO, c,
+        debugDerivation );
     },
 
     /**
@@ -124,9 +122,9 @@ define( function( require ) {
       assert && assert( b !== 0, 'b is 0' );
       assert && assert( b % d !== 0, 'b/d reduces to an integer, b=' + b + ', d=' + d );
 
-      // derivation that corresponds to design doc
-      var debugOrigin = 'level 3, type 2, (a/d)x + (b/d) = c';
-      var debugDerivation = StringUtils.fillIn( 'x={{x}}, d={{d}}, a={{a}}, b={{b}}, c=(ax+b)/d={{c}}', {
+      // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
+      var pattern = 'level 3, type 2, (a/d)x + (b/d) = c<br>x = {{x}}<br>d = {{d}}<br>a = {{a}}<br>b = {{b}}<br>c = (ax + b)/d = {{c}}';
+      var debugDerivation = StringUtils.fillIn( pattern, {
         x: x,
         a: a,
         b: b,
@@ -138,7 +136,7 @@ define( function( require ) {
       return new Challenge( x,
         new Fraction( a, d ).reduce(), new Fraction( b, d ).reduce(),
         Fraction.ZERO, c,
-        debugOrigin, debugDerivation );
+        debugDerivation );
     }
   } );
 } );
