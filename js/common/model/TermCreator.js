@@ -305,7 +305,6 @@ define( function( require ) {
      */
     putTermOnPlate: function( term, cell ) {
       assert && assert( !this.termsOnPlate.contains( term ), 'term already on plate: ' + term );
-      phet.log && phet.log( 'TermCreator.putTermOnPlate: ' + term );
 
       if ( cell === undefined && this.combineLikeTermsEnabled ) {
         cell = this.likeTermsCell;
@@ -331,7 +330,6 @@ define( function( require ) {
     removeTermFromPlate: function( term ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
       assert && assert( this.termsOnPlate.contains( term ), 'term not on plate: ' + term );
-      phet.log && phet.log( 'TermCreator.removeTermFromPlate: ' + term );
 
       // ORDER IS VERY IMPORTANT HERE!
       this.plate.removeTerm( term );
