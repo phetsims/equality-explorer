@@ -34,5 +34,11 @@ define( function( require ) {
 
   equalityExplorer.register( 'UniversalOperation', UniversalOperation );
 
-  return inherit( Object, UniversalOperation );
+  return inherit( Object, UniversalOperation, {
+
+    // @public do not rely on the format!
+    toString: function() {
+      return 'operator=' + this.operator + ', operand=' + this.operand;
+    }
+  } );
 } );
