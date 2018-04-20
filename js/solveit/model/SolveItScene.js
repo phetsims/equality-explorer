@@ -79,7 +79,10 @@ define( function( require ) {
     this.challengeSolvedEmitter = new Emitter();
 
     // When a universal operation is completed, determine if the challenge is solved
-    this.operationCompletedEmitter.addListener( function() {
+    this.operationCompletedEmitter.addListener( function( operation ) {
+
+      assert && assert( self.scale.angleProperty.value === 0,
+        'scale is not balanced after applying operation ' + operation );
 
       // challenge is in a 'solved' state if x has been isolated on the scale.
       var solved = self.isXIsolated();
