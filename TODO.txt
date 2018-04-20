@@ -1,6 +1,7 @@
 TODO items for equality-explorer
 
-- should universal operator control and EquationPanel use same font size? former is currently smaller
+- remove '× 0' operation in Solve It! screen?
+- should universal operator control and EquationPanel use same font size? Sizes are 24 and 28 respectively.
 
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
