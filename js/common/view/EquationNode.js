@@ -14,6 +14,7 @@ define( function( require ) {
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
@@ -148,23 +149,23 @@ define( function( require ) {
   function getRelationalOperator( leftTermCreators, rightTermCreators, font ) {
 
     // evaluate the left side
-    var leftWeight = 0;
+    var leftWeight = Fraction.fromInteger( 0 );
     for ( var i = 0; i < leftTermCreators.length; i++ ) {
-      leftWeight += leftTermCreators[ i ].weightOnPlateProperty.value.getValue();
+      leftWeight = leftWeight.plus( leftTermCreators[ i ].weightOnPlateProperty.value );
     }
 
     // evaluate the right side
-    var rightWeight = 0;
+    var rightWeight = Fraction.fromInteger( 0 );
     for ( i = 0; i < rightTermCreators.length; i++ ) {
-      rightWeight += rightTermCreators[ i ].weightOnPlateProperty.value.getValue();
+      rightWeight = rightWeight.plus( rightTermCreators[ i ].weightOnPlateProperty.value );
     }
 
     // determine the operator that describes the relationship between left and right sides
     var relationalOperator = null;
-    if ( leftWeight < rightWeight ) {
+    if ( leftWeight.isLessThan( rightWeight ) ) {
       relationalOperator = MathSymbols.LESS_THAN;
     }
-    else if ( leftWeight > rightWeight ) {
+    else if ( rightWeight.isLessThan( leftWeight ) ) {
       relationalOperator = MathSymbols.GREATER_THAN;
     }
     else {

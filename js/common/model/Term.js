@@ -95,7 +95,7 @@ define( function( require ) {
      * @public
      */
     isInverseTerm: function( term ) {
-      return ( this.isLikeTerm( term ) && ( this.significantValue.getValue() === -term.significantValue.getValue() ) );
+      return ( this.isLikeTerm( term ) && ( this.significantValue.plus( term.significantValue ).getValue() === 0 ) );
     },
 
     /**

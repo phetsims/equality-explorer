@@ -90,8 +90,7 @@ define( function( require ) {
         // E.g. if the operand is '5x', change the operand to '5'.
         var currentCoefficient = currentOperand.coefficient;
         adjustedOperand = _.find( scene.operands, function( operand ) {
-          return ( operand instanceof ConstantTerm ) &&
-                 ( operand.constantValue.getValue() === currentCoefficient.getValue() );
+          return ( operand instanceof ConstantTerm ) && ( operand.constantValue.equals( currentCoefficient ) );
         } );
         assert && assert( adjustedOperand, 'expected to find constant ' + currentCoefficient );
         scene.operandProperty.value = adjustedOperand;

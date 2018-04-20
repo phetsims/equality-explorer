@@ -110,7 +110,7 @@ define( function( require ) {
       function( leftWeight, rightWeight ) {
 
         // compute the weight difference between the 2 plates
-        var weightDelta = ( rightWeight.getValue() - leftWeight.getValue() );
+        var weightDelta = rightWeight.minus( leftWeight ).getValue();
 
         // constrain to maxWeight so the scale bottoms out
         if ( weightDelta > options.maxWeight ) {
