@@ -123,7 +123,7 @@ define( function( require ) {
       assert && assert( b % d !== 0, 'b/d reduces to an integer, b=' + b + ', d=' + d );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var pattern = 'level 3, type 2, (a/d)x + (b/d) = c<br>x = {{x}}<br>d = {{d}}<br>a = {{a}}<br>b = {{b}}<br>c = (ax + b)/d = {{c}}';
+      var pattern = 'level 3, type 2, (a/d)x + b/d = c<br>x = {{x}}<br>d = {{d}}<br>a = {{a}}<br>b = {{b}}<br>c = (ax + b)/d = {{c}}';
       var debugDerivation = StringUtils.fillIn( pattern, {
         x: x,
         a: a,

@@ -96,7 +96,7 @@ define( function( require ) {
       assert && assert( c !== 0, 'c is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var pattern = 'level 1, type 1, ax = c<br>x = {{x}}<br>a = {{a}}<br>c = a*x = {{c}}';
+      var pattern = 'level 1, type 1, ax = c<br>x = {{x}}<br>a = {{a}}<br>c = a * x = {{c}}';
       var debugDerivation = StringUtils.fillIn( pattern, {
         x: x,
         a: a,
@@ -175,7 +175,7 @@ define( function( require ) {
       this.xPrevious = x;
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var pattern = 'level 1, type 3, x/d = c<br>c = {{c}}<br>d = {{d}}<br>x = c*d = {{x}} ';
+      var pattern = 'level 1, type 3, x/d = c<br>c = {{c}}<br>d = {{d}}<br>x = c * d = {{x}} ';
       var debugDerivation = StringUtils.fillIn( pattern, {
         x: x,
         c: c,
