@@ -12,6 +12,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -36,16 +37,17 @@ define( function( require ) {
       equationNodeOptions: null,
 
       // supertype options
-      xMargin: 0,
-      yMargin: 0,
       fill: null,
       stroke: null,
-      resize: false
+      resize: false,
+      cornerRadius: EqualityExplorerConstants.CORNER_RADIUS
 
     }, options );
 
-    // use an invisible rectangle to enforce fixed content size
-    var invisibleRectangle = new Rectangle( 0, 0, options.contentWidth, options.contentHeight );
+    // use an invisible rectangle to enforce fixed content size, stroke 'red' with ?dev
+    var invisibleRectangle = new Rectangle( 0, 0, options.contentWidth, options.contentHeight, {
+      stroke: phet.chipper.queryParameters.dev ? 'red' : null
+    } );
 
     var equationNode = new EquationNode( leftTermCreators, rightTermCreators, options.equationNodeOptions );
 

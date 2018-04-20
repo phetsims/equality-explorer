@@ -51,7 +51,9 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 8,
       buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5
+      buttonTouchAreaYDilation: 5,
+      cornerRadius: EqualityExplorerConstants.CORNER_RADIUS
+
     }, options );
 
     assert && assert( options.maxWidth === undefined, 'VariableAccordionBox sets maxWidth' );

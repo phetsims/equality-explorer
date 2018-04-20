@@ -50,6 +50,9 @@ define( function( require ) {
     SUM_TO_ZERO_BIG_FONT_SIZE: 40, // for sum-to-zero animation that involves a 'big' term on the scale
     SUM_TO_ZERO_SMALL_FONT_SIZE: 24, // for sum-to-zero animation that involves a 'small' term on the scale
 
+    // for AccordionBoxes and Panels
+    CORNER_RADIUS: 3,
+
     // Largest integer allowed for numerator or denominator. Anything larger results in an error dialog.
     // See https://github.com/phetsims/equality-explorer/issues/48
     LARGEST_INTEGER: EqualityExplorerQueryParameters.largestInteger,

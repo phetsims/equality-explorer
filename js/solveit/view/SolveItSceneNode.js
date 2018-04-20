@@ -44,6 +44,7 @@ define( function( require ) {
   var LEVEL_FONT = new PhetFont( 20 );
   var NEXT_BUTTON_FONT = new PhetFont( 30 );
   var FACE_OPACITY = 0.8;
+  var EQUATION_PANEL_CONTENT_WIDTH = 350;
 
   /**
    * @param {SolveItScene} scene - the scene associated with this Node
@@ -86,14 +87,27 @@ define( function( require ) {
 
     // Challenge equation
     var challengePanelOptions = {
-      contentWidth: 540, // determined empirically, based on design mockups
+      contentWidth: EQUATION_PANEL_CONTENT_WIDTH, // determined empirically, based on design mockups
       stroke: null,
       fill: null,
+      xMargin: 5,
+      yMargin: 0,
       equationNodeOptions: { updateEnabled: false }, // static equation, to display the challenge
       centerX: scene.scale.location.x,
       top: statusBar.bottom + 15
     };
     var challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
+
+    // Equation that reflects what is currently on the scale
+    var equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, {
+      contentWidth: EQUATION_PANEL_CONTENT_WIDTH,
+      xMargin: 100,
+      yMargin: 0,
+      stroke: 'black',
+      fill: 'white',
+      centerX: challengePanel.centerX,
+      top: challengePanel.bottom + 10
+    } );
 
     // 'Solve for x'
     var solveForXText = StringUtils.fillIn( solveForString, {
@@ -101,18 +115,9 @@ define( function( require ) {
     } );
     var solveForXNode = new RichText( solveForXText, {
       font: new PhetFont( { size: 20, weight: 'bold' } ),
-      left: challengePanel.left,
+      left: equationPanel.left,
       centerY: challengePanel.centerY,
-      maxWidth: 125 // determined empirically
-    } );
-
-    // Equation that reflects what is currently on the scale
-    var equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, {
-      contentWidth: challengePanel.width, // determined empirically, based on design mockups
-      stroke: 'black',
-      fill: 'white',
-      centerX: challengePanel.centerX,
-      top: challengePanel.bottom + 15
+      maxWidth: ( equationPanel.width - challengePanel.width ) / 2
     } );
 
     // Layer when universal operation animation occurs
@@ -122,7 +127,7 @@ define( function( require ) {
     // Universal Operation control
     var universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
       centerX: scene.scale.location.x, // centered on the scale
-      top: equationPanel.bottom + 10
+      top: equationPanel.bottom + 15
     } );
 
     // Scale
@@ -144,7 +149,7 @@ define( function( require ) {
       iconScale: 0.6,
       xMargin: 14,
       yMargin: 7,
-      right: challengePanel.right,
+      right: equationPanel.right,
       centerY: challengePanel.centerY,
       listener: scene.nextChallenge.bind( scene )
     } );

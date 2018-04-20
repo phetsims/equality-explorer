@@ -60,7 +60,8 @@ define( function( require ) {
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5,
       contentXMargin: 10,
-      contentYMargin: 10
+      contentYMargin: 10,
+      cornerRadius: EqualityExplorerConstants.CORNER_RADIUS
 
     }, options );
 

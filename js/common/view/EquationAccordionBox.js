@@ -45,7 +45,9 @@ define( function( require ) {
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5,
       contentXMargin: 20,
-      contentYMargin: 8
+      contentYMargin: 8,
+      cornerRadius: EqualityExplorerConstants.CORNER_RADIUS
+
     }, options );
 
     assert && assert( options.maxWidth === undefined, 'EquationAccordionBox sets maxWidth' );
