@@ -1,7 +1,6 @@
 TODO items for equality-explorer
 
-Solve It! screen
-- intermediate steps of applying universal operator and restoring a snapshot are resulting in false 'solved' results
+- should universal operator control and EquationPanel use same font size? former is currently smaller
 
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
