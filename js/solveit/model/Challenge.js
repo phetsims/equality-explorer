@@ -69,7 +69,7 @@ define( function( require ) {
     // @private
     fractionToString: function( f ) {
       assert && assert( f instanceof Fraction, 'invalid f: ' + f );
-      return ( f.isInteger() ? f.getValue() : f.toString() );
+      return ( f.isInteger() ? f.getValue() : ( f.numerator + '/' + f.denominator ) );
     }
   } );
 } ); 
