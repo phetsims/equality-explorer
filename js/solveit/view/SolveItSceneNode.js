@@ -80,7 +80,7 @@ define( function( require ) {
 
     // Bar across the top of the screen
     var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode, scene.scoreProperty, {
-      spacing: 20,
+      spacing: 10,
       barFill: 'rgb( 252, 150, 152 )',
       backButtonListener: backButtonListener
     } );
@@ -101,7 +101,7 @@ define( function( require ) {
     // Equation that reflects what is currently on the scale
     var equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, {
       contentWidth: EQUATION_PANEL_CONTENT_WIDTH,
-      xMargin: 100,
+      xMargin: 110,
       yMargin: 0,
       stroke: 'black',
       fill: 'white',
@@ -115,9 +115,9 @@ define( function( require ) {
     } );
     var solveForXNode = new RichText( solveForXText, {
       font: new PhetFont( { size: 20, weight: 'bold' } ),
-      left: equationPanel.left,
+      right: challengePanel.left,
       centerY: challengePanel.centerY,
-      maxWidth: ( equationPanel.width - challengePanel.width ) / 2
+      maxWidth: challengePanel.left - layoutBounds.minX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
     // Layer when universal operation animation occurs
