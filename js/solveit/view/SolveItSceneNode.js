@@ -293,7 +293,7 @@ define( function( require ) {
         onComplete: function() {
           faceNode.visible = false;
           nextButton.visible = true;
-        },
+        }
       } );
       faceAnimation.start( phet.joist.elapsedTime );
     } );
