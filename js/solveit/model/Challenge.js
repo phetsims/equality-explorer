@@ -32,8 +32,8 @@ define( function( require ) {
 
     assert && assert( Util.isInteger( x ), 'invalid x: ' + x );
     assert && assert( a instanceof Fraction && a.isReduced(), 'invalid a: ' + a );
-    assert && assert( b instanceof Fraction && a.isReduced(), 'invalid b: ' + b );
-    assert && assert( m instanceof Fraction && a.isReduced(), 'invalid m: ' + m );
+    assert && assert( b instanceof Fraction && b.isReduced(), 'invalid b: ' + b );
+    assert && assert( m instanceof Fraction && m.isReduced(), 'invalid m: ' + m );
     assert && assert( n instanceof Fraction && n.isReduced(), 'invalid n: ' + n );
 
     // @public (read-only)
