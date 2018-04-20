@@ -164,7 +164,7 @@ define( function( require ) {
       xMargin: 12,
       yMargin: 8,
       centerX: scene.scale.location.x,
-      top: universalOperationControl.bottom + 45, // determined empirically
+      centerY: scaleNode.top, // centered on the top of the scale's grid
       listener: scene.nextChallenge.bind( scene )
     } );
 
