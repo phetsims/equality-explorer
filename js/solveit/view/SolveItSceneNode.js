@@ -268,7 +268,6 @@ define( function( require ) {
       refreshButton.visible = true;
       nextButton.visible = false;
       faceNode.visible = false;
-      faceAnimation && faceAnimation.stop();
     } );
 
     // This notification occurs that first time that a challenge is solved.
@@ -278,7 +277,6 @@ define( function( require ) {
     scene.challengeSolvedEmitter.addListener( function() {
 
       refreshButton.visible = false;
-      nextButton.visible = true;
 
       // ding!
       gameAudioPlayer.correctAnswer();
@@ -292,9 +290,10 @@ define( function( require ) {
         delay: 1000,
         duration: 1200, // fade out time, ms
         easing: TWEEN.Easing.Linear.None,
-        onStart: function() { faceNode.visible = true; },
-        onComplete: function() { faceNode.visible = false; },
-        onStop: function() { faceNode.visible = false; }
+        onComplete: function() {
+          faceNode.visible = false;
+          nextButton.visible = true;
+        },
       } );
       faceAnimation.start( phet.joist.elapsedTime );
     } );
