@@ -45,8 +45,8 @@ define( function( require ) {
   var LEVEL_FONT = new PhetFont( 20 );
   var NEXT_BUTTON_FONT = new PhetFont( 30 );
   var EQUATION_PANEL_OPTIONS = {
-    contentWidth: 350,
-    xMargin: 8,
+    contentWidth: 360,
+    xMargin: 10,
     yMargin: 0
   };
 
