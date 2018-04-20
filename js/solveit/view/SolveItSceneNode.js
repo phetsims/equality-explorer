@@ -288,7 +288,7 @@ define( function( require ) {
       faceAnimation = new OpacityTo( faceNode, {
         endOpacity: 0,
         delay: 1000,
-        duration: 1200, // fade out time, ms
+        duration: 800, // fade out time, ms
         easing: TWEEN.Easing.Linear.None,
         onComplete: function() {
           faceNode.visible = false;
