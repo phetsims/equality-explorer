@@ -44,7 +44,6 @@ define( function( require ) {
   // constants
   var LEVEL_FONT = new PhetFont( 20 );
   var NEXT_BUTTON_FONT = new PhetFont( 30 );
-  var FACE_OPACITY = 0.8;
   var EQUATION_PANEL_OPTIONS = {
     contentWidth: 350,
     xMargin: 8,
@@ -170,7 +169,6 @@ define( function( require ) {
 
     // Smiley face, displayed when the challenge has been solved
     var faceNode = new FaceNode( 225, {
-      opacity: FACE_OPACITY,
       centerX: scaleNode.centerX,
       top: universalOperationControl.bottom + 25
     } );
@@ -281,9 +279,8 @@ define( function( require ) {
       // ding!
       gameAudioPlayer.correctAnswer();
 
-      // Show face node, then fade it out.
-      // The design requirement was 'like Arithmetic, but slightly longer'.
-      faceNode.opacity = FACE_OPACITY;
+      // Show face node, fade it out, then show the Next button.
+      faceNode.opacity = 0.8;
       faceNode.visible = true;
       faceAnimation = new OpacityTo( faceNode, {
         endOpacity: 0,
