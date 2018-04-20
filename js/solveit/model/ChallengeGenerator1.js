@@ -17,6 +17,20 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
+  // strings (debug)
+  var PATTERN1 = 'level 1, type 1, ax = c<br>' +
+                 'x = {{x}}<br>' +
+                 'a = {{a}}<br>' +
+                 'c = a * x = {{c}}';
+  var PATTERN2 = 'level 1, type 2, x + b = c<br>' +
+                 'x = {{x}}<br>' +
+                 'b = {{b}}<br>' +
+                 'c = x + b = {{c}}';
+  var PATTERN3 = 'level 1, type 3, x/d = c<br>' +
+                 'c = {{c}}<br>' +
+                 'd = {{d}}<br>' +
+                 'x = c * d = {{x}} ';
+
   // constants
   var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
   var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
@@ -96,8 +110,7 @@ define( function( require ) {
       assert && assert( c !== 0, 'c is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var pattern = 'level 1, type 1, ax = c<br>x = {{x}}<br>a = {{a}}<br>c = a * x = {{c}}';
-      var debugDerivation = StringUtils.fillIn( pattern, {
+      var debugDerivation = StringUtils.fillIn( PATTERN1, {
         x: x,
         a: a,
         c: c
@@ -132,8 +145,7 @@ define( function( require ) {
       assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var pattern = 'level 1, type 2, x + b = c<br>x = {{x}}<br>b = {{b}}<br>c = x + b = {{c}}';
-      var debugDerivation = StringUtils.fillIn( pattern, {
+      var debugDerivation = StringUtils.fillIn( PATTERN2, {
         x: x,
         b: b,
         c: c
@@ -175,8 +187,7 @@ define( function( require ) {
       this.xPrevious = x;
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var pattern = 'level 1, type 3, x/d = c<br>c = {{c}}<br>d = {{d}}<br>x = c * d = {{x}} ';
-      var debugDerivation = StringUtils.fillIn( pattern, {
+      var debugDerivation = StringUtils.fillIn( PATTERN3, {
         x: x,
         c: c,
         d: d

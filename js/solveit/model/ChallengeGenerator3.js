@@ -17,6 +17,20 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
+  // strings (debug)
+  var PATTERN1 = 'level 3, type 1, (a/d)x + b = c<br>' +
+                 'x = {{x}}<br>' +
+                 'd = {{d}}<br>' +
+                 'a = {{a}}<br>' +
+                 'b = {{b}}<br>' +
+                 'c = (a/d)x + b = {{c}}';
+  var PATTERN2 = 'level 3, type 2, (a/d)x + b/d = c<br>' +
+                 'x = {{x}}<br>' +
+                 'd = {{d}}<br>' +
+                 'a = {{a}}<br>' +
+                 'b = {{b}}<br>' +
+                 'c = (ax + b)/d = {{c}}';
+
   // constants
   var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
   var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
@@ -79,8 +93,7 @@ define( function( require ) {
       assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var pattern = 'level 3, type 1, (a/d)x + b = c<br>x = {{x}}<br>d = {{d}}<br>a = {{a}}<br>b = {{b}}, c = (a/d)x + b = {{c}}';
-      var debugDerivation = StringUtils.fillIn( pattern, {
+      var debugDerivation = StringUtils.fillIn( PATTERN1, {
         x: x,
         a: a,
         b: b,
@@ -123,8 +136,7 @@ define( function( require ) {
       assert && assert( b % d !== 0, 'b/d reduces to an integer, b=' + b + ', d=' + d );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var pattern = 'level 3, type 2, (a/d)x + b/d = c<br>x = {{x}}<br>d = {{d}}<br>a = {{a}}<br>b = {{b}}<br>c = (ax + b)/d = {{c}}';
-      var debugDerivation = StringUtils.fillIn( pattern, {
+      var debugDerivation = StringUtils.fillIn( PATTERN2, {
         x: x,
         a: a,
         b: b,

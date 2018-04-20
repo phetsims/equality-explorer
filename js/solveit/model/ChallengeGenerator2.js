@@ -17,6 +17,13 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
+  // strings (debug)
+  var PATTERN = 'level 2, ax + b = c<br>' +
+                'x = {{x}}<br>' +
+                'a = {{a}}<br>' +
+                'b = {{b}}<br>' +
+                'c = ax + b = {{c}}';
+
   // constants
   var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
   var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
@@ -59,8 +66,7 @@ define( function( require ) {
       assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var pattern = 'level 2, ax + b = c<br>x = {{x}}<br>a = {{a}}<br>b = {{b}}<br>c = ax + b = {{c}}';
-      var debugDerivation = StringUtils.fillIn( pattern, {
+      var debugDerivation = StringUtils.fillIn( PATTERN, {
         x: x,
         a: a,
         b: b,
