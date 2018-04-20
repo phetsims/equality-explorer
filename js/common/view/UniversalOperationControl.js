@@ -48,6 +48,7 @@ define( function( require ) {
       symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
       integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
       fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
+      animationDistance: 55,
 
       // supertype options
       spacing: 15
@@ -226,6 +227,7 @@ define( function( require ) {
       var startY = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
 
       var animation = new UniversalOperationAnimation( operation, {
+        distance: options.animationDistance,
         symbolFont: options.symbolFont,
         integerFont: options.integerFont,
         fractionFont: options.fractionFont,

@@ -125,6 +125,7 @@ define( function( require ) {
     //TODO clicking in top/bottom areas of value is not working, was working in 1.0.0-dev.92
     // Universal Operation control
     var universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
+      animationDistance: 70,
       centerX: scene.scale.location.x, // centered on the scale
       top: equationPanel.bottom + 15
     } );
