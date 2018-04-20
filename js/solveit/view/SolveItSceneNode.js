@@ -41,10 +41,15 @@ define( function( require ) {
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
+  var STATUS_BAR_FILL = 'rgb( 252, 150, 152 )';
   var LEVEL_FONT = new PhetFont( 20 );
   var NEXT_BUTTON_FONT = new PhetFont( 30 );
   var FACE_OPACITY = 0.8;
-  var EQUATION_PANEL_CONTENT_WIDTH = 350;
+  var EQUATION_PANEL_OPTIONS = {
+    contentWidth: 350,
+    xMargin: 8,
+    yMargin: 0
+  };
 
   /**
    * @param {SolveItScene} scene - the scene associated with this Node
@@ -80,42 +85,37 @@ define( function( require ) {
 
     // Bar across the top of the screen
     var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode, scene.scoreProperty, {
-      spacing: 10,
-      barFill: 'rgb( 252, 150, 152 )',
+      spacing: 20,
+      barFill: STATUS_BAR_FILL,
       backButtonListener: backButtonListener
     } );
 
     // Challenge equation
-    var challengePanelOptions = {
-      contentWidth: EQUATION_PANEL_CONTENT_WIDTH, // determined empirically, based on design mockups
-      stroke: null,
+    var challengePanelOptions = _.extend( {}, EQUATION_PANEL_OPTIONS, {
+      stroke: STATUS_BAR_FILL,
       fill: null,
-      xMargin: 5,
-      yMargin: 0,
       equationNodeOptions: { updateEnabled: false }, // static equation, to display the challenge
       centerX: scene.scale.location.x,
       top: statusBar.bottom + 15
-    };
+    } );
     var challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
 
     // Equation that reflects what is currently on the scale
-    var equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, {
-      contentWidth: EQUATION_PANEL_CONTENT_WIDTH,
-      xMargin: 110,
-      yMargin: 0,
-      stroke: 'black',
-      fill: 'white',
-      centerX: challengePanel.centerX,
-      top: challengePanel.bottom + 10
-    } );
+    var equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators,
+      _.extend( {}, EQUATION_PANEL_OPTIONS, {
+        stroke: 'black',
+        fill: 'white',
+        centerX: challengePanel.centerX,
+        top: challengePanel.bottom + 10
+      } ) );
 
     // 'Solve for x'
     var solveForXText = StringUtils.fillIn( solveForString, {
       variable: MathSymbolFont.getRichTextMarkup( xString )
     } );
     var solveForXNode = new RichText( solveForXText, {
-      font: new PhetFont( { size: 20, weight: 'bold' } ),
-      right: challengePanel.left,
+      font: new PhetFont( { size: 24, weight: 'bold' } ),
+      right: challengePanel.left - 10,
       centerY: challengePanel.centerY,
       maxWidth: challengePanel.left - layoutBounds.minX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
@@ -149,7 +149,7 @@ define( function( require ) {
       iconScale: 0.6,
       xMargin: 14,
       yMargin: 7,
-      right: equationPanel.right,
+      left: challengePanel.right + 10,
       centerY: challengePanel.centerY,
       listener: scene.nextChallenge.bind( scene )
     } );
