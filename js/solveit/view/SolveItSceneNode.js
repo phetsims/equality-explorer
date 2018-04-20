@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var Color = require( 'SCENERY/util/Color' );
   var DebugChallengeNode = require( 'EQUALITY_EXPLORER/solveit/view/DebugChallengeNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -41,7 +42,6 @@ define( function( require ) {
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
-  var STATUS_BAR_FILL = 'rgb( 252, 150, 152 )';
   var LEVEL_FONT = new PhetFont( 20 );
   var NEXT_BUTTON_FONT = new PhetFont( 30 );
   var FACE_OPACITY = 0.8;
@@ -86,14 +86,14 @@ define( function( require ) {
     // Bar across the top of the screen
     var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode, scene.scoreProperty, {
       spacing: 20,
-      barFill: STATUS_BAR_FILL,
+      barFill: 'rgb( 252, 150, 152 )',
       backButtonListener: backButtonListener
     } );
 
     // Challenge equation
     var challengePanelOptions = _.extend( {}, EQUATION_PANEL_OPTIONS, {
-      stroke: STATUS_BAR_FILL,
-      fill: null,
+      fill: Color.WHITE.withAlpha( 0.5 ),
+      stroke: Color.BLACK.withAlpha( 0.5 ),
       equationNodeOptions: { updateEnabled: false }, // static equation, to display the challenge
       centerX: scene.scale.location.x,
       top: statusBar.bottom + 15
@@ -103,8 +103,8 @@ define( function( require ) {
     // Equation that reflects what is currently on the scale
     var equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators,
       _.extend( {}, EQUATION_PANEL_OPTIONS, {
-        stroke: 'black',
         fill: 'white',
+        stroke: 'black',
         centerX: challengePanel.centerX,
         top: challengePanel.bottom + 10
       } ) );
