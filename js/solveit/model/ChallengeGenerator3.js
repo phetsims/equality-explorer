@@ -103,7 +103,7 @@ define( function( require ) {
       // (a/d)x + b = 0x + c
       return new Challenge( x,
         new Fraction( a, d ).reduce(), Fraction.fromInteger( b ),
-        Fraction.ZERO, c,
+        Fraction.fromInteger( 0 ), c,
         debugDerivation );
     },
 
@@ -146,7 +146,7 @@ define( function( require ) {
       // (a/d)x + (b/d) = 0x + c
       return new Challenge( x,
         new Fraction( a, d ).reduce(), new Fraction( b, d ).reduce(),
-        Fraction.ZERO, c,
+        Fraction.fromInteger( 0 ), c,
         debugDerivation );
     }
   } );

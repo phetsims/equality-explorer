@@ -118,8 +118,8 @@ define( function( require ) {
 
       // ax + 0 = 0x + c
       return new Challenge( x,
-        Fraction.fromInteger( a ), Fraction.ZERO,
-        Fraction.ZERO, Fraction.fromInteger( c ),
+        Fraction.fromInteger( a ), Fraction.fromInteger( 0 ),
+        Fraction.fromInteger( 0 ), Fraction.fromInteger( c ),
         debugDerivation );
     },
 
@@ -154,7 +154,7 @@ define( function( require ) {
       // 1x + b = 0x + c
       return new Challenge( x,
         Fraction.fromInteger( 1 ), Fraction.fromInteger( b ),
-        Fraction.ZERO, Fraction.fromInteger( c ),
+        Fraction.fromInteger( 0 ), Fraction.fromInteger( c ),
         debugDerivation );
     },
 
@@ -195,8 +195,8 @@ define( function( require ) {
 
       // (1/d)x + 0 = 0x + c
       return new Challenge( x,
-        new Fraction( 1, d ), Fraction.ZERO,
-        Fraction.ZERO, Fraction.fromInteger( c ),
+        new Fraction( 1, d ), Fraction.fromInteger( 0 ),
+        Fraction.fromInteger( 0 ), Fraction.fromInteger( c ),
         debugDerivation );
     }
   } );

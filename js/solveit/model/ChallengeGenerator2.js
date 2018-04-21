@@ -76,7 +76,7 @@ define( function( require ) {
       // ax + b = 0x + c
       return new Challenge( x,
         Fraction.fromInteger( a ), Fraction.fromInteger( b ),
-        Fraction.ZERO, Fraction.fromInteger( c ),
+        Fraction.fromInteger( 0 ), Fraction.fromInteger( c ),
         debugDerivation );
     }
   } );
