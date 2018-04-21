@@ -49,6 +49,10 @@ define( function( require ) {
     // and corresponds to the challenge specification in the design document, see
     // https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo
     this.debugDerivation = debugDerivation;
+
+    // verify that the we have an equation, not an inequality
+    assert && assert( a.timesInteger( x ).plus( b ).reduce().equals( m.timesInteger( x ).plus( n ).reduce() ),
+      'challenge is an inequality: ' + this.toString() );
   }
 
   equalityExplorer.register( 'Challenge', Challenge );
