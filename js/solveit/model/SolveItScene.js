@@ -90,6 +90,7 @@ define( function( require ) {
 
       // The first time that the challenge has been solved, award points and notify listeners.
       if ( solved && !self.challengeHasBeenSolved ) {
+        phet.log && phet.log( 'operationCompletedEmitter listener: challenge is solved' );
         self.challengeHasBeenSolved = true;
         self.scoreProperty.value = self.scoreProperty.value + POINTS_PER_CHALLENGE;
         self.challengeSolvedEmitter.emit();
