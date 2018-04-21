@@ -166,7 +166,7 @@ define( function( require ) {
      */
     applyOperation: function( operation ) {
 
-      phet.log && phet.log( 'applyOperation ' + operation );
+      phet.log && phet.log( 'applyOperation: ' + operation );
 
       // Take a snapshot of terms on the scale, so we can undo the operation if necessary.
       var snapshot = this.createSnapshot();
@@ -197,10 +197,10 @@ define( function( require ) {
         if ( termCreatorsZero.length > 0 ) {
           this.sumToZeroEmitter.emit1( termCreatorsZero );
         }
-      }
 
-      // notify listeners
-      this.operationCompletedEmitter.emit( operation );
+        // notify listeners that the operation successfully completed
+        this.operationCompletedEmitter.emit( operation );
+      }
     },
 
     /**
