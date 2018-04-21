@@ -81,6 +81,7 @@ define( function( require ) {
     // When a universal operation is completed, determine if the challenge is solved
     this.operationCompletedEmitter.addListener( function( operation ) {
 
+      // All challenges in the game are equalities, and applying a universal operation should result in an equality.
       assert && assert( self.scale.angleProperty.value === 0,
         'scale is not balanced after applying operation ' + operation );
 
