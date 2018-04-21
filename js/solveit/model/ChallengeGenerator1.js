@@ -101,7 +101,7 @@ define( function( require ) {
     nextType1: function() {
 
       var x = this.randomX( X_VALUES );
-      var a = this.randomValue( A_VALUES, [ 0, 1, -1 ] );
+      var a = this.randomValue( A_VALUES, [ 0, 1 ] );
       var c = a * x;
 
       // Verify that computations meeting design requirements.
