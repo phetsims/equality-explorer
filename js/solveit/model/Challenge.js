@@ -61,12 +61,12 @@ define( function( require ) {
 
     // @public (debug) do not rely on format!
     toString: function() {
-      return StringUtils.fillIn( 'x={{x}}, {{a}} x + {{b}} = {{m}} x + {{n}}', {
-        x: this.x,
+      return StringUtils.fillIn( '{{a}} x + {{b}} = {{m}} x + {{n}}, x={{x}}', {
         a: this.fractionToString( this.a ),
         b: this.fractionToString( this.b ),
         m: this.fractionToString( this.m ),
-        n: this.fractionToString( this.n )
+        n: this.fractionToString( this.n ),
+        x: this.x
       } );
     },
 

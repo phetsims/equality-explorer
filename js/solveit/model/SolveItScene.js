@@ -131,6 +131,8 @@ define( function( require ) {
 
       // generate the challenge, form is: ax + b = mx + n
       var challenge = this.challengeGenerator.nextChallenge();
+      phet.log && phet.log( 'SolveItScene: challenge=' + challenge.toString() );
+      phet.log && phet.log( 'SolveItScene: derivation=' + challenge.debugDerivation.replace( /<br>/g, ', ' ) );
 
       // set the value of x
       this.xVariable.valueProperty.value = challenge.x;
