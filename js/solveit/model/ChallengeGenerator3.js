@@ -69,8 +69,8 @@ define( function( require ) {
      *
      * Form: (a/d)x + b = c
      * Let x be a random integer between [-40,40], x !== 0
-     * Let d be a random integer between [-10, 10], d !== 0
-     * Let a be a random integer between [-10,10], a !== 0, a % d !== 0
+     * Let d be a random integer between [-10, 10], d !== [0,1,-1]
+     * Let a be a random integer between [-10,10], a % d !== 0
      * Let b be a random integer between [-10,10], b !== 0
      * Let c = (a/d)x + b, c == 0 is OK
      *
@@ -88,7 +88,6 @@ define( function( require ) {
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
       assert && assert( d !== 0, 'd is 0' );
-      assert && assert( a !== 0, 'a is 0' );
       assert && assert( a % d !== 0, 'a/d reduces to an integer, a=' + a + ', d=' + d );
       assert && assert( b !== 0, 'b is 0' );
 
@@ -102,7 +101,9 @@ define( function( require ) {
       } );
 
       // (a/d)x + b = 0x + c
-      return new Challenge( x, new Fraction( a, d ).reduce(), Fraction.fromInteger( b ), Fraction.ZERO, c,
+      return new Challenge( x,
+        new Fraction( a, d ).reduce(), Fraction.fromInteger( b ),
+        Fraction.ZERO, c,
         debugDerivation );
     },
 
@@ -112,8 +113,8 @@ define( function( require ) {
      * Form: (a/d)x + (b/d) = c
      * Let x be a random integer between [-40,40], x !== 0
      * Let d be a random integer between [-10, 10], d !== [0, 1, -1]
-     * Let a be a random integer between [-10,10], a !== 0, a % d !== 0
-     * Let b be a random integer between [-10,10], b !== 0, b % d !== 0
+     * Let a be a random integer between [-10,10], a % d !== 0
+     * Let b be a random integer between [-10,10], b % d !== 0
      * Let c = ( ax + b )/d, c == 0 is OK
      *
      * @returns @returns {Challenge}
@@ -130,9 +131,7 @@ define( function( require ) {
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
       assert && assert( d !== 0, 'd is 0' );
-      assert && assert( a !== 0, 'a is 0' );
       assert && assert( a % d !== 0, 'a/d reduces to an integer, a=' + a + ', d=' + d );
-      assert && assert( b !== 0, 'b is 0' );
       assert && assert( b % d !== 0, 'b/d reduces to an integer, b=' + b + ', d=' + d );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
