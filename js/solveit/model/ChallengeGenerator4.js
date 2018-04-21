@@ -72,13 +72,7 @@ define( function( require ) {
       assert && assert( m !== a, 'm === a: ' + m );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN, {
-        x: x,
-        a: a,
-        b: b,
-        m: m,
-        n: n
-      } );
+      var debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, m: m, n: n } );
 
       // ax + b = mx + n
       return new Challenge( x,

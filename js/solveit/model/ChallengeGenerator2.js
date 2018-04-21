@@ -66,12 +66,7 @@ define( function( require ) {
       assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN, {
-        x: x,
-        a: a,
-        b: b,
-        c: c
-      } );
+      var debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, c: c } );
 
       // ax + b = 0x + c
       return new Challenge( x,

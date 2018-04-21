@@ -92,13 +92,7 @@ define( function( require ) {
       assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN1, {
-        x: x,
-        a: a,
-        b: b,
-        c: c,
-        d: d
-      } );
+      var debugDerivation = StringUtils.fillIn( PATTERN1, { x: x, a: a, b: b, c: c, d: d } );
 
       // (a/d)x + b = 0x + c
       return new Challenge( x,
@@ -135,13 +129,7 @@ define( function( require ) {
       assert && assert( b % d !== 0, 'b/d reduces to an integer, b=' + b + ', d=' + d );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN2, {
-        x: x,
-        a: a,
-        b: b,
-        c: c,
-        d: d
-      } );
+      var debugDerivation = StringUtils.fillIn( PATTERN2, { x: x, a: a, b: b, c: c, d: d } );
 
       // (a/d)x + (b/d) = 0x + c
       return new Challenge( x,

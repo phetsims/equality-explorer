@@ -110,11 +110,7 @@ define( function( require ) {
       assert && assert( c !== 0, 'c is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN1, {
-        x: x,
-        a: a,
-        c: c
-      } );
+      var debugDerivation = StringUtils.fillIn( PATTERN1, { x: x, a: a, c: c } );
 
       // ax + 0 = 0x + c
       return new Challenge( x,
@@ -145,11 +141,7 @@ define( function( require ) {
       assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN2, {
-        x: x,
-        b: b,
-        c: c
-      } );
+      var debugDerivation = StringUtils.fillIn( PATTERN2, { x: x, b: b, c: c } );
 
       // 1x + b = 0x + c
       return new Challenge( x,
@@ -187,11 +179,7 @@ define( function( require ) {
       this.xPrevious = x;
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN3, {
-        x: x,
-        c: c,
-        d: d
-      } );
+      var debugDerivation = StringUtils.fillIn( PATTERN3, { x: x, c: c, d: d } );
 
       // (1/d)x + 0 = 0x + c
       return new Challenge( x,
