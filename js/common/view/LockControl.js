@@ -60,6 +60,7 @@ define( function( require ) {
     this.addInputListener( new DownUpListener( {
       up: function( event ) {
         lockedProperty.value = !lockedProperty.value;
+        phet.log && phet.log( 'Lock pressed, value=' + lockedProperty.value );
       }
     } ) );
 
