@@ -34,7 +34,7 @@ define( function( require ) {
     assert && assert( options.coefficient.isReduced(), 'coefficient must be reduced: ' + options.coefficient );
     assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
 
-    // @public {Fraction}
+    // @public (read-only) {Fraction}
     this.coefficient = options.coefficient;
 
     // @public (read-only)
