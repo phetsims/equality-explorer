@@ -205,7 +205,7 @@ define( function( require ) {
     SceneNode.call( this, scene, sceneProperty, termsLayer, options );
 
     // {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
-    // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.
+    // Created on demand and reused, so we don't have to deal with buggy Dialog.dispose.
     var rewardDialog = null;
 
     // @private {EqualityExplorerRewardNode} reward shown while rewardDialog is open

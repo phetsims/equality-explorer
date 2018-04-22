@@ -54,7 +54,7 @@ define( function( require ) {
     // 'Choose Your Level'
     var chooseYourLevelNode = new Text( chooseYourLevelString, textOptions );
 
-    // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.
+    // Info dialog is created on demand, then reused so we don't have to deal with buggy Dialog.dispose.
     var infoDialog = null;
 
     // Info button, to right of 'Choose Your Level', opens the Info dialog.
