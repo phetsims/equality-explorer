@@ -223,6 +223,8 @@ define( function( require ) {
 
       var operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
 
+      phet.log && phet.log( 'Go button pressed, operation=' + operation );
+
       // start vertically aligned with the operator picker
       var startY = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
 
