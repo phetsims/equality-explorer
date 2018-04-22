@@ -79,5 +79,11 @@ related to the view.
 
 TODO
 
-support for multiple variables, 'x & y' test screen
-gme levels numbered from 1 in both model and view, and in type names (e.g. ChallengeGenerator1)
+## Solve It! screen
+
+- game levels numbered from 1 in both model and view, and in type names (e.g. ChallengeGenerator1)
+- challenge form: ax + b = mx + n
+
+## Miscellaneous
+
+- support for multiple variables, 'x & y' test screen
