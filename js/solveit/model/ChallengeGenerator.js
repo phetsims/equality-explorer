@@ -57,7 +57,7 @@ define( function( require ) {
     },
 
     /**
-     * Generates the next challenge for this level.
+     * Subtype-specific method of generating the next challenge for this level.
      * @returns {Challenge}
      * @protected
      * @abstract
