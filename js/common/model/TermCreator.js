@@ -8,7 +8,7 @@
  * - by restoring a snapshot
  * - by using the 'universal operation' control.
  *
- * TermCreators operate in one of two modes, based on {boolean} this.combineLikeTermsEnabled:
+ * TermCreators operate in one of two modes, based on the value of {boolean} this.combineLikeTermsEnabled:
  * true: each term *type* occupies one cell on the scale, and all like terms are combined
  * false: each term *instance* occupies one cell on the scale, and terms are combined only if they sum to zero
  *
