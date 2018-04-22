@@ -5,7 +5,7 @@
  * Consists of 2 plates that sit on either ends of a beam.
  * The center of the beam is balanced on a fulcrum.
  * Origin is at the point where the beam is balanced on the fulcrum.
- * Terms are arranged in a 2D (xy) grid on each plate.
+ * Terms are arranged in a 2D grid on each plate.
  *
  * @author Chris Malley (PixelZoom, Inc)
  */
@@ -101,12 +101,6 @@ define( function( require ) {
     // dispose not required.
     this.angleProperty = new DerivedProperty(
       [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
-
-      /**
-       * @param {Fraction} leftWeight
-       * @param {Fraction} rightWeight
-       * @returns {number}
-       */
       function( leftWeight, rightWeight ) {
 
         // compute the weight difference between the 2 plates
@@ -163,12 +157,6 @@ define( function( require ) {
     // dispose not required.
     this.numberOfTermsProperty = new DerivedProperty(
       [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
-
-      /**
-       * @param {number} leftNumberOfTerms
-       * @param {number} rightNumberOfTerms
-       * @returns {number}
-       */
       function( leftNumberOfTerms, rightNumberOfTerms ) {
         return leftNumberOfTerms + rightNumberOfTerms;
       }, {
