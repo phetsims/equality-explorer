@@ -2,7 +2,7 @@
 
 /**
  * Display a scene in the 'Solve It!' screen.  Each scene corresponds to a game level.
- * This shares quite a few UI components with the Operations screen, but there are too many differences
+ * This shares several UI components with the Operations screen, but there are too many differences
  * to extend OperationsSceneNode.
  *
  * @author Chris Malley (PixelZoom, Inc.)
