@@ -113,7 +113,7 @@ define( function( require ) {
     ];
 
     // Press this button to test challenge generators. See output in console.
-    if ( EqualityExplorerQueryParameters.showAnswers ) {
+    if ( assert && EqualityExplorerQueryParameters.showAnswers ) {
       var testButton = new RectangularPushButton( {
         content: new Text( 'test challenge generators', { fill: 'white', font: new PhetFont( 20 ) } ),
         baseColor: 'red',

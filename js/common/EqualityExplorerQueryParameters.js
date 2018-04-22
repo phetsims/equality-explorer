@@ -70,7 +70,7 @@ define( function( require ) {
     },
 
     // Shows answers to challenges in the 'Solve It!' screen.
-    // Also adds a 'test challenge generators' button to the level-selection UI.
+    // If assertions are enabled, this also adds a 'test challenge generators' button to the level-selection UI.
     // For internal use only, not public facing.
     showAnswers: { type: 'flag' }
   } );
