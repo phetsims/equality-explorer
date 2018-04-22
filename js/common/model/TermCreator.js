@@ -3,8 +3,10 @@
 /**
  * Abstract base type for creating and managing terms.
  *
- * Terms are created in either by dragging them out of the toolbox below the plate,
- * by restoring a snapshot, or by using the 'universal operation' control.
+ * Terms can be created in 3 ways:
+ * - by dragging them out of a toolbox below a plate
+ * - by restoring a snapshot
+ * - by using the 'universal operation' control.
  *
  * TermCreators operate in one of two modes, based on {boolean} this.combineLikeTermsEnabled:
  * true: each term *type* occupies one cell on the scale, and all like terms are combined
