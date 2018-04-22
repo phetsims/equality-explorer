@@ -110,7 +110,8 @@ define( function( require ) {
       validValues: this.operands
     } );
 
-    // @protected (read-only) emit is called when a universal operation has completed
+    // @protected (read-only) emit1 is called when a universal operation has completed.
+    // Callback signature is function( {UniversalOperation} operation )
     this.operationCompletedEmitter = new Emitter();
 
     // Variable and constant terms will combined in specific cells in the plate's grid.
@@ -200,7 +201,7 @@ define( function( require ) {
         }
 
         // notify listeners that the operation successfully completed
-        this.operationCompletedEmitter.emit( operation );
+        this.operationCompletedEmitter.emit1( operation );
       }
     },
 
