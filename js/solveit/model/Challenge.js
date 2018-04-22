@@ -20,11 +20,11 @@ define( function( require ) {
    * These letters correspond to the design specification, see
    * https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo
    *
-   * @param {number} x
-   * @param {Fraction} a
-   * @param {Fraction} b
-   * @param {Fraction} m
-   * @param {Fraction} n
+   * @param {number} x - value of the variable x
+   * @param {Fraction} a - coefficient on the left side of the equation
+   * @param {Fraction} b - constant on the left side of the equation
+   * @param {Fraction} m - coefficient on the right side of the equation
+   * @param {Fraction} n - constant on the right side of the equation
    * @param {string} debugDerivation - derivation details provided by ChallengeGenerator, contains RichText markup
    * @constructor
    */
@@ -50,7 +50,7 @@ define( function( require ) {
     // https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo
     this.debugDerivation = debugDerivation;
 
-    // verify that the we have an equation, not an inequality
+    // verify that the we have an equality
     assert && assert( a.timesInteger( x ).plus( b ).reduce().equals( m.timesInteger( x ).plus( n ).reduce() ),
       'challenge is an inequality: ' + this.toString() );
   }
