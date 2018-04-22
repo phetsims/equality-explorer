@@ -26,8 +26,6 @@ define( function( require ) {
     // @public (read-only)
     this.scene = scene;
 
-    Node.call( this );
-
     /**
      * When a term is created in the model, create the corresponding view.
      * @param {TermCreator} termCreator
@@ -68,7 +66,7 @@ define( function( require ) {
       termCreator.numberLimitExceededEmitter.addListener( numberLimitExceededListener ); // removeListener not needed
     } );
 
-    this.mutate( options );
+    Node.call( this, options );
   }
 
   equalityExplorer.register( 'SceneNode', SceneNode );
