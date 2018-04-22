@@ -65,6 +65,9 @@ Dynamic:
 Static, exists for lifetime of sim:
 - everything else
 
+Every call to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Property.multilink` and `new Multilink`
+has an associated comment that indicates whether the listener needs to be removed.
+
 ## Model
 
 This section provides an overview of the most important model elements, and some miscellaneous topics
