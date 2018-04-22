@@ -45,7 +45,7 @@ define( function( require ) {
 
     // @public (read-only) details about how the challenge was derived, for debugging.
     // With the 'showAnswers' query parameter, this information is displayed in the sim.
-    // This information is provided by the ChallengeGenerator, contains RichText markup,
+    // This information is provided by ChallengeGenerator subtypes, contains RichText markup,
     // and corresponds to the challenge specification in the design document, see
     // https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo
     this.debugDerivation = debugDerivation;
