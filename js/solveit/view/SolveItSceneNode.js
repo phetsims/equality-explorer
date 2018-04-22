@@ -148,7 +148,10 @@ define( function( require ) {
       yMargin: 7,
       left: challengePanel.right + 10,
       centerY: challengePanel.centerY,
-      listener: scene.nextChallenge.bind( scene )
+      listener: function() {
+        phet.log && phet.log( 'Refresh button pressed' );
+        scene.nextChallenge();
+      }
     } );
 
     // Next button, takes us to the next challenge
@@ -162,7 +165,10 @@ define( function( require ) {
       yMargin: 8,
       centerX: scene.scale.location.x,
       centerY: scaleNode.top, // centered on the top of the scale's grid
-      listener: scene.nextChallenge.bind( scene )
+      listener: function() {
+        phet.log && phet.log( 'Next button pressed' );
+        scene.nextChallenge();
+      }
     } );
 
     // Smiley face, displayed when the challenge has been solved
