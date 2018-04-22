@@ -21,6 +21,7 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
   var Property = require( 'AXON/Property' );
+  var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
   var Vector2 = require( 'DOT/Vector2' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
@@ -82,6 +83,8 @@ define( function( require ) {
     // When a universal operation is completed, determine if the challenge is solved.
     // removeListener not needed.
     this.operationCompletedEmitter.addListener( function( operation ) {
+
+      assert && assert( operation instanceof UniversalOperation, 'invalid operation: ' + operation );
 
       // All challenges in the game are equalities, and applying a universal operation should result in an equality.
       assert && assert( self.scale.angleProperty.value === 0,
