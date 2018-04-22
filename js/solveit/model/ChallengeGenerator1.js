@@ -151,6 +151,7 @@ define( function( require ) {
      */
     nextType3: function() {
 
+      //TODO this is a potential infinite loop, better approach?
       var x = this.xPrevious;
       while ( x === this.xPrevious ) {
         var c = this.randomValue( C_VALUES, [ 0 ] );
