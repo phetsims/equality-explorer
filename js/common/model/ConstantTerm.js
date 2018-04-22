@@ -58,10 +58,10 @@ define( function( require ) {
      * @override
      */
     copyOptions: function() {
-      var superOptions = Term.prototype.copyOptions.call( this );
-      return _.extend( {
+      var supertypeOptions = Term.prototype.copyOptions.call( this );
+      return _.extend( {}, supertypeOptions, {
         constantValue: this.constantValue
-      }, superOptions );
+      } );
     },
 
     /**
@@ -74,9 +74,9 @@ define( function( require ) {
     plus: function( term, options ) {
       options = options || {};
       assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
-      return this.copy( {
+      return this.copy( _.extend( {
         constantValue: this.constantValue.plus( term.constantValue ).reduce()
-      } );
+      }, options ) );
     },
 
     /**
@@ -88,9 +88,9 @@ define( function( require ) {
     minus: function( term, options ) {
       options = options || {};
       assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
-      return this.copy( {
+      return this.copy( _.extend( {
         constantValue: this.constantValue.minus( term.constantValue ).reduce()
-      } );
+      }, options ) );
     },
 
     /**
@@ -102,9 +102,9 @@ define( function( require ) {
     times: function( term, options ) {
       options = options || {};
       assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
-      return this.copy( {
+      return this.copy( _.extend( {
         constantValue: this.constantValue.times( term.constantValue ).reduce()
-      } );
+      }, options ) );
     },
 
     /**
@@ -117,9 +117,9 @@ define( function( require ) {
       options = options || {};
       assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
       assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-      return this.copy( {
+      return this.copy( _.extend( {
         constantValue: this.constantValue.divided( term.constantValue ).reduce()
-      } );
+      }, options ) );
     },
 
     //-------------------------------------------------------------------------------------------------
@@ -167,7 +167,8 @@ define( function( require ) {
      * @override
      */
     createSnapshot: function() {
-      return _.extend( Term.prototype.createSnapshot.call( this ), {
+      var supertypeOptions = Term.prototype.createSnapshot.call( this );
+      return _.extend( {}, supertypeOptions, {
         constantValue: this.constantValue
       } );
     },
