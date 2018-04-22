@@ -164,7 +164,7 @@ define( function( require ) {
       xMargin: 12,
       yMargin: 8,
       centerX: scene.scale.location.x,
-      centerY: scaleNode.top, // centered on the top of the scale's grid
+      top: universalOperationControl.bottom + 30, // determined empirically
       listener: function() {
         phet.log && phet.log( 'Next button pressed' );
         scene.nextChallenge();
