@@ -32,6 +32,12 @@ define( function( require ) {
   var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
+  // constants
+  var PICKER_OPTIONS = {
+    arrowsColor: 'black',
+    gradientColor: 'rgb( 150, 150, 150 )'
+  };
+  
   /**
    * @param {OperationsScene} scene
    * @param {Node} animationLayer
@@ -98,14 +104,8 @@ define( function( require ) {
       }
     };
 
-    // options common to both pickers
-    var pickerOptions = {
-      arrowsColor: 'black',
-      gradientColor: 'rgb( 150, 150, 150 )'
-    };
-
     // picker for choosing operator
-    var operatorPicker = new ObjectPicker( scene.operatorProperty, operatorItems, _.extend( {}, pickerOptions, {
+    var operatorPicker = new ObjectPicker( scene.operatorProperty, operatorItems, _.extend( {}, PICKER_OPTIONS, {
       wrapEnabled: true, // wrap around when min/max is reached
       xMargin: 18,
 
@@ -143,7 +143,7 @@ define( function( require ) {
     var downEnabledProperty = new BooleanProperty( true );
 
     // picker for choosing operand
-    var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, _.extend( {}, pickerOptions, {
+    var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, _.extend( {}, PICKER_OPTIONS, {
       xMargin: 6,
 
       // Providing these Properties means that we're responsible for up/down enabled state
@@ -189,7 +189,7 @@ define( function( require ) {
         if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) ) {
           assert && assert( operand instanceof ConstantTerm, 'unexpected operand type: ' + operand );
 
-          // up arrow is enabled if there are any constant term operands about the current selection
+          // up arrow is enabled if there are any constant term operands above the current selection
           var upEnabled = false;
           for ( var i = operandIndex + 1; i < scene.operands.length && !upEnabled; i++ ) {
             upEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
@@ -292,7 +292,7 @@ define( function( require ) {
 
   /**
    * Is the operation an attempt to do something that is unsupported with a variable term operand?
-   * Times and divide are unsupported for variable terms operands.
+   * Times and divide are unsupported for variable term operands.
    * @param {string} operator - see EqualityExplorerConstants.OPERATORS
    * @param {Term} operand
    * @returns {boolean}
@@ -323,7 +323,7 @@ define( function( require ) {
 
     /**
      * Stops all animations that are in progress.
-     * @public
+     * @private
      */
     stopAnimations: function() {
 
