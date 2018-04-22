@@ -2,6 +2,7 @@
 
 /**
  * The sole scene in the 'Operations' screen.
+ * This scene has variable and constant terms on both sides of the equation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

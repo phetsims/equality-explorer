@@ -2,6 +2,8 @@
 
 /**
  * A scene in the 'Solve It!' screen.  A scene is created for each level in the game.
+ * This is an extension of the Operations scene (variable and constant terms on both sides of the equation),
+ * with the addition of game challenges.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

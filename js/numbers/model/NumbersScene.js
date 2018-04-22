@@ -2,6 +2,7 @@
 
 /**
  * The sole scene in the 'Numbers' screen.
+ * This scene has constant terms only on both sides of the equation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
