@@ -2,10 +2,11 @@
 
 //TODO migrate to common code? This was copied from unit-rates.URMovable, which was copied from function-builder.Movable
 /**
- * A model element that is movable.
- * It has a current location and a desired destination.
- * When the user drags the model element, it moves immediately to the desired destination.
- * When the destination is set programmatically, it animates to the desired destination.
+ * A model element that is movable. It has a current location and a desired destination.
+ *
+ * The model element can be moved using either moveTo or animateTo.
+ * moveTo moves immediately to a location, and is typically used while the user is dragging the model element.
+ * animateTo animates to a location, and is typically used after the user releases the model element.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

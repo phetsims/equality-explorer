@@ -4,14 +4,13 @@
  * 2D grid on a plate on the balance scale.
  *
  * A grid contains terms. The grid is filled from the bottom up, so that there are no empty cells
- * below an occupied cell. Origin is at the bottom center.
+ * below an occupied cell. Origin is at the bottom center of the grid.
  *
- * A cell in the grid is identified by an integer index. The client doesn't need to know how to interpret
- * this identifier. It gets a cell identifier from the grid, and uses the identifier to refer to the cell.
- *
- * Using an integer index has a couple of advantages: fast lookup of terms in the grid, and low memory footprint.
- * The main disadvantage is the need to map between (row,column) and index, but that need is totally internal
- * to Grid.
+ * A cell in the grid is identified by an integer index. This index acts as an opaque identifer for the cell.
+ * The client doesn't need to know how to interpret this identifier. It gets a cell identifier from the grid,
+ * and uses the identifier to refer to the cell. Using an integer index has a couple of advantages: fast lookup
+ * of terms in the grid, and low memory footprint. The main disadvantage is the need to map between (row,column)
+ * and index, but that need is totally internal to Grid.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

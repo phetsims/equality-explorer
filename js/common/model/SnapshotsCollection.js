@@ -38,11 +38,11 @@ define( function( require ) {
     // @public {Property.<Snapshot|null>} the selected snapshot, null means no selection
     this.selectedSnapshotProperty = new Property( null, {
 
-      // a valid snapshot is null or the value of one of the snapshotProperties
+      // a valid snapshot is null or the value of one of the snapshotProperties' values
       isValidValue: function( snapshot ) {
         return ( snapshot === null ) ||
                _.some( self.snapshotProperties, function( snapshotProperty ) {
-                 return snapshotProperty.value === snapshot;
+                 return ( snapshotProperty.value === snapshot );
                } );
       }
     } );
@@ -71,9 +71,13 @@ define( function( require ) {
      * @public
      */
     deleteSelectedSnapshot: function() {
+
+      // clear the selection
       var selectedSnapshot = this.selectedSnapshotProperty.value;
       assert && assert( selectedSnapshot, 'no selected snapshot' );
       this.selectedSnapshotProperty.value = null;
+
+      // find the Property that corresponds to the snapshot and clear it
       for ( var i = 0; i < this.snapshotProperties.length; i++ ) {
         if ( this.snapshotProperties[ i ].value === selectedSnapshot ) {
           this.snapshotProperties[ i ].value = null;

@@ -31,8 +31,10 @@ define( function( require ) {
     // If variables are specified, save the variables and their current values
     if ( options.variables ) {
 
-      // @private
+      // @private store the variables
       this.variables = options.variables;
+
+      // @private save the current value of each variable
       this.variableValues = _.map( this.variables, function( variable ) {
          return variable.valueProperty.value;
       } );
@@ -78,7 +80,7 @@ define( function( require ) {
     // Format is specific to Term subtypes. See createSnapshot for each Term subtype.
     this.snapshotDataStructures = [];
 
-    // Create a snapshot data structure for each termCreator
+    // Create a snapshot data structure for each termCreator.
     for ( var i = 0; i < this.termCreators.length; i++ ) {
       this.snapshotDataStructures[ i ] = this.termCreators[ i ].createSnapshot();
     }

@@ -92,7 +92,7 @@ define( function( require ) {
     // dispose not required.
     this.contentsChangedEmitter = new Emitter();
 
-    // associate this plate with its term creators
+    // Associate this plate with its term creators. Note that this is a 2-way association.
     termCreators.forEach( function( termCreator ) {
       termCreator.plate = self;
     } );
@@ -285,7 +285,7 @@ define( function( require ) {
           _.flatMap( this.termCreators, function( termCreator ) {
             return termCreator.getTermsOnPlate();
           } )
-        ).length === 0, // contain no elements that are different
+        ).length === 0, // contains no elements that are different
           'set of terms is not the same after organize' );
 
         this.contentsChangedEmitter.emit();
