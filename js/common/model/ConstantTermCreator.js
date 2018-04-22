@@ -17,9 +17,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
 
-  // constants
-  var DEFAULT_CONSTANT_VALUE = Fraction.fromInteger( 1 ); // terms are created with this value by default
-
   /**
    * @param {Object} [options]
    * @constructor

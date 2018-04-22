@@ -16,9 +16,6 @@ define( function( require ) {
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
-  // constants
-  var DEFAULT_CONSTANT_VALUE = Fraction.fromInteger( 1 );
-
   /**
    * @param {Object} [options]
    * @constructor
