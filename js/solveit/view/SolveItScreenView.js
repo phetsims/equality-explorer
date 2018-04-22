@@ -45,7 +45,8 @@ define( function( require ) {
       children: this.sceneNodes
     } );
 
-    // Are we showing the level-selection UI?
+    // {DerivedProperty.<boolean>} Are we showing the level-selection UI?
+    // dispose not needed.
     var showingLevelSelectionProperty = new DerivedProperty( [ model.sceneProperty ], function( scene ) {
       return ( scene === null );
     } );
