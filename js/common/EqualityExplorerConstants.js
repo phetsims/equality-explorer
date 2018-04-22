@@ -55,10 +55,7 @@ define( function( require ) {
 
     // Largest integer allowed for numerator or denominator. Anything larger results in an error dialog.
     // See https://github.com/phetsims/equality-explorer/issues/48
-    LARGEST_INTEGER: EqualityExplorerQueryParameters.largestInteger,
-
-    // reaching this score results in a reward
-    GAME_REWARD_SCORE: 10
+    LARGEST_INTEGER: EqualityExplorerQueryParameters.largestInteger
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

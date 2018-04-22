@@ -72,7 +72,14 @@ define( function( require ) {
     // Shows answers to challenges in the 'Solve It!' screen.
     // If assertions are enabled, this also adds a 'test challenge generators' button to the level-selection UI.
     // For internal use only, not public facing.
-    showAnswers: { type: 'flag' }
+    showAnswers: { type: 'flag' },
+
+    // Reaching this score results in a reward.
+    // For internal use only, not public facing.
+    rewardScore: {
+      type: 'number',
+      defaultValue: 10
+    }
   } );
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );

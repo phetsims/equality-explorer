@@ -204,9 +204,9 @@ define( function( require ) {
 
     SceneNode.call( this, scene, sceneProperty, termsLayer, options );
 
-    // @private {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
+    // {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
     // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.
-    this.rewardDialog = null;
+    var rewardDialog = null;
 
     // @private {EqualityExplorerRewardNode} reward shown while rewardDialog is open
     this.rewardNode = null;
@@ -215,21 +215,21 @@ define( function( require ) {
     // unlink not needed.
     scene.scoreProperty.link( function( score ) {
 
-      if ( score === EqualityExplorerConstants.GAME_REWARD_SCORE ) {
+      if ( score === EqualityExplorerQueryParameters.rewardScore ) {
 
         gameAudioPlayer.gameOverPerfectScore();
 
         // show the reward dialog
-        self.rewardDialog = self.rewardDialog || new RewardDialog( scene.scoreProperty.value, {
+        rewardDialog = rewardDialog || new RewardDialog( scene.scoreProperty.value, {
 
           // 'Keep Going' hides the dialog
           keepGoingButtonListener: function() {
-            self.rewardDialog.hide();
+            rewardDialog.hide();
           },
 
           // 'New Level' has the same effect as the back button in the status bar
           newLevelButtonListener: function() {
-            self.rewardDialog.hide();
+            rewardDialog.hide();
             backButtonListener();
           },
 
@@ -248,7 +248,7 @@ define( function( require ) {
             self.rewardNode = null;
           }
         } );
-        self.rewardDialog.show();
+        rewardDialog.show();
       }
     } );
 
