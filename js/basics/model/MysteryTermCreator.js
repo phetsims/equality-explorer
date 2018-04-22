@@ -2,7 +2,7 @@
 
 /**
  * MysteryTermCreator creates and manages terms that are associated with mystery objects (apple, dog, turtle,...)
- * Mystery objects are objects whose (constant) weight is not revealed to the user.
+ * Mystery objects are objects whose (fixed) weight is not revealed to the user.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
