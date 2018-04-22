@@ -58,7 +58,7 @@ define( function( require ) {
   return inherit( TermNode, ConstantTermNode, {}, {
 
     /**
-     * Creates the representation of a term that appears on interactive nodes.
+     * Creates the representation of a term that the user interacts with, in this case a number inside a circle.
      * @param {Fraction} constantValue - value shown on the icon
      * @param {Object} [options] - see DEFAULT_OPTIONS
      * @returns {Node}

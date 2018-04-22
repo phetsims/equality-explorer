@@ -66,7 +66,8 @@ define( function( require ) {
   return inherit( TermNode, VariableTermNode, {}, {
 
     /**
-     * Creates the representation of a term that appears on interactive nodes.
+     * Creates the representation of a term that the user interacts with,
+     * in this case a coefficient and variable inside a square.
      * @param {Fraction} coefficient
      * @param {string} symbol - the variable's symbol, e.g. 'x'
      * @param {Object} [options] - see DEFAULT_OPTIONS
