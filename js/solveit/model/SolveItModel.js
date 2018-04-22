@@ -38,7 +38,7 @@ define( function( require ) {
       level4String
     ];
 
-    // @private challenge generators for each level
+    // @private challenge generators, ordered by ascending level number
     this.challengeGenerators = [
       new ChallengeGenerator1(),
       new ChallengeGenerator2(),

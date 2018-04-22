@@ -27,7 +27,7 @@ define( function( require ) {
 
   /**
    * @param {number} level - game level, numbered from 1 in the model and view
-   * @param {string} description
+   * @param {string} description - displayed in the status bar
    * @param {ChallengeGenerator} challengeGenerator
    * @constructor
    */
@@ -55,8 +55,7 @@ define( function( require ) {
       }
     } );
 
-    // Initialize locations of term creators.
-    // This is necessary because this screen has no TermToolboxes.
+    // Initialize locations of term creators. This is necessary because this screen has no TermToolboxes.
     // Locations can be any value, since terms in this screen never return to a toolbox.
     // This is preferable to using a default value, since initialization order is important in other screens.
     // See for example frameStartedCallback in TermCreatorNode.
@@ -72,13 +71,14 @@ define( function( require ) {
       }
     } );
 
-    // @private has the current challenge has been solved?
+    // @private has the current challenge been solved?
     this.challengeHasBeenSolved = false;
 
     // @public (read-only) emit is called the first time that the current challenge is solved
     this.challengeSolvedEmitter = new Emitter();
 
-    // When a universal operation is completed, determine if the challenge is solved
+    // When a universal operation is completed, determine if the challenge is solved.
+    // removeListener not needed.
     this.operationCompletedEmitter.addListener( function( operation ) {
 
       // All challenges in the game are equalities, and applying a universal operation should result in an equality.
@@ -118,7 +118,7 @@ define( function( require ) {
      */
     nextChallenge: function() {
 
-      // reset the universal operation control
+      // reset the universal operation
       this.operatorProperty.reset();
       this.operandProperty.reset();
 
@@ -151,7 +151,7 @@ define( function( require ) {
       this.createVariableTermOnPlate( mTermCreator, challenge.m );
       this.createConstantTermOnPlate( nTermCreator, challenge.n );
 
-      // The new challenge is has not been solved
+      // The new challenge has not been solved
       this.challengeHasBeenSolved = false;
 
       // Finally, set challengeProperty, to notify listeners that the challenge has changed.
@@ -196,7 +196,7 @@ define( function( require ) {
 
     /**
      * Determines whether the value of x has been isolated on the scale.
-     * This means that the scale contains either 'x = N' or 'N = x', where N is the value of x.
+     * This means that the scale contains either 'x = n' or 'b = x', where 'ax + b = mx + n' is the general form.
      * @returns {boolean}
      * @private
      */
@@ -210,12 +210,12 @@ define( function( require ) {
       var rightConstantTerm = this.rightConstantTermCreator.getLikeTermOnPlate();
 
       if ( ( leftVariableTerm && !leftConstantTerm && !rightVariableTerm && rightConstantTerm ) ) {
-        // x = N
-        xIsIsolated = ( leftVariableTerm.coefficient.getValue() === 1 );
+        // ax + 0 = 0x + n
+        xIsIsolated = ( leftVariableTerm.coefficient.getValue() === 1 ); // x = n
       }
       else if ( !leftVariableTerm && leftConstantTerm && rightVariableTerm && !rightConstantTerm ) {
-        // N = x
-        xIsIsolated = ( rightVariableTerm.coefficient.getValue() === 1 );
+        // 0x + b = mx + 0
+        xIsIsolated = ( rightVariableTerm.coefficient.getValue() === 1 ); // b = x
       }
 
       return xIsIsolated;
