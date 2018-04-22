@@ -36,7 +36,7 @@ define( function( require ) {
   var EqualityExplorerScreenIcons = {
 
     /**
-     * Creates the icon for the 'Basics' screen.
+     * Creates the icon for the 'Basics' screen: apples > oranges
      * @returns {ScreenIcon}
      */
     createBasicsScreenIcon: function() {
@@ -52,7 +52,7 @@ define( function( require ) {
         children: [ appleNode1, appleNode2 ]
       } );
 
-      // relational operator
+      // =
       var greaterThanNode = new Text( MathSymbols.GREATER_THAN, {
         font: new PhetFont( 140 )
       } );
@@ -72,7 +72,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates the icon for the 'Numbers' screen.
+     * Creates the icon for the 'Numbers' screen: 1 and -1 overlapping
      * @returns {ScreenIcon}
      */
     createNumbersScreenIcon: function() {
@@ -106,7 +106,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates the icon for the 'Variables' screen.
+     * Creates the icon for the 'Variables' screen: x, -x < 1, x
      * @returns {ScreenIcon}
      */
     createVariablesScreenIcon: function() {
@@ -118,7 +118,7 @@ define( function( require ) {
         children: [ leftPositiveXNode, leftNegativeXNode ]
       } );
 
-      // relational operator
+      // <
       var lessThanNode = new Text( MathSymbols.LESS_THAN, {
         font: new PhetFont( 50 )
       } );
@@ -142,7 +142,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates the icon for the 'Operations' screen.
+     * Creates the icon for the 'Operations' screen: 3x = 6
      * @returns {ScreenIcon}
      */
     createOperationsScreenIcon: function() {
@@ -170,7 +170,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates the home screen icon for the 'Solve It!' screen.
+     * Creates the home screen icon for the 'Solve It!' screen: PhET girl juggling stars
      * @returns {ScreenIcon}
      */
     createSolveItHomeScreenIcon: function() {
@@ -181,7 +181,7 @@ define( function( require ) {
     },
 
     /**
-     * Creates the navigation bar icon for the 'Solve It!' screen.
+     * Creates the navigation bar icon for the 'Solve It!' screen: +1 star
      * @returns {ScreenIcon}
      */
     createSolveItNavigationBarIcon: function() {
