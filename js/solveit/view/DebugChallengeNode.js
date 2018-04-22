@@ -33,6 +33,7 @@ define( function( require ) {
 
     RichText.call( this, RICH_TEXT_SPACE, options );
 
+    // display derivation of the current challenge. unlink not needed.
     challengeProperty.link( function( challenge ) {
       self.text = ( challenge ? challenge.debugDerivation : RICH_TEXT_SPACE );
     } );

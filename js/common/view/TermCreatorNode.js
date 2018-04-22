@@ -75,7 +75,7 @@ define( function( require ) {
       // Remove this function, so that it's called only once.
       phet.joist.sim.frameStartedEmitter.removeListener( frameStartedCallback );
     };
-    phet.joist.sim.frameStartedEmitter.addListener( frameStartedCallback );
+    phet.joist.sim.frameStartedEmitter.addListener( frameStartedCallback ); // removeListener after first call, see above
   }
 
   equalityExplorer.register( 'TermCreatorNode', TermCreatorNode );

@@ -50,6 +50,7 @@ define( function( require ) {
     this.addChild( operationAnimationLayer );
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
+    // removeListener not needed.
     scene.sumToZeroEmitter.addListener(
 
       // @param {TermCreator[]} termCreators - term creators whose term summed to zero
