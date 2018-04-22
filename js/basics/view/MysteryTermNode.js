@@ -48,7 +48,7 @@ define( function( require ) {
   return inherit( TermNode, MysteryTermNode, {}, {
 
     /**
-     * Creates the representation of a term that appears on interactive nodes.
+     * Creates the representation of a term that the user interacts with, in this case the mystery object's icon.
      * No coefficient is shown because every mystery term has an implicit coefficient of 1.
      * @param {HTMLImageElement} image
      * @param {Object} [options] - see MysteryTermNode
