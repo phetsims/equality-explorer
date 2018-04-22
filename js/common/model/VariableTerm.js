@@ -63,10 +63,10 @@ define( function( require ) {
      * @override
      */
     copyOptions: function() {
-      var superOptions = Term.prototype.copyOptions.call( this );
-      return _.extend( {
+      var supertypeOptions = Term.prototype.copyOptions.call( this );
+      return _.extend( {}, supertypeOptions, {
         coefficient: this.coefficient
-      }, superOptions );
+      } );
     },
 
     /**
@@ -167,7 +167,8 @@ define( function( require ) {
      * @override
      */
     createSnapshot: function() {
-      return _.extend( Term.prototype.createSnapshot.call( this ), {
+      var supertypeOptions = Term.prototype.createSnapshot.call( this );
+      return _.extend( {}, supertypeOptions, {
         coefficient: this.coefficient
       } );
     },
