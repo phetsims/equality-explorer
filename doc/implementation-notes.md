@@ -33,6 +33,8 @@ relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are diffe
 * trash snapshot button
 * universal operation
 * zero pair
+* challenge
+* challenge generator
 
 ## General
 
