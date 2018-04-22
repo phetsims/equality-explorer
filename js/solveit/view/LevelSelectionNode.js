@@ -54,9 +54,10 @@ define( function( require ) {
     // 'Choose Your Level'
     var chooseYourLevelNode = new Text( chooseYourLevelString, textOptions );
 
-    // Info button, to right of 'Choose Your Level'
     // Created on demand. Reused so we don't have to deal with the myriad of problems related to Dialog dispose.
     var infoDialog = null;
+
+    // Info button, to right of 'Choose Your Level', opens the Info dialog.
     var infoButton = new InfoButton( {
       iconFill: 'rgb( 41, 106, 163 )',
       maxHeight: 0.75 * chooseYourLevelNode.height,
@@ -72,7 +73,7 @@ define( function( require ) {
       levelSelectionButtons.push( new EqualityExplorerLevelSelectionButton( scene, model.sceneProperty ) );
     } );
 
-    // Layout buttons horizontally
+    // Layout the level-selection buttons horizontally
     var levelSelectionButtonsBox = new HBox( {
       children: levelSelectionButtons,
       spacing: 40
@@ -113,6 +114,7 @@ define( function( require ) {
     ];
 
     // Press this button to test challenge generators. See output in console.
+    // This test is only useful if assertions are enabled.
     if ( assert && EqualityExplorerQueryParameters.showAnswers ) {
       var testButton = new RectangularPushButton( {
         content: new Text( 'test challenge generators', { fill: 'white', font: new PhetFont( 20 ) } ),

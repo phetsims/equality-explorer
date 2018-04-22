@@ -1,7 +1,8 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Info dialog that explains the game levels in the 'Solve It!' screen
+ * Info dialog that explains the game levels in the 'Solve It!' screen.
+ * This is intended primarily for use by teachers, to remind them of the types of challenges for each level.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
