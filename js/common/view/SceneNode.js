@@ -23,10 +23,6 @@ define( function( require ) {
    */
   function SceneNode( scene, sceneProperty, termsLayer, options ) {
 
-    options = _.extend( {
-      termNodesPickable: true // are TermNodes pickable?
-    }, options );
-
     // @public (read-only)
     this.scene = scene;
 
@@ -42,7 +38,6 @@ define( function( require ) {
 
       // create a TermNode
       var termNode = termCreator.createTermNode( term );
-      termNode.pickable = options.termNodesPickable;
       termsLayer.insertChild( 0, termNode ); // behind other Nodes
 
       // Clean up when the term is disposed. Term.dispose handles removal of this listener.

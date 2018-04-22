@@ -63,11 +63,7 @@ define( function( require ) {
 
     var self = this;
 
-    options = _.extend( {
-
-      // terms are not interactive in this screen, all interaction is with the universal operation control
-      termNodesPickable: false
-    }, options );
+    options = options || {};
 
     // @private view Properties
     this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( true );
@@ -174,7 +170,9 @@ define( function( require ) {
     } );
 
     // terms live in this layer
-    var termsLayer = new Node();
+    var termsLayer = new Node( {
+      pickable: false // terms are not interactive, all interaction is with the universal operation control
+    } );
 
     var children = [
       statusBar,
