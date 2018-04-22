@@ -18,7 +18,7 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {Fraction} significantValue
+   * @param {Fraction} significantValue - value that is significant for the purposes of determining sign and number limits
    * @param {Object} [options]
    * @constructor
    * @abstract
