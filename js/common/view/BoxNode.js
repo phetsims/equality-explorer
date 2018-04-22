@@ -3,6 +3,7 @@
 //TODO migrate to common code?
 /**
  * A pseudo-3D box, with perspective. The front and top faces are visible.
+ * Used for various parts of the scale in Equality Explorer.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
