@@ -55,12 +55,14 @@ Dynamic:
 - TermNode and its subtypes (MysteryTermNode, ConstantTermNode, VariableTermNode)
 - TermDragListener
 - EquationNode
+- EquationPanel
 - Snapshot
 - SumToZeroNode
 - UniversalOperation
 - UniversalOperationNode
 - UniversalOperationAnimation
-- TODO: game types?
+- Challenge
+- EqualityExplorerRewardNode
 
 Static, exists for lifetime of sim:
 - everything else
