@@ -50,10 +50,10 @@ define( function( require ) {
       return ( scene === null );
     } );
 
-    // Handles animated 'wipe' transitions between level-selection and challenges
-    this.wipeNode = new SlidingScreen( levelSelectionNode, scenesParent,
+    // Handles animated 'slide' transitions between level-selection and challenges
+    this.slideNode = new SlidingScreen( levelSelectionNode, scenesParent,
       this.visibleBoundsProperty, showingLevelSelectionProperty );
-    this.addChild( this.wipeNode );
+    this.addChild( this.slideNode );
 
     // Make the selected scene (level) visible. unlink not needed.
     model.sceneProperty.link( function( scene ) {
@@ -83,7 +83,7 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
-      this.wipeNode.step( dt );
+      this.slideNode.step( dt );
       for ( var i = 0; i < this.sceneNodes.length; i++ ) {
         if ( this.sceneNodes[ i ].visible ) {
           this.sceneNodes[ i ].step( dt );
