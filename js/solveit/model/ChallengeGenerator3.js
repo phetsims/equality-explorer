@@ -42,6 +42,9 @@ define( function( require ) {
    */
   function ChallengeGenerator3() {
     ChallengeGenerator.call( this );
+
+    // @private methods for generating the 2 types of challenges
+    this.challengeTypeMethods = [ this.nextType1.bind( this ), this.nextType2.bind( this ) ];
   }
 
   equalityExplorer.register( 'ChallengeGenerator3', ChallengeGenerator3 );
@@ -55,13 +58,9 @@ define( function( require ) {
      * @override
      */
     nextChallengeProtected: function() {
-      var type = this.random.nextIntBetween( 1, 2 );
-      if ( type === 1 ) {
-        return this.nextType1();
-      }
-      else {
-        return this.nextType2();
-      }
+
+      // Randomly select the type of challenge to generate.
+      return this.random.sample( this.challengeTypeMethods )();
     },
 
     /**

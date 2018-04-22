@@ -43,6 +43,13 @@ define( function( require ) {
    */
   function ChallengeGenerator1() {
     ChallengeGenerator.call( this );
+
+    // @private methods for generating the 3 types of challenges
+    this.challengeTypeMethods = [
+      this.nextType1.bind( this ),
+      this.nextType2.bind( this ),
+      this.nextType3.bind( this )
+    ];
   }
 
   equalityExplorer.register( 'ChallengeGenerator1', ChallengeGenerator1 );
@@ -56,34 +63,15 @@ define( function( require ) {
      * @override
      */
     nextChallengeProtected: function() {
-      var challenge;
       if ( this.numberOfChallenges < 3 ) {
-        challenge = this.nextChallengeForType( this.numberOfChallenges + 1 );
-      }
-      else {
-        challenge = this.nextChallengeForType( this.random.nextIntBetween( 1, 3 ) );
-      }
-      return challenge;
-    },
 
-    /**
-     * Generates the next challenge for one of the 'types' identified in the design document.
-     * @param {number} type - 1, 2 or 3
-     * @returns {Challenge}
-     * @private
-     */
-    nextChallengeForType: function( type ) {
-      if ( type === 1 ) {
-        return this.nextType1();
-      }
-      else if ( type === 2 ) {
-        return this.nextType2();
-      }
-      else if ( type === 3 ) {
-        return this.nextType3();
+        // For the first 3 challenges, generate 1 of each type, in order.
+        return this.challengeTypeMethods[ this.numberOfChallenges ]();
       }
       else {
-        throw new Error( 'invalid type: ' + type );
+
+        // After the first 3 challenges, randomly select the challenge type.
+        return this.random.sample( this.challengeTypeMethods )();
       }
     },
 
