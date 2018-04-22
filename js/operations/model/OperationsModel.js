@@ -18,8 +18,6 @@ define( function( require ) {
    * @constructor
    */
   function OperationsModel() {
-
-    // this screen has 1 scene
     EqualityExplorerModel.call( this, [ new OperationsScene() ] );
   }
 
