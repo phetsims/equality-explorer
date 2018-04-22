@@ -209,18 +209,19 @@ define( function( require ) {
 
       var xIsIsolated = false;
 
-      var leftVariableTerm = this.leftVariableTermCreator.getLikeTermOnPlate();
-      var leftConstantTerm = this.leftConstantTermCreator.getLikeTermOnPlate();
-      var rightVariableTerm = this.rightVariableTermCreator.getLikeTermOnPlate();
-      var rightConstantTerm = this.rightConstantTermCreator.getLikeTermOnPlate();
+      // a, b, m, n
+      var aTerm = this.leftVariableTermCreator.getLikeTermOnPlate();
+      var bTerm = this.leftConstantTermCreator.getLikeTermOnPlate();
+      var mTerm = this.rightVariableTermCreator.getLikeTermOnPlate();
+      var nTerm = this.rightConstantTermCreator.getLikeTermOnPlate();
 
-      if ( ( leftVariableTerm && !leftConstantTerm && !rightVariableTerm && rightConstantTerm ) ) {
+      if ( ( aTerm && !bTerm && !mTerm && nTerm ) ) {
         // ax + 0 = 0x + n
-        xIsIsolated = ( leftVariableTerm.coefficient.getValue() === 1 ); // x = n
+        xIsIsolated = ( aTerm.coefficient.getValue() === 1 ); // x = n
       }
-      else if ( !leftVariableTerm && leftConstantTerm && rightVariableTerm && !rightConstantTerm ) {
+      else if ( !aTerm && bTerm && mTerm && !nTerm ) {
         // 0x + b = mx + 0
-        xIsIsolated = ( rightVariableTerm.coefficient.getValue() === 1 ); // b = x
+        xIsIsolated = ( mTerm.coefficient.getValue() === 1 ); // b = x
       }
 
       return xIsIsolated;
