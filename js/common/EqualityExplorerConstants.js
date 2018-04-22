@@ -12,6 +12,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
+  var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -35,6 +36,8 @@ define( function( require ) {
     SCREEN_VIEW_Y_MARGIN: 20,
 
     // terms
+    DEFAULT_CONSTANT_VALUE: Fraction.fromInteger( 1 ), // constant terms are created with this value by default
+    DEFAULT_COEFFICIENT: Fraction.fromInteger( 1 ), // variable terms are created with this coefficient by default
     SMALL_TERM_DIAMETER: 32, // diameter of small terms, like those in the TermsToolbox
     BIG_TERM_DIAMETER: 100, // diameter of big terms, like those on the scale in the Operations screen
     SHADOW_OPACITY: 0.4, // opacity of the shadow that appears on terms, 0-1 (transparent-opaque)

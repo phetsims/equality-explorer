@@ -12,19 +12,19 @@ define( function( require ) {
   var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
+
+  // constants
+  var DEFAULT_CONSTANT_VALUE = Fraction.fromInteger( 1 ); // terms are created with this value by default
 
   /**
    * @param {Object} [options]
    * @constructor
    */
   function ConstantTermCreator( options ) {
-
-    // @private terms are created with this value by default
-    this.defaultConstantValue = Fraction.fromInteger( 1 );
-
     TermCreator.call( this, options );
   }
 
@@ -63,7 +63,8 @@ define( function( require ) {
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
-      return ConstantTermNode.createInteractiveTermNode( this.defaultConstantValue.timesInteger( options.sign ) );
+      var constantValue = EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE.timesInteger( options.sign );
+      return ConstantTermNode.createInteractiveTermNode( constantValue );
     },
 
     /**
@@ -82,7 +83,7 @@ define( function( require ) {
 
       // If the constant value wasn't specified, use the default with sign applied.
       if ( !options.constantValue ) {
-        options.constantValue = this.defaultConstantValue.timesInteger( options.sign );
+        options.constantValue = EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE.timesInteger( options.sign );
       }
 
       return new ConstantTerm( options );

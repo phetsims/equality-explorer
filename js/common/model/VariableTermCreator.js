@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
@@ -35,7 +36,6 @@ define( function( require ) {
     this.variable = variable;
 
     // @private
-    this.defaultCoefficient = Fraction.fromInteger( 1 ); // terms are created with this coefficient by default
     this.positiveFill = options.positiveFill;
     this.negativeFill = options.negativeFill;
 
@@ -83,11 +83,11 @@ define( function( require ) {
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
-      return VariableTermNode.createInteractiveTermNode(
-        this.defaultCoefficient.timesInteger( options.sign ), this.variable.symbol, {
-          positiveFill: this.positiveFill,
-          negativeFill: this.negativeFill
-        } );
+      var coefficient = EqualityExplorerConstants.DEFAULT_COEFFICIENT.timesInteger( options.sign );
+      return VariableTermNode.createInteractiveTermNode( coefficient, this.variable.symbol, {
+        positiveFill: this.positiveFill,
+        negativeFill: this.negativeFill
+      } );
     },
 
     /**
@@ -106,7 +106,7 @@ define( function( require ) {
 
       // If the coefficient wasn't specified, use the default with sign applied.
       if ( !options.coefficient ) {
-        options.coefficient = this.defaultCoefficient.timesInteger( options.sign );
+        options.coefficient = EqualityExplorerConstants.DEFAULT_COEFFICIENT.timesInteger( options.sign );
       }
 
       return new VariableTerm( this.variable, options );

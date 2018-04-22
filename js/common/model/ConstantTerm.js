@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
@@ -25,7 +26,7 @@ define( function( require ) {
   function ConstantTerm( options ) {
 
     options = _.extend( {
-      constantValue: DEFAULT_CONSTANT_VALUE
+      constantValue: EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE
     }, options );
 
     assert && assert( options.constantValue instanceof Fraction, 'invalid constantValue: ' + options.constantValue );

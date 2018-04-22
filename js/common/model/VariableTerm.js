@@ -11,13 +11,11 @@ define( function( require ) {
   // modules
   var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
-
-  // constants
-  var DEFAULT_COEFFICIENT = Fraction.fromInteger( 1 );
 
   /**
    * @param {Variable} variable - the variable for this term, e.g. 'x'
@@ -27,7 +25,7 @@ define( function( require ) {
   function VariableTerm( variable, options ) {
 
     options = _.extend( {
-      coefficient: DEFAULT_COEFFICIENT
+      coefficient: EqualityExplorerConstants.DEFAULT_COEFFICIENT
     }, options );
 
     assert && assert( options.coefficient instanceof Fraction, 'invalid coefficient: ' + options.coefficient );
