@@ -26,6 +26,12 @@ define( function( require ) {
     this.sceneProperty = new Property( scenes[ 0 ], {
       validValues: scenes
     } );
+
+    // When the scene changes, dispose of any terms that are being dragged or animating, see #73.
+    // unlink not needed.
+    this.sceneProperty.lazyLink( function( scene ) {
+      scene.disposeTermsNotOnScale();
+    } );
   }
 
   equalityExplorer.register( 'EqualityExplorerModel', EqualityExplorerModel );
