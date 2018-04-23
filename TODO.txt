@@ -1,7 +1,5 @@
 TODO items for equality-explorer
 
-- set UniversalOperationAnimation.animationDistance so that it stops above closest terms
-
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
 - can this feature be separated from TermCreator and TermDragListener?

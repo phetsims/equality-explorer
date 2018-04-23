@@ -54,8 +54,7 @@ define( function( require ) {
       symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
       integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
       fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
-      animationDistance: 45,
-      timesZeroEnabled: true, // whether to include 'x 0' as one of the operations
+      timesZeroEnabled: true, // whether to include 'times 0' as one of the operations
 
       // supertype options
       spacing: 15
@@ -233,8 +232,11 @@ define( function( require ) {
       // start vertically aligned with the operator picker
       var startY = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
 
+      // animate to the top of the closest plate grid, offset determined empirically
+      var distance = Math.min( scene.scale.leftPlate.getGridTop(), scene.scale.rightPlate.getGridTop() ) - startY - 15;
+
       var animation = new UniversalOperationAnimation( operation, {
-        distance: options.animationDistance,
+        distance: distance,
         symbolFont: options.symbolFont,
         integerFont: options.integerFont,
         fractionFont: options.fractionFont,

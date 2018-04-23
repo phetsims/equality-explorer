@@ -94,6 +94,14 @@ define( function( require ) {
   return inherit( Object, Grid, {
 
     /**
+     * Gets the y coordinate of the top of the grid.
+     * @returns {number}
+     */
+    get top() {
+      return this.locationProperty.value.y - ( this.rows * this.cellHeight );
+    },
+
+    /**
      * Is the specified cell empty?
      * @param {number} cell
      * @returns {boolean}

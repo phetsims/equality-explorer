@@ -187,6 +187,14 @@ define( function( require ) {
     },
 
     /**
+     * Gets the y coordinate of the top of the grid.
+     * @returns {number}
+     */
+    getGridTop: function() {
+      return this.grid.top;
+    },
+
+    /**
      * Organizes terms on the plate, as specified in https://github.com/phetsims/equality-explorer/issues/4
      * @public
      */
