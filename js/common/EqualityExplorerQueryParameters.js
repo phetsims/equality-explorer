@@ -48,7 +48,7 @@ define( function( require ) {
       }
     },
 
-    // Add the 'x & y' screen, for testing multi-variable support.
+    // Adds the 'x & y' screen, for testing multi-variable support.
     // For internal use only, not public facing.
     xy: { type: 'flag' },
 
