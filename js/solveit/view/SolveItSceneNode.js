@@ -122,6 +122,7 @@ define( function( require ) {
 
     // Universal Operation control
     var universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
+      timesZeroEnabled: false, // disable multiplication by zero, see phetsims/equality-explorer#72
       animationDistance: 70,
       centerX: scene.scale.location.x, // centered on the scale
       top: equationPanel.bottom + 15

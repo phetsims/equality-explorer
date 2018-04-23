@@ -37,7 +37,7 @@ define( function( require ) {
     arrowsColor: 'black',
     gradientColor: 'rgb( 150, 150, 150 )'
   };
-  
+
   /**
    * @param {OperationsScene} scene
    * @param {Node} animationLayer
@@ -55,10 +55,14 @@ define( function( require ) {
       integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
       fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
       animationDistance: 45,
+      timesZeroEnabled: true, // whether to include 'x 0' as one of the operations
 
       // supertype options
       spacing: 15
     }, options );
+
+    // @private
+    this.timesZeroEnabled = options.timesZeroEnabled;
 
     // items for the operator picker
     var operatorItems = [];
@@ -81,9 +85,10 @@ define( function( require ) {
       var currentOperand = scene.operandProperty.value;
       var adjustedOperand;
 
-      if ( isDivideByZero( operator, currentOperand ) ) {
+      if ( isDivideByZero( operator, currentOperand ) ||
+           ( !options.timesZeroEnabled && isTimesZero( operator, currentOperand ) ) ) {
 
-        // If the operator would result in division by zero, change the operand to 1.
+        // If the operator would result in division or multiplication by zero, change the operand to 1.
         adjustedOperand = _.find( scene.operands, function( operand ) {
           return ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 );
         } );
@@ -154,7 +159,7 @@ define( function( require ) {
       upFunction: function( index ) {
         var nextOperandIndex = index + 1;
         var operator = scene.operatorProperty.value;
-        while ( !isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
+        while ( !self.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
           nextOperandIndex++;
           assert && assert( nextOperandIndex < scene.operands.length, 'nextOperandIndex out of range: ' + nextOperandIndex );
         }
@@ -165,7 +170,7 @@ define( function( require ) {
       downFunction: function( index ) {
         var nextOperandIndex = index - 1;
         var operator = scene.operatorProperty.value;
-        while ( !isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
+        while ( !self.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
           nextOperandIndex--;
           assert && assert( nextOperandIndex >= 0, 'nextOperandIndex out of range: ' + nextOperandIndex );
         }
@@ -293,6 +298,17 @@ define( function( require ) {
   }
 
   /**
+   * Does this operation result in multiplication by zero?
+   * @param {string} operator - see EqualityExplorerConstants.OPERATORS
+   * @param {Term} operand
+   * @returns {boolean}
+   */
+  function isTimesZero( operator, operand ) {
+    return operator === MathSymbols.TIMES &&
+           ( operand instanceof ConstantTerm && operand.constantValue.getValue() === 0 );
+  }
+
+  /**
    * Is the operation an attempt to do something that is unsupported with a variable term operand?
    * Times and divide are unsupported for variable term operands.
    * @param {string} operator - see EqualityExplorerConstants.OPERATORS
@@ -301,17 +317,7 @@ define( function( require ) {
    */
   function isUnsupportedVariableTermOperation( operator, operand ) {
     return ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
-               operand instanceof VariableTerm;
-  }
-
-  /**
-   * Are the specified operator and operand a supported combination?
-   * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-   * @param {Term} operand - the proposed operand
-   * @returns {boolean}
-   */
-  function isSupportedOperation( operator, operand ) {
-    return !isDivideByZero( operator, operand ) && !isUnsupportedVariableTermOperation( operator, operand );
+           operand instanceof VariableTerm;
   }
 
   return inherit( HBox, UniversalOperationControl, {
@@ -334,6 +340,18 @@ define( function( require ) {
       for ( var i = 0; i < arrayCopy.length; i++ ) {
         arrayCopy[ i ].stop();
       }
+    },
+
+    /**
+     * Are the specified operator and operand a supported combination?
+     * @param {string} operator - see EqualityExplorerConstants.OPERATORS
+     * @param {Term} operand - the proposed operand
+     * @returns {boolean}
+     */
+    isSupportedOperation: function( operator, operand ) {
+      return !isDivideByZero( operator, operand ) &&
+             ( this.timesZeroEnabled || !isTimesZero( operator, operand ) ) &&
+             !isUnsupportedVariableTermOperation( operator, operand );
     }
   } );
 } );
