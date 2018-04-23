@@ -1,7 +1,5 @@
 TODO items for equality-explorer
 
-animate left and right universal operations separately, with different distances
-
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
 - can this feature be separated from TermCreator and TermDragListener?
