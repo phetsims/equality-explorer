@@ -27,10 +27,11 @@ define( function( require ) {
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var Property = require( 'AXON/Property' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
+  var TranslateThenFade = require( 'EQUALITY_EXPLORER/common/view/TranslateThenFade' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
-  var UniversalOperationAnimation = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationAnimation' );
   var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var PICKER_OPTIONS = {
@@ -209,6 +210,13 @@ define( function( require ) {
     // @private Tween animations that are running
     this.animations = [];
 
+    // Clean up when an animation completes or is stopped.
+    var animationCleanup = function( animation, operationNode ) {
+      self.animations.splice( self.animations.indexOf( animation ), 1 );
+      !operationNode.disposed && operationNode.dispose();
+      goButton.enabled = true;
+    };
+
     // When the 'go' button is pressed, animate operations, then apply operations to terms.
     var goButtonListener = function() {
 
@@ -217,11 +225,21 @@ define( function( require ) {
       goButton.enabled = false;
 
       var operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
-
       phet.log && phet.log( 'Go button pressed, operation=' + operation );
 
-      // start vertically aligned with the operator picker
-      var startY = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
+      // operation on left side
+      var leftOperationNode = new UniversalOperationNode( operation, {
+        centerX: scene.scale.leftPlate.locationProperty.value.x,
+        centerY: self.centerY
+      } );
+      animationLayer.addChild( leftOperationNode );
+
+      // operation on right side
+      var rightOperationNode = new UniversalOperationNode( operation, {
+        centerX: scene.scale.rightPlate.locationProperty.value.x,
+        centerY: self.centerY
+      } );
+      animationLayer.addChild( rightOperationNode );
 
       // Apply the operation when both animations have completed.
       var numberOfAnimationsCompletedProperty = new NumberProperty( 0 );
@@ -231,43 +249,33 @@ define( function( require ) {
         }
       } );
 
-      // operation on left side of the scale
-      var leftAnimation = new UniversalOperationAnimation( operation, {
-        startX: scene.scale.leftPlate.locationProperty.value.x,
-        startY: startY,
-        endY: scene.scale.leftPlate.getGridTop(),
+      // animation on left side of the scale
+      var leftAnimation = new TranslateThenFade( leftOperationNode, {
+        destination: new Vector2( leftOperationNode.x, scene.scale.leftPlate.getGridTop() - leftOperationNode.height ),
         onComplete: function() {
           numberOfAnimationsCompletedProperty.value++;
-          self.animations.splice( self.animations.indexOf( leftAnimation ), 1 );
-          goButton.enabled = true;
+          animationCleanup( leftAnimation, leftOperationNode );
         },
         onStop: function() {
-          self.animations.splice( self.animations.indexOf( leftAnimation ), 1 );
-          goButton.enabled = true;
+          animationCleanup( leftAnimation, leftOperationNode );
         }
       } );
       self.animations.push( leftAnimation );
 
-      // operation on right side of the scale
-      var rightAnimation = new UniversalOperationAnimation( operation, {
-        startX: scene.scale.rightPlate.locationProperty.value.x,
-        startY: startY,
-        endY: scene.scale.rightPlate.getGridTop(),
+      // animation on right side of the scale
+      var rightAnimation = new TranslateThenFade( rightOperationNode, {
+        destination: new Vector2( rightOperationNode.x, scene.scale.rightPlate.getGridTop() - rightOperationNode.height ),
         onComplete: function() {
           numberOfAnimationsCompletedProperty.value++;
-          self.animations.splice( self.animations.indexOf( rightAnimation ), 1 );
-          goButton.enabled = true;
+          animationCleanup( rightAnimation, rightOperationNode );
         },
         onStop: function() {
-          self.animations.splice( self.animations.indexOf( rightAnimation ), 1 );
-          goButton.enabled = true;
+          animationCleanup( rightAnimation, rightOperationNode );
         }
       } );
       self.animations.push( rightAnimation );
 
       // start the animations
-      animationLayer.addChild( leftAnimation );
-      animationLayer.addChild( rightAnimation );
       leftAnimation.start();
       rightAnimation.start();
     };
