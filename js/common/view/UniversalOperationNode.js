@@ -28,26 +28,14 @@ define( function( require ) {
   function UniversalOperationNode( operation, options ) {
 
     options = _.extend( {
-      symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
-      integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
-      fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
-
-      // supertype options
       spacing: 4
     }, options );
 
-    var operatorNode = UniversalOperationNode.createOperatorNode( operation.operator, {
-      font: options.integerFont
-    } );
-
-    var operandNode = UniversalOperationNode.createOperandNode( operation.operand, {
-      symbolFont: options.symbolFont,
-      integerFont: options.integerFont,
-      fractionFont: options.fractionFont
-    } );
-
     assert && assert( !options.children, 'UniversalOperationNode sets children' );
-    options.children = [ operatorNode, operandNode ];
+    options.children = [
+      UniversalOperationNode.createOperatorNode( operation.operator ),
+      UniversalOperationNode.createOperandNode( operation.operand )
+    ];
 
     HBox.call( this, options );
   }
@@ -59,38 +47,38 @@ define( function( require ) {
     /**
      * Creates the view for a universal operator.
      * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-     * @param {Object} [options]
      * @returns {Node}
      * @public
      * @static
      */
-    createOperatorNode: function( operator, options ) {
-      return new Text( operator, options );
+    createOperatorNode: function( operator ) {
+      return new Text( operator, {
+        font: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT
+      } );
     },
 
     /**
      * Creates the view for a universal operand.
      * @param {Term} operand
-     * @param {Object} [options]
      * @returns {Node}
      * @public
      * @static
      */
-    createOperandNode: function( operand, options ) {
+    createOperandNode: function( operand ) {
 
       var operandNode = null;
 
       if ( operand instanceof ConstantTerm ) {
         operandNode = ConstantTermNode.createEquationTermNode( operand.constantValue, {
-          integerFont: options.integerFont,
-          fractionFont: options.fractionFont
+          integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
+          fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT
         } );
       }
       else if ( operand instanceof VariableTerm ) {
         operandNode = VariableTermNode.createEquationTermNode( operand.coefficient, operand.variable.symbol, {
-          symbolFont: options.symbolFont,
-          integerFont: options.integerFont,
-          fractionFont: options.fractionFont,
+          symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
+          integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
+          fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
           maxWidth: 50 // determined empirically
         } );
       }

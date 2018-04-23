@@ -17,7 +17,6 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -52,9 +51,6 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
-      integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
-      fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
       timesZeroEnabled: true, // whether to include 'times 0' as one of the operations
 
       // supertype options
@@ -70,9 +66,7 @@ define( function( require ) {
       var operator = scene.operators[ i ];
       operatorItems.push( {
         value: operator,
-        node: UniversalOperationNode.createOperatorNode( operator, {
-          font: options.integerFont
-        } )
+        node: UniversalOperationNode.createOperatorNode( operator )
       } );
     }
 
@@ -135,11 +129,7 @@ define( function( require ) {
       var operand = scene.operands[ i ];
       operandItems.push( {
         value: operand,
-        node: UniversalOperationNode.createOperandNode( operand, {
-          symbolFont: options.symbolFont,
-          integerFont: options.integerFont,
-          fractionFont: options.fractionFont
-        } )
+        node: UniversalOperationNode.createOperandNode( operand )
       } );
     }
 
@@ -241,17 +231,10 @@ define( function( require ) {
         }
       } );
 
-      // options common to both animations
-      var animationOptions = {
-        startY: startY,
-        symbolFont: options.symbolFont,
-        integerFont: options.integerFont,
-        fractionFont: options.fractionFont
-      };
-
       // operation on left side of the scale
-      var leftAnimation = new UniversalOperationAnimation( operation, _.extend( {}, animationOptions, {
+      var leftAnimation = new UniversalOperationAnimation( operation, {
         startX: scene.scale.leftPlate.locationProperty.value.x,
+        startY: startY,
         endY: scene.scale.leftPlate.getGridTop(),
         onComplete: function() {
           numberOfAnimationsCompletedProperty.value++;
@@ -262,12 +245,13 @@ define( function( require ) {
           self.animations.splice( self.animations.indexOf( leftAnimation ), 1 );
           goButton.enabled = true;
         }
-      } ) );
+      } );
       self.animations.push( leftAnimation );
 
       // operation on right side of the scale
-      var rightAnimation = new UniversalOperationAnimation( operation, _.extend( {}, animationOptions, {
+      var rightAnimation = new UniversalOperationAnimation( operation, {
         startX: scene.scale.rightPlate.locationProperty.value.x,
+        startY: startY,
         endY: scene.scale.rightPlate.getGridTop(),
         onComplete: function() {
           numberOfAnimationsCompletedProperty.value++;
@@ -278,7 +262,7 @@ define( function( require ) {
           self.animations.splice( self.animations.indexOf( rightAnimation ), 1 );
           goButton.enabled = true;
         }
-      } ) );
+      } );
       self.animations.push( rightAnimation );
 
       // start the animations

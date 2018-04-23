@@ -11,7 +11,6 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MoveTo = require( 'TWIXT/MoveTo' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -29,9 +28,6 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
-      integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
-      fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
       startX: 0,
       startY: 0,
       endY: 50,
@@ -43,11 +39,7 @@ define( function( require ) {
 
     assert && assert( options.endY > options.startY, 'endY should be > startY' );
 
-    var operationNode = new UniversalOperationNode( operation, {
-      symbolFont: options.symbolFont,
-      integerFont: options.integerFont,
-      fractionFont: options.fractionFont
-    } );
+    var operationNode = new UniversalOperationNode( operation );
 
     // wrap operationNode to hide its API
     Node.call( this, {
@@ -60,7 +52,7 @@ define( function( require ) {
     this.started = false; // was the animation started?
     this.stopped = false; // was the animation stopped?
 
-    // @private opacity animation (fade out), started when the operations arrive at their destination
+    // @private opacity animation (fade out), started when the operation arrives at its destination
     this.opacityTo = new OpacityTo( this, {
       duration: options.opacityDuration,
       endOpacity: 0,
@@ -75,7 +67,8 @@ define( function( require ) {
       }
     } );
 
-    // straight down from start location
+    // straight down from start location.
+    // account for height of operationNode, since we want it's bottom to by at destination.y
     var destination = new Vector2( self.x, options.endY - operationNode.height );
 
     // @private motion animation
