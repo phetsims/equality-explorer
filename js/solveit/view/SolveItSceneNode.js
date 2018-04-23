@@ -263,6 +263,9 @@ define( function( require ) {
     // unlink not needed.
     scene.challengeProperty.link( function( challenge ) {
 
+      // cancel operation animations
+      universalOperationControl.reset();
+
       // update the challengePanel to display the challenge equation
       self.removeChild( challengePanel );
       challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
