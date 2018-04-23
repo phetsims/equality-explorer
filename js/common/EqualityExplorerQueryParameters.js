@@ -78,7 +78,10 @@ define( function( require ) {
     // For internal use only, not public facing.
     rewardScore: {
       type: 'number',
-      defaultValue: 10
+      defaultValue: 10,
+      isValidValue: function( value ) {
+        return value > 0;
+      }
     }
   } );
 
