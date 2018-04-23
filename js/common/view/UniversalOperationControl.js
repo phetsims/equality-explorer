@@ -22,6 +22,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
@@ -232,32 +233,59 @@ define( function( require ) {
       // start vertically aligned with the operator picker
       var startY = animationLayer.globalToLocalBounds( operatorPicker.parentToGlobalBounds( operatorPicker.bounds ) ).centerY;
 
-      // animate to the top of the closest plate grid, offset determined empirically
-      var distance = Math.min( scene.scale.leftPlate.getGridTop(), scene.scale.rightPlate.getGridTop() ) - startY - 15;
+      // Apply the operation when both animations have completed.
+      var numberOfAnimationsCompletedProperty = new NumberProperty( 0 );
+      numberOfAnimationsCompletedProperty.lazyLink( function( numberOfAnimationsCompleted ) {
+        if ( numberOfAnimationsCompleted === 2 ) {
+          scene.applyOperation( operation );
+        }
+      } );
 
-      var animation = new UniversalOperationAnimation( operation, {
-        distance: distance,
+      // options common to both animations
+      var animationOptions = {
+        startY: startY,
         symbolFont: options.symbolFont,
         integerFont: options.integerFont,
-        fractionFont: options.fractionFont,
-        leftX: scene.scale.leftPlate.locationProperty.value.x,
-        rightX: scene.scale.rightPlate.locationProperty.value.x,
-        startY: startY,
+        fractionFont: options.fractionFont
+      };
+
+      // operation on left side of the scale
+      var leftAnimation = new UniversalOperationAnimation( operation, _.extend( {}, animationOptions, {
+        startX: scene.scale.leftPlate.locationProperty.value.x,
+        endY: scene.scale.leftPlate.getGridTop(),
         onComplete: function() {
-          scene.applyOperation( operation );
-          self.animations.splice( self.animations.indexOf( animation ), 1 );
+          numberOfAnimationsCompletedProperty.value++;
+          self.animations.splice( self.animations.indexOf( leftAnimation ), 1 );
           goButton.enabled = true;
         },
         onStop: function() {
-          self.animations.splice( self.animations.indexOf( animation ), 1 );
+          self.animations.splice( self.animations.indexOf( leftAnimation ), 1 );
           goButton.enabled = true;
         }
-      } );
-      self.animations.push( animation );
+      } ) );
+      self.animations.push( leftAnimation );
 
-      // start the animation
-      animationLayer.addChild( animation );
-      animation.start();
+      // operation on right side of the scale
+      var rightAnimation = new UniversalOperationAnimation( operation, _.extend( {}, animationOptions, {
+        startX: scene.scale.rightPlate.locationProperty.value.x,
+        endY: scene.scale.rightPlate.getGridTop(),
+        onComplete: function() {
+          numberOfAnimationsCompletedProperty.value++;
+          self.animations.splice( self.animations.indexOf( rightAnimation ), 1 );
+          goButton.enabled = true;
+        },
+        onStop: function() {
+          self.animations.splice( self.animations.indexOf( rightAnimation ), 1 );
+          goButton.enabled = true;
+        }
+      } ) );
+      self.animations.push( rightAnimation );
+
+      // start the animations
+      animationLayer.addChild( leftAnimation );
+      animationLayer.addChild( rightAnimation );
+      leftAnimation.start();
+      rightAnimation.start();
     };
 
     // 'go' button, applies the operation

@@ -21,7 +21,7 @@ define( function( require ) {
 
   /**
    * @param {UniversalOperation} operation
-   * @param {Object} [options]
+   * @param {Object} [options] - not propagated to supertype
    * @constructor
    */
   function UniversalOperationAnimation( operation, options ) {
@@ -32,37 +32,27 @@ define( function( require ) {
       symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
       integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
       fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
-      leftX: 0,
-      rightX: 100,
+      startX: 0,
       startY: 0,
-      distance: 55, // how far the operations will fall vertically
+      endY: 50,
       motionDuration: 700, // motion duration, ms
       opacityDuration: 250, // fade duration, in ms
       onComplete: function() {}, // called when the animation completes
       onStop: function() {} // called when the animation is stopped (by calling stop)
     }, options );
 
-    // Nodes for the operation
-    var leftOperationNode = new UniversalOperationNode( operation, {
+    var operationNode = new UniversalOperationNode( operation, {
       symbolFont: options.symbolFont,
       integerFont: options.integerFont,
-      fractionFont: options.fractionFont,
-      centerX: options.leftX,
-      centerY: options.startY
-    } );
-    var rightOperationNode = new UniversalOperationNode( operation, {
-      symbolFont: options.symbolFont,
-      integerFont: options.integerFont,
-      fractionFont: options.fractionFont,
-      centerX: options.rightX,
-      centerY: options.startY
+      fractionFont: options.fractionFont
     } );
 
-    // Animate both operation nodes together, so that the operation is applied to both sides simultaneously.
-    assert && assert( !options.children, 'UniversalOperationAnimation sets children' );
-    options.children = [ leftOperationNode, rightOperationNode ];
-
-    Node.call( this, options );
+    // wrap operationNode to hide its API
+    Node.call( this, {
+      children: [ operationNode ],
+      centerX: options.startX,
+      centerY: options.startY
+    } );
 
     // @private
     this.started = false; // was the animation started?
@@ -84,7 +74,7 @@ define( function( require ) {
     } );
 
     // straight down from start location
-    var destination = new Vector2( self.x, self.y + options.distance );
+    var destination = new Vector2( self.x, options.endY - operationNode.height );
 
     // @private motion animation
     this.moveTo = new MoveTo( self, destination, {
