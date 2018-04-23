@@ -266,13 +266,13 @@ define( function( require ) {
       // cancel operation animations
       universalOperationControl.reset();
 
-      // update the challengePanel to display the challenge equation
+      // display the challenge equation
       self.removeChild( challengePanel );
       challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
       self.addChild( challengePanel );
       challengePanel.moveToBack();
 
-      // show the correct controls
+      // visibility of other UI elements
       refreshButton.visible = true;
       nextButton.visible = false;
       faceNode.visible = false;
@@ -289,7 +289,7 @@ define( function( require ) {
       // ding!
       gameAudioPlayer.correctAnswer();
 
-      // Show face node, fade it out, then show the Next button.
+      // Show smiley face, fade it out, then show the Next button.
       faceNode.opacity = 0.8;
       faceNode.visible = true;
       faceAnimation = new OpacityTo( faceNode, {
