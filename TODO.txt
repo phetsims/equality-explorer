@@ -1,27 +1,5 @@
 TODO items for equality-explorer
 
-Lock feature, #19
-- all related terms must be created/set before startDrag is called
-- can this feature be separated from TermCreator and TermDragListener?
-- how to detect whether Term came from toolbox or plate, and not snagged while animating?
-- who is responsible for creating ghost Term? does it differ for toolbox vs plate?
-- who is responsible for creating inverse Term related to ghost term?
-- how is interactivity disabled for a ghost TermNode?
-- how should ghost and inverse Terms be managed? as fields in an interactive Term?
-- how to 'break relationship' between ghost and inverse Terms?
-
-Lock feature scenarios:
-
-- term dragged from toolbox to scale, term sums to zero with term on scale, ghost moves to plate
-- term dragged from scale to scale, ghost available on scale
-- term dragged from scale to scale, ghost requires creating inverse on scale
-- term dragged from scale to scale, ghost requires creating inverse on scale, inverse removed from scale
-- term dragged from scale to toolbox, ghost available on scale
-- term dragged from scale to toolbox, ghost requires creating inverse on scale
-- term dragged from scale to toolbox, ghost requires creating inverse on scale, inverse removed from scale
-- animate to scale, term's plate has become full, return both to toolbox
-- animate to scale, ghost's plate has become full, return both to toolbox
-
 Cleanup
 - grunt update-copyright-dates
 - review unresolved comments in design document
@@ -35,23 +13,28 @@ general requirements:
 - ghost is not interactive
 - ghost has a shadow while its not on plate
 - ghost does not interact with inverse terms on plate
+- inverse term is interactive
 - dragging a ghost's inverse breaks the association between ghost and inverse
-- ghost taken from a plate is taken from cell that is closest to term's cell
+- ghost taken from a plate is selected based on term's cell
+- inverse created on a plate is in a cell based on term's cell
 - ghost's inverse in put on plate in cell that is closest to term's cell
 
-term dragged from toolbox, ghost comes out of other toolbox
-
+scenarios: term dragged from toolbox, ghost comes out of other toolbox
+(1) term released below plate, term and ghost return to toolbox
 (2) term released above inverse on plate, term and inverse sum to zero, ghost goes to plate
 (3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
 (4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
 (5) term released about plate, room on both plates, term and ghost go to plates
 
-term dragged from plate, ghost obtained from other plate
-- same behavior as from toolbox
+scenarios: term dragged from plate, ghost obtained from other plate
+- same behavior as 'from toolbox' above
 
-term dragged from plate, ghost requires creating inverse on other plate
-(1) term released below plate, term and ghost return to toolbox, inverse remains on plate
+scenarios: term dragged from plate, ghost must be created and requires creating inverse on other plate
+(1) opposite plate is full, don't start term drag, display a dialog
+(2) term released below plate, term and ghost return to toolbox, inverse remains on plate
 (3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
 (4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
-...
+(5) term released above plate, room on both plates, term goes to plate, ghost for to plate and replaces inverse
+
+
                     
