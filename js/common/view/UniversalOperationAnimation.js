@@ -41,6 +41,8 @@ define( function( require ) {
       onStop: function() {} // called when the animation is stopped (by calling stop)
     }, options );
 
+    assert && assert( options.endY > options.startY, 'endY should be > startY' );
+
     var operationNode = new UniversalOperationNode( operation, {
       symbolFont: options.symbolFont,
       integerFont: options.integerFont,
