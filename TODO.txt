@@ -1,9 +1,6 @@
 TODO items for equality-explorer
 
 - set UniversalOperationAnimation.animationDistance so that it stops above closest terms
-- disposeTermsNotOnPlate when organize button is pressed
-- disposeTermsNotOnPlate when clear scale is pressed
-- disposeTermsNotOnPlate when snapshot is restored
 
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
