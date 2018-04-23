@@ -158,17 +158,25 @@ define( function( require ) {
     // @public
     reset: function() {
 
-      // delete all terms
-      this.allTermCreators.forEach( function( termCreator ) {
-        termCreator.disposeAllTerms();
-      } );
+      // dispose all terms
+      this.disposeAllTerms();
 
       // clear all snapshots
       this.snapshotsCollection.reset();
     },
 
     /**
-     * Disposes of all terms that are not on the scale.
+     * Disposes of all terms that are managed by term creators.
+     * @public
+     */
+    disposeAllTerms: function() {
+      this.allTermCreators.forEach( function( termCreator ) {
+        termCreator.disposeAllTerms();
+      } );
+    },
+
+    /**
+     * Disposes of all terms that are managed by term creators and are not on the scale.
      * @public
      */
     disposeTermsNotOnScale: function() {

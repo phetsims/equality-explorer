@@ -24,7 +24,7 @@ define( function( require ) {
     }, options );
 
     // @private
-    this.scale = scene.scale;
+    this.scene = scene;
     this.leftPlateSnapshot = new PlateSnapshot( scene.scale.leftPlate );
     this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate );
 
@@ -51,7 +51,9 @@ define( function( require ) {
      */
     restore: function() {
 
-      this.scale.clear();
+      // dispose of all terms, including those that may be dragging or animating, see #73
+      this.scene.disposeAllTerms();
+
       this.leftPlateSnapshot.restore();
       this.rightPlateSnapshot.restore();
 
