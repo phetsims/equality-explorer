@@ -1,8 +1,8 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Animation that occurs between when the 'Go' button is pressed on the universal operation control,
- * and the operation is applied to the terms on the scale.
+ * Animates an operation falling straight down from some starting location to some destination.
+ * This occurs between when the 'Go' button is pressed on the universal operation control.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
