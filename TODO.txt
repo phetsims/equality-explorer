@@ -1,7 +1,10 @@
 TODO items for equality-explorer
 
 - remove '× 0' operation in Solve It! screen?
-- should universal operator control and EquationPanel use same font size? Sizes are 24 and 28 respectively.
+- increase UO font size to 28
+- disposeTermsNotOnPlate when organize button is pressed
+- disposeTermsNotOnPlate when clear scale is pressed
+- disposeTermsNotOnPlate when snapshot is restored
 
 Lock feature, #19
 - all related terms must be created/set before startDrag is called
@@ -14,10 +17,7 @@ Lock feature, #19
 - how to 'break relationship' between ghost and inverse Terms?
 
 Lock feature scenarios:
-- term dragged from toolbox to toolbox, term and ghost return to toolboxes
-- term dragged from toolbox to scale, room for term and ghost on scale
-- term dragged from toolbox to scale, term's plate is full
-- term dragged from toolbox to scale, ghost's plate is full
+
 - term dragged from toolbox to scale, term sums to zero with term on scale, ghost moves to plate
 - term dragged from scale to scale, ghost available on scale
 - term dragged from scale to scale, ghost requires creating inverse on scale
@@ -31,4 +31,33 @@ Lock feature scenarios:
 Cleanup
 - grunt update-copyright-dates
 - review unresolved comments in design document
+
+
+LOCK FEATURE =========
+
+general requirements:
+- changing the lock deletes all terms that are not on the plate (dragging and animating terms)
+- term and ghost are added to equation simultaneously
+- ghost is not interactive
+- ghost has a shadow while its not on plate
+- ghost does not interact with inverse terms on plate
+- dragging a ghost's inverse breaks the association between ghost and inverse
+- ghost taken from a plate is taken from cell that is closest to term's cell
+- ghost's inverse in put on plate in cell that is closest to term's cell
+
+term dragged from toolbox, ghost comes out of other toolbox
+
+(2) term released above inverse on plate, term and inverse sum to zero, ghost goes to plate
+(3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
+(4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
+(5) term released about plate, room on both plates, term and ghost go to plates
+
+term dragged from plate, ghost obtained from other plate
+- same behavior as from toolbox
+
+term dragged from plate, ghost requires creating inverse on other plate
+(1) term released below plate, term and ghost return to toolbox, inverse remains on plate
+(3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
+(4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
+...
                     
