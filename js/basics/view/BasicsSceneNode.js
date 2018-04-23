@@ -53,7 +53,8 @@ define( function( require ) {
     this.termsLayer = new Node();
 
     var scaleNode = new BalanceScaleNode( scale, {
-      organizeButtonVisible: options.organizeButtonVisible
+      organizeButtonVisible: options.organizeButtonVisible,
+      disposeTermsNotOnScale: scene.disposeTermsNotOnScale.bind( scene )
     } );
 
     var leftTermsToolbox = new TermsToolbox( leftTermCreators, scale.leftPlate, this.termsLayer, {

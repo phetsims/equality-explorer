@@ -52,8 +52,9 @@ define( function( require ) {
   function BalanceScaleNode( scale, options ) {
 
     options = _.extend( {
+      clearScaleButtonVisible: true,
       organizeButtonVisible: true,
-      clearScaleButtonVisible: true
+      disposeTermsNotOnScale: null // {function|null} call this to dispose of terms that are NOT on the scale
     }, options );
 
     options.x = scale.location.x;
@@ -136,6 +137,13 @@ define( function( require ) {
     var organizeButton = new OrganizeButton( scale, {
       visible: options.organizeButtonVisible
     } );
+
+    // Pressing either button disposes of any terms that are not already on the scale.
+    // removeListener not needed.
+    if ( options.disposeTermsNotOnScale ) {
+      clearScaleButton.addListener( options.disposeTermsNotOnScale );
+      organizeButton.addListener( options.disposeTermsNotOnScale );
+    }
 
     // disable ClearScaleButton and OrganizeButton when the scale is empty.
     // unlink not required.
