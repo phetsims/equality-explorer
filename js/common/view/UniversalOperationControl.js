@@ -54,7 +54,7 @@ define( function( require ) {
       symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
       integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
       fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,
-      animationDistance: 55,
+      animationDistance: 45,
 
       // supertype options
       spacing: 15
