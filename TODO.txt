@@ -1,7 +1,7 @@
 TODO items for equality-explorer
 
+- set UniversalOperationAnimation.animationDistance so that it stops above closest terms
 - remove '× 0' operation in Solve It! screen?
-- increase UO font size to 28
 - disposeTermsNotOnPlate when organize button is pressed
 - disposeTermsNotOnPlate when clear scale is pressed
 - disposeTermsNotOnPlate when snapshot is restored
