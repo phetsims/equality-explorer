@@ -69,10 +69,10 @@ define( function( require ) {
 
     // straight down from start location.
     // account for height of operationNode, since we want it's bottom to by at destination.y
-    var destination = new Vector2( self.x, options.endY - operationNode.height );
+    var destination = new Vector2( this.x, options.endY - operationNode.height );
 
     // @private motion animation
-    this.moveTo = new MoveTo( self, destination, {
+    this.moveTo = new MoveTo( this, destination, {
       duration: options.motionDuration,
       constantSpeed: false,
       easing: TWEEN.Easing.Quintic.In,
