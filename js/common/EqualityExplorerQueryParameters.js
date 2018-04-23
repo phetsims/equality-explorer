@@ -60,13 +60,16 @@ define( function( require ) {
       defaultValue: 18
     },
 
-    // The largest integer value for any numerator, denominator or constant.
+    // The largest absolute integer value for any numerator, denominator or constant.
     // Any operation that would exceed this value is canceled, and a dialog is shown.
     // See https://github.com/phetsims/equality-explorer/issues/48
     // For internal use only, not public facing.
     largestInteger: {
       type: 'number',
-      defaultValue: 1E9
+      defaultValue: 1E9,
+      isValidValue: function( value ) {
+        return value > 0;
+      }
     },
 
     // Shows answers to challenges in the 'Solve It!' screen.
