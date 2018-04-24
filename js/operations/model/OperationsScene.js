@@ -168,8 +168,6 @@ define( function( require ) {
      */
     applyOperation: function( operation ) {
 
-      phet.log && phet.log( 'applyOperation: ' + operation );
-
       // Take a snapshot of terms on the scale, so we can undo the operation if necessary.
       var snapshot = this.createSnapshot();
 
