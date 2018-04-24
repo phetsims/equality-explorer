@@ -14,6 +14,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   /**
@@ -40,6 +41,36 @@ define( function( require ) {
     // @public do not rely on the format!
     toString: function() {
       return 'operator=' + this.operator + ', operand=' + this.operand;
+    },
+
+
+    /**
+     * Creates a concise human-readable string representation, intended to be used for phet.log calls.
+     * @returns {string}
+     * @public (debug)
+     */
+    toLogString: function() {
+      if ( this.operand instanceof ConstantTerm ) {
+
+        // e.g. '+ 2'
+        return StringUtils.fillIn( '{{operator}} {{constantValue}}', {
+          operator: this.operator,
+          constantValue: this.operand.constantValue.getValue()
+        } );
+      }
+      else if ( this.operand instanceof VariableTerm ) {
+
+        // e.g. '+ 2x (x=6)'
+        return StringUtils.fillIn( '{{operator}} {{coefficient}}{{symbol}} ({{symbol}}={{variableValue}})', {
+          operator: this.operator,
+          coefficient: this.operand.coefficient.getValue(),
+          symbol: this.operand.variable.symbol,
+          variableValue: this.operand.variable.valueProperty.value
+        } );
+      }
+      else {
+        throw new Error( 'unsupported operand: ' + this.operand );
+      }
     }
   } );
 } );

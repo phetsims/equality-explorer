@@ -225,7 +225,7 @@ define( function( require ) {
       goButton.enabled = false;
 
       var operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
-      phet.log && phet.log( 'Go button pressed, operation=' + operation );
+      phet.log && phet.log( 'Go ' + operation.toLogString() );
 
       // operation on left side
       var leftOperationNode = new UniversalOperationNode( operation, {
