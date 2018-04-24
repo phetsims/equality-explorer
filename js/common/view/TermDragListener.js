@@ -4,7 +4,8 @@
  * Drag listener for terms.
  *
  * Note that event.currentTarget should NOT be used herein. Because of event forwarding from TermCreatorNode,
- * event.currentTarget may not be what you expect it to be.
+ * event.currentTarget may not be what you expect it to be.  See SimpleDragHandler.createForwardingListener
+ * in TermCreatorNode.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
