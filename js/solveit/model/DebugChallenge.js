@@ -1,6 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
+ * A challenge created by reading the 'challenge' query parameter. See EqualityExplorerQueryParameters.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
