@@ -136,18 +136,24 @@ define( function( require ) {
     },
 
     /**
+     * Is this model element animating?
+     * @returns {boolean}
+     */
+    isAnimating: function() {
+      return !this.dragging &&
+             ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
+    },
+
+    /**
      * Animates location, when not being dragged by the user.
      * @param {number} dt - time since the previous step, in seconds
      * @public
      */
     step: function( dt ) {
-      
-      assert && assert( !this.disposed, 'attempt to step disposed moveable' );
 
-      var doStep = !this.dragging &&
-                   ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
+      assert && assert( !this.disposed, 'attempt to step disposed movable' );
 
-      if ( doStep ) {
+      if ( this.isAnimating() ) {
 
         // optional callback
         this.animationStepCallback && this.animationStepCallback();
