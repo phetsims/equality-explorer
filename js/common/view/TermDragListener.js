@@ -72,6 +72,10 @@ define( function( require ) {
         // if the term is on the plate, remove it from the plate
         if ( termCreator.isTermOnPlate( term ) ) {
           termCreator.removeTermFromPlate( term );
+          //TODO #19 term came from plate -- look at lockProperty, create ghost, possibly create inverse, etc.
+        }
+        else if ( !term.isAnimating() ) {
+          //TODO #19 term came from toolbox -- look at lockProperty, create ghost, etc.
         }
 
         // move the term a bit, so it's obvious that we're interacting with it
