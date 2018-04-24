@@ -13,9 +13,11 @@ define( function( require ) {
   // modules
   var Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
+  var DebugChallenge = require( 'EQUALITY_EXPLORER/solveit/model/DebugChallenge' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
@@ -137,6 +139,9 @@ define( function( require ) {
 
       // generate the challenge, form is: ax + b = mx + n
       var challenge = this.challengeGenerator.nextChallenge();
+      if ( EqualityExplorerQueryParameters.challenge ) {
+        challenge = new DebugChallenge();
+      }
       phet.log && phet.log( 'nextChallenge: challenge=' + challenge.toString() );
       phet.log && phet.log( 'nextChallenge: derivation=' + challenge.debugDerivation.replace( /<br>/g, ', ' ) );
 
