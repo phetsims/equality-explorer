@@ -82,7 +82,7 @@ define( function( require ) {
       },
 
       /**
-       * Called while the Node is being dragged.
+       * Called while termNode is being dragged.
        * @param {Event} event
        * @param {Trail} trail
        */
