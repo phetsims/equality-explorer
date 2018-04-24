@@ -69,20 +69,20 @@ define( function( require ) {
        */
       start: function( event, trail ) {
 
-        // move the node we're dragging to the foreground
-        termNode.moveToFront();
+        // if the term is on the plate, remove it from the plate
+        if ( termCreator.isTermOnPlate( term ) ) {
+          termCreator.removeTermFromPlate( term );
+        }
+
+        // move the term a bit, so it's obvious that we're interacting with it
+        term.moveTo( self.eventToLocation( event ) );
 
         // set term properties at beginning of drag
         term.dragging = true;
         term.shadowVisibleProperty.value = true;
 
-        // move the term a bit, so it's obvious that we're interacting with it
-        term.moveTo( self.eventToLocation( event ) );
-
-        // if the term is on the plate, remove it from the plate
-        if ( termCreator.isTermOnPlate( term ) ) {
-          termCreator.removeTermFromPlate( term );
-        }
+        // move the node we're dragging to the foreground
+        termNode.moveToFront();
       },
 
       /**
