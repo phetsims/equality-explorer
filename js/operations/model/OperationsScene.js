@@ -184,10 +184,12 @@ define( function( require ) {
         }
       } );
 
-      // If any term exceeds the number limit as the result of applying the operation ...
-      if ( this.isNumberLimitExceeded( this.allTermCreators ) ) {
+      // If any term exceeds maxInteger as the result of applying the operation ...
+      var termCreator = this.findMaxIntegerExceeded();
+      if ( termCreator ) {
 
-        // ... undo the operation by restoring the snapshot.
+        // Notify listeners and undo the operation by restoring the snapshot.
+        termCreator.maxIntegerExceededEmitter.emit();
         snapshot.restore();
       }
       else {
@@ -206,27 +208,19 @@ define( function( require ) {
     },
 
     /**
-     * Is the number limit exceeded by any term on the plate?
-     * @param {TermCreator[]} termCreators
-     * @returns {boolean}
+     * Finds the first TermCreator that has a Term that exceeds the maxInteger limit.
+     * @returns {TermCreator|null}
      * @private
      */
-    isNumberLimitExceeded: function( termCreators ) {
-
-      // Find the first TermCreator with a Term that violates the number limit
-      var termCreator = _.find( termCreators, function( termCreator ) {
+    findMaxIntegerExceeded: function() {
+      return _.find( this.allTermCreators, function( termCreator ) {
 
         // Get the term on the plate
         var term = termCreator.getLikeTermOnPlate();
 
         // Does the term exceed the limit?
-        return term && term.isNumberLimitExceeded();
+        return term && term.maxIntegerExceeded();
       } );
-
-      // Notify listeners
-      termCreator && termCreator.numberLimitExceededEmitter.emit();
-
-      return ( !!termCreator );
     }
   } );
 } );

@@ -52,13 +52,10 @@ define( function( require ) {
       }
     };
 
-    /**
-     * When the limit EqualityExplorerConstants.LARGEST_INTEGER is exceeded,
-     * dispose of all terms that are not on the scale, and display a dialog.
-     */
+    // When the maxInteger limit is exceeded, dispose of all terms that are not on the scale, and display a dialog.
     var dialog = null; // dialog will be reused
-    var numberLimitExceededListener = function() {
-      phet.log && phet.log( 'number limit exceeded' );
+    var maxIntegerExceededListener = function() {
+      phet.log && phet.log( 'maxInteger exceeded' );
       scene.disposeTermsNotOnScale();
       dialog = dialog || new OopsDialog( numberTooBigString );
       dialog.show();
@@ -66,7 +63,7 @@ define( function( require ) {
 
     scene.allTermCreators.forEach( function( termCreator ) {
       termCreator.termCreatedEmitter.addListener( termCreatedListener ); // removeListener not needed
-      termCreator.numberLimitExceededEmitter.addListener( numberLimitExceededListener ); // removeListener not needed
+      termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ); // removeListener not needed
     } );
 
     Node.call( this, options );

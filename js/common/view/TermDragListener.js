@@ -241,11 +241,11 @@ define( function( require ) {
               // No halo, since the terms did not overlap when drag ended.
               self.sumToZero( self.term, termInCell );
             }
-            else if ( combinedTerm.isNumberLimitExceeded() ) {
+            else if ( combinedTerm.maxIntegerExceeded() ) {
 
-              // Notify listeners that the combined term would exceed the number limit
+              // Notify listeners that the combined term would exceed the maxInteger limit.
               // Make no changes to the other terms.
-              self.termCreator.numberLimitExceededEmitter.emit();
+              self.termCreator.maxIntegerExceededEmitter.emit();
               termInCell.haloVisibleProperty.value = false;
             }
             else {

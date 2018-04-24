@@ -297,12 +297,12 @@ define( function( require ) {
 
     HBox.call( this, options );
 
-    // If the number limit is exceeded, stop all universal operations that are in progress
-    var numberLimitExceededListener = function() {
+    // If the maxInteger limit is exceeded, stop all universal operations that are in progress
+    var maxIntegerExceededListener = function() {
       self.stopAnimations();
     };
     scene.allTermCreators.forEach( function( termCreator ) {
-      termCreator.numberLimitExceededEmitter.addListener( numberLimitExceededListener ); // removeListener not needed
+      termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ); // removeListener not needed
     } );
   }
 

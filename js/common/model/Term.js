@@ -13,12 +13,13 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerMovable = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerMovable' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {Fraction} significantValue - value that is significant for the purposes of determining sign and number limits
+   * @param {Fraction} significantValue - value that is significant for the purposes of determining sign and maxInteger limits
    * @param {Object} [options]
    * @constructor
    * @abstract
@@ -33,7 +34,7 @@ define( function( require ) {
       toolboxLocation: null // {Vector2|null} location of the associated TermCreatorNode in the toolbox
     }, options );
 
-    // @private the value that is significant for the purposes of determining sign and number limits.
+    // @private the value that is significant for the purposes of determining sign and maxInteger limits.
     // The value that is significant is specific to the Term subtype.
     this.significantValue = significantValue;
 
@@ -99,14 +100,14 @@ define( function( require ) {
     },
 
     /**
-     * Does this term have a numerator or denominator that exceeds EqualityExplorerConstants.LARGEST_INTEGER?
-     * See https://github.com/phetsims/equality-explorer/issues/48
+     * Does this term have a numerator or denominator who absolute value exceeds the maxInteger limit?
+     * See EqualityExplorerQueryParameters.maxInteger and https://github.com/phetsims/equality-explorer/issues/48
      * @returns {boolean}
      * @public
      */
-    isNumberLimitExceeded: function() {
-      return ( Math.abs( this.significantValue.numerator ) > EqualityExplorerConstants.LARGEST_INTEGER ||
-               Math.abs( this.significantValue.denominator ) > EqualityExplorerConstants.LARGEST_INTEGER );
+    maxIntegerExceeded: function() {
+      return ( Math.abs( this.significantValue.numerator ) > EqualityExplorerQueryParameters.maxInteger ||
+               Math.abs( this.significantValue.denominator ) > EqualityExplorerQueryParameters.maxInteger );
     },
 
     /**

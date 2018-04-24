@@ -91,9 +91,9 @@ define( function( require ) {
     // dispose not required.
     this.termCreatedEmitter = new Emitter();
 
-    // @public emit is called when adding a term to the plate would cause EqualityExplorerConstants.LARGEST_INTEGER
+    // @public emit is called when adding a term to the plate would cause EqualityExplorerQueryParameters.maxInteger
     // to be exceeded.  See See https://github.com/phetsims/equality-explorer/issues/48
-    this.numberLimitExceededEmitter = new Emitter();
+    this.maxIntegerExceededEmitter = new Emitter();
 
     // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
     // This is needed for the lock feature, which involves creating an equivalent term on the opposite side of the scale.

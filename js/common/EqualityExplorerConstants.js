@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
@@ -54,11 +53,7 @@ define( function( require ) {
     SUM_TO_ZERO_SMALL_FONT_SIZE: 24, // for sum-to-zero animation that involves a 'small' term on the scale
 
     // for AccordionBoxes and Panels
-    CORNER_RADIUS: 3,
-
-    // Largest integer allowed for numerator or denominator. Anything larger results in an error dialog.
-    // See https://github.com/phetsims/equality-explorer/issues/48
-    LARGEST_INTEGER: EqualityExplorerQueryParameters.largestInteger
+    CORNER_RADIUS: 3
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );
