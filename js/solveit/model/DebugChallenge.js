@@ -21,11 +21,11 @@ define( function( require ) {
     assert && assert( values, 'query parameter challenge is not set' );
 
     var i = 0;
-    var x = values[ i++ ];
     var a = new Fraction( values[ i++ ], values[ i++ ] );
     var b = new Fraction( values[ i++ ], values[ i++ ] );
     var m = new Fraction( values[ i++ ], values[ i++ ] );
     var n = new Fraction( values[ i++ ], values[ i++ ] );
+    var x = values[ i++ ];
 
     Challenge.call( this, x, a, b, m, n, '?challenge' );
   }
