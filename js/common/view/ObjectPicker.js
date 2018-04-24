@@ -316,9 +316,18 @@ define( function( require ) {
 
     // @private called by dispose
     this.disposeObjectPicker = function() {
-      valueProperty.unlink( valueObserver );
-      options.upEnabledProperty.unlink( upEnabledListener );
-      options.downEnabledProperty.unlink( downEnabledListener );
+
+      if ( valueProperty.hasListener( valueObserver ) ) {
+        valueProperty.unlink( valueObserver );
+      }
+
+      if ( options.upEnabledProperty.hasListener( upEnabledListener ) ) {
+        options.upEnabledProperty.unlink( upEnabledListener );
+      }
+
+      if ( options.downEnabledProperty.hasListener( downEnabledListener ) ) {
+        options.downEnabledProperty.unlink( downEnabledListener );
+      }
     };
   }
 
