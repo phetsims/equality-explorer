@@ -158,6 +158,8 @@ define( function( require ) {
     // @public
     reset: function() {
 
+      this.lockedProperty && this.lockedProperty.reset();
+
       // dispose all terms
       this.disposeAllTerms();
 
