@@ -8,7 +8,7 @@ Cleanup
 LOCK FEATURE =========
 
 proposed simplifications:
-- terms are pickable:false while animating, so that all startDrag involve a term from toolbox or scale
+- terms are pickable:false while animating, so that all startDrag involves a term from toolbox or scale
 
 general requirements:
 - changing the lock deletes all terms that are not on the plate (dragging and animating terms)
