@@ -141,7 +141,7 @@ define( function( require ) {
      */
     isAnimating: function() {
       return !this.dragging &&
-             ( !this.locationProperty.get().equals( this.destination ) || this.animationCompletedCallback );
+             ( !this.locationProperty.get().equals( this.destination ) || !!this.animationCompletedCallback );
     },
 
     /**
