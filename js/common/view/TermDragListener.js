@@ -160,6 +160,11 @@ define( function( require ) {
      */
     animateToToolbox: function() {
       assert && assert( this.term.toolboxLocation, 'toolboxLocation was not initialized for term: ' + this.term );
+
+      // termNode cannot be grabbed while it's animating, and will be disposed of when it reaches the toolbox
+      this.termNode.pickable = false;
+
+      // dispose of the term when it reaches the toolbox
       var self = this;
       this.term.animateTo( this.term.toolboxLocation, {
         animationCompletedCallback: function() {
@@ -194,6 +199,9 @@ define( function( require ) {
       var self = this;
       var cell = this.termCreator.likeTermsCell;
       var cellLocation = this.plate.getLocationOfCell( cell );
+
+      // termNode cannot be grabbed while it's animating, and will be disposed of when it reaches the cell
+      self.termNode.pickable = false;
 
       this.term.animateTo( cellLocation, {
 
@@ -266,6 +274,9 @@ define( function( require ) {
         var self = this;
         var cellLocation = this.plate.getLocationOfCell( cell );
 
+        // termNode cannot be grabbed while it's animating
+        this.termNode.pickable = false;
+
         this.term.animateTo( cellLocation, {
 
           // If the target cell has become occupied, choose another cell.
@@ -280,6 +291,7 @@ define( function( require ) {
           animationCompletedCallback: function() {
             var cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
             self.termCreator.putTermOnPlate( self.term, cell );
+            self.termNode.pickable = true; // make termNode interactive
           }
         } );
       }
