@@ -161,7 +161,7 @@ define( function( require ) {
     animateToToolbox: function() {
       assert && assert( this.term.toolboxLocation, 'toolboxLocation was not initialized for term: ' + this.term );
 
-      // termNode cannot be grabbed while it's animating, and will be disposed of when it reaches the toolbox
+      // termNode cannot be grabbed while it's animating, and will be disposed of when term reaches the toolbox
       this.termNode.pickable = false;
 
       // dispose of the term when it reaches the toolbox
