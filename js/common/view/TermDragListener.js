@@ -43,7 +43,10 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      haloRadius: 10 // radius of the halo around terms that sum to zero
+      haloRadius: 10, // radius of the halo around terms that sum to zero
+
+      //TODO delete this when we finalize whether this is possible for lock feature
+      pickableWhileAnimating: true // is termNode pickable while term is animating?
     }, options );
 
     // @private
@@ -52,6 +55,7 @@ define( function( require ) {
     this.termCreator = termCreator;
     this.plate = plate;
     this.haloRadius = options.haloRadius;
+    this.pickableWhileAnimating = options.pickableWhileAnimating;
     this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
 
     SimpleDragHandler.call( this, {
@@ -164,8 +168,7 @@ define( function( require ) {
     animateToToolbox: function() {
       assert && assert( this.term.toolboxLocation, 'toolboxLocation was not initialized for term: ' + this.term );
 
-      // termNode cannot be grabbed while it's animating, and will be disposed of when term reaches the toolbox
-      this.termNode.pickable = false;
+      this.termNode.pickable = this.pickableWhileAnimating;
 
       // dispose of the term when it reaches the toolbox
       var self = this;
@@ -203,8 +206,7 @@ define( function( require ) {
       var cell = this.termCreator.likeTermsCell;
       var cellLocation = this.plate.getLocationOfCell( cell );
 
-      // termNode cannot be grabbed while it's animating, and will be disposed of when it reaches the cell
-      self.termNode.pickable = false;
+      self.termNode.pickable = this.pickableWhileAnimating;
 
       this.term.animateTo( cellLocation, {
 
@@ -277,8 +279,7 @@ define( function( require ) {
         var self = this;
         var cellLocation = this.plate.getLocationOfCell( cell );
 
-        // termNode cannot be grabbed while it's animating
-        this.termNode.pickable = false;
+        this.termNode.pickable = this.pickableWhileAnimating;
 
         this.term.animateTo( cellLocation, {
 
@@ -294,7 +295,7 @@ define( function( require ) {
           animationCompletedCallback: function() {
             var cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
             self.termCreator.putTermOnPlate( self.term, cell );
-            self.termNode.pickable = true; // make termNode interactive
+            self.termNode.pickable = true;
           }
         } );
       }
