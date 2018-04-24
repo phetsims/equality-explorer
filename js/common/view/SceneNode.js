@@ -14,6 +14,9 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var OopsDialog = require( 'EQUALITY_EXPLORER/common/view/OopsDialog' );
 
+  // string
+  var numberTooBigString = require( 'string!EQUALITY_EXPLORER/numberTooBig' );
+
   /**
    * @param {Scene} scene
    * @param {Property.<Scene>} sceneProperty - the selected scene
@@ -57,7 +60,7 @@ define( function( require ) {
     var numberLimitExceededListener = function() {
       phet.log && phet.log( 'number limit exceeded' );
       scene.disposeTermsNotOnScale();
-      dialog = dialog || new OopsDialog();
+      dialog = dialog || new OopsDialog( numberTooBigString );
       dialog.show();
     };
 

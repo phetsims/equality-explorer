@@ -1,8 +1,8 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Dialog displayed when an operation is canceled because EqualityExplorerConstants.LARGEST_INTEGER
- * limit is exceeded.  So named because the message begins with 'Oops!', so that's how people referred to it.
+ * Message dialog displayed when some limitation of the simulation is encountered.
+ * So named because the messages begin with 'Oops!', so that's how people referred to it.
  * See https://github.com/phetsims/equality-explorer/issues/48
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -23,17 +23,14 @@ define( function( require ) {
   // images
   var phetGirlWaggingFingerImage = require( 'image!EQUALITY_EXPLORER/phet-girl-wagging-finger.png' );
 
-  // string
-  var oopsMessageString = require( 'string!EQUALITY_EXPLORER/oopsMessage' );
-
   /**
    * @constructor
    */
-  function OopsDialog() {
+  function OopsDialog( messageString ) {
 
     var self = this;
 
-    var messageNode = new RichText( oopsMessageString, {
+    var messageNode = new RichText( messageString, {
       font: new PhetFont( 20 ),
       maxWidth: 600,
       maxHeight: 400
@@ -44,7 +41,7 @@ define( function( require ) {
     } );
     
     var content = new HBox( {
-      spacing: 10,
+      spacing: 20,
       children: [ messageNode, phetGirlNode ]
     } );
 

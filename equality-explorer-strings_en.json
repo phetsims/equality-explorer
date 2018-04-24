@@ -32,9 +32,6 @@
   "questionMark": {
     "value": "?"
   },
-  "oopsMessage": {
-    "value": "Oops! That will make<br>a number that is<br>too big for the sim.<br><br>Try a different<br>operation!"
-  },
   "chooseYourLevel": {
     "value": "Choose Your Level"
   },
@@ -58,5 +55,14 @@
   },
   "next": {
     "value": "Next"
+  },
+  "numberTooBig": {
+    "value": "Oops!<br><br>That will make a number<br>that is too big for the sim.<br><br>Try a different operation!"
+  },
+  "leftSideOfBalanceIsFull": {
+    "value": "Oops!<br><br>Left side of the balance is full."
+  },
+  "rightSideOfBalanceIsFull": {
+    "value": "Oops!<br><br>Right side of the balance is full."
   }
 }
