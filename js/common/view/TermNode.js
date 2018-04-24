@@ -95,15 +95,19 @@ define( function( require ) {
 
     // @private
     this.disposeTermNode = function() {
+
       if ( term.locationProperty.hasListener( locationObserver ) ) {
         term.locationProperty.unlink( locationObserver );
       }
+
       if ( term.shadowVisibleProperty.hasListener( shadowVisibleListener ) ) {
         term.haloVisibleProperty.unlink( shadowVisibleListener );
       }
+
       if ( term.shadowVisibleProperty.hasListener( haloVisibleListener ) ) {
         term.haloVisibleProperty.unlink( haloVisibleListener );
       }
+
       self.removeInputListener( self.termDragListener );
       self.termDragListener.dispose();
     };

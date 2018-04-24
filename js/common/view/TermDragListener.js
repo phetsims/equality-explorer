@@ -133,9 +133,11 @@ define( function( require ) {
 
     // @private called by dispose
     this.disposeTermDragListener = function() {
+
       if ( plate.locationProperty.hasListener( refreshHalosBound ) ) {
         plate.locationProperty.unlink( refreshHalosBound );
       }
+
       if ( plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
         plate.contentsChangedEmitter.removeListener( refreshHalosBound );
       }
