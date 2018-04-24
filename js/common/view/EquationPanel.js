@@ -45,9 +45,7 @@ define( function( require ) {
     }, options );
 
     // use an invisible rectangle to enforce fixed content size, stroke 'red' with ?dev
-    var invisibleRectangle = new Rectangle( 0, 0, options.contentWidth, options.contentHeight, {
-      stroke: phet.chipper.queryParameters.dev ? 'red' : null
-    } );
+    var invisibleRectangle = new Rectangle( 0, 0, options.contentWidth, options.contentHeight );
 
     var equationNode = new EquationNode( leftTermCreators, rightTermCreators, options.equationNodeOptions );
 
