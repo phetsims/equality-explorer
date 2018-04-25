@@ -15,7 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
-  var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
+  var UniversalOperationControl2 = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl2' );
   var VariablesSceneNode = require( 'EQUALITY_EXPLORER/variables/view/VariablesSceneNode' );
 
   /**
@@ -39,7 +39,7 @@ define( function( require ) {
     var operationAnimationLayer = new Node();
 
     // @private Universal Operation, below Equation accordion box
-    this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
+    this.universalOperationControl = new UniversalOperationControl2( scene, operationAnimationLayer, {
       centerX: scene.scale.location.x, // centered on the scale
       top: this.equationAccordionBox.bottom + 10
     } );
