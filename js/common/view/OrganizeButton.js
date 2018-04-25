@@ -53,6 +53,7 @@ define( function( require ) {
 
     assert && assert( !options.listener, 'OrganizeButton sets listener' );
     options.listener = function() {
+      phet.log && phet.log( 'OrganizeButton pressed' );
       scale.organize();
       self.enabled = false;
     };

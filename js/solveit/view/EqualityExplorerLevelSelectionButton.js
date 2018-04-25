@@ -37,6 +37,7 @@ define( function( require ) {
       baseColor: 'rgb( 191, 239, 254 )',
       scoreDisplayConstructor: ScoreDisplayNumberAndStar,
       listener: function() {
+        phet.log && phet.log( 'Level' + scene.level + ' button pressed' );
         sceneProperty.value = scene;
       }
     } );

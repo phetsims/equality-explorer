@@ -48,6 +48,7 @@ define( function( require ) {
 
     var resetAllButton = new ResetAllButton( {
       listener: function() {
+        phet.log && phet.log( 'ResetAllButton pressed' );
         model.reset();
         self.reset();
       },

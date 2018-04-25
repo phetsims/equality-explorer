@@ -27,6 +27,7 @@ define( function( require ) {
 
     assert && assert( !options.listener, 'ClearScaleButton sets listener' );
     options.listener = function() {
+      phet.log && phet.log( 'ClearScaleButton pressed' )
       scale.clear();
     };
 

@@ -87,7 +87,10 @@ define( function( require ) {
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
-      listener: function() { model.reset(); }
+      listener: function() {
+        phet.log && phet.log( 'ResetAllButton pressed' );
+        model.reset();
+      }
     } );
 
     // Layout

@@ -85,6 +85,10 @@ define( function( require ) {
       xMargin: 6
     } );
 
+    variable.valueProperty.lazyLink( function( value ) {
+      phet.log && phet.log( variable.symbol + ' picker changed to ' + value );
+    } );
+
     var equationNode = new HBox( {
       children: [ xText, equalsText, valuePicker ],
       spacing: 5,
