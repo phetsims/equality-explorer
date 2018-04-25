@@ -46,8 +46,6 @@ define( function( require ) {
     } );
 
     Dialog.call( this, content, {
-      modal: true,
-      hasCloseButton: true,
       xMargin: 30,
       yMargin: 30
     } );
