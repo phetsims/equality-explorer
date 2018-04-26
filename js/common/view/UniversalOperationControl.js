@@ -75,7 +75,7 @@ define( function( require ) {
      * Adjusts the operand if it's not appropriate for a specified operator.
      * @param {string} operator - see EqualityExplorerConstants.OPERATORS
      */
-    var adjustOperandForOperator = function( operator ) {
+    var operatorListener = function( operator ) {
 
       var currentOperand = scene.operandProperty.value;
       var adjustedOperand;
@@ -112,14 +112,14 @@ define( function( require ) {
       // When the up button is pressed, change the operand if it's inappropriate for the operator
       upFunction: function( index ) {
         var nextIndex = index + 1;
-        adjustOperandForOperator( scene.operators[ nextIndex ] );
+        operatorListener( scene.operators[ nextIndex ] );
         return nextIndex;
       },
 
       // When the down button is pressed, change the operand if it's inappropriate for the operator
       downFunction: function( index ) {
         var nextIndex = index - 1;
-        adjustOperandForOperator( scene.operators[ nextIndex ] );
+        operatorListener( scene.operators[ nextIndex ] );
         return nextIndex;
       }
     } ) );
