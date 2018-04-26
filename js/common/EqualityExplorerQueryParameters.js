@@ -10,7 +10,7 @@
  * - red dot at the origin of each plate (geometric center)
  * - red dot at the origin of the scale (top of fulcrum)
  * - red rectangle for drag bounds on each side of the scale
- * - red horizontal line that denotes the cutoff of on vs off the scale, when dragging terms
+ * - red horizontal line that denotes the cutoff of 'on' vs 'off' the scale, when dragging terms
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
