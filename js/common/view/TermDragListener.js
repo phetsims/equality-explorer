@@ -58,6 +58,10 @@ define( function( require ) {
     this.pickableWhileAnimating = options.pickableWhileAnimating;
     this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
 
+    //TODO use these when lock is enabled
+    this.equivalentTerm = null; // {Term|null} equivalent term on opposite plate, for lock feature
+    this.inverseTerm = null; // {Term|null} inverse term on opposite plate, for lock feature
+
     SimpleDragHandler.call( this, {
 
       allowTouchSnag: true,
