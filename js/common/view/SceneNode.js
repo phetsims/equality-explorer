@@ -10,9 +10,11 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var OopsDialog = require( 'EQUALITY_EXPLORER/common/view/OopsDialog' );
+  var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
 
   // string
   var numberTooBigString = require( 'string!EQUALITY_EXPLORER/numberTooBig' );
@@ -28,6 +30,9 @@ define( function( require ) {
 
     // @public (read-only)
     this.scene = scene;
+
+    // @private
+    this.termsLayer = termsLayer;
 
     /**
      * When a term is created in the model, create the corresponding view.
@@ -71,5 +76,34 @@ define( function( require ) {
 
   equalityExplorer.register( 'SceneNode', SceneNode );
 
-  return inherit( Node, SceneNode );
+  return inherit( Node, SceneNode, {
+
+    /**
+     * Performs sum-to-zero animation for terms that have summed to zero.
+     * @param {TermCreator[]} termCreators - term creators whose term summed to zero
+     * @public
+     */
+    animateSumToZero: function( termCreators ) {
+
+      for ( var i = 0; i < termCreators.length; i++ ) {
+
+        var termCreator = termCreators[ i ];
+
+        assert && assert( termCreator.combineLikeTermsEnabled,
+          'animateSumToZero should only be used when combineLikeTermsEnabled' );
+
+        // determine where the cell that contained the term is currently located
+        var cellCenter = termCreator.plate.getLocationOfCell( termCreator.likeTermsCell );
+
+        // display the animation in that cell
+        var sumToZeroNode = new SumToZeroNode( {
+          variable: termCreator.variable || null,
+          center: cellCenter,
+          fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
+        } );
+        this.termsLayer.addChild( sumToZeroNode );
+        sumToZeroNode.startAnimation();
+      }
+    }
+  } );
 } );

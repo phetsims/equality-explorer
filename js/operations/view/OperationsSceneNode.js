@@ -11,10 +11,8 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var UniversalOperationControl2 = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl2' );
   var VariablesSceneNode = require( 'EQUALITY_EXPLORER/variables/view/VariablesSceneNode' );
 
@@ -26,8 +24,6 @@ define( function( require ) {
    * @constructor
    */
   function OperationsSceneNode( scene, sceneProperty, layoutBounds, options ) {
-
-    var self = this;
 
     options = _.extend( {
       organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
@@ -51,28 +47,7 @@ define( function( require ) {
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
     // removeListener not needed.
-    scene.sumToZeroEmitter.addListener(
-
-      // @param {TermCreator[]} termCreators - term creators whose term summed to zero
-      function( termCreators ) {
-
-        for ( var i = 0; i < termCreators.length; i++ ) {
-
-          var termCreator = termCreators[ i ];
-
-          // determine where the cell that contained the term is currently located
-          var cellCenter = termCreator.plate.getLocationOfCell( termCreator.likeTermsCell );
-
-          // display the animation in that cell
-          var sumToZeroNode = new SumToZeroNode( {
-            variable: termCreator.variable || null,
-            center: cellCenter,
-            fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
-          } );
-          self.termsLayer.addChild( sumToZeroNode );
-          sumToZeroNode.startAnimation();
-        }
-      } );
+    scene.sumToZeroEmitter.addListener( this.animateSumToZero.bind( this ) );
   }
 
   equalityExplorer.register( 'OperationsSceneNode', OperationsSceneNode );

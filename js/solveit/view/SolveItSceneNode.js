@@ -304,11 +304,15 @@ define( function( require ) {
       } );
       faceAnimation.start( phet.joist.elapsedTime );
     } );
+
+    // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
+    // removeListener not needed.
+    scene.sumToZeroEmitter.addListener( this.animateSumToZero.bind( this ) );
   }
 
   equalityExplorer.register( 'SolveItSceneNode', SolveItSceneNode );
 
-  return inherit( Node, SolveItSceneNode, {
+  return inherit( SceneNode, SolveItSceneNode, {
 
     // @public
     reset: function() {
