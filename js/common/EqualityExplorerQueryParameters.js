@@ -116,10 +116,7 @@ define( function( require ) {
     },
 
     //TODO #19 delete this when lock is completed
-    lock: {
-      type: 'boolean',
-      defaultValue: false
-    }
+    lock: { type: 'flag' }
   } );
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
