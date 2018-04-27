@@ -42,8 +42,8 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 10,
       buttonYMargin: 8,
-      buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5,
+      buttonTouchAreaXDilation: 10,
+      buttonTouchAreaYDilation: 10,
       contentXMargin: 20,
       contentYMargin: 8,
       cornerRadius: EqualityExplorerConstants.CORNER_RADIUS

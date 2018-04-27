@@ -50,8 +50,8 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 10,
       buttonYMargin: 8,
-      buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5,
+      buttonTouchAreaXDilation: 10,
+      buttonTouchAreaYDilation: 10,
       cornerRadius: EqualityExplorerConstants.CORNER_RADIUS
 
     }, options );
@@ -82,7 +82,8 @@ define( function( require ) {
     var valuePicker = new NumberPicker( variable.valueProperty, new Property( variable.range ), {
       color: 'black',
       font: new PhetFont( options.fontSize ),
-      xMargin: 6
+      xMargin: 6,
+      touchAreaYDilation: 15
     } );
 
     var equationNode = new HBox( {

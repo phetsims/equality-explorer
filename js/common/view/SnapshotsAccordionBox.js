@@ -57,8 +57,8 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 10,
       buttonYMargin: 8,
-      buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5,
+      buttonTouchAreaXDilation: 10,
+      buttonTouchAreaYDilation: 10,
       contentXMargin: 10,
       contentYMargin: 10,
       cornerRadius: EqualityExplorerConstants.CORNER_RADIUS
@@ -106,8 +106,8 @@ define( function( require ) {
       baseColor: EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE, // button color matches selection stroke
       xMargin: 8,
       yMargin: 4,
-      touchAreaXDilation: 5,
-      touchAreaYDilation: 5,
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10,
       listener: function() {
         scene.snapshotsCollection.selectedSnapshotProperty.value.restore();
       }

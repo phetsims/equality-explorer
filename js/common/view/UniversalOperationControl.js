@@ -118,7 +118,9 @@ define( function( require ) {
         spacing: 2,
         buttonContentXMargin: 8,
         buttonContentYMargin: 3,
-        baseColor: 'white'
+        baseColor: 'white',
+        touchAreaXDilation: 0,
+        touchAreaYDilation: 15
       } );
     }
     else {
@@ -127,6 +129,8 @@ define( function( require ) {
       operatorControl = new ObjectPicker( scene.operatorProperty, operatorItems, _.extend( {}, PICKER_OPTIONS, {
         wrapEnabled: true, // wrap around when min/max is reached
         xMargin: 18,
+        touchAreaXDilation: 0,
+        touchAreaYDilation: 15,
 
         // When the up button is pressed, change the operand if it's inappropriate for the operator
         upFunction: function( index ) {
@@ -161,6 +165,8 @@ define( function( require ) {
     // picker for choosing operand
     var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, _.extend( {}, PICKER_OPTIONS, {
       xMargin: 6,
+      touchAreaXDilation: 0,
+      touchAreaYDilation: 15,
 
       // Providing these Properties means that we're responsible for up/down enabled state
       upEnabledProperty: upEnabledProperty,
@@ -309,7 +315,8 @@ define( function( require ) {
       content: goButtonIcon,
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       minXMargin: 10,
-      minYMargin: 10
+      minYMargin: 10,
+      touchAreaDilation: 5
     } );
 
     assert && assert( !options.children, 'UniversalOperationControl sets children' );
