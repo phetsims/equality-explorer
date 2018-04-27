@@ -34,7 +34,8 @@ define( function( require ) {
   // constants
   var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
   var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  var B_VALUES_TYPE1 = ChallengeGenerator.rangeToArray( -3, 3 );
+  var B_VALUES_TYPE2 = ChallengeGenerator.rangeToArray( -10, 10 );
   var D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
   /**
@@ -81,7 +82,7 @@ define( function( require ) {
       var x = this.randomX( X_VALUES );
       var d = this.randomValue( D_VALUES, [ 0, 1, -1 ] );
       var a = this.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
-      var b = this.randomValue( B_VALUES, [ 0 ] );
+      var b = this.randomValue( B_VALUES_TYPE1, [ 0 ] );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
       // Verify that computations meeting design requirements.
@@ -118,7 +119,7 @@ define( function( require ) {
       var x = this.randomX( X_VALUES );
       var d = this.randomValue( D_VALUES, [ 0, 1, -1 ] );
       var a = this.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
-      var b = this.randomValueBy( B_VALUES, function( b ) { return ( b % d !== 0 ); } );
+      var b = this.randomValueBy( B_VALUES_TYPE2, function( b ) { return ( b % d !== 0 ); } );
       var c = new Fraction( ( a * x ) + b, d ).reduce();
 
       // Verify that computations meeting design requirements.
