@@ -42,7 +42,7 @@ define( function( require ) {
     options = _.extend( {
       haloRadius: 10, // radius of the halo around terms that sum to zero
 
-      //TODO delete this when we finalize whether this is possible for lock feature
+      //TODO #19 delete this when we finalize whether this is possible for lock feature
       pickableWhileAnimating: true // is termNode pickable while term is animating?
     }, options );
 

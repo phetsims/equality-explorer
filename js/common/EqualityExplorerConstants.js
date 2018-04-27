@@ -21,7 +21,7 @@ define( function( require ) {
 
   var EqualityExplorerConstants = {
 
-    //TODO fill in credits, https://github.com/phetsims/equality-explorer/issues/2
+    //TODO #2 fill in credits
     // credits, applied to both equality-explorer and equality-explorer-basics
     CREDITS: {
       leadDesign: 'Amanda McGarry',

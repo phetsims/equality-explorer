@@ -103,7 +103,7 @@ define( function( require ) {
       }
     },
 
-    //TODO delete this when we decide which option to use
+    //TODO #77 delete this when we decide which option to use
     // Specifies the type of UI control to use for the universal operator.
     // See https://github.com/phetsims/equality-explorer/issues/77
     // For internal use only, not public facing.
