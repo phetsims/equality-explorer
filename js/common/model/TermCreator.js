@@ -223,6 +223,28 @@ define( function( require ) {
     },
 
     /**
+     * Given a term, gets the location for an equivalent term on the opposite side of the scale.
+     * When locked, equivalent terms track the y coordinate of their associated term, but their
+     * x coordinate is offset by the distance between their associated toolbox locations.
+     * @param {Term} term
+     * @returns {Vector2}
+     * @public
+     */
+    getEquivalentTermLocation: function( term ) {
+      assert && assert( this.isManagedTerm( term ), 'term is not managed by this TermCreator: ' + term );
+
+      var xOffset;
+      if ( term.significantValue.getValue() >= 0 ) {
+        xOffset = this.equivalentTermCreator.positiveLocation.x - this.positiveLocation.x;
+      }
+      else {
+        xOffset = this.equivalentTermCreator.negativeLocation.x - this.negativeLocation.x;
+      }
+
+      return term.locationProperty.value.plusXY( xOffset, 0 );
+    },
+
+    /**
      * Animates terms.
      * @param {number} dt - time since the previous step, in seconds
      * @public
