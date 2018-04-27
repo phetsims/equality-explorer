@@ -74,6 +74,12 @@ define( function( require ) {
     };
     term.locationProperty.link( locationObserver ); // unlink required in dispose
 
+    // Pickable (interactivity)
+    var pickableListener = function( pickable ) {
+      self.pickable = pickable;
+    };
+    term.pickableProperty.link( pickableListener ); // unlink required in dispose
+
     // Show/hide shadow
     var shadowVisibleListener = function( shadowVisible ) {
       shadowNode.visible = shadowVisible;
@@ -84,7 +90,7 @@ define( function( require ) {
     var haloVisibleListener = function( haloVisible ) {
       haloNode.visible = haloVisible;
     };
-    term.haloVisibleProperty.link( haloVisibleListener ); // unlink required in dispose.
+    term.haloVisibleProperty.link( haloVisibleListener ); // unlink required in dispose
 
     // @private dispose required
     this.termDragListener = new TermDragListener( this, term, termCreator, {
@@ -97,6 +103,10 @@ define( function( require ) {
 
       if ( term.locationProperty.hasListener( locationObserver ) ) {
         term.locationProperty.unlink( locationObserver );
+      }
+
+      if ( term.pickableProperty.hasListener( pickableListener ) ) {
+        term.pickableProperty.unlink( pickableListener );
       }
 
       if ( term.shadowVisibleProperty.hasListener( shadowVisibleListener ) ) {

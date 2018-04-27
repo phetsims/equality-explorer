@@ -30,6 +30,7 @@ define( function( require ) {
     assert && assert( significantValue.isReduced(), 'significantValue must be reduced: ' + significantValue );
 
     options = _.extend( {
+      pickable: true, // whether the term is pickable (interactive)
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
       toolboxLocation: null // {Vector2|null} location of the associated TermCreatorNode in the toolbox
     }, options );
@@ -50,6 +51,9 @@ define( function( require ) {
 
     // @public {Vector2|null} location of this term's corresponding TermCreatorNode in the toolbox
     this.toolboxLocation = options.toolboxLocation;
+
+    // @public whether the term is pickable (interactive)
+    this.pickableProperty = new BooleanProperty( options.pickable );
 
     // @public whether the term's shadow is visible
     this.shadowVisibleProperty = new BooleanProperty( false );
@@ -83,6 +87,7 @@ define( function( require ) {
      * @override
      */
     dispose: function() {
+      this.pickableProperty.dispose();
       this.shadowVisibleProperty.dispose();
       this.haloVisibleProperty.dispose();
       EqualityExplorerMovable.prototype.dispose.call( this );
