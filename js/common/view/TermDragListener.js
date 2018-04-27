@@ -176,7 +176,7 @@ define( function( require ) {
     animateToToolbox: function() {
       assert && assert( this.term.toolboxLocation, 'toolboxLocation was not initialized for term: ' + this.term );
 
-      this.termNode.pickable = this.pickableWhileAnimating;
+      this.term.pickableProperty.value = this.pickableWhileAnimating;
 
       // dispose of the term when it reaches the toolbox
       var self = this;
@@ -214,7 +214,7 @@ define( function( require ) {
       var cell = this.termCreator.likeTermsCell;
       var cellLocation = this.termCreator.plate.getLocationOfCell( cell );
 
-      self.termNode.pickable = this.pickableWhileAnimating;
+      self.term.pickableProperty.value = this.pickableWhileAnimating;
 
       this.term.animateTo( cellLocation, {
 
@@ -287,7 +287,7 @@ define( function( require ) {
         var self = this;
         var cellLocation = this.termCreator.plate.getLocationOfCell( cell );
 
-        this.termNode.pickable = this.pickableWhileAnimating;
+        this.term.pickableProperty.value = this.pickableWhileAnimating;
 
         this.term.animateTo( cellLocation, {
 
@@ -303,7 +303,7 @@ define( function( require ) {
           animationCompletedCallback: function() {
             var cell = self.termCreator.plate.getBestEmptyCell( self.term.locationProperty.value );
             self.termCreator.putTermOnPlate( self.term, cell );
-            self.termNode.pickable = true;
+            self.term.pickableProperty.value = true;
           }
         } );
       }
