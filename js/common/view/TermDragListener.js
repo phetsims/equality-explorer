@@ -397,7 +397,6 @@ define( function( require ) {
      */
     eventToLocation: function( event ) {
 
-      //TODO revisit this
       // move bottom center of termNode to pointer location
       var location = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( 0, this.termNode.contentNodeSize.height / 2 );
 
