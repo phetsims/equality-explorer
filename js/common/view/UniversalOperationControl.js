@@ -20,6 +20,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -29,6 +30,7 @@ define( function( require ) {
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var Property = require( 'AXON/Property' );
+  var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
   var TranslateThenFade = require( 'EQUALITY_EXPLORER/common/view/TranslateThenFade' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
@@ -107,25 +109,40 @@ define( function( require ) {
       }
     };
 
-    // picker for choosing operator
-    var operatorPicker = new ObjectPicker( scene.operatorProperty, operatorItems, _.extend( {}, PICKER_OPTIONS, {
-      wrapEnabled: true, // wrap around when min/max is reached
-      xMargin: 18,
+    var operatorControl = null;
+    if ( EqualityExplorerQueryParameters.operatorControl === 'buttons' ) {
 
-      // When the up button is pressed, change the operand if it's inappropriate for the operator
-      upFunction: function( index ) {
-        var nextIndex = index + 1;
-        operatorListener( scene.operators[ nextIndex ] );
-        return nextIndex;
-      },
+      // row of radio buttons
+      operatorControl = new RadioButtonGroup( scene.operatorProperty, operatorItems, {
+        orientation: 'horizontal',
+        spacing: 2,
+        buttonContentXMargin: 8,
+        buttonContentYMargin: 3,
+        baseColor: 'white'
+      } );
+    }
+    else {
 
-      // When the down button is pressed, change the operand if it's inappropriate for the operator
-      downFunction: function( index ) {
-        var nextIndex = index - 1;
-        operatorListener( scene.operators[ nextIndex ] );
-        return nextIndex;
-      }
-    } ) );
+      // picker
+      operatorControl = new ObjectPicker( scene.operatorProperty, operatorItems, _.extend( {}, PICKER_OPTIONS, {
+        wrapEnabled: true, // wrap around when min/max is reached
+        xMargin: 18,
+
+        // When the up button is pressed, change the operand if it's inappropriate for the operator
+        upFunction: function( index ) {
+          var nextIndex = index + 1;
+          operatorListener( scene.operators[ nextIndex ] );
+          return nextIndex;
+        },
+
+        // When the down button is pressed, change the operand if it's inappropriate for the operator
+        downFunction: function( index ) {
+          var nextIndex = index - 1;
+          operatorListener( scene.operators[ nextIndex ] );
+          return nextIndex;
+        }
+      } ) );
+    }
 
     // items for the operand picker
     var operandItems = [];
@@ -296,7 +313,7 @@ define( function( require ) {
     } );
 
     assert && assert( !options.children, 'UniversalOperationControl sets children' );
-    options.children = [ operatorPicker, operandPicker, goButton ];
+    options.children = [ operatorControl, operandPicker, goButton ];
 
     HBox.call( this, options );
 

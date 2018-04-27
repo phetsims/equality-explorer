@@ -36,7 +36,7 @@ define( function( require ) {
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var UniversalOperationControl2 = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl2' );
+  var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
 
   // strings
   var nextString = require( 'string!EQUALITY_EXPLORER/next' );
@@ -121,7 +121,7 @@ define( function( require ) {
     var operationAnimationLayer = new Node();
 
     // Universal Operation control
-    var universalOperationControl = new UniversalOperationControl2( scene, operationAnimationLayer, {
+    var universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
       timesZeroEnabled: false, // disable multiplication by zero, see phetsims/equality-explorer#72
       centerX: scene.scale.location.x, // centered on the scale
       top: equationPanel.bottom + 15
