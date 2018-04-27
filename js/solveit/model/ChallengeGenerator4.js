@@ -29,6 +29,7 @@ define( function( require ) {
   var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
   var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
   var B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  var M_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
   /**
    * @constructor
@@ -39,22 +40,6 @@ define( function( require ) {
 
   equalityExplorer.register( 'ChallengeGenerator4', ChallengeGenerator4 );
 
-  /**
-   * Generates a set of possible values for m, based on the value of a,
-   * and the constraints: m !== 0, m !== a, |m| < 10, |a-m| <= 10
-   * See https://github.com/phetsims/equality-explorer/issues/38#issuecomment-385062547
-   * @param {number} a
-   * @returns {number[]}
-   */
-  function mValues( a ) {
-    var values = ChallengeGenerator.rangeToArray( a - 10, a + 10 );
-    values = _.filter( values, function( value ) {
-      return ( value !== a && value !== 0 && value > -10 && value < 10 );
-    } );
-    assert && assert( values.length > 0, 'all values were excluded, a=' + a );
-    return values;
-  }
-
   return inherit( ChallengeGenerator, ChallengeGenerator4, {
 
     /**
@@ -64,7 +49,7 @@ define( function( require ) {
      * Let x be a random integer between [-40,40], x !== 0
      * Let a be a random integer between [-10,10], a !== 0
      * Let b be a random integer between [-10,10], b !== 0
-     * Let m be a random integer between [-10,10], m !== 0, m !== a, m < 10, (a-m) <= 10
+     * Let m be a random integer between [-10,10], m !== 0, m !== a, |a-m| <= 10
      * Let n = (a – m)x + b, n == 0 is OK
      *
      * @returns {Challenge}
@@ -76,7 +61,9 @@ define( function( require ) {
       var x = this.randomX( X_VALUES );
       var a = this.randomValue( A_VALUES, [ 0 ] );
       var b = this.randomValue( B_VALUES, [ 0 ] );
-      var m = this.randomValue( mValues( a ) );
+      var m = this.randomValueBy( M_VALUES, function( m ) {
+        return ( m !== 0 ) && ( m !== a ) && ( Math.abs( a - m ) <= 10 );
+      } );
       var n = ( ( a - m ) * x ) + b;
 
       // Verify that computations meeting design requirements.
@@ -85,7 +72,6 @@ define( function( require ) {
       assert && assert( b !== 0, 'b is 0' );
       assert && assert( m !== 0, 'm is 0' );
       assert && assert( m !== a, 'm === a: ' + m );
-      assert && assert( Math.abs( m ) < 10, '|m| is too large: ' + Math.abs( m ) );
       assert && assert( Math.abs( a - m ) <= 10, '|a-m| is too large: ' + Math.abs( a - m ) );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
