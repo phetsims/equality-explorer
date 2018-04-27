@@ -40,5 +40,7 @@ scenarios: term dragged from plate, ghost must be created and requires creating 
 (4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
 (5) term released above plate, room on both plates, term goes to plate, ghost for to plate and replaces inverse
 
+All of the above differently for combining like terms in Operations screen.
+
 
                     
