@@ -13,6 +13,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
@@ -100,7 +101,7 @@ define( function( require ) {
 
     // Some scenes support locking the left and right sides of the equation,
     // such that an action on one side results in an equivalent action on the opposite side.
-    if ( scene.lockedProperty ) {
+    if ( scene.lockedProperty && EqualityExplorerQueryParameters.lock ) {
       var lockControl = new LockControl( scene.lockedProperty, {
         x: scale.location.x,
         y: leftTermsToolbox.centerY - 5 // offset determined empirically

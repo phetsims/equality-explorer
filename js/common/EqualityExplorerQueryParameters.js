@@ -113,6 +113,12 @@ define( function( require ) {
       isValidValue: function( value ) {
         return _.includes( [ 'buttons', 'picker' ], value );
       }
+    },
+
+    //TODO #19 delete this when lock is completed
+    lock: {
+      type: 'boolean',
+      defaultValue: false
     }
   } );
 
