@@ -52,11 +52,16 @@ define( function( require ) {
     this.termCreator = termCreator;
     this.haloRadius = options.haloRadius;
     this.pickableWhileAnimating = options.pickableWhileAnimating;
-    this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
 
-    //TODO use these when lock is enabled
+    // @private related terms
+    this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
     this.equivalentTerm = null; // {Term|null} equivalent term on opposite plate, for lock feature
     this.inverseTerm = null; // {Term|null} inverse term on opposite plate, for lock feature
+
+    // @private to improve readability
+    this.plate = termCreator.plate;
+    this.equivalentTermCreator = termCreator.equivalentTermCreator;
+    this.oppositePlate = termCreator.equivalentTermCreator.plate;
 
     SimpleDragHandler.call( this, {
 
@@ -69,13 +74,27 @@ define( function( require ) {
        */
       start: function( event, trail ) {
 
-        // if the term is on the plate, remove it from the plate
         if ( termCreator.isTermOnPlate( term ) ) {
+
+          if ( termCreator.lockedProperty.value ) {
+            //TODO #19 get equivalent term from opposite plate, possibly create inverse, OopsDialog, etc.
+          }
           termCreator.removeTermFromPlate( term );
-          //TODO #19 term came from plate -- look at lockProperty, create ghost, possibly create inverse, etc.
         }
         else if ( !term.isAnimating() ) {
-          //TODO #19 term came from toolbox -- look at lockProperty, create ghost, etc.
+
+          //TODO #19 lock is temporarily disabled for the Operations screen
+          if ( !self.termCreator.combineLikeTermsEnabled ) {
+
+            // term came from toolbox. If lock is enabled, create an equivalent term on other side of the scale.
+            if ( termCreator.lockedProperty.value ) {
+              self.equivalentTerm = self.equivalentTermCreator.createTerm(
+                _.extend( term.copyOptions(), {
+                  pickable: false
+                } ) );
+              self.equivalentTerm.shadowVisibleProperty.value = true;
+            }
+          }
         }
 
         // move the term a bit, so it's obvious that we're interacting with it
@@ -117,15 +136,33 @@ define( function( require ) {
         // set term properties at end of drag
         term.draggingProperty.value = false;
         term.shadowVisibleProperty.value = false;
+        if ( self.equivalentTerm ) {
+          self.equivalentTerm.shadowVisibleProperty.value = false;
+        }
 
-        if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
+        if ( self.equivalentTerm && self.oppositePlate.isFull() ) {
+
+          self.refreshHalos();
+
+          // opposite plate is full
+          self.animateToToolbox();
+        }
+        else if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
 
           // term overlaps a term on the scale, and they sum to zero
           self.sumToZero( term, self.likeTerm, {
             haloBaseColor: EqualityExplorerColors.HALO // show the halo
           } );
+
+          // put equivalent term on opposite plate
+          if ( self.equivalentTerm ) {
+            var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
+            self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
+            self.equivalentTerm.pickableProperty.value = true;
+            self.equivalentTerm = null;
+          }
         }
-        else if ( term.locationProperty.value.y > termCreator.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
+        else if ( term.locationProperty.value.y > self.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
           // term was released below the plate, animate back to toolbox
           self.animateToToolbox();
@@ -138,20 +175,32 @@ define( function( require ) {
       }
     } );
 
-    // @private When the plate moves, or its contents change, refresh the halos around inverse terms.
+    // Equivalent term tracks the movement of the dragged term.
+    var locationListener = function( location ) {
+      if ( self.equivalentTerm ) {
+        self.equivalentTerm.moveTo( termCreator.getEquivalentTermLocation( term ) );
+      }
+    };
+    term.locationProperty.link( locationListener ); // unlink required in dispose
+
+    // @private When the plate moves, or its contents change, refresh the halos around overlapping terms.
     var refreshHalosBound = this.refreshHalos.bind( this );
-    termCreator.plate.locationProperty.link( refreshHalosBound ); // unlink required in dispose
-    termCreator.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
+    this.plate.locationProperty.link( refreshHalosBound ); // unlink required in dispose
+    this.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
 
     // @private called by dispose
     this.disposeTermDragListener = function() {
 
-      if ( termCreator.plate.locationProperty.hasListener( refreshHalosBound ) ) {
-        termCreator.plate.locationProperty.unlink( refreshHalosBound );
+      if ( term.locationProperty.hasListener( locationListener ) ) {
+        term.locationProperty.unlink( locationListener );
       }
 
-      if ( termCreator.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
-        termCreator.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
+      if ( self.plate.locationProperty.hasListener( refreshHalosBound ) ) {
+        self.plate.locationProperty.unlink( refreshHalosBound );
+      }
+
+      if ( self.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
+        self.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
       }
     };
   }
@@ -183,6 +232,10 @@ define( function( require ) {
       this.term.animateTo( this.term.toolboxLocation, {
         animationCompletedCallback: function() {
           self.term.dispose();
+          if ( self.equivalentTerm ) {
+            self.equivalentTerm.dispose();
+            self.equivalentTerm = null;
+          }
         }
       } );
     },
@@ -212,7 +265,7 @@ define( function( require ) {
 
       var self = this;
       var cell = this.termCreator.likeTermsCell;
-      var cellLocation = this.termCreator.plate.getLocationOfCell( cell );
+      var cellLocation = this.plate.getLocationOfCell( cell );
 
       self.term.pickableProperty.value = this.pickableWhileAnimating;
 
@@ -221,7 +274,7 @@ define( function( require ) {
         // When the term reaches the cell ...
         animationCompletedCallback: function() {
 
-          var termInCell = self.termCreator.plate.getTermInCell( cell );
+          var termInCell = self.plate.getTermInCell( cell );
 
           if ( !termInCell ) {
 
@@ -274,36 +327,62 @@ define( function( require ) {
     animateToEmptyCell: function() {
       assert && assert( !this.termCreator.combineLikeTermsEnabled, 'should NOT be called when combining like terms' );
 
-      var cell = this.termCreator.plate.getBestEmptyCell( this.term.locationProperty.value );
+      if ( this.plate.isFull() || ( this.equivalentTerm && this.oppositePlate.isFull() ) ) {
 
-      // Careful! cell is {number|null}, and might be 0
-      if ( cell === null ) {
-
-        // Plate is full. Return the term to its toolbox.
+        // Plate is full, return to the toolbox.
         this.animateToToolbox( this.term );
       }
       else {
 
         var self = this;
-        var cellLocation = this.termCreator.plate.getLocationOfCell( cell );
+
+        var cell = this.plate.getBestEmptyCell( this.term.locationProperty.value );
+        var cellLocation = this.plate.getLocationOfCell( cell );
 
         this.term.pickableProperty.value = this.pickableWhileAnimating;
 
         this.term.animateTo( cellLocation, {
 
-          // If the target cell has become occupied, choose another cell.
+          // On each animation step...
           animationStepCallback: function() {
-            if ( !self.termCreator.plate.isEmptyCell( cell ) ) {
+            if ( self.equivalentTerm && self.oppositePlate.isFull() ) {
+
+              // If we have an equivalent term to put on the opposite plate,
+              // and the opposite plate is full, return to the toolbox
+              self.animateToToolbox( self.term );
+            }
+            else if ( !self.plate.isEmptyCell( cell ) ) {
+
+              // If the target cell has become occupied, choose another cell.
               self.animateToEmptyCell();
             }
           },
 
-          // When the term reaches the cell, put it in the closest cell.
-          // We compute cell again here in case a term has been removed below the cell that we were animating to.
+          // When the term reaches the cell...
           animationCompletedCallback: function() {
-            var cell = self.termCreator.plate.getBestEmptyCell( self.term.locationProperty.value );
-            self.termCreator.putTermOnPlate( self.term, cell );
-            self.term.pickableProperty.value = true;
+
+            if ( self.plate.isFull() || ( self.equivalentTerm && self.oppositePlate.isFull() ) ) {
+
+              // If either plate is full, return to the toolbox.
+              self.animateToToolbox( self.term );
+            }
+            else {
+
+              // Compute cell again, in case a term has been removed below the cell that we were animating to.
+              var cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
+
+              // Put the term on the plate
+              self.termCreator.putTermOnPlate( self.term, cell );
+              self.term.pickableProperty.value = true;
+
+              // Put equivalent term on the other plate
+              if ( self.equivalentTerm ) {
+                var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
+                self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
+                self.equivalentTerm.pickableProperty.value = true;
+                self.equivalentTerm = null;
+              }
+            }
           }
         } );
       }
@@ -340,7 +419,7 @@ define( function( require ) {
         this.likeTerm = null;
 
         // does this term overlap a like term on the plate?
-        var termOnPlate = this.termCreator.plate.getTermAtLocation( this.term.locationProperty.value );
+        var termOnPlate = this.plate.getTermAtLocation( this.term.locationProperty.value );
         if ( termOnPlate && termOnPlate.isLikeTerm( this.term ) ) {
           this.likeTerm = termOnPlate;
         }
@@ -364,6 +443,13 @@ define( function( require ) {
           this.term.haloVisibleProperty.value = false;
         }
       }
+      else {
+        this.term.shadowVisibleProperty.value = false;
+        this.term.haloVisibleProperty.value = false;
+        if ( this.likeTerm ) {
+          this.likeTerm.haloVisibleProperty.value = false;
+        }
+      }
     },
 
     /**
@@ -378,7 +464,7 @@ define( function( require ) {
       assert && assert( termDragging.plus( termOnScale ).sign === 0, 'terms do not sum to zero' );
 
       // determine which cell the term appears in
-      var cell = this.termCreator.plate.getCellForTerm( termOnScale );
+      var cell = this.plate.getCellForTerm( termOnScale );
 
       // some things we need before the terms are disposed
       var variable = termDragging.variable || null;
@@ -390,7 +476,7 @@ define( function( require ) {
 
       // after the terms have been disposed and the scale has moved,
       // determine the new location of the inverse term's cell
-      var sumToZeroLocation = this.termCreator.plate.getLocationOfCell( cell );
+      var sumToZeroLocation = this.plate.getLocationOfCell( cell );
 
       options = _.extend( {
         variable: variable,

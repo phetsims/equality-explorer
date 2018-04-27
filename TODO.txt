@@ -15,7 +15,7 @@ general requirements:
 - changing the lock deletes all terms that are not on the plate (dragging and animating terms)
 - term and ghost are added to equation simultaneously
 - ghost is not interactive
-- ghost has a shadow while its not on plate
+- ghost has a shadow while term is dragging
 - ghost does not interact with inverse terms on plate
 - inverse term is interactive
 - dragging a ghost's inverse breaks the association between ghost and inverse
@@ -24,11 +24,11 @@ general requirements:
 - ghost's inverse in put on plate in cell that is closest to term's cell
 
 scenarios: term dragged from toolbox, ghost comes out of other toolbox
-(1) term released below plate, term and ghost return to toolbox
-(2) term released above inverse on plate, term and inverse sum to zero, ghost goes to plate
-(3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
-(4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
-(5) term released about plate, room on both plates, term and ghost go to plates
+X (1) term released below plate, term and ghost return to toolbox
+X (2) term released above inverse on plate, term and inverse sum to zero, ghost goes to plate
+X (3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
+X (4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
+X (5) term released about plate, room on both plates, term and ghost go to plates
 
 scenarios: term dragged from plate, ghost obtained from other plate
 - same behavior as 'from toolbox' above
