@@ -126,6 +126,14 @@ define( function( require ) {
     },
 
     /**
+     * Is the plate's grid full? That is, are all cells occupied?
+     * @public
+     */
+    isFull: function() {
+      return this.grid.isFull();
+    },
+
+    /**
      * Is the specified cell empty?
      * @param {number} cell
      * @returns {boolean}

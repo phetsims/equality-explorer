@@ -102,6 +102,15 @@ define( function( require ) {
     },
 
     /**
+     * Is the grid full? That is, are all cells occupied?
+     * @returns {boolean}
+     * @public
+     */
+    isFull: function() {
+      return ( this.cells.indexOf( NO_TERM ) === -1 );
+    },
+
+    /**
      * Is the specified cell empty?
      * @param {number} cell
      * @returns {boolean}
