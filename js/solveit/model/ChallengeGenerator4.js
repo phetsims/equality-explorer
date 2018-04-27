@@ -29,7 +29,6 @@ define( function( require ) {
   var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
   var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
   var B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var M_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
   /**
    * @constructor
@@ -61,7 +60,7 @@ define( function( require ) {
       var x = this.randomX( X_VALUES );
       var a = this.randomValue( A_VALUES, [ 0 ] );
       var b = this.randomValue( B_VALUES, [ 0 ] );
-      var m = this.randomValue( M_VALUES, [ 0, a ] );
+      var m = this.randomValue( ChallengeGenerator.rangeToArray( a - 10, a + 10 ), [ 0, a ] );
       var n = ( ( a - m ) * x ) + b;
 
       // Verify that computations meeting design requirements.
@@ -70,6 +69,12 @@ define( function( require ) {
       assert && assert( b !== 0, 'b is 0' );
       assert && assert( m !== 0, 'm is 0' );
       assert && assert( m !== a, 'm === a: ' + m );
+
+      // Verify that we fixed the 'unsolvable challenge' problem.
+      // This problem occurs when |a-m| > 10 and |a-m| is odd.
+      // see https://github.com/phetsims/equality-explorer/issues/38#issuecomment-384769381
+      assert && assert( !( Math.abs( a - m ) > 10 && ( ( a - m ) % 2 !== 0 ) ),
+        'bad combo, a=' + a + ', m=' + m + ', |a-m|=' + Math.abs( a - m ) );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
       var debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, m: m, n: n } );
