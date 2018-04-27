@@ -16,6 +16,9 @@ define( function( require ) {
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
+  // constants
+  var PANEL_CORNER_RADIUS = 3;
+
   var EqualityExplorerConstants = {
 
     //TODO fill in credits, https://github.com/phetsims/equality-explorer/issues/2
@@ -44,6 +47,20 @@ define( function( require ) {
     // universal operators, in the order that they appear in the operator picker
     OPERATORS: [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ],
 
+    // options shared by all accordion boxes
+    ACCORDION_BOX_OPTIONS: {
+      resize: false,
+      fill: 'white',
+      titleAlignX: 'left',
+      titleXSpacing: 8,
+      buttonLength: 20,
+      buttonXMargin: 10,
+      buttonYMargin: 8,
+      buttonTouchAreaXDilation: 10,
+      buttonTouchAreaYDilation: 10,
+      cornerRadius: PANEL_CORNER_RADIUS
+    },
+
     // Fonts
     ACCORDION_BOX_TITLE_FONT: new PhetFont( 18 ),
     UNIVERSAL_OPERATION_SYMBOL_FONT: new MathSymbolFont( 24 ), // for anything that's not a number
@@ -52,8 +69,8 @@ define( function( require ) {
     SUM_TO_ZERO_BIG_FONT_SIZE: 40, // for sum-to-zero animation that involves a 'big' term on the scale
     SUM_TO_ZERO_SMALL_FONT_SIZE: 24, // for sum-to-zero animation that involves a 'small' term on the scale
 
-    // for AccordionBoxes and Panels
-    CORNER_RADIUS: 3
+    // Panels
+    PANEL_CORNER_RADIUS: PANEL_CORNER_RADIUS
   };
 
   equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );

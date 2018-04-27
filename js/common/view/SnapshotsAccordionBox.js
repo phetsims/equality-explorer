@@ -41,7 +41,7 @@ define( function( require ) {
 
     var self = this;
 
-    options = _.extend( {
+    options = _.extend( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // this accordion box is designed to be a fixed width, regardless of its content
       fixedWidth: 100,
@@ -50,18 +50,8 @@ define( function( require ) {
       variableValuesVisibleProperty: null,
 
       // supertype options
-      resize: false,
-      fill: 'white',
-      titleAlignX: 'left',
-      titleXSpacing: 8,
-      buttonLength: 20,
-      buttonXMargin: 10,
-      buttonYMargin: 8,
-      buttonTouchAreaXDilation: 10,
-      buttonTouchAreaYDilation: 10,
       contentXMargin: 10,
-      contentYMargin: 10,
-      cornerRadius: EqualityExplorerConstants.CORNER_RADIUS
+      contentYMargin: 10
 
     }, options );
 

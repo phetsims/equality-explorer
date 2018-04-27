@@ -33,26 +33,16 @@ define( function( require ) {
    */
   function VariableAccordionBox( variable, options ) {
 
-    options = _.extend( {
+    options = _.extend( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // this accordion box is designed to be a fixed width, regardless of its content
       fixedWidth: 100,
       fontSize: 24,
 
       // supertype options
-      resize: false,
-      contentXMargin: 20,
-      contentYMargin: 10,
-      fill: 'white',
       showTitleWhenExpanded: false,
-      titleAlignX: 'left',
-      titleXSpacing: 8,
-      buttonLength: 20,
-      buttonXMargin: 10,
-      buttonYMargin: 8,
-      buttonTouchAreaXDilation: 10,
-      buttonTouchAreaYDilation: 10,
-      cornerRadius: EqualityExplorerConstants.CORNER_RADIUS
+      contentXMargin: 20,
+      contentYMargin: 10
 
     }, options );
 
