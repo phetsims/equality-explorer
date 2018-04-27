@@ -118,7 +118,7 @@ define( function( require ) {
         // move the term
         term.moveTo( self.eventToLocation( event ) );
 
-        //TODO any performance concern here?
+        //TODO #83 any performance concern here?
         // since multiple terms may be dragged via multi-touch, keep the most-recently-moved term on top
         termNode.moveToFront();
 
