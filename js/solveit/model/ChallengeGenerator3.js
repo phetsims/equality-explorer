@@ -91,6 +91,11 @@ define( function( require ) {
       assert && assert( a % d !== 0, 'a/d reduces to an integer, a=' + a + ', d=' + d );
       assert && assert( b !== 0, 'b is 0' );
 
+      // Verify that we fixed the 'too many steps to solve' problem.
+      // see https://github.com/phetsims/equality-explorer/issues/38#issuecomment-384761619
+      var bd = b * d;
+      assert && assert( bd >= -30 && bd <= 30, '(b * d) out of range: ' + bd );
+
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
       var debugDerivation = StringUtils.fillIn( PATTERN1, { x: x, a: a, b: b, c: c, d: d } );
 
