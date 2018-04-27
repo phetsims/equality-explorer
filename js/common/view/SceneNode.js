@@ -44,7 +44,7 @@ define( function( require ) {
 
       // create a TermNode
       var termNode = termCreator.createTermNode( term );
-      termsLayer.insertChild( 0, termNode ); // behind other Nodes
+      termsLayer.addChild( termNode );
 
       // Clean up when the term is disposed. Term.dispose handles removal of this listener.
       term.disposedEmitter.addListener( function( term ) {
