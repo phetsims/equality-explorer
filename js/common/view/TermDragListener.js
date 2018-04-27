@@ -86,7 +86,7 @@ define( function( require ) {
         term.moveTo( self.eventToLocation( event ) );
 
         // set term properties at beginning of drag
-        term.dragging = true;
+        term.draggingProperty.value = true;
         term.shadowVisibleProperty.value = true;
 
         // move the node we're dragging to the foreground
@@ -119,7 +119,7 @@ define( function( require ) {
       end: function( event, trail ) {
 
         // set term properties at end of drag
-        term.dragging = false;
+        term.draggingProperty.value = false;
         term.shadowVisibleProperty.value = false;
 
         if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
@@ -338,7 +338,7 @@ define( function( require ) {
      */
     refreshHalos: function() {
 
-      if ( this.term.dragging ) {
+      if ( this.term.draggingProperty.value ) {
 
         var previousLikeTerm = this.likeTerm;
         this.likeTerm = null;

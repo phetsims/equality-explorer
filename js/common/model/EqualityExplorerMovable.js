@@ -14,6 +14,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
@@ -30,7 +31,6 @@ define( function( require ) {
     options = _.extend( {
       location: Vector2.ZERO, // {Vector2} initial location
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} bounds that constrain dragging
-      dragging: false, // {boolean} is this instance being dragged by the user?
       animationSpeed: 400 // {number} distance/second when animating
     }, options );
 
@@ -41,7 +41,7 @@ define( function( require ) {
     this.dragBounds = options.dragBounds;
 
     // @public drag handlers must manage this flag during a drag sequence
-    this.dragging = options.dragging;
+    this.draggingProperty = new BooleanProperty( false );
 
     // @private
     this.animationSpeed = options.animationSpeed;
@@ -140,7 +140,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     isAnimating: function() {
-      return !this.dragging &&
+      return !this.draggingProperty.value &&
              ( !this.locationProperty.get().equals( this.destination ) || !!this.animationCompletedCallback );
     },
 
