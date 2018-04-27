@@ -7,6 +7,10 @@ Cleanup
 
 LOCK FEATURE =========
 
+implementation notes:
+Observe term.locationProperty, use moveTo to move equivalentTerm
+Observe inverseTerm.draggingProperty, break association with equivalentTerm if inverseTerm is dragged
+
 general requirements:
 - changing the lock deletes all terms that are not on the plate (dragging and animating terms)
 - term and ghost are added to equation simultaneously
