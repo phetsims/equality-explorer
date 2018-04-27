@@ -122,6 +122,8 @@ define( function( require ) {
         touchAreaXDilation: 0,
         touchAreaYDilation: 15
       } );
+
+      scene.operatorProperty.lazyLink( operatorListener ); // unlink not needed
     }
     else {
 
