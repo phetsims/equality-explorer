@@ -82,7 +82,7 @@ define( function( require ) {
      * @override
      */
     createTermNode: function( term, options ) {
-      return new MysteryTermNode( this, term, this.plate, options );
+      return new MysteryTermNode( this, term, options );
     }
   } );
 } );

@@ -23,14 +23,13 @@ define( function( require ) {
   /**
    * @param {TermCreator} termCreator
    * @param {Term} term
-   * @param {Plate} plate
    * @param {Node} contentNode
    * @param {Node} shadowNode
    * @param {Object} [options]
    * @constructor
    * @abstract
    */
-  function TermNode( termCreator, term, plate, contentNode, shadowNode, options ) {
+  function TermNode( termCreator, term, contentNode, shadowNode, options ) {
 
     var self = this;
 
@@ -88,7 +87,7 @@ define( function( require ) {
     term.haloVisibleProperty.link( haloVisibleListener ); // unlink required in dispose.
 
     // @private dispose required
-    this.termDragListener = new TermDragListener( this, term, termCreator, plate, {
+    this.termDragListener = new TermDragListener( this, term, termCreator, {
       haloRadius: haloRadius
     } );
     this.addInputListener( this.termDragListener ); // removeListener required in dispose

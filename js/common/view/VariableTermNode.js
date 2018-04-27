@@ -42,11 +42,10 @@ define( function( require ) {
   /**
    * @param {TermCreator} termCreator
    * @param {VariableTerm} term
-   * @param {Plate} plate
    * @param {Object} [options]
    * @constructor
    */
-  function VariableTermNode( termCreator, term, plate, options ) {
+  function VariableTermNode( termCreator, term, options ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
@@ -58,7 +57,7 @@ define( function( require ) {
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
 
-    TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );
+    TermNode.call( this, termCreator, term, contentNode, shadowNode, options );
   }
 
   equalityExplorer.register( 'VariableTermNode', VariableTermNode );

@@ -25,11 +25,10 @@ define( function( require ) {
   /**
    * @param {MysteryTermCreator} termCreator
    * @param {MysteryTerm} term
-   * @param {Plate} plate
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTermNode( termCreator, term, plate, options ) {
+  function MysteryTermNode( termCreator, term, options ) {
 
     var contentNode = MysteryTermNode.createInteractiveTermNode( term.mysteryObject.image, {
       maxHeight: term.diameter
@@ -40,7 +39,7 @@ define( function( require ) {
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
 
-    TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );
+    TermNode.call( this, termCreator, term, contentNode, shadowNode, options );
   }
 
   equalityExplorer.register( 'MysteryTermNode', MysteryTermNode );

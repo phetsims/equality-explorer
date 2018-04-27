@@ -34,11 +34,10 @@ define( function( require ) {
   /**
    * @param {ConstantTermCreator} termCreator
    * @param {ConstantTerm} term
-   * @param {Plate} plate
    * @param {Object} [options]
    * @constructor
    */
-  function ConstantTermNode( termCreator, term, plate, options ) {
+  function ConstantTermNode( termCreator, term, options ) {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
@@ -50,7 +49,7 @@ define( function( require ) {
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
 
-    TermNode.call( this, termCreator, term, plate, contentNode, shadowNode, options );
+    TermNode.call( this, termCreator, term, contentNode, shadowNode, options );
   }
 
   equalityExplorer.register( 'ConstantTermNode', ConstantTermNode );

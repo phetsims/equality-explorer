@@ -136,7 +136,7 @@ define( function( require ) {
      * @override
      */
     createTermNode: function( term, options ) {
-      return new VariableTermNode( this, term, this.plate, _.extend( {
+      return new VariableTermNode( this, term, _.extend( {
         positiveFill: this.positiveFill,
         negativeFill: this.negativeFill
       }, options ) );

@@ -19,7 +19,6 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
@@ -29,16 +28,14 @@ define( function( require ) {
    * @param {Node} termNode - Node that the listener is attached to
    * @param {Term} term - the term being dragged
    * @param {TermCreator} termCreator - the creator of term
-   * @param {Plate} plate - the plate on the scale that the term is associated with
    * @param {Object} [options]
    * @constructor
    */
-  function TermDragListener( termNode, term, termCreator, plate, options ) {
+  function TermDragListener( termNode, term, termCreator, options ) {
 
     assert && assert( termNode instanceof Node, 'invalid termNode: ' + termNode );
     assert && assert( term instanceof Term, 'invalid term: ' + term );
     assert && assert( termCreator instanceof TermCreator, 'invalid termCreator: ' + termCreator );
-    assert && assert( plate instanceof Plate, 'invalid plate: ' + plate );
 
     var self = this;
 
@@ -53,7 +50,6 @@ define( function( require ) {
     this.termNode = termNode;
     this.term = term;
     this.termCreator = termCreator;
-    this.plate = plate;
     this.haloRadius = options.haloRadius;
     this.pickableWhileAnimating = options.pickableWhileAnimating;
     this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
@@ -129,7 +125,7 @@ define( function( require ) {
             haloBaseColor: EqualityExplorerColors.HALO // show the halo
           } );
         }
-        else if ( term.locationProperty.value.y > plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
+        else if ( term.locationProperty.value.y > termCreator.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
           // term was released below the plate, animate back to toolbox
           self.animateToToolbox();
@@ -144,18 +140,18 @@ define( function( require ) {
 
     // @private When the plate moves, or its contents change, refresh the halos around inverse terms.
     var refreshHalosBound = this.refreshHalos.bind( this );
-    plate.locationProperty.link( refreshHalosBound ); // unlink required in dispose
-    plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
+    termCreator.plate.locationProperty.link( refreshHalosBound ); // unlink required in dispose
+    termCreator.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
 
     // @private called by dispose
     this.disposeTermDragListener = function() {
 
-      if ( plate.locationProperty.hasListener( refreshHalosBound ) ) {
-        plate.locationProperty.unlink( refreshHalosBound );
+      if ( termCreator.plate.locationProperty.hasListener( refreshHalosBound ) ) {
+        termCreator.plate.locationProperty.unlink( refreshHalosBound );
       }
 
-      if ( plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
-        plate.contentsChangedEmitter.removeListener( refreshHalosBound );
+      if ( termCreator.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
+        termCreator.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
       }
     };
   }
@@ -216,7 +212,7 @@ define( function( require ) {
 
       var self = this;
       var cell = this.termCreator.likeTermsCell;
-      var cellLocation = this.plate.getLocationOfCell( cell );
+      var cellLocation = this.termCreator.plate.getLocationOfCell( cell );
 
       self.termNode.pickable = this.pickableWhileAnimating;
 
@@ -225,7 +221,7 @@ define( function( require ) {
         // When the term reaches the cell ...
         animationCompletedCallback: function() {
 
-          var termInCell = self.plate.getTermInCell( cell );
+          var termInCell = self.termCreator.plate.getTermInCell( cell );
 
           if ( !termInCell ) {
 
@@ -278,7 +274,7 @@ define( function( require ) {
     animateToEmptyCell: function() {
       assert && assert( !this.termCreator.combineLikeTermsEnabled, 'should NOT be called when combining like terms' );
 
-      var cell = this.plate.getBestEmptyCell( this.term.locationProperty.value );
+      var cell = this.termCreator.plate.getBestEmptyCell( this.term.locationProperty.value );
 
       // Careful! cell is {number|null}, and might be 0
       if ( cell === null ) {
@@ -289,7 +285,7 @@ define( function( require ) {
       else {
 
         var self = this;
-        var cellLocation = this.plate.getLocationOfCell( cell );
+        var cellLocation = this.termCreator.plate.getLocationOfCell( cell );
 
         this.termNode.pickable = this.pickableWhileAnimating;
 
@@ -297,7 +293,7 @@ define( function( require ) {
 
           // If the target cell has become occupied, choose another cell.
           animationStepCallback: function() {
-            if ( !self.plate.isEmptyCell( cell ) ) {
+            if ( !self.termCreator.plate.isEmptyCell( cell ) ) {
               self.animateToEmptyCell();
             }
           },
@@ -305,7 +301,7 @@ define( function( require ) {
           // When the term reaches the cell, put it in the closest cell.
           // We compute cell again here in case a term has been removed below the cell that we were animating to.
           animationCompletedCallback: function() {
-            var cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
+            var cell = self.termCreator.plate.getBestEmptyCell( self.term.locationProperty.value );
             self.termCreator.putTermOnPlate( self.term, cell );
             self.termNode.pickable = true;
           }
@@ -344,7 +340,7 @@ define( function( require ) {
         this.likeTerm = null;
 
         // does this term overlap a like term on the plate?
-        var termOnPlate = this.plate.getTermAtLocation( this.term.locationProperty.value );
+        var termOnPlate = this.termCreator.plate.getTermAtLocation( this.term.locationProperty.value );
         if ( termOnPlate && termOnPlate.isLikeTerm( this.term ) ) {
           this.likeTerm = termOnPlate;
         }
@@ -382,7 +378,7 @@ define( function( require ) {
       assert && assert( termDragging.plus( termOnScale ).sign === 0, 'terms do not sum to zero' );
 
       // determine which cell the term appears in
-      var cell = this.plate.getCellForTerm( termOnScale );
+      var cell = this.termCreator.plate.getCellForTerm( termOnScale );
 
       // some things we need before the terms are disposed
       var variable = termDragging.variable || null;
@@ -394,7 +390,7 @@ define( function( require ) {
 
       // after the terms have been disposed and the scale has moved,
       // determine the new location of the inverse term's cell
-      var sumToZeroLocation = this.plate.getLocationOfCell( cell );
+      var sumToZeroLocation = this.termCreator.plate.getLocationOfCell( cell );
 
       options = _.extend( {
         variable: variable,
