@@ -103,6 +103,10 @@ define( function( require ) {
         // move the term
         term.moveTo( self.eventToLocation( event ) );
 
+        //TODO any performance concern here?
+        // since multiple terms may be dragged via multi-touch, keep the most-recently-moved term on top
+        termNode.moveToFront();
+
         // refresh the halos that appear when dragged term overlaps with an inverse term
         self.refreshHalos();
       },
@@ -327,7 +331,7 @@ define( function( require ) {
     },
 
     /**
-     * Refreshes the visual feedback (yellow halos) that is provided when a dragged term overlaps
+     * Refreshes the visual feedback (yellow halo) that is provided when a dragged term overlaps
      * a like term that is on the scale. This has the side-effect of setting this.likeTerm.
      * See equality-explorer#17
      * @private
@@ -350,20 +354,18 @@ define( function( require ) {
           previousLikeTerm.haloVisibleProperty.value = false;
         }
 
-        if ( !this.likeTerm ) {
+        if ( this.likeTerm && ( this.termCreator.combineLikeTermsEnabled || this.term.isInverseTerm( this.likeTerm ) ) ) {
 
-          // no like term
-          this.term.shadowVisibleProperty.value = true;
-          this.term.haloVisibleProperty.value = false;
-        }
-        else if ( this.likeTerm !== previousLikeTerm &&
-                  ( this.termCreator.combineLikeTermsEnabled || this.term.isInverseTerm( this.likeTerm ) ) ) {
-
-          // show halo for term and likeTerm
-          this.termNode.moveToFront();
+          // terms will combine, show halo for term and likeTerm
           this.term.shadowVisibleProperty.value = false;
           this.term.haloVisibleProperty.value = true;
           this.likeTerm.haloVisibleProperty.value = true;
+        }
+        else {
+
+          // term will not combine
+          this.term.shadowVisibleProperty.value = true;
+          this.term.haloVisibleProperty.value = false;
         }
       }
     },
