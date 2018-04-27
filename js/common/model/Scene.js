@@ -67,6 +67,16 @@ define( function( require ) {
     // @public (read-only) for operations that need to be performed on all term creators
     this.allTermCreators = leftTermCreators.concat( rightTermCreators );
 
+    // Associate each term creator with a 'like term' creator on the opposite side of the scale.
+    assert && assert( leftTermCreators.length === rightTermCreators.length,
+      'the same number of term creators are required on both sides of the scale' );
+    for ( var i = 0; i < leftTermCreators.length; i++ ) {
+      assert && assert( leftTermCreators[ i ].isLikeTermCreator( rightTermCreators[ i ] ),
+        'like term creators must have the same indices on both sides of the scale' );
+      leftTermCreators[ i ].equivalentTermCreator = rightTermCreators[ i ];
+      rightTermCreators[ i ].equivalentTermCreator = leftTermCreators[ i ];
+    }
+
     // @public (read-only)
     this.scale = new BalanceScale( this.leftTermCreators, this.rightTermCreators, {
       location: options.scaleLocation,
@@ -92,16 +102,6 @@ define( function( require ) {
 
     // @public collection of snapshots, for saving/restoring the state of a Scene
     this.snapshotsCollection = new SnapshotsCollection();
-
-    // Associate each term creator with a 'like term' creator on the opposite side of the scale.
-    assert && assert( leftTermCreators.length === rightTermCreators.length,
-      'the same number of term creators are required on both sides of the scale' );
-    for ( var i = 0; i < leftTermCreators.length; i++ ) {
-      assert && assert( leftTermCreators[ i ].isLikeTermCreator( rightTermCreators[ i ] ),
-        'like term creators must have the same indices on both sides of the scale' );
-      leftTermCreators[ i ].equivalentTermCreator = rightTermCreators[ i ];
-      rightTermCreators[ i ].equivalentTermCreator = leftTermCreators[ i ];
-    }
 
     // @public {BooleanProperty|null} locks equivalent terms, null if this feature is not supported
     this.lockedProperty = null;
