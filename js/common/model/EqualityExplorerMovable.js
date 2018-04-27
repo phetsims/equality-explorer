@@ -169,8 +169,9 @@ define( function( require ) {
           // move directly to the destination
           this.locationProperty.set( this.destination );
 
-          // Perform the animationCompletedCallback, which may set a new callback. The new callback must be
-          // a new function instance, since equality is used to check whether a new callback was set.
+          // Perform the animationCompletedCallback, which may set a new callback by calling animateTo.
+          // The new callback must be a new function instance, since equality is used to check whether
+          // a new callback was set.
           var saveAnimationCompletedCallback = this.animationCompletedCallback;
           this.animationCompletedCallback && this.animationCompletedCallback();
           if ( saveAnimationCompletedCallback === this.animationCompletedCallback ) {
