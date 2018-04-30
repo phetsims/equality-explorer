@@ -144,17 +144,13 @@ define( function( require ) {
         }
         else if ( !term.isAnimating() ) {
 
-          //TODO #19 lock is temporarily disabled for the Operations screen
-          if ( !self.termCreator.combineLikeTermsEnabled ) {
-
-            // term came from toolbox. If lock is enabled, create an equivalent term on other side of the scale.
-            if ( termCreator.lockedProperty.value ) {
-              self.equivalentTerm = self.equivalentTermCreator.createTerm(
-                _.extend( term.copyOptions(), {
-                  pickable: false
-                } ) );
-              self.equivalentTerm.shadowVisibleProperty.value = true;
-            }
+          // term came from toolbox. If lock is enabled, create an equivalent term on other side of the scale.
+          if ( termCreator.lockedProperty.value ) {
+            self.equivalentTerm = self.equivalentTermCreator.createTerm(
+              _.extend( term.copyOptions(), {
+                pickable: false
+              } ) );
+            self.equivalentTerm.shadowVisibleProperty.value = true;
           }
         }
 
@@ -393,12 +389,46 @@ define( function( require ) {
               termInCell.haloVisibleProperty.value = false;
             }
             else {
+
               // dispose of the terms used to create the combined term
               self.term.dispose();
               termInCell.dispose();
 
               // Put the new term on the plate.
               self.termCreator.putTermOnPlate( combinedTerm, cell );
+            }
+          }
+
+          //TODO #19 make changes only if term and equivalentTerm don't cause maxInteger to be exceeded
+          if ( self.equivalentTerm ) {
+
+            var equivalentCell = self.equivalentTermCreator.likeTermsCell;
+            var equivalentTermInCell = self.oppositePlate.getTermInCell( equivalentCell );
+
+            if ( !equivalentTermInCell ) {
+
+              // If the cell on the opposite side is empty, make a 'big' copy of equivalentTerm and put it in the cell.
+              var equivalentTermCopy = self.equivalentTerm.copy( {
+                diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+              } );
+              self.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, equivalentCell );
+
+              // dispose of the original equivalentTerm
+              self.equivalentTerm.dispose();
+              self.detachOppositeTerms();
+            }
+            else {
+
+              // combine equivalentTerm with term that's in the cell
+              var combinedEquivalentTerm = equivalentTermInCell.plus( self.equivalentTerm );
+
+              // dispose of the terms used to create the combined term
+              self.equivalentTerm.dispose();
+              equivalentTermInCell.dispose();
+              self.detachOppositeTerms();
+
+              // Put the new term on the plate.
+              self.equivalentTermCreator.putTermOnPlate( combinedEquivalentTerm, cell );
             }
           }
         }
