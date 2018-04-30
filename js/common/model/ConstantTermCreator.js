@@ -78,10 +78,11 @@ define( function( require ) {
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
-      // If the constant value wasn't specified, use the default with sign applied.
-      if ( !options.constantValue ) {
-        options.constantValue = EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE.timesInteger( options.sign );
-      }
+      // If the constant value wasn't specified, use the default.
+      options.constantValue = options.constantValue || EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE;
+
+      // Adjust the sign
+      options.constantValue = options.constantValue.timesInteger( options.sign );
 
       return new ConstantTerm( options );
     },

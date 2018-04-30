@@ -19,10 +19,15 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var OopsDialog = require( 'EQUALITY_EXPLORER/common/view/OopsDialog' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
+
+  // strings
+  var leftSideOfBalanceIsFullString = require( 'string!EQUALITY_EXPLORER/leftSideOfBalanceIsFull' );
+  var rightSideOfBalanceIsFullString = require( 'string!EQUALITY_EXPLORER/rightSideOfBalanceIsFull' );
 
   /**
    * @param {Node} termNode - Node that the listener is attached to
@@ -63,13 +68,16 @@ define( function( require ) {
     this.equivalentTermCreator = termCreator.equivalentTermCreator;
     this.oppositePlate = termCreator.equivalentTermCreator.plate;
 
-    // If the inverse term is dragged, break the association between equivalentTerm and inverseTerm
-    // var inverseTermDraggingListener = function( dragging ) {
-    //   assert && assert( self.inverseTerm, 'did not expect this to be called' );
-    //   if ( dragging ) {
-    //     self.inverseTerm = null;
-    //   }
-    // };
+    // @private If the inverse term is dragged, break the association between equivalentTerm and inverseTerm
+    this.inverseTermDraggingListener = function( dragging ) {
+      assert && assert( self.inverseTerm, 'did not expect this to be called' );
+      if ( dragging ) {
+        if ( self.inverseTerm.draggingProperty.hasListener( self.inverseTermDraggingListener ) ) {
+          self.inverseTerm.draggingProperty.unlink( self.inverseTermDraggingListener );
+        }
+        self.inverseTerm = null;
+      }
+    };
 
     SimpleDragHandler.call( this, {
 
@@ -84,8 +92,6 @@ define( function( require ) {
 
         if ( termCreator.isTermOnPlate( term ) ) {
 
-          termCreator.removeTermFromPlate( term );
-
           if ( termCreator.lockedProperty.value ) {
             if ( termCreator.combineLikeTermsEnabled ) {
               //TODO #19 Operations screen support
@@ -94,15 +100,47 @@ define( function( require ) {
 
               self.equivalentTerm = self.oppositePlate.getEquivalentTerm( term );
               if ( self.equivalentTerm ) {
+
+                // found equivalent term on opposite plate, remove it from plate
                 self.equivalentTermCreator.removeTermFromPlate( self.equivalentTerm );
                 self.equivalentTerm.pickableProperty.value = false;
                 self.equivalentTerm.shadowVisibleProperty.value = true;
               }
+              else if ( self.oppositePlate.isFull() ) {
+
+                // opposite plate is full, cannot create inverse term, show 'Oops' message
+                var thisIsLeft = ( termCreator.positiveLocation.x < self.equivalentTermCreator.positiveLocation.x );
+                var message = thisIsLeft ? rightSideOfBalanceIsFullString : leftSideOfBalanceIsFullString;
+                var oopsDialog = new OopsDialog( message );
+                oopsDialog.show();
+
+                // interrupt this drag sequence, since we can't take term off the plate
+                self.interrupt();
+                return; //TODO bad form to return from the middle of a function
+              }
               else {
-                //TODO #19 create equivalentTerm and inverseTerm, possible OopsDialog, link inverseTermDraggingListener
+
+                // create an inverse term on the opposite plate
+                self.inverseTerm = self.equivalentTermCreator.createTerm( _.extend( term.copyOptions(), {
+                  sign: -1
+                } ) );
+                var inverseCell = self.oppositePlate.getBestEmptyCell( term.locationProperty.value ); //TODO OK to use term.locationProperty?
+                self.equivalentTermCreator.putTermOnPlate( self.inverseTerm, inverseCell );
+
+                // if the inverse term is dragged, break the association to equivalentTerm
+                self.inverseTerm.draggingProperty.link( self.inverseTermDraggingListener );
+
+                // create the equivalent term on the opposite side
+                // Do this after creating inverseTerm so that it appear in front of inverseTerm.
+                self.equivalentTerm = self.equivalentTermCreator.createTerm( _.extend( term.copyOptions(), {
+                  pickable: false
+                } ) );
+                self.equivalentTerm.shadowVisibleProperty.value = true;
               }
             }
           }
+
+          termCreator.removeTermFromPlate( term );
         }
         else if ( !term.isAnimating() ) {
 
@@ -156,6 +194,9 @@ define( function( require ) {
        */
       end: function( event, trail ) {
 
+        // drag sequence was interrupted, return immediately
+        if ( self.interrupted ) { return; }
+
         // set term properties at end of drag
         term.draggingProperty.value = false;
         term.shadowVisibleProperty.value = false;
@@ -181,8 +222,7 @@ define( function( require ) {
           if ( self.equivalentTerm ) {
             var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
             self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
-            self.equivalentTerm.pickableProperty.value = true;
-            self.equivalentTerm = null;
+            self.detachOppositeTerms();
           }
         }
         else if ( term.locationProperty.value.y > self.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
@@ -242,6 +282,29 @@ define( function( require ) {
     },
 
     /**
+     * Detaches terms on the opposite scale from this drag listener.
+     * @private
+     */
+    detachOppositeTerms: function() {
+
+      // equivalent term
+      if ( this.equivalentTerm ) {
+        if ( !this.equivalentTerm.disposed ) {
+          this.equivalentTerm.pickableProperty.value = true;
+        }
+        this.equivalentTerm = null;
+      }
+
+      // inverse term
+      if ( this.inverseTerm ) {
+        if ( this.inverseTerm.draggingProperty.hasListener( this.inverseTermDraggingListener ) ) {
+          this.inverseTerm.draggingProperty.unlink( this.inverseTermDraggingListener );
+        }
+        this.inverseTerm = null;
+      }
+    },
+
+    /**
      * Returns the term to the toolbox where it was created.
      * @private
      */
@@ -257,7 +320,7 @@ define( function( require ) {
           self.term.dispose();
           if ( self.equivalentTerm ) {
             self.equivalentTerm.dispose();
-            self.equivalentTerm = null;
+            self.detachOppositeTerms();
           }
         }
       } );
@@ -401,12 +464,26 @@ define( function( require ) {
 
               // Put equivalent term on the opposite plate
               if ( self.equivalentTerm ) {
-                var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
+
+                var equivalentCell;
+                if ( self.inverseTerm ) {
+
+                  // if there's an associated inverse term, replace it
+                  equivalentCell = self.oppositePlate.getCellForTerm( self.inverseTerm );
+                  self.inverseTerm.dispose();
+                  self.inverseTerm = null;
+                }
+                else {
+
+                  // otherwise choose a cell for the equivalent term
+                  equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
+                }
+
                 self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
                 self.equivalentTerm.pickableProperty.value = true;
                 //TODO #19 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
                 self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
-                self.equivalentTerm = null;
+                self.detachOppositeTerms();
               }
             }
           }

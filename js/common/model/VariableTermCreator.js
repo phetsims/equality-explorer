@@ -104,10 +104,11 @@ define( function( require ) {
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
-      // If the coefficient wasn't specified, use the default with sign applied.
-      if ( !options.coefficient ) {
-        options.coefficient = EqualityExplorerConstants.DEFAULT_COEFFICIENT.timesInteger( options.sign );
-      }
+      // If the coefficient wasn't specified, use the default.
+      options.coefficient = options.coefficient || EqualityExplorerConstants.DEFAULT_COEFFICIENT;
+
+      // Adjust the sign
+      options.coefficient = options.coefficient.timesInteger( options.sign );
 
       return new VariableTerm( this.variable, options );
     },

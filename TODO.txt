@@ -34,11 +34,11 @@ scenarios: term dragged from plate, ghost obtained from other plate
 X (1-5) same behavior as 'from toolbox' above
 
 scenarios: term dragged from plate, ghost must be created and requires creating inverse on other plate
-(1) opposite plate is full, don't start term drag, display a dialog with "[left/right] side of balance is full"
-(2) term released below plate, term and ghost return to toolbox, inverse remains on plate
-(3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
-(4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
-(5) term released above plate, room on both plates, term goes to plate, ghost for to plate and replaces inverse
+X (1) opposite plate is full, don't start term drag, display a dialog with "[left/right] side of balance is full"
+X (2) term released below plate, term and ghost return to toolbox, inverse remains on plate
+X (3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
+X (4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
+X (5) term released above plate, room on both plates, term goes to plate, ghost for to plate and replaces inverse
 
 All of the above differently for combining like terms in Operations screen.
 
