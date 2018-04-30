@@ -462,28 +462,25 @@ define( function( require ) {
               self.termCreator.putTermOnPlate( self.term, cell );
               self.term.pickableProperty.value = true;
 
-              // Put equivalent term on the opposite plate
-              if ( self.equivalentTerm ) {
 
-                var equivalentCell;
+              if ( self.equivalentTerm ) {
                 if ( self.inverseTerm ) {
 
-                  // if there's an associated inverse term, replace it
-                  equivalentCell = self.oppositePlate.getCellForTerm( self.inverseTerm );
+                  // Equivalent and inverse term can each other out.
                   self.inverseTerm.dispose();
-                  self.inverseTerm = null;
+                  self.equivalentTerm.dispose();
+                  self.detachOppositeTerms();
                 }
                 else {
 
-                  // otherwise choose a cell for the equivalent term
-                  equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
+                  // Put equivalent term on the opposite plate
+                  var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
+                  self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
+                  self.equivalentTerm.pickableProperty.value = true;
+                  //TODO #19 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
+                  self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
+                  self.detachOppositeTerms();
                 }
-
-                self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
-                self.equivalentTerm.pickableProperty.value = true;
-                //TODO #19 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
-                self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
-                self.detachOppositeTerms();
               }
             }
           }
