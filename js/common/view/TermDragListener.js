@@ -462,7 +462,6 @@ define( function( require ) {
               self.termCreator.putTermOnPlate( self.term, cell );
               self.term.pickableProperty.value = true;
 
-
               if ( self.equivalentTerm ) {
                 if ( self.inverseTerm ) {
 
