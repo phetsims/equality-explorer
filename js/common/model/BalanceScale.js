@@ -94,8 +94,8 @@ define( function( require ) {
     };
 
     // @public (read-only)
-    this.leftPlate = new Plate( leftTermCreators, plateOptions );
-    this.rightPlate = new Plate( rightTermCreators, plateOptions );
+    this.leftPlate = new Plate( leftTermCreators, 'left', plateOptions );
+    this.rightPlate = new Plate( rightTermCreators, 'right', plateOptions );
 
     // @public {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
     // dispose not required.

@@ -24,13 +24,17 @@ define( function( require ) {
 
   // constants
   var DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
+  var VALID_DEBUG_SIDE_VALUES = [ 'left', 'right' ];
 
   /**
    * @param {TermCreator[]} termCreators - creators associated with term on this plate
+   * @param {string} debugSide - which side of the scale, for debugging, see VALID_DEBUG_SIDE_VALUES
    * @param {Object} [options]
    * @constructor
    */
-  function Plate( termCreators, options ) {
+  function Plate( termCreators, debugSide, options ) {
+
+    assert && assert( _.includes( VALID_DEBUG_SIDE_VALUES, debugSide, 'invalid debugSide: ' + debugSide ) );
 
     var self = this;
 
@@ -47,6 +51,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.termCreators = termCreators;
+    this.debugSide = debugSide;
 
     // @public (read-only)
     this.supportHeight = options.supportHeight;
@@ -56,7 +61,7 @@ define( function( require ) {
     this.cellSize = options.cellSize;
 
     // @private
-    this.grid = new Grid( this.locationProperty, {
+    this.grid = new Grid( this.locationProperty, debugSide, {
       rows: options.gridRows,
       columns: options.gridColumns,
       cellWidth: options.cellSize.width,
@@ -200,6 +205,15 @@ define( function( require ) {
      */
     getGridTop: function() {
       return this.grid.top;
+    },
+
+    /**
+     * Gets an equivalent term from the grid.
+     * @param {Term} term
+     * @returns {Term|null} - null if no equivalent term is found
+     */
+    getEquivalentTerm: function( term ) {
+      return this.grid.getEquivalentTerm( term );
     },
 
     /**

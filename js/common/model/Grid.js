@@ -30,10 +30,11 @@ define( function( require ) {
 
   /**
    * @param {Property.<Vector2>} locationProperty
+   * @param {string} debugSide - which side of the scale, for debugging
    * @param {Object} [options]
    * @constructor
    */
-  function Grid( locationProperty, options ) {
+  function Grid( locationProperty, debugSide, options ) {
 
     var self = this;
 
@@ -46,6 +47,7 @@ define( function( require ) {
 
     // @private (read-only)
     this.locationProperty = locationProperty;
+    this.debugSide = debugSide;
 
     // @public (read-only)
     this.rows = options.rows;
@@ -223,6 +225,17 @@ define( function( require ) {
     },
 
     /**
+     * Gets the first equivalent term, searching the grid from top-to-bottom, left-to-right.
+     * @param {Term} term
+     * @returns {Term|null} null if no equivalent term is found
+     */
+    getEquivalentTerm: function( term ) {
+      return _.find( this.cells, function( currentTerm ) {
+        return ( currentTerm !== NO_TERM ) && ( currentTerm.isEquivalentTerm( term ) );
+      } );
+    },
+
+    /**
      * Puts a term in the specified cell. The cell must be empty.
      * @param {Term} term
      * @param {number} cell
@@ -232,6 +245,7 @@ define( function( require ) {
       assert && assert( term instanceof Term, 'invalid term' );
       assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
       assert && assert( this.isEmptyCell( cell ), 'cell is occupied, cell: ' + cell );
+      phet.log && phet.log( this.debugSide + ' Grid.putTerm: term=' + term + ', cell=' + cell );
       this.cells[ cell ] = term;
       term.moveTo( this.getLocationOfCell( cell ) );
     },
@@ -245,6 +259,7 @@ define( function( require ) {
       assert && assert( term instanceof Term, 'invalid term: ' + term );
       var cell = this.getCellForTerm( term );
       assert && assert( cell !== null, 'term not found: ' + term );
+      phet.log && phet.log( this.debugSide + ' Grid.removeTerm: term=' + term + ', cell=' + cell );
       this.clearCell( cell );
       this.compactColumn( this.cellToColumn( cell ) );
     },

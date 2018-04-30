@@ -105,6 +105,16 @@ define( function( require ) {
     },
 
     /**
+     * Is this term equivalent to a specified term?
+     * Equivalent terms are like terms with the same significant value.
+     * @param term
+     * @returns {*|boolean}
+     */
+    isEquivalentTerm: function( term ) {
+      return ( this.isLikeTerm( term ) && this.significantValue.reduced().equals( term.significantValue.reduced() ) );
+    },
+
+    /**
      * Does this term have a numerator or denominator who absolute value exceeds the maxInteger limit?
      * See EqualityExplorerQueryParameters.maxInteger and https://github.com/phetsims/equality-explorer/issues/48
      * @returns {boolean}

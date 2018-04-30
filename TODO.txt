@@ -31,7 +31,7 @@ X (4) term released above plate, ghost plate full (or becomes full), term and gh
 X (5) term released about plate, room on both plates, term and ghost go to plates
 
 scenarios: term dragged from plate, ghost obtained from other plate
-- same behavior as 'from toolbox' above
+X (1-5) same behavior as 'from toolbox' above
 
 scenarios: term dragged from plate, ghost must be created and requires creating inverse on other plate
 (1) opposite plate is full, don't start term drag, display a dialog with "[left/right] side of balance is full"

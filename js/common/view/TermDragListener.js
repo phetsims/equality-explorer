@@ -63,6 +63,14 @@ define( function( require ) {
     this.equivalentTermCreator = termCreator.equivalentTermCreator;
     this.oppositePlate = termCreator.equivalentTermCreator.plate;
 
+    // If the inverse term is dragged, break the association between equivalentTerm and inverseTerm
+    // var inverseTermDraggingListener = function( dragging ) {
+    //   assert && assert( self.inverseTerm, 'did not expect this to be called' );
+    //   if ( dragging ) {
+    //     self.inverseTerm = null;
+    //   }
+    // };
+
     SimpleDragHandler.call( this, {
 
       allowTouchSnag: true,
@@ -76,10 +84,25 @@ define( function( require ) {
 
         if ( termCreator.isTermOnPlate( term ) ) {
 
-          if ( termCreator.lockedProperty.value ) {
-            //TODO #19 get equivalent term from opposite plate, possibly create inverse, OopsDialog, etc.
-          }
           termCreator.removeTermFromPlate( term );
+
+          if ( termCreator.lockedProperty.value ) {
+            if ( termCreator.combineLikeTermsEnabled ) {
+              //TODO #19 Operations screen support
+            }
+            else {
+
+              self.equivalentTerm = self.oppositePlate.getEquivalentTerm( term );
+              if ( self.equivalentTerm ) {
+                self.equivalentTermCreator.removeTermFromPlate( self.equivalentTerm );
+                self.equivalentTerm.pickableProperty.value = false;
+                self.equivalentTerm.shadowVisibleProperty.value = true;
+              }
+              else {
+                //TODO #19 create equivalentTerm and inverseTerm, possible OopsDialog, link inverseTermDraggingListener
+              }
+            }
+          }
         }
         else if ( !term.isAnimating() ) {
 
@@ -253,6 +276,7 @@ define( function( require ) {
       }
     },
 
+    //TODO #19 handle lock feature for Operations screen
     /**
      * Animates a term to the cell for like terms.
      * In this scenarios, all like terms occupy a specific cell on the plate.
@@ -375,11 +399,13 @@ define( function( require ) {
               self.termCreator.putTermOnPlate( self.term, cell );
               self.term.pickableProperty.value = true;
 
-              // Put equivalent term on the other plate
+              // Put equivalent term on the opposite plate
               if ( self.equivalentTerm ) {
                 var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
                 self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
                 self.equivalentTerm.pickableProperty.value = true;
+                //TODO #19 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
+                self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
                 self.equivalentTerm = null;
               }
             }
