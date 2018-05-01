@@ -10,6 +10,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Animation = require( 'TWIXT/Animation' );
+  var Easing = require( 'TWIXT/Easing' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
@@ -17,7 +19,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var OpacityTo = require( 'TWIXT/OpacityTo' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -26,6 +28,8 @@ define( function( require ) {
    * @constructor
    */
   function SumToZeroNode( options ) {
+
+    var self = this;
 
     options = _.extend( {
       variable: null, // {Variable|null} determines whether we render '0' or '0x' (for example)
@@ -44,7 +48,7 @@ define( function( require ) {
       var symbolNode = new Text( options.variable.symbol, {
         font: new MathSymbolFont( options.fontSize )
       } );
-      
+
       contentNode = new HBox( {
         spacing: 0,
         children: [ zeroNode, symbolNode ] // e.g. '0x'
@@ -66,6 +70,30 @@ define( function( require ) {
     options.children = [ haloNode, contentNode ];
 
     Node.call( this, options );
+
+    // Property to be animated
+    var opacityProperty = new NumberProperty( this.opacity );
+
+    // unlink not needed
+    opacityProperty.link( function( opacity ) {
+      self.opacity = opacity;
+    } );
+
+    // @private
+    this.animation = new Animation( {
+      stepper: 'timer',
+      duration: 0.75,
+      targets: [ {
+        property: opacityProperty,
+        easing: Easing.QUINTIC_IN,
+        to: 0
+      } ]
+    } );
+
+    // removeListener not needed
+    this.animation.finishEmitter.addListener( function() {
+      self.dispose(); // removes this Node from the scenegraph
+    } );
   }
 
   equalityExplorer.register( 'SumToZeroNode', SumToZeroNode );
@@ -77,25 +105,7 @@ define( function( require ) {
      * @public
      */
     startAnimation: function() {
-
-      var self = this;
-
-      var options = {
-        startOpacity: 1,
-        endOpacity: 0,
-        duration: 750, // fade out time, ms
-        easing: TWEEN.Easing.Quintic.In, // most of opacity change happens at end of duration
-        onStart: function() {
-          self.visible = true; // in case a client has set this Node invisible
-        },
-        onComplete: function() {
-          self.dispose(); // removes this Node from the scenegraph
-        }
-      };
-
-      // start animation, gradually fade out by modulating opacity
-      var animation = new OpacityTo( this, options );
-      animation.start( phet.joist.elapsedTime );
+      this.animation.start();
     }
   } );
 } );
