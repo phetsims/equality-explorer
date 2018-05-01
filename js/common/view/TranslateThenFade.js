@@ -9,11 +9,16 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Animation = require( 'TWIXT/Animation' );
+  var Easing = require( 'TWIXT/Easing' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MoveTo = require( 'TWIXT/MoveTo' );
-  var OpacityTo = require( 'TWIXT/OpacityTo' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
+  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
+
+  // constants
+  var STEPPER = 'manual'; // Animation will be stepped via step function
 
   /**
    * @param {Node} node
@@ -26,8 +31,8 @@ define( function( require ) {
 
     options = _.extend( {
       destination: Vector2.ZERO, // destination location
-      translateDuration: 700, // motion duration, ms
-      fadeDuration: 250, // fade duration, in ms
+      translateDuration: 0.7, // motion duration, in seconds
+      fadeDuration: 0.25, // fade duration, in seconds
       onComplete: function() {}, // called when the animation completes
       onStop: function() {} // called when the animation is stopped (by calling stop)
     }, options );
@@ -35,24 +40,48 @@ define( function( require ) {
     // @private
     this.onStop = options.onStop;
 
-    // @private fade animation, started when the translation completes
-    this.opacityTo = new OpacityTo( node, {
-      duration: options.fadeDuration,
-      endOpacity: 0,
-      easing: TWEEN.Easing.Linear.None,
-      onComplete: function() {
-        options.onComplete();
-      }
+    // Property for animating position, unlink not needed.
+    var positionProperty = new Property( node.translation );
+    positionProperty.link( function( position ) {
+      node.translation = position;
     } );
 
-    // @private translation animation
-    this.moveTo = new MoveTo( node, options.destination, {
+    // Property for animating opacity, unlink not needed.
+    var opacityProperty = new NumberProperty( node.opacity );
+    opacityProperty.link( function( opacity ) {
+      node.opacity = opacity;
+    } );
+
+    // Animation for translate
+    this.translateAnimation = new Animation( {
+      stepper: STEPPER,
       duration: options.translateDuration,
-      constantSpeed: false,
-      easing: TWEEN.Easing.Quintic.In,
-      onComplete: function() {
-        self.opacityTo.start(); // when translation completes, start the fade
-      }
+      targets: [ {
+        property: positionProperty,
+        easing: Easing.QUINTIC_IN,
+        to: options.destination
+      } ]
+    } );
+
+    // Animation for fade
+    this.fadeAnimation = new Animation( {
+      stepper: STEPPER,
+      duration: options.fadeDuration,
+      targets: [ {
+        property: opacityProperty,
+        easing: Easing.LINEAR,
+        to: 0
+      } ]
+    } );
+
+    // When translation finishes, start opacity animation
+    this.translateAnimation.finishEmitter.addListener( function() {
+      self.fadeAnimation.start();
+    } );
+
+    // When fade finishes, perform callback
+    this.fadeAnimation.finishEmitter.addListener( function() {
+      options.onComplete();
     } );
   }
 
@@ -61,11 +90,20 @@ define( function( require ) {
   return inherit( Object, TranslateThenFade, {
 
     /**
+     * @param {number} dt - time step, in seconds
+     * @public
+     */
+    step: function( dt ) {
+      this.translateAnimation.step( dt );
+      this.fadeAnimation.step( dt );
+    },
+
+    /**
      * Starts the animation.
      * @public
      */
     start: function() {
-      this.moveTo.start();
+      this.translateAnimation.start();
     },
 
     /**
@@ -73,8 +111,8 @@ define( function( require ) {
      * @public
      */
     stop: function() {
-      this.moveTo.stop();
-      this.opacityTo.stop();
+      this.translateAnimation.stop();
+      this.fadeAnimation.stop();
       this.onStop();
     }
   } );

@@ -84,10 +84,16 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
+
+      // animate the transition between level-selection and challenge UI
       this.slideNode.step( dt );
+
+      // animate the view for the selected scene
       for ( var i = 0; i < this.sceneNodes.length; i++ ) {
-        if ( this.sceneNodes[ i ].visible ) {
-          this.sceneNodes[ i ].step( dt );
+        var sceneNode = this.sceneNodes[ i ];
+        if ( sceneNode.visible ) {
+          sceneNode.step && sceneNode.step( dt );
+          break;
         }
       }
     }

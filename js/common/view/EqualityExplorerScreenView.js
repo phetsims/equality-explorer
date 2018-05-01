@@ -98,6 +98,22 @@ define( function( require ) {
       this.sceneNodes.forEach( function( sceneNode ) {
         sceneNode.reset();
       } );
+    },
+
+    /**
+     * @param {number} dt - elapsed time, in seconds
+     * @public
+     */
+    step: function( dt ) {
+
+      // animate the view for the selected scene
+      for ( var i = 0; i < this.sceneNodes.length; i++ ) {
+        var sceneNode = this.sceneNodes[ i ];
+        if ( sceneNode.visible ) {
+          sceneNode.step && sceneNode.step( dt );
+          break;
+        }
+      }
     }
   } );
 } );

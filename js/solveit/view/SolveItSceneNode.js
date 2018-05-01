@@ -120,8 +120,8 @@ define( function( require ) {
     // Layer when universal operation animation occurs
     var operationAnimationLayer = new Node();
 
-    // Universal Operation control
-    var universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
+    // @private Universal Operation control
+    this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
       timesZeroEnabled: false, // disable multiplication by zero, see phetsims/equality-explorer#72
       centerX: scene.scale.location.x, // centered on the scale
       top: equationPanel.bottom + 15
@@ -165,7 +165,7 @@ define( function( require ) {
       xMargin: 12,
       yMargin: 8,
       centerX: scene.scale.location.x,
-      top: universalOperationControl.bottom + 30, // determined empirically
+      top: this.universalOperationControl.bottom + 30, // determined empirically
       listener: function() {
         phet.log && phet.log( 'Next button pressed' );
         scene.nextChallenge();
@@ -175,7 +175,7 @@ define( function( require ) {
     // Smiley face, displayed when the challenge has been solved
     var faceNode = new FaceNode( 225, {
       centerX: scaleNode.centerX,
-      top: universalOperationControl.bottom + 25
+      top: this.universalOperationControl.bottom + 25
     } );
 
     // terms live in this layer
@@ -192,7 +192,7 @@ define( function( require ) {
       snapshotsAccordionBox,
       refreshButton,
       nextButton,
-      universalOperationControl,
+      this.universalOperationControl,
       termsLayer, // terms in from of all of the above
       operationAnimationLayer, // operations in front of terms
       faceNode // face in front of everything
@@ -264,7 +264,7 @@ define( function( require ) {
     scene.challengeProperty.link( function( challenge ) {
 
       // cancel operation animations
-      universalOperationControl.reset();
+      self.universalOperationControl.reset();
 
       // display the challenge equation
       self.removeChild( challengePanel );
@@ -324,6 +324,7 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
+      this.universalOperationControl.step( dt );
       this.rewardNode && this.rewardNode.step( dt );
     }
   } );

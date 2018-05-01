@@ -55,6 +55,14 @@ define( function( require ) {
   return inherit( VariablesSceneNode, OperationsSceneNode, {
 
     /**
+     * @param {number} dt - time step, in seconds
+     * @public
+     */
+    step: function( dt ) {
+      this.universalOperationControl.step( dt );
+    },
+
+    /**
      * @public
      * @override
      */
