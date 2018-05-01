@@ -124,31 +124,25 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    // unlink not needed
-    scene.operandProperty.link( function( operand ) {
+    var updateButtons = function() {
 
-      // remove both the times and divide buttons
-      if ( buttonGroup.hasChild( timesButton ) ) {
-        buttonGroup.removeChild( timesButton );
-      }
-      if ( buttonGroup.hasChild( divideByButton ) ) {
-        buttonGroup.removeChild( divideByButton );
-      }
+      var operand = scene.operandProperty.value;
+
+      // plus and minus are always enabled
+      plusButton.enabled = true;
+      minusButton.enabled = true;
 
       // add times button if the operand is a constant, and optionally non-zero
-      if ( ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() !== 0 || options.timesZeroEnabled ) ) {
-        buttonGroup.addChild( timesButton );
-      }
+      timesButton.enabled = ( ( operand instanceof ConstantTerm ) &&
+                              ( operand.constantValue.getValue() !== 0 || options.timesZeroEnabled ) );
 
       // add divide button if the operand is a non-zero constant
-      if ( ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() !== 0 ) ) {
-        buttonGroup.addChild( divideByButton );
-      }
+      divideByButton.enabled = ( ( operand instanceof ConstantTerm ) &&
+                                 ( operand.constantValue.getValue() !== 0 ) );
+    };
 
-      // keep buttons centered under operand picker
-      buttonGroup.centerX = operandPicker.centerX;
-      buttonGroup.top = operandPicker.bottom + 12;
-    } );
+    // unlink not needed
+    scene.operandProperty.link( updateButtons );
 
     // @private Tween animations that are running
     this.animations = [];
@@ -157,9 +151,7 @@ define( function( require ) {
     var animationCleanup = function( animation, operationNode ) {
       self.animations.splice( self.animations.indexOf( animation ), 1 );
       !operationNode.disposed && operationNode.dispose();
-      buttons.forEach( function( button ) {
-        button.enabled = true;
-      } );
+      updateButtons();
     };
 
     // When the 'go' button is pressed, animate operations, then apply operations to terms.
