@@ -216,9 +216,43 @@ define( function( require ) {
 
           // put equivalent term on opposite plate
           if ( self.equivalentTerm ) {
-            var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
-            self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
-            self.detachOppositeTerms();
+            if ( termCreator.combineLikeTermsEnabled ) {
+
+              var cell = termCreator.likeTermsCell;
+              var oppositeLikeTerm = self.oppositePlate.getTermInCell( cell );
+              if ( oppositeLikeTerm ) {
+
+                // opposite cell is occupied, combine equivalentTerm with term that's in the cell
+                var combinedTerm = self.equivalentTerm.plus( oppositeLikeTerm );
+                self.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
+                oppositeLikeTerm.dispose();
+                oppositeLikeTerm = null;
+                self.equivalentTerm.dispose();
+                self.equivalentTerm = null;
+                if ( combinedTerm.significantValue.getValue() !== 0 ) {
+                  self.equivalentTermCreator.putTermOnPlate( combinedTerm, cell );
+                }
+                self.detachOppositeTerms();
+              }
+              else {
+
+                // opposite cell is empty, put a big copy of equivalentTerm in that cell
+                var equivalentTermCopy = self.equivalentTerm.copy( {
+                  diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+                } );
+                self.equivalentTerm.dispose();
+                self.equivalentTerm = null;
+                self.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, cell );
+                self.detachOppositeTerms();
+              }
+            }
+            else {
+
+              // put equivalent term in an empty cell
+              var emptyCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
+              self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, emptyCell );
+              self.detachOppositeTerms();
+            }
           }
         }
         else if ( term.locationProperty.value.y > self.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
@@ -314,8 +348,10 @@ define( function( require ) {
       this.term.animateTo( this.term.toolboxLocation, {
         animationCompletedCallback: function() {
           self.term.dispose();
+          self.term = null;
           if ( self.equivalentTerm ) {
             self.equivalentTerm.dispose();
+            self.equivalentTerm = null;
             self.detachOppositeTerms();
           }
         }
@@ -347,8 +383,8 @@ define( function( require ) {
       assert && assert( this.termCreator.combineLikeTermsEnabled, 'should ONLY be called when combining like terms' );
 
       var self = this;
-      var cell = this.termCreator.likeTermsCell;
-      var cellLocation = this.plate.getLocationOfCell( cell );
+      var likeTermsCell = this.termCreator.likeTermsCell;
+      var cellLocation = this.plate.getLocationOfCell( likeTermsCell );
 
       self.term.pickableProperty.value = this.pickableWhileAnimating;
 
@@ -357,7 +393,8 @@ define( function( require ) {
         // When the term reaches the cell ...
         animationCompletedCallback: function() {
 
-          var termInCell = self.plate.getTermInCell( cell );
+          var termInCell = self.plate.getTermInCell( likeTermsCell );
+          var combinedTerm;
 
           if ( !termInCell ) {
 
@@ -365,15 +402,16 @@ define( function( require ) {
             var termCopy = self.term.copy( {
               diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
             } );
-            self.termCreator.putTermOnPlate( termCopy, cell );
+            self.termCreator.putTermOnPlate( termCopy, likeTermsCell );
 
             // dispose of the original term
             self.term.dispose();
+            self.term = null;
           }
           else {
 
             // Combine the terms to create a new 'big' term.
-            var combinedTerm = termInCell.plus( self.term );
+            combinedTerm = termInCell.plus( self.term );
 
             if ( combinedTerm.sign === 0 ) {
 
@@ -392,10 +430,12 @@ define( function( require ) {
 
               // dispose of the terms used to create the combined term
               self.term.dispose();
+              self.term = null;
               termInCell.dispose();
+              termInCell = null;
 
               // Put the new term on the plate.
-              self.termCreator.putTermOnPlate( combinedTerm, cell );
+              self.termCreator.putTermOnPlate( combinedTerm, likeTermsCell );
             }
           }
 
@@ -403,9 +443,9 @@ define( function( require ) {
           if ( self.equivalentTerm ) {
 
             var equivalentCell = self.equivalentTermCreator.likeTermsCell;
-            var equivalentTermInCell = self.oppositePlate.getTermInCell( equivalentCell );
+            var oppositeLikeTerm = self.oppositePlate.getTermInCell( equivalentCell );
 
-            if ( !equivalentTermInCell ) {
+            if ( !oppositeLikeTerm ) {
 
               // If the cell on the opposite side is empty, make a 'big' copy of equivalentTerm and put it in the cell.
               var equivalentTermCopy = self.equivalentTerm.copy( {
@@ -415,20 +455,29 @@ define( function( require ) {
 
               // dispose of the original equivalentTerm
               self.equivalentTerm.dispose();
+              self.equivalentTerm = null;
               self.detachOppositeTerms();
             }
             else {
 
               // combine equivalentTerm with term that's in the cell
-              var combinedEquivalentTerm = equivalentTermInCell.plus( self.equivalentTerm );
+              combinedTerm = oppositeLikeTerm.plus( self.equivalentTerm );
 
               // dispose of the terms used to create the combined term
               self.equivalentTerm.dispose();
-              equivalentTermInCell.dispose();
+              self.equivalentTerm = null;
+              oppositeLikeTerm.dispose();
+              oppositeLikeTerm = null;
               self.detachOppositeTerms();
 
-              // Put the new term on the plate.
-              self.equivalentTermCreator.putTermOnPlate( combinedEquivalentTerm, cell );
+              // Put the combined term on the plate.
+              if ( combinedTerm.significantValue.getValue() !== 0 ) {
+                self.equivalentTermCreator.putTermOnPlate( combinedTerm, likeTermsCell );
+              }
+              else {
+                combinedTerm.dispose();
+                combinedTerm = null;
+              }
             }
           }
         }
@@ -497,7 +546,9 @@ define( function( require ) {
 
                   // Equivalent and inverse term can each other out.
                   self.inverseTerm.dispose();
+                  self.inverseTerm = null;
                   self.equivalentTerm.dispose();
+                  self.equivalentTerm = null;
                   self.detachOppositeTerms();
                 }
                 else {
