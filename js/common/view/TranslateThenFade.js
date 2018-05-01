@@ -74,12 +74,12 @@ define( function( require ) {
       } ]
     } );
 
-    // When translation finishes, start opacity animation
+    // When translation finishes, start opacity animation. removeListener not needed.
     this.translateAnimation.finishEmitter.addListener( function() {
       self.fadeAnimation.start();
     } );
 
-    // When fade finishes, perform callback
+    // When fade finishes, perform callback. removeListener not needed.
     this.fadeAnimation.finishEmitter.addListener( function() {
       options.onComplete();
     } );

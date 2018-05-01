@@ -298,6 +298,7 @@ define( function( require ) {
           } ]
         } );
 
+        // removeListener not needed
         self.faceAnimation.finishEmitter.addListener( function() {
           faceNode.visible = false;
           nextButton.visible = true;
