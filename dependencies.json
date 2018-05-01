@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.0.0-dev.107 Fri Apr 27 2018 15:28:08 GMT-0600 (MDT)",
+  "comment": "# equality-explorer 1.0.0-dev.108 Mon Apr 30 2018 18:21:47 GMT-0600 (MDT)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "9ebe34e729ecd6afcbcb04af17e5b096e9913eb3",
+    "sha": "1ee8228c1e402ded5bc6521c9a1ac96d6abd466b",
     "branch": "master"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "equality-explorer": {
-    "sha": "1239dcac5e95078ff88582643674dea74c1d0ad6",
+    "sha": "1cd3b2bdaa1156288db515500c6efa15a9bd4566",
     "branch": "master"
   },
   "joist": {
@@ -37,7 +37,7 @@
     "branch": "master"
   },
   "phet-io": {
-    "sha": "3a9c8ba87a85d5605c63c406454a45322eb145fb",
+    "sha": "45e5b05807a4cd0fb2614b17ac82bb836161a941",
     "branch": "master"
   },
   "phet-io-wrapper-classroom-activity": {
@@ -49,7 +49,7 @@
     "branch": "master"
   },
   "phet-io-wrappers": {
-    "sha": "09a92a020da6870dcfac1c0e85276026428f36c6",
+    "sha": "a00f4c2922f88b387e4864c68922fcb6f1145a85",
     "branch": "master"
   },
   "phetcommon": {
@@ -61,7 +61,7 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "ef535ca6a65c7eecf6b63716835390029e001ba2",
+    "sha": "e01f08e7df6b50d92fe66e3564e2a4dfd60b7038",
     "branch": "master"
   },
   "scenery-phet": {
@@ -69,11 +69,11 @@
     "branch": "master"
   },
   "sherpa": {
-    "sha": "9b84752caa2d26576ad633dd530b562385a635da",
+    "sha": "abef4445327306e331b555db6d5c45d07b163cde",
     "branch": "master"
   },
   "sun": {
-    "sha": "f7cd7f1417ad3207ca78bf3f76b4c2b93af232ad",
+    "sha": "09efcff97c0ebdc75dde169070802f98182a9754",
     "branch": "master"
   },
   "tandem": {
@@ -89,7 +89,7 @@
     "branch": "master"
   },
   "vibe": {
-    "sha": "709fbf211ab1d9cb977921a0b521fa2348f80fe3",
+    "sha": "f2175b9bac94fd129eb51c00f2fcaf9a4fe0515b",
     "branch": "master"
   }
 }
