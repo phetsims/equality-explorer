@@ -251,7 +251,7 @@ define( function( require ) {
 
     /**
      * Stops all animations that are in progress.
-     * @private
+     * @public
      */
     stopAnimations: function() {
 
