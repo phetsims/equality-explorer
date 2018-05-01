@@ -349,6 +349,7 @@ define( function( require ) {
     /**
      * Removes a term from the plate.
      * @param {Term} term
+     * @returns {number} the cell that the term was removed from
      * @public
      */
     removeTermFromPlate: function( term ) {
@@ -356,8 +357,9 @@ define( function( require ) {
       assert && assert( this.termsOnPlate.contains( term ), 'term not on plate: ' + term );
 
       // ORDER IS VERY IMPORTANT HERE!
-      this.plate.removeTerm( term );
+      var cell = this.plate.removeTerm( term );
       this.termsOnPlate.remove( term );
+      return cell;
     },
 
     /**

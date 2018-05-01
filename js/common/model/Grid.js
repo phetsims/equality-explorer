@@ -253,6 +253,7 @@ define( function( require ) {
     /**
      * Removes a term from the grid. Any terms above it move down to fill the empty cell.
      * @param {Term} term
+     * @returns {number} the cell that the term was removed from
      * @public
      */
     removeTerm: function( term ) {
@@ -262,6 +263,7 @@ define( function( require ) {
       phet.log && phet.log( this.debugSide + ' Grid.removeTerm: term=' + term + ', cell=' + cell );
       this.clearCell( cell );
       this.compactColumn( this.cellToColumn( cell ) );
+      return cell;
     },
 
     /**

@@ -122,12 +122,14 @@ define( function( require ) {
     /**
      * Removes a term from the plate.
      * @param {Term} term
+     * @returns {number} the cell that the term was removed from
      * @public
      */
     removeTerm: function( term ) {
-      this.grid.removeTerm( term );
+      var cell = this.grid.removeTerm( term );
       this.numberOfTermsProperty.value--;
       this.contentsChangedEmitter.emit();
+      return cell;
     },
 
     /**
