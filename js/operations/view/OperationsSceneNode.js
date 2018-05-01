@@ -13,7 +13,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
+  var ArielOperationControl = require( 'EQUALITY_EXPLORER/common/view/ArielOperationControl' );
   var VariablesSceneNode = require( 'EQUALITY_EXPLORER/variables/view/VariablesSceneNode' );
 
   /**
@@ -35,7 +35,7 @@ define( function( require ) {
     var operationAnimationLayer = new Node();
 
     // @private Universal Operation, below Equation accordion box
-    this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
+    this.universalOperationControl = new ArielOperationControl( scene, operationAnimationLayer, {
       centerX: scene.scale.location.x, // centered on the scale
       top: this.equationAccordionBox.bottom + 10
     } );
