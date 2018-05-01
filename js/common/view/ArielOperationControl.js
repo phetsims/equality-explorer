@@ -232,6 +232,16 @@ define( function( require ) {
 
   return inherit( Node, ArielOperationControl, {
 
+    /**
+     * @param {number} dt - time step, in seconds
+     * @public
+     */
+    step: function( dt ) {
+      this.animations.forEach( function( animation ) {
+        animation.step( dt );
+      } );
+    },
+
     // @public
     reset: function() {
 
