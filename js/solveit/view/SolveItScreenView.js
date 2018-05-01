@@ -32,7 +32,12 @@ define( function( require ) {
     var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
     // UI for level selection and other game settings
-    var levelSelectionNode = new LevelSelectionNode( model, this.layoutBounds );
+    var levelSelectionNode = new LevelSelectionNode( model, this.layoutBounds, {
+      resetCallback: function() {
+        model.reset();
+        self.reset();
+      }
+    } );
 
     // @private {SolveItSceneNode[]} a scene for each level of the game
     this.sceneNodes = [];
@@ -78,6 +83,13 @@ define( function( require ) {
   equalityExplorer.register( 'SolveItScreenView', SolveItScreenView );
 
   return inherit( ScreenView, SolveItScreenView, {
+
+    // @public
+    reset: function() {
+      for ( var i = 0; i < this.sceneNodes.length; i++ ) {
+        this.sceneNodes[ i ].reset();
+      }
+    },
 
     /**
      * @param {number} dt - elapsed time, in seconds

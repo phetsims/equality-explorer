@@ -79,6 +79,7 @@ define( function( require ) {
     } );
 
     var backButtonListener = function() {
+      self.universalOperationControl.stopAnimations(); // stop any operations that are in progress
       sceneProperty.value = null; // back to the SettingsNode, where no scene is selected
     };
 
@@ -337,6 +338,7 @@ define( function( require ) {
 
     // @public
     reset: function() {
+      this.universalOperationControl.reset();
       this.snapshotsAccordionBoxExpandedProperty.reset();
     },
 

@@ -36,9 +36,14 @@ define( function( require ) {
   /**
    * @param {SolveItModel} model
    * @param {Bounds2} layoutBounds
+   * @param {Object} [options]
    * @constructor
    */
-  function LevelSelectionNode( model, layoutBounds ) {
+  function LevelSelectionNode( model, layoutBounds, options ) {
+
+    options = _.extend( {
+      resetCallback: null // {function|null}
+    }, options );
 
     var textOptions = {
       font: new PhetFont( 50 ),
@@ -89,7 +94,7 @@ define( function( require ) {
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         phet.log && phet.log( 'ResetAllButton pressed' );
-        model.reset();
+        options.resetCallback && options.resetCallback();
       }
     } );
 
