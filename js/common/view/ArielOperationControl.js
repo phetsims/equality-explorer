@@ -73,7 +73,7 @@ define( function( require ) {
       touchAreaYDilation: 15
     } );
 
-    //TODO clean this up if we use this control
+    //TODO #77 clean this up if we use this control
     var plusButton = new RectangularPushButton( {
       content: UniversalOperationNode.createOperatorNode( MathSymbols.PLUS ),
       baseColor: PhetColorScheme.BUTTON_YELLOW,
