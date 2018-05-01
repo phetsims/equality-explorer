@@ -65,7 +65,7 @@ define( function( require ) {
     var nodes = createNodesFunction[ level - 1 ]();
 
     RewardNode.call( this, {
-      nodes: RewardNode.createRandomNodes( nodes, 150 /* count */ )
+      nodes: RewardNode.createRandomNodes( nodes, 100 /* count */ )
     } );
   }
 
