@@ -11,10 +11,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Animation = require( 'TWIXT/Animation' );
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Color = require( 'SCENERY/util/Color' );
   var DebugChallengeNode = require( 'EQUALITY_EXPLORER/solveit/view/DebugChallengeNode' );
+  var Easing = require( 'TWIXT/Easing' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
@@ -25,7 +27,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var OpacityTo = require( 'TWIXT/OpacityTo' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -218,13 +220,31 @@ define( function( require ) {
     // @private {EqualityExplorerRewardNode} reward shown while rewardDialog is open
     this.rewardNode = null;
 
-    // When the score reaches a magic number, display the reward.
-    // unlink not needed.
-    scene.scoreProperty.link( function( score ) {
+    // Property that controls opacity of smiley face
+    var faceOpacityProperty = new NumberProperty( faceNode.opacity );
+    faceOpacityProperty.link( function( faceOpacity ) {
+      faceNode.opacity = faceOpacity;
+    } );
 
-      if ( score === EqualityExplorerQueryParameters.rewardScore ) {
+    // @private
+    this.faceAnimation = null;
+
+    // unlink not needed.
+    scene.scoreProperty.lazyLink( function( score, oldScore ) {
+
+      // do nothing when the score is reset
+      if ( score < oldScore ) {
+        return;
+      }
+
+      refreshButton.visible = false;
+
+      // When the score reaches a magic number, display the reward.
+      if ( score === EqualityExplorerQueryParameters.rewardScore ) {                                          
 
         gameAudioPlayer.gameOverPerfectScore();
+
+        nextButton.visible = true;
 
         // show the reward dialog
         rewardDialog = rewardDialog || new RewardDialog( scene.scoreProperty.value, {
@@ -257,6 +277,34 @@ define( function( require ) {
         } );
         rewardDialog.show();
       }
+      else {
+
+        // ding!
+        gameAudioPlayer.correctAnswer();
+
+        // Show smiley face, fade it out, then show the Next button.
+        faceOpacityProperty.value = 0.8;
+        faceNode.visible = true;
+
+        self.faceAnimation = new Animation( {
+          stepper: 'manual', // via step function
+          delay: 1,
+          duration: 0.8,
+          targets: [ {
+            property: faceOpacityProperty,
+            easing: Easing.LINEAR,
+            to: 0
+          } ]
+        } );
+
+        self.faceAnimation.finishEmitter.addListener( function() {
+          faceNode.visible = false;
+          nextButton.visible = true;
+          self.faceAnimation = null;
+        } );
+
+        self.faceAnimation.start();
+      }
     } );
 
     // When the challenge changes...
@@ -276,33 +324,6 @@ define( function( require ) {
       refreshButton.visible = true;
       nextButton.visible = false;
       faceNode.visible = false;
-    } );
-
-    // This notification occurs that first time that a challenge is solved.
-    // If the user choose to continue playing with the challenge, there is no subsequent feedback.
-    // removeListener not needed.
-    var faceAnimation;
-    scene.challengeSolvedEmitter.addListener( function() {
-
-      refreshButton.visible = false;
-
-      // ding!
-      gameAudioPlayer.correctAnswer();
-
-      // Show smiley face, fade it out, then show the Next button.
-      faceNode.opacity = 0.8;
-      faceNode.visible = true;
-      faceAnimation = new OpacityTo( faceNode, {
-        endOpacity: 0,
-        delay: 1000,
-        duration: 800, // fade out time, ms
-        easing: TWEEN.Easing.Linear.None,
-        onComplete: function() {
-          faceNode.visible = false;
-          nextButton.visible = true;
-        }
-      } );
-      faceAnimation.start( phet.joist.elapsedTime );
     } );
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
@@ -325,6 +346,7 @@ define( function( require ) {
      */
     step: function( dt ) {
       this.universalOperationControl.step( dt );
+      this.faceAnimation && this.faceAnimation.step( dt );
       this.rewardNode && this.rewardNode.step( dt );
     }
   } );

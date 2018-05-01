@@ -14,7 +14,6 @@ define( function( require ) {
   var Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var DebugChallenge = require( 'EQUALITY_EXPLORER/solveit/model/DebugChallenge' );
-  var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
@@ -79,9 +78,6 @@ define( function( require ) {
     // @private has the current challenge been solved?
     this.challengeHasBeenSolved = false;
 
-    // @public (read-only) emit is called the first time that the current challenge is solved
-    this.challengeSolvedEmitter = new Emitter();
-
     // When a universal operation is completed, determine if the challenge is solved.
     // removeListener not needed.
     this.operationCompletedEmitter.addListener( function( operation ) {
@@ -100,7 +96,6 @@ define( function( require ) {
         phet.log && phet.log( 'operationCompletedEmitter listener: challenge is solved' );
         self.challengeHasBeenSolved = true;
         self.scoreProperty.value = self.scoreProperty.value + POINTS_PER_CHALLENGE;
-        self.challengeSolvedEmitter.emit();
       }
     } );
   }
