@@ -245,7 +245,6 @@ define( function( require ) {
       assert && assert( term instanceof Term, 'invalid term' );
       assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
       assert && assert( this.isEmptyCell( cell ), 'cell is occupied, cell: ' + cell );
-      phet.log && phet.log( this.debugSide + ' Grid.putTerm: term=' + term + ', cell=' + cell );
       this.cells[ cell ] = term;
       term.moveTo( this.getLocationOfCell( cell ) );
     },
@@ -260,7 +259,6 @@ define( function( require ) {
       assert && assert( term instanceof Term, 'invalid term: ' + term );
       var cell = this.getCellForTerm( term );
       assert && assert( cell !== null, 'term not found: ' + term );
-      phet.log && phet.log( this.debugSide + ' Grid.removeTerm: term=' + term + ', cell=' + cell );
       this.clearCell( cell );
       this.compactColumn( this.cellToColumn( cell ) );
       return cell;
