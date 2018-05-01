@@ -120,7 +120,7 @@ define( function( require ) {
               }
               else {
 
-                // create an inverse term on the opposite plate
+                // no equivalent term on opposite plate, create an inverse term
                 self.inverseTerm = self.equivalentTermCreator.createTerm( _.extend( term.copyOptions(), {
                   sign: -1
                 } ) );
