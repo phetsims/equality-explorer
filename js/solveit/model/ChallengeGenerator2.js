@@ -56,8 +56,8 @@ define( function( require ) {
     nextChallengeProtected: function() {
 
       var x = this.randomX( X_VALUES );
-      var a = this.randomValue( A_VALUES, [ 0 ] );
-      var b = this.randomValue( B_VALUES, [ 0 ] );
+      var a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );
+      var b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
       var c = ( a * x ) + b;
 
       // Verify that computations meeting design requirements.

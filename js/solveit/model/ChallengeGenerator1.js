@@ -71,7 +71,7 @@ define( function( require ) {
       else {
 
         // After the first 3 challenges, randomly select the challenge type.
-        return this.random.sample( this.challengeTypeMethods )();
+        return phet.joist.random.sample( this.challengeTypeMethods )();
       }
     },
 
@@ -89,7 +89,7 @@ define( function( require ) {
     nextType1: function() {
 
       var x = this.randomX( X_VALUES );
-      var a = this.randomValue( A_VALUES, [ 0, 1 ] );
+      var a = ChallengeGenerator.randomValue( A_VALUES, [ 0, 1 ] );
       var c = a * x;
 
       // Verify that computations meeting design requirements.
@@ -121,7 +121,7 @@ define( function( require ) {
     nextType2: function() {
 
       var x = this.randomX( X_VALUES );
-      var b = this.randomValue( B_VALUES, [ 0 ] );
+      var b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
       var c = x + b;
 
       // Verify that computations meeting design requirements.
@@ -154,8 +154,8 @@ define( function( require ) {
       //TODO this is a potential infinite loop, better approach?
       var x = this.xPrevious;
       while ( x === this.xPrevious ) {
-        var c = this.randomValue( C_VALUES, [ 0 ] );
-        var d = this.randomValue( D_VALUES, [ 0, 1 ] );
+        var c = ChallengeGenerator.randomValue( C_VALUES, [ 0 ] );
+        var d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1 ] );
         x = c * d;
       }
 

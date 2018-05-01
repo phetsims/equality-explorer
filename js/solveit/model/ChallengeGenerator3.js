@@ -61,7 +61,7 @@ define( function( require ) {
     nextChallengeProtected: function() {
 
       // Randomly select the type of challenge to generate.
-      return this.random.sample( this.challengeTypeMethods )();
+      return phet.joist.random.sample( this.challengeTypeMethods )();
     },
 
     /**
@@ -80,9 +80,9 @@ define( function( require ) {
     nextType1: function() {
 
       var x = this.randomX( X_VALUES );
-      var d = this.randomValue( D_VALUES, [ 0, 1, -1 ] );
-      var a = this.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
-      var b = this.randomValue( B_VALUES_TYPE1, [ 0 ] );
+      var d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
+      var a = ChallengeGenerator.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
+      var b = ChallengeGenerator.randomValue( B_VALUES_TYPE1, [ 0 ] );
       var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
       // Verify that computations meeting design requirements.
@@ -122,9 +122,9 @@ define( function( require ) {
     nextType2: function() {
 
       var x = this.randomX( X_VALUES );
-      var d = this.randomValue( D_VALUES, [ 0, 1, -1 ] );
-      var a = this.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
-      var b = this.randomValueBy( B_VALUES_TYPE2, function( b ) { return ( b % d !== 0 ); } );
+      var d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
+      var a = ChallengeGenerator.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
+      var b = ChallengeGenerator.randomValueBy( B_VALUES_TYPE2, function( b ) { return ( b % d !== 0 ); } );
       var c = new Fraction( ( a * x ) + b, d ).reduce();
 
       // Verify that computations meeting design requirements.

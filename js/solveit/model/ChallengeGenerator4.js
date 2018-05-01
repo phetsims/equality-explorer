@@ -59,9 +59,9 @@ define( function( require ) {
     nextChallengeProtected: function() {
 
       var x = this.randomX( X_VALUES );
-      var a = this.randomValue( A_VALUES, [ 0 ] );
-      var b = this.randomValue( B_VALUES, [ 0 ] );
-      var m = this.randomValueBy( M_VALUES, function( m ) {
+      var a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );
+      var b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
+      var m = ChallengeGenerator.randomValueBy( M_VALUES, function( m ) {
         return ( m !== 0 ) && ( m !== a ) && ( Math.abs( a - m ) <= 10 );
       } );
       var n = ( ( a - m ) * x ) + b;
