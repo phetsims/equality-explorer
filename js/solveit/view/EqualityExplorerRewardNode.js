@@ -101,7 +101,7 @@ define( function( require ) {
       nodes.push( createIntegerConstantTermNode( i ) );
 
       // random operations on integers
-      nodes.push( createOperationNode( i ) );
+      nodes.push( createOperationNode() );
 
       // stars
       nodes.push( STAR_NODE );
@@ -121,7 +121,7 @@ define( function( require ) {
       nodes.push( createFractionConstantTermNode() );
 
       // random operations on integers
-      nodes.push( createOperationNode( i ) );
+      nodes.push( createOperationNode() );
 
       // smiley faces
       nodes.push( FACE_NODE );
@@ -187,12 +187,15 @@ define( function( require ) {
   }
 
   /**
-   * Creates an operation node with a random operator and a specified integer operand.
-   * @param {number} constantValue
+   * Creates an operation node with a random operator and a random positive integer operand.
    * @returns {Node}
    */
-  function createOperationNode( constantValue ) {
+  function createOperationNode() {
     var operator = randomOperator();
+    var constantValue = ChallengeGenerator.randomValueBy( INTEGER_VALUES,
+      function( value ) {
+        return ( value > 0 );
+      } );
     var operand = new ConstantTerm( { constantValue: Fraction.fromInteger( constantValue ) } );
     var operation = new UniversalOperation( operator, operand );
     return new UniversalOperationNode( operation, {
