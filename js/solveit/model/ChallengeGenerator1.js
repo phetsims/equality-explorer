@@ -37,6 +37,7 @@ define( function( require ) {
   var B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
   var C_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
   var D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  var MAX_ATTEMPTS = 50; // max attempts in a while loop
 
   /**
    * @constructor
@@ -151,9 +152,10 @@ define( function( require ) {
      */
     nextType3: function() {
 
-      //TODO this is a potential infinite loop, better approach?
       var x = this.xPrevious;
-      while ( x === this.xPrevious ) {
+      var attempts = 0; // to prevent an improbable infinite while loop
+      while ( x === this.xPrevious && attempts < MAX_ATTEMPTS ) {
+        attempts++;
         var c = ChallengeGenerator.randomValue( C_VALUES, [ 0 ] );
         var d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1 ] );
         x = c * d;
@@ -164,7 +166,7 @@ define( function( require ) {
       assert && assert( d !== 0, 'd is 0' );
       assert && assert( d !== 1, 'd is 1' );
       assert && assert( x !== 0, 'x is 0' );
-      assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
+      assert && assert( x !== this.xPrevious || attempts === MAX_ATTEMPTS, 'x === xPrevious: ' + x );
       this.xPrevious = x;
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
