@@ -210,7 +210,7 @@ define( function( require ) {
       } ) );
 
       // button that takes you directly to the answer
-      children.push( new RectangularPushButton( {
+      var showAnswerButton = new RectangularPushButton( {
         content: new Text( 'Show Answer', {
           font: new PhetFont( 16 ),
           fill: 'white'
@@ -221,7 +221,8 @@ define( function( require ) {
         listener: function() {
           scene.showAnswer();
         }
-      } ) );
+      } );
+      children.push( showAnswerButton );
     }
 
     assert && assert( !options.children, 'SolveItSceneNode sets children' );
@@ -254,6 +255,7 @@ define( function( require ) {
       }
 
       refreshButton.visible = false;
+      showAnswerButton && ( showAnswerButton.visible = false );
 
       // When the score reaches a magic number, display the reward.
       if ( score === EqualityExplorerQueryParameters.rewardScore ) {                                          
@@ -341,6 +343,7 @@ define( function( require ) {
       refreshButton.visible = true;
       nextButton.visible = false;
       faceNode.visible = false;
+      showAnswerButton && ( showAnswerButton.visible = true );
     } );
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
