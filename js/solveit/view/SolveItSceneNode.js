@@ -209,9 +209,9 @@ define( function( require ) {
         top: snapshotsAccordionBox.bottom + 5
       } ) );
 
-      // button that takes you directly to the answer
+      // button that takes you directly to the answer. debug only, i18n not needed.
       var showAnswerButton = new RectangularPushButton( {
-        content: new Text( 'Show Answer', {
+        content: new Text( 'show answer', {
           font: new PhetFont( 16 ),
           fill: 'white'
         } ),
