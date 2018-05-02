@@ -375,20 +375,18 @@ define( function( require ) {
     detachOppositeTerms: function() {
 
       // equivalent term
-      if ( this.equivalentTerm ) {
-        if ( !this.equivalentTerm.disposed ) {
-          this.equivalentTerm.pickableProperty.value = true;
-        }
-        this.equivalentTerm = null;
+      if ( this.equivalentTerm && !this.equivalentTerm.disposed ) {
+        this.equivalentTerm.pickableProperty.value = true;
       }
+      this.equivalentTerm = null;
 
       // inverse term
-      if ( this.inverseTerm ) {
+      if ( this.inverseTerm && !this.inverseTerm.disposed ) {
         if ( this.inverseTerm.draggingProperty.hasListener( this.inverseTermDraggingListener ) ) {
           this.inverseTerm.draggingProperty.unlink( this.inverseTermDraggingListener );
         }
-        this.inverseTerm = null;
       }
+      this.inverseTerm = null;
     },
 
     /**
