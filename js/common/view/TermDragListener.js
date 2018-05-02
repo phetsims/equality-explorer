@@ -229,6 +229,7 @@ define( function( require ) {
         term.moveTo( self.eventToLocation( event ) );
 
         //TODO #83 any performance concern here?
+        //TODO #82 could eliminate this if termNode.moveToBack when put on the plate
         // since multiple terms may be dragged via multi-touch, keep the most-recently-moved term on top
         termNode.moveToFront();
 
