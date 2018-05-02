@@ -170,7 +170,8 @@ define( function( require ) {
                 self.inverseTerm = self.equivalentTermCreator.createTerm( _.extend( term.copyOptions(), {
                   sign: -1
                 } ) );
-                var inverseCell = self.oppositePlate.getBestEmptyCell( term.locationProperty.value ); //TODO OK to use term.locationProperty?
+                var inverseTermLocation = termCreator.getEquivalentTermLocation( term );
+                var inverseCell = self.oppositePlate.getBestEmptyCell( inverseTermLocation );
                 self.equivalentTermCreator.putTermOnPlate( self.inverseTerm, inverseCell );
 
                 // if the inverse term is dragged, break the association to equivalentTerm
