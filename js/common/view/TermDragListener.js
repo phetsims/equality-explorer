@@ -171,7 +171,7 @@ define( function( require ) {
 
                 // interrupt this drag sequence, since we can't take term off the plate
                 self.interrupt();
-                return; //TODO bad form to return from the middle of a function
+                return; // generally bad form to return from the middle of a function, but this is a workaround
               }
               else {
 
