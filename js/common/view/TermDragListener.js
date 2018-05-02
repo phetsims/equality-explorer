@@ -146,8 +146,8 @@ define( function( require ) {
               // Like terms in separate cells
               //=======================================================================
 
-              var equivalentTermLocation = termCreator.getEquivalentTermLocation( term );
-              self.equivalentTerm = self.oppositePlate.getClosestEquivalentTerm( term, equivalentTermLocation );
+              var termCell = self.plate.getCellForTerm( term );
+              self.equivalentTerm = self.oppositePlate.getClosestEquivalentTerm( term, termCell );
               if ( self.equivalentTerm ) {
 
                 // found equivalent term on opposite plate, remove it from plate

@@ -225,13 +225,16 @@ define( function( require ) {
     },
 
     /**
-     * Gets an equivalent term from the grid that is closest to a specified location.
+     * Gets an equivalent term from the grid that is closest to a specified cell.
      * @param {Term} term
-     * @param {Vector2} location
+     * @param {number} cell
      * @returns {Term|null} null if no equivalent term is found
      */
-    getClosestEquivalentTerm: function( term, location ) {
+    getClosestEquivalentTerm: function( term, cell ) {
+      assert && assert( term instanceof Term, 'invalid term' );
+      assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
 
+      var cellLocation = this.getLocationOfCell( cell );
       var equivalentTerm = null;
       var distance = null;
 
@@ -239,7 +242,7 @@ define( function( require ) {
       for ( var i = 0; i < this.cells.length; i++ ) {
         var currentTerm = this.cells[ i ];
         if ( ( currentTerm !== NO_TERM ) && ( term.isEquivalentTerm( currentTerm ) ) ) {
-          var currentDistance = this.getLocationOfCell( i ).distance( location );
+          var currentDistance = this.getLocationOfCell( i ).distance( cellLocation );
           if ( equivalentTerm === null || currentDistance < distance ) {
             equivalentTerm = currentTerm;
             distance = currentDistance;
