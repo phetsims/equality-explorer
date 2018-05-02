@@ -1,5 +1,8 @@
 // Copyright 2018, University of Colorado Boulder
 
+//TODO #19 sum to zero on opposite side of scale
+//TODO #19 choose more appropriate cells on opposite side of scale
+//TODO #19 break this up into smaller encapsulated chunks
 /**
  * Drag listener for terms.
  *
