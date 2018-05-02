@@ -94,9 +94,52 @@ define( function( require ) {
 
           if ( termCreator.lockedProperty.value ) {
             if ( termCreator.combineLikeTermsEnabled ) {
-              //TODO #19 Operations screen support
+
+              //=======================================================================
+              // Like terms combined in one cell
+              //=======================================================================
+
+              var oppositeLikeTerm = self.oppositePlate.getTermInCell( termCreator.likeTermsCell );
+
+              // no need to track self.inverseTerm when like terms are combined, so uses a local var
+              var inverseTerm;
+
+              if ( oppositeLikeTerm ) {
+
+                // subtract term from what's on the opposite plate
+                inverseTerm = oppositeLikeTerm.minus( term );
+                self.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
+                oppositeLikeTerm.dispose();
+                oppositeLikeTerm = null;
+                if ( inverseTerm.significantValue.getValue() === 0 ) {
+                  inverseTerm.dispose();
+                  inverseTerm = null;
+                }
+                else {
+                  self.equivalentTermCreator.putTermOnPlate( inverseTerm, termCreator.likeTermsCell );
+                }
+              }
+              else {
+
+                // there was nothing on the opposite plate, so create the inverse of the equivalent term
+                inverseTerm = self.equivalentTermCreator.createTerm(
+                  _.extend( term.copyOptions(), {
+                    sign: -1
+                  } ) );
+                self.equivalentTermCreator.putTermOnPlate( inverseTerm, termCreator.likeTermsCell );
+              }
+
+              // create the equivalent term last, so it's in front
+              self.equivalentTerm = self.equivalentTermCreator.createTerm(
+                _.extend( term.copyOptions(), {
+                  pickable: false
+                } ) );
             }
             else {
+
+              //=======================================================================
+              // Like terms in separate cells
+              //=======================================================================
 
               self.equivalentTerm = self.oppositePlate.getEquivalentTerm( term );
               if ( self.equivalentTerm ) {
@@ -200,7 +243,7 @@ define( function( require ) {
           self.equivalentTerm.shadowVisibleProperty.value = false;
         }
 
-        if ( self.equivalentTerm && self.oppositePlate.isFull() ) {
+        if ( self.equivalentTerm && self.oppositePlate.isFull() && !termCreator.combineLikeTermsEnabled ) {
 
           self.refreshHalos();
 
@@ -218,6 +261,10 @@ define( function( require ) {
           if ( self.equivalentTerm ) {
             if ( termCreator.combineLikeTermsEnabled ) {
 
+              //=======================================================================
+              // Like terms combined in one cell
+              //=======================================================================
+
               var cell = termCreator.likeTermsCell;
               var oppositeLikeTerm = self.oppositePlate.getTermInCell( cell );
               if ( oppositeLikeTerm ) {
@@ -231,6 +278,10 @@ define( function( require ) {
                 self.equivalentTerm = null;
                 if ( combinedTerm.significantValue.getValue() !== 0 ) {
                   self.equivalentTermCreator.putTermOnPlate( combinedTerm, cell );
+                }
+                else {
+                  combinedTerm.dispose();
+                  combinedTerm = null;
                 }
                 self.detachOppositeTerms();
               }
@@ -247,6 +298,10 @@ define( function( require ) {
               }
             }
             else {
+
+              //=======================================================================
+              // Like terms in separate cells
+              //=======================================================================
 
               // put equivalent term in an empty cell
               var emptyCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
@@ -380,6 +435,7 @@ define( function( require ) {
      * @private
      */
     animateToLikeCell: function() {
+      console.log( 'animateToLikeCell' );//XXX
       assert && assert( this.termCreator.combineLikeTermsEnabled, 'should ONLY be called when combining like terms' );
 
       var self = this;
@@ -471,12 +527,12 @@ define( function( require ) {
               self.detachOppositeTerms();
 
               // Put the combined term on the plate.
-              if ( combinedTerm.significantValue.getValue() !== 0 ) {
-                self.equivalentTermCreator.putTermOnPlate( combinedTerm, likeTermsCell );
-              }
-              else {
+              if ( combinedTerm.significantValue.getValue() === 0 ) {
                 combinedTerm.dispose();
                 combinedTerm = null;
+              }
+              else {
+                self.equivalentTermCreator.putTermOnPlate( combinedTerm, likeTermsCell );
               }
             }
           }
