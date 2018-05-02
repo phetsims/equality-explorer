@@ -442,7 +442,6 @@ define( function( require ) {
      * @private
      */
     animateToLikeCell: function() {
-      console.log( 'animateToLikeCell' );//XXX
       assert && assert( this.termCreator.combineLikeTermsEnabled, 'should ONLY be called when combining like terms' );
 
       var self = this;
