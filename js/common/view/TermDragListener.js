@@ -9,6 +9,16 @@
 /**
  * Drag listener for terms.
  *
+ * Terminology:
+ * - The dragged term is the term that you’re dragging.
+ * - The equivalent term is the term on the opposite side that follows along with the dragged term.
+ *   It has the same value as the dragged term. For example, if you’re dragging 2x, the equivalent term will also be 2x.
+ * - The inverse term is the term that is created on the opposite plate if no equivalent term is already on the plate.
+ *   It’s value is the inverse of the equivalent term.  For example, if the equivalent term is 2x, the inverse term
+ *   is -2x.  (Inverse term is only relevant for the Numbers and Variables screens. In Operations, the equivalent term
+ *   is subtracted from what’s on the plate.)
+ * - The opposite plate is the plate associated with the equivalent term, opposite the dragging term.
+ *
  * Note that event.currentTarget should NOT be used herein. Because of event forwarding from TermCreatorNode,
  * event.currentTarget may not be what you expect it to be.  See SimpleDragHandler.createForwardingListener
  * in TermCreatorNode.
