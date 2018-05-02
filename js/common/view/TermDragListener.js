@@ -434,7 +434,6 @@ define( function( require ) {
       }
     },
 
-    //TODO #19 handle lock feature for Operations screen
     /**
      * Animates a term to the cell for like terms.
      * In this scenarios, all like terms occupy a specific cell on the plate.
