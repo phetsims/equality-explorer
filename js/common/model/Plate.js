@@ -210,12 +210,13 @@ define( function( require ) {
     },
 
     /**
-     * Gets an equivalent term from the grid.
+     * Gets an equivalent term from the grid that is closest to a specified location.
      * @param {Term} term
+     * @param {Vector2} location
      * @returns {Term|null} - null if no equivalent term is found
      */
-    getEquivalentTerm: function( term ) {
-      return this.grid.getEquivalentTerm( term );
+    getClosestEquivalentTerm: function( term, location ) {
+      return this.grid.getClosestEquivalentTerm( term, location );
     },
 
     /**

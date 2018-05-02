@@ -225,14 +225,29 @@ define( function( require ) {
     },
 
     /**
-     * Gets the first equivalent term, searching the grid from top-to-bottom, left-to-right.
+     * Gets an equivalent term from the grid that is closest to a specified location.
      * @param {Term} term
+     * @param {Vector2} location
      * @returns {Term|null} null if no equivalent term is found
      */
-    getEquivalentTerm: function( term ) {
-      return _.find( this.cells, function( currentTerm ) {
-        return ( currentTerm !== NO_TERM ) && ( currentTerm.isEquivalentTerm( term ) );
-      } );
+    getClosestEquivalentTerm: function( term, location ) {
+
+      var equivalentTerm = null;
+      var distance = null;
+
+      // This is brute force, but straightforward, and not a performance issue because the number of cells is small.
+      for ( var i = 0; i < this.cells.length; i++ ) {
+        var currentTerm = this.cells[ i ];
+        if ( ( currentTerm !== NO_TERM ) && ( term.isEquivalentTerm( currentTerm ) ) ) {
+          var currentDistance = this.getLocationOfCell( i ).distance( location );
+          if ( equivalentTerm === null || currentDistance < distance ) {
+            equivalentTerm = currentTerm;
+            distance = currentDistance;
+          }
+        }
+      }
+
+      return equivalentTerm;
     },
 
     /**

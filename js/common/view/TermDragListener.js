@@ -1,6 +1,8 @@
 // Copyright 2018, University of Colorado Boulder
 
 //TODO #19 sum to zero on opposite side of scale
+//TODO #19 always pop equivalent term to front
+//TODO #19 equivalent terms pop to their final location, do they need to animate?
 //TODO #19 choose more appropriate cells on opposite side of scale
 //TODO #19 break this up into smaller encapsulated chunks
 /**
@@ -144,7 +146,8 @@ define( function( require ) {
               // Like terms in separate cells
               //=======================================================================
 
-              self.equivalentTerm = self.oppositePlate.getEquivalentTerm( term );
+              var equivalentTermLocation = termCreator.getEquivalentTermLocation( term );
+              self.equivalentTerm = self.oppositePlate.getClosestEquivalentTerm( term, equivalentTermLocation );
               if ( self.equivalentTerm ) {
 
                 // found equivalent term on opposite plate, remove it from plate
