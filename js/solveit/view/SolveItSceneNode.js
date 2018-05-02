@@ -201,11 +201,26 @@ define( function( require ) {
       faceNode // face in front of everything
     ];
 
-    // show debugging info related to the challenge
     if ( EqualityExplorerQueryParameters.showAnswers ) {
+
+      // show debugging info related to the challenge
       children.push( new DebugChallengeNode( scene.challengeProperty, {
         left: snapshotsAccordionBox.left,
         top: snapshotsAccordionBox.bottom + 5
+      } ) );
+
+      // button that takes you directly to the answer
+      children.push( new RectangularPushButton( {
+        content: new Text( 'Show Answer', {
+          font: new PhetFont( 16 ),
+          fill: 'white'
+        } ),
+        baseColor: 'red',
+        centerX: scaleNode.centerX,
+        bottom: scaleNode.bottom - 5,
+        listener: function() {
+          self.showAnswer();
+        }
       } ) );
     }
 
@@ -351,6 +366,15 @@ define( function( require ) {
       this.universalOperationControl.step( dt );
       this.faceAnimation && this.faceAnimation.step( dt );
       this.rewardNode && this.rewardNode.step( dt );
+    },
+
+    /**
+     * Shows the answer, for debugging.
+     * @private
+     */
+    showAnswer: function() {
+      //TODO
+      console.log( 'showAnswer' );
     }
   } );
 } );
