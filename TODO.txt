@@ -8,7 +8,6 @@ Cleanup
 LOCK FEATURE =========
 
 known problems:
-- no shadow on equivalent term when picked off plate or while animating
 - It’s possible to exceed the number limit (1E9) for the opposite plate.
 - There are occasional layering issues with the equivalent term — it gets behind other terms.
 - In the Operations screen, there is no “sum to zero” animation when the equivalent term and what’s on the plate sum to zero.

@@ -136,10 +136,7 @@ define( function( require ) {
               }
 
               // create the equivalent term last, so it's in front
-              self.equivalentTerm = self.equivalentTermCreator.createTerm(
-                _.extend( term.copyOptions(), {
-                  pickable: false
-                } ) );
+              self.equivalentTerm = self.equivalentTermCreator.createTerm( term.copyOptions() );
             }
             else {
 
@@ -153,8 +150,6 @@ define( function( require ) {
 
                 // found equivalent term on opposite plate, remove it from plate
                 self.equivalentTermCreator.removeTermFromPlate( self.equivalentTerm );
-                self.equivalentTerm.pickableProperty.value = false;
-                self.equivalentTerm.shadowVisibleProperty.value = true;
               }
               else if ( self.oppositePlate.isFull() ) {
 
@@ -183,10 +178,7 @@ define( function( require ) {
 
                 // create the equivalent term on the opposite side
                 // Do this after creating inverseTerm so that it appear in front of inverseTerm.
-                self.equivalentTerm = self.equivalentTermCreator.createTerm( _.extend( term.copyOptions(), {
-                  pickable: false
-                } ) );
-                self.equivalentTerm.shadowVisibleProperty.value = true;
+                self.equivalentTerm = self.equivalentTermCreator.createTerm( term.copyOptions() );
               }
             }
           }
@@ -197,11 +189,7 @@ define( function( require ) {
 
           // term came from toolbox. If lock is enabled, create an equivalent term on other side of the scale.
           if ( termCreator.lockedProperty.value ) {
-            self.equivalentTerm = self.equivalentTermCreator.createTerm(
-              _.extend( term.copyOptions(), {
-                pickable: false
-              } ) );
-            self.equivalentTerm.shadowVisibleProperty.value = true;
+            self.equivalentTerm = self.equivalentTermCreator.createTerm( term.copyOptions() );
           }
         }
 
@@ -211,6 +199,10 @@ define( function( require ) {
         // set term properties at beginning of drag
         term.draggingProperty.value = true;
         term.shadowVisibleProperty.value = true;
+        if ( self.equivalentTerm ) {
+          self.equivalentTerm.shadowVisibleProperty.value = true;
+          self.equivalentTerm.pickableProperty.value = false;
+        }
 
         // move the node we're dragging to the foreground
         termNode.moveToFront();
@@ -358,6 +350,8 @@ define( function( require ) {
       if ( self.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
         self.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
       }
+
+      self.detachOppositeTerms();
     };
   }
 
@@ -618,7 +612,7 @@ define( function( require ) {
                   // Put equivalent term on the opposite plate
                   var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
                   self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
-                  self.equivalentTerm.pickableProperty.value = true;
+                  self.equivalentTerm.pickableProperty.value = true; //TODO #19 this is done by detachOppositeTerms
                   //TODO #19 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
                   self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
                   self.detachOppositeTerms();
