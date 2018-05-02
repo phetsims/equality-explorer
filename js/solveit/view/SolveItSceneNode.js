@@ -219,7 +219,7 @@ define( function( require ) {
         centerX: scaleNode.centerX,
         bottom: scaleNode.bottom - 5,
         listener: function() {
-          self.showAnswer();
+          scene.showAnswer();
         }
       } ) );
     }
@@ -366,15 +366,6 @@ define( function( require ) {
       this.universalOperationControl.step( dt );
       this.faceAnimation && this.faceAnimation.step( dt );
       this.rewardNode && this.rewardNode.step( dt );
-    },
-
-    /**
-     * Shows the answer, for debugging.
-     * @private
-     */
-    showAnswer: function() {
-      //TODO
-      console.log( 'showAnswer' );
     }
   } );
 } );

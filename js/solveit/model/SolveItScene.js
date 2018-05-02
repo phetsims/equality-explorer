@@ -225,6 +225,15 @@ define( function( require ) {
       }
 
       return xIsIsolated;
+    },
+
+    /**
+     * Goes immediately to the answer, for debugging.
+     * @public
+     */
+    showAnswer: function() {
+      //TODO
+      console.log( 'SolveItScene.showAnswer' );
     }
   } );
 } );
