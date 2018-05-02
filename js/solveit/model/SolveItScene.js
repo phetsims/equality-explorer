@@ -12,6 +12,7 @@ define( function( require ) {
 
   // modules
   var Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
+  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var DebugChallenge = require( 'EQUALITY_EXPLORER/solveit/model/DebugChallenge' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
@@ -24,6 +25,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
   var Vector2 = require( 'DOT/Vector2' );
+  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   // constants
@@ -228,12 +230,29 @@ define( function( require ) {
     },
 
     /**
-     * Goes immediately to the answer, for debugging.
+     * Displays the answer to the current challenge, for debugging.
      * @public
      */
     showAnswer: function() {
-      //TODO
-      console.log( 'SolveItScene.showAnswer' );
+
+      // 0 = 0
+      this.allTermCreators.forEach( function( termCreator ) {
+        termCreator.disposeAllTerms();
+      } );
+
+      // x = N
+      this.leftVariableTermCreator.putTermOnPlate( new VariableTerm( this.xVariable, {
+        coefficient: Fraction.fromInteger( 1 ),
+        diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+      } ) );
+      this.rightConstantTermCreator.putTermOnPlate( new ConstantTerm( {
+        constantValue: Fraction.fromInteger( this.xVariable.valueProperty.value ),
+        diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+      } ) );
+
+      // indicate that the challenge has been solved
+      this.challengeHasBeenSolved = false;
+      this.scoreProperty.value = this.scoreProperty.value + POINTS_PER_CHALLENGE;
     }
   } );
 } );
