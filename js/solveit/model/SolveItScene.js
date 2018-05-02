@@ -80,6 +80,9 @@ define( function( require ) {
     // @private has the current challenge been solved?
     this.challengeHasBeenSolved = false;
 
+    // @private will x be on the left or right side of the equation in the solution?
+    this.xOnLeft = true;
+
     // When a universal operation is completed, determine if the challenge is solved.
     // removeListener not needed.
     this.operationCompletedEmitter.addListener( function( operation ) {
@@ -146,11 +149,11 @@ define( function( require ) {
       this.xVariable.valueProperty.value = challenge.x;
 
       // randomize whether the scale shows 'ax + b = mx + n' or 'mx + n = ax + b'
-      var reflect = phet.joist.random.nextBoolean();
-      var aTermCreator = reflect ? this.leftVariableTermCreator : this.rightVariableTermCreator;
-      var bTermCreator = reflect ? this.leftConstantTermCreator : this.rightConstantTermCreator;
-      var mTermCreator = reflect ? this.rightVariableTermCreator : this.leftVariableTermCreator;
-      var nTermCreator = reflect ? this.rightConstantTermCreator : this.leftConstantTermCreator;
+      this.xOnLeft = phet.joist.random.nextBoolean();
+      var aTermCreator = this.xOnLeft ? this.leftVariableTermCreator : this.rightVariableTermCreator;
+      var bTermCreator = this.xOnLeft ? this.leftConstantTermCreator : this.rightConstantTermCreator;
+      var mTermCreator = this.xOnLeft ? this.rightVariableTermCreator : this.leftVariableTermCreator;
+      var nTermCreator = this.xOnLeft ? this.rightConstantTermCreator : this.leftConstantTermCreator;
 
       // Create terms on the scale that correspond to the challenge.
       this.createVariableTermOnPlate( aTermCreator, challenge.a );
@@ -240,15 +243,27 @@ define( function( require ) {
         termCreator.disposeAllTerms();
       } );
 
-      // x = N
-      this.leftVariableTermCreator.putTermOnPlate( new VariableTerm( this.xVariable, {
+      // x
+      var variableTerm = new VariableTerm( this.xVariable, {
         coefficient: Fraction.fromInteger( 1 ),
         diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-      } ) );
-      this.rightConstantTermCreator.putTermOnPlate( new ConstantTerm( {
+      } );
+
+      // N
+      var constantTerm = new ConstantTerm( {
         constantValue: Fraction.fromInteger( this.xVariable.valueProperty.value ),
         diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-      } ) );
+      } );
+
+      // x = N
+      if ( this.xOnLeft ) {
+        this.leftVariableTermCreator.putTermOnPlate( variableTerm );
+        this.rightConstantTermCreator.putTermOnPlate( constantTerm );
+      }
+      else {
+        this.rightVariableTermCreator.putTermOnPlate( variableTerm );
+        this.leftConstantTermCreator.putTermOnPlate( constantTerm );
+      }
 
       // indicate that the challenge has been solved
       this.challengeHasBeenSolved = false;
