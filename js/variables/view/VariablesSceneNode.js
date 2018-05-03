@@ -2,7 +2,7 @@
 
 /**
  * View of a scene in the 'Variables' screen.
- * Same as the 'Basics' screen, but with the Universal Operation control added.
+ * Same as the 'Basics' screen, but with a control for changing the variable value.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
