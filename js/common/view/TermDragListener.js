@@ -264,9 +264,11 @@ define( function( require ) {
         else if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
 
           // term overlaps a term on the scale, and they sum to zero
-          self.sumToZero( term, self.likeTerm, {
+          self.sumToZero( self.plate, term, self.likeTerm, {
             haloBaseColor: EqualityExplorerColors.HALO // show the halo
           } );
+          term = null; // since sumToZero calls term.dispose
+          self.likeTerm = null; // since sumToZero calls self.likeTerm.dispose
 
           // put equivalent term on opposite plate
           if ( self.equivalentTerm ) {
@@ -482,7 +484,8 @@ define( function( require ) {
 
               // Terms sum to zero.
               // No halo, since the terms did not overlap when drag ended.
-              self.sumToZero( self.term, termInCell );
+              self.sumToZero( self.plate, self.term, termInCell );
+              self.term = null; // since sumToZero calls self.term.dispose
             }
             else if ( combinedTerm.maxIntegerExceeded() ) {
 
@@ -699,16 +702,17 @@ define( function( require ) {
     /**
      * Handles the animation and cleanup that happens for 2 terms that sum to zero.
      * See equality-explorer#17
+     * @param {Plate} plate - which plate
      * @param {Term} termDragging - the term we're dragging
      * @param {Term} termOnScale - a term on the scale
      * @param {Object} [options] - passed to SumToZero constructor
      * @private
      */
-    sumToZero: function( termDragging, termOnScale, options ) {
+    sumToZero: function( plate, termDragging, termOnScale, options ) {
       assert && assert( termDragging.plus( termOnScale ).sign === 0, 'terms do not sum to zero' );
 
       // determine which cell the term appears in
-      var cell = this.plate.getCellForTerm( termOnScale );
+      var cell = plate.getCellForTerm( termOnScale );
 
       // some things we need before the terms are disposed
       var variable = termDragging.variable || null;
@@ -720,7 +724,7 @@ define( function( require ) {
 
       // after the terms have been disposed and the scale has moved,
       // determine the new location of the inverse term's cell
-      var sumToZeroLocation = this.plate.getLocationOfCell( cell );
+      var sumToZeroLocation = plate.getLocationOfCell( cell );
 
       options = _.extend( {
         variable: variable,
