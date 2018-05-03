@@ -46,6 +46,7 @@ define( function( require ) {
       maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
       gridRows: EqualityExplorerQueryParameters.rows, // rows in the grid on the scale
       gridColumns: EqualityExplorerQueryParameters.columns, // columns in the grid on the scale
+      numberOfSnapshots: 5,
       iconSize: null // {Dimension2|null} size of term icons on the scale, computed if null
     }, options );
 
@@ -101,7 +102,9 @@ define( function( require ) {
     } );
 
     // @public collection of snapshots, for saving/restoring the state of a Scene
-    this.snapshotsCollection = new SnapshotsCollection();
+    this.snapshotsCollection = new SnapshotsCollection( {
+      numberOfSnapshots: options.numberOfSnapshots
+    } );
 
     // @public {BooleanProperty|null} locks equivalent terms, null if this feature is not supported
     this.lockedProperty = null;
