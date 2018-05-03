@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * MysteryTerm has a fixed weight that is hidden from the user.
+ * MysteryTerm has a weight that is not revealed to the user.
  * All interactive mystery terms represent 1 mystery object, and have an implicit coefficient of 1.
  * The visual design of interactive mystery terms does not support a coefficient.
  *
@@ -46,7 +46,7 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-      return 'MysteryTerm: ' + this.mysteryObject.debugName + ' ' + this.mysteryObject.weight;
+      return 'MysteryTerm: ' + this.mysteryObject.debugName + ' ' + this.mysteryObject.weightProperty.value;
     },
 
     //-------------------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ define( function( require ) {
      * @override
      */
     get weight() {
-      return Fraction.fromInteger( this.mysteryObject.weight );
+      return Fraction.fromInteger( this.mysteryObject.weightProperty.value );
     },
 
     /**

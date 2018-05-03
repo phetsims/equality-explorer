@@ -2,7 +2,7 @@
 
 /**
  * MysteryTermCreator creates and manages terms that are associated with mystery objects (apple, dog, turtle,...)
- * Mystery objects are objects whose (fixed) weight is not revealed to the user.
+ * Mystery objects are objects whose weight is not revealed to the user.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -23,12 +23,21 @@ define( function( require ) {
    */
   function MysteryTermCreator( mysteryObject, options ) {
 
-    phet.log && phet.log( 'MysteryTermCreator: ' + mysteryObject.debugName + ', weight=' + mysteryObject.weight );
+    var self = this;
+
+    phet.log && phet.log( 'MysteryTermCreator: ' + mysteryObject.debugName +
+                          ', weight=' + mysteryObject.weightProperty.value );
 
     // @public (read-only)
     this.mysteryObject = mysteryObject;
 
     TermCreator.call( this, options );
+
+    // When the mystery object's weight changes, recompute the weight of terms on the scale.
+    // unlink not needed.
+    this.mysteryObject.weightProperty.link( function( weight ) {
+      self.updateWeightOnPlateProperty();
+    } );
   }
 
   equalityExplorer.register( 'MysteryTermCreator', MysteryTermCreator );

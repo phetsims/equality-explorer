@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Util = require( 'DOT/Util' );
 
   /**
@@ -27,7 +28,9 @@ define( function( require ) {
 
     // @public (read-only)
     this.debugName = debugName;
-    this.weight = weight;
+    this.weightProperty = new NumberProperty( weight, {
+      numberType: 'Integer'
+    } );
     this.image = image;
     this.shadow = shadow;
   }
