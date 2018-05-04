@@ -39,5 +39,13 @@ define( function( require ) {
 
   equalityExplorer.register( 'ObjectType', ObjectType );
 
-  return inherit( Object, ObjectType );
+  return inherit( Object, ObjectType, {
+
+    /**
+     * @public
+     */
+    reset: function() {
+      this.weightProperty.reset();
+    }
+  } );
 } );

@@ -69,6 +69,17 @@ define( function( require ) {
   return inherit( Scene, BasicsScene, {
 
     /**
+     * @public
+     * @override
+     */
+    reset: function() {
+      this.objectTypes.forEach( function( objectType ) {
+        objectType.reset();
+      } );
+      Scene.prototype.reset.call( this );
+    },
+
+    /**
      * Creates a snapshot of the scene.
      * @returns {Snapshot}
      * @public
