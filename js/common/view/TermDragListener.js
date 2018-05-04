@@ -363,6 +363,9 @@ define( function( require ) {
       if ( self.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
         self.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
       }
+
+      // Do NOT call detachOppositeTerms!
+      // Operations involving terms will still be in progress after dispose is called.
     };
   }
 
