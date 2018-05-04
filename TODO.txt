@@ -9,7 +9,6 @@ LOCK FEATURE =========
 
 known problems:
 - It’s possible to exceed the number limit (1E9) for the opposite plate.
-- There are occasional layering issues with the equivalent term — it gets behind other terms.
 - With lock on, "sum to zero" animation occurs in the wrong place for dragged term.
 - In the Operations screen, there is no “sum to zero” animation when the equivalent term and what’s on the plate sum to zero.
 
