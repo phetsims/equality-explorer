@@ -12,7 +12,8 @@ which provides a high-level description of the simulation model.
 ## Terminology
 
 This section enumerates terms that you'll see used throughout the internal and external documentation.
-In alphabetical order:
+
+Standard math terminology:
 
 * inequality - a mathematical relation in which two _expressions_ are joined by a 
 relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different
@@ -22,14 +23,17 @@ relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are diffe
 * operation
 * operator
 * operand
-
+* term
 * constant term
 * variable term
+
+Sim-specific terminology:
+
 * object term
-* term
 * dragged term
 * equivalent term
 * inverse term
+* balance scale (aka scale or balance)
 * locked
 * plate
 * opposite plate
