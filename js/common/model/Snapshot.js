@@ -21,7 +21,7 @@ define( function( require ) {
 
     options = _.extend( {
       variables: null, // {Variable[]|null} optional variables for the snapshot
-      mysteryObjects: null // {MysteryObject[]|null} optional mystery objects for the snapshot
+      objectTypes: null // {ObjectType[]|null} optional object types for the snapshot
     }, options );
 
     // @private
@@ -29,7 +29,7 @@ define( function( require ) {
     this.leftPlateSnapshot = new PlateSnapshot( scene.scale.leftPlate );
     this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate );
 
-    // If variables are specified, save the variables and their current values
+    // If variables are specified, save them and their current values
     if ( options.variables ) {
 
       // @private store the variables
@@ -41,15 +41,15 @@ define( function( require ) {
       } );
     }
 
-    // If mystery objects are specified, save the mystery objects and their current weights
-    if ( options.mysteryObjects ) {
+    // If object types are specified, save them and their current weights
+    if ( options.objectTypes ) {
 
-      // @private store the mystery objects
-      this.mysteryObjects = options.mysteryObjects;
+      // @private store the object types
+      this.objectTypes = options.objectTypes;
 
-      // @private save the current weight of each mystery object
-      this.weightValues = _.map( this.mysteryObjects, function( mysteryObject ) {
-        return mysteryObject.weightProperty.value;
+      // @private save the current weight of each object type
+      this.weightValues = _.map( this.objectTypes, function( objectType ) {
+        return objectType.weightProperty.value;
       } );
     }
   }
@@ -77,10 +77,10 @@ define( function( require ) {
         }
       }
 
-      // If mystery objects were specified, restore their weights
-      if ( this.mysteryObjects ) {
-        for ( i = 0; i < this.mysteryObjects.length; i++ ) {
-          this.mysteryObjects[ i ].weightProperty.value = this.weightValues[ i ];
+      // If object types were specified, restore their weights
+      if ( this.objectTypes ) {
+        for ( i = 0; i < this.objectTypes.length; i++ ) {
+          this.objectTypes[ i ].weightProperty.value = this.weightValues[ i ];
         }
       }
     }

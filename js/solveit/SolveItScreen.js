@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * The 'Mystery' screen.
+ * The 'Solve It!' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

@@ -14,7 +14,7 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MysteryObject = require( 'EQUALITY_EXPLORER/basics/model/MysteryObject' );
+  var ObjectType = require( 'EQUALITY_EXPLORER/basics/model/ObjectType' );
 
   // images
   var sphereImage = require( 'image!EQUALITY_EXPLORER/sphere.png' );
@@ -27,15 +27,14 @@ define( function( require ) {
    */
   function ShapesScene() {
 
-    // mystery objects for this scene
-    var mysteryObjects = [
+    var objectTypes = [
 
-      // name, weight, image, shadow
-      new MysteryObject( 'sphere', 2, sphereImage, sphereShadowImage ),
-      new MysteryObject( 'square', 3, squareImage, squareShadowImage )
+      // name, image, shadow, weight
+      new ObjectType( 'sphere', sphereImage, sphereShadowImage, 2 ),
+      new ObjectType( 'square', squareImage, squareShadowImage, 3 )
     ];
 
-    BasicsScene.call( this, mysteryObjects, {
+    BasicsScene.call( this, objectTypes, {
 
       debugName: 'shapes',
 

@@ -20,9 +20,9 @@ define( function( require ) {
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Multilink = require( 'AXON/Multilink' );
-  var MysteryTermCreator = require( 'EQUALITY_EXPLORER/basics/model/MysteryTermCreator' );
-  var MysteryTermNode = require( 'EQUALITY_EXPLORER/basics/view/MysteryTermNode' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var ObjectTermCreator = require( 'EQUALITY_EXPLORER/basics/model/ObjectTermCreator' );
+  var ObjectTermNode = require( 'EQUALITY_EXPLORER/basics/view/ObjectTermNode' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
@@ -196,15 +196,15 @@ define( function( require ) {
       var numberOfTermsOnPlate = termCreator.numberOfTermsOnPlateProperty.value;
       if ( numberOfTermsOnPlate > 0 ) {
 
-        if ( termCreator instanceof MysteryTermCreator ) {
+        if ( termCreator instanceof ObjectTermCreator ) {
 
           // if there were previous terms, add an operator
           if ( children.length > 0 ) {
             children.push( valueToOperatorNode( numberOfTermsOnPlate, operatorFont ) );
           }
 
-          // Each mystery term has an implicit coefficient of 1, so use the number of terms as the coefficient.
-          children.push( MysteryTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.createIcon(), {
+          // Each ObjectTerm has an implicit coefficient of 1, so use the number of terms as the coefficient.
+          children.push( ObjectTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.createIcon(), {
             font: integerFont,
             spacing: coefficientSpacing
           } ) );

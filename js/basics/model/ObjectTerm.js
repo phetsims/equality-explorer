@@ -1,9 +1,9 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * MysteryTerm has a weight that is not revealed to the user.
- * All interactive mystery terms represent 1 mystery object, and have an implicit coefficient of 1.
- * The visual design of interactive mystery terms does not support a coefficient.
+ * ObjectTerm is a term associated with some type of object (sphere, apple, dog, ...)
+ * All interactive object terms represent 1 object, and have an implicit coefficient of 1.
+ * The visual design of interactive object terms does not support a coefficient.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -17,28 +17,28 @@ define( function( require ) {
   var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   // constants
-  var COEFFICIENT = Fraction.fromInteger( 1 ); // all mystery terms have an implicit coefficient of 1
+  var COEFFICIENT = Fraction.fromInteger( 1 ); // all object terms have an implicit coefficient of 1
 
   /**
-   * @param {MysteryObject} mysteryObject
+   * @param {ObjectType} objectType
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTerm( mysteryObject, options ) {
+  function ObjectTerm( objectType, options ) {
 
     options = options || {};
     assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
     assert && assert( !options.coefficient, 'coefficient is a VariableTerm option' );
 
     // @public (read-only)
-    this.mysteryObject = mysteryObject;
+    this.objectType = objectType;
 
     Term.call( this, COEFFICIENT, options );
   }
 
-  equalityExplorer.register( 'MysteryTerm', MysteryTerm );
+  equalityExplorer.register( 'ObjectTerm', ObjectTerm );
 
-  return inherit( Term, MysteryTerm, {
+  return inherit( Term, ObjectTerm, {
 
     /**
      * For debugging only. Do not rely on the format of toString.
@@ -46,7 +46,7 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-      return 'MysteryTerm: ' + this.mysteryObject.debugName + ' ' + this.mysteryObject.weightProperty.value;
+      return 'ObjectTerm: ' + this.objectType.debugName + ' ' + this.objectType.weightProperty.value;
     },
 
     //-------------------------------------------------------------------------------------------------
@@ -56,12 +56,12 @@ define( function( require ) {
     /**
      * Creates a copy of this term, with modifications through options.
      * @param {Object} [options] - same as constructor options
-     * @returns {MysteryTerm}
+     * @returns {ObjectTerm}
      * @public
      * @override
      */
     copy: function( options ) {
-      return new MysteryTerm( this.mysteryObject, _.extend( this.copyOptions(), options ) );
+      return new ObjectTerm( this.objectType, _.extend( this.copyOptions(), options ) );
     },
 
     /**
@@ -71,31 +71,31 @@ define( function( require ) {
      * @override
      */
     get weight() {
-      return Fraction.fromInteger( this.mysteryObject.weightProperty.value );
+      return Fraction.fromInteger( this.objectType.weightProperty.value );
     },
 
     /**
      * Are this term and the specified term 'like terms'?
-     * Mystery terms are 'like' if they are associated with the same mystery object.
+     * ObjectTerms are 'like' if they are associated with the same object type.
      * @param {Term} term
      * @returns {boolean}
      * @public
      * @override
      */
     isLikeTerm: function( term ) {
-      return ( term instanceof MysteryTerm ) && ( term.mysteryObject === this.mysteryObject );
+      return ( term instanceof ObjectTerm ) && ( term.objectType === this.objectType );
     },
 
     /**
      * Applies an operation to this term, resulting in a new term.
      * @param {UniversalOperation} operation
      * @param {Object} [options] - same as constructor
-     * @returns {MysteryTerm|null} - null if the operation is not applicable to this term.
+     * @returns {ObjectTerm|null} - null if the operation is not applicable to this term.
      * @public
      * @override
      */
     applyOperation: function( operation, options ) {
-      return null; // operations are not applicable to mystery terms
+      return null; // operations are not applicable to these terms
     }
   } );
 } );

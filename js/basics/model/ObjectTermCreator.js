@@ -1,8 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * MysteryTermCreator creates and manages terms that are associated with mystery objects (apple, dog, turtle,...)
- * Mystery objects are objects whose weight is not revealed to the user.
+ * ObjectTermCreator creates and manages terms that are associated with object types (apple, dog, turtle,...)
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -12,37 +11,37 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MysteryTerm = require( 'EQUALITY_EXPLORER/basics/model/MysteryTerm' );
-  var MysteryTermNode = require( 'EQUALITY_EXPLORER/basics/view/MysteryTermNode' );
+  var ObjectTerm = require( 'EQUALITY_EXPLORER/basics/model/ObjectTerm' );
+  var ObjectTermNode = require( 'EQUALITY_EXPLORER/basics/view/ObjectTermNode' );
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
 
   /**
-   * @param {MysteryObject} mysteryObject
+   * @param {ObjectType} objectType
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTermCreator( mysteryObject, options ) {
+  function ObjectTermCreator( objectType, options ) {
 
     var self = this;
 
-    phet.log && phet.log( 'MysteryTermCreator: ' + mysteryObject.debugName +
-                          ', weight=' + mysteryObject.weightProperty.value );
+    phet.log && phet.log( 'ObjectTermCreator: ' + objectType.debugName +
+                          ', weight=' + objectType.weightProperty.value );
 
     // @public (read-only)
-    this.mysteryObject = mysteryObject;
+    this.objectType = objectType;
 
     TermCreator.call( this, options );
 
-    // When the mystery object's weight changes, recompute the weight of terms on the scale.
+    // When the object type's weight changes, recompute the weight of terms on the scale.
     // unlink not needed.
-    this.mysteryObject.weightProperty.link( function( weight ) {
+    this.objectType.weightProperty.link( function( weight ) {
       self.updateWeightOnPlateProperty();
     } );
   }
 
-  equalityExplorer.register( 'MysteryTermCreator', MysteryTermCreator );
+  equalityExplorer.register( 'ObjectTermCreator', ObjectTermCreator );
 
-  return inherit( TermCreator, MysteryTermCreator, {
+  return inherit( TermCreator, ObjectTermCreator, {
 
     //-------------------------------------------------------------------------------------------------
     // Below here is the implementation of the TermCreator API
@@ -56,18 +55,18 @@ define( function( require ) {
      * @override
      */
     createIcon: function( options ) {
-      return MysteryTermNode.createInteractiveTermNode( this.mysteryObject.image );
+      return ObjectTermNode.createInteractiveTermNode( this.objectType.image );
     },
 
     /**
-     * Instantiates a MysteryTerm.
+     * Instantiates a ObjectTerm.
      * @param {Object} [options]
      * @returns {Term}
      * @protected
      * @override
      */
     createTermProtected: function( options ) {
-      return new MysteryTerm( this.mysteryObject, options );
+      return new ObjectTerm( this.objectType, options );
     },
 
     /**
@@ -79,19 +78,19 @@ define( function( require ) {
      * @abstract
      */
     createZeroTerm: function( options ) {
-      throw new Error( 'createZeroTerm is not supported for MysteryTermCreator' );
+      throw new Error( 'createZeroTerm is not supported for ObjectTermCreator' );
     },
 
     /**
      * Instantiates the Node that corresponds to this term.
      * @param {Term} term
-     * @param {Object} options - passed to the MysteryTermNode's constructor
+     * @param {Object} options - passed to the ObjectTermNode's constructor
      * @returns {TermNode}
      * @public
      * @override
      */
     createTermNode: function( term, options ) {
-      return new MysteryTermNode( this, term, options );
+      return new ObjectTermNode( this, term, options );
     }
   } );
 } );

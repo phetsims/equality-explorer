@@ -12,17 +12,17 @@ define( function( require ) {
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MysteryTermCreator = require( 'EQUALITY_EXPLORER/basics/model/MysteryTermCreator' );
+  var ObjectTermCreator = require( 'EQUALITY_EXPLORER/basics/model/ObjectTermCreator' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
 
   /**
-   * @param {MysteryObject[]} mysteryObjects
+   * @param {ObjectType[]} objectTypes
    * @param {Object} [options]
    * @constructor
    * @abstract
    */
-  function BasicsScene( mysteryObjects, options ) {
+  function BasicsScene( objectTypes, options ) {
 
     options = _.extend( {
       hasConstantTerms: false // does this scene allow you to create constant terms?
@@ -33,11 +33,11 @@ define( function( require ) {
     options.lockable = false;
 
     // @public
-    this.mysteryObjects = mysteryObjects;
+    this.objectTypes = objectTypes;
 
     Scene.call( this,
-      createTermCreators( mysteryObjects, options.hasConstantTerms ),
-      createTermCreators( mysteryObjects, options.hasConstantTerms ),
+      createTermCreators( objectTypes, options.hasConstantTerms ),
+      createTermCreators( objectTypes, options.hasConstantTerms ),
       options );
   }
 
@@ -45,17 +45,17 @@ define( function( require ) {
 
   /**
    * Creates the term creators for this scene.
-   * @param {Object[]} mysteryObjects - see BasicsScene constructor
+   * @param {Object[]} objectTypes - see BasicsScene constructor
    * @param {boolean} hasConstantTerms - does this scene allow you to create constant terms?
    * @returns {TermCreator[]}
    */
-  function createTermCreators( mysteryObjects, hasConstantTerms ) {
+  function createTermCreators( objectTypes, hasConstantTerms ) {
 
     var termCreators = [];
 
-    // creators for mystery terms
-    for ( var i = 0; i < mysteryObjects.length; i++ ) {
-      termCreators.push( new MysteryTermCreator( mysteryObjects[ i ] ) );
+    // creators for object terms
+    for ( var i = 0; i < objectTypes.length; i++ ) {
+      termCreators.push( new ObjectTermCreator( objectTypes[ i ] ) );
     }
 
     // creator for constant terms
@@ -76,7 +76,7 @@ define( function( require ) {
      */
     createSnapshot: function() {
       return new Snapshot( this, {
-        mysteryObjects: this.mysteryObjects
+        objectTypes: this.objectTypes
       } );
     }
   } );

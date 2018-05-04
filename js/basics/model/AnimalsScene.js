@@ -14,7 +14,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MysteryObject = require( 'EQUALITY_EXPLORER/basics/model/MysteryObject' );
+  var ObjectType = require( 'EQUALITY_EXPLORER/basics/model/ObjectType' );
 
   // images
   var catImage = require( 'image!EQUALITY_EXPLORER/cat.png' );
@@ -29,16 +29,15 @@ define( function( require ) {
    */
   function AnimalsScene() {
 
-    // mystery objects for this scene
-    var mysteryObjects = [
+    var objectTypes = [
 
-      // name, weight, image, shadow
-      new MysteryObject( 'dog', 11, dogImage, dogShadowImage ),
-      new MysteryObject( 'cat', 4, catImage, catShadowImage ),
-      new MysteryObject( 'turtle', 6, turtleImage, turtleShadowImage )
+      // name, image, shadow, weight
+      new ObjectType( 'dog', dogImage, dogShadowImage, 11 ),
+      new ObjectType( 'cat', catImage, catShadowImage, 4 ),
+      new ObjectType( 'turtle', turtleImage, turtleShadowImage, 6 )
     ];
 
-    BasicsScene.call( this, mysteryObjects, {
+    BasicsScene.call( this, objectTypes, {
 
       debugName: 'animals',
 

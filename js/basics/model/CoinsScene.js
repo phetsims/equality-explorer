@@ -14,7 +14,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MysteryObject = require( 'EQUALITY_EXPLORER/basics/model/MysteryObject' );
+  var ObjectType = require( 'EQUALITY_EXPLORER/basics/model/ObjectType' );
 
   // images
   var coin1Image = require( 'image!EQUALITY_EXPLORER/coin1.png' );
@@ -29,16 +29,15 @@ define( function( require ) {
    */
   function CoinsScene() {
 
-    // mystery objects for this scene
-    var mysteryObjects = [
+    var objectTypes = [
 
-      // name, weight, image, shadow
-      new MysteryObject( 'coin1', 3, coin1Image, coin1ShadowImage ),
-      new MysteryObject( 'coin2', 2, coin2Image, coin2ShadowImage ),
-      new MysteryObject( 'coin3', 5, coin3Image, coin3ShadowImage )
+      // name, image, shadow, weight
+      new ObjectType( 'coin1', coin1Image, coin1ShadowImage, 3 ),
+      new ObjectType( 'coin2', coin2Image, coin2ShadowImage, 2 ),
+      new ObjectType( 'coin3', coin3Image, coin3ShadowImage, 5 )
     ];
 
-    BasicsScene.call( this, mysteryObjects, {
+    BasicsScene.call( this, objectTypes, {
 
       debugName: 'coins',
 

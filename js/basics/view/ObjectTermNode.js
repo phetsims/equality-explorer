@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Displays a mystery term.
+ * Displays an ObjectTerm.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -23,18 +23,18 @@ define( function( require ) {
   var DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
 
   /**
-   * @param {MysteryTermCreator} termCreator
-   * @param {MysteryTerm} term
+   * @param {ObjectTermCreator} termCreator
+   * @param {ObjectTerm} term
    * @param {Object} [options]
    * @constructor
    */
-  function MysteryTermNode( termCreator, term, options ) {
+  function ObjectTermNode( termCreator, term, options ) {
 
-    var contentNode = MysteryTermNode.createInteractiveTermNode( term.mysteryObject.image, {
+    var contentNode = ObjectTermNode.createInteractiveTermNode( term.objectType.image, {
       maxHeight: term.diameter
     } );
 
-    var shadowNode = new Image( term.mysteryObject.shadow, {
+    var shadowNode = new Image( term.objectType.shadow, {
       maxHeight: term.diameter,
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
@@ -42,15 +42,15 @@ define( function( require ) {
     TermNode.call( this, termCreator, term, contentNode, shadowNode, options );
   }
 
-  equalityExplorer.register( 'MysteryTermNode', MysteryTermNode );
+  equalityExplorer.register( 'ObjectTermNode', ObjectTermNode );
 
-  return inherit( TermNode, MysteryTermNode, {}, {
+  return inherit( TermNode, ObjectTermNode, {}, {
 
     /**
-     * Creates the representation of a term that the user interacts with, in this case the mystery object's icon.
-     * No coefficient is shown because every mystery term has an implicit coefficient of 1.
+     * Creates the representation of a term that the user interacts with, in this case the object type's icon.
+     * No coefficient is shown because every ObjectTerm has an implicit coefficient of 1.
      * @param {HTMLImageElement} image
-     * @param {Object} [options] - see MysteryTermNode
+     * @param {Object} [options] - see ObjectTermNode
      * @public
      * @static
      */
@@ -65,7 +65,7 @@ define( function( require ) {
 
     /**
      * Creates the representation of a term that is shown in equations.
-     * Since every mystery term has an implicit coefficient of 1, the coefficient is an integer.
+     * Since every ObjectTerm has an implicit coefficient of 1, the coefficient is an integer.
      * @param {number} coefficient
      * @param {Node} icon
      * @param {Object} [options]

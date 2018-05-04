@@ -1,8 +1,8 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Description of a mystery object - an object whose weight is not exposed to the user.
- * E.g. apple, dog, turtle
+ * Describes a type of object (sphere, apple, dog, turtle,..)
+ * An object type has a variable weight that applies to all related ObjectTerms.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -16,13 +16,13 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * @param {string} debugName - internal name for the mystery object type, not visible to the user
-   * @param {number} weight - initial integer weight of 1 mystery object
-   * @param {HTMLImageElement} image - image that represents the mystery object
+   * @param {string} debugName - internal name for the object type, not visible to the user
+   * @param {HTMLImageElement} image - image that represents the object
    * @param {HTMLImageElement} shadow - shadow shown while dragging
+   * @param {number} weight - initial integer weight of 1 object
    * @constructor
    */
-  function MysteryObject( debugName, weight, image, shadow ) {
+  function ObjectType( debugName, image, shadow, weight ) {
 
     assert && assert( Util.isInteger( weight ), 'weight must be an integer: ' + weight );
 
@@ -37,7 +37,7 @@ define( function( require ) {
     } );
   }
 
-  equalityExplorer.register( 'MysteryObject', MysteryObject );
+  equalityExplorer.register( 'ObjectType', ObjectType );
 
-  return inherit( Object, MysteryObject );
+  return inherit( Object, ObjectType );
 } );
