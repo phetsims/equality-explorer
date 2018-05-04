@@ -55,6 +55,9 @@ define( function( require ) {
     // @public whether the term is pickable (interactive)
     this.pickableProperty = new BooleanProperty( options.pickable );
 
+    // @public whether the term is on a plate
+    this.onPlateProperty = new BooleanProperty( false );
+
     // @public whether the term's shadow is visible
     this.shadowVisibleProperty = new BooleanProperty( false );
 

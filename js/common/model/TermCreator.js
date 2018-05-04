@@ -341,6 +341,7 @@ define( function( require ) {
       }
       this.plate.addTerm( term, cell );
       this.termsOnPlate.push( term );
+      term.onPlateProperty.value = true;
 
       assert && assert( !this.combineLikeTermsEnabled || this.termsOnPlate.length <= 1,
         'when combineLikeTermsEnabled, there should be at most 1 term on plate: ' + this.termsOnPlate.length );
@@ -359,6 +360,7 @@ define( function( require ) {
       // ORDER IS VERY IMPORTANT HERE!
       var cell = this.plate.removeTerm( term );
       this.termsOnPlate.remove( term );
+      term.onPlateProperty.value = false;
       return cell;
     },
 

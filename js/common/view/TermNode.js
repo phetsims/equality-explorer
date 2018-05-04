@@ -80,6 +80,17 @@ define( function( require ) {
     };
     term.pickableProperty.link( pickableListener ); // unlink required in dispose
 
+    // Whether the term is on a plate determines its rendering order
+    var onPlateListener = function( onPlate ) {
+      if ( onPlate ) {
+        self.moveToBack();
+      }
+      else {
+        self.moveToFront();
+      }
+    };
+    term.onPlateProperty.link( onPlateListener ); // unlink required in dispose
+
     // Show/hide shadow
     var shadowVisibleListener = function( shadowVisible ) {
       shadowNode.visible = shadowVisible;
@@ -107,6 +118,10 @@ define( function( require ) {
 
       if ( term.pickableProperty.hasListener( pickableListener ) ) {
         term.pickableProperty.unlink( pickableListener );
+      }
+
+      if ( term.onPlateProperty.hasListener( onPlateListener() ) ) {
+        term.onPlateProperty.unlink( onPlateListener );
       }
 
       if ( term.shadowVisibleProperty.hasListener( shadowVisibleListener ) ) {

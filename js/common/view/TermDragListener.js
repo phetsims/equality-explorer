@@ -228,11 +228,6 @@ define( function( require ) {
         // move the term
         term.moveTo( self.eventToLocation( event ) );
 
-        //TODO #83 any performance concern here?
-        //TODO #82 could eliminate this if termNode.moveToBack when put on the plate
-        // since multiple terms may be dragged via multi-touch, keep the most-recently-moved term on top
-        termNode.moveToFront();
-
         // refresh the halos that appear when dragged term overlaps with an inverse term
         self.refreshHalos();
       },
