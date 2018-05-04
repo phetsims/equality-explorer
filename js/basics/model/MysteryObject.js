@@ -17,7 +17,7 @@ define( function( require ) {
 
   /**
    * @param {string} debugName - internal name for the mystery object type, not visible to the user
-   * @param {number} weight - integer weight of 1 mystery object
+   * @param {number} weight - initial integer weight of 1 mystery object
    * @param {HTMLImageElement} image - image that represents the mystery object
    * @param {HTMLImageElement} shadow - shadow shown while dragging
    * @constructor
