@@ -28,11 +28,13 @@ define( function( require ) {
 
     // @public (read-only)
     this.debugName = debugName;
+    this.image = image;
+    this.shadow = shadow;
+
+    // @public
     this.weightProperty = new NumberProperty( weight, {
       numberType: 'Integer'
     } );
-    this.image = image;
-    this.shadow = shadow;
   }
 
   equalityExplorer.register( 'MysteryObject', MysteryObject );
