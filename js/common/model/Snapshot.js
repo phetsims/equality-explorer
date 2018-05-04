@@ -20,7 +20,8 @@ define( function( require ) {
   function Snapshot( scene, options ) {
 
     options = _.extend( {
-      variables: null // {Variable[]} optional variables for the snapshot
+      variables: null, // {Variable[]|null} optional variables for the snapshot
+      mysteryObjects: null // {MysteryObject[]|null} optional mystery objects for the snapshot
     }, options );
 
     // @private
@@ -37,6 +38,18 @@ define( function( require ) {
       // @private save the current value of each variable
       this.variableValues = _.map( this.variables, function( variable ) {
          return variable.valueProperty.value;
+      } );
+    }
+
+    // If mystery objects are specified, save the mystery objects and their current weights
+    if ( options.mysteryObjects ) {
+
+      // @private store the mystery objects
+      this.mysteryObjects = options.mysteryObjects;
+
+      // @private save the current weight of each mystery object
+      this.weightValues = _.map( this.mysteryObjects, function( mysteryObject ) {
+        return mysteryObject.weightProperty.value;
       } );
     }
   }
@@ -61,6 +74,13 @@ define( function( require ) {
       if ( this.variables ) {
         for ( var i = 0; i < this.variables.length; i++ ) {
           this.variables[ i ].valueProperty.value = this.variableValues[ i ];
+        }
+      }
+
+      // If mystery objects were specified, restore their weights
+      if ( this.mysteryObjects ) {
+        for ( i = 0; i < this.mysteryObjects.length; i++ ) {
+          this.mysteryObjects[ i ].weightProperty.value = this.weightValues[ i ];
         }
       }
     }

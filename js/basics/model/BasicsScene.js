@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MysteryTermCreator = require( 'EQUALITY_EXPLORER/basics/model/MysteryTermCreator' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
+  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
 
   /**
    * @param {MysteryObject[]} mysteryObjects
@@ -30,6 +31,9 @@ define( function( require ) {
     // the lock feature is not supported for scenes in the Basics screen
     assert && assert( options.lockable === undefined, 'BasicsScene sets lockable' );
     options.lockable = false;
+
+    // @public
+    this.mysteryObjects = mysteryObjects;
 
     Scene.call( this,
       createTermCreators( mysteryObjects, options.hasConstantTerms ),
@@ -62,6 +66,19 @@ define( function( require ) {
     return termCreators;
   }
 
-  return inherit( Scene, BasicsScene );
+  return inherit( Scene, BasicsScene, {
+
+    /**
+     * Creates a snapshot of the scene.
+     * @returns {Snapshot}
+     * @public
+     * @override
+     */
+    createSnapshot: function() {
+      return new Snapshot( this, {
+        mysteryObjects: this.mysteryObjects
+      } );
+    }
+  } );
 } );
 
