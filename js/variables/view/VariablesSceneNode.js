@@ -48,6 +48,7 @@ define( function( require ) {
       top: this.snapshotsAccordionBox.bottom + 15
     } );
     this.addChild( variableAccordionBox );
+    variableAccordionBox.moveToBack();
   }
 
   equalityExplorer.register( 'VariablesSceneNode', VariablesSceneNode );
