@@ -16,25 +16,34 @@ In alphabetical order:
 
 * inequality - a mathematical relation in which two _expressions_ are joined by a 
 relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different
-* dragged term
 * equation - a mathematical relation in which two _expressions_ are joined by an equal sign (=)
-* equivalent term
 * expression - a combination of symbols that is well-formed according to rules that depend on the context
-* ghost term
-* inverse term
 * like terms - https://en.wikipedia.org/wiki/Like_terms
+* operation
+* operator
+* operand
+
+* constant term
+* variable term
+* object term
+* term
+* dragged term
+* equivalent term
+* inverse term
 * locked
 * plate
+* opposite plate
 * organize button
+* clear plate button
 * restore snapshot button
-* sum to zero
-* term
-* toolbox
 * trash snapshot button
+* sum to zero
+* toolbox
 * universal operation
 * zero pair
 * challenge
 * challenge generator
+* level-selection buttons
 
 ## General
 
