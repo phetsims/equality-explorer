@@ -260,7 +260,7 @@ define( function( require ) {
         else if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
 
           // term overlaps a term on the scale, and they sum to zero
-          self.sumToZero( self.plate, term, self.likeTerm, {
+          self.sumToZero( self.plate, self.plate.getCellForTerm( self.likeTerm ), term, self.likeTerm, {
             haloBaseColor: EqualityExplorerColors.HALO // show the halo
           } );
 
@@ -483,7 +483,7 @@ define( function( require ) {
 
               // Terms sum to zero.
               // No halo, since the terms did not overlap when drag ended.
-              self.sumToZero( self.plate, self.term, termInCell );
+              self.sumToZero( self.plate, self.plate.getCellForTerm( termInCell ), self.term, termInCell );
 
               // since sumToZero calls dispose for Terms
               self.term = null;
@@ -706,25 +706,22 @@ define( function( require ) {
      * Handles the animation and cleanup that happens for 2 terms that sum to zero.
      * See equality-explorer#17
      * @param {Plate} plate - which plate
-     * @param {Term} termDragging - the term we're dragging
-     * @param {Term} termOnScale - a term on the scale
+     * @param {number} cell - which cell
+     * @param {Term} term1
+     * @param {Term} term2
      * @param {Object} [options] - passed to SumToZero constructor
      * @private
      */
-    sumToZero: function( plate, termDragging, termOnScale, options ) {
-      assert && assert( termDragging.plus( termOnScale ).sign === 0, 'terms do not sum to zero' );
-
-      // determine which cell the term appears in
-      var cell = plate.getCellForTerm( termOnScale );
-      assert && assert( plate.getCellForTerm( termOnScale ) !== null, 'termOnScale is not on scale: ' + termOnScale );
+    sumToZero: function( plate, cell, term1, term2, options ) {
+      assert && assert( term1.plus( term2 ).sign === 0, 'terms do not sum to zero' );
 
       // some things we need before the terms are disposed
-      var variable = termDragging.variable || null;
+      var variable = term1.variable || null;
       var parent = this.termNode.getParent(); // SumToZeroNode in the same layer as the TermNode we're dragging
 
       // dispose of the terms
-      termDragging.dispose();
-      termOnScale.dispose();
+      term1.dispose();
+      term2.dispose();
 
       // after the terms have been disposed and the scale has moved,
       // determine the new location of the inverse term's cell
