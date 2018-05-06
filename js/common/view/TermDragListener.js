@@ -128,7 +128,6 @@ define( function( require ) {
                 oppositeLikeTerm.dispose();
                 oppositeLikeTerm = null;
                 if ( inverseTerm.significantValue.getValue() === 0 ) {
-                  //TODO #19 sumToZero
                   inverseTerm.dispose();
                   inverseTerm = null;
                 }
@@ -287,12 +286,13 @@ define( function( require ) {
                 oppositeLikeTerm = null;
                 self.equivalentTerm.dispose();
                 self.equivalentTerm = null;
-                if ( combinedTerm.significantValue.getValue() !== 0 ) {
-                  self.equivalentTermCreator.putTermOnPlate( combinedTerm, cell );
-                }
-                else {
+                if ( combinedTerm.significantValue.getValue() === 0 ) {
+                  console.log( 'end: opposite sum-to-zero' ); //TODO #19 sumToZero
                   combinedTerm.dispose();
                   combinedTerm = null;
+                }
+                else {
+                  self.equivalentTermCreator.putTermOnPlate( combinedTerm, cell );
                 }
                 self.detachOppositeTerms();
               }
@@ -542,7 +542,7 @@ define( function( require ) {
 
               // Put the combined term on the plate.
               if ( combinedTerm.significantValue.getValue() === 0 ) {
-                //TODO #19 sumToZero
+                console.log( 'animateToLikeCell: opposite sum-to-zero' ); //TODO #19 sumToZero
                 combinedTerm.dispose();
                 combinedTerm = null;
               }
