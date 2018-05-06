@@ -79,7 +79,7 @@ define( function( require ) {
 
     // @private If the inverse term is dragged, break the association between equivalentTerm and inverseTerm
     this.inverseTermDraggingListener = function( dragging ) {
-      assert && assert( self.inverseTerm, 'did not expect this to be called' );
+      assert && assert( self.inverseTerm, 'there is no associated inverse term' );
       if ( dragging ) {
         if ( self.inverseTerm.draggingProperty.hasListener( self.inverseTermDraggingListener ) ) {
           self.inverseTerm.draggingProperty.unlink( self.inverseTermDraggingListener );
@@ -98,6 +98,9 @@ define( function( require ) {
        * @param {Trail} trail
        */
       start: function( event, trail ) {
+
+        // Detach from terms that are specific to a drag sequence
+        self.detachRelatedTerms();
 
         if ( termCreator.isTermOnPlate( term ) ) {
 
@@ -310,7 +313,7 @@ define( function( require ) {
                 else {
                   self.equivalentTermCreator.putTermOnPlate( combinedTerm, cell );
                 }
-                self.detachOppositeTerms();
+                self.detachRelatedTerms();
               }
               else {
 
@@ -321,7 +324,7 @@ define( function( require ) {
                 self.equivalentTerm.dispose();
                 self.equivalentTerm = null;
                 self.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, cell );
-                self.detachOppositeTerms();
+                self.detachRelatedTerms();
               }
             }
             else {
@@ -333,7 +336,7 @@ define( function( require ) {
               // put equivalent term in an empty cell
               var emptyCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
               self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, emptyCell );
-              self.detachOppositeTerms();
+              self.detachRelatedTerms();
             }
           }
 
@@ -386,7 +389,7 @@ define( function( require ) {
         self.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
       }
 
-      // Do NOT call detachOppositeTerms!
+      // Do NOT call detachRelatedTerms!
       // Operations involving terms will still be in progress after dispose is called.
     };
   }
@@ -405,10 +408,13 @@ define( function( require ) {
     },
 
     /**
-     * Detaches terms on the opposite scale from this drag listener.
+     * Detaches terms that are related to this drag listener, but specific to a drag sequence.
      * @private
      */
-    detachOppositeTerms: function() {
+    detachRelatedTerms: function() {
+
+      // like term
+      this.likeTerm = null;
 
       // equivalent term
       if ( this.equivalentTerm && !this.equivalentTerm.disposed ) {
@@ -443,8 +449,8 @@ define( function( require ) {
           if ( self.equivalentTerm ) {
             self.equivalentTerm.dispose();
             self.equivalentTerm = null;
-            self.detachOppositeTerms();
           }
+          self.detachRelatedTerms();
         }
       } );
     },
@@ -564,7 +570,7 @@ define( function( require ) {
               // dispose of the original equivalentTerm
               self.equivalentTerm.dispose();
               self.equivalentTerm = null;
-              self.detachOppositeTerms();
+              self.detachRelatedTerms();
             }
             else {
 
@@ -576,7 +582,7 @@ define( function( require ) {
               self.equivalentTerm = null;
               oppositeLikeTerm.dispose();
               oppositeLikeTerm = null;
-              self.detachOppositeTerms();
+              self.detachRelatedTerms();
 
               if ( combinedTerm.significantValue.getValue() === 0 ) {
 
@@ -676,7 +682,7 @@ define( function( require ) {
                   self.inverseTerm = null;
                   self.equivalentTerm.dispose();
                   self.equivalentTerm = null;
-                  self.detachOppositeTerms();
+                  self.detachRelatedTerms();
                 }
                 else {
 
@@ -685,7 +691,7 @@ define( function( require ) {
                   self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
                   //TODO #19 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
                   self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
-                  self.detachOppositeTerms();
+                  self.detachRelatedTerms();
                 }
               }
             }
