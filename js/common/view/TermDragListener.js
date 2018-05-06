@@ -539,7 +539,7 @@ define( function( require ) {
               termInCell = null;
 
               // Put the new term on the plate.
-              self.termCreator.putTermOnPlate( cokmbinedTerm, likeTermsCell );
+              self.termCreator.putTermOnPlate( combinedTerm, likeTermsCell );
             }
           }
 
