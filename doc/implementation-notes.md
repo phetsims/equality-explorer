@@ -64,8 +64,8 @@ testing. All such query parameters are documented in
 **Memory management**:
 
 Dynamic:
-- Term and its subtypes (MysteryTerm, ConstantTerm, VariableTerm)
-- TermNode and its subtypes (MysteryTermNode, ConstantTermNode, VariableTermNode)
+- Term and its subtypes (ConstantTerm, VariableTerm, ObjectTerm)
+- TermNode and its subtypes (ConstantTermNode, VariableTermNode, MysteryTermNode)
 - TermDragListener
 - EquationNode
 - EquationPanel
