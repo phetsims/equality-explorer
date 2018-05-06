@@ -91,6 +91,7 @@ define( function( require ) {
      */
     dispose: function() {
       this.pickableProperty.dispose();
+      this.onPlateProperty.dispose();
       this.shadowVisibleProperty.dispose();
       this.haloVisibleProperty.dispose();
       EqualityExplorerMovable.prototype.dispose.call( this );
