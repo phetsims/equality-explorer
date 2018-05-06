@@ -306,7 +306,7 @@ define( function( require ) {
       // removeListener required when the term is disposed, see termWasDisposed.
       term.disposedEmitter.addListener( this.termWasDisposedBound );
 
-      // Notify listeners that a term was created.
+      // Notify listeners that a term is being managed by this term creator.
       // This will result in creation of the corresponding view.
       this.termCreatedEmitter.emit3( this, term, event );
     },
