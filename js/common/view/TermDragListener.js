@@ -487,6 +487,10 @@ define( function( require ) {
           var termInCell = self.plate.getTermInCell( likeTermsCell );
           var combinedTerm;
 
+          //=======================================================================
+          // On dragged term's side of the scale
+          //=======================================================================
+
           if ( !termInCell ) {
 
             // If the cell is empty, make a 'big' copy of this term and put it in the cell.
@@ -535,9 +539,13 @@ define( function( require ) {
               termInCell = null;
 
               // Put the new term on the plate.
-              self.termCreator.putTermOnPlate( combinedTerm, likeTermsCell );
+              self.termCreator.putTermOnPlate( cokmbinedTerm, likeTermsCell );
             }
           }
+
+          //=======================================================================
+          // On opposite side of the scale
+          //=======================================================================
 
           //TODO #19 make changes only if term and equivalentTerm don't cause maxInteger to be exceeded
           if ( self.equivalentTerm ) {
