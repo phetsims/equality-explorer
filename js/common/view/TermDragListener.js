@@ -313,7 +313,6 @@ define( function( require ) {
                 else {
                   self.equivalentTermCreator.putTermOnPlate( combinedTerm, cell );
                 }
-                self.detachRelatedTerms();
               }
               else {
 
@@ -324,7 +323,6 @@ define( function( require ) {
                 self.equivalentTerm.dispose();
                 self.equivalentTerm = null;
                 self.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, cell );
-                self.detachRelatedTerms();
               }
             }
             else {
@@ -336,8 +334,8 @@ define( function( require ) {
               // put equivalent term in an empty cell
               var emptyCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
               self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, emptyCell );
-              self.detachRelatedTerms();
             }
+            self.detachRelatedTerms();
           }
 
           // Do sum-to-zero animations after plates have moved
@@ -713,7 +711,7 @@ define( function( require ) {
                   var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
                   self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
                   //TODO #90 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
-                  self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
+                  // self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
                 }
               }
               self.detachRelatedTerms();
