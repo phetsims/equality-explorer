@@ -701,12 +701,11 @@ define( function( require ) {
               if ( self.equivalentTerm ) {
                 if ( self.inverseTerm ) {
 
-                  // Equivalent and inverse term can each other out.
+                  // Equivalent and inverse term cancel each other out.
                   self.inverseTerm.dispose();
                   self.inverseTerm = null;
                   self.equivalentTerm.dispose();
                   self.equivalentTerm = null;
-                  self.detachRelatedTerms();
                 }
                 else {
 
@@ -715,9 +714,9 @@ define( function( require ) {
                   self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
                   //TODO #90 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
                   self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
-                  self.detachRelatedTerms();
                 }
               }
+              self.detachRelatedTerms();
             }
           }
         } );
