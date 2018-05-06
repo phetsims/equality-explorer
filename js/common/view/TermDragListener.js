@@ -258,13 +258,24 @@ define( function( require ) {
         }
         else if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
 
-          // term overlaps a term on the scale, and they sum to zero
-          self.sumToZero( self.plate, self.plate.getCellForTerm( self.likeTerm ), term, self.likeTerm, {
-            haloBaseColor: EqualityExplorerColors.HALO // show the halo
-          } );
+          var sumToZeroParent = termNode.getParent();
 
-          // since sumToZero calls dispose for Terms
+          // term overlaps a term on the scale, and they sum to zero
+          var sumToZeroNode = new SumToZeroNode( {
+            variable: term.variable || null,
+            haloRadius: self.haloRadius,
+            haloBaseColor: EqualityExplorerColors.HALO, // show the halo
+            fontSize: self.termCreator.combineLikeTermsEnabled ?
+                      EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE :
+                      EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
+          } );
+          sumToZeroParent.addChild( sumToZeroNode );
+          var sumToZeroCell = self.plate.getCellForTerm( self.likeTerm );
+
+          // dispose of terms that sum to zero
+          term.dispose();
           term = null;
+          self.likeTerm.dispose();
           self.likeTerm = null;
 
           // put equivalent term on opposite plate
@@ -282,12 +293,24 @@ define( function( require ) {
                 // opposite cell is occupied, combine equivalentTerm with term that's in the cell
                 var combinedTerm = self.equivalentTerm.plus( oppositeLikeTerm );
                 self.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
+
+                // dispose of the terms used to create combinedTerm
                 oppositeLikeTerm.dispose();
                 oppositeLikeTerm = null;
                 self.equivalentTerm.dispose();
                 self.equivalentTerm = null;
+
                 if ( combinedTerm.significantValue.getValue() === 0 ) {
-                  console.log( 'end: opposite sum-to-zero' ); //TODO #19 sumToZero
+
+                  // Combined term is zero. No halo, since the terms are on the opposite side.
+                  var oppositeSumToZeroNode = new SumToZeroNode( {
+                    variable: combinedTerm.variable || null,
+                    fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
+                  } );
+                  sumToZeroParent.addChild( oppositeSumToZeroNode );
+                  var oppositeSumToZeroCell = termCreator.likeTermsCell;
+
+                  // dispose of the combined term
                   combinedTerm.dispose();
                   combinedTerm = null;
                 }
@@ -319,6 +342,14 @@ define( function( require ) {
               self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, emptyCell );
               self.detachOppositeTerms();
             }
+          }
+
+          // Do sum-to-zero animations after plates have moved
+          sumToZeroNode.center = self.plate.getLocationOfCell( sumToZeroCell );
+          sumToZeroNode.startAnimation();
+          if ( oppositeSumToZeroNode ) {
+            oppositeSumToZeroNode.center = self.oppositePlate.getLocationOfCell( oppositeSumToZeroCell );
+            oppositeSumToZeroNode.startAnimation();
           }
         }
         else if ( term.locationProperty.value.y > self.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
@@ -451,6 +482,7 @@ define( function( require ) {
       var self = this;
       var likeTermsCell = this.termCreator.likeTermsCell;
       var cellLocation = this.plate.getLocationOfCell( likeTermsCell );
+      var sumToZeroParent = this.termNode.getParent();
 
       self.term.pickableProperty.value = this.pickableWhileAnimating;
 
@@ -481,12 +513,17 @@ define( function( require ) {
 
             if ( combinedTerm.sign === 0 ) {
 
-              // Terms sum to zero.
-              // No halo, since the terms did not overlap when drag ended.
-              self.sumToZero( self.plate, self.plate.getCellForTerm( termInCell ), self.term, termInCell );
+              // Terms sum to zero. No halo, since the terms did not overlap when drag ended.
+              var sumToZeroNode = new SumToZeroNode( {
+                variable: self.term.variable || null,
+                fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
+              } );
+              sumToZeroParent.addChild( sumToZeroNode );
 
-              // since sumToZero calls dispose for Terms
+              // dispose of terms that sum to zero
+              self.term.dispose();
               self.term = null;
+              termInCell.dispose();
               termInCell = null;
             }
             else if ( combinedTerm.maxIntegerExceeded() ) {
@@ -540,16 +577,34 @@ define( function( require ) {
               oppositeLikeTerm = null;
               self.detachOppositeTerms();
 
-              // Put the combined term on the plate.
               if ( combinedTerm.significantValue.getValue() === 0 ) {
-                console.log( 'animateToLikeCell: opposite sum-to-zero' ); //TODO #19 sumToZero
+
+                // terms summed to zero on opposite plate. No halo, since these terms are on opposite side.
+                var oppositeSumToZeroNode = new SumToZeroNode( {
+                  variable: combinedTerm.variable || null,
+                  fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
+                } );
+                sumToZeroParent.addChild( oppositeSumToZeroNode );
+
                 combinedTerm.dispose();
                 combinedTerm = null;
               }
               else {
+
+                // Put the combined term on the plate.
                 self.equivalentTermCreator.putTermOnPlate( combinedTerm, likeTermsCell );
               }
             }
+          }
+
+          // Do sum-to-zero animations after both plates have moved.
+          if ( sumToZeroNode ) {
+            sumToZeroNode.center = self.plate.getLocationOfCell( likeTermsCell );
+            sumToZeroNode.startAnimation();
+          }
+          if ( oppositeSumToZeroNode ) {
+            oppositeSumToZeroNode.center = self.oppositePlate.getLocationOfCell( likeTermsCell );
+            oppositeSumToZeroNode.startAnimation();
           }
         }
       } );
@@ -700,48 +755,6 @@ define( function( require ) {
           this.likeTerm.haloVisibleProperty.value = false;
         }
       }
-    },
-
-    /**
-     * Handles the animation and cleanup that happens for 2 terms that sum to zero.
-     * See equality-explorer#17
-     * @param {Plate} plate - which plate
-     * @param {number} cell - which cell
-     * @param {Term} term1
-     * @param {Term} term2
-     * @param {Object} [options] - passed to SumToZero constructor
-     * @private
-     */
-    sumToZero: function( plate, cell, term1, term2, options ) {
-      assert && assert( term1.plus( term2 ).sign === 0, 'terms do not sum to zero' );
-
-      // some things we need before the terms are disposed
-      var variable = term1.variable || null;
-      var parent = this.termNode.getParent(); // SumToZeroNode in the same layer as the TermNode we're dragging
-
-      // dispose of the terms
-      term1.dispose();
-      term2.dispose();
-
-      // after the terms have been disposed and the scale has moved,
-      // determine the new location of the inverse term's cell
-      var sumToZeroLocation = plate.getLocationOfCell( cell );
-
-      options = _.extend( {
-        variable: variable,
-        haloRadius: this.haloRadius,
-        center: sumToZeroLocation
-      }, options );
-
-      // If we're combining like terms on the scale (e.g. in Operations screen), use big font
-      if ( this.termCreator.combineLikeTermsEnabled ) {
-        options.fontSize = EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE;
-      }
-
-      // show '0' or '0x' in yellow halo, fade out
-      var sumToZeroNode = new SumToZeroNode( options );
-      parent.addChild( sumToZeroNode );
-      sumToZeroNode.startAnimation();
     }
   } );
 } );
