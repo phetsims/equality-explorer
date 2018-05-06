@@ -491,7 +491,7 @@ define( function( require ) {
         animationCompletedCallback: function() {
 
           var termInCell = self.plate.getTermInCell( likeTermsCell );
-          var combinedTerm;
+          var maxIntegerExceeded = false;
 
           //=======================================================================
           // On dragged term's side of the scale
@@ -511,32 +511,109 @@ define( function( require ) {
           }
           else {
 
-            // Combine the terms to create a new 'big' term.
-            combinedTerm = termInCell.plus( self.term );
+            // If the cell is not empty. Combine the terms to create a new 'big' term.
+            var combinedTerm = termInCell.plus( self.term );
 
-            if ( combinedTerm.sign === 0 ) {
+            if ( combinedTerm.maxIntegerExceeded() ) {
+
+              // The combined term would exceed the maxInteger limit. Make no changes to the other terms.
+              maxIntegerExceeded = true;
+              termInCell.haloVisibleProperty.value = false;
+              combinedTerm.dispose();
+              combinedTerm = null;
+            }
+            else if ( combinedTerm.sign === 0 ) {
 
               // Terms sum to zero. No halo, since the terms did not overlap when drag ended.
               var sumToZeroNode = new SumToZeroNode( {
                 variable: self.term.variable || null,
                 fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
               } );
-              sumToZeroParent.addChild( sumToZeroNode );
 
               // dispose of terms that sum to zero
               self.term.dispose();
               self.term = null;
               termInCell.dispose();
               termInCell = null;
-            }
-            else if ( combinedTerm.maxIntegerExceeded() ) {
-
-              // Notify listeners that the combined term would exceed the maxInteger limit.
-              // Make no changes to the other terms.
-              self.termCreator.maxIntegerExceededEmitter.emit();
-              termInCell.haloVisibleProperty.value = false;
+              combinedTerm.dispose();
+              combinedTerm = null;
             }
             else {
+              // Defer putting combinedTerm on the plate until after we deal with equivalentTerm,
+              // in case the equivalentTerm cause maxInteger to be exceeded.
+            }
+          }
+
+          //=======================================================================
+          // On opposite side of the scale
+          //=======================================================================
+
+          if ( self.equivalentTerm && !maxIntegerExceeded ) {
+
+            var oppositeLikeTerm = self.oppositePlate.getTermInCell( likeTermsCell );
+
+            if ( !oppositeLikeTerm ) {
+
+              // If the cell on the opposite side is empty, make a 'big' copy of equivalentTerm and put it in the cell.
+              var equivalentTermCopy = self.equivalentTerm.copy( {
+                diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+              } );
+              self.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, likeTermsCell );
+
+              // dispose of the original equivalentTerm
+              self.equivalentTerm.dispose();
+              self.equivalentTerm = null;
+            }
+            else {
+
+              // The cell is not empty. Combine equivalentTerm with term that's in the cell
+              var oppositeCombinedTerm = oppositeLikeTerm.plus( self.equivalentTerm );
+
+              if ( oppositeCombinedTerm.maxIntegerExceeded() ) {
+
+                // The combined term would exceed the maxInteger limit. Make no changes to the other terms.
+                maxIntegerExceeded = true;
+                oppositeLikeTerm.haloVisibleProperty.value = false;
+                oppositeCombinedTerm.dispose();
+                oppositeCombinedTerm = null;
+              }
+              else {
+
+                // dispose of the terms used to create oppositeCombinedTerm
+                oppositeLikeTerm.dispose();
+                oppositeLikeTerm = null;
+                self.equivalentTerm.dispose();
+                self.equivalentTerm = null;
+
+                if ( oppositeCombinedTerm.significantValue.getValue() === 0 ) {
+
+                  // terms summed to zero on opposite plate. No halo, since these terms are on opposite side.
+                  var oppositeSumToZeroNode = new SumToZeroNode( {
+                    variable: oppositeCombinedTerm.variable || null,
+                    fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
+                  } );
+
+                  // dispose of combined term
+                  oppositeCombinedTerm.dispose();
+                  oppositeCombinedTerm = null;
+                }
+                else {
+
+                  // Put the combined term on the plate.
+                  self.equivalentTermCreator.putTermOnPlate( oppositeCombinedTerm, likeTermsCell );
+                }
+              }
+            }
+          }
+
+          if ( maxIntegerExceeded ) {
+
+            // Notify listeners that maxInteger would be exceeded by this drag sequence.
+            self.termCreator.maxIntegerExceededEmitter.emit();
+          }
+          else {
+
+            if ( combinedTerm ) {
 
               // dispose of the terms used to create the combined term
               self.term.dispose();
@@ -547,72 +624,18 @@ define( function( require ) {
               // Put the new term on the plate.
               self.termCreator.putTermOnPlate( combinedTerm, likeTermsCell );
             }
-          }
 
-          //=======================================================================
-          // On opposite side of the scale
-          //=======================================================================
-
-          //TODO #19 make changes only if term and equivalentTerm don't cause maxInteger to be exceeded
-          if ( self.equivalentTerm ) {
-
-            var equivalentCell = self.equivalentTermCreator.likeTermsCell;
-            var oppositeLikeTerm = self.oppositePlate.getTermInCell( equivalentCell );
-
-            if ( !oppositeLikeTerm ) {
-
-              // If the cell on the opposite side is empty, make a 'big' copy of equivalentTerm and put it in the cell.
-              var equivalentTermCopy = self.equivalentTerm.copy( {
-                diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-              } );
-              self.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, equivalentCell );
-
-              // dispose of the original equivalentTerm
-              self.equivalentTerm.dispose();
-              self.equivalentTerm = null;
-              self.detachRelatedTerms();
+            // Do sum-to-zero animations after both plates have moved.
+            if ( sumToZeroNode ) {
+              sumToZeroParent.addChild( sumToZeroNode );
+              sumToZeroNode.center = self.plate.getLocationOfCell( likeTermsCell );
+              sumToZeroNode.startAnimation();
             }
-            else {
-
-              // combine equivalentTerm with term that's in the cell
-              combinedTerm = oppositeLikeTerm.plus( self.equivalentTerm );
-
-              // dispose of the terms used to create the combined term
-              //TODO #88 next line causes assertion failure, equivalentTerm is disposed twice
-              self.equivalentTerm.dispose();
-              self.equivalentTerm = null;
-              oppositeLikeTerm.dispose();
-              oppositeLikeTerm = null;
-              self.detachRelatedTerms();
-
-              if ( combinedTerm.significantValue.getValue() === 0 ) {
-
-                // terms summed to zero on opposite plate. No halo, since these terms are on opposite side.
-                var oppositeSumToZeroNode = new SumToZeroNode( {
-                  variable: combinedTerm.variable || null,
-                  fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
-                } );
-                sumToZeroParent.addChild( oppositeSumToZeroNode );
-
-                combinedTerm.dispose();
-                combinedTerm = null;
-              }
-              else {
-
-                // Put the combined term on the plate.
-                self.equivalentTermCreator.putTermOnPlate( combinedTerm, likeTermsCell );
-              }
+            if ( oppositeSumToZeroNode ) {
+              sumToZeroParent.addChild( oppositeSumToZeroNode );
+              oppositeSumToZeroNode.center = self.oppositePlate.getLocationOfCell( likeTermsCell );
+              oppositeSumToZeroNode.startAnimation();
             }
-          }
-
-          // Do sum-to-zero animations after both plates have moved.
-          if ( sumToZeroNode ) {
-            sumToZeroNode.center = self.plate.getLocationOfCell( likeTermsCell );
-            sumToZeroNode.startAnimation();
-          }
-          if ( oppositeSumToZeroNode ) {
-            oppositeSumToZeroNode.center = self.oppositePlate.getLocationOfCell( likeTermsCell );
-            oppositeSumToZeroNode.startAnimation();
           }
         }
       } );
