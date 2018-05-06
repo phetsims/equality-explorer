@@ -128,6 +128,7 @@ define( function( require ) {
                 oppositeLikeTerm.dispose();
                 oppositeLikeTerm = null;
                 if ( inverseTerm.significantValue.getValue() === 0 ) {
+                  //TODO #19 sum-to-zero animation
                   inverseTerm.dispose();
                   inverseTerm = null;
                 }
@@ -541,6 +542,7 @@ define( function( require ) {
 
               // Put the combined term on the plate.
               if ( combinedTerm.significantValue.getValue() === 0 ) {
+                //TODO #19 sum-to-zero animation
                 combinedTerm.dispose();
                 combinedTerm = null;
               }
@@ -714,6 +716,7 @@ define( function( require ) {
 
       // determine which cell the term appears in
       var cell = plate.getCellForTerm( termOnScale );
+      assert && assert( plate.getCellForTerm( termOnScale ) !== null, 'termOnScale is not on scale: ' + termOnScale );
 
       // some things we need before the terms are disposed
       var variable = termDragging.variable || null;
