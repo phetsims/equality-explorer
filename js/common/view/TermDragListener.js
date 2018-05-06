@@ -1,10 +1,5 @@
 // Copyright 2018, University of Colorado Boulder
 
-//TODO #19 sum to zero on opposite side of scale
-//TODO #19 always pop equivalent term to front
-//TODO #19 equivalent terms pop to their final location, do they need to animate?
-//TODO #19 desired algorithm for choosing empty cells on opposite side of scale?
-//TODO #19 desired algorithm for choosing equivalent terms on opposite side of scale?
 //TODO #19 break this up into smaller encapsulated chunks
 /**
  * Drag listener for terms.
