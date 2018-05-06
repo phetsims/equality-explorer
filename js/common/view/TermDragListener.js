@@ -128,7 +128,7 @@ define( function( require ) {
                 oppositeLikeTerm.dispose();
                 oppositeLikeTerm = null;
                 if ( inverseTerm.significantValue.getValue() === 0 ) {
-                  //TODO #19 sum-to-zero animation
+                  //TODO #19 sumToZero
                   inverseTerm.dispose();
                   inverseTerm = null;
                 }
@@ -542,7 +542,7 @@ define( function( require ) {
 
               // Put the combined term on the plate.
               if ( combinedTerm.significantValue.getValue() === 0 ) {
-                //TODO #19 sum-to-zero animation
+                //TODO #19 sumToZero
                 combinedTerm.dispose();
                 combinedTerm = null;
               }
