@@ -677,7 +677,6 @@ define( function( require ) {
                   // Put equivalent term on the opposite plate
                   var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
                   self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
-                  self.equivalentTerm.pickableProperty.value = true; //TODO #19 this is done by detachOppositeTerms
                   //TODO #19 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
                   self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
                   self.detachOppositeTerms();
