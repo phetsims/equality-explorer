@@ -713,7 +713,7 @@ define( function( require ) {
     /**
      * Refreshes the visual feedback (yellow halo) that is provided when a dragged term overlaps
      * a like term that is on the scale. This has the side-effect of setting this.likeTerm.
-     * See equality-explorer#17
+     * See https://github.com/phetsims/equality-explorer/issues/17
      * @private
      */
     refreshHalos: function() {
