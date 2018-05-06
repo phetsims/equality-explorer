@@ -578,6 +578,7 @@ define( function( require ) {
               combinedTerm = oppositeLikeTerm.plus( self.equivalentTerm );
 
               // dispose of the terms used to create the combined term
+              //TODO #88 next line causes assertion failure, equivalentTerm is disposed twice
               self.equivalentTerm.dispose();
               self.equivalentTerm = null;
               oppositeLikeTerm.dispose();
