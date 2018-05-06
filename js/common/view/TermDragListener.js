@@ -287,7 +287,7 @@ define( function( require ) {
               if ( oppositeLikeTerm ) {
 
                 // opposite cell is occupied, combine equivalentTerm with term that's in the cell
-                var combinedTerm = self.equivalentTerm.plus( oppositeLikeTerm );
+                var combinedTerm = oppositeLikeTerm.plus( self.equivalentTerm );
                 self.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
 
                 // dispose of the terms used to create combinedTerm
