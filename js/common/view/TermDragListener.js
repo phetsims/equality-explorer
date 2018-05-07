@@ -713,7 +713,7 @@ define( function( require ) {
                   var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
                   self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
                   //TODO #90 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
-                  // self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
+                  self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
                 }
               }
               self.detachRelatedTerms();
