@@ -678,40 +678,35 @@ define( function( require ) {
           // When the term reaches the cell...
           animationCompletedCallback: function() {
 
-            if ( self.plate.isFull() || ( self.equivalentTerm && self.oppositePlate.isFull() ) ) {
+            assert && assert( !self.plate.isFull(), 'plate is full' );
+            assert && assert( !( self.equivalentTerm && self.oppositePlate.isFull() ), 'opposite plate is full' );
 
-              // If either plate is full, return to the toolbox.
-              self.animateToToolbox( self.term );
-            }
-            else {
+            // Compute cell again, in case a term has been removed below the cell that we were animating to.
+            var cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
 
-              // Compute cell again, in case a term has been removed below the cell that we were animating to.
-              var cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
+            // Put the term on the plate
+            self.termCreator.putTermOnPlate( self.term, cell );
+            self.term.pickableProperty.value = true;
 
-              // Put the term on the plate
-              self.termCreator.putTermOnPlate( self.term, cell );
-              self.term.pickableProperty.value = true;
+            if ( self.equivalentTerm ) {
+              if ( self.inverseTerm ) {
 
-              if ( self.equivalentTerm ) {
-                if ( self.inverseTerm ) {
-
-                  // Equivalent and inverse term cancel each other out.
-                  self.inverseTerm.dispose();
-                  self.inverseTerm = null;
-                  self.equivalentTerm.dispose();
-                  self.equivalentTerm = null;
-                }
-                else {
-
-                  // Put equivalent term on the opposite plate
-                  var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
-                  self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
-                  //TODO #90 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
-                  self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
-                }
+                // Equivalent and inverse term cancel each other out.
+                self.inverseTerm.dispose();
+                self.inverseTerm = null;
+                self.equivalentTerm.dispose();
+                self.equivalentTerm = null;
               }
-              self.detachRelatedTerms();
+              else {
+
+                // Put equivalent term on the opposite plate
+                var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
+                self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
+                //TODO #90 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
+                self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
+              }
             }
+            self.detachRelatedTerms();
           }
         } );
       }
