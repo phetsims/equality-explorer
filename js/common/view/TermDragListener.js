@@ -309,9 +309,8 @@ define( function( require ) {
       }
       else if ( this.likeTerm && this.term.isInverseTerm( this.likeTerm ) ) {
 
-        var sumToZeroParent = this.termNode.getParent();
-
         // term overlaps a term on the scale, and they sum to zero
+        var sumToZeroParent = this.termNode.getParent();
         var sumToZeroNode = new SumToZeroNode( {
           variable: this.term.variable || null,
           haloRadius: this.haloRadius,
@@ -320,7 +319,6 @@ define( function( require ) {
                     EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE :
                     EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
         } );
-        sumToZeroParent.addChild( sumToZeroNode );
         var sumToZeroCell = this.plate.getCellForTerm( this.likeTerm );
 
         // dispose of terms that sum to zero
@@ -358,7 +356,6 @@ define( function( require ) {
                   variable: combinedTerm.variable || null,
                   fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
                 } );
-                sumToZeroParent.addChild( oppositeSumToZeroNode );
                 var oppositeSumToZeroCell = this.termCreator.likeTermsCell;
 
                 // dispose of the combined term
@@ -394,9 +391,11 @@ define( function( require ) {
         }
 
         // Do sum-to-zero animations after plates have moved
+        sumToZeroParent.addChild( sumToZeroNode );
         sumToZeroNode.center = this.plate.getLocationOfCell( sumToZeroCell );
         sumToZeroNode.startAnimation();
         if ( oppositeSumToZeroNode ) {
+          sumToZeroParent.addChild( oppositeSumToZeroNode );
           oppositeSumToZeroNode.center = this.oppositePlate.getLocationOfCell( oppositeSumToZeroCell );
           oppositeSumToZeroNode.startAnimation();
         }
