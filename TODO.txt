@@ -2,6 +2,9 @@ TODO items for equality-explorer
 
 Create top-level view types for XYScreen (XYScreenView, XYSceneNode)
 Reduce termsToolboxSpacing for XYSceneNode
+Show multiple pickers in Variable accordion box, rename to VariablesAccordionBox
+Provide options to change title of VariablesAccordionBox
+Replace ValuesAccordionBox with VariablesAccordionBox
 Consider merging ObjectTerm and VariableTerm, move view info out of these.
 Choose a cell for equivalent term and animate to it.
 
