@@ -64,7 +64,7 @@ define( function( require ) {
       }
     } ) );
 
-    this.touchArea = this.localBounds.dilatedXY( 20, 10 );
+    this.touchArea = this.localBounds.dilatedXY( 10, 10 );
   }
 
   equalityExplorer.register( 'LockControl', LockControl );

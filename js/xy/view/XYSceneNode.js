@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var VariablesSceneNode = require( 'EQUALITY_EXPLORER/variables/view/VariablesSceneNode' );
@@ -24,7 +25,8 @@ define( function( require ) {
   function XYSceneNode( scene, sceneProperty, layoutBounds, options ) {
 
     options = _.extend( {
-      termsToolboxSpacing: 10 // horizontal spacing between terms in the toolbox
+      termsToolboxContentSize: new Dimension2( 270, 50 ),
+      termsToolboxSpacing: 12 // horizontal spacing between terms in the toolbox
     }, options );
 
     VariablesSceneNode.call( this, scene, sceneProperty, layoutBounds, options );

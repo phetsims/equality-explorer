@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
@@ -33,6 +34,7 @@ define( function( require ) {
 
     options = _.extend( {
       hasNegativeTermsInToolbox: true, // {boolean} if true, put negative terms in the toolbox, e.g. -x
+      termsToolboxContentSize: new Dimension2( 250, 50 ),
       termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale
       organizeButtonVisible: true, // is the organize button visible on the scale?
 
@@ -59,6 +61,7 @@ define( function( require ) {
 
     var leftTermsToolbox = new TermsToolbox( leftTermCreators, scale.leftPlate, this.termsLayer, {
       hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
+      contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
       centerX: scale.leftPlate.locationProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
@@ -66,6 +69,7 @@ define( function( require ) {
 
     var rightTermsToolbox = new TermsToolbox( rightTermCreators, scale.rightPlate, this.termsLayer, {
       hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
+      contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
       centerX: scale.rightPlate.locationProperty.value.x,
       bottom: leftTermsToolbox.bottom
