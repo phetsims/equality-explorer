@@ -99,9 +99,6 @@ define( function( require ) {
        */
       start: function( event, trail ) {
 
-        // Detach from terms that are specific to a drag sequence
-        self.detachRelatedTerms();
-
         if ( termCreator.isTermOnPlate( term ) ) {
 
           if ( termCreator.lockedProperty.value ) {
