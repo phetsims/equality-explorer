@@ -1,20 +1,13 @@
 TODO items for equality-explorer
 
+Consider merging ObjectTerm and VariableTerm, moving view info out of these.
+
 Cleanup
 - grunt update-copyright-dates
 - review unresolved comments in design document
 
 
 LOCK FEATURE =========
-
-known problems:
-- It’s possible to exceed the number limit (1E9) for the opposite plate.
-- With lock on, "sum to zero" animation occurs in the wrong place for dragged term.
-- In the Operations screen, there is no “sum to zero” animation when the equivalent term and what’s on the plate sum to zero.
-
-implementation notes:
-Observe term.locationProperty, use moveTo to move equivalentTerm
-Observe inverseTerm.draggingProperty, break association with equivalentTerm if inverseTerm is dragged
 
 general requirements:
 - changing the lock deletes all terms that are not on the plate (dragging and animating terms)
