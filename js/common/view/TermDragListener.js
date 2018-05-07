@@ -44,7 +44,7 @@ define( function( require ) {
    * @param {Node} termNode - Node that the listener is attached to
    * @param {Term} term - the term being dragged
    * @param {TermCreator} termCreator - the creator of term
-   * @param {Object} [options] - specific to TermDragListener, not propagated to supertype
+   * @param {Object} [options]
    * @constructor
    */
   function TermDragListener( termNode, term, termCreator, options ) {
@@ -56,8 +56,16 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+
       haloRadius: 10, // radius of the halo around terms that sum to zero
-      pickableWhileAnimating: true // is termNode pickable while term is animating?
+      pickableWhileAnimating: true, // is termNode pickable while term is animating?
+
+      // SimpleDragHandler options
+      allowTouchSnag: true,
+      start: this.start.bind( this ),
+      drag: this.drag.bind( this ),
+      end: this.end.bind( this )
+
     }, options );
 
     // @private
@@ -88,273 +96,7 @@ define( function( require ) {
       }
     };
 
-    SimpleDragHandler.call( this, {
-
-      allowTouchSnag: true,
-
-      /**
-       * Called at the start of a drag cycle, on pointer down.
-       * @param {Event} event
-       * @param {Trail} trail
-       */
-      start: function( event, trail ) {
-
-        if ( termCreator.isTermOnPlate( term ) ) {
-
-          if ( termCreator.lockedProperty.value ) {
-            if ( termCreator.combineLikeTermsEnabled ) {
-
-              //=======================================================================
-              // Like terms combined in one cell
-              //=======================================================================
-
-              var oppositeLikeTerm = self.oppositePlate.getTermInCell( termCreator.likeTermsCell );
-
-              // no need to track self.inverseTerm when like terms are combined, so uses a local var
-              var inverseTerm;
-
-              if ( oppositeLikeTerm ) {
-
-                // subtract term from what's on the opposite plate
-                inverseTerm = oppositeLikeTerm.minus( term );
-                self.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
-                oppositeLikeTerm.dispose();
-                oppositeLikeTerm = null;
-                if ( inverseTerm.significantValue.getValue() === 0 ) {
-                  inverseTerm.dispose();
-                  inverseTerm = null;
-                }
-                else {
-                  self.equivalentTermCreator.putTermOnPlate( inverseTerm, termCreator.likeTermsCell );
-                }
-              }
-              else {
-
-                // there was nothing on the opposite plate, so create the inverse of the equivalent term
-                inverseTerm = self.equivalentTermCreator.createTerm(
-                  _.extend( term.copyOptions(), {
-                    sign: -1
-                  } ) );
-                self.equivalentTermCreator.putTermOnPlate( inverseTerm, termCreator.likeTermsCell );
-              }
-
-              // create the equivalent term last, so it's in front
-              self.equivalentTerm = self.equivalentTermCreator.createTerm( term.copyOptions() );
-            }
-            else {
-
-              //=======================================================================
-              // Like terms in separate cells
-              //=======================================================================
-
-              var termCell = self.plate.getCellForTerm( term );
-              self.equivalentTerm = self.oppositePlate.getClosestEquivalentTerm( term, termCell );
-              if ( self.equivalentTerm ) {
-
-                // found equivalent term on opposite plate, remove it from plate
-                self.equivalentTermCreator.removeTermFromPlate( self.equivalentTerm );
-              }
-              else if ( self.oppositePlate.isFull() ) {
-
-                // opposite plate is full, cannot create inverse term, show 'Oops' message
-                var thisIsLeft = ( termCreator.positiveLocation.x < self.equivalentTermCreator.positiveLocation.x );
-                var message = thisIsLeft ? rightSideOfBalanceIsFullString : leftSideOfBalanceIsFullString;
-                var oopsDialog = new OopsDialog( message );
-                oopsDialog.show();
-
-                // interrupt this drag sequence, since we can't take term off the plate
-                self.interrupt();
-                return; // generally bad form to return from the middle of a function, but this is a workaround
-              }
-              else {
-
-                // no equivalent term on opposite plate, create an inverse term
-                self.inverseTerm = self.equivalentTermCreator.createTerm( _.extend( term.copyOptions(), {
-                  sign: -1
-                } ) );
-                var inverseTermLocation = termCreator.getEquivalentTermLocation( term );
-                var inverseCell = self.oppositePlate.getBestEmptyCell( inverseTermLocation );
-                self.equivalentTermCreator.putTermOnPlate( self.inverseTerm, inverseCell );
-
-                // if the inverse term is dragged, break the association to equivalentTerm
-                self.inverseTerm.draggingProperty.link( self.inverseTermDraggingListener );
-
-                // create the equivalent term on the opposite side
-                // Do this after creating inverseTerm so that it appear in front of inverseTerm.
-                self.equivalentTerm = self.equivalentTermCreator.createTerm( term.copyOptions() );
-              }
-            }
-          }
-
-          termCreator.removeTermFromPlate( term );
-        }
-        else if ( !term.isAnimating() ) {
-
-          // term came from toolbox. If lock is enabled, create an equivalent term on other side of the scale.
-          if ( termCreator.lockedProperty.value ) {
-            self.equivalentTerm = self.equivalentTermCreator.createTerm( term.copyOptions() );
-          }
-        }
-
-        // move the term a bit, so it's obvious that we're interacting with it
-        term.moveTo( self.eventToLocation( event ) );
-
-        // set term properties at beginning of drag
-        term.draggingProperty.value = true;
-        term.shadowVisibleProperty.value = true;
-        if ( self.equivalentTerm ) {
-          self.equivalentTerm.shadowVisibleProperty.value = true;
-          self.equivalentTerm.pickableProperty.value = false;
-        }
-
-        // move the node we're dragging to the foreground
-        termNode.moveToFront();
-      },
-
-      /**
-       * Called while termNode is being dragged.
-       * @param {Event} event
-       * @param {Trail} trail
-       */
-      drag: function( event, trail ) {
-
-        // move the term
-        term.moveTo( self.eventToLocation( event ) );
-
-        // refresh the halos that appear when dragged term overlaps with an inverse term
-        self.refreshHalos();
-      },
-
-      /**
-       * Called at the end of a drag cycle, on pointer up.
-       * @param {Event} event
-       * @param {Trail} trail
-       */
-      end: function( event, trail ) {
-
-        // drag sequence was interrupted, return immediately
-        if ( self.interrupted ) { return; }
-
-        // set term properties at end of drag
-        term.draggingProperty.value = false;
-        term.shadowVisibleProperty.value = false;
-        if ( self.equivalentTerm ) {
-          self.equivalentTerm.shadowVisibleProperty.value = false;
-        }
-
-        if ( !termCreator.combineLikeTermsEnabled &&
-             ( self.plate.isFull() || ( self.equivalentTerm && self.oppositePlate.isFull() ) ) ) {
-
-          // each term needs its own cell and one of the plates is full
-          self.refreshHalos();
-          self.animateToToolbox();
-        }
-        else if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
-
-          var sumToZeroParent = termNode.getParent();
-
-          // term overlaps a term on the scale, and they sum to zero
-          var sumToZeroNode = new SumToZeroNode( {
-            variable: term.variable || null,
-            haloRadius: self.haloRadius,
-            haloBaseColor: EqualityExplorerColors.HALO, // show the halo
-            fontSize: self.termCreator.combineLikeTermsEnabled ?
-                      EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE :
-                      EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
-          } );
-          sumToZeroParent.addChild( sumToZeroNode );
-          var sumToZeroCell = self.plate.getCellForTerm( self.likeTerm );
-
-          // dispose of terms that sum to zero
-          term.dispose();
-          term = null;
-          self.likeTerm.dispose();
-          self.likeTerm = null;
-
-          // put equivalent term on opposite plate
-          if ( self.equivalentTerm ) {
-            if ( termCreator.combineLikeTermsEnabled ) {
-
-              //=======================================================================
-              // Like terms combined in one cell
-              //=======================================================================
-
-              var cell = termCreator.likeTermsCell;
-              var oppositeLikeTerm = self.oppositePlate.getTermInCell( cell );
-              if ( oppositeLikeTerm ) {
-
-                // opposite cell is occupied, combine equivalentTerm with term that's in the cell
-                var combinedTerm = oppositeLikeTerm.plus( self.equivalentTerm );
-                self.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
-
-                // dispose of the terms used to create combinedTerm
-                oppositeLikeTerm.dispose();
-                oppositeLikeTerm = null;
-                self.equivalentTerm.dispose();
-                self.equivalentTerm = null;
-
-                if ( combinedTerm.significantValue.getValue() === 0 ) {
-
-                  // Combined term is zero. No halo, since the terms are on the opposite side.
-                  var oppositeSumToZeroNode = new SumToZeroNode( {
-                    variable: combinedTerm.variable || null,
-                    fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
-                  } );
-                  sumToZeroParent.addChild( oppositeSumToZeroNode );
-                  var oppositeSumToZeroCell = termCreator.likeTermsCell;
-
-                  // dispose of the combined term
-                  combinedTerm.dispose();
-                  combinedTerm = null;
-                }
-                else {
-                  self.equivalentTermCreator.putTermOnPlate( combinedTerm, cell );
-                }
-              }
-              else {
-
-                // opposite cell is empty, put a big copy of equivalentTerm in that cell
-                var equivalentTermCopy = self.equivalentTerm.copy( {
-                  diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
-                } );
-                self.equivalentTerm.dispose();
-                self.equivalentTerm = null;
-                self.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, cell );
-              }
-            }
-            else {
-
-              //=======================================================================
-              // Like terms in separate cells
-              //=======================================================================
-
-              // put equivalent term in an empty cell
-              var emptyCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
-              self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, emptyCell );
-            }
-            self.detachRelatedTerms();
-          }
-
-          // Do sum-to-zero animations after plates have moved
-          sumToZeroNode.center = self.plate.getLocationOfCell( sumToZeroCell );
-          sumToZeroNode.startAnimation();
-          if ( oppositeSumToZeroNode ) {
-            oppositeSumToZeroNode.center = self.oppositePlate.getLocationOfCell( oppositeSumToZeroCell );
-            oppositeSumToZeroNode.startAnimation();
-          }
-        }
-        else if ( term.locationProperty.value.y > self.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
-
-          // term was released below the plate, animate back to toolbox
-          self.animateToToolbox();
-        }
-        else {
-
-          // term was released above the plate, animate to the plate
-          self.animateToPlate();
-        }
-      }
-    } );
+    SimpleDragHandler.call( this, options );
 
     // Equivalent term tracks the movement of the dragged term.
     var locationListener = function( location ) {
@@ -400,6 +142,274 @@ define( function( require ) {
     dispose: function() {
       this.disposeTermDragListener();
       SimpleDragHandler.prototype.dispose.call( this );
+    },
+
+    /**
+     * Called at the start of a drag cycle, on pointer down.
+     * @param {Event} event
+     * @param {Trail} trail
+     * @private
+     */
+    start: function( event, trail ) {
+
+      if ( this.termCreator.isTermOnPlate( this.term ) ) {
+
+        if ( this.termCreator.lockedProperty.value ) {
+          if ( this.termCreator.combineLikeTermsEnabled ) {
+
+            var likeTermsCell = this.termCreator.likeTermsCell;
+
+            //=======================================================================
+            // Like terms combined in one cell
+            //=======================================================================
+
+            var oppositeLikeTerm = this.oppositePlate.getTermInCell( likeTermsCell );
+
+            // no need to track this.inverseTerm when like terms are combined, so use a local var
+            var inverseTerm;
+
+            if ( oppositeLikeTerm ) {
+
+              // subtract term from what's on the opposite plate
+              inverseTerm = oppositeLikeTerm.minus( this.term );
+              this.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
+              oppositeLikeTerm.dispose();
+              oppositeLikeTerm = null;
+              if ( inverseTerm.significantValue.getValue() === 0 ) {
+                inverseTerm.dispose();
+                inverseTerm = null;
+              }
+              else {
+                this.equivalentTermCreator.putTermOnPlate( inverseTerm, likeTermsCell );
+              }
+            }
+            else {
+
+              // there was nothing on the opposite plate, so create the inverse of the equivalent term
+              inverseTerm = this.equivalentTermCreator.createTerm(
+                _.extend( this.term.copyOptions(), {
+                  sign: -1
+                } ) );
+              this.equivalentTermCreator.putTermOnPlate( inverseTerm, this.termCreator.likeTermsCell );
+            }
+
+            // create the equivalent term last, so it's in front
+            this.equivalentTerm = this.equivalentTermCreator.createTerm( this.term.copyOptions() );
+          }
+          else {
+
+            //=======================================================================
+            // Like terms in separate cells
+            //=======================================================================
+
+            var termCell = this.plate.getCellForTerm( this.term );
+            this.equivalentTerm = this.oppositePlate.getClosestEquivalentTerm( this.term, termCell );
+            if ( this.equivalentTerm ) {
+
+              // found equivalent term on opposite plate, remove it from plate
+              this.equivalentTermCreator.removeTermFromPlate( this.equivalentTerm );
+            }
+            else if ( this.oppositePlate.isFull() ) {
+
+              // opposite plate is full, cannot create inverse term, show 'Oops' message
+              var thisIsLeft = ( this.termCreator.positiveLocation.x < this.equivalentTermCreator.positiveLocation.x );
+              var message = thisIsLeft ? rightSideOfBalanceIsFullString : leftSideOfBalanceIsFullString;
+              var oopsDialog = new OopsDialog( message );
+              oopsDialog.show();
+
+              // interrupt this drag sequence, since we can't take term off the plate
+              this.interrupt();
+              return; // generally bad form to return from the middle of a function, but this is a workaround
+            }
+            else {
+
+              // no equivalent term on opposite plate, create an inverse term
+              this.inverseTerm = this.equivalentTermCreator.createTerm( _.extend( this.term.copyOptions(), {
+                sign: -1
+              } ) );
+              var inverseTermLocation = this.termCreator.getEquivalentTermLocation( this.term );
+              var inverseCell = this.oppositePlate.getBestEmptyCell( inverseTermLocation );
+              this.equivalentTermCreator.putTermOnPlate( this.inverseTerm, inverseCell );
+
+              // if the inverse term is dragged, break the association to equivalentTerm
+              this.inverseTerm.draggingProperty.link( this.inverseTermDraggingListener );
+
+              // create the equivalent term on the opposite side
+              // Do this after creating inverseTerm so that it appear in front of inverseTerm.
+              this.equivalentTerm = this.equivalentTermCreator.createTerm( this.term.copyOptions() );
+            }
+          }
+        }
+
+        this.termCreator.removeTermFromPlate( this.term );
+      }
+      else if ( !this.term.isAnimating() ) {
+
+        // term came from toolbox. If lock is enabled, create an equivalent term on other side of the scale.
+        if ( this.termCreator.lockedProperty.value ) {
+          this.equivalentTerm = this.equivalentTermCreator.createTerm( this.term.copyOptions() );
+        }
+      }
+
+      // move the term a bit, so it's obvious that we're interacting with it
+      this.term.moveTo( this.eventToLocation( event ) );
+
+      // set term properties at beginning of drag
+      this.term.draggingProperty.value = true;
+      this.term.shadowVisibleProperty.value = true;
+      if ( this.equivalentTerm ) {
+        this.equivalentTerm.shadowVisibleProperty.value = true;
+        this.equivalentTerm.pickableProperty.value = false;
+      }
+
+      // move the node we're dragging to the foreground
+      this.termNode.moveToFront();
+    },
+
+    /**
+     * Called while termNode is being dragged.
+     * @param {Event} event
+     * @param {Trail} trail
+     * @private
+     */
+    drag: function( event, trail ) {
+
+      // move the term
+      this.term.moveTo( this.eventToLocation( event ) );
+
+      // refresh the halos that appear when dragged term overlaps with an inverse term
+      this.refreshHalos();
+    },
+
+    /**
+     * Called at the end of a drag cycle, on pointer up.
+     * @param {Event} event
+     * @param {Trail} trail
+     * @private
+     */
+    end: function( event, trail ) {
+
+      // drag sequence was interrupted, return immediately
+      if ( this.interrupted ) { return; }
+
+      // set term properties at end of drag
+      this.term.draggingProperty.value = false;
+      this.term.shadowVisibleProperty.value = false;
+      if ( this.equivalentTerm ) {
+        this.equivalentTerm.shadowVisibleProperty.value = false;
+      }
+
+      if ( !this.termCreator.combineLikeTermsEnabled &&
+           ( this.plate.isFull() || ( this.equivalentTerm && this.oppositePlate.isFull() ) ) ) {
+
+        // each term needs its own cell and one of the plates is full
+        this.refreshHalos();
+        this.animateToToolbox();
+      }
+      else if ( this.likeTerm && this.term.isInverseTerm( this.likeTerm ) ) {
+
+        var sumToZeroParent = this.termNode.getParent();
+
+        // term overlaps a term on the scale, and they sum to zero
+        var sumToZeroNode = new SumToZeroNode( {
+          variable: this.term.variable || null,
+          haloRadius: this.haloRadius,
+          haloBaseColor: EqualityExplorerColors.HALO, // show the halo
+          fontSize: this.termCreator.combineLikeTermsEnabled ?
+                    EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE :
+                    EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
+        } );
+        sumToZeroParent.addChild( sumToZeroNode );
+        var sumToZeroCell = this.plate.getCellForTerm( this.likeTerm );
+
+        // dispose of terms that sum to zero
+        this.term.dispose();
+        this.term = null;
+        this.likeTerm.dispose();
+        this.likeTerm = null;
+
+        // put equivalent term on opposite plate
+        if ( this.equivalentTerm ) {
+          if ( this.termCreator.combineLikeTermsEnabled ) {
+
+            //=======================================================================
+            // Like terms combined in one cell
+            //=======================================================================
+
+            var cell = this.termCreator.likeTermsCell;
+            var oppositeLikeTerm = this.oppositePlate.getTermInCell( cell );
+            if ( oppositeLikeTerm ) {
+
+              // opposite cell is occupied, combine equivalentTerm with term that's in the cell
+              var combinedTerm = oppositeLikeTerm.plus( this.equivalentTerm );
+              this.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
+
+              // dispose of the terms used to create combinedTerm
+              oppositeLikeTerm.dispose();
+              oppositeLikeTerm = null;
+              this.equivalentTerm.dispose();
+              this.equivalentTerm = null;
+
+              if ( combinedTerm.significantValue.getValue() === 0 ) {
+
+                // Combined term is zero. No halo, since the terms are on the opposite side.
+                var oppositeSumToZeroNode = new SumToZeroNode( {
+                  variable: combinedTerm.variable || null,
+                  fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
+                } );
+                sumToZeroParent.addChild( oppositeSumToZeroNode );
+                var oppositeSumToZeroCell = this.termCreator.likeTermsCell;
+
+                // dispose of the combined term
+                combinedTerm.dispose();
+                combinedTerm = null;
+              }
+              else {
+                this.equivalentTermCreator.putTermOnPlate( combinedTerm, cell );
+              }
+            }
+            else {
+
+              // opposite cell is empty, put a big copy of equivalentTerm in that cell
+              var equivalentTermCopy = this.equivalentTerm.copy( {
+                diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+              } );
+              this.equivalentTerm.dispose();
+              this.equivalentTerm = null;
+              this.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, cell );
+            }
+          }
+          else {
+
+            //=======================================================================
+            // Like terms in separate cells
+            //=======================================================================
+
+            // put equivalent term in an empty cell
+            var emptyCell = this.oppositePlate.getBestEmptyCell( this.equivalentTerm.locationProperty.value );
+            this.equivalentTermCreator.putTermOnPlate( this.equivalentTerm, emptyCell );
+          }
+          this.detachRelatedTerms();
+        }
+
+        // Do sum-to-zero animations after plates have moved
+        sumToZeroNode.center = this.plate.getLocationOfCell( sumToZeroCell );
+        sumToZeroNode.startAnimation();
+        if ( oppositeSumToZeroNode ) {
+          oppositeSumToZeroNode.center = this.oppositePlate.getLocationOfCell( oppositeSumToZeroCell );
+          oppositeSumToZeroNode.startAnimation();
+        }
+      }
+      else if ( this.term.locationProperty.value.y > this.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
+
+        // term was released below the plate, animate back to toolbox
+        this.animateToToolbox();
+      }
+      else {
+
+        // term was released above the plate, animate to the plate
+        this.animateToPlate();
+      }
     },
 
     /**
