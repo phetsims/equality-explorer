@@ -668,15 +668,9 @@ define( function( require ) {
 
           // On each animation step...
           animationStepCallback: function() {
-            if ( self.equivalentTerm && self.oppositePlate.isFull() ) {
 
-              // If we have an equivalent term to put on the opposite plate,
-              // and the opposite plate is full, return to the toolbox
-              self.animateToToolbox( self.term );
-            }
-            else if ( !self.plate.isEmptyCell( cell ) ) {
-
-              // If the target cell has become occupied, choose another cell.
+            // If the target cell has become occupied, choose another cell.
+            if ( !self.plate.isEmptyCell( cell ) ) {
               self.animateToEmptyCell();
             }
           },
