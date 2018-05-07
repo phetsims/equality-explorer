@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
@@ -57,7 +58,9 @@ define( function( require ) {
       new VariableTermCreator( yVariable, {
         positiveFill: 'rgb( 250, 100, 255 )',
         negativeFill: 'rgb( 240, 140, 255 )'
-      } )
+      } ),
+
+      new ConstantTermCreator()
     ];
   }
 
