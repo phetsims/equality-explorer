@@ -538,7 +538,7 @@ define( function( require ) {
             }
             else {
               // Defer putting combinedTerm on the plate until after we deal with equivalentTerm,
-              // in case the equivalentTerm cause maxInteger to be exceeded.
+              // in case the equivalentTerm causes maxInteger to be exceeded.
             }
           }
 
