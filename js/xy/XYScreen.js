@@ -18,7 +18,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Screen = require( 'JOIST/Screen' );
   var XYModel = require( 'EQUALITY_EXPLORER/xy/model/XYModel' );
-  var VariablesScreenView = require( 'EQUALITY_EXPLORER/variables/view/VariablesScreenView' );
+  var XYScreenView = require( 'EQUALITY_EXPLORER/xy/view/XYScreenView' );
 
   // strings
   var screenVariablesString = 'x & y'; // i18n not required, this is a test string
@@ -36,7 +36,7 @@ define( function( require ) {
 
     Screen.call( this,
       function() { return new XYModel(); },
-      function( model ) { return new VariablesScreenView( model ); },
+      function( model ) { return new XYScreenView( model ); },
       options
     );
   }
