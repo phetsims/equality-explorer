@@ -1,6 +1,7 @@
 TODO items for equality-explorer
 
 Consider merging ObjectTerm and VariableTerm, moving view info out of these.
+Choose a cell for equivalent term and animate to it.
 
 Cleanup
 - grunt update-copyright-dates
