@@ -245,11 +245,11 @@ define( function( require ) {
           self.equivalentTerm.shadowVisibleProperty.value = false;
         }
 
-        if ( self.equivalentTerm && self.oppositePlate.isFull() && !termCreator.combineLikeTermsEnabled ) {
+        if ( !termCreator.combineLikeTermsEnabled &&
+             ( self.plate.isFull() || ( self.equivalentTerm && self.oppositePlate.isFull() ) ) ) {
 
+          // each term needs its own cell and one of the plates is full
           self.refreshHalos();
-
-          // opposite plate is full
           self.animateToToolbox();
         }
         else if ( self.likeTerm && term.isInverseTerm( self.likeTerm ) ) {
