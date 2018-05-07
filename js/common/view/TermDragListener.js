@@ -44,7 +44,7 @@ define( function( require ) {
    * @param {Node} termNode - Node that the listener is attached to
    * @param {Term} term - the term being dragged
    * @param {TermCreator} termCreator - the creator of term
-   * @param {Object} [options]
+   * @param {Object} [options] - specific to TermDragListener, not propagated to supertype
    * @constructor
    */
   function TermDragListener( termNode, term, termCreator, options ) {
