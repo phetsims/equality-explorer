@@ -302,10 +302,9 @@ define( function( require ) {
         this.equivalentTerm.shadowVisibleProperty.value = false;
       }
 
-      if ( !this.termCreator.combineLikeTermsEnabled &&
-           ( this.plate.isFull() || ( this.equivalentTerm && this.oppositePlate.isFull() ) ) ) {
+      if ( this.equivalentTerm && this.oppositePlate.isFull() && !this.termCreator.combineLikeTermsEnabled ) {
 
-        // each term needs its own cell and one of the plates is full
+        // opposite plate is full
         this.refreshHalos();
         this.animateToToolbox();
       }
