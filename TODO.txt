@@ -1,5 +1,7 @@
 TODO items for equality-explorer
 
+Create top-level view types for XYScreen (XYScreenView, XYSceneNode)
+Reduce termsToolboxSpacing for XYSceneNode
 Consider merging ObjectTerm and VariableTerm, move view info out of these.
 Choose a cell for equivalent term and animate to it.
 
