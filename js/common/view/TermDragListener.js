@@ -635,6 +635,8 @@ define( function( require ) {
               oppositeSumToZeroNode.startAnimation();
             }
           }
+
+          self.detachRelatedTerms();
         }
       } );
     },
