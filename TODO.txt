@@ -1,6 +1,5 @@
 TODO items for equality-explorer
 
-Reduce termsToolboxSpacing for XYSceneNode
 Show multiple pickers in Variable accordion box, rename to VariablesAccordionBox
 Provide options to change title of VariablesAccordionBox
 Replace ValuesAccordionBox with VariablesAccordionBox
