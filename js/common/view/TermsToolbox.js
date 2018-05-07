@@ -19,7 +19,7 @@ define( function( require ) {
   var TermCreatorNode = require( 'EQUALITY_EXPLORER/common/view/TermCreatorNode' );
 
   // constants
-  var CONTENT_SIZE = new Dimension2( 250, 50 );
+  var DEFAULT_CONTENT_SIZE = new Dimension2( 250, 50 );
 
   /**
    * @param {TermCreator[]} termCreators - creators for terms, appear in this order left-to-right
@@ -32,6 +32,7 @@ define( function( require ) {
 
     options = _.extend( {
       hasNegativeTermsInToolbox: false, // {boolean} if true, put negative terms in the toolbox, e.g. -x
+      contentSize: DEFAULT_CONTENT_SIZE,
       spacing: 45, // horizontal space between TermCreatorNodes
 
       // supertype options
@@ -39,7 +40,7 @@ define( function( require ) {
       cornerRadius: 6
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, CONTENT_SIZE.width, CONTENT_SIZE.height );
+    var backgroundNode = new Rectangle( 0, 0, options.contentSize.width, options.contentSize.height );
 
     var termCreatorNodes = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
@@ -60,8 +61,8 @@ define( function( require ) {
       align: 'center',
       children: termCreatorNodes,
       center: backgroundNode.center,
-      maxWidth: CONTENT_SIZE.width,
-      maxHeight: CONTENT_SIZE.height
+      maxWidth: options.contentSize.width,
+      maxHeight: options.contentSize.height
     } );
 
     var content = new Node( {
