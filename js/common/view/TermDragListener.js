@@ -241,6 +241,7 @@ define( function( require ) {
           }
         }
 
+        // Do this last, in case we couldn't take term off plate because opposite plate was full.
         this.termCreator.removeTermFromPlate( this.term );
       }
       else if ( !this.term.isAnimating() ) {
