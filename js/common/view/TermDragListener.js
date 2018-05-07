@@ -68,10 +68,12 @@ define( function( require ) {
 
     }, options );
 
-    // @private
+    // @private constructor args
     this.termNode = termNode;
     this.term = term;
     this.termCreator = termCreator;
+
+    // @private options
     this.haloRadius = options.haloRadius;
     this.pickableWhileAnimating = options.pickableWhileAnimating;
 
@@ -413,7 +415,7 @@ define( function( require ) {
     },
 
     /**
-     * Detaches terms that are related to this drag listener, but specific to a drag sequence.
+     * Detaches terms that are related to this drag listener.
      * @private
      */
     detachRelatedTerms: function() {
