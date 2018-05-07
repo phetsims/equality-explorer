@@ -37,7 +37,9 @@ define( function( require ) {
 
       // supertype options
       lineWidth: 1,
-      cornerRadius: 6
+      cornerRadius: 6,
+      xMargin: 5,
+      yMargin: 5
     }, options );
 
     var backgroundNode = new Rectangle( 0, 0, options.contentSize.width, options.contentSize.height );
@@ -55,6 +57,13 @@ define( function( require ) {
         } ) );
       }
     }
+
+    // touchAreas
+    termCreatorNodes.forEach( function( termCreatorNode ) {
+      var dx = Math.min( 5, options.spacing ); // determined empirically
+      var dy = options.yMargin + ( options.contentSize.height - termCreatorNode.height ) / 2; // height of toolbox
+      termCreatorNode.touchArea = termCreatorNode.localBounds.dilatedXY( dx, dy );
+    } );
 
     var hBox = new HBox( {
       spacing: options.spacing,
