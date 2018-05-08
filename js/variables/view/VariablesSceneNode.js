@@ -41,7 +41,7 @@ define( function( require ) {
     BasicsSceneNode.call( this, scene, sceneProperty, layoutBounds, options );
 
     // Variables accordion box, below the Snapshots accordion box
-    var variablesAccordionBox = new VariablesAccordionBox( scene.xVariable, {
+    var variablesAccordionBox = new VariablesAccordionBox( scene.variables, {
       expandedProperty: this.variablesAccordionBoxExpandedProperty,
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: this.snapshotsAccordionBox.right,

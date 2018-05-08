@@ -51,6 +51,9 @@ define( function( require ) {
     // @public (read-only)
     this.xVariable = new Variable( xString );
 
+    // @public (read-only)
+    this.variables = [ this.xVariable ];
+
     // @public (read-only) emit1( {TermCreator[]} ) when one or more terms become zero as the result of a universal operation
     this.sumToZeroEmitter = new Emitter();
 

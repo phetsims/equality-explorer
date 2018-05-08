@@ -25,18 +25,19 @@ define( function( require ) {
 
   // strings
   var variableString = require( 'string!EQUALITY_EXPLORER/variable' );
+  var variablesString = require( 'string!EQUALITY_EXPLORER/variables' );
 
   /**
-   * @param {Variable} variable - the variable that appears in this accordion box
+   * @param {Variable[]} variables - the variables that appear in this accordion box
    * @param {Object} [options]
    * @constructor
    */
-  function VariablesAccordionBox( variable, options ) {
+  function VariablesAccordionBox( variables, options ) {
 
     options = _.extend( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // this accordion box is designed to be a fixed width, regardless of its content
-      titleString: variableString,
+      titleString: ( variables.length > 1 ) ? variablesString : variableString,
       fixedWidth: 100,
       fontSize: 24,
 
@@ -60,32 +61,43 @@ define( function( require ) {
 
     var strut = new HStrut( contentWidth );
 
-    var xText = new Text( variable.symbol, {
-      font: new MathSymbolFont( options.fontSize ),
-      maxWidth: 0.5 * contentWidth
+    // Create a picker for each variable
+    var children = [];
+    variables.forEach( function( variable ) {
+
+      var xText = new Text( variable.symbol, {
+        font: new MathSymbolFont( options.fontSize ),
+        maxWidth: 0.5 * contentWidth
+      } );
+
+      var equalsText = new Text( MathSymbols.EQUAL_TO, {
+        font: new PhetFont( options.fontSize )
+      } );
+
+      // NumberPicker.dispose not needed, VariablesAccordionBox exists for lifetime of the sim
+      var valuePicker = new NumberPicker( variable.valueProperty, new Property( variable.range ), {
+        color: 'black',
+        font: new PhetFont( options.fontSize ),
+        xMargin: 6,
+        touchAreaYDilation: 15
+      } );
+
+      children.push( new HBox( {
+        children: [ xText, equalsText, valuePicker ],
+        spacing: 5,
+        maxWidth: contentWidth
+      } ) );
     } );
 
-    var equalsText = new Text( MathSymbols.EQUAL_TO, {
-      font: new PhetFont( options.fontSize )
-    } );
-
-    // NumberPicker.dispose not needed, VariablesAccordionBox exists for lifetime of the sim
-    var valuePicker = new NumberPicker( variable.valueProperty, new Property( variable.range ), {
-      color: 'black',
-      font: new PhetFont( options.fontSize ),
-      xMargin: 6,
-      touchAreaYDilation: 15
-    } );
-
-    var equationNode = new HBox( {
-      children: [ xText, equalsText, valuePicker ],
-      spacing: 5,
-      center: strut.center,
-      maxWidth: contentWidth
+    var hBox = new HBox( {
+      children: children,
+      spacing: 25,
+      maxWidth: contentWidth,
+      center: strut.center
     } );
 
     var contentNode = new Node( {
-      children: [ strut, equationNode ]
+      children: [ strut, hBox ]
     } );
 
     AccordionBox.call( this, contentNode, options );
