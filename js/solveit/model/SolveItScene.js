@@ -266,7 +266,7 @@ define( function( require ) {
       }
 
       // indicate that the challenge has been solved
-      this.challengeHasBeenSolved = false;
+      this.challengeHasBeenSolved = true;
       this.scoreProperty.value = this.scoreProperty.value + POINTS_PER_CHALLENGE;
     }
   } );
