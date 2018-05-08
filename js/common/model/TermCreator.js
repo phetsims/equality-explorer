@@ -250,8 +250,11 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
-      for ( var i = 0; i < this.allTerms.length; i++ ) {
-        this.allTerms.get( i ).step( dt );
+
+      // operate on a copy, since step may involve modifying the array
+      var allTermsCopy = this.allTerms.getArray().slice();
+      for ( var i = 0; i < allTermsCopy.length; i++ ) {
+        allTermsCopy[ i ].step( dt );
       }
     },
 
