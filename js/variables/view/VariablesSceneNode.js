@@ -14,7 +14,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var VariableAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariableAccordionBox' );
+  var VariablesAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariablesAccordionBox' );
 
   /**
    * @param {VariablesScene} scene
@@ -30,7 +30,7 @@ define( function( require ) {
     }, options );
 
     // @private whether the Variable accordion box is expanded or collapsed
-    this.variableAccordionBoxExpandedProperty = new BooleanProperty( true );
+    this.variablesAccordionBoxExpandedProperty = new BooleanProperty( true );
 
     // @private whether variable values are visible in snapshots
     this.variableValuesVisibleProperty = new BooleanProperty( true );
@@ -40,15 +40,15 @@ define( function( require ) {
 
     BasicsSceneNode.call( this, scene, sceneProperty, layoutBounds, options );
 
-    // Variable accordion box, below the Snapshots accordion box
-    var variableAccordionBox = new VariableAccordionBox( scene.xVariable, {
-      expandedProperty: this.variableAccordionBoxExpandedProperty,
+    // Variables accordion box, below the Snapshots accordion box
+    var variablesAccordionBox = new VariablesAccordionBox( scene.xVariable, {
+      expandedProperty: this.variablesAccordionBoxExpandedProperty,
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: this.snapshotsAccordionBox.right,
       top: this.snapshotsAccordionBox.bottom + 15
     } );
-    this.addChild( variableAccordionBox );
-    variableAccordionBox.moveToBack();
+    this.addChild( variablesAccordionBox );
+    variablesAccordionBox.moveToBack();
   }
 
   equalityExplorer.register( 'VariablesSceneNode', VariablesSceneNode );
@@ -60,7 +60,7 @@ define( function( require ) {
      * @override
      */
     reset: function() {
-      this.variableAccordionBoxExpandedProperty.reset();
+      this.variablesAccordionBoxExpandedProperty.reset();
       this.variableValuesVisibleProperty.reset();
       BasicsSceneNode.prototype.reset.call( this );
     }

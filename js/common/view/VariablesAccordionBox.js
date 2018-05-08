@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Accordion box that allows the student to modify the value of a variable (e.g. 'x').
+ * Accordion box that allows the student to modify the value of one or more variables (e.g. 'x').
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -31,7 +31,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function VariableAccordionBox( variable, options ) {
+  function VariablesAccordionBox( variable, options ) {
 
     options = _.extend( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
@@ -47,12 +47,12 @@ define( function( require ) {
 
     }, options );
 
-    assert && assert( options.maxWidth === undefined, 'VariableAccordionBox sets maxWidth' );
+    assert && assert( options.maxWidth === undefined, 'VariablesAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
 
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
-    assert && assert( !options.titleNode, 'VariableAccordionBox sets titleNode' );
+    assert && assert( !options.titleNode, 'VariablesAccordionBox sets titleNode' );
     options.titleNode = new Text( options.titleString, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
@@ -69,7 +69,7 @@ define( function( require ) {
       font: new PhetFont( options.fontSize )
     } );
 
-    // NumberPicker.dispose not needed, VariableAccordionBox exists for lifetime of the sim
+    // NumberPicker.dispose not needed, VariablesAccordionBox exists for lifetime of the sim
     var valuePicker = new NumberPicker( variable.valueProperty, new Property( variable.range ), {
       color: 'black',
       font: new PhetFont( options.fontSize ),
@@ -91,7 +91,7 @@ define( function( require ) {
     AccordionBox.call( this, contentNode, options );
   }
 
-  equalityExplorer.register( 'VariableAccordionBox', VariableAccordionBox );
+  equalityExplorer.register( 'VariablesAccordionBox', VariablesAccordionBox );
 
-  return inherit( AccordionBox, VariableAccordionBox );
+  return inherit( AccordionBox, VariablesAccordionBox );
 } );
