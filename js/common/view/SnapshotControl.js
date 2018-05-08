@@ -67,7 +67,7 @@ define( function( require ) {
     var equationNode = NO_EQUATION_NODE;
     var variableValuesNode = NO_VARIABLE_VALUES_NODE;
 
-    // parent for the equation and option x value display
+    // parent for the equation and optional display of variable values
     var snapshotNode = new LayoutBox( {
       orientation: options.orientation,
       children: [ equationNode ],
