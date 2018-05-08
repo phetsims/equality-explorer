@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
@@ -27,7 +28,9 @@ define( function( require ) {
   function VariableValuesNode( variables, options ) {
 
     options = _.extend( {
-      fontSize: 28
+      fontSize: 28,
+      commaSeparated: true,
+      spacing: 10 // spacing between values
     }, options );
 
     var variableFont = new MathSymbolFont( options.fontSize );
@@ -60,7 +63,10 @@ define( function( require ) {
 
       // comma + space separator
       if ( i < variables.length - 1 ) {
-        children.push( new Text( ', ', { font: font } ) );
+        if ( options.commaSeparated ) {
+          children.push( new Text( ',', { font: font } ) );
+        }
+        children.push( new HStrut( options.spacing ) );
       }
     }
 

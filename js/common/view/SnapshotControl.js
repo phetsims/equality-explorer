@@ -47,6 +47,9 @@ define( function( require ) {
       // layout of the equation and variable values
       orientation: 'horizontal',
 
+      // are variable values separated by commas?
+      commaSeparated: true,
+
       // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
       variableValuesVisibleProperty: null,
       controlWidth: 100,
@@ -143,7 +146,10 @@ define( function( require ) {
 
         // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
         if ( snapshot.variables ) {
-          variableValuesNode = new VariableValuesNode( snapshot.variables, { fontSize: EQUATION_FONT_SIZE } );
+          variableValuesNode = new VariableValuesNode( snapshot.variables, {
+            fontSize: EQUATION_FONT_SIZE,
+            commaSeparated: options.commaSeparated
+          } );
         }
 
         // add listener that selects the snapshot
