@@ -25,10 +25,12 @@ define( function( require ) {
     SNAPSHOT_SELECTED_STROKE: 'rgb( 85, 169, 223 )',
 
     // terms
-    POSITIVE_X_FILL: 'rgb( 49, 193, 238 )', // blue
-    NEGATIVE_X_FILL: 'rgb( 99, 212, 238 )', // lighter blue
     POSITIVE_CONSTANT_FILL: 'rgb( 246, 228, 213 )', // beige
     NEGATIVE_CONSTANT_FILL: 'rgb( 248, 238, 229 )', // lighter beige
+    POSITIVE_X_FILL: 'rgb( 49, 193, 238 )', // blue
+    NEGATIVE_X_FILL: 'rgb( 99, 212, 238 )', // lighter blue
+    POSITIVE_Y_FILL: 'rgb( 250, 100, 255 )', // pink
+    NEGATIVE_Y_FILL: 'rgb( 240, 140, 255 )', // lighter pink
 
     // halo that appears when a dragged term overlaps a like term on the scale
     HALO: 'rgba( 255, 255, 0, 0.85 )', // slightly transparent yellow
