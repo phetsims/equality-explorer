@@ -11,12 +11,12 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  var EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
   var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumbersModel = require( 'EQUALITY_EXPLORER/numbers/model/NumbersModel' );
   var NumbersScreenView = require( 'EQUALITY_EXPLORER/numbers/view/NumbersScreenView' );
   var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
 
   // strings
   var screenNumbersString = require( 'string!EQUALITY_EXPLORER/screen.numbers' );
@@ -33,7 +33,7 @@ define( function( require ) {
       homeScreenIcon: EqualityExplorerScreenIcons.createNumbersScreenIcon()
     }, options );
 
-    Screen.call( this,
+    EqualityExplorerScreen.call( this,
       function() { return new NumbersModel(); },
       function( model ) { return new NumbersScreenView( model ); },
       options
@@ -42,5 +42,5 @@ define( function( require ) {
 
   equalityExplorer.register( 'NumbersScreen', NumbersScreen );
 
-  return inherit( Screen, NumbersScreen );
+  return inherit( EqualityExplorerScreen, NumbersScreen );
 } );

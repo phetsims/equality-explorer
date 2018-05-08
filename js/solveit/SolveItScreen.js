@@ -11,12 +11,12 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  var EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
   var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   var inherit = require( 'PHET_CORE/inherit' );
   var SolveItModel = require( 'EQUALITY_EXPLORER/solveit/model/SolveItModel' );
   var SolveItScreenView = require( 'EQUALITY_EXPLORER/solveit/view/SolveItScreenView' );
   var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
 
   // strings
   var screenSolveItString = require( 'string!EQUALITY_EXPLORER/screen.solveIt' );
@@ -31,10 +31,10 @@ define( function( require ) {
       name: screenSolveItString,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
-      navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon(),
+      navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon()
     }, options );
 
-    Screen.call( this,
+    EqualityExplorerScreen.call( this,
       function() { return new SolveItModel(); },
       function( model ) { return new SolveItScreenView( model ); },
       options
@@ -43,5 +43,5 @@ define( function( require ) {
 
   equalityExplorer.register( 'SolveItScreen', SolveItScreen );
 
-  return inherit( Screen, SolveItScreen );
+  return inherit( EqualityExplorerScreen, SolveItScreen );
 } );

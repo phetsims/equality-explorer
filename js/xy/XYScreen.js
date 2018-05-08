@@ -14,9 +14,9 @@ define( function( require ) {
 
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
   var XYModel = require( 'EQUALITY_EXPLORER/xy/model/XYModel' );
   var XYScreenView = require( 'EQUALITY_EXPLORER/xy/view/XYScreenView' );
 
@@ -34,7 +34,7 @@ define( function( require ) {
       backgroundColorProperty: new Property( 'rgb( 214, 233, 254 )' )
     }, options );
 
-    Screen.call( this,
+    EqualityExplorerScreen.call( this,
       function() { return new XYModel(); },
       function( model ) { return new XYScreenView( model ); },
       options
@@ -43,5 +43,5 @@ define( function( require ) {
 
   equalityExplorer.register( 'XYScreen', XYScreen );
 
-  return inherit( Screen, XYScreen );
+  return inherit( EqualityExplorerScreen, XYScreen );
 } );

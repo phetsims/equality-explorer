@@ -11,12 +11,12 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  var EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
   var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   var inherit = require( 'PHET_CORE/inherit' );
   var OperationsModel = require( 'EQUALITY_EXPLORER/operations/model/OperationsModel' );
   var OperationsScreenView = require( 'EQUALITY_EXPLORER/operations/view/OperationsScreenView' );
   var Property = require( 'AXON/Property' );
-  var Screen = require( 'JOIST/Screen' );
 
   // strings
   var screenOperationsString = require( 'string!EQUALITY_EXPLORER/screen.operations' );
@@ -33,7 +33,7 @@ define( function( require ) {
       homeScreenIcon: EqualityExplorerScreenIcons.createOperationsScreenIcon()
     }, options );
 
-    Screen.call( this,
+    EqualityExplorerScreen.call( this,
       function() { return new OperationsModel(); },
       function( model ) { return new OperationsScreenView( model ); },
       options
@@ -42,5 +42,5 @@ define( function( require ) {
 
   equalityExplorer.register( 'OperationsScreen', OperationsScreen );
 
-  return inherit( Screen, OperationsScreen );
+  return inherit( EqualityExplorerScreen, OperationsScreen );
 } );

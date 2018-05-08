@@ -58,6 +58,16 @@ define( function( require ) {
 
       // step the selected scene
       this.sceneProperty.value.step( dt );
+    },
+
+    /**
+     * When the model is deactivated (by switching screens), delete all terms that are not on the scale.
+     * @public
+     */
+    deactivate: function() {
+      this.scenes.forEach( function( scene ) {
+        scene.disposeTermsNotOnScale();
+      } );
     }
   } );
 } );
