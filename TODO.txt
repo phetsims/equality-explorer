@@ -3,6 +3,7 @@ TODO items for equality-explorer
 Merge ObjectTerm and VariableTerm into one type of variable term
 Replace ValuesAccordionBox with VariablesAccordionBox
 Choose a cell for equivalent term and animate to it.
+Set SnapshotControl orientation:'vertical', commaSeparated:false for Labs screen
 
 Cleanup
 - grunt update-copyright-dates
