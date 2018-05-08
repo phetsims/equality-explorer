@@ -378,7 +378,8 @@ define( function( require ) {
      * @public
      */
     step: function( dt ) {
-      this.animations.forEach( function( animation ) {
+      var animationsCopy = this.animations; // operate on a copy because step may modify the array
+      animationsCopy.forEach( function( animation ) {
         animation.step( dt );
       } );
     },
