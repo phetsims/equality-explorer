@@ -2,7 +2,6 @@
 
 /**
  * View for the 'Basics' screen.
- * Adds no new functionality. Provided for symmetry, so that every screen has ScreenView and model types.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
