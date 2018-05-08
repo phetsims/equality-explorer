@@ -24,7 +24,7 @@ define( function( require ) {
 
   // constants
   var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an equation, so bounds are valid
-  var NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an x value, so bounds are valid
+  var NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have variable values, so bounds are valid
   var EQUATION_FONT_SIZE = 20;
   var FRACTION_FONT_SIZE = 14;
   var SELECTION_RECTANGLE_X_MARGIN = 20;
