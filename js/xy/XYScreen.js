@@ -15,6 +15,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
+  var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var XYModel = require( 'EQUALITY_EXPLORER/xy/model/XYModel' );
@@ -31,7 +32,8 @@ define( function( require ) {
 
     options = _.extend( {
       name: screenVariablesString,
-      backgroundColorProperty: new Property( 'rgb( 214, 233, 254 )' )
+      backgroundColorProperty: new Property( 'rgb( 214, 233, 254 )' ),
+      homeScreenIcon: EqualityExplorerScreenIcons.createXYScreenIcon()
     }, options );
 
     EqualityExplorerScreen.call( this,
