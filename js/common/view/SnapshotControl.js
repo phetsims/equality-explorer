@@ -15,8 +15,8 @@ define( function( require ) {
   var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   var EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -29,6 +29,7 @@ define( function( require ) {
   var FRACTION_FONT_SIZE = 14;
   var SELECTION_RECTANGLE_X_MARGIN = 20;
   var SELECTION_RECTANGLE_Y_MARGIN = 5;
+  var VALID_ORIENTATION_VALUES = [ 'horizontal', 'vertical' ];
 
   /**
    * @param {Scene} scene - the scene that we'll be taking a snapshot of
@@ -43,11 +44,17 @@ define( function( require ) {
 
     options = _.extend( {
 
+      // layout of the equation and variable values
+      orientation: 'horizontal',
+
       // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
       variableValuesVisibleProperty: null,
       controlWidth: 100,
       controlHeight: 50
     }, options );
+
+    assert && assert( _.includes( VALID_ORIENTATION_VALUES, options.orientation ),
+      'invalid orientation: ' + options.orientation );
 
     // rectangle that appears around the snapshot when it's selected
     var selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
@@ -61,12 +68,13 @@ define( function( require ) {
     var variableValuesNode = NO_VARIABLE_VALUES_NODE;
 
     // parent for the equation and option x value display
-    var snapshotNode = new HBox( {
+    var snapshotNode = new LayoutBox( {
+      orientation: options.orientation,
       children: [ equationNode ],
-      spacing: 10,
+      spacing: ( options.orientation === 'horizontal' ) ? 10 : 5,
       center: selectionRectangle.center,
-      maxWidth: options.controlWidth - SELECTION_RECTANGLE_X_MARGIN,
-      maxHeight: options.controlHeight - SELECTION_RECTANGLE_Y_MARGIN
+      maxWidth: options.controlWidth - 2 * SELECTION_RECTANGLE_X_MARGIN,
+      maxHeight: options.controlHeight - 2 * SELECTION_RECTANGLE_Y_MARGIN
     } );
 
     // snapshot (camera) button

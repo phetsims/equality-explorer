@@ -1,7 +1,6 @@
 TODO items for equality-explorer
 
 Merge ObjectTerm and VariableTerm into one type of variable term
-Add multi-line support to Snapshots, where variable values are on a separate line
 Replace ValuesAccordionBox with VariablesAccordionBox
 Choose a cell for equivalent term and animate to it.
 
