@@ -2,7 +2,7 @@
 
 /**
  * View of a scene in the 'Numbers' screen.  Identical to the 'Basics' screen.
- * Adds no new functionality. Provided for symmetry, so that every screen a *SceneNode type.
+ * Adds no new functionality. Provided for symmetry, so that every screen has a *SceneNode type.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
