@@ -36,6 +36,7 @@ define( function( require ) {
     options = _.extend( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // this accordion box is designed to be a fixed width, regardless of its content
+      titleString: variableString,
       fixedWidth: 100,
       fontSize: 24,
 
@@ -52,7 +53,7 @@ define( function( require ) {
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
     assert && assert( !options.titleNode, 'VariableAccordionBox sets titleNode' );
-    options.titleNode = new Text( variableString, {
+    options.titleNode = new Text( options.titleString, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
     } );
