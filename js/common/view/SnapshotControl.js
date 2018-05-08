@@ -44,16 +44,12 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // layout of the equation and variable values
-      orientation: 'horizontal',
-
-      // are variable values separated by commas?
-      commaSeparated: true,
-
       // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
       variableValuesVisibleProperty: null,
       controlWidth: 100,
-      controlHeight: 50
+      controlHeight: 50,
+      orientation: 'horizontal', // layout of the equation and variable values, see VALID_ORIENTATION_VALUES
+      commaSeparated: true // are variable values separated by commas?
     }, options );
 
     assert && assert( _.includes( VALID_ORIENTATION_VALUES, options.orientation ),
