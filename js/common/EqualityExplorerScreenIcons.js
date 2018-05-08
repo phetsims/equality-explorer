@@ -209,15 +209,14 @@ define( function( require ) {
 
       // x and -x on left side of the equation
       var xNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
-      var plusNode = new Text( MathSymbols.PLUS, { font: new PhetFont( 30 ) } );
       var yNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), yString, {
         positiveFill: EqualityExplorerColors.POSITIVE_Y_FILL,
         negativeFill: EqualityExplorerColors.NEGATIVE_Y_FILL
       } );
 
       var iconNode = new HBox( {
-        spacing: 5,
-        children: [ xNode, plusNode, yNode ]
+        spacing: 8,
+        children: [ xNode, yNode ]
       } );
 
       return new ScreenIcon( iconNode, {
