@@ -742,7 +742,9 @@ define( function( require ) {
     eventToLocation: function( event ) {
 
       // move bottom-center of termNode to pointer location
-      var location = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( 0, this.termNode.contentNodeSize.height / 2 );
+      var dx = 0;
+      var dy = this.termNode.contentNodeSize.height / 2;
+      var location = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( dx, dy );
 
       // constrain to drag bounds
       return this.term.dragBounds.closestPointTo( location );
