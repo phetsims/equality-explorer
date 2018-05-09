@@ -745,6 +745,10 @@ define( function( require ) {
      */
     refreshHalos: function() {
 
+      // Bail if this drag listener is not currently active, for example when 2 terms are locked together
+      // and only one of them is being dragged. See https://github.com/phetsims/equality-explorer/issues/96
+      if ( !this.term.pickableProperty.value ) { return; }
+
       if ( this.term.draggingProperty.value ) {
 
         var previousLikeTerm = this.likeTerm;
@@ -776,7 +780,7 @@ define( function( require ) {
         }
       }
       else {
-        this.term.shadowVisibleProperty.value = false; //TODO #96 is occurring here
+        this.term.shadowVisibleProperty.value = false;
         this.term.haloVisibleProperty.value = false;
         if ( this.likeTerm ) {
           this.likeTerm.haloVisibleProperty.value = false;
