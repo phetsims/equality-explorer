@@ -5,8 +5,6 @@ Replace ValuesAccordionBox with VariablesAccordionBox
 Set SnapshotControl orientation:'vertical', commaSeparated:false for Labs screen
 
 Choose a cell for equivalent term and animate to it.
-Break up TermDragListener
-Document test scenarios for lock feature
 
 Cleanup
 - grunt update-copyright-dates
