@@ -32,14 +32,12 @@ define( function( require ) {
     this.xVariable = new Variable( xString );
     this.yVariable = new Variable( yString );
 
-    // @public (read-only)
-    this.variables = [ this.xVariable, this.yVariable ];
-
     // Use the same query parameters as 'Variables' screen to pre-populate the scale
     Scene.call( this,
       createTermCreators( this.xVariable, this.yVariable ),
       createTermCreators( this.xVariable, this.yVariable ), {
-        debugName: 'xy'
+        debugName: 'xy',
+        variables: [ this.xVariable, this.yVariable ]
       } );
   }
 

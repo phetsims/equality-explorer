@@ -28,12 +28,9 @@ define( function( require ) {
     // @public (read-only)
     this.xVariable = new Variable( xString );
 
-    //TODO this is repeated in OperationsScene and XYScene
-    // @public (read-only)
-    this.variables = [ this.xVariable ];
-
     Scene.call( this, createTermCreators( this.xVariable ), createTermCreators( this.xVariable ), {
-      debugName: 'variables'
+      debugName: 'variables',
+      variables: [ this.xVariable ]
     } );
   }
 

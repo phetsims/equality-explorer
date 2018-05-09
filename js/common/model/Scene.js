@@ -47,7 +47,8 @@ define( function( require ) {
       gridRows: EqualityExplorerQueryParameters.rows, // rows in the grid on the scale
       gridColumns: EqualityExplorerQueryParameters.columns, // columns in the grid on the scale
       numberOfSnapshots: 5,
-      iconSize: null // {Dimension2|null} size of term icons on the scale, computed if null
+      iconSize: null, // {Dimension2|null} size of term icons on the scale, computed if null
+      variables: null // {Variable[]|null} variables associated with the scene
     }, options );
 
     // @public (read-only)
@@ -56,6 +57,9 @@ define( function( require ) {
 
     // @private {Node|null} used to represent the scene. See ES5 getter.
     this._icon = options.icon;
+
+    // @private {Variable[]|null} variables associated with the scene
+    this.variables = options.variables;
 
     // Check for potential bad combinations of term creators
     assert && validateTermCreators( leftTermCreators );
