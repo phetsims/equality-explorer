@@ -723,14 +723,14 @@ define( function( require ) {
 
     /**
      * Converts an event to a model location.
-     * Enforces relationship of the term to the pointer, and constrains the drag bounds.
+     * Sets the term's location relative to the pointer location, and constrains the drag bounds.
      * @param {Event} event
      * @returns {Vector2}
      * @private
      */
     eventToLocation: function( event ) {
 
-      // move bottom center of termNode to pointer location
+      // move bottom-center of termNode to pointer location
       var location = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( 0, this.termNode.contentNodeSize.height / 2 );
 
       // constrain to drag bounds
