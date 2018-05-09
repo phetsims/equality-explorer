@@ -14,6 +14,17 @@
  *   is subtracted from what’s on the plate.)
  * - The opposite plate is the plate associated with the equivalent term, opposite the dragging term.
  *
+ * General requirements for the 'lock' feature:
+ * - toggling the lock state deletes all terms that are not on the plate (dragging and animating terms)
+ * - dragged term and equivalent term are added to plates simultaneously
+ * - equivalent term is not interactive
+ * - equivalent term has a shadow while dragged term has a shadow
+ * - equivalent term does not interact with terms on plate (no sum-to-zero)
+ * - inverse term is interactive; interacting with it breaks the association to the equivalent term
+ * - equivalent term is chosen from a plate based on dragged term's cell - choose closest
+ * - equivalent term is put on the plate based on dragged term's cell - choose closest
+ * - inverse term is created on a plate based on term's cell - choose closest
+ *
  * Note that event.currentTarget should NOT be used herein. Because of event forwarding from TermCreatorNode,
  * event.currentTarget may not be what you expect it to be.  See SimpleDragHandler.createForwardingListener
  * in TermCreatorNode.

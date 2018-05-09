@@ -5,6 +5,8 @@ Replace ValuesAccordionBox with VariablesAccordionBox
 Set SnapshotControl orientation:'vertical', commaSeparated:false for Labs screen
 
 Choose a cell for equivalent term and animate to it.
+Break up TermDragListener
+Document test scenarios for lock feature
 
 Cleanup
 - grunt update-copyright-dates
@@ -13,34 +15,22 @@ Cleanup
 
 LOCK FEATURE =========
 
-general requirements:
-- changing the lock deletes all terms that are not on the plate (dragging and animating terms)
-- term and ghost are added to equation simultaneously
-- ghost is not interactive
-- ghost has a shadow while term is dragging
-- ghost does not interact with inverse terms on plate
-- inverse term is interactive
-- dragging a ghost's inverse breaks the association between ghost and inverse
-- ghost taken from a plate is selected based on term's cell
-- inverse created on a plate is in a cell based on term's cell
-- ghost's inverse in put on plate in cell that is closest to term's cell
-
 scenarios: term dragged from toolbox, ghost comes out of other toolbox
-X (1) term released below plate, term and ghost return to toolbox
-X (2) term released above inverse on plate, term and inverse sum to zero, ghost goes to plate
-X (3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
-X (4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
-X (5) term released about plate, room on both plates, term and ghost go to plates
+(1) term released below plate, term and ghost return to toolbox
+(2) term released above inverse on plate, term and inverse sum to zero, ghost goes to plate
+(3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
+(4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
+(5) term released about plate, room on both plates, term and ghost go to plates
 
 scenarios: term dragged from plate, ghost obtained from other plate
-X (1-5) same behavior as 'from toolbox' above
+(1-5) same behavior as 'from toolbox' above
 
 scenarios: term dragged from plate, ghost must be created and requires creating inverse on other plate
-X (1) opposite plate is full, don't start term drag, display a dialog with "[left/right] side of balance is full"
-X (2) term released below plate, term and ghost return to toolbox, inverse remains on plate
-X (3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
-X (4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
-X (5) term released above plate, room on both plates, term goes to plate, ghost for to plate and replaces inverse
+(1) opposite plate is full, don't start term drag, display a dialog with "[left/right] side of balance is full"
+(2) term released below plate, term and ghost return to toolbox, inverse remains on plate
+(3) term released above plate, term plate full (or becomes full), term and ghost return to toolbox
+(4) term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
+(5) term released above plate, room on both plates, term goes to plate, ghost for to plate and replaces inverse
 
 All of the above differently for combining like terms in Operations screen.
 
