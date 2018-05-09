@@ -776,7 +776,7 @@ define( function( require ) {
         }
       }
       else {
-        this.term.shadowVisibleProperty.value = false;
+        this.term.shadowVisibleProperty.value = false; //TODO #96 is occurring here
         this.term.haloVisibleProperty.value = false;
         if ( this.likeTerm ) {
           this.likeTerm.haloVisibleProperty.value = false;
