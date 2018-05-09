@@ -254,7 +254,13 @@ define( function( require ) {
       // operate on a copy, since step may involve modifying the array
       var allTermsCopy = this.allTerms.getArray().slice();
       for ( var i = 0; i < allTermsCopy.length; i++ ) {
-        allTermsCopy[ i ].step( dt );
+        var term = allTermsCopy[ i ];
+
+        // Stepping a term may result in some other term being disposed, so only step terms
+        // that have not been disposed. See https://github.com/phetsims/equality-explorer/issues/94.
+        if ( !term.disposed ) {
+          allTermsCopy[ i ].step( dt );
+        }
       }
     },
 
