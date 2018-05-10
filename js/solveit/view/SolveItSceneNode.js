@@ -267,6 +267,16 @@ define( function( require ) {
         // show the reward dialog
         rewardDialog = rewardDialog || new RewardDialog( scene.scoreProperty.value, {
 
+          scale: 0.75,
+
+          // Display the dialog in a location that does not obscure the challenge solution.
+          // See https://github.com/phetsims/equality-explorer/issues/104
+          layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
+            var center = simBounds.center.times( 1.0 / scale );
+            dialog.centerX = center.x;
+            dialog.centerY = center.y + 50; // offset determined empirically
+          },
+          
           // 'Keep Going' hides the dialog
           keepGoingButtonListener: function() {
             rewardDialog.hide();
