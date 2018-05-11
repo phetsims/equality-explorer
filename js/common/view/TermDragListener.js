@@ -278,6 +278,8 @@ define( function( require ) {
 
       // move the node we're dragging to the foreground
       this.termNode.moveToFront();
+
+      this.refreshHalos();
     },
 
     /**
