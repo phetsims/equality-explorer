@@ -1,7 +1,9 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Describes a variable assoicated with a type of real-world object (sphere, apple, dog, turtle,..)
+ * Describes a variable associated with a type of real-world object (sphere, apple, dog, turtle,..)
+ * This is a specialization of Variable (which is a symbolic variable, e.g. 'x') that carries additional
+ * information related to the real-world object.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
