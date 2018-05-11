@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * ObjectTermCreator creates and manages terms that are associated with 'real world' objects (apple, dog, turtle,...)
+ * ObjectTermCreator creates and manages terms that are associated with real-world objects.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

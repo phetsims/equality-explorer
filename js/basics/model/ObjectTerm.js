@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * ObjectTerm is a term associated with some type of object (sphere, apple, dog, ...)
+ * ObjectTerm is a term associated with some type of real-world object (shapes, fruits, coins, animals).
  * All interactive object terms represent 1 object, and have an implicit coefficient of 1.
  * The visual design of interactive object terms does not support a coefficient.
  *
