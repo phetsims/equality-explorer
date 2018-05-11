@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Accordion box that allows the student to modify the value of one or more variables (e.g. 'x').
+ * Accordion box that allows the student to modify the value of one or more variables.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,11 +14,13 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
+  var ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -65,10 +67,22 @@ define( function( require ) {
     var children = [];
     variables.forEach( function( variable ) {
 
-      var xText = new Text( variable.symbol, {
-        font: new MathSymbolFont( options.fontSize ),
-        maxWidth: 0.5 * contentWidth
-      } );
+      var symbolNode;
+      if ( variable instanceof ObjectVariable ) {
+
+        // use an image for a variable associated with a real-world object
+        symbolNode = new Image( variable.image, {
+          scale: 0.75 // determined empirically
+        } );
+      }
+      else {
+
+        // use text for a symbolic variable, e.g 'x'
+        symbolNode = new Text( variable.symbol, {
+          font: new MathSymbolFont( options.fontSize ),
+          maxWidth: 0.5 * contentWidth
+        } );
+      }
 
       var equalsText = new Text( MathSymbols.EQUAL_TO, {
         font: new PhetFont( options.fontSize )
@@ -83,7 +97,7 @@ define( function( require ) {
       } );
 
       children.push( new HBox( {
-        children: [ xText, equalsText, valuePicker ],
+        children: [ symbolNode, equalsText, valuePicker ],
         spacing: 5,
         maxWidth: contentWidth
       } ) );
