@@ -20,18 +20,18 @@ define( function( require ) {
   var COEFFICIENT = Fraction.fromInteger( 1 ); // all object terms have an implicit coefficient of 1
 
   /**
-   * @param {ObjectType} objectType
+   * @param {ObjectVariable} variable
    * @param {Object} [options]
    * @constructor
    */
-  function ObjectTerm( objectType, options ) {
+  function ObjectTerm( variable, options ) {
 
     options = options || {};
     assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
     assert && assert( !options.coefficient, 'coefficient is a VariableTerm option' );
 
     // @public (read-only)
-    this.objectType = objectType;
+    this.variable = variable;
 
     Term.call( this, COEFFICIENT, options );
   }
@@ -46,7 +46,7 @@ define( function( require ) {
      * @public
      */
     toString: function() {
-      return 'ObjectTerm: ' + this.objectType.debugName + ' ' + this.objectType.weightProperty.value;
+      return 'ObjectTerm: ' + this.variable.symbol + ' ' + this.variable.valueProperty.value;
     },
 
     //-------------------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ define( function( require ) {
      * @override
      */
     copy: function( options ) {
-      return new ObjectTerm( this.objectType, _.extend( this.copyOptions(), options ) );
+      return new ObjectTerm( this.variable, _.extend( this.copyOptions(), options ) );
     },
 
     /**
@@ -71,19 +71,19 @@ define( function( require ) {
      * @override
      */
     get weight() {
-      return Fraction.fromInteger( this.objectType.weightProperty.value );
+      return Fraction.fromInteger( this.variable.valueProperty.value );
     },
 
     /**
      * Are this term and the specified term 'like terms'?
-     * ObjectTerms are 'like' if they are associated with the same object type.
+     * ObjectTerms are 'like' if they are associated with the same variable.
      * @param {Term} term
      * @returns {boolean}
      * @public
      * @override
      */
     isLikeTerm: function( term ) {
-      return ( term instanceof ObjectTerm ) && ( term.objectType === this.objectType );
+      return ( term instanceof ObjectTerm ) && ( term.variable === this.variable );
     },
 
     /**

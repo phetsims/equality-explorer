@@ -17,27 +17,27 @@ define( function( require ) {
   var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
 
   /**
-   * @param {ObjectType[]} objectTypes
+   * @param {ObjectVariable[]} variables
    * @param {Object} [options]
    * @constructor
    * @abstract
    */
-  function BasicsScene( objectTypes, options ) {
+  function BasicsScene( variables, options ) {
 
     options = _.extend( {
       hasConstantTerms: false // does this scene allow you to create constant terms?
     }, options );
 
+    assert && assert( !options.variables, 'BasicsScreen sets variables' );
+    options.variables = variables;
+
     // the lock feature is not supported for scenes in the Basics screen
     assert && assert( options.lockable === undefined, 'BasicsScene sets lockable' );
     options.lockable = false;
 
-    // @public
-    this.objectTypes = objectTypes;
-
     Scene.call( this,
-      createTermCreators( objectTypes, options.hasConstantTerms ),
-      createTermCreators( objectTypes, options.hasConstantTerms ),
+      createTermCreators( variables, options.hasConstantTerms ),
+      createTermCreators( variables, options.hasConstantTerms ),
       options );
   }
 
@@ -45,17 +45,17 @@ define( function( require ) {
 
   /**
    * Creates the term creators for this scene.
-   * @param {Object[]} objectTypes - see BasicsScene constructor
+   * @param {ObjectVariable[]} variables - see BasicsScene constructor
    * @param {boolean} hasConstantTerms - does this scene allow you to create constant terms?
    * @returns {TermCreator[]}
    */
-  function createTermCreators( objectTypes, hasConstantTerms ) {
+  function createTermCreators( variables, hasConstantTerms ) {
 
     var termCreators = [];
 
     // creators for object terms
-    for ( var i = 0; i < objectTypes.length; i++ ) {
-      termCreators.push( new ObjectTermCreator( objectTypes[ i ] ) );
+    for ( var i = 0; i < variables.length; i++ ) {
+      termCreators.push( new ObjectTermCreator( variables[ i ] ) );
     }
 
     // creator for constant terms
@@ -69,17 +69,6 @@ define( function( require ) {
   return inherit( Scene, BasicsScene, {
 
     /**
-     * @public
-     * @override
-     */
-    reset: function() {
-      this.objectTypes.forEach( function( objectType ) {
-        objectType.reset();
-      } );
-      Scene.prototype.reset.call( this );
-    },
-
-    /**
      * Creates a snapshot of the scene.
      * @returns {Snapshot}
      * @public
@@ -87,7 +76,7 @@ define( function( require ) {
      */
     createSnapshot: function() {
       return new Snapshot( this, {
-        objectTypes: this.objectTypes
+        variables: this.variables
       } );
     }
   } );

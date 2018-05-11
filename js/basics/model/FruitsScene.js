@@ -14,7 +14,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ObjectType = require( 'EQUALITY_EXPLORER/basics/model/ObjectType' );
+  var ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
 
   // images
   var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
@@ -29,15 +29,15 @@ define( function( require ) {
    */
   function FruitsScene() {
 
-    var objectTypes = [
+    var variables = [
 
-      // name, image, shadow, weight
-      new ObjectType( 'apple', appleImage, appleShadowImage, 4 ),
-      new ObjectType( 'lemon', lemonImage, lemonShadowImage, 5 ),
-      new ObjectType( 'orange', orangeImage, orangeShadowImage, 2 )
+      // name, image, shadow
+      new ObjectVariable( 'apple', appleImage, appleShadowImage, { value: 4 } ),
+      new ObjectVariable( 'lemon', lemonImage, lemonShadowImage, { value: 5 } ),
+      new ObjectVariable( 'orange', orangeImage, orangeShadowImage, { value: 2 } )
     ];
 
-    BasicsScene.call( this, objectTypes, {
+    BasicsScene.call( this, variables, {
 
       debugName: 'fruits',
 

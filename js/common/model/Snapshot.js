@@ -21,7 +21,6 @@ define( function( require ) {
 
     options = _.extend( {
       variables: null, // {Variable[]|null} optional variables for the snapshot
-      objectTypes: null // {ObjectType[]|null} optional object types for the snapshot
     }, options );
 
     // @private
@@ -38,18 +37,6 @@ define( function( require ) {
       // @private save the current value of each variable
       this.variableValues = _.map( this.variables, function( variable ) {
          return variable.valueProperty.value;
-      } );
-    }
-
-    // If object types are specified, save them and their current weights
-    if ( options.objectTypes ) {
-
-      // @private store the object types
-      this.objectTypes = options.objectTypes;
-
-      // @private save the current weight of each object type
-      this.weightValues = _.map( this.objectTypes, function( objectType ) {
-        return objectType.weightProperty.value;
       } );
     }
   }
@@ -74,13 +61,6 @@ define( function( require ) {
       if ( this.variables ) {
         for ( var i = 0; i < this.variables.length; i++ ) {
           this.variables[ i ].valueProperty.value = this.variableValues[ i ];
-        }
-      }
-
-      // If object types were specified, restore their weights
-      if ( this.objectTypes ) {
-        for ( i = 0; i < this.objectTypes.length; i++ ) {
-          this.objectTypes[ i ].weightProperty.value = this.weightValues[ i ];
         }
       }
     }
@@ -127,4 +107,3 @@ define( function( require ) {
 
   return Snapshot;
 } );
- 

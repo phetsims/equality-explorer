@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * ObjectTermCreator creates and manages terms that are associated with object types (apple, dog, turtle,...)
+ * ObjectTermCreator creates and manages terms that are associated with 'real world' objects (apple, dog, turtle,...)
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -16,25 +16,24 @@ define( function( require ) {
   var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
 
   /**
-   * @param {ObjectType} objectType
+   * @param {ObjectVariable} variable
    * @param {Object} [options]
    * @constructor
    */
-  function ObjectTermCreator( objectType, options ) {
+  function ObjectTermCreator( variable, options ) {
 
     var self = this;
 
-    phet.log && phet.log( 'ObjectTermCreator: ' + objectType.debugName +
-                          ', weight=' + objectType.weightProperty.value );
+    phet.log && phet.log( 'ObjectTermCreator: ' + variable.symbol + ', weight=' + variable.valueProperty.value );
 
     // @public (read-only)
-    this.objectType = objectType;
+    this.variable = variable;
 
     TermCreator.call( this, options );
 
-    // When the object type's weight changes, recompute the weight of terms on the scale.
+    // When the variable's value changes, recompute the weight of terms on the scale.
     // unlink not needed.
-    this.objectType.weightProperty.link( function( weight ) {
+    this.variable.valueProperty.link( function( value ) {
       self.updateWeightOnPlateProperty();
     } );
   }
@@ -55,7 +54,7 @@ define( function( require ) {
      * @override
      */
     createIcon: function( options ) {
-      return ObjectTermNode.createInteractiveTermNode( this.objectType.image );
+      return ObjectTermNode.createInteractiveTermNode( this.variable.image );
     },
 
     /**
@@ -66,7 +65,7 @@ define( function( require ) {
      * @override
      */
     createTermProtected: function( options ) {
-      return new ObjectTerm( this.objectType, options );
+      return new ObjectTerm( this.variable, options );
     },
 
     /**

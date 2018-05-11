@@ -30,11 +30,11 @@ define( function( require ) {
    */
   function ObjectTermNode( termCreator, term, options ) {
 
-    var contentNode = ObjectTermNode.createInteractiveTermNode( term.objectType.image, {
+    var contentNode = ObjectTermNode.createInteractiveTermNode( term.variable.image, {
       maxHeight: term.diameter
     } );
 
-    var shadowNode = new Image( term.objectType.shadow, {
+    var shadowNode = new Image( term.variable.shadow, {
       maxHeight: term.diameter,
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );

@@ -58,7 +58,7 @@ define( function( require ) {
     // @private {Node|null} used to represent the scene. See ES5 getter.
     this._icon = options.icon;
 
-    // @private {Variable[]|null} variables associated with the scene
+    // @public {Variable[]|null} variables associated with the scene
     this.variables = options.variables;
 
     // Check for potential bad combinations of term creators
@@ -139,7 +139,7 @@ define( function( require ) {
   function validateTermCreators( termCreators ) {
     for ( var i = 0; i < termCreators.length; i++ ) {
       for ( var j = 0; j < termCreators.length; j++ ) {
-        
+
         // skip comparisons to self
         if ( termCreators[ i ] !== termCreators[ j ] ) {
           assert && assert( !( termCreators[ i ].isLikeTermCreator( termCreators[ j ] ) ),
@@ -171,6 +171,13 @@ define( function( require ) {
 
       // clear all snapshots
       this.snapshotsCollection.reset();
+
+      // reset all variables
+      if ( this.variables ) {
+        this.variables.forEach( function( variable ) {
+          variable.reset();
+        } );
+      }
     },
 
     /**
