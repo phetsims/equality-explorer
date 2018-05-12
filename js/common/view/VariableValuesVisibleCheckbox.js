@@ -12,13 +12,11 @@ define( function( require ) {
   var Checkbox = require( 'SUN/Checkbox' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VariableNode = require( 'EQUALITY_EXPLORER/common/view/VariableNode' );
 
   // strings
   var questionMarkString = require( 'string!EQUALITY_EXPLORER/questionMark' );
@@ -38,30 +36,19 @@ define( function( require ) {
     // This decision was based on the limited space we have for the checkbox in Snapshots accordion box.
     var variable = variables[ 0 ];
 
-    // the variable's symbol, in math font
-    var symbolNode;
-    if ( variable instanceof ObjectVariable ) {
+    // variable
+    var variableNode = new VariableNode( variable, {
+      iconScale: 0.45,
+      fontSize: FONT_SIZE
+    } );
 
-      // use an image for a variable associated with a real-world object
-      symbolNode = new Image( variable.image, {
-        scale: 0.45 // determined empirically
-      } );
-    }
-    else {
-
-      // use text for a symbolic variable, e.g 'x'
-      symbolNode = new Text( variable.symbol, {
-        font: new MathSymbolFont( FONT_SIZE )
-      } );
-    }
-
-    // '= ?' in normal font
+    // '= ?' in normal font (no i18n requirements here, since this is an equation)
     var rightNode = new Text( ' ' + MathSymbols.EQUAL_TO + ' ' + questionMarkString, {
       font: new PhetFont( FONT_SIZE )
     } );
 
     var contentNode = new HBox( {
-      children: [ symbolNode, rightNode ], // x = ?
+      children: [ variableNode, rightNode ], // x = ?
       maxWidth: 100
     } );
 

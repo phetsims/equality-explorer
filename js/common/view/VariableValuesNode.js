@@ -13,14 +13,12 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
-  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VariableNode = require( 'EQUALITY_EXPLORER/common/view/VariableNode' );
 
   /**
    * @param {Variable[]} variables
@@ -32,18 +30,15 @@ define( function( require ) {
     options = _.extend( {
       fontSize: 28,
       commaSeparated: true,
-      spacing: 10 // spacing between values
+      spacing: 15 // spacing between values
     }, options );
 
-    var variableFont = new MathSymbolFont( options.fontSize );
     var font = new PhetFont( options.fontSize );
 
     var children = []; // {Node[]}
 
     // '(' with normal font
-    var leftParenNode = new Text( '(', {
-      font: new PhetFont( options.fontSize )
-    } );
+    var leftParenNode = new Text( '(', { font: font } );
     children.push( leftParenNode );
 
     // E.g. x = 3, for each variable
@@ -51,21 +46,12 @@ define( function( require ) {
 
       var variable = variables[ i ];
 
-      // the symbol, in math font
-      var symbolNode;
-      if ( variable instanceof ObjectVariable ) {
-
-        // use an image for a variable associated with a real-world object
-        symbolNode = new Image( variable.image, {
-          scale: 0.45 // determined empirically
-        } );
-      }
-      else {
-
-        // use text for a symbolic variable, e.g 'x'
-        symbolNode = new Text( variable.symbol, { font: variableFont } );
-      }
-      children.push( symbolNode );
+      // variable
+      var variableNode = new VariableNode( variable, {
+        iconScale: 0.45,
+        fontSize: options.fontSize
+      } );
+      children.push( variableNode );
 
       // ' = N' in normal font, i18n not required
       var equalsValueString = StringUtils.fillIn( ' {{equals}} {{value}}', {
@@ -84,9 +70,7 @@ define( function( require ) {
       }
     }
 
-    var rightParenNode = new Text( ')', {
-      font: new PhetFont( options.fontSize )
-    } );
+    var rightParenNode = new Text( ')', { font: font } );
     children.push( rightParenNode );
 
     HBox.call( this, {
