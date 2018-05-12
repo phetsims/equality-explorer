@@ -49,6 +49,7 @@ define( function( require ) {
       variableValuesVisibleProperty: null,
 
       // SnapshotControl options
+      snapshotControlHeight: 50,
       snapshotControlOrientation: 'horizontal',
       snapshotControlCommaSeparated: true,
 
@@ -85,7 +86,8 @@ define( function( require ) {
           variableValuesVisibleProperty: options.variableValuesVisibleProperty,
           orientation: options.snapshotControlOrientation,
           commaSeparated: options.snapshotControlCommaSeparated,
-          controlWidth: contentWidth
+          controlWidth: contentWidth,
+          controlHeight: options.snapshotControlHeight
         } ) );
     }
 

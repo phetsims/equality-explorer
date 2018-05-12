@@ -37,6 +37,8 @@ define( function( require ) {
       termsToolboxContentSize: new Dimension2( 250, 50 ),
       termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale
       organizeButtonVisible: true, // is the organize button visible on the scale?
+
+      snapshotControlHeight: 50, // see controlHeight option of Snapshot control
       snapshotControlOrientation: 'horizontal', // see orientation option of Snapshot control
       snapshotControlCommaSeparated: true, // see commaSeparated option of Snapshot control
 
@@ -89,6 +91,7 @@ define( function( require ) {
 
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
       variableValuesVisibleProperty: options.variableValuesVisibleProperty,
+      snapshotControlHeight: options.snapshotControlHeight,
       snapshotControlOrientation: options.snapshotControlOrientation,
       snapshotControlCommaSeparated: options.snapshotControlCommaSeparated,
       fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
