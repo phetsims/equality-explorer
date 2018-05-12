@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Checkbox used to show/hide the value of the variable in the Snapshots accordion box.
+ * Checkbox used to show/hide the values of variables in the Snapshots accordion box.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -27,12 +27,16 @@ define( function( require ) {
   var FONT_SIZE = 24;
 
   /**
-   * @param {Variable} variable - the variable to display on the checkbox
+   * @param {Variable[]} variables - the variables
    * @param {BooleanProperty} variableValueVisibleProperty - whether the variable value is visible
    * @param {Object} [options]
    * @constructor
    */
-  function VariableCheckbox( variable, variableValueVisibleProperty, options ) {
+  function VariableValuesVisibleCheckbox( variables, variableValueVisibleProperty, options ) {
+
+    // Design decision: If there are multiple variables, use the first variable to label the checkbox.
+    // This decision was based on the limited space we have for the checkbox in Snapshots accordion box.
+    var variable = variables[ 0 ];
 
     // the variable's symbol, in math font
     var symbolNode;
@@ -64,7 +68,7 @@ define( function( require ) {
     Checkbox.call( this, contentNode, variableValueVisibleProperty, options );
   }
 
-  equalityExplorer.register( 'VariableCheckbox', VariableCheckbox );
+  equalityExplorer.register( 'VariableValuesVisibleCheckbox', VariableValuesVisibleCheckbox );
 
-  return inherit( Checkbox, VariableCheckbox );
+  return inherit( Checkbox, VariableValuesVisibleCheckbox );
 } );

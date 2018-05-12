@@ -20,7 +20,7 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var SnapshotControl = require( 'EQUALITY_EXPLORER/common/view/SnapshotControl' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VariableCheckbox = require( 'EQUALITY_EXPLORER/common/view/VariableCheckbox' );
+  var VariableValuesVisibleCheckbox = require( 'EQUALITY_EXPLORER/common/view/VariableValuesVisibleCheckbox' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
@@ -137,13 +137,12 @@ define( function( require ) {
 
     var buttonGroupChildren = [ restoreButton, trashButton ];
 
-    // Checkbox for making variable values visible. Use the first variable to label the checkbox.
+    // Checkbox for making variable values visible.
     if ( options.variableValuesVisibleProperty ) {
-      var xCheckbox = new VariableCheckbox( scene.variables[ 0 ], options.variableValuesVisibleProperty, {
+      buttonGroupChildren.push( new VariableValuesVisibleCheckbox( scene.variables, options.variableValuesVisibleProperty, {
         touchAreaXDilation: 5,
         touchAreaYDilation: 5
-      } );
-      buttonGroupChildren.push( xCheckbox );
+      } ) );
     }
 
     var buttonGroup = new HBox( {
