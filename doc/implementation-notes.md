@@ -29,6 +29,7 @@ relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are diffe
 
 Sim-specific terminology:
 
+* object variable
 * object term
 * dragged term
 * equivalent term
