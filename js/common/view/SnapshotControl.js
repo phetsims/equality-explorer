@@ -70,7 +70,7 @@ define( function( require ) {
     var snapshotNode = new LayoutBox( {
       orientation: options.orientation,
       children: [ equationNode ],
-      spacing: ( options.orientation === 'horizontal' ) ? 10 : 5,
+      spacing: ( options.orientation === 'horizontal' ) ? 15 : 10,
       center: selectionRectangle.center,
       maxWidth: options.controlWidth - 2 * SELECTION_RECTANGLE_X_MARGIN,
       maxHeight: options.controlHeight - 2 * SELECTION_RECTANGLE_Y_MARGIN
@@ -137,7 +137,8 @@ define( function( require ) {
           operatorFontSize: EQUATION_FONT_SIZE,
           integerFontSize: EQUATION_FONT_SIZE,
           fractionFontSize: FRACTION_FONT_SIZE,
-          relationalOperatorFontSize: EQUATION_FONT_SIZE
+          relationalOperatorFontSize: EQUATION_FONT_SIZE,
+          relationalOperatorSpacing: 15
         } );
 
         // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
