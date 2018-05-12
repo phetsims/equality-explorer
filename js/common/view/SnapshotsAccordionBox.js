@@ -25,7 +25,6 @@ define( function( require ) {
 
   // strings
   var snapshotsString = require( 'string!EQUALITY_EXPLORER/snapshots' );
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
   var SEPARATOR_OPTIONS = {
@@ -49,11 +48,18 @@ define( function( require ) {
       // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
       variableValuesVisibleProperty: null,
 
+      // SnapshotControl options
+      snapshotControlOrientation: 'horizontal',
+      snapshotControlCommaSeparated: true,
+
       // supertype options
       contentXMargin: 10,
       contentYMargin: 10
 
     }, options );
+
+    assert && assert( !( options.variableValuesVisibleProperty && !scene.variables ),
+      'scene has no variables to show in snapshots' );
 
     assert && assert( options.maxWidth === undefined, 'SnapshotsAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
@@ -77,6 +83,8 @@ define( function( require ) {
       snapshotsVBoxChildren.push( new SnapshotControl(
         scene, scene.snapshotsCollection.snapshotProperties[ i ], scene.snapshotsCollection.selectedSnapshotProperty, {
           variableValuesVisibleProperty: options.variableValuesVisibleProperty,
+          orientation: options.snapshotControlOrientation,
+          commaSeparated: options.snapshotControlCommaSeparated,
           controlWidth: contentWidth
         } ) );
     }
@@ -127,9 +135,9 @@ define( function( require ) {
 
     var buttonGroupChildren = [ restoreButton, trashButton ];
 
-    // Checkbox for making 'x' visible
+    // Checkbox for making variable values visible. Use the first variable to label the checkbox.
     if ( options.variableValuesVisibleProperty ) {
-      var xCheckbox = new VariableCheckbox( xString, options.variableValuesVisibleProperty, {
+      var xCheckbox = new VariableCheckbox( scene.variables[ 0 ], options.variableValuesVisibleProperty, {
         touchAreaXDilation: 5,
         touchAreaYDilation: 5
       } );

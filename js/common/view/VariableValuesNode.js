@@ -13,9 +13,11 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  var ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -50,7 +52,19 @@ define( function( require ) {
       var variable = variables[ i ];
 
       // the symbol, in math font
-      var symbolNode = new Text( variable.symbol, { font: variableFont } );
+      var symbolNode;
+      if ( variable instanceof ObjectVariable ) {
+
+        // use an image for a variable associated with a real-world object
+        symbolNode = new Image( variable.image, {
+          scale: 0.45 // determined empirically
+        } );
+      }
+      else {
+
+        // use text for a symbolic variable, e.g 'x'
+        symbolNode = new Text( variable.symbol, { font: variableFont } );
+      }
       children.push( symbolNode );
 
       // ' = N' in normal font, i18n not required
