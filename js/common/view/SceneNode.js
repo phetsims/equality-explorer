@@ -80,6 +80,11 @@ define( function( require ) {
 
     /**
      * Performs sum-to-zero animation for terms that have summed to zero.
+     * Intended to be used in screens where like terms are combined in one cell on the scale,
+     * and that involve applying universal operations.  Because universal operations may result
+     * in more than one term summing to zero, we need to perform sum-to-zero animations after
+     * the operation has been applied to all terms, so that the scale is in its final position.
+     *
      * @param {TermCreator[]} termCreators - term creators whose term summed to zero
      * @public
      */
