@@ -170,12 +170,11 @@ define( function( require ) {
         if ( this.termCreator.lockedProperty.value ) {
           if ( this.termCreator.combineLikeTermsEnabled ) {
 
+            //=======================================================================
+            // Like terms are combined in one cell
+            //=======================================================================
+
             var likeTermsCell = this.termCreator.likeTermsCell;
-
-            //=======================================================================
-            // Like terms combined in one cell
-            //=======================================================================
-
             var oppositeLikeTerm = this.oppositePlate.getTermInCell( likeTermsCell );
 
             // no need to track this.inverseTerm when like terms are combined, so use a local var
@@ -212,7 +211,7 @@ define( function( require ) {
           else {
 
             //=======================================================================
-            // Like terms in separate cells
+            // Like terms occupy separate cells
             //=======================================================================
 
             var termCell = this.plate.getCellForTerm( this.term );
