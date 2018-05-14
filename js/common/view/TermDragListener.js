@@ -289,6 +289,8 @@ define( function( require ) {
      */
     drag: function( event, trail ) {
 
+      assert && assert( !this.interrupted, 'drag should not have been called after interrupt' );
+
       // move the term
       this.term.moveTo( this.eventToLocation( event ) );
 
