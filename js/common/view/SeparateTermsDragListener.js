@@ -148,7 +148,7 @@ define( function( require ) {
       var emptyCell = this.oppositePlate.getBestEmptyCell( this.equivalentTerm.locationProperty.value );
       this.equivalentTermCreator.putTermOnPlate( this.equivalentTerm, emptyCell );
 
-      // always null for this subtype, since terms on the opposite side don't interact with other terms
+      // always null for this subtype, since terms on the opposite side don't combine
       return null;
     },
 
