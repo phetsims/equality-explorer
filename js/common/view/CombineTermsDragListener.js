@@ -77,7 +77,7 @@ define( function( require ) {
 
     /**
      * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side.
-     * @returns {SumToZeroNode|null} if the drag results in terms on the opposite plate summing to zero
+     * @returns {SumToZeroNode|null} non-null if the drag results in terms on the opposite plate summing to zero
      * @protected
      * @override
      */
