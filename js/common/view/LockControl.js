@@ -16,7 +16,7 @@ define( function( require ) {
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var ToggleNode = require( 'SUN/ToggleNode' );
+  var BooleanToggleNode = require( 'SUN/BooleanToggleNode' );
 
   // images
   var lockClosedImage = require( 'image!EQUALITY_EXPLORER/lockClosed.png' );
@@ -38,12 +38,11 @@ define( function( require ) {
     var lockClosedNode = new Image( lockClosedImage );
     var lockOpenedNode = new Image( lockOpenedImage );
 
-    var toggleNode = new ToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
+    var toggleNode = new BooleanToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
 
       // This is dependent on the specific image files, and aligns the body of the lock in both images.
-      alignIcons: function( trueNode, falseNode ) {
-        trueNode.left = falseNode.left;
-        trueNode.bottom = falseNode.bottom;
+      alignChildren: function( children ) {
+        children[ 0 ].leftBottom = children[ 1 ].leftBottom;
       },
 
       // put the origin at the center of the 'closed' lock, to facilitate layout
