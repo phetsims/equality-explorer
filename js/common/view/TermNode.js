@@ -9,13 +9,14 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var CombineTermsDragListener = require( 'EQUALITY_EXPLORER/common/view/CombineTermsDragListener' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
+  var SeparateTermsDragListener = require( 'EQUALITY_EXPLORER/common/view/SeparateTermsDragListener' );
 
   // constants
   var DEFAULT_SHADOW_OFFSET = new Dimension2( 4, 4 );
@@ -103,10 +104,17 @@ define( function( require ) {
     };
     term.haloVisibleProperty.link( haloVisibleListener ); // unlink required in dispose
 
-    // @private dispose required
-    this.termDragListener = new TermDragListener( this, term, termCreator, {
+    var dragListenerOptions = {
       haloRadius: haloRadius
-    } );
+    };
+
+    // @private dispose required
+    if ( termCreator.combineLikeTermsEnabled ) {
+      this.termDragListener = new CombineTermsDragListener( this, term, termCreator, dragListenerOptions );
+    }
+    else {
+      this.termDragListener = new SeparateTermsDragListener( this, term, termCreator, dragListenerOptions );
+    }
     this.addInputListener( this.termDragListener ); // removeListener required in dispose
 
     // @private
