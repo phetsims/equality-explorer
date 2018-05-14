@@ -343,7 +343,7 @@ define( function( require ) {
     },
 
     /**
-     * Animates the term to the plate.
+     * Animates term to plates.
      * @protected
      * @abstract
      */

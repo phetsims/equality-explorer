@@ -152,7 +152,7 @@ define( function( require ) {
     },
 
     /**
-     * Animates the term to an empty cell.
+     * Animates terms to empty cells.
      * In this scenario, each term occupies a cell on the plate, and like terms are not combined.
      * If there are no empty cells on the plate, the term is returned to the toolbox where it was created.
      * @protected

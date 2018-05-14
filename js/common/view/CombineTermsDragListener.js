@@ -131,7 +131,7 @@ define( function( require ) {
     },
 
     /**
-     * Animates a term to the cell for like terms.
+     * Animates terms to the cell for like terms.
      * All like terms occupy a specific cell on the plate.
      * If there's a term in that cell, then terms are combined to produce a new term that occupies the cell.
      * If the terms sum to zero, then the sum-to-zero animation is performed.
