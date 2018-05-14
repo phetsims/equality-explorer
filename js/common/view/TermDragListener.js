@@ -264,6 +264,9 @@ define( function( require ) {
         }
       }
 
+      assert && assert( this.equivalentTerm || !this.termCreator.lockedProperty.value,
+        'lock is on, should have equivalentTerm' ); 
+
       // move the term a bit, so it's obvious that we're interacting with it
       this.term.moveTo( this.eventToLocation( event ) );
 

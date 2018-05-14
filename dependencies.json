@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.0.0-dev.115 Wed May 09 2018 09:47:35 GMT-0600 (MDT)",
+  "comment": "# equality-explorer 1.0.0-dev.116 Mon May 14 2018 12:23:24 GMT-0600 (MDT)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "69d483f8decaacd7d56a4a1f8652495a450a9d0a",
+    "sha": "4d31d65ce3a8ef6a680dbe30c3f58729fd402c3e",
     "branch": "master"
   },
   "dot": {
@@ -21,23 +21,23 @@
     "branch": "master"
   },
   "equality-explorer": {
-    "sha": "f66194867f95a0c4df302a51175d9229dd9d160f",
+    "sha": "07645f1e045d56045bf7c4fd271fe5ef843f609b",
     "branch": "master"
   },
   "joist": {
-    "sha": "b856ab7e20a938214fd83cff676ddb5d193a9959",
+    "sha": "be29f65ce78069b7dcf069dc39ff019d669124f5",
     "branch": "master"
   },
   "kite": {
-    "sha": "b607147875dca2c350235f96d4f5546617bc6e4b",
+    "sha": "bd06199cd003605706066b758dd815c4893df33f",
     "branch": "master"
   },
   "phet-core": {
-    "sha": "752ea7377167beeba7686ad9cac0e4845ce79b2b",
+    "sha": "499117835c8f6cfee29ef1622992f73b5d0035b1",
     "branch": "master"
   },
   "phet-io": {
-    "sha": "4026843ed4df355599ef20e7353f1aba87786868",
+    "sha": "c544c8bde2ba9e47ee9d4482fde6c10d9fd35ade",
     "branch": "master"
   },
   "phet-io-wrapper-classroom-activity": {
@@ -65,7 +65,7 @@
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "94e4e53f494084dfbfe89350cb7a1edfcd4f3cbb",
+    "sha": "7d606270a2de72ab26fe24e6fce1070da09e7534",
     "branch": "master"
   },
   "sherpa": {
@@ -73,7 +73,7 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "8705964f325be5c10bb0298330cc8e854a3d1851",
+    "sha": "407f74988e166ba4afde87a2e14842f200099b40",
     "branch": "master"
   },
   "tandem": {
@@ -85,7 +85,7 @@
     "branch": "master"
   },
   "vegas": {
-    "sha": "21912f64a73ea4eebf2f4fc7d4d2a15c7b3a5869",
+    "sha": "1df5ddfde6f2d3980b5332fb7cea82ea9a90690f",
     "branch": "master"
   },
   "vibe": {
