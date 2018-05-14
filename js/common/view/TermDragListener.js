@@ -322,7 +322,7 @@ define( function( require ) {
       if ( this.equivalentTerm && this.oppositePlate.isFull() && !this.termCreator.combineLikeTermsEnabled ) {
 
         // opposite plate is full
-        this.refreshHalos();
+        this.refreshHalos(); //TODO needed?
         this.animateToToolbox();
       }
       else if ( this.likeTerm && this.term.isInverseTerm( this.likeTerm ) ) {
@@ -350,7 +350,7 @@ define( function( require ) {
           if ( this.termCreator.combineLikeTermsEnabled ) {
 
             //=======================================================================
-            // Like terms combined in one cell
+            // Like terms are combined in one cell
             //=======================================================================
 
             var cell = this.termCreator.likeTermsCell;
@@ -381,6 +381,8 @@ define( function( require ) {
                 combinedTerm = null;
               }
               else {
+
+                // put the non-zero combined term on the opposite plate
                 this.equivalentTermCreator.putTermOnPlate( combinedTerm, cell );
               }
             }
@@ -398,7 +400,7 @@ define( function( require ) {
           else {
 
             //=======================================================================
-            // Like terms in separate cells
+            // Like terms occupy separate cells
             //=======================================================================
 
             // put equivalent term in an empty cell
@@ -463,16 +465,19 @@ define( function( require ) {
 
       this.term.pickableProperty.value = this.pickableWhileAnimating;
 
-      // dispose of the term when it reaches the toolbox
       var self = this;
       this.term.animateTo( this.term.toolboxLocation, {
         animationCompletedCallback: function() {
+
+          // dispose of terms when they reach the toolbox
           self.term.dispose();
           self.term = null;
+
           if ( self.equivalentTerm ) {
             self.equivalentTerm.dispose();
             self.equivalentTerm = null;
           }
+
           self.detachRelatedTerms();
         }
       } );
@@ -495,7 +500,7 @@ define( function( require ) {
      * Animates a term to the cell for like terms.
      * In this scenarios, all like terms occupy a specific cell on the plate.
      * If there's a term in that cell, then terms are combined to produce a new term that occupies the cell.
-     * Or if the terms sum to zero, then the sum-to-zero animation is performed.
+     * If the terms sum to zero, then the sum-to-zero animation is performed.
      * @private
      */
     animateToLikeCell: function() {
@@ -644,7 +649,7 @@ define( function( require ) {
               termInCell.dispose();
               termInCell = null;
 
-              // Put the new term on the plate.
+              // Put the combined term on the plate.
               self.termCreator.putTermOnPlate( combinedTerm, likeTermsCell );
             }
 
