@@ -2,6 +2,7 @@
 
 /**
  * This is the reward that's shown behind RewardDialog when the user gets to 10 stars.
+ * The reward varies by level.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
