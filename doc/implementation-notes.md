@@ -11,7 +11,7 @@ which provides a high-level description of the simulation model.
 
 ## Terminology
 
-This section defines terminology that you'll see used throughout the internal (code) and external documentation.  There's no need to memorize this section; skim it once, refer back to it as you explore the implementation.
+This section defines terminology that you'll see used throughout the internal and external documentation.  There's no need to memorize this section; skim it once, refer back to it as you explore the implementation.
 
 Standard terminology:
 
