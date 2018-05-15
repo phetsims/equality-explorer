@@ -116,6 +116,8 @@ BalanceScale, Plate, Grid
 
 Universal Operation
 
+Terms that evaluate to zero are omitted. A term with coefficient of `1` is displayed as `x`.  A term with coeffient of `-1` is displayed as `-x`.
+
 Snapshots
 
 ## View
@@ -139,11 +141,11 @@ EquationNode, dynamic vs static
 
 ## Solve It! screen
 
-Game levels numbered from 1 in both model and view, and in type names (e.g. ChallengeGenerator1)
+Game levels are numbered from 1 in both the model and view, and in type names (e.g. `ChallengeGenerator1`)
 
-Challenge form: `ax + b = mx + n`
+The general form of all challenges equations is: `ax + b = mx + n`.
 
-Variables and comments in challenge generators correspond to the specification in the [Challenge Generation design document(https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo).
+`ChallengeGenerator` and its subtypes are responsible for generating challenges for the 4 levels. Variables and comments therein correspond to the specification in the [Challenge Generation design document](https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo).
 
 ## Miscellaneous
 
