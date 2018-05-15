@@ -15,7 +15,7 @@ define( function( require ) {
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Color = require( 'SCENERY/util/Color' );
-  var DebugChallengeNode = require( 'EQUALITY_EXPLORER/solveit/view/DebugChallengeNode' );
+  var ChallengeDerivationNode = require( 'EQUALITY_EXPLORER/solveit/view/ChallengeDerivationNode' );
   var Easing = require( 'TWIXT/Easing' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -203,8 +203,8 @@ define( function( require ) {
 
     if ( EqualityExplorerQueryParameters.showAnswers ) {
 
-      // show debugging info related to the challenge
-      children.push( new DebugChallengeNode( scene.challengeProperty, {
+      // shows how the current challenge was derived
+      children.push( new ChallengeDerivationNode( scene.challengeProperty, {
         left: snapshotsAccordionBox.left,
         top: snapshotsAccordionBox.bottom + 5
       } ) );

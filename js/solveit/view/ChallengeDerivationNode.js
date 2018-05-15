@@ -1,7 +1,7 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Displays debugging info related to the current challenge.
+ * Shows how the current challenge was derived. Used exclusively for debugging.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -23,7 +23,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function DebugChallengeNode( challengeProperty, options ) {
+  function ChallengeDerivationNode( challengeProperty, options ) {
 
     var self = this;
 
@@ -39,8 +39,8 @@ define( function( require ) {
     } );
   }
 
-  equalityExplorer.register( 'DebugChallengeNode', DebugChallengeNode );
+  equalityExplorer.register( 'ChallengeDerivationNode', ChallengeDerivationNode );
 
-  return inherit( RichText, DebugChallengeNode );
+  return inherit( RichText, ChallengeDerivationNode );
 } );
  
