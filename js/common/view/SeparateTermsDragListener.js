@@ -184,7 +184,7 @@ define( function( require ) {
 
             // If the target cell has become occupied, choose another cell.
             if ( !self.plate.isEmptyCell( cell ) ) {
-              self.animateToEmptyCell();
+              self.animateToPlate();
             }
           },
 
