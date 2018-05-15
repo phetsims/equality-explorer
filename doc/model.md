@@ -13,7 +13,7 @@ There are 2 modes of operation when building equations:
 
 The _Basics_ screen introduces equations using real-world objects &mdash; shapes, fruits, coins and animals. 
 
-The _Numbers_ screen introduces the _lock_ feature, activated using the padlock button at the bottom center of the screen. 
+The _Numbers_ screen introduces the _lock_ feature, activated using the padlock button at the bottom center of the screen. When locked, making a change to one side of the equation results in an equivalent change to the opposite side of the equation. For example, if the student drags a constant term '1' to the left plate, a '1' will also be dragged to the right plate.  If the student drags a '1' off the left plate, and the right plate is empty, '1' and '-1' will be created on the right side; the '1' will be dragged and the -1 will remain on the plate.  
 
 The _Variables_ screen introduces the variable _x_, and the abiltiy to change its value.
 
