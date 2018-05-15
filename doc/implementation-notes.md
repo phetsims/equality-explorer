@@ -47,7 +47,7 @@ Sim-specific terminology:
 * plate - the balance scale has 2 of these, one for each side of the equation, see [Plate](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Plate.js)
 * restore snapshot button - restores the snapshot that is selected in the Snapshots accordion box
 * "sum to zero" - the phrase used when adding 2 terms results in a value of zero 
-* term creator - responsible for creating and managing terms, uses the PhET creator pattern, see [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js) 
+* term creator - responsible for creating and managing terms, uses the PhET [creator pattern](https://github.com/phetsims/scenery-phet/issues/214), see [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js) 
 * toolbox - panels that appear below the plates, terms can be dragged to/from
 * universal operation - an operation that is applied to both sides of the equation 
 
