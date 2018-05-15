@@ -37,13 +37,10 @@ define( function( require ) {
     // icons
     var lockClosedNode = new Image( lockClosedImage );
     var lockOpenedNode = new Image( lockOpenedImage );
+    assert && assert( lockClosedNode.width === lockOpenedNode.width && lockClosedNode.height === lockOpenedNode.height,
+      'lock images must have identical dimensions' );
 
     var toggleNode = new BooleanToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
-
-      // This is dependent on the specific image files, and aligns the body of the lock in both images.
-      alignChildren: function( children ) {
-        children[ 0 ].leftBottom = children[ 1 ].leftBottom;
-      },
 
       // put the origin at the center of the 'closed' lock, to facilitate layout
       x: -lockClosedNode.width / 2,
@@ -63,7 +60,7 @@ define( function( require ) {
       }
     } ) );
 
-    this.touchArea = this.localBounds.dilatedXY( 10, 10 );
+    this.touchArea = this.localBounds.dilatedXY( 5, 10 );
   }
 
   equalityExplorer.register( 'LockControl', LockControl );
