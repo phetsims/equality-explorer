@@ -89,7 +89,7 @@ Instances of these types are dynamic and require memory management; `dispose` mu
 - `Challenge`
 - `EqualityExplorerRewardNode`
 
-Instances of all other types are static, created during sim initialization, and exist for the lifetime of the sim.
+Instances of all other types are static, created during sim initialization or lazily, and exist for the lifetime of the sim.
 
 If you make significant modifications to this sim that involve any of the above dynamic types, you should perform memory leak testing similar to https://github.com/phetsims/equality-explorer/issues/64.
 
