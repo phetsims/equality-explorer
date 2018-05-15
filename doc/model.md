@@ -11,6 +11,10 @@ There are 2 modes of operation when building equations:
 
 (2) Like terms are combined in one cell on the scale.  This is the mode of operation in the _Operations_ and _Solve It!_ screens.
 
+The _Basics_ screen introduces equations using real-world objects &mdash; shapes, fruits, coins and animals. 
+
+The _Numbers_ screen introduces the _lock_ feature, activated using the padlock button at the bottom center of the screen. 
+
 The _Variables_ screen introduces the variable _x_, and the abiltiy to change its value.
 
 The _Operations_ screen introduces the ability to apply _operations_ to both sides of the scale. An operation consists of an _operator_ and an _operand_. The operators are addition, subtraction, multiplication and division.  The operands are constant and variable terms.  Constant terms have a range of -10 to 10.  Variable terms involve the variable _x_, with a coefficient range of -10 to 10.  Multiplication and division are supported for constant terms only. Division by zero is not allowed.
