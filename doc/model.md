@@ -11,6 +11,8 @@ There are 2 modes of operation when building equations:
 
 (2) Like terms are combined in one cell on the scale.  This is the mode of operation in the _Operations_ and _Solve It!_ screens.
 
+All screens provide the ability to save and restore _snapshots_. Each snapshot contains the contents of the scale (including the positions of all terms) and the values of any variables.
+
 The _Basics_ screen introduces equations using terms that correspond to real-world objects (shapes, fruits, coins and animals) whose weights are hidden.
 
 The _Numbers_ screen introduces the _lock_ feature, activated using the padlock button at the bottom center of the screen. When locked, making a change to one side of the equation results in an equivalent change to the opposite side of the equation. For example, if the student drags a constant term '1' to the left plate, a '1' will also be dragged to the right plate.  If the student drags a '1' off the left plate, and the right plate is empty, '1' and '-1' will be created on the right side; the '1' will be dragged and the -1 will remain on the plate.  
