@@ -23,9 +23,9 @@ The _Operations_ screen introduces the ability to apply _operations_ to both sid
 
 The _Solve It!_ screen is a game that tests the student's ability to solve equations involving one variable. The game is organized into 4 _levels_ that are progressively more difficult:
 
-- Level 1: One-step equations
-- Level 2: Two-step equations
-- Level 3: Multi-step equations with fractions
-- Level 4: Multi-step equations with variables on both sides
+- Level 1: One-step equations (`ax = c` or `x + b = c`)
+- Level 2: Two-step equations (`ax + b = c`)
+- Level 3: Multi-step equations with fractions (`(a/d)x + b = c` or `(a/d)x + (b/d) = c`)
+- Level 4: Multi-step equations with variables on both sides (`ax + b = mx + n`)
 
 Each level provides an infinite number of _challenges_, generated randomly. Each challenge provides an equation (no inequalities), and the goal is solve for `x` by reducing the equation to either `x = N` or `N = x`.  For each challenge solved, the student is awarded one star and a smiley face appears.  When 10 challenges have been solved, an additional reward appears.
