@@ -19,7 +19,7 @@ The _Variables_ screen introduces the variable `x`, and the abiltiy to change it
 
 The _Operations_ screen introduces the ability to apply _operations_ to both sides of the scale. An operation consists of an _operator_ and an _operand_. The operators are addition, subtraction, multiplication and division.  The operands are constant and variable terms.  Constant terms have a range of -10 to 10.  Variable terms involve the variable `x`, with a coefficient range of -10 to 10.  Multiplication and division are supported for constant terms only. Division by zero is not allowed.
 
-The _Solve It!_ screen is a game that tests the student's ability to solve equations involving one variable. The game is organized into 4 _levels_:
+The _Solve It!_ screen is a game that tests the student's ability to solve equations involving one variable. The game is organized into 4 _levels_ that are progressively more difficult:
 
 - Level 1: One-step equations
 - Level 2: Two-step equations
