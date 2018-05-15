@@ -14,8 +14,8 @@ define( function( require ) {
   var Animation = require( 'TWIXT/Animation' );
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var Color = require( 'SCENERY/util/Color' );
   var ChallengeDerivationNode = require( 'EQUALITY_EXPLORER/solveit/view/ChallengeDerivationNode' );
+  var Color = require( 'SCENERY/util/Color' );
   var Easing = require( 'TWIXT/Easing' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
