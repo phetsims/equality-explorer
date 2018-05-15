@@ -95,13 +95,25 @@ Instances of all other types are static, created at startup or lazily, and exist
 
 This section provides a concise overview of the screens, their similarities and their differences. For more details, consult the (somewhat out of date) [Equality Explorer HTML5 design document](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ).
 
-All screens have one of more _scenes_, containing four common elements: a balance scale, an equation that represents what is on the scale, term toolboxes, and a Snapshots accordion box.  The `Basics` screen is the only screen with more than one scene, but the general pattern is applied to all screens to facilitate reuse.
-
 Screens differ primarily in their strategy for putting terms on the scale. The two strategies are:
 
 (1) **Separate like terms**: Like terms occupy separate cells on the scale, and are combined only if they sum to zero. This strategy is used in the _Basics_, _Numbers_ and _Variables_ screens.  Those screens consequently have a 6x6 grid of cells on each plate.
 
 (2) **Combine like terms**: Like terms are combined in one cell on the scale. This strategy is used in the _Operations_ and _Solve It!_ screens. Those screens have a 1x2 grid of cells on each plate; one cell for variable terms, the other cell for constant terms.
+
+All screens have one of more _scenes_, containing four common elements: a balance scale, an equation that represents what is on the scale, 2 term toolboxes, and a Snapshots accordion box. If a screen has more than one scene, it also has a control for choosing the scene. The _Basics_ and _Solve It!_ screens have more than one scene; other screens have a single scene.
+
+The first three screens are similar, except for the number of scenes and types of terms in each scene.  They all use strategy (1) above for putting terms on the scale. 
+
+The _Basics_ screen has 4 scenes with 'real-world object' terms (plus constant terms in the 'shapes' scene).  A set of radio buttons is used to choose a scene. 
+
+The _Numbers_ screen has one scene with constant terms. It introduces the lock featues, described in more detail later.  
+
+The _Variables_ screen has one scene with variable and constant terms. It introduces a picker for changing the variable's values.
+
+The _Operations_ screen also has one scene with variable and constant terms, but uses strategy (2) for putting terms on the scale.  This screen also introduces the 'universal operation control', used to apply operations to both sides of the scale.
+
+The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection buttons are used to choose a scene (level). The scenes in this screen differ from other screens in a couple of important ways:  since the goal is to determine the value of `x`, the picker for setting `x` is hidden; and two equations are shown about the balance scale, the top one corresponding the challenge, and the bottom one corresponding to what's currently on the scale.
 
 ## Model
 
