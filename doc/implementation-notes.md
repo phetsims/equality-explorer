@@ -143,9 +143,9 @@ EquationNode, dynamic vs static
 
 Game levels are numbered from 1 in both the model and view, and in type names (e.g. `ChallengeGenerator1`.)
 
-The general form of all challenges equations is: `ax + b = mx + n`.
+[Challenge](https://github.com/phetsims/equality-explorer/blob/master/js/solveit/model/Challenge.js) encapsulates equations with the general form: `ax + b = mx + n`.  Terms that evaluate to zero are omitted.
 
-`ChallengeGenerator` and its subtypes are responsible for generating challenges for the 4 levels. Variables and comments therein correspond to the specification in the [Challenge Generation design document](https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo).
+[ChallengeGenerator](https://github.com/phetsims/equality-explorer/blob/master/js/solveit/model/ChallengeGenerator.js) and its subtypes are responsible for generating challenges for the 4 levels. Variables and comments therein correspond to the specification in the [Challenge Generation design document](https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo).
 
 ## Miscellaneous
 
