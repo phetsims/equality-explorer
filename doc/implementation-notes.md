@@ -22,8 +22,8 @@ Standard terminology:
 * inequality - a mathematical relation in which two expressions are joined by a 
 relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different
 * like terms - see https://en.wikipedia.org/wiki/Like_terms
-* operand - the input value to an operation
-* operation - in this sim, used to refer to binary operations involving one operator and one operand
+* operand - an input value to an operation
+* operation - in this sim, used to refer to binary operations involving one operator and two operands
 * operator - in this sim, identifies the function of a binary operation, or the operators in an equation expression
 * relational operator - denotes the relationship between the left and right side of an equation, e.g. `=`, `>`, `<`
 * terms - numbers or objects that appear in an equation, see [Term](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Term.js)
