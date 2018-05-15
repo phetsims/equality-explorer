@@ -89,7 +89,7 @@ Instances of the types listed below are dynamic and require memory management; `
 - `Challenge`
 - `EqualityExplorerRewardNode`
 
-Instances of all other types are static, created during sim initialization or lazily, and exist for the lifetime of the sim.
+Instances of all other types are static, created at initialization or lazily, and exist for the lifetime of the sim.
 
 ## Model
 
