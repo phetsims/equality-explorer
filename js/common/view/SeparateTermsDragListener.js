@@ -88,6 +88,10 @@ define( function( require ) {
       TermDragListener.prototype.detachRelatedTerms.call( this );
     },
 
+    //-------------------------------------------------------------------------------------------------
+    // Below here is the implementation of the TermDragListener API
+    //-------------------------------------------------------------------------------------------------
+
     /**
      * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
      * Check this.interrupted after calling this function; it may interrupt the drag cycle!

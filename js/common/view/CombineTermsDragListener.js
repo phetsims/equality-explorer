@@ -33,6 +33,10 @@ define( function( require ) {
 
   return inherit( TermDragListener, CombineTermsDragListener, {
 
+    //-------------------------------------------------------------------------------------------------
+    // Below here is the implementation of the TermDragListener API
+    //-------------------------------------------------------------------------------------------------
+    
     /**
      * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
      * @protected

@@ -191,16 +191,6 @@ define( function( require ) {
     },
 
     /**
-     * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
-     * Check this.interrupted after calling this function; it may interrupt the drag cycle!
-     * @protected
-     * @abstract
-     */
-    startOpposite: function() {
-      throw new Error( 'startOpposite must be implemented by subtype' );
-    },
-
-    /**
      * Called while termNode is being dragged.
      * @param {Event} event
      * @param {Trail} trail
@@ -290,16 +280,6 @@ define( function( require ) {
     },
 
     /**
-     * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side.
-     * @returns {SumToZeroNode|null} non-null if the drag results in terms on the opposite plate summing to zero
-     * @protected
-     * @abstract
-     */
-    endOpposite: function() {
-      throw new Error( 'endOpposite must be implemented by subtype' );
-    },
-
-    /**
      * Detaches terms that are related to this drag listener.
      * @protected
      */
@@ -340,15 +320,6 @@ define( function( require ) {
           self.detachRelatedTerms();
         }
       } );
-    },
-
-    /**
-     * Animates term to plates.
-     * @protected
-     * @abstract
-     */
-    animateToPlate: function() {
-      throw new Error( 'animateToPlate must be implemented by subtype' );
     },
 
     /**
@@ -418,6 +389,39 @@ define( function( require ) {
           this.likeTerm.haloVisibleProperty.value = false;
         }
       }
+    },
+
+    //-------------------------------------------------------------------------------------------------
+    // Below here are @abstract methods, to be implemented by subtypes
+    //-------------------------------------------------------------------------------------------------
+
+    /**
+     * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
+     * Check this.interrupted after calling this function; it may interrupt the drag cycle!
+     * @protected
+     * @abstract
+     */
+    startOpposite: function() {
+      throw new Error( 'startOpposite must be implemented by subtype' );
+    },
+
+    /**
+     * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side.
+     * @returns {SumToZeroNode|null} non-null if the drag results in terms on the opposite plate summing to zero
+     * @protected
+     * @abstract
+     */
+    endOpposite: function() {
+      throw new Error( 'endOpposite must be implemented by subtype' );
+    },
+
+    /**
+     * Animates term to plates.
+     * @protected
+     * @abstract
+     */
+    animateToPlate: function() {
+      throw new Error( 'animateToPlate must be implemented by subtype' );
     }
   } );
 } );
