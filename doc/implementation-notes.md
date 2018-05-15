@@ -101,7 +101,21 @@ If you make significant modifications to this sim that involve any of the above 
 This section provides an overview of the most important model elements, and some miscellaneous topics
 related to the model.
 
+Fractions vs integers
+
 All fractions must be reduced.
+
+Model and Scene
+
+EqualityExplorerMovable base type, responsibilites
+
+Term creators and the creator pattern.
+
+ObjectTerm vs VariableTerm
+
+Universal Operation
+
+Snapshots
 
 TODO
 
@@ -110,12 +124,21 @@ TODO
 This section provides an overview of the most important view components, and some miscellaneous topics
 related to the view.
 
+ScreenView and SceneNode
+
+TermNode creation and event forwarding
+
+TermDragListener and its subtypes
+
 TODO
 
 ## Solve It! screen
 
-- game levels numbered from 1 in both model and view, and in type names (e.g. ChallengeGenerator1)
-- challenge form: ax + b = mx + n
+Game levels numbered from 1 in both model and view, and in type names (e.g. ChallengeGenerator1)
+
+Challenge form: ax + b = mx + n
+
+Variables and comments in challenge generators correspond to the specification in the [Challenge Generation design document(https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo).
 
 ## Miscellaneous
 
