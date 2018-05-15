@@ -16,9 +16,9 @@ This section defines terminology that you'll see used throughout the internal (c
 Standard math terminology:
 
 * constant term - term with a constant value, e.g. `1` or `2/3`, see [ConstantTerm](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/ConstantTerm.js)
-* equation - a mathematical relation in which two _expressions_ are joined by an equal sign (=)
+* equation - a mathematical relation in which two expressions are joined by an equal sign (=)
 * expression - a combination of symbols that is well-formed according to rules that depend on the context
-* inequality - a mathematical relation in which two _expressions_ are joined by a 
+* inequality - a mathematical relation in which two expressions are joined by a 
 relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different
 * like terms - https://en.wikipedia.org/wiki/Like_terms
 * operand - the input value to an operation
