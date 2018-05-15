@@ -77,18 +77,17 @@ this.addInputListener( this.termDragListener );
 
 Instances of these types are dynamic and require memory management; `dispose` must be implemented and called.
 
-- Term and its subtypes (ConstantTerm, VariableTerm, ObjectTerm)
-- TermNode and its subtypes (ConstantTermNode, VariableTermNode, MysteryTermNode)
-- TermDragListener and its subtypes (CombinedTermsDragListener, SeparateTermsDragListener)
-- EquationNode
-- EquationPanel
-- Snapshot
-- SumToZeroNode
-- UniversalOperation
-- UniversalOperationNode
-- UniversalOperationAnimation
-- Challenge
-- EqualityExplorerRewardNode
+- `Term` and its subtypes (`ConstantTerm`, `VariableTerm`, `ObjectTerm`)
+- `TermNode` and its subtypes (`ConstantTermNode`, `VariableTermNode`, `ObjectTermNode`)
+- `TermDragListener` and its subtypes (`CombinedTermsDragListener`, `SeparateTermsDragListener`)
+- `EquationNode`
+- `EquationPanel`
+- `Snapshot`
+- `SumToZeroNode`
+- `UniversalOperation`
+- `UniversalOperationNode`
+- `Challenge`
+- `EqualityExplorerRewardNode`
 
 Instances of all other types are static, created during sim initialization, and exist for the lifetime of the sim.
 
