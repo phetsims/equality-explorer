@@ -11,44 +11,46 @@ which provides a high-level description of the simulation model.
 
 ## Terminology
 
-This section enumerates terms that you'll see used throughout the internal and external documentation.
+This section defines terminology that you'll see used throughout the internal (code) and external documentation.
 
 Standard math terminology:
 
-* inequality - a mathematical relation in which two _expressions_ are joined by a 
-relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different
+* constant term - term with a constant value, e.g. `1` or `2/3`, see [ConstantTerm](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/ConstantTerm.js)
 * equation - a mathematical relation in which two _expressions_ are joined by an equal sign (=)
 * expression - a combination of symbols that is well-formed according to rules that depend on the context
+* inequality - a mathematical relation in which two _expressions_ are joined by a 
+relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different
 * like terms - https://en.wikipedia.org/wiki/Like_terms
-* operation
-* operator
-* operand
-* term
-* constant term
-* variable term
+* operand - the input value to an operation
+* operation - in this sim, used to refer to binary operations involving one operator and one operand
+* operator - in this sim, identifies the function of a binary operation, or the operators in an equation expression
+* relational operator - denotes the relationship between the left and right side of an equation, e.g. `=`, `>`, `<`
+* terms - numbers or objects that appear in an equation, see [Term](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Term.js)
+* variable term - term with a coefficient and associated variable, e.g. `5x` or `-x`, see [VariableTerm](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/VariableTerm.js)
 
 Sim-specific terminology:
 
-* object variable
-* object term
-* dragged term
-* equivalent term
-* inverse term
-* balance scale (aka scale or balance)
-* locked
-* plate
-* opposite plate
-* organize button
-* clear plate button
-* restore snapshot button
-* trash snapshot button
-* sum to zero
-* toolbox
-* universal operation
-* zero pair
-* challenge
-* challenge generator
-* level-selection buttons
+* balance scale (aka scale or balance) - device for weighing, corresponds to the equation that appears above it, see [BalanceScale](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/BalanceScale.js)
+* balances - when the balance scale's plates contain the same weight, it is balanced
+* challenge - a single-variable equation, where the goal is to solve for the variable
+* challenge generator - generates challenges for a specific game level
+* clear scale button - deletes all terms from the scale
+* delete snapshot button - deletes the snapshot that is selected in the Snapshots accordion box
+* dragged term - a term that you're dragging
+* equivalent term - a term on the opposite side that is identical to the dragged term
+* inverse term - a term on the opposite side that is the inverse of the dragged term
+* level-selection buttons - the buttons used to select the game level
+* locked - when the sim is locked, interacting with terms on one side of the equation will result in an equivalent interaction on the opposite side
+* object variable - a real-world object (shape, fruit, coin, animal) whose value is variable. As distnguished from a symbolic variable (`x`)
+* object term - term associated with an object variable
+* opposite plate - the plate associated with the equivalent term, opposite the dragging term
+* organize button - organizes terms on the plates
+* plate - the balance scale has 2 of these, one for each side of the equation, see [Plate](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Plate.js)
+* restore snapshot button - restores the snapshot that is selected in the Snapshots accordion box
+* sum to zero -
+* term creator - responsible for creating and managing terms, uses the PhET creator pattern, see [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js) 
+* toolbox - panels that appear below the plates, terms can be dragged to/from
+* universal operation - an operation that is applied to both sides of the equation 
 
 ## General
 
