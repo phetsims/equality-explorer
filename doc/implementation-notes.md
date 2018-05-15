@@ -147,5 +147,5 @@ Variables and comments in challenge generators correspond to the specification i
 
 ## Miscellaneous
 
-While this simulation only presents the student with at most one variable, the code was written to support multiple variables. As of this writing, a non-production screen is provided to verify multi-variable support.  Run with the `xy` query parameter to add the _x & y_ screen.  Note that this screen may be moved to its own simulation in the future, see https://github.com/phetsims/equality-explorer/issues/99.
+**Multi-variable support**: While this simulation only presents the student with at most one variable, the code was written to support multiple variables. As of this writing, a non-production screen is provided to verify multi-variable support.  Run with the `xy` query parameter to add the _x & y_ screen.  Note that this screen may be moved to its own simulation in the future, see https://github.com/phetsims/equality-explorer/issues/99.
 Support for multiple variables and XYScreen
