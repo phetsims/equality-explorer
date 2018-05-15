@@ -141,7 +141,7 @@ EquationNode, dynamic vs static
 
 ## Solve It! screen
 
-Game levels are numbered from 1 in both the model and view, and in type names (e.g. `ChallengeGenerator1`)
+Game levels are numbered from 1 in both the model and view, and in type names (e.g. `ChallengeGenerator1`.)
 
 The general form of all challenges equations is: `ax + b = mx + n`.
 
