@@ -67,7 +67,7 @@ testing. Sim-specific query parameters are documented in
 
 **Memory management**:
 
-All calls that register an observer have associated documentation indicating whether a corresponding unregister call is required. This includes calls to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Property.multilink` and `new Multilink`.  When unregistering is not needed, it's typically because instances of a type exist for the lifetime of teh sim. Examples:
+All calls that register an observer have associated documentation indicating whether a corresponding unregister call is required. This includes calls to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Property.multilink` and `new Multilink`.  When unregistering is not needed, it's typically because instances of a type exist for the lifetime of the sim. Examples:
 
 ```js
 // unlink not needed.
@@ -92,7 +92,7 @@ Instances of these types are dynamic and require memory management; `dispose` mu
 - Challenge
 - EqualityExplorerRewardNode
 
-Instances of all other types are static, created during sim initialization, and exist for the lifetime of sim.
+Instances of all other types are static, created during sim initialization, and exist for the lifetime of the sim.
 
 If you make significant modifications to this sim that involve any of the above dynamic types, you should perform memory leak testing similar to https://github.com/phetsims/equality-explorer/issues/64.
 
