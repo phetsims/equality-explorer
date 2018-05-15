@@ -93,7 +93,7 @@ Instances of all other types are static, created at startup or lazily, and exist
 
 ## Screens
 
-This section provides a concise overview of the screens, their similarities and their differences. For more details, consult the (slightly out of date) [Equality Explorer HTML5 design document](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ).
+This section provides a concise overview of the screens, their similarities and their differences. For more details, consult the (somewhat out of date) [Equality Explorer HTML5 design document](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ).
 
 ## Model
 
