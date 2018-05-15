@@ -91,6 +91,8 @@ Instances of the types listed below are dynamic and require memory management; `
 
 Instances of all other types are static, created at startup or lazily, and exist for the lifetime of the sim.
 
+## Screens: similarities and differences
+
 ## Model
 
 This section provides an overview of the most important model elements, and some miscellaneous topics
