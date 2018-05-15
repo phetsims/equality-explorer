@@ -9,11 +9,11 @@ Equations are built using _constant terms_ (e.g. `1`, `-1`, `5`, `2/3`) and _var
 
 Throughout the simulation, fractional constants and coefficients are reduced. E.g. `4/6` becomes `2/3`; `-10/2` becomes `-5`.
 
-There are two modes of operation when building equations:
+When building equations, there are two strategies for handling like terms:
 
-(1) Like terms occupy separate cells on the scale, and can be combined only if they sum to zero. This is the mode of operation in the _Basics_, _Numbers_ and _Variables_ screens.
+(1) Like terms occupy separate cells on the scale, and are combined only if they sum to zero. This strategy is used in the _Basics_, _Numbers_ and _Variables_ screens.
 
-(2) Like terms are combined in one cell on the scale.  This is the mode of operation in the _Operations_ and _Solve It!_ screens.
+(2) Like terms are combined in one cell on the scale. This strategy is used in the _Operations_ and _Solve It!_ screens.
 
 All screens provide the ability to save and restore _snapshots_. Each snapshot contains the contents of the scale (including the positions of all terms) and the values of any variables.
 
