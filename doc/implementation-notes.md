@@ -147,4 +147,5 @@ Variables and comments in challenge generators correspond to the specification i
 
 ## Miscellaneous
 
+While this simulation only presents the student with at most one variable, 
 Support for multiple variables and XYScreen
