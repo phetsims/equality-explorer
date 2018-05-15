@@ -60,15 +60,26 @@ frames. The domain of this simulation has no need for a model coordinate frame, 
 are treated as equivalent, and no transform is required. (If you don't understand that, don't worry about it.)
 
 **Query parameters**: Query parameters are used to enable sim-specific features, mainly for debugging and
-testing. All such query parameters are documented in
+testing. All sim-specific query parameters are documented in
 [EqualityExplorerQueryParameters](https://github.com/phetsims/equality-explorer/blob/master/js/common/EqualityExplorerQueryParameters.js).
 
 **Memory management**:
 
-Dynamic:
+All calls that register an observer have associated documentation indicating whether a corresponding unregister call is required. This includes calls to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Property.multilink` and `new Multilink`.  When unregistering is not needed, it's typically because instances of a type exist for the lifetime of teh sim. Examples:
+
+```js
+// unlink not needed.
+this.variable.valueProperty.link( function( value ) { ... } );
+
+// removeListener required when the term is disposed.
+term.disposedEmitter.addListener( this.termWasDisposedBound );
+```
+
+Instances of these types are dynamic and require memory management; `dispose` must be implemented and called.
+
 - Term and its subtypes (ConstantTerm, VariableTerm, ObjectTerm)
 - TermNode and its subtypes (ConstantTermNode, VariableTermNode, MysteryTermNode)
-- TermDragListener
+- TermDragListener and its subtypes (CombinedTermsDragListener, SeparateTermsDragListener)
 - EquationNode
 - EquationPanel
 - Snapshot
@@ -79,11 +90,7 @@ Dynamic:
 - Challenge
 - EqualityExplorerRewardNode
 
-Static, exists for lifetime of sim:
-- everything else
-
-Every call to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Property.multilink` and `new Multilink`
-has an associated comment that indicates whether the listener needs to be removed.
+Instances of all other types are static, created during sim initialization, and exist for the lifetime of sim.
 
 ## Model
 
