@@ -60,8 +60,8 @@ frames. The domain of this simulation has no need for a model coordinate frame, 
 are treated as equivalent, and no transform is required. (If you don't understand that, don't worry about it.)
 
 **Query parameters**: Query parameters are used to enable sim-specific features, mainly for debugging and
-testing. All sim-specific query parameters are documented in
-[EqualityExplorerQueryParameters](https://github.com/phetsims/equality-explorer/blob/master/js/common/EqualityExplorerQueryParameters.js). Query parameters that are common to all sims are described in [initialize-globals.js](https://github.com/phetsims/chipper/blob/master/js/initialize-globals.js).
+testing. Sim-specific query parameters are documented in
+[EqualityExplorerQueryParameters](https://github.com/phetsims/equality-explorer/blob/master/js/common/EqualityExplorerQueryParameters.js). Query parameters that are common to all sims are documented at QUERY_PARAMETERS_SCHEMA in [initialize-globals.js](https://github.com/phetsims/chipper/blob/master/js/initialize-globals.js).
 
 **Memory management**:
 
