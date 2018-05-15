@@ -97,6 +97,8 @@ Instances of all other types are static, created during sim initialization, and 
 This section provides an overview of the most important model elements, and some miscellaneous topics
 related to the model.
 
+All fractions must be reduced.
+
 TODO
 
 ## View
