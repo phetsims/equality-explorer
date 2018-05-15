@@ -26,4 +26,4 @@ The _Solve It!_ screen is a game that tests the student's ability to solve equat
 - Level 3: Multi-step equations with fractions
 - Level 4: Multi-step equations with variables on both sides
 
-Each level provides an infinite number of _challenges_, generates at random. Each challenge provides an equation, and the goal is solve for `x` by reducing the equation to either `x = N` or `N = x`.  When the goal is reached, a smiley face is displayed.  When 10 challenges have been solved, an additional reward appears.
+Each level provides an infinite number of _challenges_, generated randomly. Each challenge provides an equation, and the goal is solve for `x` by reducing the equation to either `x = N` or `N = x`.  When the goal is reached, a smiley face is displayed.  When 10 challenges have been solved, an additional reward appears.
