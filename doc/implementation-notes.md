@@ -141,6 +141,8 @@ EquationNode, dynamic vs static
 
 ## Solve It! screen
 
+A few notes related to the _Solve It!_ screen:
+
 Game levels are numbered from 1 in both the model and view, and in type names (e.g. `ChallengeGenerator1`.)
 
 [Challenge](https://github.com/phetsims/equality-explorer/blob/master/js/solveit/model/Challenge.js) encapsulates equations with the general form: `ax + b = mx + n`.  Terms that evaluate to zero are omitted.
