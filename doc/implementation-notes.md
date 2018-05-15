@@ -101,45 +101,55 @@ If you make significant modifications to this sim that involve any of the above 
 This section provides an overview of the most important model elements, and some miscellaneous topics
 related to the model.
 
+Two strategies: like terms occupy separate cells, like terms are combined in one cell 
+
 Fractions vs integers
 
 All fractions must be reduced.
 
-Model and Scene
+Model and Scenes
+
+Variable vs ObjectVariable
 
 EqualityExplorerMovable base type, responsibilites
 
-Term creators and the creator pattern.
+Term hierarchy
 
-ObjectTerm vs VariableTerm
+TermCreator responsibilities and the creator pattern.
+
+BalanceScale, Plate, Grid
 
 Universal Operation
 
 Snapshots
-
-TODO
 
 ## View
 
 This section provides an overview of the most important view components, and some miscellaneous topics
 related to the view.
 
-ScreenView and SceneNode
+ScreenView and SceneNodes
 
 TermNode creation and event forwarding
 
 TermDragListener and its subtypes
 
-TODO
+Halos 
+
+Sum-to-zero animation, halo vs no halo
+
+Lock feature - dragged term, equivalent term, inverse term
+
+EquationNode, dynamic vs static
 
 ## Solve It! screen
 
 Game levels numbered from 1 in both model and view, and in type names (e.g. ChallengeGenerator1)
 
-Challenge form: ax + b = mx + n
+Challenge form: `ax + b = mx + n`
 
 Variables and comments in challenge generators correspond to the specification in the [Challenge Generation design document(https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo).
 
 ## Miscellaneous
 
-- support for multiple variables, 'x & y' test screen
+Support for multiple variables and XYScreen
