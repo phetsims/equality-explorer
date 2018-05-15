@@ -73,8 +73,8 @@ All calls that register an observer have associated documentation indicating whe
 // unlink not needed.
 this.variable.valueProperty.link( function( value ) { ... } );
 
-// removeListener required when the term is disposed.
-term.disposedEmitter.addListener( this.termWasDisposedBound );
+// removeListener required in dispose.
+this.addInputListener( this.termDragListener ); 
 ```
 
 Instances of these types are dynamic and require memory management; `dispose` must be implemented and called.
