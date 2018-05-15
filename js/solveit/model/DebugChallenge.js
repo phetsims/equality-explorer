@@ -15,6 +15,9 @@ define( function( require ) {
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
 
+  /**
+   * @constructor
+   */
   function DebugChallenge() {
 
     var values = EqualityExplorerQueryParameters.challenge;
