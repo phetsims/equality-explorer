@@ -9,7 +9,7 @@ Equations are built using _constant terms_ (e.g. `1`, `-1`, `5`, `2/3`) and _var
 
 Throughout the simulation, fractional constants and coefficients are reduced. E.g. `4/6` becomes `2/3`; `-10/2` becomes `-5`.
 
-There are 2 modes of operation when building equations:
+There are two modes of operation when building equations:
 
 (1) Like terms occupy separate cells on the scale, and can be combined only if they sum to zero. This is the mode of operation in the _Basics_, _Numbers_ and _Variables_ screens.
 
