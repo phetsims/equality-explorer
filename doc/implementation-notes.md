@@ -130,13 +130,13 @@ The balance scale is composed of 3 primary model elements: [BalanceScale], [Plat
 
 [Term](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Term.js) is the base type for terms. There are 3 subtypes. [ConstantTerm](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/ConstantTerm.js) corresponds to constant terms. [VariableTerm](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/VariableTerm.js) corresponds to terms that are associated with a symbolic variable, e.g. `x`.  [ObjectTerm](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectTerm.js) is a term that is associated with a real-world object (shape, fruit, coin, animal).  VariableTerm and ObjectTerm are similar in that they are associated with a variable, but their requirements are different enough to justify separate types.  And there are in fact two variable types: [Variable](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Variable.js) is a typical symbolic variable, and its subtype [ObjectVariable](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectVariable.js) contains more information pertaining to a real-world object.
 
-[TermCreator] is the base type for creating and managing terms. It uses the PhET [creator pattern], described more in the [**Common Patterns**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#common-patterns) section.  Term creators are responsible for creating and managing terms.  There is a subtype for each term type, namely [ConstantTermCreator], [VariableTermCreator] and [ObjectTermCreator].
+[TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js) is the base type for creating and managing terms. It uses the PhET [creator pattern], described more in the [**Common Patterns**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#common-patterns) section.  Term creators are responsible for creating and managing terms.  There is a subtype for each term type, namely [ConstantTermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/ConstantTermCreator.js), [VariableTermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/VariableTermCreator.js) and [ObjectTermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectTermCreator.js).
 
 Universal Operation
 
 Snapshots
 
-Through the simulation, variable values are represented using integers. All other numbers (constants, coefficients,...) are represented using fraction, using the common-code [Fraction] type.  Fraction are always in reduced form, both in the model and view.
+Through the simulation, variable values are represented using integers. All other numbers (constants, coefficients,...) are represented using fraction, using the common-code [Fraction](https://github.com/phetsims/phetcommon/blob/master/js/model/Fraction.js) type.  Fraction are always in reduced form, both in the model and view.
 
 ## View
 
