@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.0.0-dev.116 Mon May 14 2018 12:23:24 GMT-0600 (MDT)",
+  "comment": "# equality-explorer 1.0.0-dev.117 Wed May 16 2018 15:26:16 GMT-0600 (MDT)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "equality-explorer": {
-    "sha": "07645f1e045d56045bf7c4fd271fe5ef843f609b",
+    "sha": "b9dbdae9279bc4f7ad9027fd9e1b40f0e8fc3d83",
     "branch": "master"
   },
   "joist": {
@@ -49,7 +49,7 @@
     "branch": "master"
   },
   "phet-io-wrappers": {
-    "sha": "e76385d03c680a03d85ccabbdf5b6cf4196e1d9d",
+    "sha": "3025fb6463f1b7b0232d33c5d2c1828f97f7888d",
     "branch": "master"
   },
   "phetcommon": {
@@ -65,7 +65,7 @@
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "7d606270a2de72ab26fe24e6fce1070da09e7534",
+    "sha": "8ea468dc3ff86d59b8a8d3d2ad65fc5fd3078016",
     "branch": "master"
   },
   "sherpa": {
@@ -73,7 +73,7 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "407f74988e166ba4afde87a2e14842f200099b40",
+    "sha": "1e84ddc2e636c62a80d45fc78b50e90b526d63b9",
     "branch": "master"
   },
   "tandem": {
