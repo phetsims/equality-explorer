@@ -151,7 +151,7 @@ TermDragListener and its subtypes
 
 Halos 
 
-Sum-to-zero animation, halo vs no halo
+Sum-to-zero animation, halo vs no halo, location based on where the plates are post-operation, batching for universal operation. 
 
 Lock feature - dragged term, equivalent term, inverse term
 
