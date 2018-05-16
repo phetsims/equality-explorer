@@ -147,7 +147,7 @@ The balance scale is composed of 3 primary model elements: [BalanceScale](https:
 
 [UniversalOperation](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/UniversalOperation.js) encapsulates a 'universal operation', terminology invented in the design document. It refers to an operation that is applied to all terms both sides of the scale, using a control that allows the student to select a binary operator and an operand. The operands are `Term` instances.
 
-[Snapshot](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Snapshot.js) encapsulates the full state of the scale and associated variables. A snapshot does _not_ contain a collection of `Term`instances; it is an opaque description of terms and their locations, and delegates to `TermCreator` subtypes to save and restore the state. 
+[Snapshot](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Snapshot.js) encapsulates the full state of the scale and associated variables. A snapshot does _not_ contain a collection of `Term`instances; it is an opaque lightweight description of terms and their locations, and delegates to `TermCreator` subtypes to save and restore the state. 
 
 Through the simulation, variable values are represented using integers. All other numbers (constants, coefficients,...) are represented using fraction, using the common-code [Fraction](https://github.com/phetsims/phetcommon/blob/master/js/model/Fraction.js) type.  Fraction are always in reduced form, both in the model and view.
 
