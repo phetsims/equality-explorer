@@ -112,7 +112,7 @@ This section provides a concise overview of the screens, their similarities and 
 
 Screens differ primarily in their strategy for putting terms on the scale. The two strategies are:
 
-(1) **Separate like terms**: Like terms occupy separate cells on the scale, and are combined only if they sum to zero. This strategy is used in the _Basics_, _Numbers_ and _Variables_ screens.  Those screens consequently have a 6x6 grid of cells on each plate.
+(1) **Separate like terms**: Like terms occupy separate cells on the scale, and are combined only if they sum to zero. This strategy is used in the _Basics_, _Numbers_ and _Variables_ screens.  Those screens have a 6x6 grid of cells on each plate (visible using the `showGrid` query parameter).
 
 (2) **Combine like terms**: Like terms are combined in one cell on the scale. This strategy is used in the _Operations_ and _Solve It!_ screens. Those screens have a 1x2 grid of cells on each plate; one cell for variable terms, the other cell for constant terms.
 
