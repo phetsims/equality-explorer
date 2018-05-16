@@ -273,13 +273,14 @@ define( function( require ) {
           layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
 
             // center horizontally on the screen
-            var centerX = simBounds.center.times( 1 / scale ).x;
+            var screenCenterX = simBounds.center.times( 1 / scale ).x;
 
             // top of dialog below equationPanel, so the solution is not obscured
-            var centerTop = self.localToGlobalPoint( new Vector2( equationPanel.centerX, equationPanel.bottom + 10 ) ).times( 1 / scale );
+            var localCenterTop = new Vector2( equationPanel.centerX, equationPanel.bottom + 10 );
+            var globalCenterTop = self.localToGlobalPoint( localCenterTop ).times( 1 / scale );
 
-            dialog.centerX = centerX;
-            dialog.top = centerTop.y;
+            dialog.centerX = screenCenterX;
+            dialog.top = globalCenterTop.y;
           },
 
           // 'Keep Going' hides the dialog
