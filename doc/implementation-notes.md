@@ -104,7 +104,7 @@ A term's lifecycle ends when it is returned to the toolbox, or when some action 
 
 1. The `Term`'s `dispose` method is called, which causes its `disposedEmitter` to fire.  See `dispose `in [EqualityExplorerMovable](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/EqualityExplorerMovable.js), the supertype of `Term`. 
 2. The `TermCreator` that manages the `Term` receives notification that the `Term` has been disposed. It removes the `Term` from the scale (if relevant), and removes the `Term` from its list of managed `Term`s.  See `termWasDisposed` in [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js).
-3. The listener associated with the `Term`'s `disposedEmitter` receives notification that the `Term` has been disposed. The listener calls the `TermNode`'s `dispose` method, removing it from the scenegraph.  See `termCreatedListener` in [SceneNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SceneNode.js).
+3. The listener associated with the `Term`'s `disposedEmitter` receives notification that the `Term` has been disposed. The listener calls the associated `TermNode`'s `dispose` method, removing it from the scenegraph.  See `termCreatedListener` in [SceneNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SceneNode.js).
 
 ## Screens and Scenes
 
