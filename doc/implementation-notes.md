@@ -36,7 +36,7 @@ Sim-specific terminology:
 * equivalent term - a term on the opposite side that is identical to the dragged term
 * inverse term - a term on the opposite side that is the inverse of the dragged term
 * level-selection buttons - the buttons used to select the game level
-* locked - when the sim is locked, interacting with terms on one side of the equation will result in an equivalent interaction on the opposite side
+* locked - when the sim is locked, interacting with terms on one side of the equation will result in an equivalent interaction on the opposite side. See the [**Lock feature**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#lock-feature) section for more details.
 * object variable - a real-world object (shape, fruit, coin, animal) whose value is variable. As distinguished from a symbolic variable (`x`), see [ObjectVariable](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectVariable.js)
 * object term - term associated with an object variable, see [ObjectTerm](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectTerm.js)
 * opposite plate - the plate associated with the equivalent term, opposite the dragging term
@@ -122,7 +122,7 @@ The first three screens are similar, except for the number of scenes and types o
 
 The _Basics_ screen has 4 scenes with 'real-world object' terms (plus constant terms in the 'shapes' scene).  A set of radio buttons is used to choose a scene. 
 
-The _Numbers_ screen has one scene with constant terms. It introduces the lock feature, described in more detail later.  
+The _Numbers_ screen has one scene with constant terms. It introduces the lock feature, described in the [**Lock feature**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#lock-feature) section.  
 
 The _Variables_ screen has one scene with variable terms and constant terms. It introduces a picker for changing the variable's values.
 
