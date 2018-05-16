@@ -180,6 +180,10 @@ A few notes related to the _Solve It!_ screen:
 
 Game levels are numbered 1 to 4 in both the model and view, and in type names (e.g. `ChallengeGenerator1` for Level 1), so that the implementation corresponds to the description in the design document.  (This differs from the more typical approach of using 0-based indexing in the model, then converted to 1-based indexing in the view.) 
 
+## Lock feature
+
+The lock feature is complicate enough to warrant its own section in this document.  Specification of the lock feature is spread out across the [Equality Explorer HTML5 design document](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ), GitHub issue https://github.com/phetsims/equality-explorer/issues/19 and the documentation in [TermDragListener](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermDragListener.js).
+
 ## Miscellaneous
 
 **Support for multiple variables**: While this simulation only presents the student with at most one variable (`x`), the code was written to support multiple variables. As of this writing, a non-production screen is provided to verify multi-variable support.  Run with the `xy` query parameter to add the _x & y_ screen.  Note that this screen may be moved to its own simulation in the future; see https://github.com/phetsims/equality-explorer/issues/99.
