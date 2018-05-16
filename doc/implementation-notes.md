@@ -1,13 +1,10 @@
 # Equality Explorer - implementation notes
 
-This document contains miscellaneous notes related to the implementation of Equality Explorer. 
-It supplements the internal (source code) documentation, and (hopefully) provides insight into
-"big picture" implementation issues.  The audience for this document is software developers who
-are familiar with JavaScript and PhET simulation development (as described in 
-[PhET Development Overview](http://bit.ly/phet-html5-development-overview)).
+This document contains miscellaneous notes related to the implementation of Equality Explorer. This is not an exhaustive description of the implementation.  The intention is to provide a "big picture" overview, and to supplement the internal documentation (source code comments) and external documentation (design documents).  
 
-First, read [model.md](https://github.com/phetsims/equality-explorer/blob/master/doc/model.md),
-which provides a high-level description of the simulation model.
+The audience for this document is software developers who are familiar with JavaScript and PhET simulation development (as described in [PhET Development Overview](http://bit.ly/phet-html5-development-overview)).  The reader should also be familiar with general design patterns used in PhET simulations.
+
+Before reading this document, see [model.md](https://github.com/phetsims/equality-explorer/blob/master/doc/model.md), which provides a high-level description of the simulation model.
 
 ## Terminology
 
