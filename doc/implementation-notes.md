@@ -124,23 +124,19 @@ related to the model.
 
 [Scene](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Scene.js) is the based type for all scenes.  See the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.
 
-Fractions vs integers
+The balance scale is composed of 3 primary model elements: [BalanceScale], [Plate] and [Grid].
 
-All fractions must be reduced.
+[EqualityExplorerMovable](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/EqualityExplorerMovable.js) is a base type that is responsible for an object's location and animation to a desired location. It's used to implement terms.
 
-Variable vs ObjectVariable
+[Term] is the base type for terms. There are 3 subtypes. [ConstantTerm] corresponds to constant terms. [VariableTerm] corresponds to terms that are associated with a symbolic variable, e.g. `x`.  [ObjectTerm] is a term that is associated with a real-world object (shape, fruit, coin, animal).  VariableTerm and ObjectTerm are similar in that they are associated with a variable, but their requirements are different enough to justify separate types.
 
-EqualityExplorerMovable base type, responsibilites
-
-Term hierarchy
-
-TermCreator responsibilities and the creator pattern.
-
-BalanceScale, Plate, Grid
+[TermCreator] is the base type for creating and managing terms. It uses the PhET [creator pattern], described more in the [General Patterns] section.  Term creators are responsible for creating and managing terms.  There is a subtype for each term type, namely [ConstantTermCreator], [VariableTermCreator] and [ObjectTermCreator].
 
 Universal Operation
 
 Snapshots
+
+Through the simulation, variable values are represented using integers. All other numbers (constants, coefficients,...) are represented using fraction, using the common-code [Fraction] type.  Fraction are always in reduced form, both in the model and view.
 
 ## View
 
