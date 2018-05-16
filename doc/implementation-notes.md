@@ -116,7 +116,7 @@ Screens differ primarily in their strategy for putting terms on the scale. The t
 
 (2) **Combine like terms**: Like terms are combined in one cell on the scale. This strategy is used in the _Operations_ and _Solve It!_ screens. Those screens have a 1x2 grid of cells on each plate; one cell for variable terms, the other cell for constant terms.
 
-All screens have one of more _scenes_, containing four common elements: a balance scale, an equation that represents what is on the scale, 2 term toolboxes, and a Snapshots accordion box. If a screen has more than one scene, it also has a control for choosing the scene. The _Basics_ and _Solve It!_ screens have more than one scene; other screens have a single scene. 
+All screens have one of more _scenes_, containing four common elements: a balance scale, an equation that represents what is on the scale, 2 toolboxes, and a Snapshots accordion box. If a screen has more than one scene, it also has a control for choosing the scene. The _Basics_ and _Solve It!_ screens have more than one scene; other screens have a single scene. 
 
 The first three screens are similar, except for the number of scenes and types of terms in each scene.  They all use strategy (1) above for putting terms on the scale. 
 
