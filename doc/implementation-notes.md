@@ -122,7 +122,7 @@ The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection bu
 This section provides an overview of the most important model elements, and some miscellaneous topics
 related to the model.
 
-[Scene](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Scene.js) is the based type for all scenes.  See the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.
+[Scene](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Scene.js) is the base type for all scenes.  See the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.
 
 The balance scale is composed of 3 primary model elements: [BalanceScale](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/BalanceScale.js), [Plate](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Plate.js) and [Grid](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Grid.js).
 
