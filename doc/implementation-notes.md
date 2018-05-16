@@ -128,7 +128,7 @@ The balance scale is composed of 3 primary model elements: [BalanceScale], [Plat
 
 [EqualityExplorerMovable](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/EqualityExplorerMovable.js) is a base type that is responsible for an object's location and animation to a desired location. It's used to implement terms.
 
-[Term] is the base type for terms. There are 3 subtypes. [ConstantTerm] corresponds to constant terms. [VariableTerm] corresponds to terms that are associated with a symbolic variable, e.g. `x`.  [ObjectTerm] is a term that is associated with a real-world object (shape, fruit, coin, animal).  VariableTerm and ObjectTerm are similar in that they are associated with a variable, but their requirements are different enough to justify separate types.
+[Term] is the base type for terms. There are 3 subtypes. [ConstantTerm] corresponds to constant terms. [VariableTerm] corresponds to terms that are associated with a symbolic variable, e.g. `x`.  [ObjectTerm] is a term that is associated with a real-world object (shape, fruit, coin, animal).  VariableTerm and ObjectTerm are similar in that they are associated with a variable, but their requirements are different enough to justify separate types.  And there are in fact two variable types: [Variable] is a typical symbolic variable, and its subtype [ObjectVariable] contains more information pertaining to a real-world object.
 
 [TermCreator] is the base type for creating and managing terms. It uses the PhET [creator pattern], described more in the [General Patterns] section.  Term creators are responsible for creating and managing terms.  There is a subtype for each term type, namely [ConstantTermCreator], [VariableTermCreator] and [ObjectTermCreator].
 
