@@ -124,7 +124,7 @@ The _Basics_ screen has 4 scenes with 'real-world object' terms (plus constant t
 
 The _Numbers_ screen has one scene with constant terms. It introduces the lock feature, described in more detail later.  
 
-The _Variables_ screen has one scene with variable terms (`x`) and constant terms. It introduces a picker for changing the variable's values.
+The _Variables_ screen has one scene with variable terms and constant terms. It introduces a picker for changing the variable's values.
 
 The _Operations_ screen also has one scene with variable terms and constant terms, but uses strategy (2) for putting terms on the scale.  This screen also introduces the 'universal operation control', used to apply operations to both sides of the scale.
 
