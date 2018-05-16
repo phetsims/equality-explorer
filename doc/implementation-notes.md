@@ -172,7 +172,7 @@ EquationNode, dynamic vs static. Terms that evaluate to zero are omitted. A term
 
 ## Solve It! screen
 
-A few notes related to the _Solve It!_ screen:
+A few notes related to the _Solve It!_ screen, since it has some components that are unique to this screen.
 
 [Challenge](https://github.com/phetsims/equality-explorer/blob/master/js/solveit/model/Challenge.js) encapsulates equations with the general form `ax + b = mx + n`, where the goal is to solve for `x`  Terms that evaluate to zero are omitted from the general form.
 
