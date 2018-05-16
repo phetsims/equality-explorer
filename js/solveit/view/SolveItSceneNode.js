@@ -39,6 +39,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // strings
   var nextString = require( 'string!EQUALITY_EXPLORER/next' );
@@ -258,7 +259,7 @@ define( function( require ) {
       showAnswerButton && ( showAnswerButton.visible = false );
 
       // When the score reaches a magic number, display the reward.
-      if ( score === EqualityExplorerQueryParameters.rewardScore ) {                                          
+      if ( score === EqualityExplorerQueryParameters.rewardScore ) {
 
         gameAudioPlayer.gameOverPerfectScore();
 
@@ -270,11 +271,17 @@ define( function( require ) {
           // Display the dialog in a location that does not obscure the challenge solution.
           // See https://github.com/phetsims/equality-explorer/issues/104
           layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
-            var center = simBounds.center.times( 1.0 / scale );
-            dialog.centerX = center.x;
-            dialog.centerY = center.y + 25; // offset determined empirically, so as not to obscure the solution
+
+            // center horizontally on the screen
+            var centerX = simBounds.center.times( 1 / scale ).x;
+
+            // top of dialog below equationPanel, so the solution is not obscured
+            var centerTop = self.localToGlobalPoint( new Vector2( equationPanel.centerX, equationPanel.bottom + 10 ) ).times( 1 / scale );
+
+            dialog.centerX = centerX;
+            dialog.top = centerTop.y;
           },
-          
+
           // 'Keep Going' hides the dialog
           keepGoingButtonListener: function() {
             rewardDialog.hide();
