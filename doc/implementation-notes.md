@@ -94,18 +94,17 @@ A creator is responsible for handling the user interaction that results in the c
 
 In this sim, creators live in the toolboxes below the scale, see [TermsToolbox](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermsToolbox.js). The objects displayed in the toolboxes are `TermCreatorNode`s, each with an associated `TermCreator`.  Clicking on one of the objects in the toolbox creates a term, via the following steps:
 
-1. The `TermCreatorNode` receives the `{Event} event`.
-2. The `TermCreatorNode` propagates the `event` to its associated `TermCreator`, and instructs it to create a `Term`.  See `addInputListener` in `TermCreatorNode`.
-3. The `TermCreator` creates the `Term`, adds it to its list of managed `Term`s, and adds a listener to the `Term`'s `{Emitter} disposedEmitter` (fired when the `Term` is eventually disposed).  See `createTerm` in `TermCreator`. 
-4. The `TermCreator` notifies listeners that a new `Term` has been created by firing `{Emitter} termCreatedEmitter`. The `event` that was provided by the `TermCreator` is propagated to `termCreatedEmitter` listeners. See `manageTerm` in `TermCreator`.
-5. The view listens for `termCreatedEmitter`. It creates the associated view component, a `TermNode` subtype. The `event` is propagated to the `TermNode`.  A listener is added for the `Term`'s `disposedEmitter`, to dispose of the associated `TermNode`. See `termCreatedListener` in `SceneNode`.
-6. `TermNode` propagates the `event` to its drag listener, a subtype of `TermDragListener`. Interaction with the newly-created `Term` begins.  See `startDrag` in `TermNode`.
+1. The `TermCreatorNode` receives the `{Event} event`. The `TermCreatorNode` propagates the `event` to its associated `TermCreator`, and instructs it to create a `Term`.  See `addInputListener` in [TermCreatorNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermCreatorNode.js)`.
+2. The `TermCreator` creates the `Term`, adds it to its list of managed `Term`s, and adds a listener to the `Term`'s `{Emitter} disposedEmitter` (fired when the `Term` is eventually disposed).  See `createTerm` in [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js). 
+3. The `TermCreator` notifies listeners that a new `Term` has been created by firing `{Emitter} termCreatedEmitter`. The `event` that was provided by the `TermCreator` is propagated to `termCreatedEmitter` listeners. See `manageTerm` in [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js).
+4. The view listens for `termCreatedEmitter`. It creates the associated view component, a `TermNode` subtype. The `event` is propagated to the `TermNode`.  A listener is added for the `Term`'s `disposedEmitter`, to dispose of the associated `TermNode`. See `termCreatedListener` in [SceneNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SceneNode.js).
+5. `TermNode` propagates the `event` to its drag listener, a subtype of `TermDragListener`. Interaction with the newly-created `Term` begins.  See `startDrag` in [TermNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermNode.js).
 
 A term's lifecycle ends when it is returned to the toolbox, or when some action results in deleting it from the scale. When a term is disposed, the following steps occur:
 
-1. The `Term`'s `dispose` method is called, which causes its `disposedEmitter` to fire.  See `dispose `in `EqualityExplorerMovable`. 
-2. The `TermCreator` that manages the `Term` receives notification that the `Term` has been disposed. It removes the `Term` from the scale (if relevant), and removes the `Term` from its list of managed `Term`s.  See `termWasDisposed` in `TermCreator`.
-3. The listener associated with the `Term`'s `disposedEmitter` receives notification that the `Term` has been disposed. The listener calls the `TermNode`'s `dispose` method, removing it from the scenegraph.  See `termCreatedListener` in `SceneNode`.
+1. The `Term`'s `dispose` method is called, which causes its `disposedEmitter` to fire.  See `dispose `in [EqualityExplorerMovable](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/EqualityExplorerMovable.js). 
+2. The `TermCreator` that manages the `Term` receives notification that the `Term` has been disposed. It removes the `Term` from the scale (if relevant), and removes the `Term` from its list of managed `Term`s.  See `termWasDisposed` in [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js).
+3. The listener associated with the `Term`'s `disposedEmitter` receives notification that the `Term` has been disposed. The listener calls the `TermNode`'s `dispose` method, removing it from the scenegraph.  See `termCreatedListener` in [SceneNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SceneNode.js).
 
 ## Screens and Scenes
 
