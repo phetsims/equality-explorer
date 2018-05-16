@@ -72,7 +72,7 @@ this.variable.valueProperty.link( function( value ) { ... } );
 this.addInputListener( this.termDragListener ); 
 ```
 
-Instances of the types listed below are dynamic and require memory management; `dispose` must be implemented and called. If you make modifications that involve dynamic types, you should perform memory leak testing similar to https://github.com/phetsims/equality-explorer/issues/64.
+Instances of the types listed below are dynamic &mdash; they come and go during the lifetime of the sim. They require memory management, so `dispose` must be implemented and called. If you make modifications that involve dynamic types, you should perform memory leak testing similar to https://github.com/phetsims/equality-explorer/issues/64.
 
 - `Term` and its subtypes (`ConstantTerm`, `VariableTerm`, `ObjectTerm`)
 - `TermNode` and its subtypes (`ConstantTermNode`, `VariableTermNode`, `ObjectTermNode`)
