@@ -51,7 +51,7 @@ Sim-specific terminology:
 * toolbox - panels that appear below the plates, terms can be dragged to/from
 * universal operation - an operation that is applied to both sides of the equation, see [UniveralOperation](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/UniversalOperation.js) 
 
-## General
+## General Patterns
 
 This section describes how this simulation uses patterns that are common to most PhET simulations.
 
