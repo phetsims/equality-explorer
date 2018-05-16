@@ -93,7 +93,7 @@ Instances of all other types are static, created at startup or lazily, and exist
 
 **Creator Pattern**: TODO
 
-## Screens
+## Screens and Scenes
 
 This section provides a concise overview of the screens, their similarities and their differences. For more details, consult the (somewhat out of date) [Equality Explorer HTML5 design document](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ).
 
@@ -122,7 +122,7 @@ The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection bu
 This section provides an overview of the most important model elements, and some miscellaneous topics
 related to the model.
 
-[Scene](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Scene.js) is the based type for all scenes.  See the **Screens** section above for a description of scenes.
+[Scene](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Scene.js) is the based type for all scenes.  See the **Screens and Scenes** section above for a description of scenes.
 
 Fractions vs integers
 
