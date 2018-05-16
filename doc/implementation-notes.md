@@ -122,8 +122,6 @@ The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection bu
 This section provides an overview of the most important model elements, and some miscellaneous topics
 related to the model.
 
-Two strategies: like terms occupy separate cells, like terms are combined in one cell 
-
 Fractions vs integers
 
 All fractions must be reduced.
