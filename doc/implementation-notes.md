@@ -140,8 +140,6 @@ BalanceScale, Plate, Grid
 
 Universal Operation
 
-Terms that evaluate to zero are omitted. A term with coefficient of `1` is displayed as `x`.  A term with coeffient of `-1` is displayed as `-x`.
-
 Snapshots
 
 ## View
@@ -161,7 +159,7 @@ Sum-to-zero animation, halo vs no halo
 
 Lock feature - dragged term, equivalent term, inverse term
 
-EquationNode, dynamic vs static
+EquationNode, dynamic vs static. Terms that evaluate to zero are omitted. A term with coefficient of `1` is displayed as `x`.  A term with coeffient of `-1` is displayed as `-x`.
 
 ## Solve It! screen
 
