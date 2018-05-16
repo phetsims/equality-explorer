@@ -105,7 +105,7 @@ A term's lifecycle ends when it is returned to the toolbox, or when some action 
 
 1. The `Term`'s `dispose` method is called, which causes its `disposedEmitter` to fire.  See `dispose `in `EqualityExplorerMovable`. 
 2. The `TermCreator` that manages the `Term` receives notification that the `Term` has been disposed. It removes the `Term` from the scale (if relevant), and removes the `Term` from its list of managed `Term`s.  See `termWasDisposed` in `TermCreator`.
-3. The listener associated with the `Term`'s `disposedEmitter` receives notification that the `Term` has been disposed. The `TermNode`'s `dispose` method is called, removing it from the scenegraph.  See `termCreatedListener` in `SceneNode`.
+3. The listener associated with the `Term`'s `disposedEmitter` receives notification that the `Term` has been disposed. The listener calls the `TermNode`'s `dispose` method, removing it from the scenegraph.  See `termCreatedListener` in `SceneNode`.
 
 ## Screens and Scenes
 
