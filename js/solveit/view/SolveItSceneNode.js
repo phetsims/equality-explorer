@@ -272,7 +272,7 @@ define( function( require ) {
           layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
             var center = simBounds.center.times( 1.0 / scale );
             dialog.centerX = center.x;
-            dialog.centerY = center.y + 50; // offset determined empirically
+            dialog.centerY = center.y + 25; // offset determined empirically, so as not to block the answer
           },
           
           // 'Keep Going' hides the dialog
