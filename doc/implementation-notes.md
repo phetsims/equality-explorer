@@ -132,7 +132,7 @@ The balance scale is composed of 3 primary model elements: [BalanceScale](https:
 
 [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js) is the base type for creating and managing terms. It uses the PhET creator pattern, described more in the [**Common Patterns**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#common-patterns) section.  Term creators are responsible for creating and managing terms.  There is a subtype for each term type, namely [ConstantTermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/ConstantTermCreator.js), [VariableTermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/VariableTermCreator.js) and [ObjectTermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectTermCreator.js).
 
-[UniversalOperation](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/UniversalOperation.js) encapsulates a 'universal operation', terminology invented in the design document. It refers to an operation that is applied to both sides of the scale, using a control that allows the student to select a binary operator and an operand. The operators The operands are `Term` instances.
+[UniversalOperation](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/UniversalOperation.js) encapsulates a 'universal operation', terminology invented in the design document. It refers to an operation that is applied to all terms both sides of the scale, using a control that allows the student to select a binary operator and an operand. The operands are `Term` instances.
 
 Snapshots
 
