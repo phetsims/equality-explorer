@@ -88,7 +88,23 @@ Instances of the types listed below are dynamic &mdash; they come and go during 
 
 Instances of all other types are static. They are created at startup or lazily, and exist for the lifetime of the sim.
 
-**Creator Pattern**: TODO
+**Creator Pattern**: Discussion about this pattern can be found in https://github.com/phetsims/scenery-phet/issues/214. What you won't find there is a summary of the pattern or a canonical example.  So I'll attempt to summarize what it is, and how it's applied in this simulation.  
+
+A 'creator' is responsible for handling the user interaction that results in the creation of both the model and view for a type of model element.  In this sim, the creator is also responsible for managing the model element throughout its lifecycle.  `TermCreator` (and its subtypes) handles creation and management of model elements. `TermCreatorNode` handles the user interaction that results in the creation of `Term`s and their associated `TermNode`s.  
+
+The objects displayed in the toolboxes below the scale are `TermCreatorNode`s.  Clicking on one of the objects in the toolbox creates a term, via the following steps:
+
+(1) The associated `TermCreator` is instructed to create a `Term`.
+(2) The `TermCreator` creates the `Term`, adds it to its list of managed `Term`s, and adds a listener to the `Term`'s `{Emitter} disposedEmitter` (fired when the `Term` is eventually disposed).
+(3) The `TermCreator` notifies listeners that a new `Term` has been created by firing `{Emitter} termCreatedEmitter`
+(4) The view (`SceneNode`) listens for `termCreatedEmitter`, and creates the associated view component (a `TermNode` subtype).
+(5) `TermNode` registers itself as a listener for the the `Term`'s `disposedEmitter`.
+
+A term's lifecycle ends when it is returned to the toolbox, or when some action results in deleting it from the scale. When a term is disposed, the following steps occur:
+
+(1) Calling `dispose` for a `Term` causes its `disposedEmitter` to fire.
+(2) The `TermCreator` that manages the `Term` receives notification that the `Term` has been disposed. It removes the `Term` from the scale (if appropriate), and removes the `Term` from its list of managed `Term`s.  
+(3) The `TermNode` associated with the `Term` receives notification that the `Term` has been disposed. It calls its own `dispose` method, removing itself from the scenegraph. 
 
 ## Screens and Scenes
 
