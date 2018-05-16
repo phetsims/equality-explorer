@@ -128,7 +128,7 @@ The _Variables_ screen has one scene with variable terms and constant terms. It 
 
 The _Operations_ screen also has one scene with variable terms and constant terms, but uses strategy (2) for putting terms on the scale.  This screen also introduces the 'universal operation control', used to apply operations to both sides of the scale.
 
-The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection buttons are used to choose a scene. The scenes in this screen differ from other screens in a couple of important ways: Since the goal is to determine the value of `x`, the picker for setting `x` is hidden. Two equations are shown above the scale &mdash& the top one corresponds to the challenge, the bottom one corresponds to what's currently on the scale.
+The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection buttons are used to choose a scene. The scenes in this screen differ from other screens in a couple of important ways: Since the goal is to determine the value of `x`, the picker for setting `x` is hidden. Two equations are shown above the scale &mdash; the top one corresponds to the challenge, the bottom one corresponds to what's currently on the scale. See the [**Solve It! screen**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#solve-it-screen) section for more notes.
 
 ## Model
 
