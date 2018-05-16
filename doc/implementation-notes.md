@@ -37,7 +37,7 @@ Sim-specific terminology:
 * inverse term - a term on the opposite side that is the inverse of the dragged term
 * level-selection buttons - the buttons used to select the game level
 * locked - when the sim is locked, interacting with terms on one side of the equation will result in an equivalent interaction on the opposite side
-* object variable - a real-world object (shape, fruit, coin, animal) whose value is variable. As distnguished from a symbolic variable (`x`), see [ObjectVariable](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectVariable.js)
+* object variable - a real-world object (shape, fruit, coin, animal) whose value is variable. As distinguished from a symbolic variable (`x`), see [ObjectVariable](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectVariable.js)
 * object term - term associated with an object variable, see [ObjectTerm](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectTerm.js)
 * opposite plate - the plate associated with the equivalent term, opposite the dragging term
 * organize button - organizes terms on the plates
