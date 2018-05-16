@@ -122,11 +122,11 @@ The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection bu
 This section provides an overview of the most important model elements, and some miscellaneous topics
 related to the model.
 
+[Scene](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Scene.js) is the based type for all scenes.  See the **Screens** section above for a description of scenes.
+
 Fractions vs integers
 
 All fractions must be reduced.
-
-Model and Scenes
 
 Variable vs ObjectVariable
 
