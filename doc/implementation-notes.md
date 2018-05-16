@@ -94,18 +94,18 @@ A creator is responsible for handling the user interaction that results in the c
 
 In this sim, creators live in the toolboxes below the scale, see [TermsToolbox](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermsToolbox.js). The objects displayed in the toolboxes are `TermCreatorNode`s, each with an associated `TermCreator`.  Clicking on one of the objects in the toolbox creates a term, via the following steps:
 
-(1) The associated `TermCreator` is instructed to create a `Term`, and the `{Event} event` that started the interaction is forward to the `TermCreator`.
-(2) The `TermCreator` creates the `Term`, adds it to its list of managed `Term`s, and adds a listener to the `Term`'s `{Emitter} disposedEmitter` (fired when the `Term` is eventually disposed).
-(3) The `TermCreator` notifies listeners that a new `Term` has been created by firing `{Emitter} termCreatedEmitter`. The `event` that was provided by the `TermCreator` is provided as an argument to `termCreatedEmitter.emit3`.
-(4) The view (`SceneNode`) listens for `termCreatedEmitter`, and creates the associated view component (a `TermNode` subtype).  
-(5) `TermNode` registers itself as a listener for the the `Term`'s `disposedEmitter`.
-(6) The `event` that started the interaction is propagated to the `TermNode`'s drag listener (a subtype of `TermDragListener`) and interaction with the newly-created `Term` begins.
+1. The associated `TermCreator` is instructed to create a `Term`, and the `{Event} event` that started the interaction is forward to the `TermCreator`.
+2. The `TermCreator` creates the `Term`, adds it to its list of managed `Term`s, and adds a listener to the `Term`'s `{Emitter} disposedEmitter` (fired when the `Term` is eventually disposed).
+3. The `TermCreator` notifies listeners that a new `Term` has been created by firing `{Emitter} termCreatedEmitter`. The `event` that was provided by the `TermCreator` is provided as an argument to `termCreatedEmitter.emit3`.
+4. The view (`SceneNode`) listens for `termCreatedEmitter`, and creates the associated view component (a `TermNode` subtype).  
+5. `TermNode` registers itself as a listener for the the `Term`'s `disposedEmitter`.
+6. The `event` that started the interaction is propagated to the `TermNode`'s drag listener (a subtype of `TermDragListener`) and interaction with the newly-created `Term` begins.
 
 A term's lifecycle ends when it is returned to the toolbox, or when some action results in deleting it from the scale. When a term is disposed, the following steps occur:
 
-(1) Calling `dispose` for a `Term` causes its `disposedEmitter` to fire.
-(2) The `TermCreator` that manages the `Term` receives notification that the `Term` has been disposed. It removes the `Term` from the scale (if relevant), and removes the `Term` from its list of managed `Term`s.
-(3) The `TermNode` associated with the `Term` receives notification that the `Term` has been disposed. The `TermNode` calls its own `dispose` method, removing itself from the scenegraph. 
+1. Calling `dispose` for a `Term` causes its `disposedEmitter` to fire.
+2. The `TermCreator` that manages the `Term` receives notification that the `Term` has been disposed. It removes the `Term` from the scale (if relevant), and removes the `Term` from its list of managed `Term`s.
+3. The `TermNode` associated with the `Term` receives notification that the `Term` has been disposed. The `TermNode` calls its own `dispose` method, removing itself from the scenegraph. 
 
 ## Screens and Scenes
 
