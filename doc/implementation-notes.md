@@ -53,7 +53,7 @@ Sim-specific terminology:
 
 ## Common Patterns
 
-This section describes how this simulation uses patterns that are common to most PhET simulations.
+This section describes how this simulation uses patterns that are generally common to PhET simulations.
 
 **Model-view transform**: Many PhET simulations have a model-view transform that maps between model and view coordinate
 frames. The domain of this simulation has no need for a model coordinate frame, so the model and view coordinate frames
