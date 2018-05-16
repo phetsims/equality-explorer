@@ -169,7 +169,7 @@ A few notes related to the _Solve It!_ screen:
 
 [ChallengeGenerator](https://github.com/phetsims/equality-explorer/blob/master/js/solveit/model/ChallengeGenerator.js) and its subtypes are responsible for generating challenges for the 4 game levels. Variables and comments in the code correspond to the specification in the [Challenge Generation design document](https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo).
 
-Game levels are numbered 1 to 4 in both the model and view, and in type names (e.g. `ChallengeGenerator1` for Level 1), so that the implementation corresponds to the description in the design document. 
+Game levels are numbered 1 to 4 in both the model and view, and in type names (e.g. `ChallengeGenerator1` for Level 1), so that the implementation corresponds to the description in the design document.  (This differs from other models that you may have encountered, where 0-based indexing is typically used in the model, then converted to 1-based indexing in the view.) 
 
 ## Miscellaneous
 
