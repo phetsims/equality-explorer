@@ -273,7 +273,7 @@ define( function( require ) {
           layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
 
             // center horizontally on the screen
-            var screenCenterX = simBounds.center.times( 1 / scale ).x;
+            var screenCenterX = screenBounds.center.times( 1 / scale ).x;
 
             // top of dialog below equationPanel, so the solution is not obscured
             var localCenterTop = new Vector2( equationPanel.centerX, equationPanel.bottom + 10 );
