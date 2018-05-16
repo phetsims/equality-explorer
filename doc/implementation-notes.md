@@ -113,7 +113,7 @@ The _Variables_ screen has one scene with variable and constant terms. It introd
 
 The _Operations_ screen also has one scene with variable and constant terms, but uses strategy (2) for putting terms on the scale.  This screen also introduces the 'universal operation control', used to apply operations to both sides of the scale.
 
-The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection buttons are used to choose a scene (level). The scenes in this screen differ from other screens in a couple of important ways:  since the goal is to determine the value of `x`, the picker for setting `x` is hidden; and two equations are shown about the balance scale, the top one corresponding the challenge, and the bottom one corresponding to what's currently on the scale.
+The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection buttons are used to choose a scene (level). The scenes in this screen differ from other screens in a couple of important ways:  since the goal is to determine the value of `x`, the picker for setting `x` is hidden; and two equations are shown above the scale; the top one corresponds to the challenge, the bottom one corresponds to what's currently on the scale.
 
 ## Model
 
