@@ -86,7 +86,7 @@ Instances of the types listed below are dynamic &mdash; they come and go during 
 - `Challenge`
 - `EqualityExplorerRewardNode`
 
-Instances of all other types are static, created at startup or lazily, and exist for the lifetime of the sim.
+Instances of all other types are static. They are created at startup or lazily, and exist for the lifetime of the sim.
 
 **Creator Pattern**: TODO
 
