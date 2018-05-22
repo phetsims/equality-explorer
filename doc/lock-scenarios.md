@@ -106,6 +106,16 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 5. Verify that the dragged term and the term that it overlaps sum to zero. 
 6. Verify that the equivalent term moves immediately to an empty cell on the opposite plate.
 
+### Scenario 11
+
+### Scenario 12
+
+### Scenario 13
+
+### Scenario 14
+
+### Scenario 15
+
 ## Combine Like Terms
 
 The next 15 scenarios involve screens where like terms are combined in one cell on the scale.  Those screens are _Operations_ and _Solve It!_.
