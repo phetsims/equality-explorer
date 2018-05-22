@@ -14,7 +14,7 @@ Standard terminology:
 
 * balance scale (a.k.a. scale or balance) - device for weighing, corresponds to the equation that appears above it, see [BalanceScale](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/BalanceScale.js)
 * constant term - term with a constant value, e.g. `1` or `2/3`, see [ConstantTerm](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/ConstantTerm.js)
-* equation - a mathematical relation in which two expressions are joined by an equal sign (=)
+* equation - a mathematical relation in which two expressions are joined by an equals sign (=)
 * expression - a combination of symbols that is well-formed according to rules that depend on the context
 * inequality - a mathematical relation in which two expressions are joined by a 
 relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different
