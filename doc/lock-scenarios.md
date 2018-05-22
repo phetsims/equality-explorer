@@ -60,4 +60,44 @@ The first 10 scenarios involve screens where like terms are placed in separate c
 5. Verify that the dragged term and the term that it overlaps sum to zero. 
 6. Verify that the equivalent term moves immediately to an empty cell on the opposite plate.
 
+### Scenario 6
 
+1. Identify a term that appears on both plates.
+2. Drag one of these terms.
+3. Verify that the equivalent term comes off the opposite plate.
+4. Release the dragged term below the plate.
+5. Verify that the dragged term and equivalent term return to their respective toolboxes.
+
+### Scenario 7
+
+1. Run with `?speed=0.1` to slow animation.
+2. Fill the left plate. 
+3. Identify a term that appears on both plates, and drag one of those terms from the left plate.
+4. Verify that the equivalent term comes off the right plate.
+5. Release the dragged term above the left plate, and above all other terms.
+6. Before the dragged term reaches the left plate, fill the empty cell on the left plate.
+6. Verify that the dragged term and equivalent term return to their respective toolboxes.
+
+### Scenario 8
+
+1. Run with `?speed=0.1` to slow animation.
+2. Fill the _right_ plate. 
+3. Identify a term that appears on both plates, and drag one of those terms from the left plate.
+4. Verify that the equivalent term comes off the right plate.
+5. Release the dragged term above the left plate, and above all other terms.
+6. Before the dragged term reaches the left plate, fill the empty cell on the right plate.
+6. Verify that the dragged term and equivalent term return to their respective toolboxes.
+
+### Scenario 10
+
+1. Identify a term that appears on both plates.
+2. Drag one of these terms.
+3. Verify that the equivalent term comes off the opposite plate.
+4. Release the dragged term above the plate, and above all other terms.
+5. Verify that the dragged term and equivalent term return to their respective plates.
+
+
+
+## Separate Like Terms
+
+The next 10 scenarios involve screens where like terms are combined in one cell on the scale.  Those screens are _Operations_ and _Solve It!_.
