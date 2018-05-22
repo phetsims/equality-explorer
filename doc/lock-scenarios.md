@@ -15,10 +15,11 @@ Relevant terminology from [implementation-notes.md](https://github.com/phetsims/
 
 In all scenarios:
 
-- equivalent term should follow dragged term during dragging and animation
-- dragged term and equivalent term should be put on plates simultaneously
-- equivalent term should not be draggable, or interact with other terms
-- inverse term should be draggable
+* start with lock on, unless otherwise indicated
+* equivalent term should follow dragged term during dragging and animation
+* dragged term and equivalent term should be put on plates simultaneously
+* equivalent term should not be draggable, or interact with other terms
+* inverse term should be draggable
 
 ## Separate Like Terms
 
@@ -109,6 +110,13 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 6. Verify that the equivalent term moves immediately to an empty cell on the opposite plate.
 
 ### Scenario 11
+
+1. Start with lock off.
+2. Put a '1' on a plate.
+3. Fill the opposite plate with '-1'.
+4. Turn lock on.
+5. Attempt to drag '1' off plate.
+6. Verify that the drag is cancelled, and a dialog is displayed indicating "Left side of the balance is full" or "Right side of the balance is full", depending on which plate is full.
 
 ### Scenario 12
 
