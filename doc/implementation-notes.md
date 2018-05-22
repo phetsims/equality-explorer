@@ -45,7 +45,7 @@ Sim-specific terminology:
 * restore snapshot button - restores the snapshot that is selected in the Snapshots accordion box
 * "sum to zero" - the phrase used when adding 2 terms results in a value of zero 
 * term creator - responsible for creating and managing terms, uses the PhET [creator pattern](https://github.com/phetsims/scenery-phet/issues/214), see [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js) 
-* toolbox - panels that appear below the plates, terms can be dragged to/from
+* toolbox - panel that appear below a plate, terms can be dragged to/from
 * universal operation - an operation that is applied to both sides of the equation, see [UniveralOperation](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/UniversalOperation.js) 
 
 ## Common Patterns
