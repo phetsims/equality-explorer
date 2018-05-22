@@ -1,3 +1,3 @@
-## Equality Explorer - Lock feature scenarios
+# Equality Explorer - Lock feature scenarios
 
-TODO see https://github.com/phetsims/equality-explorer/issues/100
+The lock feature is deceptively complicated, involving many scenarios.  This document describes the most basic set of scenarios.  Issue https://github.com/phetsims/equality-explorer/issues/19 contains the original discussion and (incomplete) specification of the lock feature.
