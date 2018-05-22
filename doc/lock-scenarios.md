@@ -18,7 +18,7 @@ In all scenarios:
 
 ## Separate Like Terms
 
-The first 10 scenarios involve screens where like terms are placed in separate cells on the scale.  Those screens are _Numbers_ and _Variables_.
+The first 15 scenarios involve screens where like terms are placed in separate cells on the scale.  Those screens are _Numbers_ and _Variables_.
 
 ### Scenario 1
 
@@ -104,6 +104,6 @@ The first 10 scenarios involve screens where like terms are placed in separate c
 5. Verify that the dragged term and the term that it overlaps sum to zero. 
 6. Verify that the equivalent term moves immediately to an empty cell on the opposite plate.
 
-## Separate Like Terms
+## Combine Like Terms
 
-The next 10 scenarios involve screens where like terms are combined in one cell on the scale.  Those screens are _Operations_ and _Solve It!_.
+The next 15 scenarios involve screens where like terms are combined in one cell on the scale.  Those screens are _Operations_ and _Solve It!_.
