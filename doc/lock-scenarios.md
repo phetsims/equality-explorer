@@ -43,7 +43,7 @@ The first 10 scenarios involved screens where like terms are placed in separate 
 3. Release the dragged term anywhere above the plate.
 4. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
-## Scenario 4
+### Scenario 4
 
 1. Drag a term from a toolbox.
 2. Verify that an equivalent term comes out of the opposite toolbox.
