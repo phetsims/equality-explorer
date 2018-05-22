@@ -156,17 +156,13 @@ Throughout the simulation, variable values are represented using integers. All o
 This section provides an overview of the most important view components, and some miscellaneous topics
 related to the view.
 
-ScreenView and SceneNodes
+[SceneNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SceneNode.js) is the base type for viewing all scenes.  See the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.
 
-TermNode creation and event forwarding
+[TermNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermNode.js) is the base type of all terms. There is a subtype for each type of term, namely [ConstantTermNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/ConstantTermNode.js), [VariableTermNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/VariableTermNode.js) and [ObjectTermNode](https://github.com/phetsims/equality-explorer/blob/master/js/basics/view/ObjectTermNode.js).
 
-TermDragListener and its subtypes
-
-Halos 
+Every `TermNode` has an associated drag listener that is a subtype of [TermDragListener](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermDragListener.js). `TermDragListener` and its subtypes encapsulate all drag behavior and the lock feature. Which subtype is used depends on the strategy used for putting terms on the scale, as described in the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes) section above. [SeparateTermsDragListener](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SeparateTermsDragListener.js) is used when like terms occupy separate cells on the scale. [CombinedTermsDragListener](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/CombineTermsDragListener.js) is used when like terms are combined in one cell on the scale.
 
 Sum-to-zero animation, halo vs no halo, location based on where the plates are post-operation, batching for universal operation, batching when lock is on
-
-Lock feature - dragged term, equivalent term, inverse term
 
 EquationNode, dynamic vs static. Terms that evaluate to zero are omitted. A term with coefficient of `1` is displayed as `x`.  A term with coeffient of `-1` is displayed as `-x`.
 
@@ -183,6 +179,8 @@ Game levels are numbered 1 to 4 in both the model and view, and in type names (e
 ## Lock feature
 
 The lock feature is complicate enough to warrant its own section in this document.  Specification of the lock feature is spread out across the [Equality Explorer HTML5 design document](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ), GitHub issue https://github.com/phetsims/equality-explorer/issues/19 and the documentation in [TermDragListener](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermDragListener.js).
+
+TODO more info
 
 ## Miscellaneous
 
