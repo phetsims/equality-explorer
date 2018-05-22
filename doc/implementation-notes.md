@@ -156,7 +156,7 @@ Throughout the simulation, variable values are represented using integers. All o
 This section provides an overview of the most important view components, and some miscellaneous topics
 related to the view.
 
-[SceneNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SceneNode.js) is the base type for all scenes, and each `SceneNode` instance has an associated `Scene` instance.  See the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.
+[SceneNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SceneNode.js) is the base type for all scenes. See the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.  For screens that have more than one scene, there is one `SceneNode` instance for each `Scene` instance, and one `SceneNode` is made visible depending on which `Scene` is selected. Primarily for performance reasons, we do not mutate a single instance of `SceneNode`.   
 
 [TermNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermNode.js) is the base type of all terms. There is a subtype for each type of term, namely [ConstantTermNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/ConstantTermNode.js), [VariableTermNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/VariableTermNode.js) and [ObjectTermNode](https://github.com/phetsims/equality-explorer/blob/master/js/basics/view/ObjectTermNode.js).
 
