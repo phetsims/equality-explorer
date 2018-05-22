@@ -23,7 +23,7 @@ In all scenarios:
 
 ## Separate Like Terms
 
-The first 15 scenarios involve screens where like terms are placed in separate cells on the scale.  Those screens are _Numbers_ and _Variables_.
+The first 16 scenarios involve screens where like terms are placed in separate cells on the scale.  Those screens are _Numbers_ and _Variables_.
 
 ### Scenario 1
 
@@ -120,19 +120,23 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 
 ### Scenario 12
 
-term released below plate, term and ghost return to toolbox, inverse remains on plate
+inverse created, term released below plate, term and equivalent return to toolbox, inverse remains on plate
 
 ### Scenario 13
 
-term released above plate, term plate full (or becomes full), term and ghost return to toolbox
+inverse created, term released above plate, term plate full (or becomes full), term and equivalent return to toolbox, inverse remains on plate
 
 ### Scenario 14
 
-term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
+inverse created, term released above plate, equivalent plate full (or becomes full), term and equivalent return to toolbox, inverse remains on plate
 
 ### Scenario 15
 
-term released above plate, room on both plates, term goes to plate, ghost for to plate and replaces inverse
+inverse created, term released above plate, room on both plates, term goes to plate, equivalent returns to plate and replaces inverse
+
+### Scenario 16
+
+inverse created, inverse dragged, association broken
 
 ## Combine Like Terms
 
