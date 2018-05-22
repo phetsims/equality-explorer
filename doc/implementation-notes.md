@@ -15,10 +15,10 @@ Standard terminology:
 * balance scale (a.k.a. scale or balance) - device for weighing, corresponds to the equation that appears above it, see [BalanceScale](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/BalanceScale.js)
 * constant term - term with a constant value, e.g. `1` or `2/3`, see [ConstantTerm](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/ConstantTerm.js)
 * equation - a mathematical relation in which two expressions are joined by an equals sign (=)
-* expression - a combination of symbols that is well-formed according to rules that depend on the context
+* expression - in this sim, one side of an equation or inequality
 * inequality - a mathematical relation in which two expressions are joined by a 
-relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different
-* like terms - see https://en.wikipedia.org/wiki/Like_terms
+relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different. In this simulation, the relational symbols are limited to > and <.
+* like terms - terms that have the same variables and powers, see https://en.wikipedia.org/wiki/Like_terms
 * operand - an input value to an operation
 * operation - in this sim, used to refer to binary operations involving one operator and two operands
 * operator - in this sim, identifies the function of a binary operation, or the operators in an equation expression
@@ -38,8 +38,8 @@ Sim-specific terminology:
 * level-selection buttons - the buttons used to select the game level
 * locked - when the sim is locked, interacting with terms on one side of the equation will result in an equivalent interaction on the opposite side. See the [**Lock feature**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#lock-feature) section for more details.
 * object variable - a real-world object (shape, fruit, coin, animal) whose value is variable. As distinguished from a symbolic variable (`x`), see [ObjectVariable](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectVariable.js)
-* object term - term associated with an object variable, see [ObjectTerm](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectTerm.js)
-* opposite plate - the plate associated with the equivalent term, opposite the dragging term
+* object term - a term associated with an object variable, see [ObjectTerm](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectTerm.js)
+* opposite plate - the plate associated with the equivalent term, opposite the dragged term
 * organize button - organizes terms on the plates
 * plate - the balance scale has 2 of these, one for each side of the equation, see [Plate](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Plate.js)
 * restore snapshot button - restores the snapshot that is selected in the Snapshots accordion box
@@ -54,21 +54,21 @@ This section describes how this simulation uses patterns that are generally comm
 
 **Model-view transform**: Many PhET simulations have a model-view transform that maps between model and view coordinate
 frames. The domain of this simulation has no need for a model coordinate frame, so the model and view coordinate frames
-are treated as equivalent, and no transform is required. (If you don't understand that, don't worry about it.)
+are treated as equivalent, and no transform is required.
 
 **Query parameters**: Query parameters are used to enable sim-specific features, mainly for debugging and
 testing. Sim-specific query parameters are documented in
-[EqualityExplorerQueryParameters](https://github.com/phetsims/equality-explorer/blob/master/js/common/EqualityExplorerQueryParameters.js). Query parameters that are common to all sims are documented at QUERY_PARAMETERS_SCHEMA in [initialize-globals.js](https://github.com/phetsims/chipper/blob/master/js/initialize-globals.js).
+[EqualityExplorerQueryParameters](https://github.com/phetsims/equality-explorer/blob/master/js/common/EqualityExplorerQueryParameters.js).
 
 **Assertions**: The implementation makes heavy use of `assert` to verify pre/post assumptions and perform type checking. If you are making modifications to this sim, do so with assertions enabled via the `ea` query parameter.
 
 **Memory management**: All calls that register a listener or observer have associated documentation indicating whether a corresponding call is required to deregister. This includes calls to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Property.multilink` and `new Multilink`.  When deregistering is not needed, it's typically because instances of a type exist for the lifetime of the sim. Examples:
 
 ```js
-// unlink not needed.
+// unlink not needed
 this.variable.valueProperty.link( function( value ) { ... } );
 
-// removeListener required in dispose.
+// removeListener required in dispose
 this.addInputListener( this.termDragListener ); 
 ```
 
@@ -92,11 +92,11 @@ Instances of all other types are static. They are created at startup or lazily, 
 
 A creator is responsible for handling the user interaction that results in the creation of both the model and view for a type of model element.  In this sim, the creator is also responsible for managing the model element throughout its lifecycle.  
 
-In this sim, creators live in the toolboxes below the scale, see [TermsToolbox](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermsToolbox.js). The objects displayed in the toolboxes are `TermCreatorNode`s, each with an associated `TermCreator`.  Clicking on one of the objects in the toolbox creates a term, via the following steps:
+Creators live in the toolboxes below the scale, see [TermsToolbox](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermsToolbox.js). The objects displayed in the toolboxes are `TermCreatorNode`s, each with an associated `TermCreator`.  Clicking on one of the objects in the toolbox creates a term, via the following steps:
 
-1. The `TermCreatorNode` receives the `{Event} event`. The `TermCreatorNode` propagates the `event` to its associated `TermCreator`, and instructs it to create a `Term`.  See `addInputListener` in [TermCreatorNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermCreatorNode.js).
+1. The `TermCreatorNode` receives a Scenery input `{Event} event`. The `TermCreatorNode` propagates the `event` to its associated `TermCreator`, and instructs it to create a `Term`.  See `addInputListener` in [TermCreatorNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermCreatorNode.js).
 2. The `TermCreator` creates the `Term`, adds it to its list of managed `Term`s, and adds a listener to the `Term`'s `{Emitter} disposedEmitter` (fired when the `Term` is eventually disposed).  See `createTerm` in [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js). 
-3. The `TermCreator` notifies listeners that a new `Term` has been created by firing `{Emitter} termCreatedEmitter`. The `event` that was provided by the `TermCreator` is propagated to `termCreatedEmitter` listeners. See `manageTerm` in [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js).
+3. The `TermCreator` notifies listeners that a new `Term` has been created by firing `{Emitter} termCreatedEmitter`. The `event` is propagated to `termCreatedEmitter` listeners. See `manageTerm` in [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js).
 4. The view listens for `termCreatedEmitter`. It creates the associated view component, a `TermNode` subtype. The `event` is propagated to the `TermNode`.  A listener is added for the `Term`'s `disposedEmitter`, to dispose of the associated `TermNode`. See `termCreatedListener` in [SceneNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SceneNode.js).
 5. `TermNode` propagates the `event` to its drag listener, a subtype of `TermDragListener`. Interaction with the newly-created `Term` begins.  See `startDrag` in [TermNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermNode.js).
 
@@ -116,7 +116,7 @@ Screens differ primarily in their strategy for putting terms on the scale. The t
 
 (2) **Combine like terms**: Like terms are combined in one cell on the scale. This strategy is used in the _Operations_ and _Solve It!_ screens. Those screens have a 1x2 grid of cells on each plate; one cell for variable terms, the other cell for constant terms.
 
-All screens have one of more _scenes_, containing four common elements: a balance scale, an equation that represents what is on the scale, 2 toolboxes, and a Snapshots accordion box. If a screen has more than one scene, it also has a control for choosing the scene. The _Basics_ and _Solve It!_ screens have more than one scene; other screens have a single scene. 
+All screens have one or more _scenes_, containing four common elements: a balance scale, an equation that represents what is on the scale, 2 toolboxes containing `TermCreator`s, and a set of snapshots. If a screen has more than one scene, it also has a control for choosing the scene. The _Basics_ and _Solve It!_ screens have more than one scene; other screens have a single scene. 
 
 The first three screens are similar, except for the number of scenes and types of terms in each scene.  They all use strategy (1) above for putting terms on the scale. 
 
