@@ -88,15 +88,21 @@ The first 10 scenarios involve screens where like terms are placed in separate c
 6. Before the dragged term reaches the left plate, fill the empty cell on the right plate.
 6. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
+### Scenario 9
+
+1. Identify a term that appears on both plates, drag one of those terms.
+2. Verify that the equivalent term comes off the opposite plate.
+3. Release the dragged term above the plate, and above all other terms.
+4. Verify that the dragged term and equivalent term return to their respective plates.
+
 ### Scenario 10
 
-1. Identify a term that appears on both plates.
-2. Drag one of these terms.
-3. Verify that the equivalent term comes off the opposite plate.
-4. Release the dragged term above the plate, and above all other terms.
-5. Verify that the dragged term and equivalent term return to their respective plates.
-
-
+1. Identify a term that appears on both plates, drag one of those terms. 
+2. Verify that an equivalent term comes off the opposite plate.
+3. Position the dragged term so that it overlaps a like term that will sum to zero.
+4. Release the dragged term.
+5. Verify that the dragged term and the term that it overlaps sum to zero. 
+6. Verify that the equivalent term moves immediately to an empty cell on the opposite plate.
 
 ## Separate Like Terms
 
