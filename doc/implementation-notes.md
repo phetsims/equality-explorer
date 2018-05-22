@@ -164,7 +164,7 @@ Every `TermNode` has an associated drag listener that is a subtype of [TermDragL
 
 [SumToZeroNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SumToZeroNode.js) encapsulates the animation that occurs when two like terms sum to zero. When constant terms sum to zero, a '0' is displayed and fades out. When variable terms sum to zero, a '0x' is displayed and fades out. `SumToZeroNode` includes an optional yellow halo, displayed when terms that sum to zero overlap while dragging. When terms sum to zero, the animation is displayed after the scale moved, in the same cell that was previously occupied by one of the terms.  When a universal operation is applied, or when the lock feature is on, multiple terms may sum to zero as the result of an operation.  In these scenarios, animations are batched and displayed at the completion of the operation, after the scale has reached equilibrium. For an example of batching, see `animateSumToZero` in `SceneNode`.  
 
-EquationNode, dynamic vs static. Terms that evaluate to zero are omitted. A term with coefficient of `1` is displayed as `x`.  A term with coeffient of `-1` is displayed as `-x`.
+[EquationNode]() displays equations throiughout the simulation &mdash; in the "Equation or inequation" and "Snapshots" accordion boxes, and in the _Solve It!_ screen.  It handles all types of terms, and omits terms that evaluate to zero. A variable term (e.g. `x`) with coefficient of `1` is displayed as `x`.  A variable term with coeffient of `-1` is displayed as `-x`.
 
 ## Solve It! screen
 
