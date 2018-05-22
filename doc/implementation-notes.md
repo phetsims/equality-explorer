@@ -56,6 +56,8 @@ This section describes how this simulation uses patterns that are generally comm
 frames. The domain of this simulation has no need for a model coordinate frame, so the model and view coordinate frames
 are treated as equivalent, and no transform is required.
 
+**Coordinate frames**: There is one global coordinate frame used to represent all locations throughout the sim. That coordinate frame is described by `ScreenView.DEFAULT_LAYOUT_BOUNDS`.  There are no relative coordinates.  For example, the location of a term on a plate is expressed in the global coordinate frame, not in a coordinate frame relative to the location of the plate.
+
 **Query parameters**: Query parameters are used to enable sim-specific features, mainly for debugging and
 testing. Sim-specific query parameters are documented in
 [EqualityExplorerQueryParameters](https://github.com/phetsims/equality-explorer/blob/master/js/common/EqualityExplorerQueryParameters.js).
