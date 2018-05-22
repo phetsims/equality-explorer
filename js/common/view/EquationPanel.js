@@ -54,6 +54,7 @@ define( function( require ) {
 
     equationNode.on( 'bounds', function() {
 
+      //TODO fix this comment, it refers to "the accordion box".
       // Compute the scale required to keep the equation inside the accordion box, and centered on
       // the relational operator. This is more complicated than setting maxWidth because the equation's
       // relation operator is centered in the accordion box, and only one side of the equation may get

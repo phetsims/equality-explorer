@@ -49,7 +49,7 @@ define( function( require ) {
     } );
     this.addChild( variablesAccordionBox );
     variablesAccordionBox.moveToBack();
-    this.snapshotsAccordionBox.top = variablesAccordionBox.bottom + 15;
+    this.snapshotsAccordionBox.top = variablesAccordionBox.bottom + 10;
   }
 
   equalityExplorer.register( 'VariablesSceneNode', VariablesSceneNode );
