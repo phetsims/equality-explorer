@@ -194,6 +194,8 @@ The dragged term and equivalent term must be added to the scale simultaneously. 
 
 When the state of the lock feature changes, any `Terms` that are not on the scale (i.e. `Terms` that are dragging or animating) are immediately disposed.  This simolification eliminates the need to handle some complicated multitouch scenarios.
 
+For an overview of various scenarios involving the lock feature, see [lock-scenarios.md](https://github.com/phetsims/equality-explorer/blob/master/doc/lock-scenarios.md).
+
 ## Miscellaneous
 
 **Support for multiple variables**: While this simulation only presents the student with at most one variable (`x`), the code was written to support multiple variables. As of this writing, a non-production screen is provided to verify multi-variable support.  Run with the `xy` query parameter to add the _Two Variables_ screen.  Note that this screen may be moved to its own simulation in the future; see https://github.com/phetsims/equality-explorer/issues/99.
