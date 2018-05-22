@@ -1,6 +1,8 @@
 # Equality Explorer - Lock feature scenarios
 
-The lock feature is deceptively complicated, involving many scenarios.  This document describes the most basic set of scenarios.  It's highly recommended to use this set of scenarios as a baseline for regression testing.  Issue [phetsims/equality-explorer#19](https://github.com/phetsims/equality-explorer/issues/19) contains the original discussion and (incomplete) specification of the lock feature.
+The lock feature is deceptively complicated, involving many scenarios.  This document describes the most basic set of scenarios.  It's highly recommended to use this set of scenarios as a baseline for regression testing.  For extra credit, try make up variations and use multitouch.  
+
+Issue [phetsims/equality-explorer#19](https://github.com/phetsims/equality-explorer/issues/19) contains the original discussion and (incomplete) specification of the lock feature.
 
 Relevant terminology from [implementation-notes.md](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#terminology):
 
