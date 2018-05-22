@@ -6,9 +6,9 @@ Issue [phetsims/equality-explorer#19](https://github.com/phetsims/equality-explo
 
 Relevant terminology from [implementation-notes.md](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#terminology):
 
-- dragged term - a term that you're dragging
-- equivalent term - a term on the opposite side that is identical to the dragged term
-- inverse term - a term on the opposite side that is the inverse of the dragged term
+- dragged term - the term that you're dragging
+- equivalent term - the term on the opposite side that is identical to the dragged term
+- inverse term - a term created on the opposite side of the scale that is the inverse of the dragged term
 - plate - the balance scale has 2 of these, one for each side of the equation
 - opposite plate - the plate associated with the equivalent term, opposite the dragged term
 - toolbox - panel that appears below a plate, terms can be dragged to/from
