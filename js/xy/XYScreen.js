@@ -22,7 +22,7 @@ define( function( require ) {
   var XYScreenView = require( 'EQUALITY_EXPLORER/xy/view/XYScreenView' );
 
   // strings
-  var screenVariablesString = 'x & y'; // i18n not required, this is a test string
+  var screenTwoVariabledString = 'Two Variables'; // i18n not required, this is a test string
 
   /**
    * @param {Object} [options]
@@ -31,7 +31,7 @@ define( function( require ) {
   function XYScreen( options ) {
 
     options = _.extend( {
-      name: screenVariablesString,
+      name: screenTwoVariabledString,
       backgroundColorProperty: new Property( 'rgb( 214, 233, 254 )' ),
       homeScreenIcon: EqualityExplorerScreenIcons.createXYScreenIcon()
     }, options );
