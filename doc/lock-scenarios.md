@@ -32,7 +32,7 @@ The first 10 scenarios involved screens where like terms are placed in separate 
 1. Start with one of the plates full.
 1. On the side of the scale with a full plate, drag a term from a toolbox.
 2. Verify that an equivalent term comes out of the opposite toolbox.
-3. Release the dragged term anywhere above the full plate.
+3. Release the dragged term anywhere above the plate.
 4. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
 ### Scenario 3
@@ -40,7 +40,7 @@ The first 10 scenarios involved screens where like terms are placed in separate 
 1. Start with one of the plates full.
 1. On the _opposite_ side of the scale as the full plate, drag a term from a toolbox.
 2. Verify that an equivalent term comes out of the opposite toolbox.
-3. Release the dragged term anywhere above the full plate.
+3. Release the dragged term anywhere above the plate.
 4. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
 ## Scenario 4
