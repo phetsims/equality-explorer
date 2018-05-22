@@ -15,6 +15,8 @@ In all scenarios:
 
 - equivalent term should follow dragged term during dragging and animation
 - dragged term and equivalent term should be put on plates simultaneously
+- equivalent term should not be draggable, or interact with other terms
+- inverse term should be draggable
 
 ## Separate Like Terms
 
