@@ -120,11 +120,19 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 
 ### Scenario 12
 
+term released below plate, term and ghost return to toolbox, inverse remains on plate
+
 ### Scenario 13
+
+term released above plate, term plate full (or becomes full), term and ghost return to toolbox
 
 ### Scenario 14
 
+term released above plate, ghost plate full (or becomes full), term and ghost return to toolbox
+
 ### Scenario 15
+
+term released above plate, room on both plates, term goes to plate, ghost for to plate and replaces inverse
 
 ## Combine Like Terms
 
