@@ -32,9 +32,9 @@ Sim-specific terminology:
 * challenge generator - generates challenges for a specific game level, see [ChallengeGenerator](https://github.com/phetsims/equality-explorer/blob/master/js/solveit/model/ChallengeGenerator.js) and its subtypes
 * clear scale button - deletes all terms from the scale
 * delete snapshot button - deletes the snapshot that is selected in the Snapshots accordion box
-* dragged term - a term that you're dragging
-* equivalent term - a term on the opposite side that is identical to the dragged term
-* inverse term - a term on the opposite side that is the inverse of the dragged term
+* dragged term - the term that you're dragging
+* equivalent term - the term on the opposite side that is identical to the dragged term
+* inverse term - a term created on the opposite side of the scale that is the inverse of the dragged term, and is paired with the equivalent term
 * level-selection buttons - the buttons used to select the game level
 * locked - when the sim is locked, interacting with terms on one side of the equation will result in an equivalent interaction on the opposite side. See the [**Lock feature**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#lock-feature) section for more details.
 * object variable - a real-world object (shape, fruit, coin, animal) whose value is variable. As distinguished from a symbolic variable (`x`), see [ObjectVariable](https://github.com/phetsims/equality-explorer/blob/master/js/basics/model/ObjectVariable.js)
