@@ -37,7 +37,8 @@ define( function( require ) {
       createTermCreators( this.xVariable, this.yVariable ),
       createTermCreators( this.xVariable, this.yVariable ), {
         debugName: 'xy',
-        variables: [ this.xVariable, this.yVariable ]
+        variables: [ this.xVariable, this.yVariable ],
+        numberOfSnapshots: 4
       } );
   }
 
