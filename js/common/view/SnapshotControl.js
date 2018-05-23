@@ -28,7 +28,7 @@ define( function( require ) {
   var EQUATION_FONT_SIZE = 22;
   var FRACTION_FONT_SIZE = 14;
   var SELECTION_RECTANGLE_X_MARGIN = 10;
-  var SELECTION_RECTANGLE_Y_MARGIN = 5;
+  var SELECTION_RECTANGLE_Y_MARGIN = 8;
   var VALID_ORIENTATION_VALUES = [ 'horizontal', 'vertical' ];
 
   /**
@@ -70,7 +70,7 @@ define( function( require ) {
     var snapshotNode = new LayoutBox( {
       orientation: options.orientation,
       children: [ equationNode ],
-      spacing: ( options.orientation === 'horizontal' ) ? 15 : 10,
+      spacing: ( options.orientation === 'horizontal' ) ? 20 : 10,
       center: selectionRectangle.center,
       maxWidth: options.controlWidth - 2 * SELECTION_RECTANGLE_X_MARGIN,
       maxHeight: options.controlHeight - 2 * SELECTION_RECTANGLE_Y_MARGIN

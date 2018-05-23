@@ -55,7 +55,8 @@ define( function( require ) {
 
       // supertype options
       contentXMargin: 10,
-      contentYMargin: 10
+      contentYMargin: 10,
+      contentYSpacing: 3
 
     }, options );
 
@@ -74,12 +75,8 @@ define( function( require ) {
       maxWidth: 0.85 * contentWidth
     } );
 
-    var snapshotsVBoxChildren = [];
-
-    // separator between title and snapshots
-    snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
-
     // Create a row for each snapshot
+    var snapshotsVBoxChildren = [];
     for ( var i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
       snapshotsVBoxChildren.push( new SnapshotControl(
         scene, scene.snapshotsCollection.snapshotProperties[ i ], scene.snapshotsCollection.selectedSnapshotProperty, {
@@ -91,11 +88,8 @@ define( function( require ) {
         } ) );
     }
 
-    // separator between snapshots and buttons
-    snapshotsVBoxChildren.push( new HSeparator( contentWidth, SEPARATOR_OPTIONS ) );
-
     var snapshotsVBox = new VBox( {
-      spacing: 13,
+      spacing: 15,
       children: snapshotsVBoxChildren
     } );
 
@@ -155,7 +149,11 @@ define( function( require ) {
 
     var contentVBox = new VBox( {
       spacing: 10,
-      children: [ snapshotsVBox, buttonGroup ]
+      children: [
+        snapshotsVBox,
+        new HSeparator( contentWidth, SEPARATOR_OPTIONS ),
+        buttonGroup
+      ]
     } );
 
     AccordionBox.call( this, contentVBox, options );
