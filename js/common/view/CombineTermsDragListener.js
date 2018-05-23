@@ -39,6 +39,7 @@ define( function( require ) {
     
     /**
      * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
+     * @returns {boolean} true=success, false=failure
      * @protected
      * @override
      */
@@ -77,6 +78,8 @@ define( function( require ) {
 
       // create the equivalent term last, so it's in front
       this.equivalentTerm = this.equivalentTermCreator.createTerm( this.term.copyOptions() );
+
+      return true;
     },
 
     /**

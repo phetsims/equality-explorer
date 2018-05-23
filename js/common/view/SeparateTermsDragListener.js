@@ -94,7 +94,7 @@ define( function( require ) {
 
     /**
      * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
-     * Check this.interrupted after calling this function; it may interrupt the drag cycle!
+     * @returns {boolean} true=success, false=failure
      * @protected
      * @override
      */
@@ -119,6 +119,7 @@ define( function( require ) {
 
         // interrupt this drag sequence, since we can't take term off the plate
         this.interrupt();
+        return false;
       }
       else {
 
@@ -137,6 +138,8 @@ define( function( require ) {
         // Do this after creating inverseTerm so that it appear in front of inverseTerm.
         this.equivalentTerm = this.equivalentTermCreator.createTerm( this.term.copyOptions() );
       }
+
+      return true;
     },
 
     /**

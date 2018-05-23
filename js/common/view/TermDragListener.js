@@ -148,14 +148,15 @@ define( function( require ) {
      */
     start: function( event, trail ) {
 
+      var success = true;
+
       if ( this.termCreator.isTermOnPlate( this.term ) ) {
 
         if ( this.termCreator.lockedProperty.value ) {
-          this.startOpposite();
+          success = this.startOpposite();
         }
 
-        // startOpposite may have interrupted the drag cycle
-        if ( !this.interrupted ) {
+        if ( success ) {
           this.termCreator.removeTermFromPlate( this.term );
         }
       }
@@ -167,8 +168,7 @@ define( function( require ) {
         }
       }
 
-      // startOpposite may have interrupted the drag cycle
-      if ( !this.interrupted ) {
+      if ( success ) {
         assert && assert( this.equivalentTerm || !this.termCreator.lockedProperty.value,
           'lock is on, equivalentTerm expected' );
 
@@ -197,8 +197,6 @@ define( function( require ) {
      * @private
      */
     drag: function( event, trail ) {
-
-      assert && assert( !this.interrupted, 'drag should not have been called after interrupt' );
 
       // move the term
       this.term.moveTo( this.eventToLocation( event ) );
@@ -397,7 +395,7 @@ define( function( require ) {
 
     /**
      * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
-     * Check this.interrupted after calling this function; it may interrupt the drag cycle!
+     * @returns {boolean} true=success, false=failure
      * @protected
      * @abstract
      */
