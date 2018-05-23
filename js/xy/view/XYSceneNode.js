@@ -26,7 +26,8 @@ define( function( require ) {
 
     options = _.extend( {
       termsToolboxContentSize: new Dimension2( 270, 50 ),
-      termsToolboxSpacing: 12 // horizontal spacing between terms in the toolbox
+      termsToolboxSpacing: 12, // horizontal spacing between terms in the toolbox
+      snapshotControlOrientation: 'vertical' // put variable values below equations in Snapshots
     }, options );
 
     VariablesSceneNode.call( this, scene, sceneProperty, layoutBounds, options );
