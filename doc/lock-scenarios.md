@@ -23,7 +23,7 @@ In all scenarios:
 
 ## Separate Like Terms
 
-The first 16 scenarios involve screens where like terms are placed in separate cells on the scale.  Those screens are _Numbers_ and _Variables_.
+The first 16 scenarios involve screens where like terms are placed in separate cells on the scale.  Those screens are _Numbers_ and _Variables_. Scenarios 1-5 involve dragging a term from a toolbox. Scenarios 6-16 involve dragging a term from a plate.
 
 ### Scenario 1
 
