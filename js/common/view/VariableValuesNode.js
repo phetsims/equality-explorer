@@ -42,7 +42,7 @@ define( function( require ) {
     var leftParenNode = new Text( '(', { font: font } );
     children.push( leftParenNode );
 
-    // E.g. x = 3, for each variable
+    // E.g. {{symbol}} = {{value}}, for each variable
     for ( var i = 0; i < variables.length; i++ ) {
 
       var variable = variables[ i ];
