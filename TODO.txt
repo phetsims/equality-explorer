@@ -1,7 +1,0 @@
-TODO items for equality-explorer
-
-Cleanup
-- grunt update-copyright-dates
-- review unresolved comments in design document
-
-                    
