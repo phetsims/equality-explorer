@@ -167,7 +167,9 @@ define( function( require ) {
     // unlink not required.
     selectedSnapshotProperty.link( function( selectedSnapshot ) {
       var isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
-      selectionRectangle.stroke = isSelected ? EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE : 'transparent';
+      selectionRectangle.stroke = isSelected ?
+                                  EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE :
+                                  EqualityExplorerColors.SNAPSHOT_DESELECTED_STROKE;
     } );
 
     if ( options.variableValuesVisibleProperty ) {

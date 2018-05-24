@@ -23,6 +23,7 @@ define( function( require ) {
 
     // snapshots
     SNAPSHOT_SELECTED_STROKE: 'rgb( 85, 169, 223 )',
+    SNAPSHOT_DESELECTED_STROKE: 'transparent',
 
     // terms
     POSITIVE_CONSTANT_FILL: 'rgb( 246, 228, 213 )', // beige
