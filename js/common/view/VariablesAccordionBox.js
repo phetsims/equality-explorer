@@ -27,6 +27,9 @@ define( function( require ) {
   var variableString = require( 'string!EQUALITY_EXPLORER/variable' );
   var variablesString = require( 'string!EQUALITY_EXPLORER/variables' );
 
+  // constants
+  var Y_MARGIN = 4;
+
   /**
    * @param {Variable[]} variables - the variables that appear in this accordion box
    * @param {Object} [options]
@@ -45,7 +48,9 @@ define( function( require ) {
       // supertype options
       showTitleWhenExpanded: false,
       contentXMargin: 20,
-      contentYMargin: 4
+      contentYMargin: Y_MARGIN,
+      titleYMargin: Y_MARGIN,
+      buttonYMargin: Y_MARGIN
 
     }, options );
 
@@ -55,7 +60,7 @@ define( function( require ) {
     options.maxHeight = options.fixedHeight;
 
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
-    var contentHeight = options.fixedHeight - ( 2 * options.contentYMargin );
+    var contentHeight = options.fixedHeight - options.titleYMargin - options.contentYMargin;
 
     assert && assert( !options.titleNode, 'VariablesAccordionBox sets titleNode' );
     options.titleNode = new Text( options.titleString, {
@@ -63,7 +68,7 @@ define( function( require ) {
       maxWidth: 0.85 * contentWidth
     } );
 
-    var backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
+    var backgroundNode = new Rectangle( 0, 0, contentWidth + 5, contentHeight + 5 );
 
     // Create a picker for each variable
     var children = [];

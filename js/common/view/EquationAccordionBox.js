@@ -19,6 +19,9 @@ define( function( require ) {
   // strings
   var equationOrInequalityString = require( 'string!EQUALITY_EXPLORER/equationOrInequality' );
 
+  // constants
+  var Y_MARGIN = 8;
+
   /**
    * @param {TermCreator[]} leftTermCreators - left side of equation
    * @param {TermCreator[]} rightTermCreators - right side of equation
@@ -36,7 +39,9 @@ define( function( require ) {
       // supertype options
       showTitleWhenExpanded: false,
       contentXMargin: 20,
-      contentYMargin: 8
+      contentYMargin: Y_MARGIN,
+      titleYMargin: Y_MARGIN,
+      buttonYMargin: Y_MARGIN
 
     }, options );
 
@@ -47,7 +52,7 @@ define( function( require ) {
 
     var contentNode = new EquationPanel( leftTermCreators, rightTermCreators, {
       contentWidth: options.fixedWidth - ( 2 * options.contentXMargin ),
-      contentHeight: options.fixedHeight - ( 2 * options.contentYMargin ),
+      contentHeight: options.fixedHeight - options.titleYMargin - options.contentYMargin,
       xMargin: 0,
       yMargin: 0
     } );
