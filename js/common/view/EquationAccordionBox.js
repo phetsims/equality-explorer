@@ -42,8 +42,8 @@ define( function( require ) {
 
     assert && assert( options.maxWidth === undefined, 'EquationAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
-    // assert && assert( options.maxHeight === undefined, 'EquationAccordionBox sets maxHeight' );
-    // options.maxHeight = options.fixedHeight;
+    assert && assert( options.maxHeight === undefined, 'EquationAccordionBox sets maxHeight' );
+    options.maxHeight = options.fixedHeight;
 
     var contentNode = new EquationPanel( leftTermCreators, rightTermCreators, {
       contentWidth: options.fixedWidth - ( 2 * options.contentXMargin ),
