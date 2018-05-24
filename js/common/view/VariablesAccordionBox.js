@@ -70,7 +70,7 @@ define( function( require ) {
     variables.forEach( function( variable ) {
 
       var variableNode = new VariableNode( variable, {
-        iconScale: 0.75,
+        iconScale: 0.55,
         fontSize: options.fontSize
       } );
 
