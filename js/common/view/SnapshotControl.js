@@ -127,6 +127,7 @@ define( function( require ) {
       // either the button or the snapshot is visible
       snapshotButton.visible = !snapshot;
       snapshotNode.visible = !!snapshot;
+      selectionRectangle.visible = !!snapshot;
 
       if ( snapshot ) {
 
