@@ -32,7 +32,6 @@ define( function( require ) {
 
   // strings
   var xString = require( 'string!EQUALITY_EXPLORER/x' );
-  var yString = 'y'; // i18n not required, this is a test string
 
   var EqualityExplorerScreenIcons = {
 
@@ -198,30 +197,6 @@ define( function( require ) {
       return new ScreenIcon( iconNode, {
         maxIconWidthProportion: 0.75,
         fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
-      } );
-    },
-
-    /**
-     * Creates the icon for the 'x & y' screen: x + y
-     * @returns {ScreenIcon}
-     */
-    createXYScreenIcon: function() {
-
-      // x and -x on left side of the equation
-      var xNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
-      var yNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), yString, {
-        positiveFill: EqualityExplorerColors.POSITIVE_Y_FILL,
-        negativeFill: EqualityExplorerColors.NEGATIVE_Y_FILL
-      } );
-
-      var iconNode = new HBox( {
-        spacing: 8,
-        children: [ xNode, yNode ]
-      } );
-
-      return new ScreenIcon( iconNode, {
-        maxIconWidthProportion: 0.75,
-        fill: EqualityExplorerColors.VARIABLES_SCREEN_BACKGROUND
       } );
     }
   };

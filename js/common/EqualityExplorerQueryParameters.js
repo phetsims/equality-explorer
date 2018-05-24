@@ -48,10 +48,6 @@ define( function( require ) {
       }
     },
 
-    // Adds the 'x & y' screen, for testing multi-variable support.
-    // For internal use only, not public facing.
-    xy: { type: 'flag' },
-
     // Vertical offset, relative to center of plate, for when a term is considered 'above' the plate.
     // Positive y is down in scenery, so positive values are below the center of the plate.
     // For internal use only, not public facing.
