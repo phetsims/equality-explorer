@@ -1,7 +1,8 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Displays the value of variables in parenthesis, e.g. '(x = 2)' or '(x = 1, y = 3)'.
+ * Displays the values of variables in parenthesis.
+ * E.g. '(x = 2)' or '(x = 1, y = 3)' or (sphere = 2, square = 1, triangle = 4).
  * Used in Snapshots.
  *
  * @author Chris Malley (PixelZoom, Inc.)
