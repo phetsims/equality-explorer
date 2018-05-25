@@ -14,6 +14,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -21,6 +22,7 @@ define( function( require ) {
 
   // constants
   var DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
+  var ICON_SCALE_MULTIPLIER = 0.75; // use this to adjust size of icon relative to coefficient
 
   /**
    * @param {ObjectTermCreator} termCreator
@@ -82,9 +84,14 @@ define( function( require ) {
 
       var coefficientNode = new Text( coefficient, { font: options.font } );
 
+      var iconWrapper = new Node( {
+        children: [ icon ],
+        scale: ICON_SCALE_MULTIPLIER * coefficientNode.height / icon.height
+      } );
+
       return new HBox( {
         spacing: 2,
-        children: [ coefficientNode, icon ]
+        children: [ coefficientNode, iconWrapper ]
       } );
     }
   } );

@@ -30,7 +30,6 @@ define( function( require ) {
 
   // constants
   var DEFAULT_FONT_SIZE = 30;
-  var ICON_SCALE_FACTOR = 0.7; // use this to adjust the size of object icons
 
   /**
    * @param {TermCreator[]} leftTermCreators - left side of equation, terms appear in this order
@@ -191,8 +190,6 @@ define( function( require ) {
    */
   function createSideNode( termCreators, config ) {
 
-    var integerHeight = new Text( '1', { font: config.integerFont } ).height;
-
     var children = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
 
@@ -209,8 +206,7 @@ define( function( require ) {
           }
 
           // Each ObjectTerm has an implicit coefficient of 1, so use the number of terms as the coefficient.
-          var icon = termCreator.createIcon( { maxHeight: ICON_SCALE_FACTOR * integerHeight } );
-          children.push( ObjectTermNode.createEquationTermNode( numberOfTermsOnPlate, icon, {
+          children.push( ObjectTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.createIcon(), {
             font: config.integerFont,
             spacing: config.coefficientSpacing
           } ) );
