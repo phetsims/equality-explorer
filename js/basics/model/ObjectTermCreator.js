@@ -48,13 +48,13 @@ define( function( require ) {
 
     /**
      * Creates the icon used to represent this term in the TermsToolbox and equations.
-     * @param {Object} [options] - ignored for this subtype
+     * @param {Object} [options]
      * @returns {Node}
      * @public
      * @override
      */
     createIcon: function( options ) {
-      return ObjectTermNode.createInteractiveTermNode( this.variable.image );
+      return ObjectTermNode.createInteractiveTermNode( this.variable.image, options );
     },
 
     /**

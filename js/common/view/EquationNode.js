@@ -29,7 +29,8 @@ define( function( require ) {
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   // constants
-  var DEFAULT_FONT_SIZE = 28;
+  var DEFAULT_FONT_SIZE = 30;
+  var ICON_SCALE_FACTOR = 0.7; // use this to adjust the size of object icons
 
   /**
    * @param {TermCreator[]} leftTermCreators - left side of equation, terms appear in this order
@@ -53,9 +54,6 @@ define( function( require ) {
       integerFontSize: DEFAULT_FONT_SIZE,
       fractionFontSize: 0.6 * DEFAULT_FONT_SIZE,
       relationalOperatorFontSize: 1.5 * DEFAULT_FONT_SIZE,
-
-      // scale for object icons
-      iconScale: 1,
 
       // horizontal spacing
       coefficientSpacing: 3, // space between coefficient and icon
@@ -97,8 +95,7 @@ define( function( require ) {
       integerFont: new PhetFont( options.integerFontSize ),
       fractionFont: new PhetFont( options.fractionFontSize ),
       coefficientSpacing: options.coefficientSpacing,
-      plusSpacing: options.plusSpacing,
-      iconScale: options.iconScale
+      plusSpacing: options.plusSpacing
     };
 
     // updates the equation's terms
@@ -189,6 +186,8 @@ define( function( require ) {
    */
   function createSideNode( termCreators, config ) {
 
+    var integerHeight = new Text( '1', { font: config.integerFont } ).height;
+
     var children = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
 
@@ -205,8 +204,8 @@ define( function( require ) {
           }
 
           // Each ObjectTerm has an implicit coefficient of 1, so use the number of terms as the coefficient.
-          children.push( ObjectTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.createIcon(), {
-            scale: config.iconScale,
+          var icon = termCreator.createIcon( { maxHeight: ICON_SCALE_FACTOR * integerHeight } );
+          children.push( ObjectTermNode.createEquationTermNode( numberOfTermsOnPlate, icon, {
             font: config.integerFont,
             spacing: config.coefficientSpacing
           } ) );

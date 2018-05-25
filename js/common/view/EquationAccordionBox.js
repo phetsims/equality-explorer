@@ -35,8 +35,8 @@ define( function( require ) {
 
       // supertype options
       showTitleWhenExpanded: false,
-      contentXMargin: 20,
-      contentYMargin: 8
+      contentXMargin: 8,
+      contentYMargin: 4
 
     }, options );
 

@@ -40,7 +40,9 @@ define( function( require ) {
       fill: null,
       stroke: null,
       resize: false,
-      cornerRadius: EqualityExplorerConstants.PANEL_CORNER_RADIUS
+      cornerRadius: EqualityExplorerConstants.PANEL_CORNER_RADIUS,
+      xMargin: 5,
+      yMargin: 5
 
     }, options );
 
