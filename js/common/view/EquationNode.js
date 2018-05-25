@@ -28,6 +28,9 @@ define( function( require ) {
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
   var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
+  // constants
+  var DEFAULT_FONT_SIZE = 28;
+
   /**
    * @param {TermCreator[]} leftTermCreators - left side of equation, terms appear in this order
    * @param {TermCreator[]} rightTermCreators - right side of equation, terms appear in this order
@@ -45,11 +48,11 @@ define( function( require ) {
       updateEnabled: true,
 
       // fonts sizes, optimized for EquationAccordionBox
-      symbolFontSize: 28,
-      operatorFontSize: 28,
-      integerFontSize: 28,
-      fractionFontSize: 16,
-      relationalOperatorFontSize: 40,
+      symbolFontSize: DEFAULT_FONT_SIZE,
+      operatorFontSize: DEFAULT_FONT_SIZE,
+      integerFontSize: DEFAULT_FONT_SIZE,
+      fractionFontSize: 0.6 * DEFAULT_FONT_SIZE,
+      relationalOperatorFontSize: 1.5 * DEFAULT_FONT_SIZE,
 
       // horizontal spacing
       coefficientSpacing: 3, // space between coefficient and icon
