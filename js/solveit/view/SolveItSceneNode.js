@@ -95,7 +95,10 @@ define( function( require ) {
     var challengePanelOptions = _.extend( {}, EQUATION_PANEL_OPTIONS, {
       fill: Color.WHITE.withAlpha( 0.5 ),
       stroke: Color.BLACK.withAlpha( 0.5 ),
-      equationNodeOptions: { updateEnabled: false }, // static equation, to display the challenge
+      equationNodeOptions: {
+        relationalOperatorFontWeight: 'normal',
+        updateEnabled: false // static equation, to display the challenge
+      },
       centerX: scene.scale.location.x,
       top: statusBar.bottom + 15
     } );
@@ -106,6 +109,9 @@ define( function( require ) {
       _.extend( {}, EQUATION_PANEL_OPTIONS, {
         fill: 'white',
         stroke: 'black',
+        equationNodeOptions: {
+          relationalOperatorFontWeight: 'normal'
+        },
         centerX: challengePanel.centerX,
         top: challengePanel.bottom + 10
       } ) );

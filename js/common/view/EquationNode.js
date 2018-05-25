@@ -55,6 +55,8 @@ define( function( require ) {
       fractionFontSize: 0.6 * DEFAULT_FONT_SIZE,
       relationalOperatorFontSize: 1.5 * DEFAULT_FONT_SIZE,
 
+      relationalOperatorFontWeight: 'bold',
+
       // horizontal spacing
       coefficientSpacing: 3, // space between coefficient and icon
       plusSpacing: 8, // space around plus operator
@@ -67,7 +69,10 @@ define( function( require ) {
     var leftSideNode = null;
     var rightSideNode = null;
     var relationalOperatorNode = new Text( '?', {
-      font: new PhetFont( { size: options.relationalOperatorFontSize, weight: 'bold' } )
+      font: new PhetFont( {
+        size: options.relationalOperatorFontSize,
+        weight: options.relationalOperatorFontWeight
+      } )
     } );
 
     // updates the equation's layout, origin at the center of the relational operator
