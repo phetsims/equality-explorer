@@ -22,7 +22,7 @@ define( function( require ) {
 
   // constants
   var DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
-  var ICON_SCALE_MULTIPLIER = 0.75; // use this to adjust size of icon relative to coefficient
+  var ICON_SCALE_MULTIPLIER = 0.7; // use this to adjust size of icon relative to coefficient
 
   /**
    * @param {ObjectTermCreator} termCreator
