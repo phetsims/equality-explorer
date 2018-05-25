@@ -54,6 +54,9 @@ define( function( require ) {
       fractionFontSize: 0.6 * DEFAULT_FONT_SIZE,
       relationalOperatorFontSize: 1.5 * DEFAULT_FONT_SIZE,
 
+      // scale for object icons
+      iconScale: 1,
+
       // horizontal spacing
       coefficientSpacing: 3, // space between coefficient and icon
       plusSpacing: 8, // space around plus operator
@@ -61,18 +64,13 @@ define( function( require ) {
 
     }, options );
 
-    // fonts for various parts of the equation
-    var symbolFont = new MathSymbolFont( options.symbolFontSize );
-    var operatorFont = new PhetFont( options.operatorFontSize );
-    var relationalOperatorFont = new PhetFont( { size: options.relationalOperatorFontSize, weight: 'bold' } );
-    var integerFont = new PhetFont( options.integerFontSize );
-    var fractionFont = new PhetFont( options.fractionFontSize );
-
     Node.call( this );
 
     var leftSideNode = null;
     var rightSideNode = null;
-    var relationalOperatorNode = new Text( '?', { font: relationalOperatorFont } );
+    var relationalOperatorNode = new Text( '?', {
+      font: new PhetFont( { size: options.relationalOperatorFontSize, weight: 'bold' } )
+    } );
 
     // updates the equation's layout, origin at the center of the relational operator
     var updateLayout = function() {
@@ -92,15 +90,21 @@ define( function( require ) {
       updateLayout();
     };
 
+    // configuration information one side of the equation, passed to createSideNode
+    var sideConfig = {
+      symbolFont: new MathSymbolFont( options.symbolFontSize ),
+      operatorFont: new PhetFont( options.operatorFontSize ),
+      integerFont: new PhetFont( options.integerFontSize ),
+      fractionFont: new PhetFont( options.fractionFontSize ),
+      coefficientSpacing: options.coefficientSpacing,
+      plusSpacing: options.plusSpacing,
+      iconScale: options.iconScale
+    };
+
     // updates the equation's terms
     var updateTerms = function() {
-
-      leftSideNode = createSideNode( leftTermCreators, symbolFont, operatorFont, integerFont, fractionFont,
-        options.coefficientSpacing, options.plusSpacing );
-
-      rightSideNode = createSideNode( rightTermCreators, symbolFont, operatorFont, integerFont, fractionFont,
-        options.coefficientSpacing, options.plusSpacing );
-
+      leftSideNode = createSideNode( leftTermCreators, sideConfig );
+      rightSideNode = createSideNode( rightTermCreators, sideConfig );
       self.children = [ leftSideNode, relationalOperatorNode, rightSideNode ];
       updateLayout();
     };
@@ -146,10 +150,9 @@ define( function( require ) {
    * Gets the operator that describes the relationship between the left and right sides.
    * @param {TermCreator[]} leftTermCreators
    * @param {TermCreator[]} rightTermCreators
-   * @param {Font} font
    * @returns {string}
    */
-  function getRelationalOperator( leftTermCreators, rightTermCreators, font ) {
+  function getRelationalOperator( leftTermCreators, rightTermCreators ) {
 
     // evaluate the left side
     var leftWeight = Fraction.fromInteger( 0 );
@@ -181,15 +184,10 @@ define( function( require ) {
   /**
    * Creates one side of the equation.
    * @param {TermCreator[]} termCreators
-   * @param {Font} symbolFont - font for variables, like 'x'
-   * @param {Font} operatorFont
-   * @param {Font} integerFont
-   * @param {Font} fractionFont
-   * @param {number} coefficientSpacing - space between coefficients and icons
-   * @param {number} plusSpacing - space around plus operators
+   * @param {Object} config - see createSideNodeConfig in constructor
    * @returns {Node}
    */
-  function createSideNode( termCreators, symbolFont, operatorFont, integerFont, fractionFont, coefficientSpacing, plusSpacing ) {
+  function createSideNode( termCreators, config ) {
 
     var children = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
@@ -203,13 +201,14 @@ define( function( require ) {
 
           // if there were previous terms, add an operator
           if ( children.length > 0 ) {
-            children.push( valueToOperatorNode( numberOfTermsOnPlate, operatorFont ) );
+            children.push( valueToOperatorNode( numberOfTermsOnPlate, config.operatorFont ) );
           }
 
           // Each ObjectTerm has an implicit coefficient of 1, so use the number of terms as the coefficient.
           children.push( ObjectTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.createIcon(), {
-            font: integerFont,
-            spacing: coefficientSpacing
+            scale: config.iconScale,
+            font: config.integerFont,
+            spacing: config.coefficientSpacing
           } ) );
         }
         else if ( termCreator instanceof VariableTermCreator ) {
@@ -220,15 +219,15 @@ define( function( require ) {
 
             // if there were previous terms, replace the coefficient's sign with an operator
             if ( children.length > 0 ) {
-              children.push( valueToOperatorNode( coefficient.getValue(), operatorFont ) );
+              children.push( valueToOperatorNode( coefficient.getValue(), config.operatorFont ) );
               coefficient = coefficient.abs();
             }
 
             children.push( VariableTermNode.createEquationTermNode( coefficient, termCreator.variable.symbol, {
-              integerFont: integerFont,
-              fractionFont: fractionFont,
-              symbolFont: symbolFont,
-              coefficientSpacing: coefficientSpacing
+              integerFont: config.integerFont,
+              fractionFont: config.fractionFont,
+              symbolFont: config.symbolFont,
+              coefficientSpacing: config.coefficientSpacing
             } ) );
           }
         }
@@ -240,13 +239,13 @@ define( function( require ) {
 
             // if there were previous terms, replace the constant's sign with an operator
             if ( children.length > 0 ) {
-              children.push( valueToOperatorNode( constantValue.getValue(), operatorFont ) );
+              children.push( valueToOperatorNode( constantValue.getValue(), config.operatorFont ) );
               constantValue = constantValue.abs();
             }
 
             children.push( ConstantTermNode.createEquationTermNode( constantValue, {
-              integerFont: integerFont,
-              fractionFont: fractionFont
+              integerFont: config.integerFont,
+              fractionFont: config.fractionFont
             } ) );
           }
         }
@@ -258,11 +257,11 @@ define( function( require ) {
 
     // if there were no terms, then this side of the equation evaluated to zero
     if ( children.length === 0 ) {
-      children.push( new Text( '0', { font: integerFont } ) );
+      children.push( new Text( '0', { font: config.integerFont } ) );
     }
 
     return new HBox( {
-      spacing: plusSpacing,
+      spacing: config.plusSpacing,
       children: children
     } );
   }
