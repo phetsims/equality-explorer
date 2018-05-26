@@ -58,8 +58,8 @@ define( function( require ) {
 
       // Compute the scale required to keep the equation centered on the relational operator.
       // This is more complicated than setting maxWidth because the equation's relation operator is
-      // centered in the panel, and only one side of the equation may get too wide. equation.x is the
-      // center of the equation's relational operator.
+      // centered in the panel, and only one side of the equation may get too wide.
+      // equationNode.x is the center of the equation's relational operator.
       var maxSideWidth = options.contentWidth / 2;
       var leftSideOverflow = Math.max( 0, equationNode.x - equationNode.left - maxSideWidth );
       var rightSideOverflow = Math.max( 0, equationNode.right - equationNode.x - maxSideWidth );
