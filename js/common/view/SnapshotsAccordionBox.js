@@ -52,6 +52,7 @@ define( function( require ) {
       snapshotControlHeight: 50,
       snapshotControlOrientation: 'horizontal',
       snapshotControlCommaSeparated: true,
+      snapshotControlVariableValuesOpacity: 1,
 
       // supertype options
       contentXMargin: 10,
@@ -83,6 +84,7 @@ define( function( require ) {
           variableValuesVisibleProperty: options.variableValuesVisibleProperty,
           orientation: options.snapshotControlOrientation,
           commaSeparated: options.snapshotControlCommaSeparated,
+          variableValuesOpacity: options.snapshotControlVariableValuesOpacity,
           controlWidth: contentWidth,
           controlHeight: options.snapshotControlHeight
         } ) );

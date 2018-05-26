@@ -41,6 +41,7 @@ define( function( require ) {
       snapshotControlHeight: 50, // see controlHeight option of Snapshot control
       snapshotControlOrientation: 'horizontal', // see orientation option of Snapshot control
       snapshotControlCommaSeparated: true, // see commaSeparated option of Snapshot control
+      snapshotControlVariableValuesOpacity: 1, // opacity of variable values in snapshots
 
       // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
       variableValuesVisibleProperty: null
@@ -94,6 +95,7 @@ define( function( require ) {
       snapshotControlHeight: options.snapshotControlHeight,
       snapshotControlOrientation: options.snapshotControlOrientation,
       snapshotControlCommaSeparated: options.snapshotControlCommaSeparated,
+      snapshotControlVariableValuesOpacity: options.snapshotControlVariableValuesOpacity,
       fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,

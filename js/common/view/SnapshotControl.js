@@ -49,11 +49,14 @@ define( function( require ) {
       controlWidth: 100,
       controlHeight: 50,
       orientation: 'horizontal', // layout of the equation and variable values, see VALID_ORIENTATION_VALUES
-      commaSeparated: true // are variable values separated by commas?
+      commaSeparated: true, // are variable values separated by commas?
+      variableValuesOpacity: 1 // [0,1], see https://github.com/phetsims/equality-explorer/issues/113
     }, options );
 
     assert && assert( _.includes( VALID_ORIENTATION_VALUES, options.orientation ),
       'invalid orientation: ' + options.orientation );
+    assert && assert( options.variableValuesOpacity >= 0 && options.variableValuesOpacity <= 1,
+      'invalid variableValuesOpacity: ' + options.variableValuesOpacity );
 
     // rectangle that appears around the snapshot when it's selected
     var selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
@@ -145,6 +148,7 @@ define( function( require ) {
         // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
         if ( snapshot.variables ) {
           variableValuesNode = new VariableValuesNode( snapshot.variables, {
+            opacity: options.variableValuesOpacity,
             fontSize: EQUATION_FONT_SIZE,
             commaSeparated: options.commaSeparated
           } );
