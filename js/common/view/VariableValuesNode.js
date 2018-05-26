@@ -13,7 +13,6 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -31,7 +30,9 @@ define( function( require ) {
     options = _.extend( {
       fontSize: 28,
       commaSeparated: true,
-      spacing: 15 // spacing between values
+
+      // supertype options
+      spacing: 15
     }, options );
 
     var font = new PhetFont( options.fontSize );
@@ -47,12 +48,14 @@ define( function( require ) {
 
       var variable = variables[ i ];
 
+      var hBoxChildren = [];
+
       // variable
       var variableNode = new VariableNode( variable, {
         iconScale: 0.45,
         fontSize: options.fontSize
       } );
-      children.push( variableNode );
+      hBoxChildren.push( variableNode );
 
       // ' = N' in normal font, i18n not required
       var equalsValueString = StringUtils.fillIn( ' {{equals}} {{value}}', {
@@ -60,24 +63,28 @@ define( function( require ) {
         value: variable.valueProperty.value
       } );
       var equalsValueNode = new Text( equalsValueString, { font: font } );
-      children.push( equalsValueNode );
+      hBoxChildren.push( equalsValueNode );
 
       // comma + space separator
       if ( i < variables.length - 1 ) {
         if ( options.commaSeparated ) {
-          children.push( new Text( ',', { font: font } ) );
+          hBoxChildren.push( new Text( ',', { font: font } ) );
         }
-        children.push( new HStrut( options.spacing ) );
       }
+
+      children.push( new HBox( {
+        children: hBoxChildren,
+        spacing: 0
+      } ) );
     }
 
     var rightParenNode = new Text( ')', { font: font } );
     children.push( rightParenNode );
 
-    HBox.call( this, {
-      children: children,
-      spacing: 0
-    } );
+    assert && assert( !options.children, 'VariableValuesNode sets children' );
+    options.childen = children;
+
+    HBox.call( this, options );
   }
 
   equalityExplorer.register( 'VariableValuesNode', VariableValuesNode );
