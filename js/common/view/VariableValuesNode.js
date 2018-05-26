@@ -13,6 +13,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -30,10 +31,12 @@ define( function( require ) {
     options = _.extend( {
       fontSize: 28,
       commaSeparated: true,
-
-      // supertype options
-      spacing: 15
+      spacingInsideTerms: 3,
+      spacingBetweenTerms: 15
     }, options );
+
+    assert && assert( options.spacing === undefined, 'VariableValuesNode sets spacing' );
+    options.spacing = 0;
 
     var font = new PhetFont( options.fontSize );
 
@@ -48,41 +51,38 @@ define( function( require ) {
 
       var variable = variables[ i ];
 
-      var hBoxChildren = [];
+      children.push( new HBox( {
+        spacing: options.spacingInsideTerms,
+        children: [
 
-      // variable
-      var variableNode = new VariableNode( variable, {
-        iconScale: 0.45,
-        fontSize: options.fontSize
-      } );
-      hBoxChildren.push( variableNode );
+          // variable
+          new VariableNode( variable, {
+            iconScale: 0.45,
+            fontSize: options.fontSize
+          } ),
 
-      // ' = N' in normal font, i18n not required
-      var equalsValueString = StringUtils.fillIn( ' {{equals}} {{value}}', {
-        equals: MathSymbols.EQUAL_TO,
-        value: variable.valueProperty.value
-      } );
-      var equalsValueNode = new Text( equalsValueString, { font: font } );
-      hBoxChildren.push( equalsValueNode );
+          // =
+          new Text( MathSymbols.EQUAL_TO, { font: font } ),
+
+          // N
+          new Text( '' + variable.valueProperty.value, { font: font } )
+        ]
+      } ) );
 
       // comma + space separator
       if ( i < variables.length - 1 ) {
         if ( options.commaSeparated ) {
-          hBoxChildren.push( new Text( ',', { font: font } ) );
+          children.push( new Text( ',', { font: font } ) );
         }
+        children.push( new HStrut( options.spacingBetweenTerms ) );
       }
-
-      children.push( new HBox( {
-        children: hBoxChildren,
-        spacing: 0
-      } ) );
     }
 
     var rightParenNode = new Text( ')', { font: font } );
     children.push( rightParenNode );
 
     assert && assert( !options.children, 'VariableValuesNode sets children' );
-    options.childen = children;
+    options.children = children;
 
     HBox.call( this, options );
   }
