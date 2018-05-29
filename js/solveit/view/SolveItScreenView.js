@@ -60,7 +60,7 @@ define( function( require ) {
 
     // Handles the animated 'slide' transition between level-selection and challenges (scenesParent)
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
-      content: levelSelectionNode
+      content: ( model.sceneProperty.value === null ) ? levelSelectionNode : scenesParent
     } );
     this.addChild( this.transitionNode );
 
