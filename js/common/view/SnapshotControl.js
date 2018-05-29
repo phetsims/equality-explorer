@@ -20,6 +20,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
   var VariableValuesNode = require( 'EQUALITY_EXPLORER/common/view/VariableValuesNode' );
 
   // constants
@@ -93,7 +94,7 @@ define( function( require ) {
       maxHeight: options.controlHeight,
       listener: function() {
         assert && assert( !snapshotProperty.value, 'snapshot is already occupied' );
-        var snapshot = scene.createSnapshot();
+        var snapshot = new Snapshot( scene );
         snapshotProperty.value = snapshot; // associate the snapshot with this control
         selectedSnapshotProperty.value = snapshot; // select the created snapshot
       }

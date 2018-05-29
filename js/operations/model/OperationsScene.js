@@ -172,7 +172,7 @@ define( function( require ) {
     applyOperation: function( operation ) {
 
       // Take a snapshot of terms on the scale, so we can undo the operation if necessary.
-      var snapshot = this.createSnapshot();
+      var snapshot = new Snapshot( this );
 
       // {TermCreator[]} TermCreators whose term summed to zero as the result of applying this operation.
       var termCreatorsZero = [];

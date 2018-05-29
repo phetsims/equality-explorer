@@ -17,7 +17,6 @@ define( function( require ) {
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
   var SnapshotsCollection = require( 'EQUALITY_EXPLORER/common/model/SnapshotsCollection' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -211,15 +210,6 @@ define( function( require ) {
       this.allTermCreators.forEach( function( termCreator ) {
         termCreator.step( dt );
       } );
-    },
-
-    /**
-     * Creates a snapshot of the scene.
-     * @returns {Snapshot}
-     * @public
-     */
-    createSnapshot: function() {
-      return new Snapshot( this );
     }
   } );
 } );
