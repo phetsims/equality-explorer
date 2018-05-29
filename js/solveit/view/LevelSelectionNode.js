@@ -50,14 +50,34 @@ define( function( require ) {
       maxWidth: 0.65 * layoutBounds.width
     };
 
-    // 'Solve for x'
+    // Level-selection buttons
+    var levelSelectionButtons = [];
+    model.scenes.forEach( function( scene ) {
+      levelSelectionButtons.push( new EqualityExplorerLevelSelectionButton( scene, model.sceneProperty ) );
+    } );
+
+    // Layout the level-selection buttons horizontally
+    var levelSelectionButtonsBox = new HBox( {
+      children: levelSelectionButtons,
+      spacing: 40,
+      centerX: layoutBounds.centerX,
+      top: layoutBounds.centerY - 25 // top of buttons slightly above center
+    } );
+
+    // 'Choose Your Level', centered above level-selection buttons
+    var chooseYourLevelNode = new Text( chooseYourLevelString, _.extend( {}, textOptions, {
+      centerX: levelSelectionButtonsBox.centerX,
+      bottom: levelSelectionButtonsBox.top - 65
+    } ) );
+
+    // 'Solve for x', centered above 'Choose You Level'
     var solveForXText = StringUtils.fillIn( solveForString, {
       variable: MathSymbolFont.getRichTextMarkup( xString )
     } );
-    var solveForXNode = new RichText( solveForXText, textOptions );
-
-    // 'Choose Your Level'
-    var chooseYourLevelNode = new Text( chooseYourLevelString, textOptions );
+    var solveForXNode = new RichText( solveForXText, _.extend( {}, textOptions, {
+      centerX: chooseYourLevelNode.centerX,
+      bottom: chooseYourLevelNode.top - 30
+    } ) );
 
     // Info dialog is created on demand, then reused so we don't have to deal with buggy Dialog.dispose.
     var infoDialog = null;
@@ -69,48 +89,28 @@ define( function( require ) {
       listener: function() {
         infoDialog = infoDialog || new InfoDialog( model.levelDescriptions );
         infoDialog.show();
-      }
+      },
+      left: chooseYourLevelNode.right + 20,
+      centerY: chooseYourLevelNode.centerY
     } );
 
-    // Level-selection buttons
-    var levelSelectionButtons = [];
-    model.scenes.forEach( function( scene ) {
-      levelSelectionButtons.push( new EqualityExplorerLevelSelectionButton( scene, model.sceneProperty ) );
-    } );
-
-    // Layout the level-selection buttons horizontally
-    var levelSelectionButtonsBox = new HBox( {
-      children: levelSelectionButtons,
-      spacing: 40
-    } );
-
-    // Sound button
+    // Sound button, at lower left
     var soundButton = new SoundToggleButton( model.soundEnabledProperty, {
       stroke: 'gray',
-      scale: 1.3
+      scale: 1.3,
+      left: layoutBounds.minX + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    // Reset All button
+    // Reset All button, at lower right
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         phet.log && phet.log( 'ResetAllButton pressed' );
         options.resetCallback && options.resetCallback();
-      }
+      },
+      right: layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
-
-    // Layout
-    levelSelectionButtonsBox.centerX = layoutBounds.centerX;
-    levelSelectionButtonsBox.top = layoutBounds.centerY - 25; // top of buttons slightly above center
-    chooseYourLevelNode.centerX = levelSelectionButtonsBox.centerX;
-    chooseYourLevelNode.bottom = levelSelectionButtonsBox.top - 65;
-    solveForXNode.centerX = chooseYourLevelNode.centerX;
-    solveForXNode.bottom = chooseYourLevelNode.top - 30;
-    infoButton.left = chooseYourLevelNode.right + 20;
-    infoButton.centerY = chooseYourLevelNode.centerY;
-    soundButton.left = layoutBounds.minX + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN;
-    soundButton.bottom = layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN;
-    resetAllButton.right = layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN;
-    resetAllButton.bottom = layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN;
 
     var children = [
       solveForXNode,
