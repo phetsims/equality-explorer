@@ -67,7 +67,7 @@ define( function( require ) {
     // Make the selected scene (level) visible. unlink not needed.
     model.sceneProperty.link( function( scene ) {
 
-      // Skip null (no scene selected), so that scene is shown during wipe transition
+      // Skip null (no scene selected), so that scene is shown during 'slide' transition
       if ( scene !== null ) {
 
         // if the scene doesn't have an associated challenge, create one
