@@ -77,7 +77,7 @@ define( function( require ) {
     } );
 
     var equationAccordionBox = new EquationAccordionBox( leftTermCreators, rightTermCreators, {
-      fixedWidth: rightTermsToolbox.right - leftTermsToolbox.left,
+      fixedWidth: Math.floor( rightTermsToolbox.right - leftTermsToolbox.left ),
       expandedProperty: this.equationAccordionBoxExpandedProperty,
 
       // Slightly off center, so that the equation's relational operator is horizontally centered
@@ -89,7 +89,7 @@ define( function( require ) {
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
       snapshotControlOptions: options.snapshotControlOptions,
       variableValuesVisibleProperty: options.variableValuesVisibleProperty,
-      fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
+      fixedWidth: Math.floor( ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15 ),
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
