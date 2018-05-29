@@ -13,7 +13,6 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
-  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
   var Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
@@ -25,12 +24,11 @@ define( function( require ) {
    */
   function VariablesScene() {
 
-    // @public (read-only)
-    this.xVariable = new Variable( xString );
+    var xVariable = new Variable( xString );
 
-    Scene.call( this, createTermCreators( this.xVariable ), createTermCreators( this.xVariable ), {
+    Scene.call( this, createTermCreators( xVariable ), createTermCreators( xVariable ), {
       debugName: 'variables',
-      variables: [ this.xVariable ]
+      variables: [ xVariable ]
     } );
   }
 
@@ -53,27 +51,5 @@ define( function( require ) {
     ];
   }
 
-  return inherit( Scene, VariablesScene, {
-
-    /**
-     * @public
-     * @override
-     */
-    reset: function() {
-      this.xVariable.reset();
-      Scene.prototype.reset.call( this );
-    },
-
-    /**
-     * Creates a snapshot of the scene.
-     * @returns {Snapshot}
-     * @public
-     * @override
-     */
-    createSnapshot: function() {
-      return new Snapshot( this, {
-        variables: [ this.xVariable ]
-      } );
-    }
-  } );
+  return inherit( Scene, VariablesScene );
 } );

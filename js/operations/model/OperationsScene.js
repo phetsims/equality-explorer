@@ -48,7 +48,7 @@ define( function( require ) {
       iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
     }, options );
 
-    // @public (read-only)
+    // @protected
     this.xVariable = new Variable( xString );
 
     assert && assert( !options.variables, 'OperationsScene sets variables' );

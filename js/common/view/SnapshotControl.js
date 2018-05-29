@@ -146,8 +146,8 @@ define( function( require ) {
         } );
 
         // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
-        if ( snapshot.variables ) {
-          variableValuesNode = new VariableValuesNode( snapshot.variables, {
+        if ( scene.variables ) {
+          variableValuesNode = new VariableValuesNode( scene.variables, {
             opacity: options.variableValuesOpacity,
             fontSize: EQUATION_FONT_SIZE,
             commaSeparated: options.commaSeparated,

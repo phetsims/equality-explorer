@@ -14,14 +14,9 @@ define( function( require ) {
 
   /**
    * @param {Scene} scene
-   * @param {Object} [options]
    * @constructor
    */
-  function Snapshot( scene, options ) {
-
-    options = _.extend( {
-      variables: null, // {Variable[]|null} optional variables for the snapshot
-    }, options );
+  function Snapshot( scene ) {
 
     // @private
     this.scene = scene;
@@ -29,13 +24,10 @@ define( function( require ) {
     this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate );
 
     // If variables are specified, save them and their current values
-    if ( options.variables ) {
+    if ( scene.variables ) {
 
-      // @private store the variables
-      this.variables = options.variables;
-
-      // @private save the current value of each variable
-      this.variableValues = _.map( this.variables, function( variable ) {
+      // @private {number[]} save the current value of each variable
+      this.variableValues = _.map( scene.variables, function( variable ) {
          return variable.valueProperty.value;
       } );
     }
@@ -58,9 +50,10 @@ define( function( require ) {
       this.rightPlateSnapshot.restore();
 
       // If variables were specified, restore their values
-      if ( this.variables ) {
-        for ( var i = 0; i < this.variables.length; i++ ) {
-          this.variables[ i ].valueProperty.value = this.variableValues[ i ];
+      if ( this.variableValues ) {
+        assert && assert( this.variableValues.length === this.scene.variables.length, 'oops, missing variables' );
+        for ( var i = 0; i < this.variableValues.length; i++ ) {
+          this.scene.variables[ i ].valueProperty.value = this.variableValues[ i ];
         }
       }
     }

@@ -14,7 +14,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ObjectTermCreator = require( 'EQUALITY_EXPLORER/basics/model/ObjectTermCreator' );
   var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
-  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
 
   /**
    * @param {ObjectVariable[]} variables
@@ -66,19 +65,6 @@ define( function( require ) {
     return termCreators;
   }
 
-  return inherit( Scene, BasicsScene, {
-
-    /**
-     * Creates a snapshot of the scene.
-     * @returns {Snapshot}
-     * @public
-     * @override
-     */
-    createSnapshot: function() {
-      return new Snapshot( this, {
-        variables: this.variables
-      } );
-    }
-  } );
+  return inherit( Scene, BasicsScene );
 } );
 
