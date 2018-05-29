@@ -37,11 +37,7 @@ define( function( require ) {
       termsToolboxContentSize: new Dimension2( 250, 50 ),
       termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale
       organizeButtonVisible: true, // is the organize button visible on the scale?
-
-      snapshotControlHeight: 50, // see controlHeight option of Snapshot control
-      snapshotControlOrientation: 'horizontal', // see orientation option of Snapshot control
-      snapshotControlCommaSeparated: true, // see commaSeparated option of Snapshot control
-      snapshotControlVariableValuesOpacity: 1, // opacity of variable values in snapshots
+      snapshotControlOptions: null, // propagated to SnapshotControl via SnapshotAccordionBox
 
       // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
       variableValuesVisibleProperty: null
@@ -91,11 +87,8 @@ define( function( require ) {
     } );
 
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
+      snapshotControlOptions: options.snapshotControlOptions,
       variableValuesVisibleProperty: options.variableValuesVisibleProperty,
-      snapshotControlHeight: options.snapshotControlHeight,
-      snapshotControlOrientation: options.snapshotControlOrientation,
-      snapshotControlCommaSeparated: options.snapshotControlCommaSeparated,
-      snapshotControlVariableValuesOpacity: options.snapshotControlVariableValuesOpacity,
       fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,

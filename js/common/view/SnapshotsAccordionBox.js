@@ -48,11 +48,8 @@ define( function( require ) {
       // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
       variableValuesVisibleProperty: null,
 
-      // SnapshotControl options
-      snapshotControlHeight: 50,
-      snapshotControlOrientation: 'horizontal',
-      snapshotControlCommaSeparated: true,
-      snapshotControlVariableValuesOpacity: 1,
+      // {Object|null} options passed to SnapshotControl
+      snapshotControlOptions: null,
 
       // supertype options
       contentXMargin: 10,
@@ -61,6 +58,14 @@ define( function( require ) {
 
     }, options );
 
+    // options for SnapshotControl
+    options.snapshotControlOptions = _.extend( {
+      controlHeight: 50,
+      orientation: 'horizontal',
+      commaSeparated: true,
+      variableValuesOpacity: 1
+    }, options.snapshotControlOptions );
+
     assert && assert( !( options.variableValuesVisibleProperty && !scene.variables ),
       'scene has no variables to show in snapshots' );
 
@@ -68,6 +73,11 @@ define( function( require ) {
     options.maxWidth = options.fixedWidth;
 
     var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
+
+    options.snapshotControlOptions = _.extend( {
+      variableValuesVisibleProperty: options.variableValuesVisibleProperty,
+      controlWidth: contentWidth
+    }, options.snapshotControlOptions );
 
     // title
     assert && assert( !options.titleNode, 'SnapshotsAccordionBox sets titleNode' );
@@ -79,15 +89,8 @@ define( function( require ) {
     // Create a row for each snapshot
     var snapshotsVBoxChildren = [];
     for ( var i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
-      snapshotsVBoxChildren.push( new SnapshotControl(
-        scene, scene.snapshotsCollection.snapshotProperties[ i ], scene.snapshotsCollection.selectedSnapshotProperty, {
-          variableValuesVisibleProperty: options.variableValuesVisibleProperty,
-          orientation: options.snapshotControlOrientation,
-          commaSeparated: options.snapshotControlCommaSeparated,
-          variableValuesOpacity: options.snapshotControlVariableValuesOpacity,
-          controlWidth: contentWidth,
-          controlHeight: options.snapshotControlHeight
-        } ) );
+      snapshotsVBoxChildren.push( new SnapshotControl( scene, scene.snapshotsCollection.snapshotProperties[ i ],
+        scene.snapshotsCollection.selectedSnapshotProperty, options.snapshotControlOptions ) );
     }
 
     var snapshotsVBox = new VBox( {
