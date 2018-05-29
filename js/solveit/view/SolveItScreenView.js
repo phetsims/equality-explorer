@@ -64,16 +64,6 @@ define( function( require ) {
     } );
     this.addChild( this.transitionNode );
 
-    // When there is no scene selection, show the level-selection UI.
-    model.sceneProperty.lazyLink( function( scene ) {
-      if ( scene === null ) {
-        self.transitionNode.slideRightTo( levelSelectionNode, TRANSITION_OPTIONS );
-      }
-      else {
-        self.transitionNode.slideLeftTo( scenesParent, TRANSITION_OPTIONS );
-      }
-    } );
-
     // Make the selected scene (level) visible. unlink not needed.
     model.sceneProperty.link( function( scene ) {
 
@@ -89,6 +79,16 @@ define( function( require ) {
         for ( var i = 0; i < self.sceneNodes.length; i++ ) {
           self.sceneNodes[ i ].visible = ( self.sceneNodes[ i ].scene === scene );
         }
+      }
+    } );
+
+    // When there is no scene selection, show the level-selection UI.
+    model.sceneProperty.lazyLink( function( scene ) {
+      if ( scene === null ) {
+        self.transitionNode.slideRightTo( levelSelectionNode, TRANSITION_OPTIONS );
+      }
+      else {
+        self.transitionNode.slideLeftTo( scenesParent, TRANSITION_OPTIONS );
       }
     } );
   }
