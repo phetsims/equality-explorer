@@ -14,7 +14,7 @@ define( function( require ) {
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelSelectionNode = require( 'EQUALITY_EXPLORER/solveit/view/LevelSelectionNode' );
-  var Property = require( 'AXON/Property' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SolveItSceneNode = require( 'EQUALITY_EXPLORER/solveit/view/SolveItSceneNode' );
   var TransitionNode = require( 'TWIXT/TransitionNode' );
@@ -54,49 +54,42 @@ define( function( require ) {
         this.layoutBounds, this.visibleBoundsProperty, gameAudioPlayer );
       this.sceneNodes.push( sceneNode );
     }
+    var scenesParent = new Node( {
+      children: this.sceneNodes
+    } );
 
-    // {Property.<SolveItSceneNode|null>} Node for the scene that is currently selected, null when no scene is selected
-    var selectedSceneNodeProperty = new Property( null );
-
-    // Handles the animated 'slide' transition between level-selection and selected scene
-    assert && assert( model.sceneProperty.value === null, 'expected to start with level-selection UI' );
+    // Handles the animated 'slide' transition between level-selection and challenges (scenesParent)
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
-      content: levelSelectionNode
+      content: ( model.sceneProperty.value === null ) ? levelSelectionNode : scenesParent,
+      cachedNodes: [ scenesParent ]
     } );
     this.addChild( this.transitionNode );
 
+    // Make the selected scene (level) visible. unlink not needed.
     model.sceneProperty.link( function( scene ) {
 
-      if ( scene === null ) {
+      // Skip null (no scene selected), so that scene is shown during 'slide' transition
+      if ( scene !== null ) {
 
-        // no scene is selected
-        selectedSceneNodeProperty.value = null;
-      }
-      else {
-
-        // if the selected scene doesn't have an associated challenge, create one
+        // if the scene doesn't have an associated challenge, create one
         if ( !scene.challengeProperty.value ) {
           scene.nextChallenge();
         }
 
-        // locate the Node for the selected scene
+        // make the selected scene visible
         for ( var i = 0; i < self.sceneNodes.length; i++ ) {
-          if ( self.sceneNodes[ i ].scene === scene ) {
-            selectedSceneNodeProperty.value = self.sceneNodes[ i ];
-            break;
-          }
+          self.sceneNodes[ i ].visible = ( self.sceneNodes[ i ].scene === scene );
         }
-        assert && assert( selectedSceneNodeProperty.value, 'Node not found for selected scene' );
       }
     } );
 
-    // When there is no scene selection, show the level-selection UI.
-    selectedSceneNodeProperty.lazyLink( function( selectedSceneNode ) {
-      if ( selectedSceneNode === null ) {
-        self.transitionNode.slideRightTo( levelSelectionNode, TRANSITION_OPTIONS );
+    // Transition between the level-selection UI and the selected scene.
+    model.sceneProperty.lazyLink( function( scene ) {
+      if ( scene ) {
+        self.transitionNode.slideLeftTo( scenesParent, TRANSITION_OPTIONS );
       }
       else {
-        self.transitionNode.slideLeftTo( selectedSceneNode, TRANSITION_OPTIONS );
+        self.transitionNode.slideRightTo( levelSelectionNode, TRANSITION_OPTIONS );
       }
     } );
   }
