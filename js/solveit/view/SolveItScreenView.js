@@ -58,7 +58,7 @@ define( function( require ) {
       children: this.sceneNodes
     } );
 
-    // Handles the animated 'slide' transition between level-selection and challenges
+    // Handles the animated 'slide' transition between level-selection and challenges (scenesParent)
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
       content: levelSelectionNode
     } );
