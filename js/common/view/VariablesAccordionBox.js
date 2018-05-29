@@ -63,7 +63,7 @@ define( function( require ) {
       maxWidth: 0.85 * contentWidth
     } );
 
-    var backgroundNode = new Rectangle( 0, 0, contentWidth + 5, contentHeight + 5 );
+    var backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     // Create a picker for each variable
     var children = [];
