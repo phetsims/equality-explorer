@@ -56,7 +56,7 @@ define( function( require ) {
 
           // variable
           new VariableNode( variable, {
-            iconScale: 0.45,
+            iconScale: 0.35,
             fontSize: options.fontSize
           } ),
 

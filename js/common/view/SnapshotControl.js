@@ -73,7 +73,7 @@ define( function( require ) {
     var snapshotNode = new LayoutBox( {
       orientation: options.orientation,
       children: [ equationNode ],
-      spacing: ( options.orientation === 'horizontal' ) ? 20 : 10,
+      spacing: ( options.orientation === 'horizontal' ) ? 20 : 8,
       center: selectionRectangle.center,
       maxWidth: options.controlWidth - 2 * SELECTION_RECTANGLE_X_MARGIN,
       maxHeight: options.controlHeight - 2 * SELECTION_RECTANGLE_Y_MARGIN
@@ -150,7 +150,11 @@ define( function( require ) {
           variableValuesNode = new VariableValuesNode( snapshot.variables, {
             opacity: options.variableValuesOpacity,
             fontSize: EQUATION_FONT_SIZE,
-            commaSeparated: options.commaSeparated
+            commaSeparated: options.commaSeparated,
+
+            // de-emphasize variables when they are below the equation by scaling them down,
+            // see https://github.com/phetsims/equality-explorer/issues/110
+            scale: ( options.orientation === 'horizontal' ) ? 1 : 0.75
           } );
         }
 
