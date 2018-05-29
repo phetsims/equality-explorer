@@ -9,15 +9,23 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var Easing = require( 'TWIXT/Easing' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelSelectionNode = require( 'EQUALITY_EXPLORER/solveit/view/LevelSelectionNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var SlidingScreen = require( 'TWIXT/SlidingScreen' );
   var SolveItSceneNode = require( 'EQUALITY_EXPLORER/solveit/view/SolveItSceneNode' );
+  var TransitionNode = require( 'TWIXT/TransitionNode' );
+
+  // constants
+  var TRANSITION_OPTIONS = {
+    duration: 0.4, // sec
+    targetOptions: {
+      easing: Easing.QUADRATIC_IN_OUT
+    }
+  };
 
   /**
    * @param {SolveItModel} model
@@ -50,16 +58,21 @@ define( function( require ) {
       children: this.sceneNodes
     } );
 
-    // {DerivedProperty.<boolean>} Are we showing the level-selection UI?
-    // dispose not needed.
-    var showingLevelSelectionProperty = new DerivedProperty( [ model.sceneProperty ], function( scene ) {
-      return ( scene === null );
+    // Handles the animated 'slide' transition between level-selection and challenges
+    this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
+      content: levelSelectionNode
     } );
+    this.addChild( this.transitionNode );
 
-    // Handles animated 'slide' transitions between level-selection and challenges
-    this.slideNode = new SlidingScreen( levelSelectionNode, scenesParent,
-      this.visibleBoundsProperty, showingLevelSelectionProperty );
-    this.addChild( this.slideNode );
+    // When there is no scene selection, show the level-selection UI.
+    model.sceneProperty.lazyLink( function( scene ) {
+      if ( scene === null ) {
+        self.transitionNode.slideRightTo( levelSelectionNode, TRANSITION_OPTIONS );
+      }
+      else {
+        self.transitionNode.slideLeftTo( scenesParent, TRANSITION_OPTIONS );
+      }
+    } );
 
     // Make the selected scene (level) visible. unlink not needed.
     model.sceneProperty.link( function( scene ) {
@@ -98,7 +111,7 @@ define( function( require ) {
     step: function( dt ) {
 
       // animate the transition between level-selection and challenge UI
-      this.slideNode.step( dt );
+      this.transitionNode.step( dt );
 
       // animate the view for the selected scene
       for ( var i = 0; i < this.sceneNodes.length; i++ ) {
