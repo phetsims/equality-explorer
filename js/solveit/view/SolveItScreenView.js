@@ -57,14 +57,24 @@ define( function( require ) {
 
     // {Property.<SolveItSceneNode|null>} Node for the scene that is currently selected, null when no scene is selected
     var selectedSceneNodeProperty = new Property( null );
+
+    // Handles the animated 'slide' transition between level-selection and selected scene
+    assert && assert( model.sceneProperty.value === null, 'expected to start with level-selection UI' );
+    this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
+      content: levelSelectionNode
+    } );
+    this.addChild( this.transitionNode );
+
     model.sceneProperty.link( function( scene ) {
 
       if ( scene === null ) {
+
+        // no scene is selected
         selectedSceneNodeProperty.value = null;
       }
       else {
 
-        // if the scene doesn't have an associated challenge, create one
+        // if the selected scene doesn't have an associated challenge, create one
         if ( !scene.challengeProperty.value ) {
           scene.nextChallenge();
         }
@@ -79,13 +89,6 @@ define( function( require ) {
         assert && assert( selectedSceneNodeProperty.value, 'Node not found for selected scene' );
       }
     } );
-
-    // Handles the animated 'slide' transition between level-selection and selected scene
-    assert && assert( model.sceneProperty.value === null, 'expected to start with level-selection UI' );
-    this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
-      content: levelSelectionNode
-    } );
-    this.addChild( this.transitionNode );
 
     // When there is no scene selection, show the level-selection UI.
     selectedSceneNodeProperty.lazyLink( function( selectedSceneNode ) {
