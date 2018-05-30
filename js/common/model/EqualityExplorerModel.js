@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Base type for models in the Equality Explorer sim.
+ * Abstract base type for models in the Equality Explorer sim.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,12 +14,13 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
 
   /**
-   * @param {Scene[]} scenes
+   * @param {EqualityExplorerScene[]} scenes
    * @constructor
+   * @abstract
    */
   function EqualityExplorerModel( scenes ) {
 
-    // @public {Scene[]} scenes, in the order that they appear from left-to-right as radio buttons
+    // @public {EqualityExplorerScene[]} scenes, in the order that they appear from left-to-right as radio buttons
     this.scenes = scenes;
 
     // @public {Property.<Scene>} the selected scene

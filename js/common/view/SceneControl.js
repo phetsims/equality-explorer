@@ -14,8 +14,8 @@ define( function( require ) {
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
 
   /**
-   * @param {Scene[]} scenes - the scene choices
-   * @param {Property.<Scene>} sceneProperty - the scene that is currently selected
+   * @param {EqualityExplorerScene[]} scenes - the scene choices
+   * @param {Property.<EqualityExplorerScene>} sceneProperty - the scene that is currently selected
    * @param {Object} [options]
    * @constructor
    */

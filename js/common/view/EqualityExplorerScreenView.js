@@ -47,7 +47,7 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    // @private {Scene[]} create the view for each scene
+    // @private {EqualityExplorerScene[]} create the view for each scene
     this.sceneNodes = [];
     model.scenes.forEach( function( scene ) {
       var sceneNode = self.createSceneNode( scene, model.sceneProperty, self.layoutBounds, {

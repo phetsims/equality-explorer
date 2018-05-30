@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Base type for a scene in Equality Explorer sim.
+ * Abstract base type for a scene in Equality Explorer sim.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -32,6 +32,7 @@ define( function( require ) {
    * @param {TermCreator[]} rightTermCreators - in the order that they appear in the right toolbox and right side of equations
    * @param {Object} [options]
    * @constructor
+   * @abstract
    */
   function EqualityExplorerScene( leftTermCreators, rightTermCreators, options ) {
 
