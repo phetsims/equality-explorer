@@ -153,9 +153,9 @@ define( function( require ) {
             fontSize: EQUATION_FONT_SIZE,
             commaSeparated: options.commaSeparated,
 
-            // de-emphasize variables when they are below the equation by scaling them down,
+            // de-emphasize variable values by scaling them down,
             // see https://github.com/phetsims/equality-explorer/issues/110
-            scale: ( options.orientation === 'horizontal' ) ? 1 : 0.75
+            scale: 0.75
           } );
         }
 
