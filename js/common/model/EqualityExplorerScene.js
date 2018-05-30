@@ -118,8 +118,7 @@ define( function( require ) {
 
       this.lockedProperty = new BooleanProperty( false );
 
-      // update the lockedProperty of all term creators.
-      // unlink not needed.
+      // Update the lockedProperty of all term creators. unlink not needed.
       this.lockedProperty.link( function( locked ) {
         for ( var i = 0; i < self.allTermCreators.length; i++ ) {
           self.allTermCreators[ i ].lockedProperty.value = locked;

@@ -123,8 +123,7 @@ define( function( require ) {
         }
       } );
 
-    // Move the plates when the angle changes.
-    // unlink not required.
+    // Move the plates when the angle changes. unlink not required.
     this.angleProperty.link( function( angle ) {
 
       // hoist reusable vars

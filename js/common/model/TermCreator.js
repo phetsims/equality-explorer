@@ -114,14 +114,12 @@ define( function( require ) {
     // @private
     this.updateWeightOnPlatePropertyBound = this.updateWeightOnPlateProperty.bind( this );
 
-    // Update weight when number of terms on plate changes.
-    // unlink not required.
+    // Update weight when number of terms on plate changes. unlink not required.
     this.numberOfTermsOnPlateProperty.link( function( numberOfTermsOnPlate ) {
       self.updateWeightOnPlatePropertyBound();
     } );
 
-    // When locked changes...
-    // unlink not required.
+    // When locked changes... unlink not required.
     this.lockedProperty.lazyLink( function( locked ) {
 
       // If lock feature is turned on, verify that an equivalentTermCreator has been provided.

@@ -145,8 +145,7 @@ define( function( require ) {
       organizeButton.addListener( options.disposeTermsNotOnScale );
     }
 
-    // disable ClearScaleButton and OrganizeButton when the scale is empty.
-    // unlink not required.
+    // Disable ClearScaleButton and OrganizeButton when the scale is empty. unlink not required.
     scale.numberOfTermsProperty.link( function( numberOfTerms ) {
       var enabled = ( numberOfTerms !== 0 );
       clearScaleButton.enabled = enabled;
@@ -180,8 +179,7 @@ define( function( require ) {
 
     Node.call( this, options );
 
-    // Adjust parts of the scale that depend on angle.
-    // unlink not required.
+    // Adjust parts of the scale that depend on angle. unlink not required.
     scale.angleProperty.link( function( angle, oldAngle ) {
 
       var deltaAngle = angle - oldAngle;
@@ -202,15 +200,13 @@ define( function( require ) {
       }
     } );
 
-    // move the left plate
-    // unlink not required
+    // Move the left plate. unlink not required.
     scale.leftPlate.locationProperty.link( function( location ) {
       leftPlateNode.x = location.x - scale.location.x;
       leftPlateNode.y = location.y - scale.location.y;
     } );
 
-    // move the right plate
-    // unlink not required
+    // Move the right plate. unlink not required.
     scale.rightPlate.locationProperty.link( function( location ) {
       rightPlateNode.x = location.x - scale.location.x;
       rightPlateNode.y = location.y - scale.location.y;

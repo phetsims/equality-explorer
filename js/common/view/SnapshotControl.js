@@ -124,8 +124,7 @@ define( function( require ) {
       snapshotNode.center = selectionRectangle.center;
     };
 
-    // updates the view when the model changes.
-    // unlink not required.
+    // Updates the view when the model changes. unlink not required.
     snapshotProperty.link( function( snapshot ) {
 
       // either the button or the snapshot is visible
@@ -173,8 +172,7 @@ define( function( require ) {
       updateSnapshotLayout();
     } );
 
-    // Shows that the associated snapshot has been selected.
-    // unlink not required.
+    // Shows that the associated snapshot has been selected. unlink not required.
     selectedSnapshotProperty.link( function( selectedSnapshot ) {
       var isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
       selectionRectangle.stroke = isSelected ?
@@ -184,8 +182,7 @@ define( function( require ) {
 
     if ( options.variableValuesVisibleProperty ) {
 
-      // Shows/hides variable values.
-      // unlink not required
+      // Shows/hides variable values. unlink not required.
       options.variableValuesVisibleProperty.link( function( visible ) {
         updateSnapshotLayout();
       } );

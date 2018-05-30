@@ -23,7 +23,7 @@ define( function( require ) {
     this.leftPlateSnapshot = new PlateSnapshot( scene.scale.leftPlate );
     this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate );
 
-    // If variables are specified, save them and their current values
+    // If the scene has variables, save their values.
     if ( scene.variables ) {
 
       // @private {number[]} save the current value of each variable
@@ -49,7 +49,7 @@ define( function( require ) {
       this.leftPlateSnapshot.restore();
       this.rightPlateSnapshot.restore();
 
-      // If variables were specified, restore their values
+      // If we saved variable values, restore them.
       if ( this.variableValues ) {
         assert && assert( this.variableValues.length === this.scene.variables.length, 'oops, missing variables' );
         for ( var i = 0; i < this.variableValues.length; i++ ) {

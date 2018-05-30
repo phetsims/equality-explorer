@@ -348,8 +348,7 @@ define( function( require ) {
       }
     } );
 
-    // When the challenge changes...
-    // unlink not needed.
+    // When the challenge changes... unlink not needed.
     scene.challengeProperty.link( function( challenge ) {
 
       // cancel operation animations

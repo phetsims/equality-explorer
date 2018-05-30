@@ -38,7 +38,11 @@ define( function( require ) {
 
   return inherit( Object, UniversalOperation, {
 
-    // @public do not rely on the format!
+    /**
+     * For debugging only. Do not rely on the format of toString.
+     * @returns {string}
+     * @public
+     */
     toString: function() {
       return 'operator=' + this.operator + ', operand=' + this.operand;
     },

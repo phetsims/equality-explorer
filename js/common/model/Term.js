@@ -113,6 +113,7 @@ define( function( require ) {
      * Equivalent terms are like terms with the same significant value.
      * @param term
      * @returns {*|boolean}
+     * @public
      */
     isEquivalentTerm: function( term ) {
       return ( this.isLikeTerm( term ) && this.significantValue.reduced().equals( term.significantValue.reduced() ) );

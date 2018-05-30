@@ -70,8 +70,7 @@ define( function( require ) {
     // @private bounds of the grid, initialized in locationProperty listener
     this.bounds = new Bounds2( 0, 1, 0, 1 );
 
-    // When the grid moves ...
-    // unlink not required.
+    // When the grid moves ... unlink not required.
     this.locationProperty.link( function( location ) {
 
       // recompute the grid's bounds, origin (x,y) is at bottom center
@@ -98,6 +97,7 @@ define( function( require ) {
     /**
      * Gets the y coordinate of the top of the grid.
      * @returns {number}
+     * @public
      */
     get top() {
       return this.locationProperty.value.y - ( this.rows * this.cellHeight );
@@ -229,6 +229,7 @@ define( function( require ) {
      * @param {Term} term
      * @param {number} cell
      * @returns {Term|null} null if no equivalent term is found
+     * @public
      */
     getClosestEquivalentTerm: function( term, cell ) {
       assert && assert( term instanceof Term, 'invalid term' );

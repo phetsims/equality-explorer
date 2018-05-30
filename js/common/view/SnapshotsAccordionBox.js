@@ -126,8 +126,7 @@ define( function( require ) {
       }
     } );
 
-    // Disables restore and trash buttons when there is no selection.
-    // unlink not required.
+    // Disables restore and trash buttons when there is no selection. unlink not required.
     scene.snapshotsCollection.selectedSnapshotProperty.link( function( snapshot ) {
       var enabled = ( snapshot !== null );
       restoreButton.enabled = enabled;

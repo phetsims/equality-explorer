@@ -41,8 +41,7 @@ define( function( require ) {
 
     TermCreator.call( this, options );
 
-    // When the variable values changes, recompute the weight of terms on the scale.
-    // unlink not needed.
+    // When the variable values changes, recompute the weight of terms on the scale. unlink not needed.
     this.variable.valueProperty.link( function( variableValue ) {
       self.updateWeightOnPlateProperty();
     } );

@@ -204,6 +204,7 @@ define( function( require ) {
     /**
      * Gets the y coordinate of the top of the grid.
      * @returns {number}
+     * @public
      */
     getGridTop: function() {
       return this.grid.top;
@@ -214,6 +215,7 @@ define( function( require ) {
      * @param {Term} term
      * @param {number} cell
      * @returns {Term|null} - null if no equivalent term is found
+     * @public
      */
     getClosestEquivalentTerm: function( term, cell ) {
       return this.grid.getClosestEquivalentTerm( term, cell );

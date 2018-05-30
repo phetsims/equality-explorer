@@ -40,13 +40,13 @@ define( function( require ) {
     // @private
     this.onStop = options.onStop;
 
-    // Property for animating position, unlink not needed.
+    // Property for animating position. unlink not needed.
     var positionProperty = new Property( node.translation );
     positionProperty.link( function( position ) {
       node.translation = position;
     } );
 
-    // Property for animating opacity, unlink not needed.
+    // Property for animating opacity. unlink not needed.
     var opacityProperty = new NumberProperty( node.opacity );
     opacityProperty.link( function( opacity ) {
       node.opacity = opacity;
