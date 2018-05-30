@@ -15,8 +15,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
-   * @param {Scene} scene
-   * @param {Property.<Scene>} sceneProperty - the selected scene
+   * @param {EqualityExplorerScene} scene
+   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor

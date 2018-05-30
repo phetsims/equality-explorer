@@ -24,8 +24,8 @@ define( function( require ) {
   var TermsToolbox = require( 'EQUALITY_EXPLORER/common/view/TermsToolbox' );
 
   /**
-   * @param {Scene} scene
-   * @param {Property.<Scene>} sceneProperty - the selected scene
+   * @param {EqualityExplorerScene} scene
+   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor

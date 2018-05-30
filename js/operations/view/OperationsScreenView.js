@@ -19,14 +19,25 @@ define( function( require ) {
    * @constructor
    */
   function OperationsScreenView( model ) {
-    EqualityExplorerScreenView.call( this, model, {
-      createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
-        return new OperationsSceneNode( scene, sceneProperty, layoutBounds, options );
-      }
-    } );
+    EqualityExplorerScreenView.call( this, model );
   }
 
   equalityExplorer.register( 'OperationsScreenView', OperationsScreenView );
 
-  return inherit( EqualityExplorerScreenView, OperationsScreenView );
+  return inherit( EqualityExplorerScreenView, OperationsScreenView, {
+
+    /**
+     * Creates the Node for this scene.
+     * @param {EqualityExplorerScene} scene
+     * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+     * @param {Bounds2} layoutBounds
+     * @param {Object} [options]
+     * @returns {Node}
+     * @protected
+     * @override
+     */
+    createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
+      return new OperationsSceneNode( scene, sceneProperty, layoutBounds, options );
+    }
+  } );
 } );

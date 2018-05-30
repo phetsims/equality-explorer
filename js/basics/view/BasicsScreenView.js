@@ -20,14 +20,26 @@ define( function( require ) {
    */
   function BasicsScreenView( model ) {
     EqualityExplorerScreenView.call( this, model, {
-      createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
-        return new BasicsSceneNode( scene, sceneProperty, layoutBounds, options );
-      },
-      hasNegativeTermsInToolbox: false // create Node for positive terms only in the toolbox
+      hasNegativeTermsInToolbox: false // only positive terms in the toolbox
     } );
   }
 
   equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );
 
-  return inherit( EqualityExplorerScreenView, BasicsScreenView );
+  return inherit( EqualityExplorerScreenView, BasicsScreenView, {
+
+    /**
+     * Creates the Node for this scene.
+     * @param {EqualityExplorerScene} scene
+     * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+     * @param {Bounds2} layoutBounds
+     * @param {Object} [options]
+     * @returns {Node}
+     * @protected
+     * @override
+     */
+    createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
+      return new BasicsSceneNode( scene, sceneProperty, layoutBounds, options );
+    }
+  } );
 } );

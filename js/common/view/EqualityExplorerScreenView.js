@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Base type for ScreenViews in the Equality Explorer sim.
+ * Abstract base type for ScreenViews in the Equality Explorer sim.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -14,13 +14,13 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var SceneControl = require( 'EQUALITY_EXPLORER/common/view/SceneControl' );
-  var EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
 
   /**
    * @param {EqualityExplorerModel} model
    * @param {Object} [options]
    * @constructor
+   * @abstract
    */
   function EqualityExplorerScreenView( model, options ) {
 
@@ -28,19 +28,9 @@ define( function( require ) {
 
     options = _.extend( {
 
-      /**
-       * Creates the Node for a Scene
-       * @param {Scene} scene
-       * @param {Property.<Scene>} sceneProperty - the selected Scene
-       * @param {Bounds2} layoutBounds
-       * @param {Object} [options]
-       * @returns {Node}
-       */
-      createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
-        return new EqualityExplorerSceneNode( scene, sceneProperty, layoutBounds, options );
-      },
-
-      // {boolean} if true, put negative terms in the toolbox, e.g. -x
+      // {boolean}
+      // true = positive and negative terms in the toolbox, e.g. x, -x, 1, -1
+      // false = only positive terms in the toolbox, e.g. x, 1
       hasNegativeTermsInToolbox: true
     }, options );
 
@@ -60,7 +50,7 @@ define( function( require ) {
     // @private {Scene[]} create the view for each scene
     this.sceneNodes = [];
     model.scenes.forEach( function( scene ) {
-      var sceneNode = options.createSceneNode( scene, model.sceneProperty, self.layoutBounds, {
+      var sceneNode = self.createSceneNode( scene, model.sceneProperty, self.layoutBounds, {
         hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox
       } );
       self.sceneNodes.push( sceneNode );
@@ -114,6 +104,20 @@ define( function( require ) {
           break;
         }
       }
+    },
+
+    /**
+     * Creates the Node for this scene.
+     * @param {EqualityExplorerScene} scene
+     * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected Scene
+     * @param {Bounds2} layoutBounds
+     * @param {Object} [options]
+     * @returns {Node}
+     * @protected
+     * @abstract
+     */
+    createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
+      throw new Error( 'createSceneNode must be implemented by subtype' );
     }
   } );
 } );

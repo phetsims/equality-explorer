@@ -33,7 +33,7 @@ define( function( require ) {
   var VALID_ORIENTATION_VALUES = [ 'horizontal', 'vertical' ];
 
   /**
-   * @param {Scene} scene - the scene that we'll be taking a snapshot of
+   * @param {EqualityExplorerScene} scene - the scene that we'll be taking a snapshot of
    * @param {Property.<Snapshot|null>} snapshotProperty - snapshot associated with this control, null if no snapshot
    * @param {Property.<Snapshot|null>} selectedSnapshotProperty - the selected snapshot, null if no selection
    * @param {Object} [options]

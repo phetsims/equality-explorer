@@ -19,14 +19,25 @@ define( function( require ) {
    * @constructor
    */
   function VariablesScreenView( model ) {
-    EqualityExplorerScreenView.call( this, model, {
-      createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
-        return new VariablesSceneNode( scene, sceneProperty, layoutBounds, options );
-      }
-    } );
+    EqualityExplorerScreenView.call( this, model );
   }
 
   equalityExplorer.register( 'VariablesScreenView', VariablesScreenView );
 
-  return inherit( EqualityExplorerScreenView, VariablesScreenView );
+  return inherit( EqualityExplorerScreenView, VariablesScreenView, {
+
+    /**
+     * Creates the Node for this scene.
+     * @param {EqualityExplorerScene} scene
+     * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+     * @param {Bounds2} layoutBounds
+     * @param {Object} [options]
+     * @returns {Node}
+     * @protected
+     * @override
+     */
+    createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
+      return new VariablesSceneNode( scene, sceneProperty, layoutBounds, options );
+    }
+  } );
 } );

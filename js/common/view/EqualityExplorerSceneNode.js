@@ -20,8 +20,8 @@ define( function( require ) {
   var numberTooBigString = require( 'string!EQUALITY_EXPLORER/numberTooBig' );
 
   /**
-   * @param {Scene} scene
-   * @param {Property.<Scene>} sceneProperty - the selected scene
+   * @param {EqualityExplorerScene} scene
+   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
    * @param {Node} termsLayer - parent for all TermNodes
    * @param {Object} [options]
    * @constructor

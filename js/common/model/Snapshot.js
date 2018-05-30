@@ -13,7 +13,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
-   * @param {Scene} scene
+   * @param {EqualityExplorerScene} scene
    * @constructor
    */
   function Snapshot( scene ) {
