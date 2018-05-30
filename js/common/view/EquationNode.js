@@ -65,8 +65,11 @@ define( function( require ) {
 
     Node.call( this );
 
-    var leftSideNode = null;
-    var rightSideNode = null;
+    // expressions for the left and right sides of the equation
+    var leftExpressionNode = null;
+    var rightExpressionNode = null;
+
+    // relational operator that separates the two expressions
     var relationalOperatorNode = new Text( '?', {
       font: new PhetFont( {
         size: options.relationalOperatorFontSize,
@@ -76,13 +79,13 @@ define( function( require ) {
 
     // updates the equation's layout, origin at the center of the relational operator
     var updateLayout = function() {
-      if ( leftSideNode && rightSideNode ) {
+      if ( leftExpressionNode && rightExpressionNode ) {
         relationalOperatorNode.centerX = 0;
         relationalOperatorNode.centerY = 0;
-        leftSideNode.right = relationalOperatorNode.left - options.relationalOperatorSpacing;
-        leftSideNode.centerY = relationalOperatorNode.centerY;
-        rightSideNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
-        rightSideNode.centerY = relationalOperatorNode.centerY;
+        leftExpressionNode.right = relationalOperatorNode.left - options.relationalOperatorSpacing;
+        leftExpressionNode.centerY = relationalOperatorNode.centerY;
+        rightExpressionNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
+        rightExpressionNode.centerY = relationalOperatorNode.centerY;
       }
     };
 
@@ -92,8 +95,8 @@ define( function( require ) {
       updateLayout();
     };
 
-    // configuration information one side of the equation, passed to createSideNode
-    var sideConfig = {
+    // configuration information for one side of the equation, passed to createExpressionNode
+    var expressionConfig = {
       symbolFont: new MathSymbolFont( options.symbolFontSize ),
       operatorFont: new PhetFont( options.operatorFontSize ),
       integerFont: new PhetFont( options.integerFontSize ),
@@ -104,9 +107,9 @@ define( function( require ) {
 
     // updates the equation's terms
     var updateTerms = function() {
-      leftSideNode = createSideNode( leftTermCreators, sideConfig );
-      rightSideNode = createSideNode( rightTermCreators, sideConfig );
-      self.children = [ leftSideNode, relationalOperatorNode, rightSideNode ];
+      leftExpressionNode = createExpressionNode( leftTermCreators, expressionConfig );
+      rightExpressionNode = createExpressionNode( rightTermCreators, expressionConfig );
+      self.children = [ leftExpressionNode, relationalOperatorNode, rightExpressionNode ];
       updateLayout();
     };
 
@@ -183,12 +186,12 @@ define( function( require ) {
   }
 
   /**
-   * Creates one side of the equation.
+   * Creates an expression, one side of the equation.
    * @param {TermCreator[]} termCreators
-   * @param {Object} config - see createSideNodeConfig in constructor
+   * @param {Object} config - see createExpressionNodeConfig in constructor
    * @returns {Node}
    */
-  function createSideNode( termCreators, config ) {
+  function createExpressionNode( termCreators, config ) {
 
     var children = [];
     for ( var i = 0; i < termCreators.length; i++ ) {
