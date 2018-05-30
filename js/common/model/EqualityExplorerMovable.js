@@ -138,6 +138,7 @@ define( function( require ) {
     /**
      * Is this model element animating?
      * @returns {boolean}
+     * @public
      */
     isAnimating: function() {
       return !this.draggingProperty.value &&

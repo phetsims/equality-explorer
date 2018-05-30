@@ -46,7 +46,7 @@ define( function( require ) {
       maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
       gridRows: EqualityExplorerQueryParameters.rows, // rows in the grid on the scale
       gridColumns: EqualityExplorerQueryParameters.columns, // columns in the grid on the scale
-      numberOfSnapshots: 5,
+      numberOfSnapshots: 5, // number of snapshots in the Snapshots accordion box
       iconSize: null, // {Dimension2|null} size of term icons on the scale, computed if null
       variables: null // {Variable[]|null} variables associated with the scene
     }, options );
