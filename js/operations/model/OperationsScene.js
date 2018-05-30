@@ -16,11 +16,11 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
-  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
   var StringProperty = require( 'AXON/StringProperty' );
   var Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
@@ -131,7 +131,7 @@ define( function( require ) {
     this.rightVariableTermCreator = new VariableTermCreator( this.xVariable, variableTermCreatorOptions );
     this.rightConstantTermCreator = new ConstantTermCreator( constantTermCreatorOptions );
 
-    Scene.call( this,
+    EqualityExplorerScene.call( this,
       [ this.leftVariableTermCreator, this.leftConstantTermCreator ],
       [ this.rightVariableTermCreator, this.rightConstantTermCreator ],
       options );
@@ -139,7 +139,7 @@ define( function( require ) {
 
   equalityExplorer.register( 'OperationsScene', OperationsScene );
 
-  return inherit( Scene, OperationsScene, {
+  return inherit( EqualityExplorerScene, OperationsScene, {
 
     /**
      * @public
@@ -149,7 +149,7 @@ define( function( require ) {
       this.xVariable.reset();
       this.operatorProperty.reset();
       this.operandProperty.reset();
-      Scene.prototype.reset.call( this );
+      EqualityExplorerScene.prototype.reset.call( this );
     },
 
     /**

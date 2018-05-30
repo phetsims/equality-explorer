@@ -11,9 +11,9 @@ define( function( require ) {
   // modules
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObjectTermCreator = require( 'EQUALITY_EXPLORER/basics/model/ObjectTermCreator' );
-  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
    * @param {ObjectVariable[]} variables
@@ -34,7 +34,7 @@ define( function( require ) {
     assert && assert( options.lockable === undefined, 'BasicsScene sets lockable' );
     options.lockable = false;
 
-    Scene.call( this,
+    EqualityExplorerScene.call( this,
       createTermCreators( variables, options.hasConstantTerms ),
       createTermCreators( variables, options.hasConstantTerms ),
       options );
@@ -65,6 +65,6 @@ define( function( require ) {
     return termCreators;
   }
 
-  return inherit( Scene, BasicsScene );
+  return inherit( EqualityExplorerScene, BasicsScene );
 } );
 

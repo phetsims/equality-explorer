@@ -11,8 +11,8 @@ define( function( require ) {
   // modules
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
   var Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
@@ -26,7 +26,7 @@ define( function( require ) {
 
     var xVariable = new Variable( xString );
 
-    Scene.call( this, createTermCreators( xVariable ), createTermCreators( xVariable ), {
+    EqualityExplorerScene.call( this, createTermCreators( xVariable ), createTermCreators( xVariable ), {
       debugName: 'variables',
       variables: [ xVariable ]
     } );
@@ -51,5 +51,5 @@ define( function( require ) {
     ];
   }
 
-  return inherit( Scene, VariablesScene );
+  return inherit( EqualityExplorerScene, VariablesScene );
 } );

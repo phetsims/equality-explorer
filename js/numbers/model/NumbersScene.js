@@ -12,19 +12,19 @@ define( function( require ) {
   // modules
   var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Scene = require( 'EQUALITY_EXPLORER/common/model/Scene' );
 
   /**
    * @constructor
    */
   function NumbersScene() {
-    Scene.call( this, [ new ConstantTermCreator() ], [ new ConstantTermCreator() ], {
+    EqualityExplorerScene.call( this, [ new ConstantTermCreator() ], [ new ConstantTermCreator() ], {
       debugName: 'numbers'
     } );
   }
 
   equalityExplorer.register( 'NumbersScene', NumbersScene );
 
-  return inherit( Scene, NumbersScene );
+  return inherit( EqualityExplorerScene, NumbersScene );
 } );

@@ -33,7 +33,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function Scene( leftTermCreators, rightTermCreators, options ) {
+  function EqualityExplorerScene( leftTermCreators, rightTermCreators, options ) {
 
     var self = this;
 
@@ -52,7 +52,7 @@ define( function( require ) {
 
     // @public (read-only)
     this.debugName = options.debugName;
-    phet.log && phet.log( 'Scene: ' + this.debugName + ', maxWeight=' + options.maxWeight );
+    phet.log && phet.log( 'scene: ' + this.debugName + ', maxWeight=' + options.maxWeight );
 
     // @private {Node|null} used to represent the scene. See ES5 getter.
     this._icon = options.icon;
@@ -104,7 +104,7 @@ define( function( require ) {
       termCreator.dragBounds = self.rightDragBounds;
     } );
 
-    // @public collection of snapshots, for saving/restoring the state of a Scene
+    // @public collection of snapshots, for saving/restoring the state of a scene
     this.snapshotsCollection = new SnapshotsCollection( {
       numberOfSnapshots: options.numberOfSnapshots
     } );
@@ -127,7 +127,7 @@ define( function( require ) {
     }
   }
 
-  equalityExplorer.register( 'Scene', Scene );
+  equalityExplorer.register( 'EqualityExplorerScene', EqualityExplorerScene );
 
   /**
    * Verifies that none of the specified term creators are 'like term' creators.
@@ -148,7 +148,7 @@ define( function( require ) {
     }
   }
 
-  return inherit( Object, Scene, {
+  return inherit( Object, EqualityExplorerScene, {
 
     /**
      * Gets the icon used to represent this scene.
