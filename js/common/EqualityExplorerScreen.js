@@ -18,6 +18,7 @@ define( function( require ) {
    * @param {function(model):Node } createView
    * @param {Object} [options]
    * @constructor
+   * @abstract
    */
   function EqualityExplorerScreen( createModel, createView, options ) {
 

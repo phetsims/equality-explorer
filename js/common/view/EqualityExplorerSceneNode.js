@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Base type for displaying scenes in Equality Explorer.
+ * Abstract base type for displaying scenes in Equality Explorer.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -25,6 +25,7 @@ define( function( require ) {
    * @param {Node} termsLayer - parent for all TermNodes
    * @param {Object} [options]
    * @constructor
+   * @abstract
    */
   function EqualityExplorerSceneNode( scene, sceneProperty, termsLayer, options ) {
 
