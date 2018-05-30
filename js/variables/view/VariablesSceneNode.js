@@ -13,6 +13,7 @@ define( function( require ) {
   var BasicsSceneNode = require( 'EQUALITY_EXPLORER/basics/view/BasicsSceneNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var VariablesAccordionBox = require( 'EQUALITY_EXPLORER/common/view/VariablesAccordionBox' );
 
@@ -29,8 +30,8 @@ define( function( require ) {
       termsToolboxSpacing: 30 // horizontal spacing between terms in the toolbox
     }, options );
 
-    // @private whether the Variable accordion box is expanded or collapsed
-    this.variablesAccordionBoxExpandedProperty = new BooleanProperty( true );
+    // @private whether the Variables accordion box is expanded or collapsed
+    this.variablesAccordionBoxExpandedProperty = new BooleanProperty( EqualityExplorerConstants.VARIABLES_ACCORDION_BOX_EXPANDED );
 
     // @private whether variable values are visible in snapshots
     this.variableValuesVisibleProperty = new BooleanProperty( true );

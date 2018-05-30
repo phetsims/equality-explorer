@@ -71,7 +71,7 @@ define( function( require ) {
     options = options || {};
 
     // @private view Properties
-    this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( true );
+    this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
     // Level description, displayed in the status bar
     var levelDescriptionNode = new RichText( scene.description, {
