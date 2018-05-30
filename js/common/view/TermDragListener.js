@@ -24,9 +24,11 @@
  * - equivalent term is put on the plate based on dragged term's cell - choose closest
  * - inverse term is created on a plate based on term's cell - choose closest
  *
- * Note that event.currentTarget should NOT be used herein. Because of event forwarding from TermCreatorNode,
- * event.currentTarget may not be what you expect it to be.  See SimpleDragHandler.createForwardingListener
- * in TermCreatorNode.
+ * NOTE: When a Term is created, events are forward to this drag listener by TermCreatorNode, via
+ * SimpleDragHandler.createForwardingListener. At the time of this writing, that means that fields in
+ * Event and SimpleDragHandler will contain invalid values. In Event, currentTarget and trail will be specific
+ * to the forwarding TermCreatorNode. In SimpleDragHandler, node, trail, transform and startTransformMatrix
+ * fields are all invalid, and you should avoid calling cancel().
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
