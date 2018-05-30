@@ -31,7 +31,7 @@ define( function( require ) {
 
     /**
      * Returns the sum of constant values for all terms on the plate.
-     * @returns {RationalNumber}
+     * @returns {Fraction}
      * @public
      */
     sumConstantsOnPlate: function() {

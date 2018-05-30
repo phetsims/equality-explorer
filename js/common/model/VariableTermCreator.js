@@ -54,7 +54,7 @@ define( function( require ) {
 
     /**
      * Returns the sum of coefficients for all terms on the plate.
-     * @returns {RationalNumber}
+     * @returns {Fraction}
      * @public
      */
     sumCoefficientsOnPlate: function() {
