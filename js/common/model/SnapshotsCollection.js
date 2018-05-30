@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Manages a collection of SnapshotsCollection.
+ * Manages a collection of Snapshots.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */

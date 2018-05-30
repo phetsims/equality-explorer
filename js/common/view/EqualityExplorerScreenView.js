@@ -91,6 +91,7 @@ define( function( require ) {
     },
 
     /**
+     * Animates the view.
      * @param {number} dt - elapsed time, in seconds
      * @public
      */

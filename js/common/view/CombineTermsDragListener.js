@@ -38,7 +38,7 @@ define( function( require ) {
     //-------------------------------------------------------------------------------------------------
     
     /**
-     * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
+     * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side of the scale.
      * @returns {boolean} true=success, false=failure
      * @protected
      * @override
@@ -83,7 +83,7 @@ define( function( require ) {
     },
 
     /**
-     * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side.
+     * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side of the scale.
      * @returns {SumToZeroNode|null} non-null if the drag results in terms on the opposite plate summing to zero
      * @protected
      * @override
