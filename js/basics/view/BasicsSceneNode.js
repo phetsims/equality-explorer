@@ -14,12 +14,12 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var TermsToolbox = require( 'EQUALITY_EXPLORER/common/view/TermsToolbox' );
 
@@ -121,7 +121,7 @@ define( function( require ) {
       children.push( new Rectangle( scene.rightDragBounds, dragBoundsOption ) );
     }
 
-    SceneNode.call( this, scene, sceneProperty, this.termsLayer, {
+    EqualityExplorerSceneNode.call( this, scene, sceneProperty, this.termsLayer, {
       children: children
     } );
 
@@ -132,7 +132,7 @@ define( function( require ) {
 
   equalityExplorer.register( 'BasicsSceneNode', BasicsSceneNode );
 
-  return inherit( SceneNode, BasicsSceneNode, {
+  return inherit( EqualityExplorerSceneNode, BasicsSceneNode, {
 
     // @public
     reset: function() {

@@ -14,7 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var SceneControl = require( 'EQUALITY_EXPLORER/common/view/SceneControl' );
-  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
+  var EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
   var ScreenView = require( 'JOIST/ScreenView' );
 
   /**
@@ -37,7 +37,7 @@ define( function( require ) {
        * @returns {Node}
        */
       createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
-        return new SceneNode( scene, sceneProperty, layoutBounds, options );
+        return new EqualityExplorerSceneNode( scene, sceneProperty, layoutBounds, options );
       },
 
       // {boolean} if true, put negative terms in the toolbox, e.g. -x

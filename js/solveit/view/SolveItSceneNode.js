@@ -21,6 +21,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
+  var EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
   var EquationPanel = require( 'EQUALITY_EXPLORER/common/view/EquationPanel' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
@@ -34,7 +35,6 @@ define( function( require ) {
   var RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
   var RewardDialog = require( 'VEGAS/RewardDialog' );
   var RichText = require( 'SCENERY/nodes/RichText' );
-  var SceneNode = require( 'EQUALITY_EXPLORER/common/view/SceneNode' );
   var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -235,7 +235,7 @@ define( function( require ) {
     assert && assert( !options.children, 'SolveItSceneNode sets children' );
     options.children = children;
 
-    SceneNode.call( this, scene, sceneProperty, termsLayer, options );
+    EqualityExplorerSceneNode.call( this, scene, sceneProperty, termsLayer, options );
 
     // {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
     // Created on demand and reused, so we don't have to deal with buggy Dialog.dispose.
@@ -375,7 +375,7 @@ define( function( require ) {
 
   equalityExplorer.register( 'SolveItSceneNode', SolveItSceneNode );
 
-  return inherit( SceneNode, SolveItSceneNode, {
+  return inherit( EqualityExplorerSceneNode, SolveItSceneNode, {
 
     // @public
     reset: function() {

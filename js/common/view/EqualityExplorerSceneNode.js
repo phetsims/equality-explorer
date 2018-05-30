@@ -26,7 +26,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function SceneNode( scene, sceneProperty, termsLayer, options ) {
+  function EqualityExplorerSceneNode( scene, sceneProperty, termsLayer, options ) {
 
     // @public (read-only)
     this.scene = scene;
@@ -74,9 +74,9 @@ define( function( require ) {
     Node.call( this, options );
   }
 
-  equalityExplorer.register( 'SceneNode', SceneNode );
+  equalityExplorer.register( 'EqualityExplorerSceneNode', EqualityExplorerSceneNode );
 
-  return inherit( Node, SceneNode, {
+  return inherit( Node, EqualityExplorerSceneNode, {
 
     /**
      * Performs sum-to-zero animation for terms that have summed to zero.
