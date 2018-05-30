@@ -28,6 +28,8 @@ define( function( require ) {
   function NumbersScreen( options ) {
 
     options = _.extend( {
+
+      // EqualityExplorerScreen options
       name: screenNumbersString,
       backgroundColorProperty: new Property( EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createNumbersScreenIcon()

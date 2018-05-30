@@ -29,6 +29,8 @@ define( function( require ) {
   function ObjectVariable( symbol, image, shadow, options ) {
 
     options = _.extend( {
+
+      // Variable options
       range: DEFAULT_RANGE
     }, options );
 

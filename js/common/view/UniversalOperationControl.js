@@ -59,7 +59,7 @@ define( function( require ) {
     options = _.extend( {
       timesZeroEnabled: true, // whether to include 'times 0' as one of the operations
 
-      // supertype options
+      // HBox options
       spacing: 15
     }, options );
 

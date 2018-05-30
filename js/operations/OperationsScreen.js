@@ -28,6 +28,8 @@ define( function( require ) {
   function OperationsScreen( options ) {
 
     options = _.extend( {
+
+      // EqualityExplorerScreen options
       name: screenOperationsString,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createOperationsScreenIcon()

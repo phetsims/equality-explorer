@@ -26,7 +26,7 @@ define( function( require ) {
 
     options = _.extend( {
 
-      // supertype options
+      // RectangularPushButton options
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 8,
       yMargin: 4,

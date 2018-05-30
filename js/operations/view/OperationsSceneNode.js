@@ -26,6 +26,8 @@ define( function( require ) {
   function OperationsSceneNode( scene, sceneProperty, layoutBounds, options ) {
 
     options = _.extend( {
+
+      // VariablesSceneNode options
       organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
     }, options );
 

@@ -30,6 +30,8 @@ define( function( require ) {
   function LockControl( lockedProperty, options ) {
 
     options = _.extend( {
+
+      // Node options
       cursor: 'pointer',
       maxHeight: 45
     }, options );

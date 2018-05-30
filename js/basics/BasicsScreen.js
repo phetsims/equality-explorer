@@ -28,6 +28,8 @@ define( function( require ) {
   function BasicsScreen( options ) {
 
     options = _.extend( {
+
+      // EqualityExplorerScreen options
       name: screenBasicsString,
       backgroundColorProperty: new Property( EqualityExplorerColors.BASICS_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createBasicsScreenIcon()

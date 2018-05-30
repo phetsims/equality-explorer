@@ -28,6 +28,8 @@ define( function( require ) {
   function VariablesScreen( options ) {
 
     options = _.extend( {
+
+      // EqualityExplorerScreen options
       name: screenVariablesString,
       backgroundColorProperty: new Property( EqualityExplorerColors.VARIABLES_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createVariablesScreenIcon()

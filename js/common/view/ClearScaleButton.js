@@ -21,6 +21,8 @@ define( function( require ) {
   function ClearScaleButton( scale, options ) {
 
     options = _.extend( {
+
+      // EraserButton options
       touchAreaDilation: 5,
       iconWidth: 22
     }, options );

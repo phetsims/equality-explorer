@@ -42,6 +42,8 @@ define( function( require ) {
   function OperationsScene( options ) {
 
     options = _.extend( {
+
+      // EqualityExplorerScene options
       debugName: 'operations',
       gridRows: 1,
       gridColumns: 2,

@@ -36,7 +36,7 @@ define( function( require ) {
       // options passed to EquationNode constructor
       equationNodeOptions: null,
 
-      // supertype options
+      // Panel options
       fill: null,
       stroke: null,
       resize: false,

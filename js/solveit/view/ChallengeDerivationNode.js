@@ -28,6 +28,8 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+
+      // RichText options
       font: DEFAULT_FONT
     }, options );
 

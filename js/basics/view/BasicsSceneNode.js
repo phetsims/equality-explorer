@@ -37,10 +37,12 @@ define( function( require ) {
       termsToolboxContentSize: new Dimension2( 250, 50 ),
       termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale
       organizeButtonVisible: true, // is the organize button visible on the scale?
-      snapshotControlOptions: null, // propagated to SnapshotControl via SnapshotAccordionBox
 
       // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
-      variableValuesVisibleProperty: null
+      variableValuesVisibleProperty: null,
+
+      // SnapshotControl options
+      snapshotControlOptions: null
     }, options );
 
     // @public view-specific Properties

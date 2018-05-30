@@ -29,6 +29,8 @@ define( function( require ) {
       rows: 1,
       columns: 1,
       cellSize: DEFAULT_CELL_SIZE, // {Dimension2} uniform width and height of each cell
+
+      // Path options
       stroke: EqualityExplorerColors.GRID_STROKE,
       lineWidth: 0.25
     }, options );

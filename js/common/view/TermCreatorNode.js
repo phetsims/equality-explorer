@@ -30,7 +30,7 @@ define( function( require ) {
     options = _.extend( {
       sign: 1,  // sign that will be applied to terms created by this Node, 1 or -1
 
-      // supertype options
+      // Node options
       cursor: 'pointer'
     }, options );
 

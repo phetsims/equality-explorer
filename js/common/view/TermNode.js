@@ -37,7 +37,7 @@ define( function( require ) {
     options = _.extend( {
       shadowOffset: DEFAULT_SHADOW_OFFSET,
 
-      // supertype options
+      // Node options
       cursor: 'pointer'
     }, options );
 

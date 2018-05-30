@@ -28,6 +28,8 @@ define( function( require ) {
   function UniversalOperationNode( operation, options ) {
 
     options = _.extend( {
+
+      // HBox options
       spacing: 4
     }, options );
 

@@ -35,7 +35,7 @@ define( function( require ) {
       contentSize: DEFAULT_CONTENT_SIZE,
       spacing: 45, // horizontal space between TermCreatorNodes
 
-      // supertype options
+      // Panel options
       lineWidth: 1,
       cornerRadius: 6,
       xMargin: 5,

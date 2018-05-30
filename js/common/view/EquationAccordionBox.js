@@ -33,7 +33,7 @@ define( function( require ) {
       fixedWidth: 100,
       fixedHeight: 75,
 
-      // supertype options
+      // AccordionBox options
       showTitleWhenExpanded: false,
       contentXMargin: 8,
       contentYMargin: 4

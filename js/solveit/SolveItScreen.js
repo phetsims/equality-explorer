@@ -28,6 +28,8 @@ define( function( require ) {
   function SolveItScreen( options ) {
 
     options = _.extend( {
+
+      // EqualityExplorerScreen options
       name: screenSolveItString,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
