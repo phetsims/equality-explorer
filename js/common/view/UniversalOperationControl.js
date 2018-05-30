@@ -374,6 +374,7 @@ define( function( require ) {
   return inherit( HBox, UniversalOperationControl, {
 
     /**
+     * Steps the animations.
      * @param {number} dt - time step, in seconds
      * @public
      */
@@ -409,6 +410,7 @@ define( function( require ) {
      * @param {string} operator - see EqualityExplorerConstants.OPERATORS
      * @param {Term} operand - the proposed operand
      * @returns {boolean}
+     * @private
      */
     isSupportedOperation: function( operator, operand ) {
       return !isDivideByZero( operator, operand ) &&

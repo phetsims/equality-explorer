@@ -52,7 +52,7 @@ define( function( require ) {
         children: [ appleNode1, appleNode2 ]
       } );
 
-      // =
+      // >
       var greaterThanNode = new Text( MathSymbols.GREATER_THAN, {
         font: new PhetFont( 140 )
       } );

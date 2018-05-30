@@ -22,7 +22,8 @@ define( function( require ) {
   var EqualityExplorerConstants = {
 
     //TODO #2 fill in credits
-    // credits, applied to both equality-explorer and equality-explorer-basics
+    // credits, applied to the entire family of sims:
+    // equality-explorer, equality-explorer-basics and equality-explorer-two-variables
     CREDITS: {
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
