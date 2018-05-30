@@ -21,7 +21,7 @@ define( function( require ) {
 
   // constants
   var TRANSITION_OPTIONS = {
-    duration: 0.4, // sec
+    duration: 0.5, // sec
     targetOptions: {
       easing: Easing.QUADRATIC_IN_OUT
     }
