@@ -1,7 +1,9 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Node that creates terms.
+ * Node that creates terms. These nodes appear in the toolboxes that appear below the scale's plates.
+ * See https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md
+ * for a detailed description of how the PhET 'creator pattern' is applied in this simulation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
