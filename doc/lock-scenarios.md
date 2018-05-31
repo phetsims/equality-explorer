@@ -15,7 +15,7 @@ Relevant terminology from [implementation-notes.md](https://github.com/phetsims/
 
 In all scenarios:
 
-* start with lock on, unless otherwise indicated
+* start with an empty scale, unless otherwise indicated
 * equivalent term should follow dragged term during dragging and animation
 * dragged term and equivalent term should be put on plates simultaneously
 * equivalent term should not be draggable, or interact with other terms
@@ -27,51 +27,56 @@ The first 16 scenarios involve screens where like terms are placed in separate c
 
 ### Scenario 1
 
-1. Drag a term from a toolbox.
-2. Verify that an equivalent term comes out of the opposite toolbox.
-3. Release the term below the plates.
-4. Verify that the dragged term and equivalent term return to their respective toolboxes.
+1. Turn the lock on.
+2. Drag an term from the left toolbox.
+3. Verify that an equivalent term comes out of the right toolbox and follows the dragged term.
+4. Release the dragged term below the plates.
+5. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
 ### Scenario 2
 
-1. Start with one of the plates full.
-1. On the side of the scale with a full plate, drag a term from a toolbox.
-2. Verify that an equivalent term comes out of the opposite toolbox.
-3. Release the dragged term anywhere above the plate.
-4. Verify that the dragged term and equivalent term return to their respective toolboxes.
+1. Fill one of the plates with terms.
+2. Turn the lock on.
+3. On the side of the scale with a full plate, drag a term from a toolbox.
+4. Verify that an equivalent term comes out of the opposite toolbox and follows the dragged term.
+5. Release the dragged term anywhere above its plate.
+6. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
 ### Scenario 3
 
-1. Start with one of the plates full.
-1. On the _opposite_ side of the scale as the full plate, drag a term from a toolbox.
-2. Verify that an equivalent term comes out of the opposite toolbox.
-3. Release the dragged term anywhere above the plate.
-4. Verify that the dragged term and equivalent term return to their respective toolboxes.
+1. Fill one of the plates with terms.
+2. Turn the lock on.
+3. On the _opposite_ side of the scale as the full plate, drag a term from a toolbox.
+4. Verify that an equivalent term comes out of the opposite toolbox and follows the dragged term.
+5. Release the dragged term anywhere above the plate.
+6. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
 ### Scenario 4
 
-1. Drag a term from a toolbox.
-2. Verify that an equivalent term comes out of the opposite toolbox.
-3. Release the dragged term above the plate, and above any other terms on the plate.
-4. The dragged term animates to an empty cell on the plate.
-5. Verify that the equivalent term follows the dragged term during animation, then jumps to an empty cell on the opposite plate.
+1. Turn the lock on.
+2. Drag a term from a toolbox.
+3. Verify that an equivalent term comes out of the opposite toolbox and follows the dragged term.
+4. Release the dragged term above the plate, and above any other terms on the plate.
+5. The dragged term animates to an empty cell on the plate.
+6. Verify that the equivalent term follows the dragged term during animation, then jumps to an empty cell on the opposite plate.
 
 ### Scenario 5
 
-1. Drag a term from a toolbox.
-2. Verify that an equivalent term comes out of the opposite toolbox.
-3. Position the dragged term so that it overlaps a like term that will sum to zero.
-4. Release the dragged term.
-5. Verify that the dragged term and the term that it overlaps sum to zero. 
+1. Turn the lock on.
+2. Drag a term from a toolbox.
+3. Verify that an equivalent term comes out of the opposite toolbox and follows the dragged term.
+4. Position the dragged term so that it overlaps a like term that will sum to zero.
+5. Release the dragged term. The dragged term and the term that it overlaps sum to zero. 
 6. Verify that the equivalent term moves immediately to an empty cell on the opposite plate.
 
 ### Scenario 6
 
-1. Identify a term that appears on both plates.
-2. Drag one of these terms.
-3. Verify that the equivalent term comes off the opposite plate.
-4. Release the dragged term below the plate.
-5. Verify that the dragged term and equivalent term return to their respective toolboxes.
+1. Put one of each term on both plates.
+2. Term the lock on.
+3. Drag one a term off one of the plates.
+4. Verify that the equivalent term comes off the opposite plate and follows the dragged term.
+5. Release the dragged term below the plate.
+6. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
 ### Scenario 7
 
@@ -120,7 +125,11 @@ The first 16 scenarios involve screens where like terms are placed in separate c
 
 ### Scenario 12
 
-inverse created, term released below plate, term and equivalent return to toolbox, inverse remains on plate
+1. Start with x on the left plate, nothing on the right plate.
+2. Drag x off the left plate. 
+3. Verify that the equivalent term (x) is created on the right side, and the inverse term (-x) is created on the plate.
+4. Release the dragged term below the plate.
+5. Verify that the dragged term and equivalent term eturn to their respective toolboxes, and the inverse term remains on the right plate.
 
 ### Scenario 13
 
