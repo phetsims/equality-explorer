@@ -228,7 +228,7 @@ define( function( require ) {
       if ( this.equivalentTerm && !this.termCreator.combineLikeTermsEnabled && this.oppositePlate.isFull() ) {
 
         // there's no place to put equivalentTerm, the opposite plate is full
-        this.refreshHalos(); //TODO needed?
+        this.refreshHalos();
         this.animateToToolbox();
       }
       else if ( this.likeTerm && this.term.isInverseTerm( this.likeTerm ) ) {
