@@ -169,3 +169,51 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 ## Combine Like Terms
 
 The next 15 scenarios involve screens where like terms are combined in one cell on the scale.  Those screens are _Operations_ and _Solve It!_, and you may use either of those screens to test these scenarios.
+
+### Scenario 16
+
+1. Turn the lock on.
+2. Drag an term from the left toolbox.
+3. Verify that an equivalent term comes out of the right toolbox and follows the dragged term.
+4. Release the dragged term below the plates.
+5. Verify that the dragged term and equivalent term return to their respective toolboxes.
+
+### Scenario 17
+
+1. Put `x + 1` on both the left and right plates.
+2. Turn the lock on.
+3. On the side of the scale with a full plate, drag a term from a toolbox.
+4. Verify that an equivalent term comes out of the opposite toolbox and follows the dragged term.
+5. Release the dragged term anywhere above its plate.
+6. Verify that the dragged term and equivalent term are added to the correct terms on their respective plates.
+
+### Scenario 18
+
+1. Put `x + 1` on both the left and right plates.
+2. Turn the lock on.
+2. Drag a '-1' from a toolbox.
+3. Verify that an equivalent term '-1' comes out of the opposite toolbox and follows the dragged term.
+4. Position the dragged term so that it overlaps the like term '1' that will sum to zero.
+5. Release the dragged term. The dragged term sums to zero. 
+6. Verify that the equivalent term moves immediately to the opposite plate and sums to zero.
+
+### Scenario 19
+
+1. Put `x + 1` on the left and `x - 1' on the right plate.
+2. Turn the lock on.
+2. Drag a '-1' from a toolbox.
+3. Verify that an equivalent term '-1' comes out of the opposite toolbox and follows the dragged term.
+4. Position the dragged term so that it overlaps the like term '1' on the scale.
+5. Release the dragged term. The dragged term and the like term that it overlaps sum to zero. 
+6. Verify that the equivalent term moves immediately to the opposite plate and adds to produce `x - 2`.
+
+### Scenario 20
+
+1. Put `x + 1` on the left and `x - 1' on the right plate.
+2. Turn the lock on.
+2. Drag a '1' from a toolbox.
+3. Verify that an equivalent term '1' comes out of the opposite toolbox and follows the dragged term.
+4. Position the dragged term so that it overlaps the like term '1' on the scale.
+5. Release the dragged term. The dragged term adds to produce `x + 2`. 
+6. Verify that the equivalent term moves immediately to the opposite plate and sums to zero.
+
