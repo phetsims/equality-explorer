@@ -199,7 +199,7 @@ The next 15 scenarios involve screens where like terms are combined in one cell 
 
 ### Scenario 19
 
-1. Put `x + 1` on the left and `x - 1' on the right plate.
+1. Put `x + 1` on the left and `x - 1` on the right plate.
 2. Turn the lock on.
 2. Drag a '-1' from a toolbox.
 3. Verify that an equivalent term '-1' comes out of the opposite toolbox and follows the dragged term.
@@ -209,7 +209,7 @@ The next 15 scenarios involve screens where like terms are combined in one cell 
 
 ### Scenario 20
 
-1. Put `x + 1` on the left and `x - 1' on the right plate.
+1. Put `x + 1` on the left and `x - 1` on the right plate.
 2. Turn the lock on.
 2. Drag a '1' from a toolbox.
 3. Verify that an equivalent term '1' comes out of the opposite toolbox and follows the dragged term.
