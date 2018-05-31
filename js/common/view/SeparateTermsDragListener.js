@@ -17,8 +17,8 @@ define( function( require ) {
   var TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
 
   // strings
-  var leftSideOfBalanceIsFullString = require( 'string!EQUALITY_EXPLORER/leftSideOfBalanceIsFull' );
-  var rightSideOfBalanceIsFullString = require( 'string!EQUALITY_EXPLORER/rightSideOfBalanceIsFull' );
+  var leftSideFullString = require( 'string!EQUALITY_EXPLORER/leftSideFull' );
+  var rightSideFullString = require( 'string!EQUALITY_EXPLORER/rightSideFull' );
 
   /**
    * @param {Node} termNode - Node that the listener is attached to
@@ -113,7 +113,7 @@ define( function( require ) {
 
         // opposite plate is full, cannot create inverse term, show 'Oops' message
         var thisIsLeft = ( this.termCreator.positiveLocation.x < this.equivalentTermCreator.positiveLocation.x );
-        var message = thisIsLeft ? rightSideOfBalanceIsFullString : leftSideOfBalanceIsFullString;
+        var message = thisIsLeft ? rightSideFullString : leftSideFullString;
         var oopsDialog = new OopsDialog( message );
         oopsDialog.show();
 

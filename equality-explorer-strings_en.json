@@ -62,10 +62,10 @@
   "numberTooBig": {
     "value": "Oops!<br><br>That will make a number<br>that is too big for the sim.<br><br>Try a different operation!"
   },
-  "leftSideOfBalanceIsFull": {
+  "leftSideFull": {
     "value": "Oops!<br><br>Left side of the balance is full."
   },
-  "rightSideOfBalanceIsFull": {
+  "rightSideFull": {
     "value": "Oops!<br><br>Right side of the balance is full."
   }
 }
