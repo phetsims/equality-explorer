@@ -23,7 +23,7 @@ In all scenarios:
 
 ## Separate Like Terms
 
-The first 15 scenarios involve screens where like terms are placed in separate cells on the scale.  Those screens are _Numbers_ and _Variables_. Scenarios 1-5 involve dragging a term from a toolbox. Scenarios 6-15 involve dragging a term from a plate.
+The first 15 scenarios involve screens where like terms are placed in separate cells on the scale.  Those screens are _Numbers_ and _Variables_, and you may use either of those screens to test theses scenarios. Scenarios 1-5 involve dragging a term from a toolbox. Scenarios 6-15 involve dragging a term from a plate.
 
 ### Scenario 1
 
@@ -168,4 +168,4 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 
 ## Combine Like Terms
 
-The next 15 scenarios involve screens where like terms are combined in one cell on the scale.  Those screens are _Operations_ and _Solve It!_.
+The next 15 scenarios involve screens where like terms are combined in one cell on the scale.  Those screens are _Operations_ and _Solve It!_, and you may use either of those screens to test these scenarios.
