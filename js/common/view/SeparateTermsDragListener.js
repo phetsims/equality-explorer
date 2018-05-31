@@ -202,7 +202,7 @@ define( function( require ) {
             assert && assert( !( self.equivalentTerm && self.oppositePlate.isFull() ), 'opposite plate is full' );
 
             // Compute cell again, in case a term has been removed below the cell that we were animating to.
-            cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
+            var cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
 
             // Put the term on the plate
             self.termCreator.putTermOnPlate( self.term, cell );
