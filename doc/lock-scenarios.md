@@ -23,7 +23,7 @@ In all scenarios:
 
 ## Separate Like Terms
 
-The first 16 scenarios involve screens where like terms are placed in separate cells on the scale.  Those screens are _Numbers_ and _Variables_. Scenarios 1-5 involve dragging a term from a toolbox. Scenarios 6-16 involve dragging a term from a plate.
+The first 15 scenarios involve screens where like terms are placed in separate cells on the scale.  Those screens are _Numbers_ and _Variables_. Scenarios 1-5 involve dragging a term from a toolbox. Scenarios 6-15 involve dragging a term from a plate.
 
 ### Scenario 1
 
@@ -129,28 +129,42 @@ The first 16 scenarios involve screens where like terms are placed in separate c
 
 ### Scenario 12
 
-1. Put 'x' on the left plate, nothing on the right plate.
+1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
-3. Drag 'x' off the left plate. 
-4. Verify that the equivalent term 'x' is created on the right side, and the inverse term '-x' is created on the plate.
+3. Drag '-1' off the left plate. 
+4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
 5. Release the dragged term below the plate.
 6. Verify that the dragged term and equivalent term return to their respective toolboxes, and the inverse term remains on the right plate.
 
 ### Scenario 13
 
-inverse created, term released above plate, term plate full (or becomes full), term and equivalent return to toolbox, inverse remains on plate
+1. Fill the left plate with '1', nothing on the right plate.
+2. Turn the lock on.
+3. Drag a '1' off the left plate. 
+4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
+5. Before releasing the dragged term, add a term to the left plate to fill it. 
+6. Release the dragged term above the plate. 
+7. Verify that the dragged term and equivalent term return to their respective toolboxes, and the inverse term remains on the right plate.
 
 ### Scenario 14
 
-inverse created, term released above plate, equivalent plate full (or becomes full), term and equivalent return to toolbox, inverse remains on plate
+1. Put '1' on the left plate, nothing on the right plate.
+2. Turn the lock on.
+3. Drag '-1' off the left plate. 
+4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
+5. Release the dragged term above the plate.
+6. Verify that the dragged term and equivalent term return to their respective plates, and the inverse term is replaced by the equivalent term.
 
 ### Scenario 15
 
-inverse created, term released above plate, room on both plates, term goes to plate, equivalent returns to plate and replaces inverse
-
-### Scenario 16
-
-inverse created, inverse dragged, association broken
+1. Run with `?speed=0.1` to slow animation.
+2. Put '1' on the left plate, nothing on the right plate.
+3. Turn the lock on.
+4. Drag '-1' off the left plate. 
+5. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
+6. Release the dragged term above the plate.
+7. Before the dragged term reaches its plate, grab the inverse term.
+6. Verify that the dragged term and equivalent term return to their respective plates, and the inverse term is _not_ replaced by the equivalent term. 
 
 ## Combine Like Terms
 
