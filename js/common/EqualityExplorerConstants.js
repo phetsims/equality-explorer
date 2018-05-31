@@ -36,7 +36,7 @@ define( function( require ) {
     // ScreenView
     SCREEN_VIEW_LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
     SCREEN_VIEW_X_MARGIN: 20,
-    SCREEN_VIEW_Y_MARGIN: 20,
+    SCREEN_VIEW_Y_MARGIN: 16,
 
     // terms
     DEFAULT_CONSTANT_VALUE: Fraction.fromInteger( 1 ), // constant terms are created with this value by default

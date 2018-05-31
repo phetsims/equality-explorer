@@ -21,7 +21,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var DEFAULT_SCALE_LOCATION = new Vector2( 355, 420 );
+  var DEFAULT_SCALE_LOCATION = new Vector2( 355, 427 );
   var DRAG_BOUNDS_X_MARGIN = 20;
   var DRAG_BOUNDS_Y_MARGIN = 10;
   var DRAG_BOUNDS_MIN_Y = 100;
