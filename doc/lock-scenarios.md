@@ -81,55 +81,60 @@ The first 16 scenarios involve screens where like terms are placed in separate c
 ### Scenario 7
 
 1. Run with `?speed=0.1` to slow animation.
-2. Fill the left plate. 
-3. Identify a term that appears on both plates, and drag one of those terms from the left plate.
-4. Verify that the equivalent term comes off the right plate.
-5. Release the dragged term above the left plate, and above all other terms.
-6. Before the dragged term reaches the left plate, fill the empty cell on the left plate.
-6. Verify that the dragged term and equivalent term return to their respective toolboxes.
+2. Put one of each term on both plates, and fill the left plate.
+3. Turn the lock on.
+4. Identify a term that appears on both plates, and drag one of those terms from the left plate.
+5. Verify that the equivalent term comes off the right plate and follows the dragged term.
+6. Release the dragged term above the left plate, and above all other terms.
+7. Before the dragged term reaches the left plate, fill the empty cell on the left plate.
+8. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
 ### Scenario 8
 
 1. Run with `?speed=0.1` to slow animation.
-2. Fill the _right_ plate. 
-3. Identify a term that appears on both plates, and drag one of those terms from the left plate.
-4. Verify that the equivalent term comes off the right plate.
-5. Release the dragged term above the left plate, and above all other terms.
-6. Before the dragged term reaches the left plate, fill the empty cell on the right plate.
+2. Put one of each term on both plates, and fill the _right_ plate.
+3. Turn the lock on.
+4. Identify a term that appears on both plates, and drag one of those terms from the left plate.
+5. Verify that the equivalent term comes off the right plate and follows the dragged term.
+6. Release the dragged term above the left plate, and above all other terms.
+7. Before the dragged term reaches the left plate, fill the empty cell on the _right_ plate.
 6. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
 ### Scenario 9
 
-1. Identify a term that appears on both plates, drag one of those terms.
-2. Verify that the equivalent term comes off the opposite plate.
-3. Release the dragged term above the plate, and above all other terms.
-4. Verify that the dragged term and equivalent term return to their respective plates.
+1. Put one of each term on both plates.
+2. Turn the lock on.
+3. Drag a term off one of the plates.
+4. Verify that the equivalent term comes off the opposite plate and follows the dragged term.
+5. Release the dragged term above the plate, and above all other terms.
+6. Verify that the dragged term and equivalent term return to their respective plates.
 
 ### Scenario 10
 
-1. Identify a term that appears on both plates, drag one of those terms. 
-2. Verify that an equivalent term comes off the opposite plate.
-3. Position the dragged term so that it overlaps a like term that will sum to zero.
-4. Release the dragged term.
-5. Verify that the dragged term and the term that it overlaps sum to zero. 
-6. Verify that the equivalent term moves immediately to an empty cell on the opposite plate.
+1. Put one of each term on both plates.
+2. Turn the lock on.
+3. Drag a term off one of the plates. 
+4. Verify that an equivalent term comes off the opposite plate and follows the dragged term.
+5. Position the dragged term so that it overlaps a like term that will sum to zero.
+6. Release the dragged term. Tdragged term and the term that it overlaps sum to zero. 
+7. Verify that the equivalent term moves immediately to an empty cell on the opposite plate.
 
 ### Scenario 11
 
-1. Start with lock off.
-2. Put a '1' on a plate.
-3. Fill the opposite plate with '-1'.
-4. Turn lock on.
-5. Attempt to drag '1' off plate.
-6. Verify that the drag is cancelled, and a dialog is displayed indicating "Left side of the balance is full" or "Right side of the balance is full", depending on which plate is full.
+1. Put a '1' on a plate.
+2. Fill the opposite plate with '-1'.
+3. Turn the lock on.
+4. Attempt to drag '1' off plate.
+5. Verify that the drag is cancelled, and a dialog is displayed indicating "Left side of the balance is full" or "Right side of the balance is full", depending on which plate is full.
 
 ### Scenario 12
 
-1. Start with x on the left plate, nothing on the right plate.
-2. Drag x off the left plate. 
-3. Verify that the equivalent term (x) is created on the right side, and the inverse term (-x) is created on the plate.
-4. Release the dragged term below the plate.
-5. Verify that the dragged term and equivalent term eturn to their respective toolboxes, and the inverse term remains on the right plate.
+1. Put 'x' on the left plate, nothing on the right plate.
+2. Turn the lock on.
+3. Drag 'x' off the left plate. 
+4. Verify that the equivalent term 'x' is created on the right side, and the inverse term '-x' is created on the plate.
+5. Release the dragged term below the plate.
+6. Verify that the dragged term and equivalent term return to their respective toolboxes, and the inverse term remains on the right plate.
 
 ### Scenario 13
 
