@@ -85,7 +85,7 @@ define( function( require ) {
       // Slightly off center, so that the equation's relational operator is horizontally centered
       // above the scale's arrow. The offset was determined empirically.
       centerX: scale.location.x - 15,
-      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
+      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
@@ -94,7 +94,7 @@ define( function( require ) {
       fixedWidth: Math.floor( ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15 ),
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
-      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
+      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
     var children = [
