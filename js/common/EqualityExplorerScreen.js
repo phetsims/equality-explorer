@@ -27,7 +27,7 @@ define( function( require ) {
     Screen.call( this, createModel, createView, options );
 
     // When this Screen is deactivated, deactivate the model.  unlink not needed.
-    this.screenActiveProperty.lazyLink( function( screenActive ) {
+    this.activeProperty.lazyLink( function( screenActive ) {
       if ( !screenActive && self.model.deactivate ) {
         self.model.deactivate();
       }
