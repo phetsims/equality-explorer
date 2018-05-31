@@ -20,7 +20,6 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -66,7 +65,7 @@ define( function( require ) {
     // @private
     this.timesZeroEnabled = options.timesZeroEnabled;
 
-    // items for the operator picker
+    // items for the operator control
     var operatorItems = [];
     for ( var i = 0; i < scene.operators.length; i++ ) {
       var operator = scene.operators[ i ];
@@ -75,6 +74,17 @@ define( function( require ) {
         node: UniversalOperationNode.createOperatorNode( operator )
       } );
     }
+
+    // radio buttons for selecting the operator
+    var operatorControl = new RadioButtonGroup( scene.operatorProperty, operatorItems, {
+      orientation: 'horizontal',
+      spacing: 2,
+      buttonContentXMargin: 8,
+      buttonContentYMargin: 3,
+      baseColor: 'white',
+      touchAreaXDilation: 0,
+      touchAreaYDilation: 15
+    } );
 
     /*
      * Adjusts the operand if it's not appropriate for a specified operator.
@@ -109,46 +119,7 @@ define( function( require ) {
       }
     };
 
-    var operatorControl = null;
-    if ( EqualityExplorerQueryParameters.operatorControl === 'buttons' ) {
-
-      // row of radio buttons
-      operatorControl = new RadioButtonGroup( scene.operatorProperty, operatorItems, {
-        orientation: 'horizontal',
-        spacing: 2,
-        buttonContentXMargin: 8,
-        buttonContentYMargin: 3,
-        baseColor: 'white',
-        touchAreaXDilation: 0,
-        touchAreaYDilation: 15
-      } );
-
-      scene.operatorProperty.lazyLink( operatorListener ); // unlink not needed
-    }
-    else {
-
-      // picker
-      operatorControl = new ObjectPicker( scene.operatorProperty, operatorItems, _.extend( {}, PICKER_OPTIONS, {
-        wrapEnabled: true, // wrap around when min/max is reached
-        xMargin: 18,
-        touchAreaXDilation: 0,
-        touchAreaYDilation: 15,
-
-        // When the up button is pressed, change the operand if it's inappropriate for the operator
-        upFunction: function( index ) {
-          var nextIndex = index + 1;
-          operatorListener( scene.operators[ nextIndex ] );
-          return nextIndex;
-        },
-
-        // When the down button is pressed, change the operand if it's inappropriate for the operator
-        downFunction: function( index ) {
-          var nextIndex = index - 1;
-          operatorListener( scene.operators[ nextIndex ] );
-          return nextIndex;
-        }
-      } ) );
-    }
+    scene.operatorProperty.lazyLink( operatorListener ); // unlink not needed
 
     // items for the operand picker
     var operandItems = [];

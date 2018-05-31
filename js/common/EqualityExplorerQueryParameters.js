@@ -97,18 +97,6 @@ define( function( require ) {
       isValidValue: function( value ) {
         return ( value === null ) || ( value.length === 9 );
       }
-    },
-
-    //TODO #77 delete this when we decide which option to use
-    // Specifies the type of UI control to use for the universal operator.
-    // See https://github.com/phetsims/equality-explorer/issues/77
-    // For internal use only, not public facing.
-    operatorControl: {
-      type: 'string',
-      defaultValue: 'buttons',
-      isValidValue: function( value ) {
-        return _.includes( [ 'buttons', 'picker' ], value );
-      }
     }
   } );
 
