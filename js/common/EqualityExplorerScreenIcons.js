@@ -161,7 +161,7 @@ define( function( require ) {
       var iconNode = new HBox( {
         spacing: 5,
         children: [ variableTermNode, greaterThanNode, constantTermNode ]
-      });
+      } );
 
       return new ScreenIcon( iconNode, {
         maxIconWidthProportion: 0.75,
@@ -192,7 +192,7 @@ define( function( require ) {
       var iconNode = new HBox( {
         spacing: 3,
         children: [ numberNode, starNode ]
-      });
+      } );
 
       return new ScreenIcon( iconNode, {
         maxIconWidthProportion: 0.75,

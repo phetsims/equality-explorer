@@ -18,7 +18,7 @@ define( function( require ) {
     BASICS_SCREEN_BACKGROUND: 'rgb( 255, 250, 227 )',
     NUMBERS_SCREEN_BACKGROUND: 'rgb( 214, 233, 254 )',
     VARIABLES_SCREEN_BACKGROUND: 'rgb( 239, 253, 218 )',
-    SOLVING_SCREEN_BACKGROUND:  'rgb( 237, 225, 253 )',
+    SOLVING_SCREEN_BACKGROUND: 'rgb( 237, 225, 253 )',
     SOLVE_IT_SCREEN_BACKGROUND: 'rgb( 248, 227, 226 )',
 
     // snapshots

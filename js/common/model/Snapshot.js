@@ -28,7 +28,7 @@ define( function( require ) {
 
       // @private {number[]} save the current value of each variable
       this.variableValues = _.map( scene.variables, function( variable ) {
-         return variable.valueProperty.value;
+        return variable.valueProperty.value;
       } );
     }
   }

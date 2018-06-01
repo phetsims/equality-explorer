@@ -70,7 +70,7 @@ define( function( require ) {
         stroke: options.color,
         lineWidth: options.lineWidth
       } );
-      
+
       var absoluteFractionNode = new VBox( {
         children: [ numeratorNode, lineNode, denominatorNode ],
         align: 'center',

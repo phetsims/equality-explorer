@@ -39,7 +39,7 @@ define( function( require ) {
     var phetGirlNode = new Image( phetGirlWaggingFingerImage, {
       maxHeight: 132 // determined empirically
     } );
-    
+
     var content = new HBox( {
       spacing: 20,
       children: [ messageNode, phetGirlNode ]

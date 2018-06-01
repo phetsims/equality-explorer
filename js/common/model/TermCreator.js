@@ -54,7 +54,7 @@ define( function( require ) {
     // @private {Plate} the plate that this term creator is associated with.
     // Deferred initialization, see set plate() for notes.
     this._plate = null;
-    
+
     // @private {Vector2} locations of the associated positive and negative TermCreatorNodes.
     // Deferred initialization, see set positiveLocation() and set negativeLocation() for notes.
     this._positiveLocation = null;
@@ -524,7 +524,7 @@ define( function( require ) {
 
       // If the 2 terms are 'like' then the creators are 'like'.
       var isLike = thisTerm.isLikeTerm( thatTerm );
-      
+
       // Dispose of the terms.
       thisTerm.dispose();
       thatTerm.dispose();
