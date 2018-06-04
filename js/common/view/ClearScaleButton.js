@@ -14,11 +14,11 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
-   * @param {BalanceScale} scale
+   * @param {function} clearScaleFunction
    * @param {Object} [options]
    * @constructor
    */
-  function ClearScaleButton( scale, options ) {
+  function ClearScaleButton( clearScaleFunction, options ) {
 
     options = _.extend( {
 
@@ -30,7 +30,7 @@ define( function( require ) {
     assert && assert( !options.listener, 'ClearScaleButton sets listener' );
     options.listener = function() {
       phet.log && phet.log( 'ClearScaleButton pressed' );
-      scale.clear();
+      clearScaleFunction();
     };
 
     EraserButton.call( this, options );

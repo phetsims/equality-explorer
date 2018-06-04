@@ -16,11 +16,11 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
 
   /**
-   * @param {BalanceScale} scale
+   * @param {function} organizeFunction
    * @param {Object} [options]
    * @constructor
    */
-  function OrganizeButton( scale, options ) {
+  function OrganizeButton( organizeFunction, options ) {
 
     var self = this;
 
@@ -54,7 +54,7 @@ define( function( require ) {
     assert && assert( !options.listener, 'OrganizeButton sets listener' );
     options.listener = function() {
       phet.log && phet.log( 'OrganizeButton pressed' );
-      scale.organize();
+      organizeFunction();
       self.enabled = false;
     };
 

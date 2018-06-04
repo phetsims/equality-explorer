@@ -129,12 +129,12 @@ define( function( require ) {
     } );
 
     // pressing this button clears all terms from the scale
-    var clearScaleButton = new ClearScaleButton( scale, {
+    var clearScaleButton = new ClearScaleButton( scale.clear.bind( scale ), {
       visible: options.clearScaleButtonVisible
     } );
 
     // pressing this button organizes terms on the scale, grouping like terms together
-    var organizeButton = new OrganizeButton( scale, {
+    var organizeButton = new OrganizeButton( scale.organize.bind( scale ), {
       visible: options.organizeButtonVisible
     } );
 
