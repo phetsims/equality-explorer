@@ -21,7 +21,7 @@ define( function( require ) {
 
   var EqualityExplorerConstants = {
 
-    //TODO #2 fill in credits
+    //TODO #2 finalize the credits
     // credits, applied to the entire family of sims:
     // equality-explorer, equality-explorer-basics and equality-explorer-two-variables
     CREDITS: {
