@@ -98,8 +98,8 @@ define( function( require ) {
     // to be exceeded.  See See https://github.com/phetsims/equality-explorer/issues/48
     this.maxIntegerExceededEmitter = new Emitter();
 
-    // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale.
-    // This is needed for the lock feature, which involves creating an equivalent term on the opposite side of the scale.
+    // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale. This is needed
+    // for the lock feature, which involves creating an equivalent term on the opposite side of the scale.
     // Example: When locked, if you drag -x out of the left toolbox, -x must also drag out of the right toolbox.
     // Because this is a 2-way association, initialization is deferred until after instantiation.
     // See set equivalentTermCreator() for notes.
@@ -219,7 +219,8 @@ define( function( require ) {
      * @public
      */
     get equivalentTermCreator() {
-      assert && assert( this._equivalentTermCreator, 'attempt to access equivalentTermCreator before it was initialized' );
+      assert && assert( this._equivalentTermCreator,
+        'attempt to access equivalentTermCreator before it was initialized' );
       return this._equivalentTermCreator;
     },
 
@@ -421,8 +422,10 @@ define( function( require ) {
      * @public
      */
     getLikeTermOnPlate: function() {
-      assert && assert( this.combineLikeTermsEnabled, 'getLikeTermOnPlate is only supported when combineLikeTermsEnabled' );
-      assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate' );
+      assert && assert( this.combineLikeTermsEnabled,
+        'getLikeTermOnPlate is only supported when combineLikeTermsEnabled' );
+      assert && assert( this.termsOnPlate.length <= 1,
+        'expected at most 1 term on plate' );
       return this.plate.getTermInCell( this.likeTermsCell );
     },
 
@@ -572,8 +575,10 @@ define( function( require ) {
      */
     applyOperation: function( operation ) {
 
-      assert && assert( this.combineLikeTermsEnabled, 'applyOperation is only supported when combining like terms' );
-      assert && assert( this.termsOnPlate.length <= 1, 'expected at most 1 term on plate: ' + this.termsOnPlate.length );
+      assert && assert( this.combineLikeTermsEnabled,
+        'applyOperation is only supported when combining like terms' );
+      assert && assert( this.termsOnPlate.length <= 1,
+        'expected at most 1 term on plate: ' + this.termsOnPlate.length );
 
       var summedToZero = false;
       var plateWasEmpty = false;
