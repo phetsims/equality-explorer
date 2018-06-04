@@ -99,7 +99,7 @@ define( function( require ) {
       }
     },
 
-    // Providing this flag will initialize the lock feature to be 'on' by default.
+    // Turns the lock feature 'on' by default.
     // For internal use only, not public facing.
     locked: { type: 'flag' },
 
