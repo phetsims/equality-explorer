@@ -49,7 +49,8 @@ define( function( require ) {
     // @private {Vector2} destination to animate to, set using animateTo
     this.destination = options.location.copy();
 
-    // @private {function|null} called when animation step occurs, set using animateTo. Don't do anything expensive here!
+    // @private {function|null} called when animation step occurs, set using animateTo.
+    // Don't do anything expensive here!
     this.animationStepCallback = null;
 
     // @private {function|null} called when animation to destination completes, set using animateTo

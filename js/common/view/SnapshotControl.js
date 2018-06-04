@@ -24,8 +24,8 @@ define( function( require ) {
   var VariableValuesNode = require( 'EQUALITY_EXPLORER/common/view/VariableValuesNode' );
 
   // constants
-  var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have an equation, so bounds are valid
-  var NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder when we don't have variable values, so bounds are valid
+  var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for equation, so bounds are valid
+  var NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for variable values, so bounds are valid
   var EQUATION_FONT_SIZE = 22;
   var FRACTION_FONT_SIZE = 14;
   var SELECTION_RECTANGLE_X_MARGIN = 10;

@@ -46,8 +46,10 @@ define( function( require ) {
     }, options );
 
     // @public view-specific Properties
-    this.equationAccordionBoxExpandedProperty = new BooleanProperty( EqualityExplorerConstants.EQUATION_ACCORDION_BOX_EXPANDED );
-    this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
+    this.equationAccordionBoxExpandedProperty =
+      new BooleanProperty( EqualityExplorerConstants.EQUATION_ACCORDION_BOX_EXPANDED );
+    this.snapshotsAccordionBoxExpandedProperty =
+      new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
     // locals vars to improve readability
     var scale = scene.scale;
