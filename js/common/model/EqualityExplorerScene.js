@@ -116,7 +116,7 @@ define( function( require ) {
     // if the 'lock' feature is supported...
     if ( options.lockable ) {
 
-      this.lockedProperty = new BooleanProperty( false );
+      this.lockedProperty = new BooleanProperty( EqualityExplorerQueryParameters.locked );
 
       // Update the lockedProperty of all term creators. unlink not needed.
       this.lockedProperty.link( function( locked ) {

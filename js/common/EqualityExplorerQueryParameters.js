@@ -97,7 +97,11 @@ define( function( require ) {
       isValidValue: function( value ) {
         return ( value === null ) || ( value.length === 9 );
       }
-    }
+    },
+
+    // Providing this flag will initialize the lock feature to be 'on' by default.
+    // For internal use only, not public facing.
+    locked: { type: 'flag' }
   } );
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
