@@ -1,6 +1,6 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
-//TODO migrate to common code, see https://github.com/phetsims/scenery-phet/issues/345
+//TODO migrate to common code when needed by another sim, see https://github.com/phetsims/scenery-phet/issues/345
 /**
  * User-interface component for picking one of several values
  * This is essentially a value with integrated up/down spinners.
