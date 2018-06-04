@@ -14,6 +14,7 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
   var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -111,7 +112,7 @@ define( function( require ) {
 
     // Some scenes support locking the left and right sides of the equation,
     // such that an action on one side results in an equivalent action on the opposite side.
-    if ( scene.lockedProperty ) {
+    if ( scene.lockedProperty && EqualityExplorerQueryParameters.lockVisible ) {
       var lockControl = new LockControl( scene.lockedProperty, {
         x: scale.location.x,
         y: leftTermsToolbox.centerY - 5 // offset determined empirically

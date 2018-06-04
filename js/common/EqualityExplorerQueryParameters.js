@@ -101,7 +101,16 @@ define( function( require ) {
 
     // Providing this flag will initialize the lock feature to be 'on' by default.
     // For internal use only, not public facing.
-    locked: { type: 'flag' }
+    locked: { type: 'flag' },
+
+    // Whether the lock control is visible.  When used with the locked query parameter, this is useful for keeping
+    // the sim in the locked or unlocked state while memory profiling. For example, use ?locked&lockVisible=false
+    // to profile the sim in the locked state.
+    // For internal use only, not public facing.
+    lockVisible: {
+      type: 'boolean',
+      defaultValue: true
+    }
   } );
 
   equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
