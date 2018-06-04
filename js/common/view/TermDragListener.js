@@ -267,7 +267,8 @@ define( function( require ) {
           oppositeSumToZeroNode.startAnimation();
         }
       }
-      else if ( this.term.locationProperty.value.y > this.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
+      else if ( this.term.locationProperty.value.y >
+                this.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
         // term was released below the plate, animate back to toolbox
         this.animateToToolbox();
@@ -368,7 +369,8 @@ define( function( require ) {
           previousLikeTerm.haloVisibleProperty.value = false;
         }
 
-        if ( this.likeTerm && ( this.termCreator.combineLikeTermsEnabled || this.term.isInverseTerm( this.likeTerm ) ) ) {
+        if ( this.likeTerm &&
+             ( this.termCreator.combineLikeTermsEnabled || this.term.isInverseTerm( this.likeTerm ) ) ) {
 
           // terms will combine, show halo for term and likeTerm
           this.term.shadowVisibleProperty.value = false;

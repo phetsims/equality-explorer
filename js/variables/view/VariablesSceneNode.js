@@ -33,7 +33,8 @@ define( function( require ) {
     }, options );
 
     // @private whether the Variables accordion box is expanded or collapsed
-    this.variablesAccordionBoxExpandedProperty = new BooleanProperty( EqualityExplorerConstants.VARIABLES_ACCORDION_BOX_EXPANDED );
+    this.variablesAccordionBoxExpandedProperty =
+      new BooleanProperty( EqualityExplorerConstants.VARIABLES_ACCORDION_BOX_EXPANDED );
 
     // @private whether variable values are visible in snapshots
     this.variableValuesVisibleProperty = new BooleanProperty( true );

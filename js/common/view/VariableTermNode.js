@@ -143,7 +143,8 @@ define( function( require ) {
       }
 
       // variable's symbol, with option to show 1 and -1
-      var symbolText = ( !options.showOne && coefficient.getValue() === -1 ) ? ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
+      var symbolText = ( !options.showOne && coefficient.getValue() === -1 ) ?
+                       ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
       var symbolNode = new Text( symbolText, {
         font: options.symbolFont
       } );

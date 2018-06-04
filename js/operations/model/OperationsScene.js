@@ -56,7 +56,8 @@ define( function( require ) {
     assert && assert( !options.variables, 'OperationsScene sets variables' );
     options.variables = [ this.xVariable ];
 
-    // @public (read-only) emit1( {TermCreator[]} ) when one or more terms become zero as the result of a universal operation
+    // @public (read-only)
+    // emit1( {TermCreator[]} ) when one or more terms become zero as the result of a universal operation
     this.sumToZeroEmitter = new Emitter();
 
     // @public (read-only)

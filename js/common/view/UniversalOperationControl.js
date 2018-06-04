@@ -151,7 +151,8 @@ define( function( require ) {
         var operator = scene.operatorProperty.value;
         while ( !self.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
           nextOperandIndex++;
-          assert && assert( nextOperandIndex < scene.operands.length, 'nextOperandIndex out of range: ' + nextOperandIndex );
+          assert && assert( nextOperandIndex < scene.operands.length,
+            'nextOperandIndex out of range: ' + nextOperandIndex );
         }
         return nextOperandIndex;
       },

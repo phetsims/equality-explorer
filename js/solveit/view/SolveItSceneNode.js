@@ -71,7 +71,8 @@ define( function( require ) {
     options = options || {};
 
     // @private view Properties
-    this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
+    this.snapshotsAccordionBoxExpandedProperty =
+      new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
     // Level description, displayed in the status bar
     var levelDescriptionNode = new RichText( scene.description, {
@@ -85,11 +86,12 @@ define( function( require ) {
     };
 
     // Bar across the top of the screen
-    var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode, scene.scoreProperty, {
-      spacing: 20,
-      barFill: 'rgb( 252, 150, 152 )',
-      backButtonListener: backButtonListener
-    } );
+    var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode,
+      scene.scoreProperty, {
+        spacing: 20,
+        barFill: 'rgb( 252, 150, 152 )',
+        backButtonListener: backButtonListener
+      } );
 
     // Challenge equation
     var challengePanelOptions = _.extend( {}, EQUATION_PANEL_OPTIONS, {
