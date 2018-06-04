@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.0.0-dev.122 Thu May 31 2018 14:53:25 GMT-0600 (MDT)",
+  "comment": "# equality-explorer 1.0.0-dev.123 Mon Jun 04 2018 10:03:59 GMT-0600 (MDT)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "8be818775063b7a0488c0731c45dc9f957410e94",
+    "sha": "eac7925d4e727e0a3def185b98aa2361d4dde5ad",
     "branch": "master"
   },
   "dot": {
@@ -21,11 +21,11 @@
     "branch": "master"
   },
   "equality-explorer": {
-    "sha": "8e6425bc2044118f2f4d6154ecdf9bd5448789a9",
+    "sha": "18f9cc3e4127f5af90a4797da9ead5d40891610f",
     "branch": "master"
   },
   "joist": {
-    "sha": "69e76f81a0003f9cd8672dc6ad0b9f0ef3be277d",
+    "sha": "85b10c15980fd893bdb3d1cb0216fa0708f304c0",
     "branch": "master"
   },
   "kite": {
@@ -37,7 +37,7 @@
     "branch": "master"
   },
   "phet-io": {
-    "sha": "55abcb639fc923162fd5cd4dec46b3a35d327d31",
+    "sha": "851c0e4c5dd58f6eb18fb70ee955a861d6158c9d",
     "branch": "master"
   },
   "phet-io-wrapper-classroom-activity": {
@@ -49,7 +49,7 @@
     "branch": "master"
   },
   "phet-io-wrappers": {
-    "sha": "27fa3baa7771c1602c74f2513cecdff992e43f8e",
+    "sha": "75d43c50c2f7e9b5d9fe054a5940493299049b32",
     "branch": "master"
   },
   "phetcommon": {
@@ -61,11 +61,11 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "1363045d0a3ffd4092a90ba9e93f0e0ba2b2325f",
+    "sha": "9342ce56ec0adbabbf9c99088905e05b0d5bc6da",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "3c8d4ae09749c91f942491359d756932a1b695cd",
+    "sha": "ebf60452a982f624f20c17a94d10bd75c5bf1aa9",
     "branch": "master"
   },
   "sherpa": {
@@ -73,11 +73,11 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "6adf0f3c4a83e88d15b9ac4fc5e5a098ad92bbb3",
+    "sha": "a2445090fbe1c0827f4169f59de568ffac90078e",
     "branch": "master"
   },
   "tandem": {
-    "sha": "dfc7e54399bd3530733b907c8b8f5ec1d129026f",
+    "sha": "3e1c8fd37ccbf76ac00e147ef6fb1edddbbbab8c",
     "branch": "master"
   },
   "twixt": {
