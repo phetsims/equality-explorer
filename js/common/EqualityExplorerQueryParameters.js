@@ -83,10 +83,10 @@ define( function( require ) {
       }
     },
 
-    // A specific challenge that will be used throughout the Solve It! screen.
+    // Describes a challenge that will be used throughout the Solve It! screen.
     // Used to test and debug a specific challenge, e.g. https://github.com/phetsims/equality-explorer/issues/71.
     // Format is [a1,a2,b1,b2,m1,m2,n1,n2,x] where a1/a2 x + b1/b2 = m1/m2 x + n1/n1.
-    // Example: challenge=-7,2,4,1,0,1,-17,1,6 -> -7/2 x + 4 = -17 (x=6)
+    // Example: to test -7/2 x + 4 = -17 (x=6), use challenge=-7,2,4,1,0,1,-17,1,6
     // For internal use only, not public facing.
     challenge: {
       type: 'array',
