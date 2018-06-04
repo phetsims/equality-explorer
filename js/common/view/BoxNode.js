@@ -32,7 +32,8 @@ define( function( require ) {
       stroke: 'black' // {Color|string} stroke used for both faces of the box
     }, options );
 
-    var hypotenuse = Math.sqrt( options.vanishingPointDistance * options.vanishingPointDistance + ( options.width / 2 ) * ( options.width / 2 ) );
+    var hypotenuse = Math.sqrt( options.vanishingPointDistance * options.vanishingPointDistance +
+                                ( options.width / 2 ) * ( options.width / 2 ) );
     var perspectiveXOffset = hypotenuse * ( options.depth / options.vanishingPointDistance );
 
     // options.width is the width at the midpoint of the box's top face, compute the foreground and background widths

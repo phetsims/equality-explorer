@@ -28,8 +28,8 @@ define( function( require ) {
   var DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.maxY - DRAG_BOUNDS_Y_MARGIN;
 
   /**
-   * @param {TermCreator[]} leftTermCreators - in the order that they appear in the left toolbox and left side of equations
-   * @param {TermCreator[]} rightTermCreators - in the order that they appear in the right toolbox and right side of equations
+   * @param {TermCreator[]} leftTermCreators - in the order that they appear in left toolbox and left side of equations
+   * @param {TermCreator[]} rightTermCreators - in the order that they appear in right toolbox and right side of equations
    * @param {Object} [options]
    * @constructor
    * @abstract

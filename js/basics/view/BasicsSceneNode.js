@@ -91,7 +91,8 @@ define( function( require ) {
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
       snapshotControlOptions: options.snapshotControlOptions,
       variableValuesVisibleProperty: options.variableValuesVisibleProperty,
-      fixedWidth: Math.floor( ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15 ),
+      fixedWidth: Math.floor( ( layoutBounds.right - scaleNode.right ) -
+                              EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15 ),
       expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
