@@ -15,7 +15,7 @@ When building equations, there are two strategies for handling like terms:
 
 (2) *Combine Like Terms*: Like terms are combined in one cell on the scale. This strategy is used in the _Operations_ and _Solve It!_ screens.
 
-All screens provide the ability to save and restore _snapshots_. Each snapshot contains the contents of the scale (including the positions of all terms) and the values of any variables.
+All screens provide the ability to save and restore _snapshots_. Each snapshot contains the contents of the scale (including the positions of all terms on the scale) and the values of any variables.
 
 The _Basics_ screen introduces equations using terms that correspond to real-world objects (shapes, fruits, coins and animals) whose values are hidden.
 
