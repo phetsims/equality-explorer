@@ -58,7 +58,7 @@ This section describes how this simulation uses patterns that are generally comm
 
 **Model-view transform**: Many PhET simulations have a model-view transform that maps between model and view coordinate
 frames. The domain of this simulation has no need for a model coordinate frame, so the model and view coordinate frames
-are treated as equivalent, and no transform is required.
+are treated as equivalent, and no transform is required.  All coordinates and distances are in the view coordinate frame, and are unitless.
 
 **Coordinate frames**: There is one global coordinate frame used to represent all locations throughout the sim. That coordinate frame is described by `ScreenView.DEFAULT_LAYOUT_BOUNDS`.  There are no relative coordinates.  For example, the location of a term on a plate is expressed in the global coordinate frame, not in a coordinate frame relative to the location of the plate.
 
