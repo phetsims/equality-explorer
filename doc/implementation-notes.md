@@ -58,9 +58,9 @@ This section describes how this simulation uses patterns that are generally comm
 
 **Model-view transform**: Many PhET simulations have a model-view transform that maps between model and view coordinate
 frames. The domain of this simulation has no need for a model coordinate frame, so the model and view coordinate frames
-are treated as equivalent, and no transform is required.  All coordinates and distances are in the view coordinate frame, and are unitless.
+are treated as equivalent, and no transform is required.
 
-**Coordinate frames**: There is one global coordinate frame used to represent all locations throughout the sim. That coordinate frame is described by `ScreenView.DEFAULT_LAYOUT_BOUNDS`.  There are no relative coordinates.  For example, the location of a term on a plate is expressed in the global coordinate frame, not in a coordinate frame relative to the location of the plate.
+**Coordinate frames**: There is one global coordinate frame used to represent all locations throughout the sim. That coordinate frame is described by `ScreenView.DEFAULT_LAYOUT_BOUNDS`. All coordinates and distances are unitless.  There is no use of relative coordinates; for example, the location of a term on a plate is expressed in the global coordinate frame, not in a coordinate frame relative to the location of the plate.
 
 **Query parameters**: Query parameters are used to enable sim-specific features, mainly for debugging and
 testing. Sim-specific query parameters are documented in
@@ -68,7 +68,7 @@ testing. Sim-specific query parameters are documented in
 
 **Assertions**: The implementation makes heavy use of `assert` to verify pre/post assumptions and perform type checking. If you are making modifications to this sim, do so with assertions enabled via the `ea` query parameter.
 
-**Memory management**: All calls that register a listener or observer have associated documentation indicating whether a corresponding call is required to deregister. This includes calls to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Property.multilink` and `new Multilink`.  When deregistering is not needed, it's typically because instances of a type exist for the lifetime of the sim. Examples:
+**Memory management**: All calls that register a listener or observer have associated documentation indicating whether a corresponding call is required to deregister. This includes calls to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Property.multilink` and `new Multilink`.  When deregistering is not needed, it's typically because an instance exists for the lifetime of the sim. Examples:
 
 ```js
 // unlink not needed
