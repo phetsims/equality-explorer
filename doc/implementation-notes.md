@@ -202,4 +202,4 @@ For an overview of various scenarios involving the lock feature, see [lock-scena
 
 ## Miscellaneous
 
-**Support for multiple variables**: While this simulation only presents the student with at most one variable (`x`), the code was written to support multiple variables. See the _Equality Explorer: Two Variables_ simulation for multi-variable equations.
+**Support for multiple variables**: While this simulation only presents the student with at most one variable (`x`), the code was written to support multiple variables. See the _Equality Explorer: Two Variables_ simulation for multi-variable equations (`x`, `y`).
