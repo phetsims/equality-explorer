@@ -11,9 +11,9 @@ Throughout the simulation, fractional constants and coefficients are _always_ re
 
 When building equations, there are two strategies for handling like terms:
 
-(1) *Separate Like Terms*: Like terms occupy separate cells on the scale, and are combined only if they sum to zero. This strategy is used in the _Basics_, _Numbers_ and _Variables_ screens.
+(1) **Separate Like Terms**: Like terms occupy separate cells on the scale, and are combined only if they sum to zero. This strategy is used in the _Basics_, _Numbers_ and _Variables_ screens.
 
-(2) *Combine Like Terms*: Like terms are combined in one cell on the scale. This strategy is used in the _Operations_ and _Solve It!_ screens.
+(2) **Combine Like Terms**: Like terms are combined in one cell on the scale. This strategy is used in the _Operations_ and _Solve It!_ screens.
 
 All screens provide the ability to save and restore _snapshots_. Each snapshot contains the contents of the scale (including the positions of all terms on the scale) and the values of any variables.
 
