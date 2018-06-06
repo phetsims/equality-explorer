@@ -34,8 +34,8 @@ Sim-specific terminology:
 
 * challenge - a single-variable equation, where the goal is to solve for the variable, see [Challenge](https://github.com/phetsims/equality-explorer/blob/master/js/solveit/model/Challenge.js)
 * challenge generator - generates challenges for a specific game level, see [ChallengeGenerator](https://github.com/phetsims/equality-explorer/blob/master/js/solveit/model/ChallengeGenerator.js) and its subtypes
-* clear scale button - deletes all terms from the scale
-* delete snapshot button - deletes the snapshot that is selected in the Snapshots accordion box
+* "clear scale" button - deletes all terms from the scale
+* "delete snapshot" button - deletes the snapshot that is selected in the Snapshots accordion box
 * dragged term - the term that you're dragging
 * equivalent term - the term on the opposite side of the scale that is identical to the dragged term
 * inverse term - a term created on the opposite side of the scale that is the inverse of the dragged term, and is paired with the equivalent term
