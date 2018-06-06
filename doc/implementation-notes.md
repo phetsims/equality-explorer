@@ -78,7 +78,7 @@ this.variable.valueProperty.link( function( value ) { ... } );
 this.addInputListener( this.termDragListener ); 
 ```
 
-Instances of the types listed below are dynamic &mdash; they come and go during the lifetime of the sim. They require memory management, so `dispose` must be implemented and called. If you make modifications that involve dynamic types, you should perform memory leak testing similar to https://github.com/phetsims/equality-explorer/issues/64.
+Instances of the types listed below are dynamic &mdash; they come and go during the lifetime of the sim. They require memory management, so `dispose` must be implemented and called. If you make modifications that involve dynamic types, you should perform memory leak testing similar to [equality-explorer#64](https://github.com/phetsims/equality-explorer/issues/64).
 
 - `Term` and its subtypes (`ConstantTerm`, `VariableTerm`, `ObjectTerm`)
 - `TermNode` and its subtypes (`ConstantTermNode`, `VariableTermNode`, `ObjectTermNode`)
@@ -94,7 +94,7 @@ Instances of the types listed below are dynamic &mdash; they come and go during 
 
 Instances of all other types are static. They are created at startup or lazily, and exist for the lifetime of the sim.
 
-**Creator Pattern**: Discussion about this pattern can be found in https://github.com/phetsims/scenery-phet/issues/214. What you won't find there is a summary of the pattern or a canonical example.  So I'll attempt to summarize what it is, and how it's applied in this simulation.  
+**Creator Pattern**: Discussion about this pattern can be found in [scenery-phet#214](https://github.com/phetsims/scenery-phet/issues/214). What you won't find there is a summary of the pattern or a canonical example.  So I'll attempt to summarize what it is, and how it's applied in this simulation.  
 
 A creator is responsible for handling the user interaction that results in the creation of both the model and view for a type of model element.  In this sim, the creator is also responsible for managing the model element throughout its lifecycle.  
 
@@ -186,7 +186,7 @@ Game levels are numbered 1 to 4 in both the model and view, and in type names (e
 
 ## Lock feature
 
-The lock feature is complicated enough to warrant its own section in this document.  Specification of the lock feature is spread out across the [Equality Explorer HTML5](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ) design document, GitHub issue https://github.com/phetsims/equality-explorer/issues/19 and the documentation in [TermDragListener](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermDragListener.js).
+The lock feature is complicated enough to warrant its own section in this document.  Specification of the lock feature is spread out across the [Equality Explorer HTML5](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ) design document, GitHub issue [equality-explorer#19](https://github.com/phetsims/equality-explorer/issues/19) and the documentation in [TermDragListener](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermDragListener.js).
 
 Each `TermNode` has an associated `Term` model element, and a `TermDragListener` that handles dragging the associated `Term`. When unlocked, `TermDragListener` is responsible only for dragging its associated `Term`.  When locked, the `TermDragListener` becomes responsible for three `Term`s, as defined in the **Terminology*** section:
 
@@ -202,4 +202,4 @@ For an overview of various scenarios involving the lock feature, see [lock-scena
 
 ## Miscellaneous
 
-**Support for multiple variables**: While this simulation only presents the student with at most one variable (`x`), the code was written to support multiple variables. As of this writing, a non-production screen is provided to verify multi-variable support.  Run with the `xy` query parameter to add the _Two Variables_ screen.  Note that this screen may be moved to its own simulation in the future; see https://github.com/phetsims/equality-explorer/issues/99.
+**Support for multiple variables**: While this simulation only presents the student with at most one variable (`x`), the code was written to support multiple variables. As of this writing, a non-production screen is provided to verify multi-variable support.  Run with the `xy` query parameter to add the _Two Variables_ screen.  Note that this screen may be moved to its own simulation in the future; see [equality-explorer#99](https://github.com/phetsims/equality-explorer/issues/99).
