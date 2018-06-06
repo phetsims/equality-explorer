@@ -5,15 +5,15 @@ that are not necessarily technical.
 
 Equality Explorer allows the student to build equations and inequalities (herein referred to as _equations_) by placing _terms_ on a _balance scale_. The scale has a finite number of _cells_ in which to place terms. The 2 sides of the scale correspond to the 2 sides of an equation, which is shown above the scale.  
 
-Equations are built using _constant terms_ (e.g. `1`, `-1`, `5`, `2/3`) and _variable terms_.  Variables terms have a coefficient, e.g. `5x`, `-2x`.  If the coefficient is `1` or `-1`, then `x` or `-x` is shown respectively.
+Equations are built using _constant terms_ (e.g. `1`, `-1`, `5`, `2/3`) and _variable terms_ (e.g. `5x`, `-2x`).  If a variable term's coefficient is `1` or `-1`, then `x` or `-x` is shown respectively.
 
-Throughout the simulation, fractional constants and coefficients are reduced. E.g. `4/6` becomes `2/3`; `-10/2` becomes `-5`.
+Throughout the simulation, fractional constants and coefficients are _always_ reduced. E.g. `4/6` becomes `2/3`; `-10/2` becomes `-5`.
 
 When building equations, there are two strategies for handling like terms:
 
-(1) Like terms occupy separate cells on the scale, and are combined only if they sum to zero. This strategy is used in the _Basics_, _Numbers_ and _Variables_ screens.
+(1) *Separate Like Terms*: Like terms occupy separate cells on the scale, and are combined only if they sum to zero. This strategy is used in the _Basics_, _Numbers_ and _Variables_ screens.
 
-(2) Like terms are combined in one cell on the scale. This strategy is used in the _Operations_ and _Solve It!_ screens.
+(2) *Combine Like Terms*: Like terms are combined in one cell on the scale. This strategy is used in the _Operations_ and _Solve It!_ screens.
 
 All screens provide the ability to save and restore _snapshots_. Each snapshot contains the contents of the scale (including the positions of all terms) and the values of any variables.
 
