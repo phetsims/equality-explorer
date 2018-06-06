@@ -21,7 +21,7 @@ The _Basics_ screen introduces equations using terms that correspond to real-wor
 
 The _Numbers_ screen introduces the _lock_ feature, activated using the padlock button at the bottom center of the screen. When locked, making a change to one side of the equation results in an equivalent change to the opposite side of the equation. For example, if the student drags a constant term '1' to the left plate, a `1` will also be dragged to the right plate.  If the student drags a `1` off the left plate, and the right plate is empty, `1` and `-1` will be created on the right side; the `1` will be dragged and the `-1` will remain on the plate.  
 
-The _Variables_ screen introduces the variable `x`, and the abiltiy to change its value.
+The _Variables_ screen introduces the variable `x`, and the ability to change its value.
 
 The _Operations_ screen introduces the ability to apply _operations_ to both sides of the scale. An operation consists of an _operator_ and an _operand_. The operators are addition, subtraction, multiplication and division.  The operands are constant and variable terms.  Constant terms have a range of `-10` to `10`.  Variable terms involve the variable `x`, with a coefficient range of `-10` to `10`.  Multiplication and division are supported for constant terms only. Division by zero is not allowed.
 
