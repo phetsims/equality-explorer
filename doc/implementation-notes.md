@@ -202,6 +202,6 @@ For an overview of various scenarios involving the lock feature, see [lock-scena
 
 ## Related simulations
 
-**Equality Explorer: Basics**: The _Basics_ screen in this sim is identical to the _Basics_ screen in _Equality Explorer_.  The _Lab_ screen adds the ability to change the values (weights) of real-world objects, something that was no doable in _Equality Explorer_.
+**Equality Explorer: Basics**: The _Basics_ screen in this sim is identical to the _Basics_ screen in _Equality Explorer_.  The _Lab_ screen adds the ability to change the values (weights) of real-world objects, something that was not doable in _Equality Explorer_.
 
-**Equality Explorer: Two Variables**: Equality Explorer only presents the student with one variable, `x`.  But the code was written to support multiple variables, and that's demonstrated in _Equality Explorer: Two Variables_, where the student is presented with equations involving `x` and `y`. 
+**Equality Explorer: Two Variables**: Equality Explorer presents the student with one variable, `x`.  But the code was written to support multiple variables, and that's demonstrated in _Equality Explorer: Two Variables_, where the student is presented with equations involving `x` and `y`. 
