@@ -200,6 +200,8 @@ When the state of the lock feature changes, any `Terms` that are not on the scal
 
 For an overview of various scenarios involving the lock feature, see [lock-scenarios.md](https://github.com/phetsims/equality-explorer/blob/master/doc/lock-scenarios.md).
 
-## Miscellaneous
+## Related simulations
 
-**Support for multiple variables**: While this simulation only presents the student with at most one variable (`x`), the code was written to support multiple variables. See the _Equality Explorer: Two Variables_ simulation for multi-variable equations (`x`, `y`).
+**Equality Explorer: Basics**: The _Basics_ screen in this sim is identical to the _Basics_ screen in _Equality Explorer_.  The _Lab_ screen adds the ability to change the values (weights) of real-world objects, something that was no doable in _Equality Explorer_.
+
+**Equality Explorer: Two Variables**: Equality Explorer only presents the student with one variable, `x`.  But the code was written to support multiple variables, and that's demonstrated in _Equality Explorer: Two Variables_, where the student is presented with equations involving `x` and `y`. 
