@@ -186,7 +186,7 @@ Game levels are numbered 1 to 4 in both the model and view, and in type names (e
 
 ## Lock feature
 
-The lock feature is complicated enough to warrant its own section in this document.  Specification of the lock feature is spread out across the [Equality Explorer HTML5 design document](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ), GitHub issue https://github.com/phetsims/equality-explorer/issues/19 and the documentation in [TermDragListener](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermDragListener.js).
+The lock feature is complicated enough to warrant its own section in this document.  Specification of the lock feature is spread out across the [Equality Explorer HTML5](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ) design document, GitHub issue https://github.com/phetsims/equality-explorer/issues/19 and the documentation in [TermDragListener](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/TermDragListener.js).
 
 Each `TermNode` has an associated `Term` model element, and a `TermDragListener` that handles dragging the associated `Term`. When unlocked, `TermDragListener` is responsible only for dragging its associated `Term`.  When locked, the `TermDragListener` becomes responsible for three `Term`s, as defined in the **Terminology*** section:
 
