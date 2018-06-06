@@ -6,7 +6,7 @@ The audience for this document is software developers who are familiar with Java
 
 Before reading this document, see [model.md](https://github.com/phetsims/equality-explorer/blob/master/doc/model.md), which provides a high-level description of the simulation model.
 
-There are two design documents for this sim:
+There are two design documents for this sim, but they are not necessarily up to date:
 - [Equality Explorer HTML5](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ)
 - [Equality Explorer Game](https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo)
 
