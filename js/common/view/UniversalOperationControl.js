@@ -79,6 +79,7 @@ define( function( require ) {
     var operatorControl = new RadioButtonGroup( scene.operatorProperty, operatorItems, {
       orientation: 'horizontal',
       spacing: 2,
+      selectedLineWidth: 2,
       buttonContentXMargin: 8,
       buttonContentYMargin: 3,
       baseColor: 'white',
