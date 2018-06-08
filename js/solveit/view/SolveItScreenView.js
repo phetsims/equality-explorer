@@ -39,7 +39,8 @@ define( function( require ) {
 
     ScreenView.call( this, model );
 
-    // @private
+    // @private state of the Snapshots accordion box is global to the Screen,
+    // see https://github.com/phetsims/equality-explorer/issues/124
     this.snapshotsAccordionBoxExpandedProperty =
       new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
