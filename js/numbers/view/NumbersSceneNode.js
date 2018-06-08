@@ -17,12 +17,13 @@ define( function( require ) {
   /**
    * @param {EqualityExplorerScene} scene
    * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor
    */
-  function NumbersSceneNode( scene, sceneProperty, layoutBounds, options ) {
-    BasicsSceneNode.call( this, scene, sceneProperty, layoutBounds, options );
+  function NumbersSceneNode( scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+    BasicsSceneNode.call( this, scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
   }
 
   equalityExplorer.register( 'NumbersSceneNode', NumbersSceneNode );

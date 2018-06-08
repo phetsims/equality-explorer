@@ -27,11 +27,12 @@ define( function( require ) {
   /**
    * @param {EqualityExplorerScene} scene
    * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor
    */
-  function BasicsSceneNode( scene, sceneProperty, layoutBounds, options ) {
+  function BasicsSceneNode( scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
 
     options = _.extend( {
       hasNegativeTermsInToolbox: true, // {boolean} if true, put negative terms in the toolbox, e.g. -x
@@ -49,8 +50,6 @@ define( function( require ) {
     // @public view-specific Properties
     this.equationAccordionBoxExpandedProperty =
       new BooleanProperty( EqualityExplorerConstants.EQUATION_ACCORDION_BOX_EXPANDED );
-    this.snapshotsAccordionBoxExpandedProperty =
-      new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
     // locals vars to improve readability
     var scale = scene.scale;
@@ -96,7 +95,7 @@ define( function( require ) {
       variableValuesVisibleProperty: options.variableValuesVisibleProperty,
       fixedWidth: Math.floor( ( layoutBounds.right - scaleNode.right ) -
                               EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15 ),
-      expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
+      expandedProperty: snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
@@ -143,7 +142,6 @@ define( function( require ) {
     // @public
     reset: function() {
       this.equationAccordionBoxExpandedProperty.reset();
-      this.snapshotsAccordionBoxExpandedProperty.reset();
     }
   } );
 } );

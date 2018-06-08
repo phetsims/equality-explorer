@@ -20,11 +20,12 @@ define( function( require ) {
   /**
    * @param {VariablesScene} scene
    * @param {Property.<Scene>} sceneProperty - the selected scene
+   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor
    */
-  function VariablesSceneNode( scene, sceneProperty, layoutBounds, options ) {
+  function VariablesSceneNode( scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
 
     options = _.extend( {
 
@@ -42,7 +43,7 @@ define( function( require ) {
     assert && assert( !options.variableValuesVisibleProperty, 'VariablesSceneNode sets variableValuesVisibleProperty' );
     options.variableValuesVisibleProperty = this.variableValuesVisibleProperty;
 
-    BasicsSceneNode.call( this, scene, sceneProperty, layoutBounds, options );
+    BasicsSceneNode.call( this, scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
     // Variables accordion box, above the Snapshots accordion box
     var variablesAccordionBox = new VariablesAccordionBox( scene.variables, {

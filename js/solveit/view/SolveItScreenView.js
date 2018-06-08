@@ -9,8 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Easing = require( 'TWIXT/Easing' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelSelectionNode = require( 'EQUALITY_EXPLORER/solveit/view/LevelSelectionNode' );
@@ -37,6 +39,10 @@ define( function( require ) {
 
     ScreenView.call( this, model );
 
+    // @private
+    this.snapshotsAccordionBoxExpandedProperty =
+      new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
+
     var gameAudioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
     // UI for level selection and other game settings
@@ -51,7 +57,7 @@ define( function( require ) {
     this.sceneNodes = [];
     for ( var i = 0; i < model.scenes.length; i++ ) {
       var sceneNode = new SolveItSceneNode( model.scenes[ i ], model.sceneProperty,
-        this.layoutBounds, this.visibleBoundsProperty, gameAudioPlayer );
+        this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer );
       this.sceneNodes.push( sceneNode );
     }
     var scenesParent = new Node( {
@@ -100,6 +106,7 @@ define( function( require ) {
 
     // @public
     reset: function() {
+      this.snapshotsAccordionBoxExpandedProperty.reset();
       for ( var i = 0; i < this.sceneNodes.length; i++ ) {
         this.sceneNodes[ i ].reset();
       }

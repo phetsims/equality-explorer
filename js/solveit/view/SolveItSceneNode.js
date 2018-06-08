@@ -13,7 +13,6 @@ define( function( require ) {
   // modules
   var Animation = require( 'TWIXT/Animation' );
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ChallengeDerivationNode = require( 'EQUALITY_EXPLORER/solveit/view/ChallengeDerivationNode' );
   var Color = require( 'SCENERY/util/Color' );
   var Easing = require( 'TWIXT/Easing' );
@@ -60,19 +59,17 @@ define( function( require ) {
    * @param {Property.<SolveItScene|null>} sceneProperty - the selected scene
    * @param {Bounds2} layoutBounds - of the parent ScreenView
    * @param {Property.<Bounds2>} visibleBoundsProperty - of the parent ScreenView
+   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty - whether Snapshots is expanded
    * @param {GameAudioPlayer} gameAudioPlayer
    * @param {Object} [options]
    * @constructor
    */
-  function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProperty, gameAudioPlayer, options ) {
+  function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProperty,
+                             snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, options ) {
 
     var self = this;
 
     options = options || {};
-
-    // @private view Properties
-    this.snapshotsAccordionBoxExpandedProperty =
-      new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
     // Level description, displayed in the status bar
     var levelDescriptionNode = new RichText( scene.description, {
@@ -149,7 +146,7 @@ define( function( require ) {
     // Snapshots
     var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
       fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
-      expandedProperty: this.snapshotsAccordionBoxExpandedProperty,
+      expandedProperty: snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       top: statusBar.bottom + 20
     } );
@@ -381,7 +378,6 @@ define( function( require ) {
     // @public
     reset: function() {
       this.universalOperationControl.reset();
-      this.snapshotsAccordionBoxExpandedProperty.reset();
     },
 
     /**

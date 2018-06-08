@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -36,6 +37,10 @@ define( function( require ) {
 
     ScreenView.call( this );
 
+    // @private
+    this.snapshotsAccordionBoxExpandedProperty =
+      new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
+
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         phet.log && phet.log( 'ResetAllButton pressed' );
@@ -50,9 +55,10 @@ define( function( require ) {
     // @private {EqualityExplorerScene[]} create the view for each scene
     this.sceneNodes = [];
     model.scenes.forEach( function( scene ) {
-      var sceneNode = self.createSceneNode( scene, model.sceneProperty, self.layoutBounds, {
-        hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox
-      } );
+      var sceneNode = self.createSceneNode( scene, model.sceneProperty,
+        self.snapshotsAccordionBoxExpandedProperty, self.layoutBounds, {
+          hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
+        } );
       self.sceneNodes.push( sceneNode );
       self.addChild( sceneNode );
     } );
@@ -85,6 +91,7 @@ define( function( require ) {
 
     // @public
     reset: function() {
+      this.snapshotsAccordionBoxExpandedProperty.reset();
       this.sceneNodes.forEach( function( sceneNode ) {
         sceneNode.reset();
       } );
@@ -111,13 +118,14 @@ define( function( require ) {
      * Creates the Node for this scene.
      * @param {EqualityExplorerScene} scene
      * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected Scene
+     * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
      * @param {Bounds2} layoutBounds
      * @param {Object} [options]
      * @returns {Node}
      * @protected
      * @abstract
      */
-    createSceneNode: function( scene, sceneProperty, layoutBounds, options ) {
+    createSceneNode: function( scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
       throw new Error( 'createSceneNode must be implemented by subtype' );
     }
   } );
