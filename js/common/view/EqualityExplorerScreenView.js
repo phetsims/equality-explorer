@@ -58,7 +58,7 @@ define( function( require ) {
     model.scenes.forEach( function( scene ) {
       var sceneNode = self.createSceneNode( scene, model.sceneProperty,
         self.snapshotsAccordionBoxExpandedProperty, self.layoutBounds, {
-          hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
+          hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox
         } );
       self.sceneNodes.push( sceneNode );
       self.addChild( sceneNode );
