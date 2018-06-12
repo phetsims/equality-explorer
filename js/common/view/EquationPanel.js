@@ -54,6 +54,7 @@ define( function( require ) {
     // wrapper to avoid exceeding stack size when bounds of equationNode changes
     var equationParent = new Node( { children: [ equationNode ] } );
 
+    // off is not needed
     equationNode.on( 'bounds', function() {
 
       // Compute the scale required to keep the equation centered on the relational operator.
