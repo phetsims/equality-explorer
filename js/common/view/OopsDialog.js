@@ -45,7 +45,11 @@ define( function( require ) {
       children: [ messageNode, phetGirlNode ]
     } );
 
-    Dialog.call( this, content );
+    Dialog.call( this, content, {
+      topMargin: 20,
+      bottomMargin: 20,
+      rightMargin: 20
+    } );
 
     // Click anywhere on the dialog to hide it.
     this.addInputListener( new ButtonListener( {
