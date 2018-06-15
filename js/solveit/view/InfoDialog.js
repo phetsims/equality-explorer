@@ -55,7 +55,9 @@ define( function( require ) {
     } );
 
     Dialog.call( this, content, {
-      title: titleNode
+      title: titleNode,
+      ySpacing: 20,
+      bottomMargin: 20
     } );
 
     // Click anywhere on the dialog to hide it.
