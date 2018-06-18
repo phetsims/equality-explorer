@@ -131,7 +131,12 @@ define( function( require ) {
         listener: function() {
           model.testChallengeGenerators();
           var messageNode = new RichText( 'Test completed.<br>See results in browser console.' );
-          var dialog = new Dialog( messageNode );
+          var dialog = new Dialog( messageNode, {
+            topMargin: 20,
+            bottomMargin: 20,
+            leftMargin: 20,
+            rightMargin: 20
+          } );
           dialog.show();
         },
         centerX: layoutBounds.centerX,
