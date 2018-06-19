@@ -16,7 +16,6 @@ define( function( require ) {
 
   // constants
   var DEFAULT_FONT = new PhetFont( 14 );
-  var RICH_TEXT_SPACE = '\u00A0'; // workaround for https://github.com/phetsims/scenery/issues/769
 
   /**
    * @param {Property.<Challenge|null>} challengeProperty
@@ -33,11 +32,11 @@ define( function( require ) {
       font: DEFAULT_FONT
     }, options );
 
-    RichText.call( this, RICH_TEXT_SPACE, options );
+    RichText.call( this, '', options );
 
     // display derivation of the current challenge. unlink not needed.
     challengeProperty.link( function( challenge ) {
-      self.text = ( challenge ? challenge.debugDerivation : RICH_TEXT_SPACE );
+      self.text = ( challenge ? challenge.debugDerivation : '' );
     } );
   }
 
