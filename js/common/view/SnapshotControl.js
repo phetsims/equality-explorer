@@ -134,6 +134,8 @@ define( function( require ) {
 
       if ( snapshot ) {
 
+        selectionRectangle.cursor = 'pointer';
+
         // create the equation for the snapshot
         equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, {
           updateEnabled: false, // equation is static
@@ -142,7 +144,8 @@ define( function( require ) {
           integerFontSize: EQUATION_FONT_SIZE,
           fractionFontSize: FRACTION_FONT_SIZE,
           relationalOperatorFontSize: EQUATION_FONT_SIZE,
-          relationalOperatorSpacing: 15
+          relationalOperatorSpacing: 15,
+          pickable: false
         } );
 
         // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
@@ -162,6 +165,8 @@ define( function( require ) {
         self.addInputListener( upListener );
       }
       else if ( self.hasInputListener( upListener ) ) {
+
+        selectionRectangle.cursor = null;
 
         // no associated snapshot
         equationNode = NO_EQUATION_NODE;
