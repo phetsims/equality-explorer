@@ -77,7 +77,8 @@ define( function( require ) {
       spacing: ( options.orientation === 'horizontal' ) ? 20 : 8,
       center: selectionRectangle.center,
       maxWidth: options.controlWidth - 2 * SELECTION_RECTANGLE_X_MARGIN,
-      maxHeight: options.controlHeight - 2 * SELECTION_RECTANGLE_Y_MARGIN
+      maxHeight: options.controlHeight - 2 * SELECTION_RECTANGLE_Y_MARGIN,
+      pickable: false
     } );
 
     // snapshot (camera) button
