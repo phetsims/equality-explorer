@@ -490,6 +490,7 @@ define( function( require ) {
     termWasDisposed: function( term ) {
       assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
 
+      // ORDER IS VERY IMPORTANT HERE!
       if ( this.isTermOnPlate( term ) ) {
         this.removeTermFromPlate( term );
       }
