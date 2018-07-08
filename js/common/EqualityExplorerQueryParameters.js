@@ -104,8 +104,8 @@ define( function( require ) {
     locked: { type: 'flag' },
 
     // Whether the lock control is visible.  When used with the 'locked' query parameter, this is useful for keeping
-    // the sim in the locked or unlocked state while memory profiling. For example, use ?locked&lockVisible=false
-    // to profile the sim in the locked state.
+    // the sim in the locked or unlocked state while memory profiling or fuzz testing.
+    // For example, use ?locked&lockVisible=false to profile the sim in the locked state.
     // For internal use only, not public facing.
     lockVisible: {
       type: 'boolean',
