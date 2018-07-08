@@ -86,6 +86,7 @@ define( function( require ) {
       assert && assert( !this.disposed, 'dispose called twice for ' + this );
 
       this.locationProperty.dispose();
+      this.draggingProperty.dispose();
 
       // Do this last, sequence is important!
       this.disposed = true;
