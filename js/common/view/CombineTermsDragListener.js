@@ -275,6 +275,12 @@ define( function( require ) {
             }
           }
 
+          // If we still have equivalentTerm, restore its pickability.
+          if ( self.equivalentTerm ) {
+            self.equivalentTerm.pickableProperty.value = true;
+            self.equivalentTerm = null;
+          }
+
           if ( maxIntegerExceeded ) {
 
             // Notify listeners that maxInteger would be exceeded by this drag sequence.
@@ -307,7 +313,7 @@ define( function( require ) {
             }
           }
 
-          self.detachRelatedTerms();
+          assert && assert( self.equivalentTerm === null, 'equivalentTerm should be null' );
         }
       } );
     }

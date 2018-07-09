@@ -123,9 +123,6 @@ define( function( require ) {
       if ( self.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
         self.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
       }
-
-      // Do NOT call detachRelatedTerms!
-      // Operations involving terms will still be in progress after dispose is called.
     };
   }
 
@@ -254,7 +251,8 @@ define( function( require ) {
         // put equivalent term on opposite plate
         if ( this.equivalentTerm ) {
           var oppositeSumToZeroNode = this.endOpposite();
-          this.detachRelatedTerms();
+          this.equivalentTerm.pickableProperty.value = true;
+          this.equivalentTerm = null;
         }
 
         // Do sum-to-zero animations after addressing both plates, so that plates have moved to their final position.
@@ -281,22 +279,6 @@ define( function( require ) {
     },
 
     /**
-     * Detaches terms that are related to this drag listener.
-     * @protected
-     */
-    detachRelatedTerms: function() {
-
-      // like term
-      this.likeTerm = null;
-
-      // equivalent term
-      if ( this.equivalentTerm && !this.equivalentTerm.disposed ) {
-        this.equivalentTerm.pickableProperty.value = true;
-      }
-      this.equivalentTerm = null;
-    },
-
-    /**
      * Returns terms to the toolboxes where they were created.
      * @private
      */
@@ -317,8 +299,6 @@ define( function( require ) {
             self.equivalentTerm.dispose();
             self.equivalentTerm = null;
           }
-
-          self.detachRelatedTerms();
         }
       } );
     },

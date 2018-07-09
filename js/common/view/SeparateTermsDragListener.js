@@ -70,24 +70,6 @@ define( function( require ) {
       TermDragListener.prototype.dispose.call( this );
     },
 
-    /**
-     * Detaches terms that are related to this drag listener.
-     * @protected
-     * @override
-     */
-    detachRelatedTerms: function() {
-
-      // inverse term
-      if ( this.inverseTerm && !this.inverseTerm.disposed ) {
-        if ( this.inverseTerm.draggingProperty.hasListener( this.inverseTermDraggingListener ) ) {
-          this.inverseTerm.draggingProperty.unlink( this.inverseTermDraggingListener );
-        }
-      }
-      this.inverseTerm = null;
-
-      TermDragListener.prototype.detachRelatedTerms.call( this );
-    },
-
     //-------------------------------------------------------------------------------------------------
     // Below here is the implementation of the TermDragListener API
     //-------------------------------------------------------------------------------------------------
@@ -132,7 +114,7 @@ define( function( require ) {
         this.equivalentTermCreator.putTermOnPlate( this.inverseTerm, inverseCell );
 
         // if the inverse term is dragged, break the association to equivalentTerm
-        this.inverseTerm.draggingProperty.link( this.inverseTermDraggingListener ); // unlink needed in dispose
+        this.inverseTerm.draggingProperty.lazyLink( this.inverseTermDraggingListener ); // unlink needed in dispose
 
         // create the equivalent term on the opposite side
         // Do this after creating inverseTerm so that it appear in front of inverseTerm.
@@ -225,9 +207,13 @@ define( function( require ) {
                 self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
                 //TODO #90 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
                 self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
+                self.equivalentTerm.pickableProperty.value = true;
+                self.equivalentTerm = null;
               }
-              self.detachRelatedTerms();
             }
+
+            assert && assert( self.equivalentTerm === null, 'equivalentTerm should be null' );
+            assert && assert( self.inverseTerm === null, 'inverseTerm should be null' );
           }
         } );
       }
