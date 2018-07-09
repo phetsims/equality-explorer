@@ -57,7 +57,7 @@ define( function( require ) {
     },
 
     // The largest absolute integer value for any numerator, denominator or constant.
-    // Any operation that would exceed this value is canceled, and a dialog is shown.
+    // Any operation or interaction that would exceed this value is canceled, and a dialog is shown.
     // See https://github.com/phetsims/equality-explorer/issues/48
     // For internal use only, not public facing.
     maxInteger: {
