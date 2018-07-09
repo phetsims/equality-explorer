@@ -296,6 +296,7 @@ define( function( require ) {
      * @public
      */
     manageTerm: function( term, event ) {
+      assert && assert( !term.disposed, 'term is disposed: ' + term );
       assert && assert( !this.isManagedTerm( term ), 'term is already managed: ' + term );
       assert && assert( !event || event instanceof Event, 'invalid event: ' + event );
 
@@ -333,7 +334,7 @@ define( function( require ) {
     },
 
     /**
-     * Puts a term on the plate. If the term wasn't already managed, it become mananaged.
+     * Puts a term on the plate. If the term wasn't already managed, it becomes managed.
      * @param {Term} term
      * @param {number} [cell] - cell in the plate's 2D grid, defaults to this.likeTermsCell when combining like terms
      * @public
