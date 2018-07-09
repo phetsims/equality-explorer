@@ -112,6 +112,8 @@ A term's lifecycle ends when it is returned to the toolbox, or when some action 
 2. The `TermCreator` that manages the `Term` receives notification that the `Term` has been disposed. It removes the `Term` from the scale (if relevant), and removes the `Term` from its list of managed `Term`s.  See `termWasDisposed` in [TermCreator](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/TermCreator.js).
 3. The listener associated with the `Term`'s `disposedEmitter` receives notification that the `Term` has been disposed. The listener calls the associated `TermNode`'s `dispose` method, removing it from the scenegraph.  See `termCreatedListener` in [EqualityExplorerSceneNode](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/EqualityExplorerSceneNode.js).
 
+**Big Numbers**: In screens where like terms are combined (_Operations_ and _Solve It!_) there is no inherent maximum value. If we allowed it, values would grow arbitrarily large, exceeding the ability to be represented.  All integers (including numerators and denominators) are therefore limited to `EqualityExplorerQueryParameters.maxInteger`, currently `1E9`.  If an interaction or operation would exceed that value, it is canceled, and the user is presented with a dialog that informs them of the constraint.
+
 ## Screens and Scenes
 
 This section provides a concise overview of the screens, their similarities and their differences. For more details, consult the (somewhat out of date) [Equality Explorer HTML5 design document](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ).
