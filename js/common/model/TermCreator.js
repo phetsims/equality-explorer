@@ -259,7 +259,7 @@ define( function( require ) {
       for ( var i = 0; i < allTermsCopy.length; i++ ) {
         var term = allTermsCopy[ i ];
 
-        // Stepping a term may result in some other term being disposed, so only step terms
+        // Stepping a term may result in other term(s) being disposed, so only step terms
         // that have not been disposed. See https://github.com/phetsims/equality-explorer/issues/94.
         if ( !term.disposed ) {
           allTermsCopy[ i ].step( dt );
