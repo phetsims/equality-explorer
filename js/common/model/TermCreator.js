@@ -109,7 +109,6 @@ define( function( require ) {
     this.lockedProperty = new BooleanProperty( false );
 
     // @private called when Term.dispose is called
-    ``
     this.unmanageTermBound = this.unmanageTerm.bind( this );
 
     // @private
