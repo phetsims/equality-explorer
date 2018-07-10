@@ -251,8 +251,10 @@ define( function( require ) {
         // put equivalent term on opposite plate
         if ( this.equivalentTerm ) {
           var oppositeSumToZeroNode = this.endOpposite();
-          this.equivalentTerm.pickableProperty.value = true;
-          this.equivalentTerm = null;
+          if ( this.equivalentTerm ) {
+            this.equivalentTerm.pickableProperty.value = true;
+            this.equivalentTerm = null;
+          }
         }
 
         // Do sum-to-zero animations after addressing both plates, so that plates have moved to their final position.
