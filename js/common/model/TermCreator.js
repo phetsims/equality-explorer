@@ -109,7 +109,8 @@ define( function( require ) {
     this.lockedProperty = new BooleanProperty( false );
 
     // @private called when Term.dispose is called
-    this.termWasDisposedBound = this.termWasDisposed.bind( this );
+    ``
+    this.unmanageTermBound = this.unmanageTerm.bind( this );
 
     // @private
     this.updateWeightOnPlatePropertyBound = this.updateWeightOnPlateProperty.bind( this );
@@ -316,11 +317,32 @@ define( function( require ) {
 
       // Clean up when the term is disposed.
       // removeListener required when the term is disposed, see termWasDisposed.
-      term.disposedEmitter.addListener( this.termWasDisposedBound );
+      term.disposedEmitter.addListener( this.unmanageTermBound );
 
       // Notify listeners that a term is being managed by this term creator.
       // This will result in creation of the corresponding view.
       this.termCreatedEmitter.emit3( this, term, event );
+    },
+
+    /**
+     * Called when Term.dispose is called.
+     * @param {Term} term
+     * @private
+     */
+    unmanageTerm: function( term ) {
+
+      // ORDER IS VERY IMPORTANT HERE!
+      if ( this.isTermOnPlate( term ) ) {
+        this.removeTermFromPlate( term );
+      }
+
+      if ( this.allTerms.contains( term ) ) {
+        this.allTerms.remove( term );
+      }
+
+      if ( term.disposedEmitter.hasListener( this.unmanageTermBound ) ) {
+        term.disposedEmitter.removeListener( this.unmanageTermBound );
+      }
     },
 
     /**
@@ -467,7 +489,7 @@ define( function( require ) {
      */
     disposeTerms: function( terms ) {
       for ( var i = 0; i < terms.length; i++ ) {
-        terms[ i ].dispose(); // results in call to termWasDisposed
+        terms[ i ].dispose(); // results in call to unmanageTerm
       }
     },
 
@@ -481,26 +503,6 @@ define( function( require ) {
       for ( var i = 0; i < this.allTerms.getArray().length; i++ ) {
         this.allTerms.get( i ).haloVisibleProperty.value = false;
       }
-    },
-
-    /**
-     * Called when Term.dispose is called.
-     * @param {Term} term
-     * @private
-     */
-    termWasDisposed: function( term ) {
-      assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
-
-      // ORDER IS VERY IMPORTANT HERE!
-      if ( this.isTermOnPlate( term ) ) {
-        this.removeTermFromPlate( term );
-      }
-
-      if ( term.disposedEmitter.hasListener( this.termWasDisposedBound ) ) {
-        term.disposedEmitter.removeListener( this.termWasDisposedBound );
-      }
-
-      this.allTerms.remove( term );
     },
 
     /**
