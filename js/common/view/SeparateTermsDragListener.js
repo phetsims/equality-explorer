@@ -190,7 +190,8 @@ define( function( require ) {
             self.termCreator.putTermOnPlate( self.term, cell );
             self.term.pickableProperty.value = true;
 
-            // Handle related terms on opposite side
+            // Handle related terms on opposite side.
+            // Note that equivalentTerm and/or inverseTerm may have been disposed of, so handle that.
             if ( self.equivalentTerm ) {
               if ( self.inverseTerm ) {
 
@@ -198,9 +199,8 @@ define( function( require ) {
                 !self.inverseTerm.disposed && self.inverseTerm.dispose();
                 self.inverseTerm = null;
                 !self.equivalentTerm.disposed && self.equivalentTerm.dispose();
-                self.equivalentTerm = null;
               }
-              else {
+              else if ( !self.equivalentTerm.disposed ) {
 
                 // Put equivalent term on the opposite plate
                 var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
@@ -208,8 +208,8 @@ define( function( require ) {
                 //TODO #90 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
                 self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
                 self.equivalentTerm.pickableProperty.value = true;
-                self.equivalentTerm = null;
               }
+              self.equivalentTerm = null;
             }
 
             assert && assert( self.equivalentTerm === null, 'equivalentTerm should be null' );
