@@ -489,7 +489,15 @@ define( function( require ) {
      */
     disposeTerms: function( terms ) {
       for ( var i = 0; i < terms.length; i++ ) {
-        terms[ i ].dispose(); // results in call to unmanageTerm
+        var term = terms[ i ];
+        if ( !term.disposed ) {
+          term.dispose(); // results in call to unmanageTerm
+        }
+        else {
+          // workaround for https://github.com/phetsims/equality-explorer/issues/88
+          phet.log && phet.log( 'Oops! term was already disposed, cleaning up: ' + term, { color: 'red' } );
+          this.unmanageTerm( term );
+        }
       }
     },
 
