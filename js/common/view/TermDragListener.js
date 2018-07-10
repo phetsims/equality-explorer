@@ -243,9 +243,9 @@ define( function( require ) {
         var sumToZeroCell = this.plate.getCellForTerm( this.likeTerm );
 
         // dispose of terms that sum to zero
-        this.term.dispose();
+        !this.term.disposed && this.term.dispose();
         this.term = null;
-        this.likeTerm.dispose();
+        !this.likeTerm.disposed && this.likeTerm.dispose();
         this.likeTerm = null;
 
         // put equivalent term on opposite plate
@@ -292,11 +292,11 @@ define( function( require ) {
         animationCompletedCallback: function() {
 
           // dispose of terms when they reach the toolbox
-          self.term.dispose();
+          !self.term.disposed && self.term.dispose();
           self.term = null;
 
           if ( self.equivalentTerm ) {
-            self.equivalentTerm.dispose();
+            !self.equivalentTerm.disposed && self.equivalentTerm.dispose();
             self.equivalentTerm = null;
           }
         }

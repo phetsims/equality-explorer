@@ -195,9 +195,9 @@ define( function( require ) {
               if ( self.inverseTerm ) {
 
                 // Equivalent and inverse term cancel each other out.
-                self.inverseTerm.dispose();
+                !self.inverseTerm.disposed && self.inverseTerm.dispose();
                 self.inverseTerm = null;
-                self.equivalentTerm.dispose();
+                !self.equivalentTerm.disposed && self.equivalentTerm.dispose();
                 self.equivalentTerm = null;
               }
               else {
