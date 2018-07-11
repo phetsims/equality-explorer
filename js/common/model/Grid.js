@@ -318,7 +318,7 @@ define( function( require ) {
         // clear the column
         this.clearColumn( column );
 
-        // Put terms pack into the column, from bottom up.
+        // Put terms back into the column, from bottom up.
         row = this.rows - 1;
         for ( var i = terms.length - 1; i >= 0; i-- ) {
           term = terms[ i ];
