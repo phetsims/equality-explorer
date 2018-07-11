@@ -199,17 +199,26 @@ define( function( require ) {
                 !self.inverseTerm.disposed && self.inverseTerm.dispose();
                 self.inverseTerm = null;
                 !self.equivalentTerm.disposed && self.equivalentTerm.dispose();
+                self.equivalentTerm = null;
               }
               else if ( !self.equivalentTerm.disposed ) {
 
+                // Transfer self.equivalentTerm to a local variable and set to null, so that equivalentTerm
+                // no longer tracks movement of term. See https://github.com/phetsims/equality-explorer/issues/90
+                var equivalentTerm = self.equivalentTerm;
+                self.equivalentTerm = null;
+
                 // Put equivalent term on the opposite plate
-                var equivalentCell = self.oppositePlate.getBestEmptyCell( self.equivalentTerm.locationProperty.value );
-                self.equivalentTermCreator.putTermOnPlate( self.equivalentTerm, equivalentCell );
-                //TODO #90 next line should be unnecessary, but location is wrong when putting equivalentTerm on right plate
-                self.equivalentTerm.moveTo( self.oppositePlate.getLocationOfCell( equivalentCell ) );
-                self.equivalentTerm.pickableProperty.value = true;
+                var equivalentCell = self.oppositePlate.getBestEmptyCell( equivalentTerm.locationProperty.value );
+                self.equivalentTermCreator.putTermOnPlate( equivalentTerm, equivalentCell );
+                equivalentTerm.pickableProperty.value = true;
               }
-              self.equivalentTerm = null;
+              else {
+
+                // Do nothing - equivalentTerm was disposed before animationCompletedCallback was called.
+                // See https://github.com/phetsims/equality-explorer/issues/88
+                self.equivalentTerm = null;
+              }
             }
 
             assert && assert( self.equivalentTerm === null, 'equivalentTerm should be null' );
