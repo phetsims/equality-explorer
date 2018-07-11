@@ -28,7 +28,7 @@ define( function( require ) {
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
       team: 'Diana Berenice L\u00f3pez Tavares, Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
-      qualityAssurance: 'Steele Dalton',
+      qualityAssurance: 'Steele Dalton, Liam Mulhall, Jacob Romero',
       graphicArts: 'Mariah Hermsmeyer, Cheryl McCutchan',
       thanks: ''
     },
