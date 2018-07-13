@@ -217,7 +217,7 @@ The next 8 scenarios involve screens where like terms are combined in one cell o
 5. Release the dragged term. The dragged term adds to produce `x + 2`. 
 6. Verify that the equivalent term moves immediately to the opposite plate and sums to zero.
 
-### Scenario 20
+### Scenario 21
 
 1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
@@ -226,7 +226,7 @@ The next 8 scenarios involve screens where like terms are combined in one cell o
 5. Release the dragged term below the plate.
 6. Verify that the dragged term and equivalent term return to their respective toolboxes, and the inverse term remains on the right plate.
 
-### Scenario 21
+### Scenario 22
 
 1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
@@ -235,7 +235,7 @@ The next 8 scenarios involve screens where like terms are combined in one cell o
 5. Release the dragged term above the plate.
 6. Verify that the dragged term and equivalent term return to their respective plates, and that the equivalent term is added to the the inverse term on the right plate.
 
-### Scenario 22
+### Scenario 23
 
 1. Run with `?speed=0.1` to slow animation.
 2. Put '1' on the left plate, nothing on the right plate.
