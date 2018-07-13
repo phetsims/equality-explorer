@@ -2,7 +2,7 @@
 
 //TODO consolidate with NumberPicker when needed by another sim, see https://github.com/phetsims/scenery-phet/issues/345
 /**
- * User-interface component for picking one of several values
+ * User-interface component for picking one of several values.
  * This is essentially a value with integrated up/down spinners.
  * But PhET has been calling it a 'picker', so that's what this type is named.
  *
