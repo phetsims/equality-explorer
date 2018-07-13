@@ -150,10 +150,10 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 
 1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
-3. Drag '-1' off the left plate. 
+3. Drag '1' off the left plate. 
 4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
 5. Release the dragged term above the plate.
-6. Verify that the dragged term and equivalent term return to their respective plates, and the inverse term is replaced by the equivalent term.
+6. Verify that the dragged term (1) and equivalent term (1) return to their respective plates, and the inverse term (-1) is replaced by the equivalent term.
 
 ### Scenario 15
 
