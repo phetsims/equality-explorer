@@ -30,6 +30,7 @@ define( function( require ) {
      * Creates the Node for this scene.
      * @param {EqualityExplorerScene} scene
      * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+     * @param {BooleanProperty} equationAccordionBoxExpandedProperty
      * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
      * @param {Bounds2} layoutBounds
      * @param {Object} [options]
@@ -37,8 +38,10 @@ define( function( require ) {
      * @protected
      * @override
      */
-    createSceneNode: function( scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
-      return new OperationsSceneNode( scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+    createSceneNode: function( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                               snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+      return new OperationsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+        snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
     }
   } );
 } );

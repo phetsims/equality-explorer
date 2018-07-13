@@ -37,6 +37,11 @@ define( function( require ) {
 
     ScreenView.call( this );
 
+    // @private state of the Equation accordion box is global to the Screen,
+    // see https://github.com/phetsims/equality-explorer/issues/124
+    this.equationAccordionBoxExpandedProperty =
+      new BooleanProperty( EqualityExplorerConstants.EQUATION_ACCORDION_BOX_EXPANDED );
+
     // @private state of the Snapshots accordion box is global to the Screen,
     // see https://github.com/phetsims/equality-explorer/issues/124
     this.snapshotsAccordionBoxExpandedProperty =
@@ -57,7 +62,9 @@ define( function( require ) {
     this.sceneNodes = [];
     model.scenes.forEach( function( scene ) {
       var sceneNode = self.createSceneNode( scene, model.sceneProperty,
-        self.snapshotsAccordionBoxExpandedProperty, self.layoutBounds, {
+        self.equationAccordionBoxExpandedProperty,
+        self.snapshotsAccordionBoxExpandedProperty,
+        self.layoutBounds, {
           hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox
         } );
       self.sceneNodes.push( sceneNode );
@@ -92,9 +99,10 @@ define( function( require ) {
 
     // @public
     reset: function() {
+      this.equationAccordionBoxExpandedProperty.reset();
       this.snapshotsAccordionBoxExpandedProperty.reset();
       this.sceneNodes.forEach( function( sceneNode ) {
-        sceneNode.reset();
+        sceneNode.reset && sceneNode.reset();
       } );
     },
 
@@ -119,6 +127,7 @@ define( function( require ) {
      * Creates the Node for this scene.
      * @param {EqualityExplorerScene} scene
      * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected Scene
+     * @param {BooleanProperty} equationAccordionBoxExpandedProperty
      * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
      * @param {Bounds2} layoutBounds
      * @param {Object} [options]
@@ -126,7 +135,8 @@ define( function( require ) {
      * @protected
      * @abstract
      */
-    createSceneNode: function( scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+    createSceneNode: function( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                               snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
       throw new Error( 'createSceneNode must be implemented by subtype' );
     }
   } );

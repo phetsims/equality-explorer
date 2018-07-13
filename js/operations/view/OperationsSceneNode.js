@@ -19,12 +19,14 @@ define( function( require ) {
   /**
    * @param {EqualityExplorerScene} scene
    * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
    * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor
    */
-  function OperationsSceneNode( scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  function OperationsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                                snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
 
     options = _.extend( {
 
@@ -32,7 +34,8 @@ define( function( require ) {
       organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
     }, options );
 
-    VariablesSceneNode.call( this, scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+    VariablesSceneNode.call( this, scene, sceneProperty, equationAccordionBoxExpandedProperty,
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
     // Layer when universal operation animation occurs
     var operationAnimationLayer = new Node();

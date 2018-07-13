@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
@@ -27,12 +26,14 @@ define( function( require ) {
   /**
    * @param {EqualityExplorerScene} scene
    * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
    * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @constructor
    */
-  function BasicsSceneNode( scene, sceneProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  function BasicsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                            snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
 
     options = _.extend( {
       hasNegativeTermsInToolbox: true, // {boolean} if true, put negative terms in the toolbox, e.g. -x
@@ -46,10 +47,6 @@ define( function( require ) {
       // SnapshotControl options
       snapshotControlOptions: null
     }, options );
-
-    // @public view-specific Properties
-    this.equationAccordionBoxExpandedProperty =
-      new BooleanProperty( EqualityExplorerConstants.EQUATION_ACCORDION_BOX_EXPANDED );
 
     // locals vars to improve readability
     var scale = scene.scale;
@@ -82,7 +79,7 @@ define( function( require ) {
 
     var equationAccordionBox = new EquationAccordionBox( leftTermCreators, rightTermCreators, {
       fixedWidth: Math.floor( rightTermsToolbox.right - leftTermsToolbox.left ),
-      expandedProperty: this.equationAccordionBoxExpandedProperty,
+      expandedProperty: equationAccordionBoxExpandedProperty,
 
       // Slightly off center, so that the equation's relational operator is horizontally centered
       // above the scale's arrow. The offset was determined empirically.
@@ -137,11 +134,5 @@ define( function( require ) {
 
   equalityExplorer.register( 'BasicsSceneNode', BasicsSceneNode );
 
-  return inherit( EqualityExplorerSceneNode, BasicsSceneNode, {
-
-    // @public
-    reset: function() {
-      this.equationAccordionBoxExpandedProperty.reset();
-    }
-  } );
+  return inherit( EqualityExplorerSceneNode, BasicsSceneNode );
 } );
