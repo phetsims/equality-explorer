@@ -171,8 +171,8 @@ define( function( require ) {
           // On each animation step...
           animationStepCallback: function() {
 
-            // If the target cell has become occupied, choose another cell.
-            if ( !self.plate.isEmptyCell( cell ) ) {
+            // If the target cell has become occupied, or the opposite plate is full, try again.
+            if ( !self.plate.isEmptyCell( cell ) || ( self.equivalentTerm && self.oppositePlate.isFull() ) ) {
               self.animateToPlate();
             }
           },
