@@ -207,7 +207,7 @@ define( function( require ) {
       faceNode // face in front of everything
     ];
 
-    if ( EqualityExplorerQueryParameters.showAnswers ) {
+    if ( phet.chipper.queryParameters.showAnswers ) {
 
       // shows how the current challenge was derived
       children.push( new ChallengeDerivationNode( scene.challengeProperty, {

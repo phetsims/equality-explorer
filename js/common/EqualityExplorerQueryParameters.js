@@ -68,11 +68,6 @@ define( function( require ) {
       }
     },
 
-    // Shows answers to challenges in the 'Solve It!' screen. If assertions are enabled and fuzzMouse is disabled,
-    // this also adds a 'test challenge generators' button to the level-selection UI.
-    // For internal use only, not public facing.
-    showAnswers: { type: 'flag' },
-
     // Reaching this score results in a reward.
     // For internal use only, not public facing.
     rewardScore: {

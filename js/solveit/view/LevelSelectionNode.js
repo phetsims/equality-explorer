@@ -13,7 +13,6 @@ define( function( require ) {
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var EqualityExplorerLevelSelectionButton = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerLevelSelectionButton' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -124,7 +123,7 @@ define( function( require ) {
     // Press this button to test challenge generators. See output in console.
     // This test is only useful if assertions are enabled.
     // Also disable if fuzzMouse is enabled, since this takes a long time and is not relevant to fuzz testing.
-    if ( assert && EqualityExplorerQueryParameters.showAnswers && !phet.chipper.queryParameters.fuzzMouse ) {
+    if ( assert && phet.chipper.queryParameters.showAnswers && !phet.chipper.queryParameters.fuzzMouse ) {
       var testButton = new RectangularPushButton( {
         content: new Text( 'test challenge generators', { fill: 'white', font: new PhetFont( 20 ) } ),
         baseColor: 'red',
