@@ -160,11 +160,11 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 1. Run with `?speed=0.1` to slow animation.
 2. Put '1' on the left plate, nothing on the right plate.
 3. Turn the lock on.
-4. Drag '-1' off the left plate. 
+4. Drag '1' off the left plate. 
 5. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
 6. Release the dragged term above the plate.
 7. Before the dragged term reaches its plate, grab the inverse term.
-6. Verify that the dragged term and equivalent term return to their respective plates, and the inverse term is _not_ replaced by the equivalent term. 
+6. Verify that the dragged term (1) and equivalent term (1) return to their respective plates, and the inverse term (-1) is _not_ replaced by the equivalent term. 
 
 ## Combine Like Terms
 
