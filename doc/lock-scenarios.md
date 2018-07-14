@@ -131,10 +131,10 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 
 1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
-3. Drag '-1' off the left plate. 
+3. Drag '1' off the left plate. 
 4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
 5. Release the dragged term below the plate.
-6. Verify that the dragged term and equivalent term return to their respective toolboxes, and the inverse term remains on the right plate.
+6. Verify that the dragged term (1) and equivalent term (1) return to their respective toolboxes, and the inverse term (-1) remains on the right plate.
 
 ### Scenario 13
 
@@ -150,21 +150,21 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 
 1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
-3. Drag '-1' off the left plate. 
+3. Drag '1' off the left plate. 
 4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
 5. Release the dragged term above the plate.
-6. Verify that the dragged term and equivalent term return to their respective plates, and the inverse term is replaced by the equivalent term.
+6. Verify that the dragged term (1) and equivalent term (1) return to their respective plates, and the inverse term (-1) is replaced by the equivalent term.
 
 ### Scenario 15
 
 1. Run with `?speed=0.1` to slow animation.
 2. Put '1' on the left plate, nothing on the right plate.
 3. Turn the lock on.
-4. Drag '-1' off the left plate. 
+4. Drag '1' off the left plate. 
 5. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
 6. Release the dragged term above the plate.
 7. Before the dragged term reaches its plate, grab the inverse term.
-6. Verify that the dragged term and equivalent term return to their respective plates, and the inverse term is _not_ replaced by the equivalent term. 
+6. Verify that the dragged term (1) and equivalent term (1) return to their respective plates, and the inverse term (-1) is _not_ replaced by the equivalent term. 
 
 ## Combine Like Terms
 
@@ -217,7 +217,7 @@ The next 8 scenarios involve screens where like terms are combined in one cell o
 5. Release the dragged term. The dragged term adds to produce `x + 2`. 
 6. Verify that the equivalent term moves immediately to the opposite plate and sums to zero.
 
-### Scenario 20
+### Scenario 21
 
 1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
@@ -226,7 +226,7 @@ The next 8 scenarios involve screens where like terms are combined in one cell o
 5. Release the dragged term below the plate.
 6. Verify that the dragged term and equivalent term return to their respective toolboxes, and the inverse term remains on the right plate.
 
-### Scenario 21
+### Scenario 22
 
 1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
@@ -235,7 +235,7 @@ The next 8 scenarios involve screens where like terms are combined in one cell o
 5. Release the dragged term above the plate.
 6. Verify that the dragged term and equivalent term return to their respective plates, and that the equivalent term is added to the the inverse term on the right plate.
 
-### Scenario 22
+### Scenario 23
 
 1. Run with `?speed=0.1` to slow animation.
 2. Put '1' on the left plate, nothing on the right plate.
