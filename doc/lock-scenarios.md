@@ -168,7 +168,7 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 
 ## Combine Like Terms
 
-The next 8 scenarios involve screens where like terms are combined in one cell on the scale.  Those screens are _Operations_ and _Solve It!_, and you may use either of those screens to test these scenarios.
+The next 8 scenarios involve screens where like terms are combined in one cell on the scale.  Test these scenarios in the _Operations_ screens.
 
 ### Scenario 16
 
