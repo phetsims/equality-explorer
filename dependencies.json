@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.0.0-dev.126 Fri Jul 13 2018 13:13:46 GMT-0600 (MDT)",
+  "comment": "# equality-explorer 1.1.0-dev.1 Mon Jul 16 2018 10:08:10 GMT-0600 (MDT)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "master"
@@ -13,7 +13,7 @@
     "branch": "master"
   },
   "chipper": {
-    "sha": "9222b8efa739f10593793d4db92f67ab6386bca2",
+    "sha": "6d7a5fc027bbc855686e2a8424fccf6058dc4b9a",
     "branch": "master"
   },
   "dot": {
@@ -21,7 +21,7 @@
     "branch": "master"
   },
   "equality-explorer": {
-    "sha": "56bbdb6ba0b06428e405a4360deff9e393c8a1e7",
+    "sha": "b3447dac182a372150c1c90ab7aa880e1425cdd9",
     "branch": "master"
   },
   "joist": {
@@ -33,11 +33,11 @@
     "branch": "master"
   },
   "phet-core": {
-    "sha": "e9adfb5b44a2d18b3ffb463db196a8ec58aabb3b",
+    "sha": "b1a11992e3da1747cb123df9432b085ee82be1e3",
     "branch": "master"
   },
   "phet-io": {
-    "sha": "2a3c3457e07deb737eefdb33fbd659f8f7bb6fc9",
+    "sha": "d98423ccebfeb8cf380252c83806c772137760d8",
     "branch": "master"
   },
   "phet-io-wrapper-classroom-activity": {
@@ -53,7 +53,7 @@
     "branch": "master"
   },
   "phet-io-wrappers": {
-    "sha": "d90097d8403cdb2c3a6a50a2b1abc921d45f6eda",
+    "sha": "925de7b550e7d597a28f39cf8d93cd3faad1889b",
     "branch": "master"
   },
   "phetcommon": {
@@ -73,11 +73,11 @@
     "branch": "master"
   },
   "sherpa": {
-    "sha": "341552b7e46696a8ffa9394d31912974bc9be9ee",
+    "sha": "4b8710ca4dca159ab3d8e32afe62dff34f096343",
     "branch": "master"
   },
   "sun": {
-    "sha": "9b94b548fae8823796c6cf4b1fea728e340c69dd",
+    "sha": "dbf9cb407c79d664c47710efac44581a3e6b71ff",
     "branch": "master"
   },
   "tandem": {
