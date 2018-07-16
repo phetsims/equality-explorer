@@ -182,7 +182,7 @@ The next 8 scenarios involve screens where like terms are combined in one cell o
 
 1. Put `x + 1` on both the left and right plates.
 2. Turn the lock on.
-3. On the side of the scale with a full plate, drag a term from a toolbox.
+3. Drag a term from a toolbox.
 4. Verify that an equivalent term comes out of the opposite toolbox and follows the dragged term.
 5. Release the dragged term anywhere above its plate.
 6. Verify that the dragged term and equivalent term are added to the like terms on their respective plates.
