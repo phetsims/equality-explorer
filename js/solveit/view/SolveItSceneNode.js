@@ -85,6 +85,7 @@ define( function( require ) {
     // Bar across the top of the screen
     var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode,
       scene.scoreProperty, {
+        floatToTop: true, // see https://github.com/phetsims/equality-explorer/issues/144
         spacing: 20,
         barFill: 'rgb( 252, 150, 152 )',
         backButtonListener: backButtonListener
