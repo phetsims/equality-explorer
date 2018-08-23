@@ -233,7 +233,7 @@ The next 8 scenarios involve screens where like terms are combined in one cell o
 3. Drag '1' off the left plate. 
 4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
 5. Release the dragged term above the plate.
-6. Verify that the dragged term and equivalent term return to their respective plates, and that the equivalent term is added to the the inverse term on the right plate.
+6. Verify that the dragged term and equivalent term return to their respective plates, and that the equivalent term is added to the inverse term on the right plate.
 
 ### Scenario 23
 
