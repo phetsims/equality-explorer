@@ -5,7 +5,7 @@
  * (The correct term is 'weighing platform', but 'plate' was used throughout the design.)
  * Terms are arranged in a 2D grid of cells, where each cell can be occupied by at most one term.
  *
- * @author Chris Malley (PixelZoom, Inc)
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';

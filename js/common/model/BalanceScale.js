@@ -7,7 +7,7 @@
  * Origin is at the point where the beam is balanced on the fulcrum.
  * Terms are arranged in a 2D grid on each plate.
  *
- * @author Chris Malley (PixelZoom, Inc)
+ * @author Chris Malley (PixelZoom, Inc.)
  */
 define( function( require ) {
   'use strict';
