@@ -24,9 +24,9 @@ define( function( require ) {
   var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
   var Property = require( 'AXON/Property' );
   var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
-  var Vector2 = require( 'DOT/Vector2' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var POINTS_PER_CHALLENGE = 1;

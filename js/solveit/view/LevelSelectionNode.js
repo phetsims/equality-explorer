@@ -15,8 +15,8 @@ define( function( require ) {
   var EqualityExplorerLevelSelectionButton = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerLevelSelectionButton' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var InfoDialog = require( 'EQUALITY_EXPLORER/solveit/view/InfoDialog' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );

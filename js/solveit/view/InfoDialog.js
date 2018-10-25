@@ -11,9 +11,9 @@ define( function( require ) {
 
   // modules
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
+  var Dialog = require( 'SUN/Dialog' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Dialog = require( 'SUN/Dialog' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Text = require( 'SCENERY/nodes/Text' );

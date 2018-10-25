@@ -14,9 +14,9 @@ define( function( require ) {
   var EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
   var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
   var SolveItModel = require( 'EQUALITY_EXPLORER/solveit/model/SolveItModel' );
   var SolveItScreenView = require( 'EQUALITY_EXPLORER/solveit/view/SolveItScreenView' );
-  var Property = require( 'AXON/Property' );
 
   // strings
   var screenSolveItString = require( 'string!EQUALITY_EXPLORER/screen.solveIt' );

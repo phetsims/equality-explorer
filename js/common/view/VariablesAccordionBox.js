@@ -24,8 +24,8 @@ define( function( require ) {
   var VariableNode = require( 'EQUALITY_EXPLORER/common/view/VariableNode' );
 
   // strings
-  var variableString = require( 'string!EQUALITY_EXPLORER/variable' );
   var variablesString = require( 'string!EQUALITY_EXPLORER/variables' );
+  var variableString = require( 'string!EQUALITY_EXPLORER/variable' );
 
   /**
    * @param {Variable[]} variables - the variables that appear in this accordion box

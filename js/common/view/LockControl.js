@@ -11,12 +11,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanToggleNode = require( 'SUN/BooleanToggleNode' );
   var DownUpListener = require( 'SCENERY/input/DownUpListener' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var BooleanToggleNode = require( 'SUN/BooleanToggleNode' );
 
   // images
   var lockClosedImage = require( 'image!EQUALITY_EXPLORER/lockClosed.png' );

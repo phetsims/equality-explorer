@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var CombineTermsDragListener = require( 'EQUALITY_EXPLORER/common/view/CombineTermsDragListener' );
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var CombineTermsDragListener = require( 'EQUALITY_EXPLORER/common/view/CombineTermsDragListener' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
