@@ -81,7 +81,6 @@ define( function( require ) {
 
     // @private
     this.animation = new Animation( {
-      stepper: 'timer',
       duration: 0.75,
       targets: [ {
         property: opacityProperty,

@@ -18,7 +18,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var STEPPER = 'manual'; // Animation will be stepped via step function
+  var STEPPER = null; // Animation will be stepped via step function
 
   /**
    * @param {Node} node
@@ -54,7 +54,7 @@ define( function( require ) {
 
     // Animation for translate
     this.translateAnimation = new Animation( {
-      stepper: STEPPER,
+      animationStepEmitter: STEPPER,
       duration: options.translateDuration,
       targets: [ {
         property: positionProperty,
@@ -65,7 +65,7 @@ define( function( require ) {
 
     // Animation for fade
     this.fadeAnimation = new Animation( {
-      stepper: STEPPER,
+      animationStepEmitter: STEPPER,
       duration: options.fadeDuration,
       targets: [ {
         property: opacityProperty,

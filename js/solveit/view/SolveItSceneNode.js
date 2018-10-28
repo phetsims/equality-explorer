@@ -327,7 +327,7 @@ define( function( require ) {
         faceNode.visible = true;
 
         self.faceAnimation = new Animation( {
-          stepper: 'manual', // via step function
+          animationStepEmitter: null, // via step function
           delay: 1,
           duration: 0.8,
           targets: [ {
