@@ -54,7 +54,7 @@ define( function( require ) {
 
     // Animation for translate
     this.translateAnimation = new Animation( {
-      animationStepEmitter: STEPPER,
+      stepEmitter: STEPPER,
       duration: options.translateDuration,
       targets: [ {
         property: positionProperty,
@@ -65,7 +65,7 @@ define( function( require ) {
 
     // Animation for fade
     this.fadeAnimation = new Animation( {
-      animationStepEmitter: STEPPER,
+      stepEmitter: STEPPER,
       duration: options.fadeDuration,
       targets: [ {
         property: opacityProperty,
