@@ -134,7 +134,7 @@ define( function( require ) {
      * Creates a snapshot of this term.
      * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
      * Subtypes that have additional options should override this method and add to the options returned here.
-     * @return {Object}
+     * @returns {Object}
      * @public
      */
     createSnapshot: function() {

@@ -160,7 +160,7 @@ define( function( require ) {
     /**
      * Creates a snapshot of this term.
      * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
-     * @return {Object}
+     * @returns {Object}
      * @public
      * @override
      */

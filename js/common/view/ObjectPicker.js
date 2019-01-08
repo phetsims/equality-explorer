@@ -363,7 +363,7 @@ define( function( require ) {
    * Gets the index of the item that has a specified value.
    * @param {{value:Object, node:Node}} items
    * @param {Object} value
-   * @return {number}
+   * @returns {number}
    */
   var indexOfItemWithValue = function( items, value ) {
     var index = -1;
