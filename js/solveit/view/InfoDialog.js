@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var Dialog = require( 'SUN/Dialog' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -32,8 +31,6 @@ define( function( require ) {
    * @constructor
    */
   function InfoDialog( levelDescriptions ) {
-
-    var self = this;
 
     var children = [];
     levelDescriptions.forEach( function( levelDescription ) {
@@ -59,11 +56,6 @@ define( function( require ) {
       ySpacing: 20,
       bottomMargin: 20
     } );
-
-    // Click anywhere on the dialog to hide it.
-    this.addInputListener( new ButtonListener( {
-      fire: function() { self.hide(); }
-    } ) );
   }
 
   equalityExplorer.register( 'InfoDialog', InfoDialog );

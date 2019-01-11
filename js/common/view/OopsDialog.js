@@ -11,7 +11,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var Dialog = require( 'SUN/Dialog' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -27,8 +26,6 @@ define( function( require ) {
    * @constructor
    */
   function OopsDialog( messageString ) {
-
-    var self = this;
 
     var messageNode = new RichText( messageString, {
       font: new PhetFont( 20 ),
@@ -50,11 +47,6 @@ define( function( require ) {
       bottomMargin: 20,
       rightMargin: 20
     } );
-
-    // Click anywhere on the dialog to hide it.
-    this.addInputListener( new ButtonListener( {
-      fire: function() { self.hide(); }
-    } ) );
   }
 
   equalityExplorer.register( 'OopsDialog', OopsDialog );
