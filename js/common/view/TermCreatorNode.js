@@ -59,8 +59,8 @@ define( function( require ) {
       }
     ) );
 
-    // Things to do after the sim has loaded, when this Node has a valid location.
-    var frameStartedCallback = function() {
+    // Things to do after the sim has been constructed, when TermCreatorNode has a valid location.
+    phet.joist.sim.endedSimConstructionEmitter.addListener( function() {
 
       // This Node's location
       var location = termsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
@@ -72,11 +72,7 @@ define( function( require ) {
       else {
         termCreator.negativeLocation = location;
       }
-
-      // Remove this function, so that it's called only once.
-      phet.joist.sim.frameStartedEmitter.removeListener( frameStartedCallback );
-    };
-    phet.joist.sim.frameStartedEmitter.addListener( frameStartedCallback ); // removeListener after first call
+    } );
   }
 
   equalityExplorer.register( 'TermCreatorNode', TermCreatorNode );
