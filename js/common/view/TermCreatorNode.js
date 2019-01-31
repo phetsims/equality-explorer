@@ -74,7 +74,7 @@ define( function( require ) {
       }
 
       // While endedSimConstructionEmitter should only emit once, we'll still
-      // remove this listener, since it's only intended to be called only once.
+      // remove this listener, since it's only intended to be called once.
       phet.joist.sim.endedSimConstructionEmitter.removeListener( listener );
     };
     phet.joist.sim.endedSimConstructionEmitter.addListener( listener );
