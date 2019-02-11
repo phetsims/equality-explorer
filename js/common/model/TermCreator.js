@@ -260,7 +260,7 @@ define( function( require ) {
 
         // Stepping a term may result in other term(s) being disposed, so only step terms
         // that have not been disposed. See https://github.com/phetsims/equality-explorer/issues/94.
-        if ( !term.disposed ) {
+        if ( !term.isDisposed ) {
           allTermsCopy[ i ].step( dt );
         }
       }
@@ -296,7 +296,7 @@ define( function( require ) {
      * @public
      */
     manageTerm: function( term, event ) {
-      assert && assert( !term.disposed, 'term is disposed: ' + term );
+      assert && assert( !term.isDisposed, 'term is disposed: ' + term );
       assert && assert( !this.isManagedTerm( term ), 'term is already managed: ' + term );
       assert && assert( !event || event instanceof Event, 'invalid event: ' + event );
 
@@ -489,7 +489,7 @@ define( function( require ) {
     disposeTerms: function( terms ) {
       for ( var i = 0; i < terms.length; i++ ) {
         var term = terms[ i ];
-        if ( !term.disposed ) {
+        if ( !term.isDisposed ) {
           term.dispose(); // results in call to unmanageTerm
         }
         else {

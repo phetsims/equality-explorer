@@ -214,7 +214,7 @@ define( function( require ) {
     // Clean up when an animation completes or is stopped.
     var animationCleanup = function( animation, operationNode ) {
       self.animations.splice( self.animations.indexOf( animation ), 1 );
-      !operationNode.disposed && operationNode.dispose();
+      !operationNode.isDisposed && operationNode.dispose();
       goButton.enabled = true;
     };
 

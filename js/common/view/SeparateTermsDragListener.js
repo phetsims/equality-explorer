@@ -196,12 +196,12 @@ define( function( require ) {
               if ( self.inverseTerm ) {
 
                 // Equivalent and inverse term cancel each other out.
-                !self.inverseTerm.disposed && self.inverseTerm.dispose();
+                !self.inverseTerm.isDisposed && self.inverseTerm.dispose();
                 self.inverseTerm = null;
-                !self.equivalentTerm.disposed && self.equivalentTerm.dispose();
+                !self.equivalentTerm.isDisposed && self.equivalentTerm.dispose();
                 self.equivalentTerm = null;
               }
-              else if ( !self.equivalentTerm.disposed ) {
+              else if ( !self.equivalentTerm.isDisposed ) {
 
                 // Transfer self.equivalentTerm to a local variable and set to null, so that equivalentTerm
                 // no longer tracks movement of term. See https://github.com/phetsims/equality-explorer/issues/90

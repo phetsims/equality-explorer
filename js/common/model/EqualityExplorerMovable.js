@@ -60,7 +60,7 @@ define( function( require ) {
     this.disposedEmitter = new Emitter();
 
     // @public (read-only) has dispose completed?
-    this.disposed = false;
+    this.isDisposed = false;
   }
 
   equalityExplorer.register( 'EqualityExplorerMovable', EqualityExplorerMovable );
@@ -83,13 +83,13 @@ define( function( require ) {
 
     // @public
     dispose: function() {
-      assert && assert( !this.disposed, 'dispose called twice for ' + this );
+      assert && assert( !this.isDisposed, 'dispose called twice for ' + this );
 
       this.locationProperty.dispose();
       this.draggingProperty.dispose();
 
       // Do this last, sequence is important!
-      this.disposed = true;
+      this.isDisposed = true;
       this.disposedEmitter.emit1( this );
       this.disposedEmitter.dispose();
     },
@@ -153,7 +153,7 @@ define( function( require ) {
      */
     step: function( dt ) {
 
-      assert && assert( !this.disposed, 'attempt to step disposed movable' );
+      assert && assert( !this.isDisposed, 'attempt to step disposed movable' );
 
       if ( this.isAnimating() ) {
 

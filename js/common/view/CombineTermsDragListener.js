@@ -100,9 +100,9 @@ define( function( require ) {
         this.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
 
         // dispose of the terms used to create combinedTerm
-        !oppositeLikeTerm.disposed && oppositeLikeTerm.dispose();
+        !oppositeLikeTerm.isDisposed && oppositeLikeTerm.dispose();
         oppositeLikeTerm = null;
-        !this.equivalentTerm.disposed && this.equivalentTerm.dispose();
+        !this.equivalentTerm.isDisposed && this.equivalentTerm.dispose();
         this.equivalentTerm = null;
 
         if ( combinedTerm.significantValue.getValue() === 0 ) {
@@ -129,7 +129,7 @@ define( function( require ) {
         var equivalentTermCopy = this.equivalentTerm.copy( {
           diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
         } );
-        !this.equivalentTerm.disposed && this.equivalentTerm.dispose();
+        !this.equivalentTerm.isDisposed && this.equivalentTerm.dispose();
         this.equivalentTerm = null;
         this.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, cell );
       }
@@ -175,7 +175,7 @@ define( function( require ) {
             self.termCreator.putTermOnPlate( termCopy, likeTermsCell );
 
             // dispose of the original term
-            !self.term.disposed && self.term.dispose();
+            !self.term.isDisposed && self.term.dispose();
             self.term = null;
           }
           else {
@@ -200,9 +200,9 @@ define( function( require ) {
               } );
 
               // dispose of terms that sum to zero
-              !self.term.disposed && self.term.dispose();
+              !self.term.isDisposed && self.term.dispose();
               self.term = null;
-              !termInCell.disposed && termInCell.dispose();
+              !termInCell.isDisposed && termInCell.dispose();
               termInCell = null;
               combinedTerm.dispose();
               combinedTerm = null;
@@ -230,7 +230,7 @@ define( function( require ) {
               self.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, likeTermsCell );
 
               // dispose of the original equivalentTerm
-              !self.equivalentTerm.disposed && self.equivalentTerm.dispose();
+              !self.equivalentTerm.isDisposed && self.equivalentTerm.dispose();
               self.equivalentTerm = null;
             }
             else {
@@ -251,7 +251,7 @@ define( function( require ) {
                 // dispose of the terms used to create oppositeCombinedTerm
                 oppositeLikeTerm.dispose();
                 oppositeLikeTerm = null;
-                !self.equivalentTerm.disposed && self.equivalentTerm.dispose();
+                !self.equivalentTerm.isDisposed && self.equivalentTerm.dispose();
                 self.equivalentTerm = null;
 
                 if ( oppositeCombinedTerm.significantValue.getValue() === 0 ) {
@@ -291,9 +291,9 @@ define( function( require ) {
             if ( combinedTerm ) {
 
               // dispose of the terms used to create the combined term
-              !self.term.disposed && self.term.dispose();
+              !self.term.isDisposed && self.term.dispose();
               self.term = null;
-              !termInCell.disposed && termInCell.dispose();
+              !termInCell.isDisposed && termInCell.dispose();
               termInCell = null;
 
               // Put the combined term on the plate.
