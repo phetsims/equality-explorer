@@ -1,4 +1,4 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2018-2019, University of Colorado Boulder
 
 /**
  * Abstract base type for creating and managing terms.
@@ -293,7 +293,7 @@ define( function( require ) {
      * Tells this term creator to manage a term.  Once managed, a term cannot be unmanaged - it's a life commitment!
      * @param {Term} term
      * @param {Event|null} [event] is provided if term was created as the result of a user interaction
-     * @public
+     * @private
      */
     manageTerm: function( term, event ) {
       assert && assert( !term.isDisposed, 'term is disposed: ' + term );
