@@ -92,7 +92,7 @@ define( function( require ) {
     // Callback signature is function( {TermCreator} termCreator, {Term} term, {Event|null} [event] ),
     // where event is non-null if the term was created as the result of a user interaction.
     // dispose not required.
-    this.termCreatedEmitter = new Emitter();
+    this.termCreatedEmitter = new Emitter( { validationEnabled: false } );
 
     // @public emit is called when adding a term to the plate would cause EqualityExplorerQueryParameters.maxInteger
     // to be exceeded.  See See https://github.com/phetsims/equality-explorer/issues/48
@@ -320,7 +320,7 @@ define( function( require ) {
 
       // Notify listeners that a term is being managed by this term creator.
       // This will result in creation of the corresponding view.
-      this.termCreatedEmitter.emit3( this, term, event );
+      this.termCreatedEmitter.emit( this, term, event );
     },
 
     /**
