@@ -57,7 +57,7 @@ define( function( require ) {
 
     // @public (read-only) emit1 when dispose has completed.
     // Callback signature is function( {Term} term ), where the parameter is the term that was disposed.
-    this.disposedEmitter = new Emitter();
+    this.disposedEmitter = new Emitter( { validationEnabled: false } );
 
     // @public (read-only) has dispose completed?
     this.isDisposed = false;
@@ -90,7 +90,7 @@ define( function( require ) {
 
       // Do this last, sequence is important!
       this.isDisposed = true;
-      this.disposedEmitter.emit1( this );
+      this.disposedEmitter.emit( this );
       this.disposedEmitter.dispose();
     },
 

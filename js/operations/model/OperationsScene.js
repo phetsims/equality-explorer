@@ -57,8 +57,8 @@ define( function( require ) {
     options.variables = [ this.xVariable ];
 
     // @public (read-only)
-    // emit1( {TermCreator[]} ) when one or more terms become zero as the result of a universal operation
-    this.sumToZeroEmitter = new Emitter();
+    // emit( {TermCreator[]} ) when one or more terms become zero as the result of a universal operation
+    this.sumToZeroEmitter = new Emitter( { validationEnabled: false } );
 
     // @public (read-only)
     this.operators = EqualityExplorerConstants.OPERATORS;
@@ -118,7 +118,7 @@ define( function( require ) {
 
     // @protected (read-only) emit1 is called when a universal operation has completed.
     // Callback signature is function( {UniversalOperation} operation )
-    this.operationCompletedEmitter = new Emitter();
+    this.operationCompletedEmitter = new Emitter( { validationEnabled: false } );
 
     // Variable and constant terms will combined in specific cells in the plate's grid.
     var variableTermCreatorOptions = {
@@ -203,11 +203,11 @@ define( function( require ) {
         // appear in the cells at the scale's final position, not at the position before the
         // operation was applied, or at some intermediate location as the operation is being applied.
         if ( termCreatorsZero.length > 0 ) {
-          this.sumToZeroEmitter.emit1( termCreatorsZero );
+          this.sumToZeroEmitter.emit( termCreatorsZero );
         }
 
         // notify listeners that the operation successfully completed
-        this.operationCompletedEmitter.emit1( operation );
+        this.operationCompletedEmitter.emit( operation );
       }
     },
 
