@@ -23,6 +23,8 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
   var StringProperty = require( 'AXON/StringProperty' );
+  var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
+  var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
   var Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
   var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
@@ -57,8 +59,14 @@ define( function( require ) {
     options.variables = [ this.xVariable ];
 
     // @public (read-only)
-    // emit( {TermCreator[]} ) when one or more terms become zero as the result of a universal operation
-    this.sumToZeroEmitter = new Emitter( { validationEnabled: false } );
+    // emit when one or more terms become zero as the result of a universal operation
+    this.sumToZeroEmitter = new Emitter( {
+      validators: [ {
+
+        // {TermCreator[]}
+        isValidValue: array => ( Array.isArray( array ) && _.every( array, value => value instanceof TermCreator ) )
+      } ]
+    } );
 
     // @public (read-only)
     this.operators = EqualityExplorerConstants.OPERATORS;
@@ -116,9 +124,10 @@ define( function( require ) {
       validValues: this.operands
     } );
 
-    // @protected (read-only) emit1 is called when a universal operation has completed.
-    // Callback signature is function( {UniversalOperation} operation )
-    this.operationCompletedEmitter = new Emitter( { validationEnabled: false } );
+    // @protected (read-only) emit is called when a universal operation has completed.
+    this.operationCompletedEmitter = new Emitter( {
+      validators: [ { valueType: UniversalOperation } ]
+    } );
 
     // Variable and constant terms will combined in specific cells in the plate's grid.
     var variableTermCreatorOptions = {

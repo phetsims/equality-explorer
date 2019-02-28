@@ -55,9 +55,10 @@ define( function( require ) {
     // @private {function|null} called when animation to destination completes, set using animateTo
     this.animationCompletedCallback = null;
 
-    // @public (read-only) emit1 when dispose has completed.
-    // Callback signature is function( {Term} term ), where the parameter is the term that was disposed.
-    this.disposedEmitter = new Emitter( { validationEnabled: false } );
+    // @public (read-only) emit when dispose has completed.
+    this.disposedEmitter = new Emitter( {
+      validators: [ { valueType: EqualityExplorerMovable } ]
+    } );
 
     // @public (read-only) has dispose completed?
     this.isDisposed = false;

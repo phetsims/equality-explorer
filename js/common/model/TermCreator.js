@@ -32,6 +32,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
+  var Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -88,11 +89,17 @@ define( function( require ) {
       useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
     } );
 
-    // @public emit3 is called when a term is created.
+    // @public emit is called when a term is created.
     // Callback signature is function( {TermCreator} termCreator, {Term} term, {Event|null} [event] ),
     // where event is non-null if the term was created as the result of a user interaction.
     // dispose not required.
-    this.termCreatedEmitter = new Emitter( { validationEnabled: false } );
+    this.termCreatedEmitter = new Emitter( {
+      validators: [
+        { valueType: TermCreator },
+        { valueType: Term },
+        { isValidValue: value => ( value instanceof Event || value === null ) } // {Event|null}
+      ]
+    } );
 
     // @public emit is called when adding a term to the plate would cause EqualityExplorerQueryParameters.maxInteger
     // to be exceeded.  See See https://github.com/phetsims/equality-explorer/issues/48
@@ -298,7 +305,7 @@ define( function( require ) {
     manageTerm: function( term, event ) {
       assert && assert( !term.isDisposed, 'term is disposed: ' + term );
       assert && assert( !this.isManagedTerm( term ), 'term is already managed: ' + term );
-      assert && assert( !event || event instanceof Event, 'invalid event: ' + event );
+      assert && assert( event instanceof Event || event === null, 'invalid event: ' + event );
 
       this.allTerms.add( term );
 
@@ -370,7 +377,7 @@ define( function( require ) {
 
       // ORDER IS VERY IMPORTANT HERE!
       if ( !this.isManagedTerm( term ) ) {
-        this.manageTerm( term );
+        this.manageTerm( term, null );
       }
       this.plate.addTerm( term, cell );
       this.termsOnPlate.push( term );
