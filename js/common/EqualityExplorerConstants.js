@@ -53,12 +53,14 @@ define( function( require ) {
       fill: 'white',
       titleAlignX: 'left',
       titleXSpacing: 8,
-      buttonLength: 20,
       buttonXMargin: 10,
       buttonYMargin: 8,
-      buttonTouchAreaXDilation: 10,
-      buttonTouchAreaYDilation: 10,
-      cornerRadius: PANEL_CORNER_RADIUS
+      cornerRadius: PANEL_CORNER_RADIUS,
+      expandCollapseButtonOptions: {
+        sideLength: 20,
+        touchAreaXDilation: 10,
+        touchAreaYDilation: 10
+      }
     },
 
     // initial state of accordion boxes for all screens
