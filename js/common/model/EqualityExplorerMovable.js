@@ -18,8 +18,8 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Vector2Property = require( 'DOT/Vector2Property' );
 
   /**
    * @param {Object} [options]
@@ -34,7 +34,7 @@ define( function( require ) {
     }, options );
 
     // @public (read-only) {Property.<Vector2>} DO NOT set this directly! Use moveTo or animateTo.
-    this.locationProperty = new Property( options.location, { valueType: Vector2 } );
+    this.locationProperty = new Vector2Property( options.location );
 
     // @public (read-only)
     this.dragBounds = options.dragBounds;

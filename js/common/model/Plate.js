@@ -19,8 +19,8 @@ define( function( require ) {
   var Grid = require( 'EQUALITY_EXPLORER/common/model/Grid' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Vector2Property = require( 'DOT/Vector2Property' );
 
   // constants
   var DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
@@ -47,7 +47,7 @@ define( function( require ) {
     }, options );
 
     // @public
-    this.locationProperty = new Property( new Vector2( 0, 0 ), { valueType: Vector2 } );
+    this.locationProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
     // @public (read-only)
     this.termCreators = termCreators;
