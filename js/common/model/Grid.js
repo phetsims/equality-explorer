@@ -29,7 +29,7 @@ define( function( require ) {
   var NO_TERM = null; // occupies all empty cells in the grid
 
   /**
-   * @param {Property.<Vector2>} locationProperty
+   * @param {Vector2Property} locationProperty
    * @param {string} debugSide - which side of the scale, for debugging
    * @param {Object} [options]
    * @constructor

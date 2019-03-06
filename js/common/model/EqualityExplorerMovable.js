@@ -33,7 +33,7 @@ define( function( require ) {
       animationSpeed: 400 // {number} distance/second when animating
     }, options );
 
-    // @public (read-only) {Property.<Vector2>} DO NOT set this directly! Use moveTo or animateTo.
+    // @public (read-only) DO NOT set this directly! Use moveTo or animateTo.
     this.locationProperty = new Vector2Property( options.location );
 
     // @public (read-only)
