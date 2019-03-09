@@ -64,7 +64,7 @@ define( function( require ) {
       upFunction: function( index ) { return index + 1; },
       downFunction: function( index ) { return index - 1; },
 
-      // {Property.<boolean>||null} whether the up and down buttons are enabled.
+      // {Property.<boolean>|null} whether the up and down buttons are enabled.
       // If the client provides these, then the client is fully responsible for the state of these Properties.
       // If null, a default implementation is used.
       upEnabledProperty: null,
