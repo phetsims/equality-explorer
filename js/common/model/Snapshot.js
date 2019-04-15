@@ -81,8 +81,6 @@ define( function( require ) {
     }
   }
 
-  equalityExplorer.register( 'Snapshot.PlateSnapshot', PlateSnapshot );
-
   inherit( Object, PlateSnapshot, {
 
     /**

@@ -355,8 +355,6 @@ define( function( require ) {
     } );
   }
 
-  equalityExplorer.register( 'ObjectPicker.ButtonStateListener', ButtonStateListener );
-
   inherit( ButtonListener, ButtonStateListener );
 
   /**
