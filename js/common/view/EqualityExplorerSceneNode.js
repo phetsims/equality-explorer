@@ -13,7 +13,7 @@ define( function( require ) {
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var OopsDialog = require( 'EQUALITY_EXPLORER/common/view/OopsDialog' );
+  var OopsDialog = require( 'SCENERY_PHET/OopsDialog' );
   var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
 
   // string

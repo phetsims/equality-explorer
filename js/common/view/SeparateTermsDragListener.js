@@ -13,7 +13,7 @@ define( function( require ) {
   // modules
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var OopsDialog = require( 'EQUALITY_EXPLORER/common/view/OopsDialog' );
+  var OopsDialog = require( 'SCENERY_PHET/OopsDialog' );
   var TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
 
   // strings
