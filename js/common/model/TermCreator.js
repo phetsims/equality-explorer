@@ -400,7 +400,9 @@ define( function( require ) {
       // ORDER IS VERY IMPORTANT HERE!
       var cell = this.plate.removeTerm( term );
       this.termsOnPlate.remove( term );
-      term.onPlateProperty.value = false;
+      if ( !term.onPlateProperty.isDisposed ) {
+        term.onPlateProperty.value = false;
+      }
       return cell;
     },
 
