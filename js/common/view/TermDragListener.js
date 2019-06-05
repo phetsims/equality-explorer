@@ -355,11 +355,13 @@ define( function( require ) {
              ( this.termCreator.combineLikeTermsEnabled || this.term.isInverseTerm( this.likeTerm ) ) ) {
 
           // terms will combine, show halo for term and likeTerm
-          this.term.shadowVisibleProperty.value = false;
-          this.term.haloVisibleProperty.value = true;
+          if ( !this.term.isDisposed ) {
+            this.term.shadowVisibleProperty.value = false;
+            this.term.haloVisibleProperty.value = true;
+          }
           this.likeTerm.haloVisibleProperty.value = true;
         }
-        else {
+        else if ( !this.term.isDisposed ) {
 
           // term will not combine
           this.term.shadowVisibleProperty.value = true;
@@ -367,8 +369,10 @@ define( function( require ) {
         }
       }
       else {
-        this.term.shadowVisibleProperty.value = false;
-        this.term.haloVisibleProperty.value = false;
+        if ( !this.term.isDisposed ) {
+          this.term.shadowVisibleProperty.value = false;
+          this.term.haloVisibleProperty.value = false;
+        }
         if ( this.likeTerm ) {
           this.likeTerm.haloVisibleProperty.value = false;
         }
