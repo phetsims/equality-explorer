@@ -23,7 +23,6 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var RichText = require( 'SCENERY/nodes/RichText' );
-  var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -93,14 +92,6 @@ define( function( require ) {
       centerY: chooseYourLevelNode.centerY
     } );
 
-    // Sound button, at lower left
-    var soundButton = new SoundToggleButton( model.soundEnabledProperty, {
-      stroke: 'gray',
-      scale: 1.3,
-      left: layoutBounds.minX + EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
-    } );
-
     // Reset All button, at lower right
     var resetAllButton = new ResetAllButton( {
       listener: function() {
@@ -116,7 +107,6 @@ define( function( require ) {
       chooseYourLevelNode,
       infoButton,
       levelSelectionButtonsBox,
-      soundButton,
       resetAllButton
     ];
 

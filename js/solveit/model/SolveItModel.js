@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ChallengeGenerator1 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator1' );
   var ChallengeGenerator2 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator2' );
   var ChallengeGenerator3 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator3' );
@@ -56,9 +55,6 @@ define( function( require ) {
 
     // @public {SolveItScene|null} the selected scene, null if no scene is currently selected
     this.sceneProperty = new Property( null );
-
-    // @public technically a view Property, but convenient to put it in the model
-    this.soundEnabledProperty = new BooleanProperty( true );
   }
 
   equalityExplorer.register( 'SolveItModel', SolveItModel );
@@ -77,7 +73,6 @@ define( function( require ) {
       } );
 
       this.sceneProperty.reset();
-      this.soundEnabledProperty.reset();
     },
 
     /**

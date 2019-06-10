@@ -33,7 +33,8 @@ define( function( require ) {
     ];
 
     var sim = new Sim( equalityExplorerTitleString, screens, {
-      credits: EqualityExplorerConstants.CREDITS
+      credits: EqualityExplorerConstants.CREDITS,
+      supportsSound: true
     } );
     sim.start();
   } );

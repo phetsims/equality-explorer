@@ -13,7 +13,7 @@ define( function( require ) {
   var Easing = require( 'TWIXT/Easing' );
   var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var GameAudioPlayerOld = require( 'VEGAS/GameAudioPlayerOld' );
+  var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelSelectionNode = require( 'EQUALITY_EXPLORER/solveit/view/LevelSelectionNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -44,7 +44,7 @@ define( function( require ) {
     this.snapshotsAccordionBoxExpandedProperty =
       new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
-    var gameAudioPlayer = new GameAudioPlayerOld( model.soundEnabledProperty );
+    var gameAudioPlayer = new GameAudioPlayer();
 
     // UI for level selection and other game settings
     var levelSelectionNode = new LevelSelectionNode( model, this.layoutBounds, {
