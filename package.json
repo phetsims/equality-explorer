@@ -13,8 +13,7 @@
     "requirejsNamespace": "EQUALITY_EXPLORER",
     "phetLibs": [
       "twixt",
-      "vegas",
-      "vibe"
+      "vegas"
     ],
     "runnable": true,
     "supportedBrands": [
