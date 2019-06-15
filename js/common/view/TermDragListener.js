@@ -347,19 +347,20 @@ define( function( require ) {
         }
 
         // if the like term is new, then clean up previous like term
-        if ( previousLikeTerm && ( previousLikeTerm !== this.likeTerm ) ) {
+        if ( previousLikeTerm && !previousLikeTerm.isDisposed && ( previousLikeTerm !== this.likeTerm ) ) {
           previousLikeTerm.haloVisibleProperty.value = false;
         }
 
-        if ( this.likeTerm &&
-             ( this.termCreator.combineLikeTermsEnabled || this.term.isInverseTerm( this.likeTerm ) ) ) {
+        if ( this.likeTerm && ( this.termCreator.combineLikeTermsEnabled || this.term.isInverseTerm( this.likeTerm ) ) ) {
 
           // terms will combine, show halo for term and likeTerm
           if ( !this.term.isDisposed ) {
             this.term.shadowVisibleProperty.value = false;
             this.term.haloVisibleProperty.value = true;
           }
-          this.likeTerm.haloVisibleProperty.value = true;
+          if ( !this.likeTerm.isDisposed ) {
+            this.likeTerm.haloVisibleProperty.value = true;
+          }
         }
         else if ( !this.term.isDisposed ) {
 
@@ -373,7 +374,7 @@ define( function( require ) {
           this.term.shadowVisibleProperty.value = false;
           this.term.haloVisibleProperty.value = false;
         }
-        if ( this.likeTerm ) {
+        if ( this.likeTerm && !this.likeTerm.isDisposed ) {
           this.likeTerm.haloVisibleProperty.value = false;
         }
       }
