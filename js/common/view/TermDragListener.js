@@ -98,7 +98,7 @@ define( function( require ) {
 
     // Equivalent term tracks the movement of the dragged term throughout the drag cycle and post-drag animation.
     var locationListener = function( location ) {
-      if ( self.equivalentTerm ) {
+      if ( self.equivalentTerm && !self.equivalentTerm.isDisposed ) {
         self.equivalentTerm.moveTo( termCreator.getEquivalentTermLocation( term ) );
       }
     };
