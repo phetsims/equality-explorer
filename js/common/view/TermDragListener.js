@@ -177,7 +177,7 @@ define( function( require ) {
         // set term properties at beginning of drag
         this.term.draggingProperty.value = true;
         this.term.shadowVisibleProperty.value = true;
-        if ( this.equivalentTerm ) {
+        if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
           this.equivalentTerm.shadowVisibleProperty.value = true;
           this.equivalentTerm.pickableProperty.value = false;
         }
@@ -218,7 +218,7 @@ define( function( require ) {
       // set term Properties at end of drag
       this.term.draggingProperty.value = false;
       this.term.shadowVisibleProperty.value = false;
-      if ( this.equivalentTerm ) {
+      if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
         this.equivalentTerm.shadowVisibleProperty.value = false;
       }
 
@@ -251,10 +251,10 @@ define( function( require ) {
         // put equivalent term on opposite plate
         if ( this.equivalentTerm ) {
           var oppositeSumToZeroNode = this.endOpposite();
-          if ( this.equivalentTerm ) {
+          if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
             this.equivalentTerm.pickableProperty.value = true;
-            this.equivalentTerm = null;
           }
+          this.equivalentTerm = null;
         }
 
         // Do sum-to-zero animations after addressing both plates, so that plates have moved to their final position.
