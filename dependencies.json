@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.0.7-rc.1 Mon Jul 08 2019 14:02:21 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# equality-explorer 1.0.7 Wed Jul 10 2019 15:52:43 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "HEAD"
@@ -21,7 +21,7 @@
     "branch": "HEAD"
   },
   "equality-explorer": {
-    "sha": "29a759fc171cb0a3420fafa61e092c8801b6286b",
+    "sha": "6c33e7ff55d800af924098da09fefd52a3477435",
     "branch": "1.0"
   },
   "joist": {
