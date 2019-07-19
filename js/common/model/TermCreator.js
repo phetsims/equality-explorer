@@ -97,7 +97,7 @@ define( function( require ) {
       validators: [
         { valueType: TermCreator },
         { valueType: Term },
-        { isValidValue: value => ( value instanceof Event || value === null ) } // {Event|null}
+        { valueType: [ Event, null ] }
       ]
     } );
 
