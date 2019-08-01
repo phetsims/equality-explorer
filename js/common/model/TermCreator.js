@@ -94,7 +94,7 @@ define( function( require ) {
     // where event is non-null if the term was created as the result of a user interaction.
     // dispose not required.
     this.termCreatedEmitter = new Emitter( {
-      validators: [
+      parameters: [
         { valueType: TermCreator },
         { valueType: Term },
         { valueType: [ Event, null ] }

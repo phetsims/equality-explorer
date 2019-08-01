@@ -61,7 +61,7 @@ define( function( require ) {
     // @public (read-only)
     // emit when one or more terms become zero as the result of a universal operation
     this.sumToZeroEmitter = new Emitter( {
-      validators: [ {
+      parameters: [ {
 
         // {TermCreator[]}
         isValidValue: array => ( Array.isArray( array ) && _.every( array, value => value instanceof TermCreator ) )
@@ -126,7 +126,7 @@ define( function( require ) {
 
     // @protected (read-only) emit is called when a universal operation has completed.
     this.operationCompletedEmitter = new Emitter( {
-      validators: [ { valueType: UniversalOperation } ]
+      parameters: [ { valueType: UniversalOperation } ]
     } );
 
     // Variable and constant terms will combined in specific cells in the plate's grid.

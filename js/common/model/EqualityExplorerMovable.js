@@ -57,7 +57,7 @@ define( function( require ) {
 
     // @public (read-only) emit when dispose has completed.
     this.disposedEmitter = new Emitter( {
-      validators: [ { valueType: EqualityExplorerMovable } ]
+      parameters: [ { valueType: EqualityExplorerMovable } ]
     } );
 
     // @public (read-only) has dispose completed?
