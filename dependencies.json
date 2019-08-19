@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.0.8 Mon Aug 05 2019 15:23:28 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# equality-explorer 1.0.8 Mon Aug 19 2019 13:26:47 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "928741cfc8fe804334d5b35292140314511f8678",
     "branch": "HEAD"
@@ -21,12 +21,12 @@
     "branch": "HEAD"
   },
   "equality-explorer": {
-    "sha": "96f9f47c589a70d7b7a8dd7ae87aa6e40e7d4ab2",
+    "sha": "d4a069156c300ea8d5df8095dc4f23dd53a7212b",
     "branch": "1.0"
   },
   "joist": {
-    "sha": "efd1646778015a2d9c7b57be5e8ca52e74317035",
-    "branch": "HEAD"
+    "sha": "5bcf4d92ae0c7ffde549cc9c265e0889e9736cff",
+    "branch": "equality-explorer-1.0"
   },
   "kite": {
     "sha": "d08fb3c757566cb77db0fd3089105698d952a27c",
@@ -61,8 +61,8 @@
     "branch": "HEAD"
   },
   "scenery-phet": {
-    "sha": "80fa4ab9d1ec8b731409e26683f478ea3cdb8b69",
-    "branch": "HEAD"
+    "sha": "c2ceadad2e247be550a90db6a0389b807d401bcb",
+    "branch": "equality-explorer-1.0"
   },
   "sherpa": {
     "sha": "341552b7e46696a8ffa9394d31912974bc9be9ee",
