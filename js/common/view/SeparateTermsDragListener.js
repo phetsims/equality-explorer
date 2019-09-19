@@ -33,7 +33,7 @@ define( require => {
 
     TermDragListener.call( this, termNode, term, termCreator, options );
 
-    var self = this;
+    const self = this;
 
     // @private
     this.inverseTerm = null; // {Term|null} inverse term on opposite plate, for lock feature
@@ -83,7 +83,7 @@ define( require => {
     startOpposite: function() {
       assert && assert( this.termCreator.lockedProperty.value, 'startOpposite should only be called when lock is on' );
 
-      var termCell = this.plate.getCellForTerm( this.term );
+      const termCell = this.plate.getCellForTerm( this.term );
       this.equivalentTerm = this.oppositePlate.getClosestEquivalentTerm( this.term, termCell );
 
       if ( this.equivalentTerm ) {
@@ -94,9 +94,9 @@ define( require => {
       else if ( this.oppositePlate.isFull() ) {
 
         // opposite plate is full, cannot create inverse term, show 'Oops' message
-        var thisIsLeft = ( this.termCreator.positiveLocation.x < this.equivalentTermCreator.positiveLocation.x );
-        var message = thisIsLeft ? rightSideFullString : leftSideFullString;
-        var oopsDialog = new OopsDialog( message );
+        const thisIsLeft = ( this.termCreator.positiveLocation.x < this.equivalentTermCreator.positiveLocation.x );
+        const message = thisIsLeft ? rightSideFullString : leftSideFullString;
+        const oopsDialog = new OopsDialog( message );
         oopsDialog.show();
 
         // interrupt this drag sequence, since we can't take term off the plate
@@ -109,8 +109,8 @@ define( require => {
         this.inverseTerm = this.equivalentTermCreator.createTerm( _.extend( this.term.copyOptions(), {
           sign: -1
         } ) );
-        var inverseTermLocation = this.termCreator.getEquivalentTermLocation( this.term );
-        var inverseCell = this.oppositePlate.getBestEmptyCell( inverseTermLocation );
+        const inverseTermLocation = this.termCreator.getEquivalentTermLocation( this.term );
+        const inverseCell = this.oppositePlate.getBestEmptyCell( inverseTermLocation );
         this.equivalentTermCreator.putTermOnPlate( this.inverseTerm, inverseCell );
 
         // if the inverse term is dragged, break the association to equivalentTerm
@@ -134,7 +134,7 @@ define( require => {
       assert && assert( this.termCreator.lockedProperty.value, 'endOpposite should only be called when lock is on' );
 
       // put equivalent term in an empty cell
-      var emptyCell = this.oppositePlate.getBestEmptyCell( this.equivalentTerm.locationProperty.value );
+      const emptyCell = this.oppositePlate.getBestEmptyCell( this.equivalentTerm.locationProperty.value );
       this.equivalentTermCreator.putTermOnPlate( this.equivalentTerm, emptyCell );
 
       // always null for this subtype, since terms on the opposite side don't combine
@@ -158,11 +158,11 @@ define( require => {
       }
       else {
 
-        var self = this;
+        const self = this;
 
         // the target cell and its location
-        var cell = this.plate.getBestEmptyCell( this.term.locationProperty.value );
-        var cellLocation = this.plate.getLocationOfCell( cell );
+        const cell = this.plate.getBestEmptyCell( this.term.locationProperty.value );
+        const cellLocation = this.plate.getLocationOfCell( cell );
 
         this.term.pickableProperty.value = this.pickableWhileAnimating;
 
@@ -184,7 +184,7 @@ define( require => {
             assert && assert( !( self.equivalentTerm && self.oppositePlate.isFull() ), 'opposite plate is full' );
 
             // Compute cell again, in case a term has been removed below the cell that we were animating to.
-            var cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
+            const cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
 
             // Put the term on the plate
             self.termCreator.putTermOnPlate( self.term, cell );
@@ -205,11 +205,11 @@ define( require => {
 
                 // Transfer self.equivalentTerm to a local variable and set to null, so that equivalentTerm
                 // no longer tracks movement of term. See https://github.com/phetsims/equality-explorer/issues/90
-                var equivalentTerm = self.equivalentTerm;
+                const equivalentTerm = self.equivalentTerm;
                 self.equivalentTerm = null;
 
                 // Put equivalent term on the opposite plate
-                var equivalentCell = self.oppositePlate.getBestEmptyCell( equivalentTerm.locationProperty.value );
+                const equivalentCell = self.oppositePlate.getBestEmptyCell( equivalentTerm.locationProperty.value );
                 self.equivalentTermCreator.putTermOnPlate( equivalentTerm, equivalentCell );
                 equivalentTerm.pickableProperty.value = true;
               }

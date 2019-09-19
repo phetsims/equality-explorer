@@ -21,7 +21,7 @@ define( require => {
   const TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
 
   // constants
-  var DEFAULT_OPTIONS = {
+  const DEFAULT_OPTIONS = {
     positiveFill: EqualityExplorerColors.POSITIVE_CONSTANT_FILL, // fill of background circle for positive coefficient
     negativeFill: EqualityExplorerColors.NEGATIVE_CONSTANT_FILL, // fill of background circle for negative coefficient
     positiveLineDash: [], // solid border for positive coefficient
@@ -41,10 +41,10 @@ define( require => {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
-    var contentNode = ConstantTermNode.createInteractiveTermNode( term.constantValue,
+    const contentNode = ConstantTermNode.createInteractiveTermNode( term.constantValue,
       _.extend( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
-    var shadowNode = new Circle( term.diameter / 2, {
+    const shadowNode = new Circle( term.diameter / 2, {
       fill: 'black',
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
@@ -73,18 +73,18 @@ define( require => {
         diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       }, DEFAULT_OPTIONS, options );
 
-      var isPositive = ( constantValue.getValue() >= 0 );
+      const isPositive = ( constantValue.getValue() >= 0 );
 
       // background circle
-      var circleNode = new Circle( options.diameter / 2, {
+      const circleNode = new Circle( options.diameter / 2, {
         stroke: 'black',
         fill: isPositive ? options.positiveFill : options.negativeFill,
         lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
       } );
 
       // constant value
-      var margin = 0.18 * options.diameter; // determined empirically
-      var constantNode = ConstantTermNode.createEquationTermNode( constantValue, {
+      const margin = 0.18 * options.diameter; // determined empirically
+      const constantNode = ConstantTermNode.createEquationTermNode( constantValue, {
         fractionFont: options.fractionFont,
         integerFont: options.integerFont,
         maxWidth: circleNode.width - ( 2 * margin ),

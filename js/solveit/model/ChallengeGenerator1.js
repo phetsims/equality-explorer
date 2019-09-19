@@ -18,26 +18,26 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings (debug)
-  var PATTERN1 = 'level 1, type 1, ax = c<br>' +
+  const PATTERN1 = 'level 1, type 1, ax = c<br>' +
                  'x = {{x}}<br>' +
                  'a = {{a}}<br>' +
                  'c = a * x = {{c}}';
-  var PATTERN2 = 'level 1, type 2, x + b = c<br>' +
+  const PATTERN2 = 'level 1, type 2, x + b = c<br>' +
                  'x = {{x}}<br>' +
                  'b = {{b}}<br>' +
                  'c = x + b = {{c}}';
-  var PATTERN3 = 'level 1, type 3, x/d = c<br>' +
+  const PATTERN3 = 'level 1, type 3, x/d = c<br>' +
                  'c = {{c}}<br>' +
                  'd = {{d}}<br>' +
                  'x = c * d = {{x}} ';
 
   // constants
-  var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
-  var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var C_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var MAX_ATTEMPTS = 50; // max attempts in a while loop
+  const X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
+  const A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const C_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const MAX_ATTEMPTS = 50; // max attempts in a while loop
 
   /**
    * @constructor
@@ -89,9 +89,9 @@ define( require => {
      */
     nextType1: function() {
 
-      var x = this.randomX( X_VALUES );
-      var a = ChallengeGenerator.randomValue( A_VALUES, [ 0, 1 ] );
-      var c = a * x;
+      const x = this.randomX( X_VALUES );
+      const a = ChallengeGenerator.randomValue( A_VALUES, [ 0, 1 ] );
+      const c = a * x;
 
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
@@ -99,7 +99,7 @@ define( require => {
       assert && assert( c !== 0, 'c is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN1, { x: x, a: a, c: c } );
+      const debugDerivation = StringUtils.fillIn( PATTERN1, { x: x, a: a, c: c } );
 
       // ax + 0 = 0x + c
       return new Challenge( x,
@@ -121,16 +121,16 @@ define( require => {
      */
     nextType2: function() {
 
-      var x = this.randomX( X_VALUES );
-      var b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
-      var c = x + b;
+      const x = this.randomX( X_VALUES );
+      const b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
+      const c = x + b;
 
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
       assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN2, { x: x, b: b, c: c } );
+      const debugDerivation = StringUtils.fillIn( PATTERN2, { x: x, b: b, c: c } );
 
       // 1x + b = 0x + c
       return new Challenge( x,
@@ -152,8 +152,8 @@ define( require => {
      */
     nextType3: function() {
 
-      var x = this.xPrevious;
-      var attempts = 0; // to prevent an improbable infinite while loop
+      let x = this.xPrevious;
+      let attempts = 0; // to prevent an improbable infinite while loop
       while ( x === this.xPrevious && attempts < MAX_ATTEMPTS ) {
         attempts++;
         var c = ChallengeGenerator.randomValue( C_VALUES, [ 0 ] );
@@ -170,7 +170,7 @@ define( require => {
       this.xPrevious = x;
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN3, { x: x, c: c, d: d } );
+      const debugDerivation = StringUtils.fillIn( PATTERN3, { x: x, c: c, d: d } );
 
       // (1/d)x + 0 = 0x + c
       return new Challenge( x,

@@ -17,7 +17,7 @@ define( require => {
   const Shape = require( 'KITE/Shape' );
 
   // constants
-  var DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
+  const DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
 
   /**
    * @param {Object} [options]
@@ -35,19 +35,19 @@ define( require => {
       lineWidth: 0.25
     }, options );
 
-    var gridWidth = options.columns * options.cellSize.width;
-    var gridHeight = options.rows * options.cellSize.height;
+    const gridWidth = options.columns * options.cellSize.width;
+    const gridHeight = options.rows * options.cellSize.height;
 
     // border
-    var gridShape = new Shape().rect( 0, 0, gridWidth, gridHeight );
+    const gridShape = new Shape().rect( 0, 0, gridWidth, gridHeight );
 
     // horizontal lines
-    for ( var row = 1; row < options.rows; row++ ) {
+    for ( let row = 1; row < options.rows; row++ ) {
       gridShape.moveTo( 0, row * options.cellSize.height ).lineTo( gridWidth, row * options.cellSize.height );
     }
 
     // vertical lines
-    for ( var column = 1; column < options.columns; column++ ) {
+    for ( let column = 1; column < options.columns; column++ ) {
       gridShape.moveTo( column * options.cellSize.width, 0 ).lineTo( column * options.cellSize.width, gridHeight );
     }
 

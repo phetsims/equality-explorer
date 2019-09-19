@@ -18,7 +18,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var STEPPER = null; // Animation will be stepped via step function
+  const STEPPER = null; // Animation will be stepped via step function
 
   /**
    * @param {Node} node
@@ -27,7 +27,7 @@ define( require => {
    */
   function TranslateThenFade( node, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       destination: Vector2.ZERO, // destination location
@@ -41,13 +41,13 @@ define( require => {
     this.onStop = options.onStop;
 
     // Property for animating position. unlink not needed.
-    var positionProperty = new Property( node.translation );
+    const positionProperty = new Property( node.translation );
     positionProperty.link( function( position ) {
       node.translation = position;
     } );
 
     // Property for animating opacity. unlink not needed.
-    var opacityProperty = new NumberProperty( node.opacity );
+    const opacityProperty = new NumberProperty( node.opacity );
     opacityProperty.link( function( opacity ) {
       node.opacity = opacity;
     } );

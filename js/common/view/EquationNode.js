@@ -29,7 +29,7 @@ define( require => {
   const VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   // constants
-  var DEFAULT_FONT_SIZE = 30;
+  const DEFAULT_FONT_SIZE = 30;
 
   /**
    * @param {TermCreator[]} leftTermCreators - left side of equation, terms appear in this order
@@ -39,7 +39,7 @@ define( require => {
    */
   function EquationNode( leftTermCreators, rightTermCreators, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 
@@ -66,11 +66,11 @@ define( require => {
     Node.call( this );
 
     // expressions for the left and right sides of the equation
-    var leftExpressionNode = null;
-    var rightExpressionNode = null;
+    let leftExpressionNode = null;
+    let rightExpressionNode = null;
 
     // relational operator that separates the two expressions
-    var relationalOperatorNode = new Text( '?', {
+    const relationalOperatorNode = new Text( '?', {
       font: new PhetFont( {
         size: options.relationalOperatorFontSize,
         weight: options.relationalOperatorFontWeight
@@ -78,7 +78,7 @@ define( require => {
     } );
 
     // updates the equation's layout, origin at the center of the relational operator
-    var updateLayout = function() {
+    const updateLayout = function() {
       if ( leftExpressionNode && rightExpressionNode ) {
         relationalOperatorNode.centerX = 0;
         relationalOperatorNode.centerY = 0;
@@ -90,13 +90,13 @@ define( require => {
     };
 
     // updates the relational operator based on left vs right weight
-    var updateRelationalOperator = function() {
+    const updateRelationalOperator = function() {
       relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
       updateLayout();
     };
 
     // configuration information for one side of the equation, passed to createExpressionNode
-    var expressionConfig = {
+    const expressionConfig = {
       symbolFont: new MathSymbolFont( options.symbolFontSize ),
       operatorFont: new PhetFont( options.operatorFontSize ),
       integerFont: new PhetFont( options.integerFontSize ),
@@ -106,7 +106,7 @@ define( require => {
     };
 
     // updates the equation's terms
-    var updateTerms = function() {
+    const updateTerms = function() {
       leftExpressionNode = createExpressionNode( leftTermCreators, expressionConfig );
       rightExpressionNode = createExpressionNode( rightTermCreators, expressionConfig );
       self.children = [ leftExpressionNode, relationalOperatorNode, rightExpressionNode ];
@@ -117,10 +117,10 @@ define( require => {
     if ( options.updateEnabled ) {
 
       // {Property[]} dependencies that require the relational operator to be updated
-      var relationalOperatorDependencies = [];
+      const relationalOperatorDependencies = [];
 
       // {Property[]} dependencies that require the terms to be updated
-      var termDependencies = [];
+      const termDependencies = [];
 
       // Gather dependencies for all term creators...
       leftTermCreators.concat( rightTermCreators ).forEach( function( termCreator ) {
@@ -159,19 +159,19 @@ define( require => {
   function getRelationalOperator( leftTermCreators, rightTermCreators ) {
 
     // evaluate the left side
-    var leftWeight = Fraction.fromInteger( 0 );
+    let leftWeight = Fraction.fromInteger( 0 );
     for ( var i = 0; i < leftTermCreators.length; i++ ) {
       leftWeight = leftWeight.plus( leftTermCreators[ i ].weightOnPlateProperty.value );
     }
 
     // evaluate the right side
-    var rightWeight = Fraction.fromInteger( 0 );
+    let rightWeight = Fraction.fromInteger( 0 );
     for ( i = 0; i < rightTermCreators.length; i++ ) {
       rightWeight = rightWeight.plus( rightTermCreators[ i ].weightOnPlateProperty.value );
     }
 
     // determine the operator that describes the relationship between left and right sides
-    var relationalOperator = null;
+    let relationalOperator = null;
     if ( leftWeight.isLessThan( rightWeight ) ) {
       relationalOperator = MathSymbols.LESS_THAN;
     }
@@ -193,12 +193,12 @@ define( require => {
    */
   function createExpressionNode( termCreators, config ) {
 
-    var children = [];
-    for ( var i = 0; i < termCreators.length; i++ ) {
+    const children = [];
+    for ( let i = 0; i < termCreators.length; i++ ) {
 
-      var termCreator = termCreators[ i ];
+      const termCreator = termCreators[ i ];
 
-      var numberOfTermsOnPlate = termCreator.numberOfTermsOnPlateProperty.value;
+      const numberOfTermsOnPlate = termCreator.numberOfTermsOnPlateProperty.value;
       if ( numberOfTermsOnPlate > 0 ) {
 
         if ( termCreator instanceof ObjectTermCreator ) {
@@ -216,7 +216,7 @@ define( require => {
         }
         else if ( termCreator instanceof VariableTermCreator ) {
 
-          var coefficient = termCreator.sumCoefficientsOnPlate();
+          let coefficient = termCreator.sumCoefficientsOnPlate();
 
           if ( coefficient.getValue() !== 0 ) {
 
@@ -236,7 +236,7 @@ define( require => {
         }
         else if ( termCreator instanceof ConstantTermCreator ) {
 
-          var constantValue = termCreator.sumConstantsOnPlate();
+          let constantValue = termCreator.sumConstantsOnPlate();
 
           if ( constantValue.getValue() !== 0 ) {
 
@@ -277,7 +277,7 @@ define( require => {
    */
   function valueToOperatorNode( value, operatorFont ) {
     assert && assert( typeof value === 'number', 'invalid value: ' + value );
-    var operator = ( value > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
+    const operator = ( value > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
     return new Text( operator, { font: operatorFont } );
   }
 

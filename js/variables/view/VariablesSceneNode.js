@@ -49,7 +49,7 @@ define( require => {
       snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
     // Variables accordion box, above the Snapshots accordion box
-    var variablesAccordionBox = new VariablesAccordionBox( scene.variables, {
+    const variablesAccordionBox = new VariablesAccordionBox( scene.variables, {
       expandedProperty: this.variablesAccordionBoxExpandedProperty,
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: this.snapshotsAccordionBox.right,

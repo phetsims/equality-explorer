@@ -18,13 +18,13 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings (debug)
-  var PATTERN1 = 'level 3, type 1, (a/d)x + b = c<br>' +
+  const PATTERN1 = 'level 3, type 1, (a/d)x + b = c<br>' +
                  'x = {{x}}<br>' +
                  'd = {{d}}<br>' +
                  'a = {{a}}<br>' +
                  'b = {{b}}<br>' +
                  'c = (a/d)x + b = {{c}}';
-  var PATTERN2 = 'level 3, type 2, (a/d)x + b/d = c<br>' +
+  const PATTERN2 = 'level 3, type 2, (a/d)x + b/d = c<br>' +
                  'x = {{x}}<br>' +
                  'd = {{d}}<br>' +
                  'a = {{a}}<br>' +
@@ -32,11 +32,11 @@ define( require => {
                  'c = (ax + b)/d = {{c}}';
 
   // constants
-  var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
-  var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var B_VALUES_TYPE1 = ChallengeGenerator.rangeToArray( -3, 3 );
-  var B_VALUES_TYPE2 = ChallengeGenerator.rangeToArray( -10, 10 );
-  var D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
+  const A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const B_VALUES_TYPE1 = ChallengeGenerator.rangeToArray( -3, 3 );
+  const B_VALUES_TYPE2 = ChallengeGenerator.rangeToArray( -10, 10 );
+  const D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
   /**
    * @constructor
@@ -79,11 +79,11 @@ define( require => {
      */
     nextType1: function() {
 
-      var x = this.randomX( X_VALUES );
-      var d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
-      var a = ChallengeGenerator.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
-      var b = ChallengeGenerator.randomValue( B_VALUES_TYPE1, [ 0 ] );
-      var c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
+      const x = this.randomX( X_VALUES );
+      const d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
+      const a = ChallengeGenerator.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
+      const b = ChallengeGenerator.randomValue( B_VALUES_TYPE1, [ 0 ] );
+      const c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
@@ -93,11 +93,11 @@ define( require => {
 
       // Verify that we fixed the 'too many steps to solve' problem.
       // see https://github.com/phetsims/equality-explorer/issues/38#issuecomment-384761619
-      var bd = b * d;
+      const bd = b * d;
       assert && assert( bd >= -30 && bd <= 30, '(b * d) out of range: ' + bd );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN1, { x: x, a: a, b: b, c: c, d: d } );
+      const debugDerivation = StringUtils.fillIn( PATTERN1, { x: x, a: a, b: b, c: c, d: d } );
 
       // (a/d)x + b = 0x + c
       return new Challenge( x,
@@ -121,11 +121,11 @@ define( require => {
      */
     nextType2: function() {
 
-      var x = this.randomX( X_VALUES );
-      var d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
-      var a = ChallengeGenerator.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
-      var b = ChallengeGenerator.randomValueBy( B_VALUES_TYPE2, function( b ) { return ( b % d !== 0 ); } );
-      var c = new Fraction( ( a * x ) + b, d ).reduce();
+      const x = this.randomX( X_VALUES );
+      const d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
+      const a = ChallengeGenerator.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
+      const b = ChallengeGenerator.randomValueBy( B_VALUES_TYPE2, function( b ) { return ( b % d !== 0 ); } );
+      const c = new Fraction( ( a * x ) + b, d ).reduce();
 
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
@@ -134,7 +134,7 @@ define( require => {
       assert && assert( b % d !== 0, 'b/d reduces to an integer, b=' + b + ', d=' + d );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN2, { x: x, a: a, b: b, c: c, d: d } );
+      const debugDerivation = StringUtils.fillIn( PATTERN2, { x: x, a: a, b: b, c: c, d: d } );
 
       // (a/d)x + (b/d) = 0x + c
       return new Challenge( x,

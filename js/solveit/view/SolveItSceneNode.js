@@ -46,9 +46,9 @@ define( require => {
   const xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
-  var LEVEL_FONT = new PhetFont( 20 );
-  var NEXT_BUTTON_FONT = new PhetFont( 30 );
-  var EQUATION_PANEL_OPTIONS = {
+  const LEVEL_FONT = new PhetFont( 20 );
+  const NEXT_BUTTON_FONT = new PhetFont( 30 );
+  const EQUATION_PANEL_OPTIONS = {
     contentWidth: 360,
     xMargin: 10,
     yMargin: 0
@@ -67,23 +67,23 @@ define( require => {
   function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProperty,
                              snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, options ) {
 
-    var self = this;
+    const self = this;
 
     options = options || {};
 
     // Level description, displayed in the status bar
-    var levelDescriptionNode = new RichText( scene.description, {
+    const levelDescriptionNode = new RichText( scene.description, {
       font: LEVEL_FONT,
       maxWidth: 650 // determined empirically
     } );
 
-    var backButtonListener = function() {
+    const backButtonListener = function() {
       self.universalOperationControl.stopAnimations(); // stop any operations that are in progress
       sceneProperty.value = null; // back to the SettingsNode, where no scene is selected
     };
 
     // Bar across the top of the screen
-    var statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode,
+    const statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode,
       scene.scoreProperty, {
         floatToTop: true, // see https://github.com/phetsims/equality-explorer/issues/144
         spacing: 20,
@@ -92,7 +92,7 @@ define( require => {
       } );
 
     // Challenge equation
-    var challengePanelOptions = _.extend( {}, EQUATION_PANEL_OPTIONS, {
+    const challengePanelOptions = _.extend( {}, EQUATION_PANEL_OPTIONS, {
       fill: Color.WHITE.withAlpha( 0.5 ),
       stroke: Color.BLACK.withAlpha( 0.5 ),
       equationNodeOptions: {
@@ -102,10 +102,10 @@ define( require => {
       centerX: scene.scale.location.x,
       top: statusBar.bottom + 15
     } );
-    var challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
+    let challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
 
     // Equation that reflects what is currently on the scale
-    var equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators,
+    const equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators,
       _.extend( {}, EQUATION_PANEL_OPTIONS, {
         fill: 'white',
         stroke: 'black',
@@ -117,10 +117,10 @@ define( require => {
       } ) );
 
     // 'Solve for x'
-    var solveForXText = StringUtils.fillIn( solveForString, {
+    const solveForXText = StringUtils.fillIn( solveForString, {
       variable: MathSymbolFont.getRichTextMarkup( xString )
     } );
-    var solveForXNode = new RichText( solveForXText, {
+    const solveForXNode = new RichText( solveForXText, {
       font: new PhetFont( { size: 24, weight: 'bold' } ),
       right: challengePanel.left - 10,
       centerY: challengePanel.centerY,
@@ -128,7 +128,7 @@ define( require => {
     } );
 
     // Layer when universal operation animation occurs
-    var operationAnimationLayer = new Node();
+    const operationAnimationLayer = new Node();
 
     // @private Universal Operation control
     this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
@@ -138,14 +138,14 @@ define( require => {
     } );
 
     // Scale
-    var scaleNode = new BalanceScaleNode( scene.scale, {
+    const scaleNode = new BalanceScaleNode( scene.scale, {
       clearScaleButtonVisible: false,
       organizeButtonVisible: false,
       disposeTermsNotOnScale: scene.disposeTermsNotOnScale.bind( scene )
     } );
 
     // Snapshots
-    var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
+    const snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
       fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
@@ -153,7 +153,7 @@ define( require => {
     } );
 
     // Refresh button, generates a new challenge, effectively skipping the current challenge
-    var refreshButton = new RefreshButton( {
+    const refreshButton = new RefreshButton( {
       iconScale: 0.6,
       xMargin: 14,
       yMargin: 7,
@@ -166,7 +166,7 @@ define( require => {
     } );
 
     // Next button, takes us to the next challenge
-    var nextButton = new RectangularPushButton( {
+    const nextButton = new RectangularPushButton( {
       content: new Text( nextString, {
         font: NEXT_BUTTON_FONT,
         maxWidth: 100 // determined empirically
@@ -183,17 +183,17 @@ define( require => {
     } );
 
     // Smiley face, displayed when the challenge has been solved
-    var faceNode = new FaceNode( 225, {
+    const faceNode = new FaceNode( 225, {
       centerX: scaleNode.centerX,
       top: this.universalOperationControl.bottom + 25
     } );
 
     // terms live in this layer
-    var termsLayer = new Node( {
+    const termsLayer = new Node( {
       pickable: false // terms are not interactive, all interaction is with the universal operation control
     } );
 
-    var children = [
+    const children = [
       statusBar,
       challengePanel,
       solveForXNode,
@@ -239,13 +239,13 @@ define( require => {
 
     // {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
     // Created on demand and reused, so we don't have to deal with buggy Dialog.dispose.
-    var rewardDialog = null;
+    let rewardDialog = null;
 
     // @private {EqualityExplorerRewardNode} reward shown while rewardDialog is open
     this.rewardNode = null;
 
     // Property that controls opacity of smiley face
-    var faceOpacityProperty = new NumberProperty( faceNode.opacity );
+    const faceOpacityProperty = new NumberProperty( faceNode.opacity );
     faceOpacityProperty.link( function( faceOpacity ) {
       faceNode.opacity = faceOpacity;
     } );
@@ -279,11 +279,11 @@ define( require => {
           layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
 
             // center horizontally on the screen
-            var screenCenterX = screenBounds.center.times( 1 / scale ).x;
+            const screenCenterX = screenBounds.center.times( 1 / scale ).x;
 
             // top of dialog below equationPanel, so the solution is not obscured
-            var localCenterTop = new Vector2( equationPanel.centerX, equationPanel.bottom + 10 );
-            var globalCenterTop = self.localToGlobalPoint( localCenterTop ).times( 1 / scale );
+            const localCenterTop = new Vector2( equationPanel.centerX, equationPanel.bottom + 10 );
+            const globalCenterTop = self.localToGlobalPoint( localCenterTop ).times( 1 / scale );
 
             dialog.centerX = screenCenterX;
             dialog.top = globalCenterTop.y;

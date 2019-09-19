@@ -35,8 +35,8 @@ define( require => {
      * @public
      */
     sumConstantsOnPlate: function() {
-      var sum = Fraction.fromInteger( 0 );
-      for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
+      let sum = Fraction.fromInteger( 0 );
+      for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
         sum = sum.plus( this.termsOnPlate.get( i ).constantValue ).reduced();
       }
       return sum;
@@ -60,7 +60,7 @@ define( require => {
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
-      var constantValue = EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE.timesInteger( options.sign );
+      const constantValue = EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE.timesInteger( options.sign );
       return ConstantTermNode.createInteractiveTermNode( constantValue );
     },
 

@@ -22,7 +22,7 @@ define( require => {
   const questionMarkString = require( 'string!EQUALITY_EXPLORER/questionMark' );
 
   // constants
-  var FONT_SIZE = 24;
+  const FONT_SIZE = 24;
 
   /**
    * @param {Variable[]} variables - the variables
@@ -34,20 +34,20 @@ define( require => {
 
     // Design decision: If there are multiple variables, use the first variable to label the checkbox.
     // This decision was based on the limited space we have for the checkbox in Snapshots accordion box.
-    var variable = variables[ 0 ];
+    const variable = variables[ 0 ];
 
     // variable
-    var variableNode = new VariableNode( variable, {
+    const variableNode = new VariableNode( variable, {
       iconScale: 0.45,
       fontSize: FONT_SIZE
     } );
 
     // '= ?' in normal font (no i18n requirements here, since this is an equation)
-    var rightNode = new Text( ' ' + MathSymbols.EQUAL_TO + ' ' + questionMarkString, {
+    const rightNode = new Text( ' ' + MathSymbols.EQUAL_TO + ' ' + questionMarkString, {
       font: new PhetFont( FONT_SIZE )
     } );
 
-    var contentNode = new HBox( {
+    const contentNode = new HBox( {
       children: [ variableNode, rightNode ], // x = ?
       maxWidth: 100
     } );

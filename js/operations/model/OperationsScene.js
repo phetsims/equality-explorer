@@ -33,8 +33,8 @@ define( require => {
   const xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
-  var OPERAND_RANGE = new Range( -10, 10 );
-  var ICON_SIZE = new Dimension2(
+  const OPERAND_RANGE = new Range( -10, 10 );
+  const ICON_SIZE = new Dimension2(
     EqualityExplorerConstants.BIG_TERM_DIAMETER + 10,
     EqualityExplorerConstants.BIG_TERM_DIAMETER );
 
@@ -79,9 +79,9 @@ define( require => {
     // @public (read-only) {Term[]} operands that appear in the operand picker.
     // These are the only Terms that are not created and managed by a TermCreator.
     this.operands = [];
-    for ( var i = OPERAND_RANGE.min; i <= OPERAND_RANGE.max; i++ ) {
+    for ( let i = OPERAND_RANGE.min; i <= OPERAND_RANGE.max; i++ ) {
 
-      var constantTermOperand = new ConstantTerm( {
+      const constantTermOperand = new ConstantTerm( {
         constantValue: Fraction.fromInteger( i )
       } );
 
@@ -92,7 +92,7 @@ define( require => {
       }
       else {
 
-        var variableTermOperand = new VariableTerm( this.xVariable, {
+        const variableTermOperand = new VariableTerm( this.xVariable, {
           coefficient: Fraction.fromInteger( i )
         } );
 
@@ -114,7 +114,7 @@ define( require => {
     }
 
     // Start with operand 1
-    var defaultOperand = _.find( this.operands, function( operand ) {
+    const defaultOperand = _.find( this.operands, function( operand ) {
       return ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 );
     } );
     assert && assert( defaultOperand, 'oops, the default was not found' );
@@ -130,10 +130,10 @@ define( require => {
     } );
 
     // Variable and constant terms will combined in specific cells in the plate's grid.
-    var variableTermCreatorOptions = {
+    const variableTermCreatorOptions = {
       likeTermsCell: 0 // cell on the plate that all like terms will occupy
     };
-    var constantTermCreatorOptions = {
+    const constantTermCreatorOptions = {
       likeTermsCell: 1 // cell on the plate that all like terms will occupy
     };
 
@@ -184,21 +184,21 @@ define( require => {
     applyOperation: function( operation ) {
 
       // Take a snapshot of terms on the scale, so we can undo the operation if necessary.
-      var snapshot = new Snapshot( this );
+      const snapshot = new Snapshot( this );
 
       // {TermCreator[]} TermCreators whose term summed to zero as the result of applying this operation.
-      var termCreatorsZero = [];
+      const termCreatorsZero = [];
 
       // Apply the operation to each TermCreator
       this.allTermCreators.forEach( function( termCreator ) {
-        var summedToZero = termCreator.applyOperation( operation );
+        const summedToZero = termCreator.applyOperation( operation );
         if ( summedToZero ) {
           termCreatorsZero.push( termCreator );
         }
       } );
 
       // If any term exceeds maxInteger as the result of applying the operation ...
-      var termCreator = this.findMaxIntegerExceeded();
+      const termCreator = this.findMaxIntegerExceeded();
       if ( termCreator ) {
 
         // Notify listeners and undo the operation by restoring the snapshot.
@@ -229,7 +229,7 @@ define( require => {
       return _.find( this.allTermCreators, function( termCreator ) {
 
         // Get the term on the plate
-        var term = termCreator.getLikeTermOnPlate();
+        const term = termCreator.getLikeTermOnPlate();
 
         // Does the term exceed the limit?
         return term && term.maxIntegerExceeded();

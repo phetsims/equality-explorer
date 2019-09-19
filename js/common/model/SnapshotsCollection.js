@@ -23,11 +23,11 @@ define( require => {
       numberOfSnapshots: 5
     }, options );
 
-    var self = this;
+    const self = this;
 
     // @public {Property.<Snapshot|null>[]} a Property for each possible snapshot, null means no snapshot
     this.snapshotProperties = [];
-    for ( var i = 0; i < options.numberOfSnapshots; i++ ) {
+    for ( let i = 0; i < options.numberOfSnapshots; i++ ) {
       this.snapshotProperties.push( new Property( null, {
         isValidValue: function( snapshot ) {
           return ( snapshot === null ) || ( snapshot instanceof Snapshot );
@@ -59,7 +59,7 @@ define( require => {
       this.selectedSnapshotProperty.reset();
 
       // delete all snapshots
-      for ( var i = 0; i < this.snapshotProperties.length; i++ ) {
+      for ( let i = 0; i < this.snapshotProperties.length; i++ ) {
         if ( this.snapshotProperties[ i ].value !== null ) {
           this.snapshotProperties[ i ].value = null;
         }
@@ -73,12 +73,12 @@ define( require => {
     deleteSelectedSnapshot: function() {
 
       // clear the selection
-      var selectedSnapshot = this.selectedSnapshotProperty.value;
+      const selectedSnapshot = this.selectedSnapshotProperty.value;
       assert && assert( selectedSnapshot, 'no selected snapshot' );
       this.selectedSnapshotProperty.value = null;
 
       // find the Property that corresponds to the snapshot and clear it
-      for ( var i = 0; i < this.snapshotProperties.length; i++ ) {
+      for ( let i = 0; i < this.snapshotProperties.length; i++ ) {
         if ( this.snapshotProperties[ i ].value === selectedSnapshot ) {
           this.snapshotProperties[ i ].value = null;
           break;

@@ -15,7 +15,7 @@ define( require => {
   const Range = require( 'DOT/Range' );
 
   // constants
-  var DEFAULT_RANGE = new Range( -40, 40 );
+  const DEFAULT_RANGE = new Range( -40, 40 );
 
   /**
    * @param {string} symbol - the variable's symbol, e.g. 'x'

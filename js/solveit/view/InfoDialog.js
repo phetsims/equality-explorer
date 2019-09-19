@@ -22,9 +22,9 @@ define( require => {
   const levelsString = require( 'string!EQUALITY_EXPLORER/levels' );
 
   // constants
-  var TITLE_FONT = new PhetFont( 24 );
-  var DESCRIPTION_FONT = new PhetFont( 18 );
-  var MAX_CONTENT_WIDTH = 500;
+  const TITLE_FONT = new PhetFont( 24 );
+  const DESCRIPTION_FONT = new PhetFont( 18 );
+  const MAX_CONTENT_WIDTH = 500;
 
   /**
    * @param {string[]} levelDescriptions
@@ -32,21 +32,21 @@ define( require => {
    */
   function InfoDialog( levelDescriptions ) {
 
-    var children = [];
+    const children = [];
     levelDescriptions.forEach( function( levelDescription ) {
       children.push( new RichText( levelDescription, {
         font: DESCRIPTION_FONT
       } ) );
     } );
 
-    var content = new VBox( {
+    const content = new VBox( {
       align: 'left',
       spacing: 15,
       children: children,
       maxWidth: MAX_CONTENT_WIDTH // scale all of the descriptions uniformly
     } );
 
-    var titleNode = new Text( levelsString, {
+    const titleNode = new Text( levelsString, {
       font: TITLE_FONT,
       maxWidth: 0.75 * MAX_CONTENT_WIDTH
     } );

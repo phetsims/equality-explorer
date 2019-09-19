@@ -41,10 +41,10 @@ define( require => {
      * @param {Term} term
      * @param {Event|null} event - event is non-null when the term was created via user interaction
      */
-    var termCreatedListener = function( termCreator, term, event ) {
+    const termCreatedListener = function( termCreator, term, event ) {
 
       // create a TermNode
-      var termNode = termCreator.createTermNode( term );
+      const termNode = termCreator.createTermNode( term );
       termsLayer.addChild( termNode );
 
       // Clean up when the term is disposed. Term.dispose handles removal of this listener.
@@ -59,8 +59,8 @@ define( require => {
     };
 
     // When the maxInteger limit is exceeded, dispose of all terms that are not on the scale, and display a dialog.
-    var dialog = null; // dialog will be reused
-    var maxIntegerExceededListener = function() {
+    let dialog = null; // dialog will be reused
+    const maxIntegerExceededListener = function() {
       phet.log && phet.log( 'maxInteger exceeded' );
       scene.disposeTermsNotOnScale();
       dialog = dialog || new OopsDialog( numberTooBigString );
@@ -91,18 +91,18 @@ define( require => {
      */
     animateSumToZero: function( termCreators ) {
 
-      for ( var i = 0; i < termCreators.length; i++ ) {
+      for ( let i = 0; i < termCreators.length; i++ ) {
 
-        var termCreator = termCreators[ i ];
+        const termCreator = termCreators[ i ];
 
         assert && assert( termCreator.combineLikeTermsEnabled,
           'animateSumToZero should only be used when combineLikeTermsEnabled' );
 
         // determine where the cell that contained the term is currently located
-        var cellCenter = termCreator.plate.getLocationOfCell( termCreator.likeTermsCell );
+        const cellCenter = termCreator.plate.getLocationOfCell( termCreator.likeTermsCell );
 
         // display the animation in that cell
-        var sumToZeroNode = new SumToZeroNode( {
+        const sumToZeroNode = new SumToZeroNode( {
           variable: termCreator.variable || null,
           center: cellCenter,
           fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE

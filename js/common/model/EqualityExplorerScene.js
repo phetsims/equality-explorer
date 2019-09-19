@@ -21,11 +21,11 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var DEFAULT_SCALE_LOCATION = new Vector2( 355, 427 );
-  var DRAG_BOUNDS_X_MARGIN = 20;
-  var DRAG_BOUNDS_Y_MARGIN = 10;
-  var DRAG_BOUNDS_MIN_Y = 100;
-  var DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.maxY - DRAG_BOUNDS_Y_MARGIN;
+  const DEFAULT_SCALE_LOCATION = new Vector2( 355, 427 );
+  const DRAG_BOUNDS_X_MARGIN = 20;
+  const DRAG_BOUNDS_Y_MARGIN = 10;
+  const DRAG_BOUNDS_MIN_Y = 100;
+  const DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.maxY - DRAG_BOUNDS_Y_MARGIN;
 
   /**
    * @param {TermCreator[]} leftTermCreators - in order that they appear in left toolbox and left side of equations
@@ -36,7 +36,7 @@ define( require => {
    */
   function EqualityExplorerScene( leftTermCreators, rightTermCreators, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       debugName: null, // internal name, not displayed to the user
@@ -75,7 +75,7 @@ define( require => {
     // Associate each term creator with a 'like term' creator on the opposite side of the scale.
     assert && assert( leftTermCreators.length === rightTermCreators.length,
       'the same number of term creators are required on both sides of the scale' );
-    for ( var i = 0; i < leftTermCreators.length; i++ ) {
+    for ( let i = 0; i < leftTermCreators.length; i++ ) {
       assert && assert( leftTermCreators[ i ].isLikeTermCreator( rightTermCreators[ i ] ),
         'like term creators must have the same indices on both sides of the scale' );
       leftTermCreators[ i ].equivalentTermCreator = rightTermCreators[ i ];
@@ -120,7 +120,7 @@ define( require => {
 
       // Update the lockedProperty of all term creators. unlink not needed.
       this.lockedProperty.link( function( locked ) {
-        for ( var i = 0; i < self.allTermCreators.length; i++ ) {
+        for ( let i = 0; i < self.allTermCreators.length; i++ ) {
           self.allTermCreators[ i ].lockedProperty.value = locked;
         }
       } );
@@ -136,8 +136,8 @@ define( require => {
    * @param {TermCreator[]} termCreators
    */
   function validateTermCreators( termCreators ) {
-    for ( var i = 0; i < termCreators.length; i++ ) {
-      for ( var j = 0; j < termCreators.length; j++ ) {
+    for ( let i = 0; i < termCreators.length; i++ ) {
+      for ( let j = 0; j < termCreators.length; j++ ) {
 
         // skip comparisons to self
         if ( termCreators[ i ] !== termCreators[ j ] ) {

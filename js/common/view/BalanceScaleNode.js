@@ -28,21 +28,21 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // base
-  var BASE_WIDTH = 200;
-  var BASE_HEIGHT = 40;
-  var BASE_DEPTH = 10;
+  const BASE_WIDTH = 200;
+  const BASE_HEIGHT = 40;
+  const BASE_DEPTH = 10;
 
   // beam
-  var BEAM_HEIGHT = 5;
-  var BEAM_DEPTH = 8;
+  const BEAM_HEIGHT = 5;
+  const BEAM_DEPTH = 8;
 
   // fulcrum that the beam is balanced on
-  var FULCRUM_HEIGHT = 52;
-  var FULCRUM_TOP_WIDTH = 15;
-  var FULCRUM_BOTTOM_WIDTH = 25;
+  const FULCRUM_HEIGHT = 52;
+  const FULCRUM_TOP_WIDTH = 15;
+  const FULCRUM_BOTTOM_WIDTH = 25;
 
   // arrow
-  var ARROW_LENGTH = 75;
+  const ARROW_LENGTH = 75;
 
   /**
    * @param {BalanceScale} scale
@@ -61,14 +61,14 @@ define( require => {
     options.y = scale.location.y;
 
     // the fulcrum that the beam balances on
-    var fulcrumTaper = FULCRUM_BOTTOM_WIDTH - FULCRUM_TOP_WIDTH;
-    var fulcrumShape = new Shape().polygon( [
+    const fulcrumTaper = FULCRUM_BOTTOM_WIDTH - FULCRUM_TOP_WIDTH;
+    const fulcrumShape = new Shape().polygon( [
       new Vector2( 0, 0 ),
       new Vector2( FULCRUM_TOP_WIDTH, 0 ),
       new Vector2( FULCRUM_TOP_WIDTH + fulcrumTaper / 2, FULCRUM_HEIGHT ),
       new Vector2( -fulcrumTaper / 2, FULCRUM_HEIGHT )
     ] );
-    var fulcrumNode = new Path( fulcrumShape, {
+    const fulcrumNode = new Path( fulcrumShape, {
       stroke: 'black',
       fill: EqualityExplorerColors.SCALE_FULCRUM_FILL,
 
@@ -78,7 +78,7 @@ define( require => {
     } );
 
     // the base the supports the entire scale
-    var baseNode = new BoxNode( {
+    const baseNode = new BoxNode( {
       width: BASE_WIDTH,
       height: BASE_HEIGHT,
       depth: BASE_DEPTH,
@@ -90,7 +90,7 @@ define( require => {
     } );
 
     // the beam that supports a plate on either end
-    var beamNode = new BoxNode( {
+    const beamNode = new BoxNode( {
       width: scale.beamWidth,
       height: BEAM_HEIGHT,
       depth: BEAM_DEPTH,
@@ -102,7 +102,7 @@ define( require => {
     } );
 
     // arrow at the center on the beam, points perpendicular to the beam
-    var arrowNode = new ArrowNode( 0, 0, 0, -ARROW_LENGTH, {
+    const arrowNode = new ArrowNode( 0, 0, 0, -ARROW_LENGTH, {
       headHeight: 20,
       headWidth: 15,
       centerX: beamNode.centerX,
@@ -111,7 +111,7 @@ define( require => {
 
     // A dashed line that is perpendicular to the base.
     // When the scale is balanced, the arrow will be aligned with this line.
-    var dashedLine = new Line( 0, 0, 0, 1.2 * ARROW_LENGTH, {
+    const dashedLine = new Line( 0, 0, 0, 1.2 * ARROW_LENGTH, {
       lineDash: [ 4, 4 ],
       stroke: 'black',
       centerX: beamNode.centerX,
@@ -119,22 +119,22 @@ define( require => {
     } );
 
     // left plate
-    var leftPlateNode = new PlateNode( scale.leftPlate, {
+    const leftPlateNode = new PlateNode( scale.leftPlate, {
       center: beamNode.center // correct location will be set later in constructor
     } );
 
     // right plate
-    var rightPlateNode = new PlateNode( scale.rightPlate, {
+    const rightPlateNode = new PlateNode( scale.rightPlate, {
       center: beamNode.center // correct location will be set later in constructor
     } );
 
     // pressing this button clears all terms from the scale
-    var clearScaleButton = new ClearScaleButton( scale.clear.bind( scale ), {
+    const clearScaleButton = new ClearScaleButton( scale.clear.bind( scale ), {
       visible: options.clearScaleButtonVisible
     } );
 
     // pressing this button organizes terms on the scale, grouping like terms together
-    var organizeButton = new OrganizeButton( scale.organize.bind( scale ), {
+    const organizeButton = new OrganizeButton( scale.organize.bind( scale ), {
       visible: options.organizeButtonVisible
     } );
 
@@ -147,13 +147,13 @@ define( require => {
 
     // Disable ClearScaleButton and OrganizeButton when the scale is empty. unlink not required.
     scale.numberOfTermsProperty.link( function( numberOfTerms ) {
-      var enabled = ( numberOfTerms !== 0 );
+      const enabled = ( numberOfTerms !== 0 );
       clearScaleButton.enabled = enabled;
       organizeButton.enabled = enabled;
     } );
 
     // buttons on the front face of the base
-    var buttonsParent = new HBox( {
+    const buttonsParent = new HBox( {
       children: [ clearScaleButton, organizeButton ],
       spacing: 100,
       centerX: baseNode.centerX,
@@ -182,7 +182,7 @@ define( require => {
     // Adjust parts of the scale that depend on angle. unlink not required.
     scale.angleProperty.link( function( angle, oldAngle ) {
 
-      var deltaAngle = angle - oldAngle;
+      const deltaAngle = angle - oldAngle;
 
       // rotate the beam about its pivot point
       beamNode.rotateAround( new Vector2( beamNode.centerX, beamNode.centerY ), deltaAngle );

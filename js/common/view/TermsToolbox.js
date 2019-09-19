@@ -19,7 +19,7 @@ define( require => {
   const TermCreatorNode = require( 'EQUALITY_EXPLORER/common/view/TermCreatorNode' );
 
   // constants
-  var DEFAULT_CONTENT_SIZE = new Dimension2( 250, 50 );
+  const DEFAULT_CONTENT_SIZE = new Dimension2( 250, 50 );
 
   /**
    * @param {TermCreator[]} termCreators - creators for terms, appear in this order left-to-right
@@ -42,10 +42,10 @@ define( require => {
       yMargin: 5
     }, options );
 
-    var backgroundNode = new Rectangle( 0, 0, options.contentSize.width, options.contentSize.height );
+    const backgroundNode = new Rectangle( 0, 0, options.contentSize.width, options.contentSize.height );
 
-    var termCreatorNodes = [];
-    for ( var i = 0; i < termCreators.length; i++ ) {
+    const termCreatorNodes = [];
+    for ( let i = 0; i < termCreators.length; i++ ) {
 
       // creator for positive terms
       termCreatorNodes.push( new TermCreatorNode( termCreators[ i ], plate, termsLayer ) );
@@ -60,12 +60,12 @@ define( require => {
 
     // touchAreas
     termCreatorNodes.forEach( function( termCreatorNode ) {
-      var dx = Math.min( 5, options.spacing ); // determined empirically
-      var dy = options.yMargin + ( options.contentSize.height - termCreatorNode.height ) / 2; // height of toolbox
+      const dx = Math.min( 5, options.spacing ); // determined empirically
+      const dy = options.yMargin + ( options.contentSize.height - termCreatorNode.height ) / 2; // height of toolbox
       termCreatorNode.touchArea = termCreatorNode.localBounds.dilatedXY( dx, dy );
     } );
 
-    var hBox = new HBox( {
+    const hBox = new HBox( {
       spacing: options.spacing,
       align: 'center',
       children: termCreatorNodes,
@@ -74,7 +74,7 @@ define( require => {
       maxHeight: options.contentSize.height
     } );
 
-    var content = new Node( {
+    const content = new Node( {
       children: [ backgroundNode, hBox ]
     } );
 

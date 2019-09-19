@@ -56,7 +56,7 @@ define( require => {
      * @override
      */
     copyOptions: function() {
-      var supertypeOptions = Term.prototype.copyOptions.call( this );
+      const supertypeOptions = Term.prototype.copyOptions.call( this );
       return _.extend( {}, supertypeOptions, {
         constantValue: this.constantValue
       } );
@@ -165,7 +165,7 @@ define( require => {
      * @override
      */
     createSnapshot: function() {
-      var supertypeOptions = Term.prototype.createSnapshot.call( this );
+      const supertypeOptions = Term.prototype.createSnapshot.call( this );
       return _.extend( {}, supertypeOptions, {
         constantValue: this.constantValue
       } );
@@ -181,7 +181,7 @@ define( require => {
      */
     applyOperation: function( operation, options ) {
 
-      var term = null;
+      let term = null;
 
       // constant operands only
       if ( operation.operand instanceof ConstantTerm ) {

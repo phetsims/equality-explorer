@@ -20,7 +20,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
 
-  var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
+  const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
     // Shows the grid on each of the plates.
     // For internal use only, not public facing.

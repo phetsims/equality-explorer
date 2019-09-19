@@ -26,7 +26,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var NO_TERM = null; // occupies all empty cells in the grid
+  const NO_TERM = null; // occupies all empty cells in the grid
 
   /**
    * @param {Vector2Property} locationProperty
@@ -36,7 +36,7 @@ define( require => {
    */
   function Grid( locationProperty, debugSide, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       rows: 10,
@@ -62,8 +62,8 @@ define( require => {
     // Storing as a 1D array makes it easy for snapshots to save/restore the location of terms in the grid.
     // See rowColumnToCell, cellToRow, cellToColumn for mapping between index and (row,column).
     this.cells = [];
-    var numberOfCells = options.rows * options.columns;
-    for ( var i = 0; i < numberOfCells; i++ ) {
+    const numberOfCells = options.rows * options.columns;
+    for ( let i = 0; i < numberOfCells; i++ ) {
       this.cells[ i ] = NO_TERM;
     }
 
@@ -82,7 +82,7 @@ define( require => {
       );
 
       // move the terms
-      for ( var i = 0; i < self.cells.length; i++ ) {
+      for ( let i = 0; i < self.cells.length; i++ ) {
         if ( self.cells[ i ] !== NO_TERM ) {
           self.cells[ i ].moveTo( self.getLocationOfCell( i ) );
         }
@@ -138,7 +138,7 @@ define( require => {
      * @public
      */
     clearAllCells: function() {
-      for ( var i = 0; i < this.cells.length; i++ ) {
+      for ( let i = 0; i < this.cells.length; i++ ) {
         this.clearCell( i );
       }
     },
@@ -150,7 +150,7 @@ define( require => {
      */
     clearColumn: function( column ) {
       assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
-      for ( var row = 0; row < this.rows; row++ ) {
+      for ( let row = 0; row < this.rows; row++ ) {
         this.clearCell( this.rowColumnToCell( row, column ) );
       }
     },
@@ -162,13 +162,13 @@ define( require => {
      * @private
      */
     getCellAtLocation: function( location ) {
-      var cell = null;
+      let cell = null;
       if ( this.containsLocation( location ) ) {
 
         // row and column of the cell that contains location
         // Math.min handles the case where location is exactly on bounds.maxX or maxY. See #39.
-        var row = Math.min( this.rows - 1, Math.floor( ( location.y - this.bounds.minY ) / this.cellHeight ) );
-        var column = Math.min( this.columns - 1, Math.floor( ( location.x - this.bounds.minX ) / this.cellWidth ) );
+        const row = Math.min( this.rows - 1, Math.floor( ( location.y - this.bounds.minY ) / this.cellHeight ) );
+        const column = Math.min( this.columns - 1, Math.floor( ( location.x - this.bounds.minX ) / this.cellWidth ) );
 
         cell = this.rowColumnToCell( row, column );
       }
@@ -194,7 +194,7 @@ define( require => {
      */
     getCellForTerm: function( term ) {
       assert && assert( term instanceof Term, 'invalid term' );
-      var index = this.cells.indexOf( term );
+      const index = this.cells.indexOf( term );
       return ( index === -1 ) ? null : index;
     },
 
@@ -216,8 +216,8 @@ define( require => {
      * @public
      */
     getTermAtLocation: function( location ) {
-      var term = null;
-      var cell = this.getCellAtLocation( location );
+      let term = null;
+      const cell = this.getCellAtLocation( location );
       if ( cell !== null ) {
         term = this.getTermInCell( cell );
       }
@@ -235,15 +235,15 @@ define( require => {
       assert && assert( term instanceof Term, 'invalid term' );
       assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
 
-      var cellLocation = this.getLocationOfCell( cell );
-      var equivalentTerm = null;
-      var distance = null;
+      const cellLocation = this.getLocationOfCell( cell );
+      let equivalentTerm = null;
+      let distance = null;
 
       // This is brute force, but straightforward, and not a performance issue because the number of cells is small.
-      for ( var i = 0; i < this.cells.length; i++ ) {
-        var currentTerm = this.cells[ i ];
+      for ( let i = 0; i < this.cells.length; i++ ) {
+        const currentTerm = this.cells[ i ];
         if ( ( currentTerm !== NO_TERM ) && ( term.isEquivalentTerm( currentTerm ) ) ) {
-          var currentDistance = this.getLocationOfCell( i ).distance( cellLocation );
+          const currentDistance = this.getLocationOfCell( i ).distance( cellLocation );
           if ( equivalentTerm === null || currentDistance < distance ) {
             equivalentTerm = currentTerm;
             distance = currentDistance;
@@ -276,7 +276,7 @@ define( require => {
      */
     removeTerm: function( term ) {
       assert && assert( term instanceof Term, 'invalid term: ' + term );
-      var cell = this.getCellForTerm( term );
+      const cell = this.getCellForTerm( term );
       assert && assert( cell !== null, 'term not found: ' + term );
       this.clearCell( cell );
       this.compactColumn( this.cellToColumn( cell ) );
@@ -292,11 +292,11 @@ define( require => {
     compactColumn: function( column ) {
       assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
 
-      var hasHoles = false; // does the column have one or more holes?
-      var terms = []; // terms in the column
+      let hasHoles = false; // does the column have one or more holes?
+      const terms = []; // terms in the column
 
-      var term; // the current term
-      var cell; // the current cell identifier
+      let term; // the current term
+      let cell; // the current cell identifier
 
       // Get all terms in the column, from top down
       for ( var row = 0; row < this.rows; row++ ) {
@@ -320,7 +320,7 @@ define( require => {
 
         // Put terms back into the column, from bottom up.
         row = this.rows - 1;
-        for ( var i = terms.length - 1; i >= 0; i-- ) {
+        for ( let i = terms.length - 1; i >= 0; i-- ) {
           term = terms[ i ];
           cell = this.rowColumnToCell( row--, column );
           this.cells[ cell ] = term;
@@ -338,11 +338,11 @@ define( require => {
     getLocationOfCell: function( cell ) {
       assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
 
-      var row = this.cellToRow( cell );
-      var column = this.cellToColumn( cell );
+      const row = this.cellToRow( cell );
+      const column = this.cellToColumn( cell );
 
-      var x = this.bounds.minX + ( column * this.cellWidth ) + ( 0.5 * this.cellWidth );
-      var y = this.bounds.minY + ( row * this.cellHeight ) + ( 0.5 * this.cellHeight );
+      const x = this.bounds.minX + ( column * this.cellWidth ) + ( 0.5 * this.cellWidth );
+      const y = this.bounds.minY + ( row * this.cellHeight ) + ( 0.5 * this.cellHeight );
       return new Vector2( x, y );
     },
 
@@ -352,7 +352,7 @@ define( require => {
      * @private
      */
     getLastEmptyCell: function() {
-      var index = this.cells.lastIndexOf( NO_TERM );
+      const index = this.cells.lastIndexOf( NO_TERM );
       return ( index === -1 ) ? null : index;
     },
 
@@ -367,19 +367,19 @@ define( require => {
     getBestEmptyCell: function( location ) {
 
       // Start with the last empty cell in the array
-      var closestCell = this.getLastEmptyCell();
+      let closestCell = this.getLastEmptyCell();
 
       // Careful! closestCell is {number|null}, and might be 0
       // If the grid is not full...
       if ( closestCell !== null ) {
 
-        var closestDistance = this.getLocationOfCell( closestCell ).distance( location );
+        let closestDistance = this.getLocationOfCell( closestCell ).distance( location );
 
         // Find the closest cell based on distance, working backwards from lastEmptyCell.
         // This is brute force, but straightforward, and not a performance issue because the number of cells is small.
-        for ( var i = closestCell - 1; i >= 0; i-- ) {
+        for ( let i = closestCell - 1; i >= 0; i-- ) {
           if ( this.isEmptyCell( i ) ) {
-            var distance = this.getLocationOfCell( i ).distance( location );
+            const distance = this.getLocationOfCell( i ).distance( location );
             if ( distance < closestDistance ) {
               closestDistance = distance;
               closestCell = i;
@@ -389,10 +389,10 @@ define( require => {
 
         // Now look below the closest cell to see if there are any empty cells in the same column.
         // This makes terms "fall" to the cell that is closest to the bottom of the grid.
-        var closestRow = this.cellToRow( closestCell );
-        var closestColumn = this.cellToColumn( closestCell );
-        for ( var row = this.rows - 1; row > closestRow; row-- ) {
-          var cellBelow = this.rowColumnToCell( row, closestColumn );
+        const closestRow = this.cellToRow( closestCell );
+        const closestColumn = this.cellToColumn( closestCell );
+        for ( let row = this.rows - 1; row > closestRow; row-- ) {
+          const cellBelow = this.rowColumnToCell( row, closestColumn );
           if ( this.isEmptyCell( cellBelow ) ) {
             closestCell = cellBelow;
             break;
@@ -421,7 +421,7 @@ define( require => {
      */
     cellToRow: function( cell ) {
       assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
-      var row = Math.ceil( ( cell + 1 ) / this.columns ) - 1;
+      const row = Math.ceil( ( cell + 1 ) / this.columns ) - 1;
       assert && assert( row >= 0 && row < this.rows );
       return row;
     },
@@ -434,7 +434,7 @@ define( require => {
      */
     cellToColumn: function( cell ) {
       assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
-      var column = cell % this.columns;
+      const column = cell % this.columns;
       assert && assert( column >= 0 && column < this.columns );
       return column;
     },
@@ -449,7 +449,7 @@ define( require => {
     rowColumnToCell: function( row, column ) {
       assert && assert( row >= 0 && row < this.rows, 'row out of range: ' + row );
       assert && assert( column >= 0 && column < this.columns, 'column out of range: ' + column );
-      var cell = ( row * this.columns ) + column;
+      const cell = ( row * this.columns ) + column;
       assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
       return cell;
     }

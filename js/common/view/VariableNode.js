@@ -29,7 +29,7 @@ define( require => {
       fontSize: 24 // for variables that are displayed as a text symbol, e.g. 'x'
     }, options );
 
-    var symbolNode;
+    let symbolNode;
     if ( variable instanceof ObjectVariable ) {
 
       // use an image for a variable associated with a real-world object

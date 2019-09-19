@@ -33,7 +33,7 @@ define( require => {
   // strings
   const xString = require( 'string!EQUALITY_EXPLORER/x' );
 
-  var EqualityExplorerScreenIcons = {
+  const EqualityExplorerScreenIcons = {
 
     /**
      * Creates the icon for the 'Basics' screen: apples > oranges
@@ -42,25 +42,25 @@ define( require => {
     createBasicsScreenIcon: function() {
 
       // apples on left side of the equation
-      var appleNode1 = new Image( appleBigImage );
-      var appleNode2 = new Image( appleBigImage, {
+      const appleNode1 = new Image( appleBigImage );
+      const appleNode2 = new Image( appleBigImage, {
         left: appleNode1.left - 10,
         top: appleNode1.bottom + 5
       } );
-      var appleGroupNode = new VBox( {
+      const appleGroupNode = new VBox( {
         spacing: 2,
         children: [ appleNode1, appleNode2 ]
       } );
 
       // >
-      var greaterThanNode = new Text( MathSymbols.GREATER_THAN, {
+      const greaterThanNode = new Text( MathSymbols.GREATER_THAN, {
         font: new PhetFont( 140 )
       } );
 
       // an orange on right side of the equation
-      var orangeNode = new Image( orangeBigImage );
+      const orangeNode = new Image( orangeBigImage );
 
-      var iconNode = new HBox( {
+      const iconNode = new HBox( {
         spacing: 15,
         children: [ appleGroupNode, greaterThanNode, orangeNode ]
       } );
@@ -78,25 +78,25 @@ define( require => {
     createNumbersScreenIcon: function() {
 
       // 1
-      var positiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
+      const positiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
 
       // -1
-      var negativeOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ) );
+      const negativeOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ) );
 
       // -1 overlaps 1
       negativeOneNode.left = positiveOneNode.right - 10;
       negativeOneNode.bottom = positiveOneNode.centerY + 10;
 
       // halos
-      var haloRadius = 0.85 * positiveOneNode.width;
-      var positiveOneHaloNode = new HaloNode( haloRadius, {
+      const haloRadius = 0.85 * positiveOneNode.width;
+      const positiveOneHaloNode = new HaloNode( haloRadius, {
         center: positiveOneNode.center
       } );
-      var negativeOneHaloNode = new HaloNode( haloRadius, {
+      const negativeOneHaloNode = new HaloNode( haloRadius, {
         center: negativeOneNode.center
       } );
 
-      var iconNode = new Node( {
+      const iconNode = new Node( {
         children: [ positiveOneHaloNode, negativeOneHaloNode, positiveOneNode, negativeOneNode ]
       } );
 
@@ -112,25 +112,25 @@ define( require => {
     createVariablesScreenIcon: function() {
 
       // x and -x on left side of the equation
-      var leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
-      var leftNegativeXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ), xString );
-      var leftGroupNode = new VBox( {
+      const leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
+      const leftNegativeXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ), xString );
+      const leftGroupNode = new VBox( {
         children: [ leftPositiveXNode, leftNegativeXNode ]
       } );
 
       // <
-      var lessThanNode = new Text( MathSymbols.LESS_THAN, {
+      const lessThanNode = new Text( MathSymbols.LESS_THAN, {
         font: new PhetFont( 50 )
       } );
 
       // 1 and x on right side of the equation
-      var rightPositiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
-      var rightPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
-      var rightGroupNode = new VBox( {
+      const rightPositiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
+      const rightPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), xString );
+      const rightGroupNode = new VBox( {
         children: [ rightPositiveOneNode, rightPositiveXNode ]
       } );
 
-      var iconNode = new HBox( {
+      const iconNode = new HBox( {
         spacing: 10,
         children: [ leftGroupNode, lessThanNode, rightGroupNode ]
       } );
@@ -147,18 +147,18 @@ define( require => {
      */
     createOperationsScreenIcon: function() {
 
-      var operatorOptions = { font: new PhetFont( 30 ) };
+      const operatorOptions = { font: new PhetFont( 30 ) };
 
       // 3x on left side of equation
-      var variableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ), xString );
+      const variableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ), xString );
 
       // =
-      var greaterThanNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );
+      const greaterThanNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );
 
       // 6 on right side of equation
-      var constantTermNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 6 ) );
+      const constantTermNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 6 ) );
 
-      var iconNode = new HBox( {
+      const iconNode = new HBox( {
         spacing: 5,
         children: [ variableTermNode, greaterThanNode, constantTermNode ]
       } );
@@ -174,7 +174,7 @@ define( require => {
      * @returns {ScreenIcon}
      */
     createSolveItHomeScreenIcon: function() {
-      var iconNode = new Image( phetGirlJugglingStarsImage );
+      const iconNode = new Image( phetGirlJugglingStarsImage );
       return new ScreenIcon( iconNode, {
         fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
       } );
@@ -186,10 +186,10 @@ define( require => {
      */
     createSolveItNavigationBarIcon: function() {
 
-      var numberNode = new Text( MathSymbols.UNARY_PLUS + '1', { font: new PhetFont( 25 ) } );
-      var starNode = new StarNode();
+      const numberNode = new Text( MathSymbols.UNARY_PLUS + '1', { font: new PhetFont( 25 ) } );
+      const starNode = new StarNode();
 
-      var iconNode = new HBox( {
+      const iconNode = new HBox( {
         spacing: 3,
         children: [ numberNode, starNode ]
       } );

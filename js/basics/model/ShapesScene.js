@@ -27,7 +27,7 @@ define( require => {
    */
   function ShapesScene() {
 
-    var variables = [
+    const variables = [
 
       // name, image, shadow
       new ObjectVariable( 'sphere', sphereImage, sphereShadowImage, { value: 2 } ),

@@ -22,7 +22,7 @@ define( require => {
    */
   function OrganizeButton( organizeFunction, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 

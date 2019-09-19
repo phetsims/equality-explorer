@@ -42,7 +42,7 @@ define( require => {
    */
   function TermCreator( options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
@@ -242,7 +242,7 @@ define( require => {
     getEquivalentTermLocation: function( term ) {
       assert && assert( this.isManagedTerm( term ), 'term is not managed by this TermCreator: ' + term );
 
-      var xOffset;
+      let xOffset;
       if ( term.significantValue.getValue() >= 0 ) {
         xOffset = this.equivalentTermCreator.positiveLocation.x - this.positiveLocation.x;
       }
@@ -261,9 +261,9 @@ define( require => {
     step: function( dt ) {
 
       // operate on a copy, since step may involve modifying the array
-      var allTermsCopy = this.allTerms.getArray().slice();
-      for ( var i = 0; i < allTermsCopy.length; i++ ) {
-        var term = allTermsCopy[ i ];
+      const allTermsCopy = this.allTerms.getArray().slice();
+      for ( let i = 0; i < allTermsCopy.length; i++ ) {
+        const term = allTermsCopy[ i ];
 
         // Stepping a term may result in other term(s) being disposed, so only step terms
         // that have not been disposed. See https://github.com/phetsims/equality-explorer/issues/94.
@@ -288,7 +288,7 @@ define( require => {
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
       // create term
-      var term = this.createTermProtected( options );
+      const term = this.createTermProtected( options );
 
       // manage the term
       this.manageTerm( term, options.event );
@@ -398,7 +398,7 @@ define( require => {
       assert && assert( this.termsOnPlate.contains( term ), 'term not on plate: ' + term );
 
       // ORDER IS VERY IMPORTANT HERE!
-      var cell = this.plate.removeTerm( term );
+      const cell = this.plate.removeTerm( term );
       this.termsOnPlate.remove( term );
       if ( !term.onPlateProperty.isDisposed ) {
         term.onPlateProperty.value = false;
@@ -496,8 +496,8 @@ define( require => {
      * @private
      */
     disposeTerms: function( terms ) {
-      for ( var i = 0; i < terms.length; i++ ) {
-        var term = terms[ i ];
+      for ( let i = 0; i < terms.length; i++ ) {
+        const term = terms[ i ];
         if ( !term.isDisposed ) {
           term.dispose(); // results in call to unmanageTerm
         }
@@ -516,7 +516,7 @@ define( require => {
      * @private
      */
     hideAllTermHalos: function() {
-      for ( var i = 0; i < this.allTerms.getArray().length; i++ ) {
+      for ( let i = 0; i < this.allTerms.getArray().length; i++ ) {
         this.allTerms.get( i ).haloVisibleProperty.value = false;
       }
     },
@@ -526,8 +526,8 @@ define( require => {
      * @protected
      */
     updateWeightOnPlateProperty: function() {
-      var weight = Fraction.fromInteger( 0 );
-      for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
+      let weight = Fraction.fromInteger( 0 );
+      for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
         weight = weight.plus( this.termsOnPlate.get( i ).weight ).reduced();
       }
       this.weightOnPlateProperty.value = weight;
@@ -542,11 +542,11 @@ define( require => {
     isLikeTermCreator: function( termCreator ) {
 
       // Create 2 terms via createTermProtected, not createTerm, so that they are not managed.
-      var thisTerm = this.createTermProtected();
-      var thatTerm = termCreator.createTermProtected();
+      const thisTerm = this.createTermProtected();
+      const thatTerm = termCreator.createTermProtected();
 
       // If the 2 terms are 'like' then the creators are 'like'.
-      var isLike = thisTerm.isLikeTerm( thatTerm );
+      const isLike = thisTerm.isLikeTerm( thatTerm );
 
       // Dispose of the terms.
       thisTerm.dispose();
@@ -563,10 +563,10 @@ define( require => {
      * @public
      */
     createSnapshot: function() {
-      var snapshot = [];
-      var termsOnPlate = this.getTermsOnPlate();
-      for ( var i = 0; i < termsOnPlate.length; i++ ) {
-        var term = termsOnPlate[ i ];
+      const snapshot = [];
+      const termsOnPlate = this.getTermsOnPlate();
+      for ( let i = 0; i < termsOnPlate.length; i++ ) {
+        const term = termsOnPlate[ i ];
         snapshot.push( {
           cell: this.plate.getCellForTerm( term ), // {number} cell that the Term occupies
           termOptions: term.createSnapshot() // {Object} options to Term's constructor, specific to subtype
@@ -581,8 +581,8 @@ define( require => {
      * @public
      */
     restoreSnapshot: function( snapshot ) {
-      for ( var i = 0; i < snapshot.length; i++ ) {
-        var term = this.createTerm( snapshot[ i ].termOptions );
+      for ( let i = 0; i < snapshot.length; i++ ) {
+        const term = this.createTerm( snapshot[ i ].termOptions );
         this.putTermOnPlate( term, snapshot[ i ].cell );
       }
     },
@@ -600,11 +600,11 @@ define( require => {
       assert && assert( this.termsOnPlate.length <= 1,
         'expected at most 1 term on plate: ' + this.termsOnPlate.length );
 
-      var summedToZero = false;
-      var plateWasEmpty = false;
+      let summedToZero = false;
+      let plateWasEmpty = false;
 
       // Get the term on the plate, or use zero term
-      var term = this.plate.getTermInCell( this.likeTermsCell );
+      let term = this.plate.getTermInCell( this.likeTermsCell );
       if ( !term ) {
         plateWasEmpty = true;
         term = this.createZeroTerm( {
@@ -613,7 +613,7 @@ define( require => {
       }
 
       // {Term|null} Apply the operation to the term. Returns null if the operation was not applicable to the term.
-      var newTerm = term.applyOperation( operation );
+      const newTerm = term.applyOperation( operation );
 
       if ( newTerm ) {
 

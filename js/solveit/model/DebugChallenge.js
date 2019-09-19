@@ -20,15 +20,15 @@ define( require => {
    */
   function DebugChallenge() {
 
-    var values = EqualityExplorerQueryParameters.challenge;
+    const values = EqualityExplorerQueryParameters.challenge;
     assert && assert( values, 'query parameter challenge is not set' );
 
-    var i = 0;
-    var a = new Fraction( values[ i++ ], values[ i++ ] );
-    var b = new Fraction( values[ i++ ], values[ i++ ] );
-    var m = new Fraction( values[ i++ ], values[ i++ ] );
-    var n = new Fraction( values[ i++ ], values[ i++ ] );
-    var x = values[ i++ ];
+    let i = 0;
+    const a = new Fraction( values[ i++ ], values[ i++ ] );
+    const b = new Fraction( values[ i++ ], values[ i++ ] );
+    const m = new Fraction( values[ i++ ], values[ i++ ] );
+    const n = new Fraction( values[ i++ ], values[ i++ ] );
+    const x = values[ i++ ];
 
     Challenge.call( this, x, a, b, m, n, '?challenge' );
   }

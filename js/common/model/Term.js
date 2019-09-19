@@ -79,7 +79,7 @@ define( require => {
      * @override
      */
     copyOptions: function() {
-      var superOptions = EqualityExplorerMovable.prototype.copyOptions.call( this );
+      const superOptions = EqualityExplorerMovable.prototype.copyOptions.call( this );
       return _.extend( {
         diameter: this.diameter
       }, superOptions );

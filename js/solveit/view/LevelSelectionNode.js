@@ -43,19 +43,19 @@ define( require => {
       resetCallback: null // {function|null}
     }, options );
 
-    var textOptions = {
+    const textOptions = {
       font: new PhetFont( 50 ),
       maxWidth: 0.65 * layoutBounds.width
     };
 
     // Level-selection buttons
-    var levelSelectionButtons = [];
+    const levelSelectionButtons = [];
     model.scenes.forEach( function( scene ) {
       levelSelectionButtons.push( new EqualityExplorerLevelSelectionButton( scene, model.sceneProperty ) );
     } );
 
     // Layout the level-selection buttons horizontally
-    var levelSelectionButtonsBox = new HBox( {
+    const levelSelectionButtonsBox = new HBox( {
       children: levelSelectionButtons,
       spacing: 40,
       centerX: layoutBounds.centerX,
@@ -63,25 +63,25 @@ define( require => {
     } );
 
     // 'Choose Your Level', centered above level-selection buttons
-    var chooseYourLevelNode = new Text( chooseYourLevelString, _.extend( {}, textOptions, {
+    const chooseYourLevelNode = new Text( chooseYourLevelString, _.extend( {}, textOptions, {
       centerX: levelSelectionButtonsBox.centerX,
       bottom: levelSelectionButtonsBox.top - 65
     } ) );
 
     // 'Solve for x', centered above 'Choose You Level'
-    var solveForXText = StringUtils.fillIn( solveForString, {
+    const solveForXText = StringUtils.fillIn( solveForString, {
       variable: MathSymbolFont.getRichTextMarkup( xString )
     } );
-    var solveForXNode = new RichText( solveForXText, _.extend( {}, textOptions, {
+    const solveForXNode = new RichText( solveForXText, _.extend( {}, textOptions, {
       centerX: chooseYourLevelNode.centerX,
       bottom: chooseYourLevelNode.top - 30
     } ) );
 
     // Info dialog is created on demand, then reused so we don't have to deal with buggy Dialog.dispose.
-    var infoDialog = null;
+    let infoDialog = null;
 
     // Info button, to right of 'Choose Your Level', opens the Info dialog.
-    var infoButton = new InfoButton( {
+    const infoButton = new InfoButton( {
       iconFill: 'rgb( 41, 106, 163 )',
       maxHeight: 0.75 * chooseYourLevelNode.height,
       listener: function() {
@@ -93,7 +93,7 @@ define( require => {
     } );
 
     // Reset All button, at lower right
-    var resetAllButton = new ResetAllButton( {
+    const resetAllButton = new ResetAllButton( {
       listener: function() {
         phet.log && phet.log( 'ResetAllButton pressed' );
         options.resetCallback && options.resetCallback();
@@ -102,7 +102,7 @@ define( require => {
       bottom: layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var children = [
+    const children = [
       solveForXNode,
       chooseYourLevelNode,
       infoButton,
@@ -114,13 +114,13 @@ define( require => {
     // This test is only useful if assertions are enabled.
     // Also disable if fuzz is enabled, since this takes a long time and is not relevant to fuzz testing.
     if ( assert && phet.chipper.queryParameters.showAnswers && !phet.chipper.queryParameters.fuzz ) {
-      var testButton = new RectangularPushButton( {
+      const testButton = new RectangularPushButton( {
         content: new Text( 'test challenge generators', { fill: 'white', font: new PhetFont( 20 ) } ),
         baseColor: 'red',
         listener: function() {
           model.testChallengeGenerators();
-          var messageNode = new RichText( 'Test completed.<br>See results in browser console.' );
-          var dialog = new Dialog( messageNode, {
+          const messageNode = new RichText( 'Test completed.<br>See results in browser console.' );
+          const dialog = new Dialog( messageNode, {
             topMargin: 20,
             bottomMargin: 20,
             leftMargin: 20,

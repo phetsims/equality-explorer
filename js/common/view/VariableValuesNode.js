@@ -37,18 +37,18 @@ define( require => {
     assert && assert( options.spacing === undefined, 'VariableValuesNode sets spacing' );
     options.spacing = 0;
 
-    var font = new PhetFont( options.fontSize );
+    const font = new PhetFont( options.fontSize );
 
-    var children = []; // {Node[]}
+    const children = []; // {Node[]}
 
     // '(' with normal font
-    var leftParenNode = new Text( '(', { font: font } );
+    const leftParenNode = new Text( '(', { font: font } );
     children.push( leftParenNode );
 
     // E.g. {{symbol}} = {{value}}, for each variable
-    for ( var i = 0; i < variables.length; i++ ) {
+    for ( let i = 0; i < variables.length; i++ ) {
 
-      var variable = variables[ i ];
+      const variable = variables[ i ];
 
       children.push( new HBox( {
         spacing: options.spacingInsideTerms,
@@ -77,7 +77,7 @@ define( require => {
       }
     }
 
-    var rightParenNode = new Text( ')', { font: font } );
+    const rightParenNode = new Text( ')', { font: font } );
     children.push( rightParenNode );
 
     assert && assert( !options.children, 'VariableValuesNode sets children' );

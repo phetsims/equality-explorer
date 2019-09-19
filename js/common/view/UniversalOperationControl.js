@@ -38,7 +38,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var PICKER_OPTIONS = {
+  const PICKER_OPTIONS = {
     arrowsColor: 'black',
     gradientColor: 'rgb( 150, 150, 150 )'
   };
@@ -53,7 +53,7 @@ define( require => {
 
     assert && assert( scene instanceof OperationsScene, 'invalid scene: ' + scene );
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       timesZeroEnabled: true, // whether to include 'times 0' as one of the operations
@@ -66,9 +66,9 @@ define( require => {
     this.timesZeroEnabled = options.timesZeroEnabled;
 
     // items for the operator control
-    var operatorItems = [];
+    const operatorItems = [];
     for ( var i = 0; i < scene.operators.length; i++ ) {
-      var operator = scene.operators[ i ];
+      const operator = scene.operators[ i ];
       operatorItems.push( {
         value: operator,
         node: UniversalOperationNode.createOperatorNode( operator )
@@ -76,7 +76,7 @@ define( require => {
     }
 
     // radio buttons for selecting the operator
-    var operatorControl = new RadioButtonGroup( scene.operatorProperty, operatorItems, {
+    const operatorControl = new RadioButtonGroup( scene.operatorProperty, operatorItems, {
       orientation: 'horizontal',
       spacing: 2,
       selectedLineWidth: 2,
@@ -91,10 +91,10 @@ define( require => {
      * Adjusts the operand if it's not appropriate for a specified operator.
      * @param {string} operator - see EqualityExplorerConstants.OPERATORS
      */
-    var operatorListener = function( operator ) {
+    const operatorListener = function( operator ) {
 
-      var currentOperand = scene.operandProperty.value;
-      var adjustedOperand;
+      const currentOperand = scene.operandProperty.value;
+      let adjustedOperand;
 
       if ( isDivideByZero( operator, currentOperand ) ||
            ( !options.timesZeroEnabled && isTimesZero( operator, currentOperand ) ) ) {
@@ -111,7 +111,7 @@ define( require => {
         // If the operator is not supported for a variable term operand, change the operand to
         // a constant term that has the same value as the variable term's coefficient.
         // E.g. if the operand is '5x', change the operand to '5'.
-        var currentCoefficient = currentOperand.coefficient;
+        const currentCoefficient = currentOperand.coefficient;
         adjustedOperand = _.find( scene.operands, function( operand ) {
           return ( operand instanceof ConstantTerm ) && ( operand.constantValue.equals( currentCoefficient ) );
         } );
@@ -123,9 +123,9 @@ define( require => {
     scene.operatorProperty.lazyLink( operatorListener ); // unlink not needed
 
     // items for the operand picker
-    var operandItems = [];
+    const operandItems = [];
     for ( i = 0; i < scene.operands.length; i++ ) {
-      var operand = scene.operands[ i ];
+      const operand = scene.operands[ i ];
       operandItems.push( {
         value: operand,
         node: UniversalOperationNode.createOperandNode( operand )
@@ -133,11 +133,11 @@ define( require => {
     }
 
     // Take control of enabling up/down arrows for operand picker
-    var upEnabledProperty = new BooleanProperty( true );
-    var downEnabledProperty = new BooleanProperty( true );
+    const upEnabledProperty = new BooleanProperty( true );
+    const downEnabledProperty = new BooleanProperty( true );
 
     // picker for choosing operand
-    var operandPicker = new ObjectPicker( scene.operandProperty, operandItems, _.extend( {}, PICKER_OPTIONS, {
+    const operandPicker = new ObjectPicker( scene.operandProperty, operandItems, _.extend( {}, PICKER_OPTIONS, {
       xMargin: 6,
       touchAreaXDilation: 0,
       touchAreaYDilation: 15,
@@ -148,8 +148,8 @@ define( require => {
 
       // When the up button is pressed, skip operands that are inappropriate for the operation
       upFunction: function( index ) {
-        var nextOperandIndex = index + 1;
-        var operator = scene.operatorProperty.value;
+        let nextOperandIndex = index + 1;
+        const operator = scene.operatorProperty.value;
         while ( !self.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
           nextOperandIndex++;
           assert && assert( nextOperandIndex < scene.operands.length,
@@ -160,8 +160,8 @@ define( require => {
 
       // When the down button is pressed, skip operands that are inappropriate for the operation
       downFunction: function( index ) {
-        var nextOperandIndex = index - 1;
-        var operator = scene.operatorProperty.value;
+        let nextOperandIndex = index - 1;
+        const operator = scene.operatorProperty.value;
         while ( !self.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
           nextOperandIndex--;
           assert && assert( nextOperandIndex >= 0, 'nextOperandIndex out of range: ' + nextOperandIndex );
@@ -180,21 +180,21 @@ define( require => {
        */
       function( operator, operand ) {
 
-        var operandIndex = scene.operands.indexOf( operand );
+        const operandIndex = scene.operands.indexOf( operand );
         assert && assert( operandIndex !== -1, 'operand not found: ' + operand );
 
         if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) ) {
           assert && assert( operand instanceof ConstantTerm, 'unexpected operand type: ' + operand );
 
           // up arrow is enabled if there are any constant term operands above the current selection
-          var upEnabled = false;
+          let upEnabled = false;
           for ( var i = operandIndex + 1; i < scene.operands.length && !upEnabled; i++ ) {
             upEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
           }
           upEnabledProperty.value = upEnabled;
 
           // down arrow is enabled if there are any constant term operands below the current selection
-          var downEnabled = false;
+          let downEnabled = false;
           for ( i = operandIndex - 1; i >= 0 && !downEnabled; i-- ) {
             downEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
           }
@@ -212,38 +212,38 @@ define( require => {
     this.animations = [];
 
     // Clean up when an animation completes or is stopped.
-    var animationCleanup = function( animation, operationNode ) {
+    const animationCleanup = function( animation, operationNode ) {
       self.animations.splice( self.animations.indexOf( animation ), 1 );
       !operationNode.isDisposed && operationNode.dispose();
       goButton.enabled = true;
     };
 
     // When the 'go' button is pressed, animate operations, then apply operations to terms.
-    var goButtonListener = function() {
+    const goButtonListener = function() {
 
       // Go button is disabled until the animation completes, so that students don't press the button rapid-fire.
       // See https://github.com/phetsims/equality-explorer/issues/48
       goButton.enabled = false;
 
-      var operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
+      const operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
       phet.log && phet.log( 'Go ' + operation.toLogString() );
 
       // operation on left side
-      var leftOperationNode = new UniversalOperationNode( operation, {
+      const leftOperationNode = new UniversalOperationNode( operation, {
         centerX: scene.scale.leftPlate.locationProperty.value.x,
         centerY: self.centerY
       } );
       animationLayer.addChild( leftOperationNode );
 
       // operation on right side
-      var rightOperationNode = new UniversalOperationNode( operation, {
+      const rightOperationNode = new UniversalOperationNode( operation, {
         centerX: scene.scale.rightPlate.locationProperty.value.x,
         centerY: self.centerY
       } );
       animationLayer.addChild( rightOperationNode );
 
       // Apply the operation when both animations have completed.
-      var numberOfAnimationsCompletedProperty = new NumberProperty( 0 );
+      const numberOfAnimationsCompletedProperty = new NumberProperty( 0 );
       numberOfAnimationsCompletedProperty.lazyLink( function( numberOfAnimationsCompleted ) {
         if ( numberOfAnimationsCompleted === 2 ) {
           scene.applyOperation( operation );
@@ -282,7 +282,7 @@ define( require => {
     };
 
     // 'go' button, applies the operation
-    var goButtonIcon = new FontAwesomeNode( 'level_down', {
+    const goButtonIcon = new FontAwesomeNode( 'level_down', {
       scale: 0.75 * operandPicker.height / operandPicker.height // scale relative to the pickers
     } );
     var goButton = new RoundPushButton( {
@@ -300,7 +300,7 @@ define( require => {
     HBox.call( this, options );
 
     // If the maxInteger limit is exceeded, stop all universal operations that are in progress
-    var maxIntegerExceededListener = function() {
+    const maxIntegerExceededListener = function() {
       self.stopAnimations();
     };
     scene.allTermCreators.forEach( function( termCreator ) {
@@ -352,7 +352,7 @@ define( require => {
      * @public
      */
     step: function( dt ) {
-      var animationsCopy = this.animations; // operate on a copy because step may modify the array
+      const animationsCopy = this.animations; // operate on a copy because step may modify the array
       animationsCopy.forEach( function( animation ) {
         animation.step( dt );
       } );
@@ -372,8 +372,8 @@ define( require => {
     stopAnimations: function() {
 
       // Operate on a copy of the array, since animations remove themselves from the array when stopped.
-      var arrayCopy = this.animations.slice( 0 );
-      for ( var i = 0; i < arrayCopy.length; i++ ) {
+      const arrayCopy = this.animations.slice( 0 );
+      for ( let i = 0; i < arrayCopy.length; i++ ) {
         arrayCopy[ i ].stop();
       }
     },

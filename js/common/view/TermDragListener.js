@@ -61,7 +61,7 @@ define( require => {
     assert && assert( term instanceof Term, 'invalid term: ' + term );
     assert && assert( termCreator instanceof TermCreator, 'invalid termCreator: ' + termCreator );
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 
@@ -97,7 +97,7 @@ define( require => {
     SimpleDragHandler.call( this, options );
 
     // Equivalent term tracks the movement of the dragged term throughout the drag cycle and post-drag animation.
-    var locationListener = function( location ) {
+    const locationListener = function( location ) {
       if ( self.equivalentTerm && !self.equivalentTerm.isDisposed ) {
         self.equivalentTerm.moveTo( termCreator.getEquivalentTermLocation( term ) );
       }
@@ -105,7 +105,7 @@ define( require => {
     term.locationProperty.link( locationListener ); // unlink required in dispose
 
     // When the plate moves, or its contents change, refresh the halos around overlapping terms.
-    var refreshHalosBound = this.refreshHalos.bind( this );
+    const refreshHalosBound = this.refreshHalos.bind( this );
     this.plate.locationProperty.link( refreshHalosBound ); // unlink required in dispose
     this.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
 
@@ -147,7 +147,7 @@ define( require => {
      */
     start: function( event, trail ) {
 
-      var success = true;
+      let success = true;
 
       if ( this.termCreator.isTermOnPlate( this.term ) ) {
 
@@ -231,8 +231,8 @@ define( require => {
       else if ( this.likeTerm && this.term.isInverseTerm( this.likeTerm ) ) {
 
         // overlapping terms sum to zero
-        var sumToZeroParent = this.termNode.getParent();
-        var sumToZeroNode = new SumToZeroNode( {
+        const sumToZeroParent = this.termNode.getParent();
+        const sumToZeroNode = new SumToZeroNode( {
           variable: this.term.variable || null,
           haloRadius: this.haloRadius,
           haloBaseColor: EqualityExplorerColors.HALO, // show the halo
@@ -240,7 +240,7 @@ define( require => {
                     EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE :
                     EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
         } );
-        var sumToZeroCell = this.plate.getCellForTerm( this.likeTerm );
+        const sumToZeroCell = this.plate.getCellForTerm( this.likeTerm );
 
         // dispose of terms that sum to zero
         !this.term.isDisposed && this.term.dispose();
@@ -289,7 +289,7 @@ define( require => {
 
       this.term.pickableProperty.value = this.pickableWhileAnimating;
 
-      var self = this;
+      const self = this;
       this.term.animateTo( this.term.toolboxLocation, {
         animationCompletedCallback: function() {
 
@@ -315,9 +315,9 @@ define( require => {
     eventToLocation: function( event ) {
 
       // move bottom-center of termNode to pointer location
-      var dx = 0;
-      var dy = this.termNode.contentNodeSize.height / 2;
-      var location = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( dx, dy );
+      const dx = 0;
+      const dy = this.termNode.contentNodeSize.height / 2;
+      const location = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( dx, dy );
 
       // constrain to drag bounds
       return this.term.dragBounds.closestPointTo( location );
@@ -337,11 +337,11 @@ define( require => {
 
       if ( this.term.draggingProperty.value ) {
 
-        var previousLikeTerm = this.likeTerm;
+        const previousLikeTerm = this.likeTerm;
         this.likeTerm = null;
 
         // does this term overlap a like term on the plate?
-        var termOnPlate = this.plate.getTermAtLocation( this.term.locationProperty.value );
+        const termOnPlate = this.plate.getTermAtLocation( this.term.locationProperty.value );
         if ( termOnPlate && termOnPlate.isLikeTerm( this.term ) ) {
           this.likeTerm = termOnPlate;
         }

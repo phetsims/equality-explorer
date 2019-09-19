@@ -48,7 +48,7 @@ define( require => {
      * @public
      */
     nextChallenge: function() {
-      var challenge = this.nextChallengeProtected();
+      const challenge = this.nextChallengeProtected();
       this.numberOfChallenges++;
       return challenge;
     },
@@ -69,7 +69,7 @@ define( require => {
      * @returns {number}
      */
     randomX: function( values ) {
-      var x = ChallengeGenerator.randomValue( values, [ 0, this.xPrevious ] );
+      const x = ChallengeGenerator.randomValue( values, [ 0, this.xPrevious ] );
       assert && assert( x !== 0, 'x is 0' );
       assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
       this.xPrevious = x;
@@ -90,8 +90,8 @@ define( require => {
       assert && assert( Util.isInteger( min ), 'min must be an integer: ' + min );
       assert && assert( Util.isInteger( max ), 'max must be an integer: ' + max );
 
-      var values = []; // {number[]}
-      for ( var i = min; i <= max; i++ ) {
+      const values = []; // {number[]}
+      for ( let i = min; i <= max; i++ ) {
         values.push( i );
       }
       return values;
@@ -104,7 +104,7 @@ define( require => {
      * @returns {number}
      */
     randomValueBy: function( values, predicate ) {
-      var filteredValues = _.filter( values, predicate );
+      const filteredValues = _.filter( values, predicate );
       assert && assert( filteredValues.length > 0, 'all values were excluded' );
       return phet.joist.random.sample( filteredValues );
     },

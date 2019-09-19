@@ -24,13 +24,13 @@ define( require => {
   const VariableValuesNode = require( 'EQUALITY_EXPLORER/common/view/VariableValuesNode' );
 
   // constants
-  var NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for equation, so bounds are valid
-  var NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for variable values, so bounds are valid
-  var EQUATION_FONT_SIZE = 22;
-  var FRACTION_FONT_SIZE = 14;
-  var SELECTION_RECTANGLE_X_MARGIN = 10;
-  var SELECTION_RECTANGLE_Y_MARGIN = 8;
-  var VALID_ORIENTATION_VALUES = [ 'horizontal', 'vertical' ];
+  const NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for equation, so bounds are valid
+  const NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for variable values, so bounds are valid
+  const EQUATION_FONT_SIZE = 22;
+  const FRACTION_FONT_SIZE = 14;
+  const SELECTION_RECTANGLE_X_MARGIN = 10;
+  const SELECTION_RECTANGLE_Y_MARGIN = 8;
+  const VALID_ORIENTATION_VALUES = [ 'horizontal', 'vertical' ];
 
   /**
    * @param {EqualityExplorerScene} scene - the scene that we'll be taking a snapshot of
@@ -41,7 +41,7 @@ define( require => {
    */
   function SnapshotControl( scene, snapshotProperty, selectedSnapshotProperty, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 
@@ -60,18 +60,18 @@ define( require => {
       'invalid variableValuesOpacity: ' + options.variableValuesOpacity );
 
     // rectangle that appears around the snapshot when it's selected
-    var selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
+    const selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
       cornerRadius: 3,
       lineWidth: 3,
       stroke: 'transparent'
     } );
 
     // placeholders, so that snapshotNode has valid bounds
-    var equationNode = NO_EQUATION_NODE;
-    var variableValuesNode = NO_VARIABLE_VALUES_NODE;
+    let equationNode = NO_EQUATION_NODE;
+    let variableValuesNode = NO_VARIABLE_VALUES_NODE;
 
     // parent for the equation and optional display of variable values
-    var snapshotNode = new LayoutBox( {
+    const snapshotNode = new LayoutBox( {
       orientation: options.orientation,
       children: [ equationNode ],
       spacing: ( options.orientation === 'horizontal' ) ? 20 : 8,
@@ -82,8 +82,8 @@ define( require => {
     } );
 
     // snapshot (camera) button
-    var snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
-    var snapshotButton = new RectangularPushButton( {
+    const snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
+    const snapshotButton = new RectangularPushButton( {
       content: snapshotIcon,
       baseColor: 'white',
       xMargin: 8,
@@ -95,7 +95,7 @@ define( require => {
       maxHeight: options.controlHeight,
       listener: function() {
         assert && assert( !snapshotProperty.value, 'snapshot is already occupied' );
-        var snapshot = new Snapshot( scene );
+        const snapshot = new Snapshot( scene );
         snapshotProperty.value = snapshot; // associate the snapshot with this control
         selectedSnapshotProperty.value = snapshot; // select the created snapshot
       }
@@ -107,7 +107,7 @@ define( require => {
     Node.call( this, options );
 
     // selects the snapshot associated with this control
-    var upListener = new DownUpListener( {
+    const upListener = new DownUpListener( {
       upInside: function( event, trail ) {
         assert && assert( snapshotProperty.value, 'expected a snapshot' );
         selectedSnapshotProperty.value = snapshotProperty.value;
@@ -115,7 +115,7 @@ define( require => {
     } );
 
     // updates the layout of the snapshot, and centers it in the control
-    var updateSnapshotLayout = function() {
+    const updateSnapshotLayout = function() {
       if ( options.variableValuesVisibleProperty && options.variableValuesVisibleProperty.value ) {
         snapshotNode.children = [ equationNode, variableValuesNode ];
       }
@@ -180,7 +180,7 @@ define( require => {
 
     // Shows that the associated snapshot has been selected. unlink not required.
     selectedSnapshotProperty.link( function( selectedSnapshot ) {
-      var isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
+      const isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
       selectionRectangle.stroke = isSelected ?
                                   EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE :
                                   EqualityExplorerColors.SNAPSHOT_DESELECTED_STROKE;

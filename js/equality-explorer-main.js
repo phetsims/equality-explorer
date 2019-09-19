@@ -24,7 +24,7 @@ define( require => {
   SimLauncher.launch( function() {
 
     // production screens
-    var screens = [
+    const screens = [
       new BasicsScreen(),
       new NumbersScreen(),
       new VariablesScreen(),
@@ -32,7 +32,7 @@ define( require => {
       new SolveItScreen()
     ];
 
-    var sim = new Sim( equalityExplorerTitleString, screens, {
+    const sim = new Sim( equalityExplorerTitleString, screens, {
       credits: EqualityExplorerConstants.CREDITS,
       supportsSound: true
     } );

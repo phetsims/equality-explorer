@@ -15,7 +15,7 @@ define( require => {
   const Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   // constants
-  var COEFFICIENT = Fraction.fromInteger( 1 ); // all object terms have an implicit coefficient of 1
+  const COEFFICIENT = Fraction.fromInteger( 1 ); // all object terms have an implicit coefficient of 1
 
   /**
    * @param {ObjectVariable} variable

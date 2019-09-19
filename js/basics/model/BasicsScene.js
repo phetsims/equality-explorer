@@ -50,10 +50,10 @@ define( require => {
    */
   function createTermCreators( variables, hasConstantTerms ) {
 
-    var termCreators = [];
+    const termCreators = [];
 
     // creators for object terms
-    for ( var i = 0; i < variables.length; i++ ) {
+    for ( let i = 0; i < variables.length; i++ ) {
       termCreators.push( new ObjectTermCreator( variables[ i ] ) );
     }
 

@@ -49,19 +49,19 @@ define( require => {
     }, options );
 
     // locals vars to improve readability
-    var scale = scene.scale;
-    var leftTermCreators = scene.leftTermCreators;
-    var rightTermCreators = scene.rightTermCreators;
+    const scale = scene.scale;
+    const leftTermCreators = scene.leftTermCreators;
+    const rightTermCreators = scene.rightTermCreators;
 
     // @protected terms live in this layer
     this.termsLayer = new Node();
 
-    var scaleNode = new BalanceScaleNode( scale, {
+    const scaleNode = new BalanceScaleNode( scale, {
       organizeButtonVisible: options.organizeButtonVisible,
       disposeTermsNotOnScale: scene.disposeTermsNotOnScale.bind( scene )
     } );
 
-    var leftTermsToolbox = new TermsToolbox( leftTermCreators, scale.leftPlate, this.termsLayer, {
+    const leftTermsToolbox = new TermsToolbox( leftTermCreators, scale.leftPlate, this.termsLayer, {
       hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
       contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
@@ -69,7 +69,7 @@ define( require => {
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var rightTermsToolbox = new TermsToolbox( rightTermCreators, scale.rightPlate, this.termsLayer, {
+    const rightTermsToolbox = new TermsToolbox( rightTermCreators, scale.rightPlate, this.termsLayer, {
       hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
       contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
@@ -77,7 +77,7 @@ define( require => {
       bottom: leftTermsToolbox.bottom
     } );
 
-    var equationAccordionBox = new EquationAccordionBox( leftTermCreators, rightTermCreators, {
+    const equationAccordionBox = new EquationAccordionBox( leftTermCreators, rightTermCreators, {
       fixedWidth: Math.floor( rightTermsToolbox.right - leftTermsToolbox.left ),
       expandedProperty: equationAccordionBoxExpandedProperty,
 
@@ -87,7 +87,7 @@ define( require => {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
+    const snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
       snapshotControlOptions: options.snapshotControlOptions,
       variableValuesVisibleProperty: options.variableValuesVisibleProperty,
       fixedWidth: Math.floor( ( layoutBounds.right - scaleNode.right ) -
@@ -97,7 +97,7 @@ define( require => {
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    var children = [
+    const children = [
       scaleNode,
       leftTermsToolbox,
       rightTermsToolbox,
@@ -109,7 +109,7 @@ define( require => {
     // Some scenes support locking the left and right sides of the equation,
     // such that an action on one side results in an equivalent action on the opposite side.
     if ( scene.lockedProperty && EqualityExplorerQueryParameters.lockVisible ) {
-      var lockControl = new LockControl( scene.lockedProperty, {
+      const lockControl = new LockControl( scene.lockedProperty, {
         x: scale.location.x,
         y: leftTermsToolbox.centerY - 5 // offset determined empirically
       } );
@@ -118,7 +118,7 @@ define( require => {
 
     // Render the drag bounds for the left and right plates
     if ( phet.chipper.queryParameters.dev ) {
-      var dragBoundsOption = { stroke: 'red', lineWidth: 0.25 };
+      const dragBoundsOption = { stroke: 'red', lineWidth: 0.25 };
       children.push( new Rectangle( scene.leftDragBounds, dragBoundsOption ) );
       children.push( new Rectangle( scene.rightDragBounds, dragBoundsOption ) );
     }

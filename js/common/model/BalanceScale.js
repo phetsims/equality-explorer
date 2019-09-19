@@ -29,7 +29,7 @@ define( require => {
    */
   function BalanceScale( leftTermCreators, rightTermCreators, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 
@@ -65,12 +65,12 @@ define( require => {
     this.rightTermCreators = rightTermCreators;
 
     // {TermCreator[]} all TermCreator instances
-    var termCreators = leftTermCreators.concat( rightTermCreators );
+    const termCreators = leftTermCreators.concat( rightTermCreators );
 
     // Compute the maximum width and height of all term icons
     if ( !options.iconSize ) {
-      var maxIconWidth = 0;
-      var maxIconHeight = 0;
+      let maxIconWidth = 0;
+      let maxIconHeight = 0;
       termCreators.forEach( function( termCreator ) {
         maxIconWidth = Math.max( maxIconWidth, termCreator.createIcon().width );
         maxIconHeight = Math.max( maxIconHeight, termCreator.createIcon().height );
@@ -79,13 +79,13 @@ define( require => {
     }
 
     // size of each cell in the grid
-    var cellSize = new Dimension2(
+    const cellSize = new Dimension2(
       options.iconSize.width + ( 2 * options.gridXMargin ),
       options.iconSize.height + ( 2 * options.gridYMargin ) );
     assert && assert( options.gridColumns * cellSize.width <= options.plateDiameter, 'grid is wider than plate' );
 
     // options that apply to both plates
-    var plateOptions = {
+    const plateOptions = {
       supportHeight: options.plateSupportHeight,
       diameter: options.plateDiameter,
       gridRows: options.gridRows,
@@ -104,7 +104,7 @@ define( require => {
       function( leftWeight, rightWeight ) {
 
         // compute the weight difference between the 2 plates
-        var weightDelta = rightWeight.minus( leftWeight ).getValue();
+        let weightDelta = rightWeight.minus( leftWeight ).getValue();
 
         // constrain to maxWeight so the scale bottoms out
         if ( weightDelta > options.maxWeight ) {
@@ -114,7 +114,7 @@ define( require => {
           weightDelta = -options.maxWeight;
         }
 
-        var angle = ( weightDelta / options.maxWeight ) * options.maxAngle;
+        const angle = ( weightDelta / options.maxWeight ) * options.maxAngle;
         assert && assert( Math.abs( angle ) <= options.maxAngle, 'angle out of range: ' + angle );
         return angle;
       }, {
@@ -127,18 +127,18 @@ define( require => {
     this.angleProperty.link( function( angle ) {
 
       // hoist reusable vars
-      var dx = 0;
-      var dy = 0;
+      let dx = 0;
+      let dy = 0;
 
       // move the right plate
-      var rightLocation = null;
-      var absXInset = Math.abs( options.plateXInset );
+      let rightLocation = null;
+      const absXInset = Math.abs( options.plateXInset );
       if ( angle === 0 ) {
         rightLocation = new Vector2( self.location.x + ( self.beamWidth / 2 ) - absXInset,
           self.location.y - options.plateSupportHeight );
       }
       else {
-        var hypotenuse = ( self.beamWidth / 2 ) - absXInset;
+        const hypotenuse = ( self.beamWidth / 2 ) - absXInset;
         dx = Math.cos( angle ) * hypotenuse;
         dy = Math.sin( angle ) * hypotenuse;
         rightLocation = new Vector2( self.location.x + dx, self.location.y + dy - options.plateSupportHeight );
@@ -183,7 +183,7 @@ define( require => {
      * @public
      */
     clear: function() {
-      var termCreators = this.leftTermCreators.concat( this.rightTermCreators );
+      const termCreators = this.leftTermCreators.concat( this.rightTermCreators );
       termCreators.forEach( function( termCreator ) {
         termCreator.disposeTermsOnPlate();
       } );

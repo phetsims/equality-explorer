@@ -52,7 +52,7 @@ define( require => {
       // If we saved variable values, restore them.
       if ( this.variableValues ) {
         assert && assert( this.variableValues.length === this.scene.variables.length, 'oops, missing variables' );
-        for ( var i = 0; i < this.variableValues.length; i++ ) {
+        for ( let i = 0; i < this.variableValues.length; i++ ) {
           this.scene.variables[ i ].valueProperty.value = this.variableValues[ i ];
         }
       }
@@ -76,7 +76,7 @@ define( require => {
     this.snapshotDataStructures = [];
 
     // Create a snapshot data structure for each termCreator.
-    for ( var i = 0; i < this.termCreators.length; i++ ) {
+    for ( let i = 0; i < this.termCreators.length; i++ ) {
       this.snapshotDataStructures[ i ] = this.termCreators[ i ].createSnapshot();
     }
   }
@@ -90,7 +90,7 @@ define( require => {
     restore: function() {
       assert && assert( this.termCreators.length === this.snapshotDataStructures.length,
         'arrays should have same length' );
-      for ( var i = 0; i < this.termCreators.length; i++ ) {
+      for ( let i = 0; i < this.termCreators.length; i++ ) {
         this.termCreators[ i ].restoreSnapshot( this.snapshotDataStructures[ i ] );
       }
     }

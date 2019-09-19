@@ -22,7 +22,7 @@ define( require => {
    */
   function EqualityExplorerScreen( createModel, createView, options ) {
 
-    var self = this;
+    const self = this;
 
     Screen.call( this, createModel, createView, options );
 

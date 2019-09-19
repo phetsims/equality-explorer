@@ -17,7 +17,7 @@ define( require => {
   const Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
 
   // constants
-  var DEFAULT_RANGE = new Range( 1, 10 );
+  const DEFAULT_RANGE = new Range( 1, 10 );
 
   /**
    * @param {string} symbol - symbolic name for the object type, not visible to the user

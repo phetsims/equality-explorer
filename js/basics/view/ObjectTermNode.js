@@ -21,8 +21,8 @@ define( require => {
   const Util = require( 'DOT/Util' );
 
   // constants
-  var DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
-  var ICON_SCALE_MULTIPLIER = 0.7; // use this to adjust size of icon relative to coefficient
+  const DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
+  const ICON_SCALE_MULTIPLIER = 0.7; // use this to adjust size of icon relative to coefficient
 
   /**
    * @param {ObjectTermCreator} termCreator
@@ -32,11 +32,11 @@ define( require => {
    */
   function ObjectTermNode( termCreator, term, options ) {
 
-    var contentNode = ObjectTermNode.createInteractiveTermNode( term.variable.image, {
+    const contentNode = ObjectTermNode.createInteractiveTermNode( term.variable.image, {
       maxHeight: term.diameter
     } );
 
-    var shadowNode = new Image( term.variable.shadow, {
+    const shadowNode = new Image( term.variable.shadow, {
       maxHeight: term.diameter,
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
@@ -82,9 +82,9 @@ define( require => {
         font: DEFAULT_COEFFICIENT_FONT
       }, options );
 
-      var coefficientNode = new Text( coefficient, { font: options.font } );
+      const coefficientNode = new Text( coefficient, { font: options.font } );
 
-      var iconWrapper = new Node( {
+      const iconWrapper = new Node( {
         children: [ icon ],
         scale: ICON_SCALE_MULTIPLIER * coefficientNode.height / icon.height
       } );

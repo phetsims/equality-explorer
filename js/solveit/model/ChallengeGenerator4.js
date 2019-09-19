@@ -18,7 +18,7 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings (debug)
-  var PATTERN = 'level 4, ax + b = mx + n<br>' +
+  const PATTERN = 'level 4, ax + b = mx + n<br>' +
                 'x = {{x}}<br>' +
                 'a = {{a}}<br>' +
                 'b = {{b}}<br>' +
@@ -26,10 +26,10 @@ define( require => {
                 'n = (a–m)x + b = {{n}}';
 
   // constants
-  var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
-  var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var M_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
+  const A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const M_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
   /**
    * @constructor
@@ -58,13 +58,13 @@ define( require => {
      */
     nextChallengeProtected: function() {
 
-      var x = this.randomX( X_VALUES );
-      var a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );
-      var b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
-      var m = ChallengeGenerator.randomValueBy( M_VALUES, function( m ) {
+      const x = this.randomX( X_VALUES );
+      const a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );
+      const b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
+      const m = ChallengeGenerator.randomValueBy( M_VALUES, function( m ) {
         return ( m !== 0 ) && ( m !== a ) && ( Math.abs( a - m ) <= 10 );
       } );
-      var n = ( ( a - m ) * x ) + b;
+      const n = ( ( a - m ) * x ) + b;
 
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
@@ -75,7 +75,7 @@ define( require => {
       assert && assert( Math.abs( a - m ) <= 10, '|a-m| is too large: ' + Math.abs( a - m ) );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, m: m, n: n } );
+      const debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, m: m, n: n } );
 
       // ax + b = mx + n
       return new Challenge( x,

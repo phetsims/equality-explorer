@@ -29,7 +29,7 @@ define( require => {
    */
   function FruitsScene() {
 
-    var variables = [
+    const variables = [
 
       // name, image, shadow
       new ObjectVariable( 'apple', appleImage, appleShadowImage, { value: 4 } ),

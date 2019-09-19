@@ -24,7 +24,7 @@ define( require => {
    */
   function VariablesScene() {
 
-    var xVariable = new Variable( xString );
+    const xVariable = new Variable( xString );
 
     EqualityExplorerScene.call( this, createTermCreators( xVariable ), createTermCreators( xVariable ), {
       debugName: 'variables',

@@ -15,7 +15,7 @@ define( require => {
   const RichText = require( 'SCENERY/nodes/RichText' );
 
   // constants
-  var DEFAULT_FONT = new PhetFont( 14 );
+  const DEFAULT_FONT = new PhetFont( 14 );
 
   /**
    * @param {Property.<Challenge|null>} challengeProperty
@@ -24,7 +24,7 @@ define( require => {
    */
   function ChallengeDerivationNode( challengeProperty, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 

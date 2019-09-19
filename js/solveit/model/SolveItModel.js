@@ -49,7 +49,7 @@ define( require => {
 
     // @public (read-only) {SolveItScene[]} a scene for each level
     this.scenes = [];
-    for ( var i = 0; i < this.levelDescriptions.length; i++ ) {
+    for ( let i = 0; i < this.levelDescriptions.length; i++ ) {
       this.scenes.push( new SolveItScene( i + 1, this.levelDescriptions[ i ], this.challengeGenerators[ i ] ) );
     }
 
@@ -82,15 +82,15 @@ define( require => {
      */
     testChallengeGenerators: function() {
 
-      var testsPerLevel = 1000;
+      const testsPerLevel = 1000;
 
-      for ( var i = 0; i < this.challengeGenerators.length; i++ ) {
+      for ( let i = 0; i < this.challengeGenerators.length; i++ ) {
 
         console.log( '>>> Testing level ' + ( i + 1 ) );
-        var challengeGenerator = this.challengeGenerators[ i ];
+        const challengeGenerator = this.challengeGenerators[ i ];
 
-        for ( var j = 0; j < testsPerLevel; j++ ) {
-          var challenge = challengeGenerator.nextChallenge();
+        for ( let j = 0; j < testsPerLevel; j++ ) {
+          const challenge = challengeGenerator.nextChallenge();
           console.log( j + ': ' + challenge.toString() );
         }
       }

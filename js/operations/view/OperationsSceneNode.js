@@ -38,7 +38,7 @@ define( require => {
       snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
     // Layer when universal operation animation occurs
-    var operationAnimationLayer = new Node();
+    const operationAnimationLayer = new Node();
 
     // @private Universal Operation, below Equation accordion box
     this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {

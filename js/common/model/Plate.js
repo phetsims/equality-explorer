@@ -23,8 +23,8 @@ define( require => {
   const Vector2Property = require( 'DOT/Vector2Property' );
 
   // constants
-  var DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
-  var VALID_DEBUG_SIDE_VALUES = [ 'left', 'right' ];
+  const DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
+  const VALID_DEBUG_SIDE_VALUES = [ 'left', 'right' ];
 
   /**
    * @param {TermCreator[]} termCreators - creators associated with term on this plate
@@ -36,7 +36,7 @@ define( require => {
 
     assert && assert( _.includes( VALID_DEBUG_SIDE_VALUES, debugSide, 'invalid debugSide: ' + debugSide ) );
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       supportHeight: 10, // height of the vertical support that connects the plate to the scale
@@ -77,8 +77,8 @@ define( require => {
     } );
 
     // weightProperty is derived from the weights of each termCreator
-    var weightDependencies = [];
-    for ( var i = 0; i < termCreators.length; i++ ) {
+    const weightDependencies = [];
+    for ( let i = 0; i < termCreators.length; i++ ) {
       weightDependencies.push( termCreators[ i ].weightOnPlateProperty );
     }
 
@@ -86,8 +86,8 @@ define( require => {
     // dispose not required.
     this.weightProperty = new DerivedProperty( weightDependencies,
       function() {
-        var weight = Fraction.fromInteger( 0 );
-        for ( var i = 0; i < termCreators.length; i++ ) {
+        let weight = Fraction.fromInteger( 0 );
+        for ( let i = 0; i < termCreators.length; i++ ) {
           weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value ).reduced();
         }
         return weight;
@@ -126,7 +126,7 @@ define( require => {
      * @public
      */
     removeTerm: function( term ) {
-      var cell = this.grid.removeTerm( term );
+      const cell = this.grid.removeTerm( term );
       this.numberOfTermsProperty.value--;
       this.contentsChangedEmitter.emit();
       return cell;
@@ -227,20 +227,20 @@ define( require => {
      */
     organize: function() {
 
-      var numberOfTermsToOrganize = this.numberOfTermsProperty.value;
+      let numberOfTermsToOrganize = this.numberOfTermsProperty.value;
 
       if ( numberOfTermsToOrganize > 0 ) {
 
-        var grid = this.grid;
+        const grid = this.grid;
 
         grid.clearAllCells();
 
         // start with the bottom-left cell
-        var row = grid.rows - 1;
-        var column = 0;
+        let row = grid.rows - 1;
+        let column = 0;
 
         // Group the terms by positive and negative
-        var termGroups = []; // {Term[][]}
+        const termGroups = []; // {Term[][]}
         this.termCreators.forEach( function( termCreator ) {
           termGroups.push( termCreator.getPositiveTermsOnPlate() );
           termGroups.push( termCreator.getNegativeTermsOnPlate() );
@@ -251,10 +251,10 @@ define( require => {
           if ( terms.length > 0 ) {
 
             // stack the terms in columns, from left to right
-            for ( var i = 0; i < terms.length; i++ ) {
+            for ( let i = 0; i < terms.length; i++ ) {
 
-              var term = terms[ i ];
-              var cell = grid.rowColumnToCell( row, column );
+              const term = terms[ i ];
+              const cell = grid.rowColumnToCell( row, column );
               grid.putTerm( term, cell );
 
               numberOfTermsToOrganize--;
@@ -279,7 +279,7 @@ define( require => {
 
               // Start a new column if we have enough cells to the right of the current column.
               // Otherwise continue to fill the current column.
-              var numberOfCellsToRight = ( grid.columns - column - 1 ) * grid.rows;
+              const numberOfCellsToRight = ( grid.columns - column - 1 ) * grid.rows;
               if ( numberOfCellsToRight >= numberOfTermsToOrganize ) {
                 row = grid.rows - 1;
                 column++;
@@ -294,18 +294,18 @@ define( require => {
 
         // Center the stacks on the plate by shifting columns to the right.
         // If it's not possible to exactly center, the additional space will appear on the right.
-        var numberOfEmptyColumns = grid.columns - column - 1;
-        var gridColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
+        const numberOfEmptyColumns = grid.columns - column - 1;
+        const gridColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
         if ( gridColumnsToShiftRight > 0 ) {
           for ( row = grid.rows - 1; row >= 0; row-- ) {
             for ( column = grid.columns - 1; column >= 0; column-- ) {
-              var cell = grid.rowColumnToCell( row, column );
-              var term = grid.getTermInCell( cell );
+              const cell = grid.rowColumnToCell( row, column );
+              const term = grid.getTermInCell( cell );
               if ( term ) {
 
                 // move term 1 column to the right
                 grid.clearCell( cell );
-                var rightCell = grid.rowColumnToCell( row, column + gridColumnsToShiftRight );
+                const rightCell = grid.rowColumnToCell( row, column + gridColumnsToShiftRight );
                 grid.putTerm( term, rightCell );
               }
             }

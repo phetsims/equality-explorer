@@ -47,12 +47,12 @@ define( require => {
     }, options );
 
     // use an invisible rectangle to enforce fixed content size, stroke 'red' with ?dev
-    var invisibleRectangle = new Rectangle( 0, 0, options.contentWidth, options.contentHeight );
+    const invisibleRectangle = new Rectangle( 0, 0, options.contentWidth, options.contentHeight );
 
-    var equationNode = new EquationNode( leftTermCreators, rightTermCreators, options.equationNodeOptions );
+    const equationNode = new EquationNode( leftTermCreators, rightTermCreators, options.equationNodeOptions );
 
     // wrapper to avoid exceeding stack size when bounds of equationNode changes
-    var equationParent = new Node( { children: [ equationNode ] } );
+    const equationParent = new Node( { children: [ equationNode ] } );
 
     // off is not needed
     equationNode.on( 'bounds', function() {
@@ -61,14 +61,14 @@ define( require => {
       // This is more complicated than setting maxWidth because the equation's relation operator is
       // centered in the panel, and only one side of the equation may get too wide.
       // equationNode.x is the center of the equation's relational operator.
-      var maxSideWidth = options.contentWidth / 2;
-      var leftSideOverflow = Math.max( 0, equationNode.x - equationNode.left - maxSideWidth );
-      var rightSideOverflow = Math.max( 0, equationNode.right - equationNode.x - maxSideWidth );
-      var maxOverflow = Math.max( leftSideOverflow, rightSideOverflow );
-      var xScale = maxSideWidth / ( maxSideWidth + maxOverflow );
+      const maxSideWidth = options.contentWidth / 2;
+      const leftSideOverflow = Math.max( 0, equationNode.x - equationNode.left - maxSideWidth );
+      const rightSideOverflow = Math.max( 0, equationNode.right - equationNode.x - maxSideWidth );
+      const maxOverflow = Math.max( leftSideOverflow, rightSideOverflow );
+      const xScale = maxSideWidth / ( maxSideWidth + maxOverflow );
 
       // vertical scale
-      var yScale = options.contentHeight / equationNode.height;
+      const yScale = options.contentHeight / equationNode.height;
 
       // Scale and center the parent
       equationParent.setScaleMagnitude( Math.min( xScale, yScale ) );
@@ -76,7 +76,7 @@ define( require => {
       equationParent.centerY = invisibleRectangle.centerY;
     } );
 
-    var contentNode = new Node( {
+    const contentNode = new Node( {
       children: [ invisibleRectangle, equationParent ]
     } );
 

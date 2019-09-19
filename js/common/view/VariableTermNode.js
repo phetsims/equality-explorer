@@ -25,7 +25,7 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  var DEFAULT_OPTIONS = {
+  const DEFAULT_OPTIONS = {
     margin: null, // {number|null} margin, determined empirically if null
     positiveFill: EqualityExplorerColors.POSITIVE_X_FILL, // fill of background square for positive coefficient
     negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL, // fill of background square for negative coefficient
@@ -49,10 +49,10 @@ define( require => {
 
     options = _.extend( {}, DEFAULT_OPTIONS, options );
 
-    var contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.variable.symbol,
+    const contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.variable.symbol,
       _.extend( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
-    var shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
+    const shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
       fill: 'black',
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
@@ -88,16 +88,16 @@ define( require => {
         options.margin = 0.12 * options.diameter; // determined empirically
       }
 
-      var isPositive = ( coefficient.getValue() >= 0 );
+      const isPositive = ( coefficient.getValue() >= 0 );
 
       // background square
-      var squareNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
+      const squareNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
         stroke: 'black',
         fill: isPositive ? options.positiveFill : options.negativeFill,
         lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
       } );
 
-      var valueNode = VariableTermNode.createEquationTermNode( coefficient, symbol, _.extend( {}, options, {
+      const valueNode = VariableTermNode.createEquationTermNode( coefficient, symbol, _.extend( {}, options, {
         align: 'center',
         maxWidth: squareNode.width - ( 2 * options.margin ),
         maxHeight: squareNode.height - ( 2 * options.margin ),
@@ -135,7 +135,7 @@ define( require => {
 
       // coefficient, with option to show 1 and -1
       if ( options.showOne || coefficient.abs().getValue() !== 1 ) {
-        var coefficientNode = new ReducedFractionNode( coefficient, {
+        const coefficientNode = new ReducedFractionNode( coefficient, {
           fractionFont: options.fractionFont,
           integerFont: options.integerFont
         } );
@@ -143,9 +143,9 @@ define( require => {
       }
 
       // variable's symbol, with option to show 1 and -1
-      var symbolText = ( !options.showOne && coefficient.getValue() === -1 ) ?
+      const symbolText = ( !options.showOne && coefficient.getValue() === -1 ) ?
                        ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
-      var symbolNode = new Text( symbolText, {
+      const symbolNode = new Text( symbolText, {
         font: options.symbolFont
       } );
       options.children.push( symbolNode );

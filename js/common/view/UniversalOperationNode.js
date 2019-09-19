@@ -68,7 +68,7 @@ define( require => {
      */
     createOperandNode: function( operand ) {
 
-      var operandNode = null;
+      let operandNode = null;
 
       if ( operand instanceof ConstantTerm ) {
         operandNode = ConstantTermNode.createEquationTermNode( operand.constantValue, {

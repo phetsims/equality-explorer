@@ -27,7 +27,7 @@ define( require => {
   const snapshotsString = require( 'string!EQUALITY_EXPLORER/snapshots' );
 
   // constants
-  var SEPARATOR_OPTIONS = {
+  const SEPARATOR_OPTIONS = {
     stroke: 'rgb( 200, 200, 200 )'
   };
 
@@ -38,7 +38,7 @@ define( require => {
    */
   function SnapshotsAccordionBox( scene, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
@@ -72,7 +72,7 @@ define( require => {
     assert && assert( options.maxWidth === undefined, 'SnapshotsAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
 
-    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
+    const contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
     options.snapshotControlOptions = _.extend( {
       variableValuesVisibleProperty: options.variableValuesVisibleProperty,
@@ -87,20 +87,20 @@ define( require => {
     } );
 
     // Create a row for each snapshot
-    var snapshotsVBoxChildren = [];
-    for ( var i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
+    const snapshotsVBoxChildren = [];
+    for ( let i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
       snapshotsVBoxChildren.push( new SnapshotControl( scene, scene.snapshotsCollection.snapshotProperties[ i ],
         scene.snapshotsCollection.selectedSnapshotProperty, options.snapshotControlOptions ) );
     }
 
-    var snapshotsVBox = new VBox( {
+    const snapshotsVBox = new VBox( {
       spacing: 15,
       children: snapshotsVBoxChildren
     } );
 
     // Button to restore the selected snapshot
-    var restoreIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
-    var restoreButton = new RectangularPushButton( {
+    const restoreIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
+    const restoreButton = new RectangularPushButton( {
       content: restoreIcon,
       baseColor: EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE, // button color matches selection stroke
       xMargin: 8,
@@ -113,8 +113,8 @@ define( require => {
     } );
 
     // Button to delete (trash) the selected snapshot
-    var trashIcon = new FontAwesomeNode( 'trash', { scale: 0.45 } );
-    var trashButton = new RectangularPushButton( {
+    const trashIcon = new FontAwesomeNode( 'trash', { scale: 0.45 } );
+    const trashButton = new RectangularPushButton( {
       content: trashIcon,
       baseColor: 'white',
       xMargin: 12,
@@ -128,12 +128,12 @@ define( require => {
 
     // Disables restore and trash buttons when there is no selection. unlink not required.
     scene.snapshotsCollection.selectedSnapshotProperty.link( function( snapshot ) {
-      var enabled = ( snapshot !== null );
+      const enabled = ( snapshot !== null );
       restoreButton.enabled = enabled;
       trashButton.enabled = enabled;
     } );
 
-    var buttonGroupChildren = [ restoreButton, trashButton ];
+    const buttonGroupChildren = [ restoreButton, trashButton ];
 
     // Checkbox for making variable values visible.
     if ( options.variableValuesVisibleProperty ) {
@@ -144,7 +144,7 @@ define( require => {
         } ) );
     }
 
-    var buttonGroup = new HBox( {
+    const buttonGroup = new HBox( {
       spacing: 40,
       children: buttonGroupChildren,
       maxWidth: contentWidth
@@ -152,7 +152,7 @@ define( require => {
 
     snapshotsVBoxChildren.push( buttonGroup );
 
-    var contentVBox = new VBox( {
+    const contentVBox = new VBox( {
       spacing: 10,
       children: [
         snapshotsVBox,
@@ -164,7 +164,7 @@ define( require => {
     AccordionBox.call( this, contentVBox, options );
 
     // Click outside this accordion box to clear the selected snapshot.
-    var clickToDeselectListener = {
+    const clickToDeselectListener = {
       down: function( event ) {
         if ( !self.parentToGlobalBounds( self.visibleBounds ).containsPoint( event.pointer.point ) ) {
           scene.snapshotsCollection.selectedSnapshotProperty.value = null;

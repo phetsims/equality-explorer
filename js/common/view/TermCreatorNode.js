@@ -25,7 +25,7 @@ define( require => {
    */
   function TermCreatorNode( termCreator, plate, termsLayer, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       sign: 1,  // sign that will be applied to terms created by this Node, 1 or -1
@@ -63,7 +63,7 @@ define( require => {
     var frameStartedCallback = function() {
 
       // This Node's location
-      var location = termsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
+      const location = termsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
 
       // assign to termCreator's location
       if ( options.sign === 1 ) {

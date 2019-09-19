@@ -29,7 +29,7 @@ define( require => {
    */
   function SumToZeroNode( options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       variable: null, // {Variable|null} determines whether we render '0' or '0x' (for example)
@@ -38,14 +38,14 @@ define( require => {
       fontSize: EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
     }, options );
 
-    var zeroNode = new Text( '0', {
+    const zeroNode = new Text( '0', {
       font: new PhetFont( options.fontSize )
     } );
 
-    var contentNode = null;
+    let contentNode = null;
     if ( options.variable ) {
 
-      var symbolNode = new Text( options.variable.symbol, {
+      const symbolNode = new Text( options.variable.symbol, {
         font: new MathSymbolFont( options.fontSize )
       } );
 
@@ -61,7 +61,7 @@ define( require => {
     }
     contentNode.maxWidth = 2 * options.haloRadius;
 
-    var haloNode = new HaloNode( options.haloRadius, {
+    const haloNode = new HaloNode( options.haloRadius, {
       baseColor: options.haloBaseColor,
       center: contentNode.center
     } );
@@ -72,7 +72,7 @@ define( require => {
     Node.call( this, options );
 
     // Property to be animated
-    var opacityProperty = new NumberProperty( this.opacity );
+    const opacityProperty = new NumberProperty( this.opacity );
 
     // unlink not needed
     opacityProperty.link( function( opacity ) {

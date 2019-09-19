@@ -35,23 +35,23 @@ define( require => {
   const xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
-  var DIAMETER = 40;
-  var IMAGE_OPTIONS = { maxHeight: DIAMETER };
+  const DIAMETER = 40;
+  const IMAGE_OPTIONS = { maxHeight: DIAMETER };
 
   // Range for coefficients and constants, zero excluded
-  var INTEGER_VALUES = ChallengeGenerator.rangeToArray( -9, 9 );
+  const INTEGER_VALUES = ChallengeGenerator.rangeToArray( -9, 9 );
   INTEGER_VALUES.splice( INTEGER_VALUES.indexOf( 0 ), 1 );
 
   // Node instances that are reused throughout the rewards
-  var APPLE_NODE = new Image( appleImage, IMAGE_OPTIONS );
-  var CAT_NODE = new Image( catImage, IMAGE_OPTIONS );
-  var DOG_NODE = new Image( dogImage, IMAGE_OPTIONS );
-  var ORANGE_NODE = new Image( orangeImage, IMAGE_OPTIONS );
-  var STAR_NODE = new StarNode( {
+  const APPLE_NODE = new Image( appleImage, IMAGE_OPTIONS );
+  const CAT_NODE = new Image( catImage, IMAGE_OPTIONS );
+  const DOG_NODE = new Image( dogImage, IMAGE_OPTIONS );
+  const ORANGE_NODE = new Image( orangeImage, IMAGE_OPTIONS );
+  const STAR_NODE = new StarNode( {
     innerRadius: DIAMETER / 4,
     outerRadius: DIAMETER / 2
   } );
-  var FACE_NODE = new FaceNode( DIAMETER, {
+  const FACE_NODE = new FaceNode( DIAMETER, {
     headStroke: 'black'
   } );
 
@@ -61,9 +61,9 @@ define( require => {
    */
   function EqualityExplorerRewardNode( level ) {
 
-    var createNodesFunction = [ createNodes1, createNodes2, createNodes3, createNodes4 ];
+    const createNodesFunction = [ createNodes1, createNodes2, createNodes3, createNodes4 ];
 
-    var nodes = createNodesFunction[ level - 1 ]();
+    const nodes = createNodesFunction[ level - 1 ]();
 
     RewardNode.call( this, {
       nodes: RewardNode.createRandomNodes( nodes, 100 /* count */ )
@@ -74,7 +74,7 @@ define( require => {
 
   // Creates nodes for level 1 reward.
   function createNodes1() {
-    var nodes = [];
+    const nodes = [];
     INTEGER_VALUES.forEach( function( i ) {
 
       // variable terms with integer coefficients
@@ -92,7 +92,7 @@ define( require => {
 
   // Creates nodes for level 2 reward.
   function createNodes2() {
-    var nodes = [];
+    const nodes = [];
     INTEGER_VALUES.forEach( function( i ) {
 
       // variable terms with integer coefficients
@@ -112,7 +112,7 @@ define( require => {
 
   // Creates nodes for level 3 reward.
   function createNodes3() {
-    var nodes = [];
+    const nodes = [];
     INTEGER_VALUES.forEach( function( i ) {
 
       // variable terms with integer coefficients
@@ -132,7 +132,7 @@ define( require => {
 
   // Creates nodes for level 4 reward.
   function createNodes4() {
-    var nodes = [];
+    const nodes = [];
     INTEGER_VALUES.forEach( function( i ) {
 
       // variable terms with integer coefficients
@@ -176,12 +176,12 @@ define( require => {
    * @returns {Node}
    */
   function createFractionConstantTermNode() {
-    var numerator = ChallengeGenerator.randomValue( INTEGER_VALUES, [ 0 ] );
-    var denominator = ChallengeGenerator.randomValueBy( INTEGER_VALUES,
+    const numerator = ChallengeGenerator.randomValue( INTEGER_VALUES, [ 0 ] );
+    const denominator = ChallengeGenerator.randomValueBy( INTEGER_VALUES,
       function( denominator ) {
         return ( denominator !== 0 ) && ( Math.abs( denominator ) !== 1 ) && ( numerator % denominator !== 0 );
       } );
-    var constantValue = new Fraction( numerator, denominator ).reduced();
+    const constantValue = new Fraction( numerator, denominator ).reduced();
     return ConstantTermNode.createInteractiveTermNode( constantValue, {
       diameter: DIAMETER
     } );
@@ -192,13 +192,13 @@ define( require => {
    * @returns {Node}
    */
   function createOperationNode() {
-    var operator = randomOperator();
-    var constantValue = ChallengeGenerator.randomValueBy( INTEGER_VALUES,
+    const operator = randomOperator();
+    const constantValue = ChallengeGenerator.randomValueBy( INTEGER_VALUES,
       function( value ) {
         return ( value > 0 );
       } );
-    var operand = new ConstantTerm( { constantValue: Fraction.fromInteger( constantValue ) } );
-    var operation = new UniversalOperation( operator, operand );
+    const operand = new ConstantTerm( { constantValue: Fraction.fromInteger( constantValue ) } );
+    const operation = new UniversalOperation( operator, operand );
     return new UniversalOperationNode( operation, {
       maxHeight: DIAMETER
     } );

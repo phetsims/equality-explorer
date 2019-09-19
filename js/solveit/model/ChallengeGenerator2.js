@@ -18,16 +18,16 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings (debug)
-  var PATTERN = 'level 2, ax + b = c<br>' +
+  const PATTERN = 'level 2, ax + b = c<br>' +
                 'x = {{x}}<br>' +
                 'a = {{a}}<br>' +
                 'b = {{b}}<br>' +
                 'c = ax + b = {{c}}';
 
   // constants
-  var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
-  var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
+  const A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+  const B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
   /**
    * @constructor
@@ -55,10 +55,10 @@ define( require => {
      */
     nextChallengeProtected: function() {
 
-      var x = this.randomX( X_VALUES );
-      var a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );
-      var b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
-      var c = ( a * x ) + b;
+      const x = this.randomX( X_VALUES );
+      const a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );
+      const b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
+      const c = ( a * x ) + b;
 
       // Verify that computations meeting design requirements.
       assert && assert( x !== 0, 'x is 0' );
@@ -66,7 +66,7 @@ define( require => {
       assert && assert( b !== 0, 'b is 0' );
 
       // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-      var debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, c: c } );
+      const debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, c: c } );
 
       // ax + b = 0x + c
       return new Challenge( x,

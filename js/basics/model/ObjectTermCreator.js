@@ -22,7 +22,7 @@ define( require => {
    */
   function ObjectTermCreator( variable, options ) {
 
-    var self = this;
+    const self = this;
 
     phet.log && phet.log( 'ObjectTermCreator: ' + variable.symbol + ', weight=' + variable.valueProperty.value );
 

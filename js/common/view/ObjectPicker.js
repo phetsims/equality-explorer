@@ -28,7 +28,7 @@ define( require => {
   const StringProperty = require( 'AXON/StringProperty' );
 
   // constants
-  var BUTTON_STATES = [ 'up', 'down', 'over', 'out' ];
+  const BUTTON_STATES = [ 'up', 'down', 'over', 'out' ];
 
   /**
    * @param {Property.<Object>} valueProperty - value of the current item that is displayed
@@ -81,85 +81,85 @@ define( require => {
     // Nodes
 
     // maximum dimensions of item Nodes
-    var maxWidth = _.maxBy( items, function( item ) {
+    const maxWidth = _.maxBy( items, function( item ) {
       return item.node.width;
     } ).node.width;
-    var maxHeight = _.maxBy( items, function( item ) {
+    const maxHeight = _.maxBy( items, function( item ) {
       return item.node.height;
     } ).node.height;
 
     // compute shape of the background behind the value
-    var backgroundWidth = maxWidth + ( 2 * options.xMargin );
-    var backgroundHeight = maxHeight + ( 2 * options.yMargin );
-    var backgroundOverlap = 1;
-    var backgroundCornerRadius = options.cornerRadius;
+    const backgroundWidth = maxWidth + ( 2 * options.xMargin );
+    const backgroundHeight = maxHeight + ( 2 * options.yMargin );
+    const backgroundOverlap = 1;
+    const backgroundCornerRadius = options.cornerRadius;
 
     // parent for value, to maintain rendering order and simplify centering
-    var valueParentNode = new Rectangle( 0, 0, backgroundWidth, backgroundHeight, {
+    const valueParentNode = new Rectangle( 0, 0, backgroundWidth, backgroundHeight, {
       pickable: false
     } );
 
     // top half of the background, for 'up'. Shape computed starting at upper-left, going clockwise.
-    var upShape = new Shape()
+    const upShape = new Shape()
       .arc( backgroundCornerRadius, backgroundCornerRadius, backgroundCornerRadius, Math.PI, Math.PI * 3 / 2, false )
       .arc( backgroundWidth - backgroundCornerRadius, backgroundCornerRadius, backgroundCornerRadius, -Math.PI / 2, 0, false )
       .lineTo( backgroundWidth, ( backgroundHeight / 2 ) + backgroundOverlap )
       .lineTo( 0, ( backgroundHeight / 2 ) + backgroundOverlap )
       .close();
-    var upBackground = new Path( upShape, { pickable: false } );
+    const upBackground = new Path( upShape, { pickable: false } );
 
     // bottom half of the background, for 'down'. Shape computed starting at bottom-right, going clockwise.
-    var downShape = new Shape()
+    const downShape = new Shape()
       .arc( backgroundWidth - backgroundCornerRadius, backgroundHeight - backgroundCornerRadius, backgroundCornerRadius, 0, Math.PI / 2, false )
       .arc( backgroundCornerRadius, backgroundHeight - backgroundCornerRadius, backgroundCornerRadius, Math.PI / 2, Math.PI, false )
       .lineTo( 0, backgroundHeight / 2 )
       .lineTo( backgroundWidth, backgroundHeight / 2 )
       .close();
-    var downBackground = new Path( downShape, { pickable: false } );
+    const downBackground = new Path( downShape, { pickable: false } );
 
     // separate rectangle for stroke around value background
-    var strokedBackground = new Rectangle( 0, 0, backgroundWidth, backgroundHeight, backgroundCornerRadius, backgroundCornerRadius, {
+    const strokedBackground = new Rectangle( 0, 0, backgroundWidth, backgroundHeight, backgroundCornerRadius, backgroundCornerRadius, {
       pickable: false,
       stroke: options.backgroundStroke,
       lineWidth: options.backgroundLineWidth
     } );
 
     // compute size of arrows
-    var arrowButtonSize = new Dimension2( 0.5 * backgroundWidth, options.arrowHeight );
+    const arrowButtonSize = new Dimension2( 0.5 * backgroundWidth, options.arrowHeight );
 
     // options shared by both arrows
-    var arrowOptions = {
+    const arrowOptions = {
       stroke: options.arrowStroke,
       lineWidth: options.arrowLineWidth,
       pickable: false
     };
 
     // up arrow
-    var upArrowShape = new Shape()
+    const upArrowShape = new Shape()
       .moveTo( arrowButtonSize.width / 2, 0 )
       .lineTo( arrowButtonSize.width, arrowButtonSize.height )
       .lineTo( 0, arrowButtonSize.height )
       .close();
-    var upArrow = new Path( upArrowShape, _.extend( {}, arrowOptions, {
+    const upArrow = new Path( upArrowShape, _.extend( {}, arrowOptions, {
       centerX: upBackground.centerX,
       bottom: upBackground.top - options.arrowYSpacing
     } ) );
 
     // down arrow
-    var downArrowShape = new Shape()
+    const downArrowShape = new Shape()
       .moveTo( arrowButtonSize.width / 2, arrowButtonSize.height )
       .lineTo( 0, 0 )
       .lineTo( arrowButtonSize.width, 0 )
       .close();
-    var downArrow = new Path( downArrowShape, _.extend( {}, arrowOptions, {
+    const downArrow = new Path( downArrowShape, _.extend( {}, arrowOptions, {
       centerX: downBackground.centerX,
       top: downBackground.bottom + options.arrowYSpacing
     } ) );
 
     // parents for 'up' and 'down' components
-    var upParent = new Node( { children: [ upBackground, upArrow ] } );
+    const upParent = new Node( { children: [ upBackground, upArrow ] } );
     upParent.addChild( new Rectangle( upParent.localBounds ) ); // invisible overlay
-    var downParent = new Node( { children: [ downBackground, downArrow ] } );
+    const downParent = new Node( { children: [ downBackground, downArrow ] } );
     downParent.addChild( new Rectangle( downParent.localBounds ) ); // invisible overlay
 
     // rendering order
@@ -191,7 +191,7 @@ define( require => {
     // Colors
 
     // arrow colors
-    var arrowColors = {
+    const arrowColors = {
       up: options.arrowsColor,
       over: options.arrowsColor,
       down: options.arrowsPressedColor,
@@ -200,9 +200,9 @@ define( require => {
     };
 
     // background colors
-    var highlightGradient = createVerticalGradient( options.gradientColor, options.backgroundColor, options.gradientColor, backgroundHeight );
-    var pressedGradient = createVerticalGradient( options.gradientPressedColor, options.backgroundColor, options.gradientPressedColor, backgroundHeight );
-    var backgroundColors = {
+    const highlightGradient = createVerticalGradient( options.gradientColor, options.backgroundColor, options.gradientColor, backgroundHeight );
+    const pressedGradient = createVerticalGradient( options.gradientPressedColor, options.backgroundColor, options.gradientPressedColor, backgroundHeight );
+    const backgroundColors = {
       up: options.backgroundColor,
       over: highlightGradient,
       down: pressedGradient,
@@ -214,14 +214,14 @@ define( require => {
     // Properties
 
     // index of the item that's currently selected
-    var indexProperty = new NumberProperty( indexOfItemWithValue( items, valueProperty.value ), {
+    const indexProperty = new NumberProperty( indexOfItemWithValue( items, valueProperty.value ), {
       numberType: 'Integer',
       range: new Range( 0, items.length - 1 )
     } );
 
     // state of the up and down button
-    var upStateProperty = new StringProperty( 'up', { validValues: BUTTON_STATES } );
-    var downStateProperty = new StringProperty( 'up', { validValues: BUTTON_STATES } );
+    const upStateProperty = new StringProperty( 'up', { validValues: BUTTON_STATES } );
+    const downStateProperty = new StringProperty( 'up', { validValues: BUTTON_STATES } );
 
     // enables the up button
     if ( !options.upEnabledProperty ) {
@@ -244,9 +244,9 @@ define( require => {
 
     // up - removeInputListener unnecessary
     upParent.addInputListener( new ButtonStateListener( upStateProperty ) );
-    var upListener = new FireOnHoldInputListener( {
+    const upListener = new FireOnHoldInputListener( {
       listener: function() {
-        var index = options.upFunction( indexProperty.value );
+        let index = options.upFunction( indexProperty.value );
         if ( options.wrapEnabled && index >= items.length ) {
           index = options.upFunction( -1 );
         }
@@ -259,9 +259,9 @@ define( require => {
 
     // down - removeInputListener unnecessary
     downParent.addInputListener( new ButtonStateListener( downStateProperty ) );
-    var downListener = new FireOnHoldInputListener( {
+    const downListener = new FireOnHoldInputListener( {
       listener: function() {
-        var index = options.downFunction( indexProperty.value );
+        let index = options.downFunction( indexProperty.value );
         if ( options.wrapEnabled && index < 0 ) {
           index = options.downFunction( items.length );
         }
@@ -273,19 +273,19 @@ define( require => {
     downParent.addInputListener( downListener );
 
     // enable/disable, unlink required
-    var upEnabledListener = function( enabled ) { upListener.enabled = enabled; };
-    var downEnabledListener = function( enabled ) { downListener.enabled = enabled; };
+    const upEnabledListener = function( enabled ) { upListener.enabled = enabled; };
+    const downEnabledListener = function( enabled ) { downListener.enabled = enabled; };
     options.upEnabledProperty.link( upEnabledListener );
     options.downEnabledProperty.link( downEnabledListener );
 
     // Update displayed Node and index to match the curret value
-    var valueObserver = function( value ) {
+    const valueObserver = function( value ) {
 
       valueParentNode.removeAllChildren();
 
       // show the node associated with the value
-      var index = indexOfItemWithValue( items, value );
-      var valueNode = items[ index ].node;
+      const index = indexOfItemWithValue( items, value );
+      const valueNode = items[ index ].node;
       valueParentNode.addChild( valueNode );
       valueNode.centerX = backgroundWidth / 2;
       valueNode.centerY = backgroundHeight / 2;
@@ -364,8 +364,8 @@ define( require => {
    * @returns {number}
    */
   var indexOfItemWithValue = function( items, value ) {
-    var index = -1;
-    for ( var i = 0; i < items.length; i++ ) {
+    let index = -1;
+    for ( let i = 0; i < items.length; i++ ) {
       if ( items[ i ].value === value ) {
         index = i;
         break;

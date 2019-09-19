@@ -54,8 +54,8 @@ define( require => {
     assert && assert( options.maxHeight === undefined, 'VariablesAccordionBox sets maxHeight' );
     options.maxHeight = options.fixedHeight;
 
-    var contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
-    var contentHeight = options.fixedHeight - ( 2 * options.contentYMargin );
+    const contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
+    const contentHeight = options.fixedHeight - ( 2 * options.contentYMargin );
 
     assert && assert( !options.titleNode, 'VariablesAccordionBox sets titleNode' );
     options.titleNode = new Text( options.titleString, {
@@ -63,23 +63,23 @@ define( require => {
       maxWidth: 0.85 * contentWidth
     } );
 
-    var backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
+    const backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     // Create a picker for each variable
-    var children = [];
+    const children = [];
     variables.forEach( function( variable ) {
 
-      var variableNode = new VariableNode( variable, {
+      const variableNode = new VariableNode( variable, {
         iconScale: 0.55,
         fontSize: options.fontSize
       } );
 
-      var equalsText = new Text( MathSymbols.EQUAL_TO, {
+      const equalsText = new Text( MathSymbols.EQUAL_TO, {
         font: new PhetFont( options.fontSize )
       } );
 
       // NumberPicker.dispose not needed, VariablesAccordionBox exists for lifetime of the sim
-      var valuePicker = new NumberPicker( variable.valueProperty, new Property( variable.range ), {
+      const valuePicker = new NumberPicker( variable.valueProperty, new Property( variable.range ), {
         color: 'black',
         font: new PhetFont( options.fontSize ),
         xMargin: 6,
@@ -94,14 +94,14 @@ define( require => {
       } ) );
     } );
 
-    var hBox = new HBox( {
+    const hBox = new HBox( {
       children: children,
       spacing: 25,
       maxWidth: contentWidth,
       center: backgroundNode.center
     } );
 
-    var contentNode = new Node( {
+    const contentNode = new Node( {
       children: [ backgroundNode, hBox ]
     } );
 

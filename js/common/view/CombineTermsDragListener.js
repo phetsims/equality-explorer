@@ -46,10 +46,10 @@ define( require => {
     startOpposite: function() {
       assert && assert( this.termCreator.lockedProperty.value, 'startOpposite should only be called when lock is on' );
 
-      var likeTermsCell = this.termCreator.likeTermsCell;
-      var oppositeLikeTerm = this.oppositePlate.getTermInCell( likeTermsCell );
+      const likeTermsCell = this.termCreator.likeTermsCell;
+      let oppositeLikeTerm = this.oppositePlate.getTermInCell( likeTermsCell );
 
-      var inverseTerm;
+      let inverseTerm;
 
       if ( oppositeLikeTerm ) {
 
@@ -91,12 +91,12 @@ define( require => {
     endOpposite: function() {
       assert && assert( this.termCreator.lockedProperty.value, 'endOpposite should only be called when lock is on' );
 
-      var cell = this.termCreator.likeTermsCell;
-      var oppositeLikeTerm = this.oppositePlate.getTermInCell( cell );
+      const cell = this.termCreator.likeTermsCell;
+      let oppositeLikeTerm = this.oppositePlate.getTermInCell( cell );
       if ( oppositeLikeTerm ) {
 
         // opposite cell is occupied, combine equivalentTerm with term that's in the cell
-        var combinedTerm = oppositeLikeTerm.plus( this.equivalentTerm );
+        let combinedTerm = oppositeLikeTerm.plus( this.equivalentTerm );
         this.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
 
         // dispose of the terms used to create combinedTerm
@@ -126,7 +126,7 @@ define( require => {
       else {
 
         // opposite cell is empty, put a big copy of equivalentTerm in that cell
-        var equivalentTermCopy = this.equivalentTerm.copy( {
+        const equivalentTermCopy = this.equivalentTerm.copy( {
           diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
         } );
         !this.equivalentTerm.isDisposed && this.equivalentTerm.dispose();
@@ -147,10 +147,10 @@ define( require => {
      */
     animateToPlate: function() {
 
-      var self = this;
-      var likeTermsCell = this.termCreator.likeTermsCell;
-      var cellLocation = this.plate.getLocationOfCell( likeTermsCell );
-      var sumToZeroParent = this.termNode.getParent();
+      const self = this;
+      const likeTermsCell = this.termCreator.likeTermsCell;
+      const cellLocation = this.plate.getLocationOfCell( likeTermsCell );
+      const sumToZeroParent = this.termNode.getParent();
 
       self.term.pickableProperty.value = this.pickableWhileAnimating;
 
@@ -159,8 +159,8 @@ define( require => {
         // When the term reaches the cell ...
         animationCompletedCallback: function() {
 
-          var termInCell = self.plate.getTermInCell( likeTermsCell );
-          var maxIntegerExceeded = false;
+          let termInCell = self.plate.getTermInCell( likeTermsCell );
+          let maxIntegerExceeded = false;
 
           //=======================================================================
           // On dragged term's side of the scale
@@ -169,7 +169,7 @@ define( require => {
           if ( !termInCell ) {
 
             // If the cell is empty, make a 'big' copy of this term and put it in the cell.
-            var termCopy = self.term.copy( {
+            const termCopy = self.term.copy( {
               diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
             } );
             self.termCreator.putTermOnPlate( termCopy, likeTermsCell );
@@ -219,12 +219,12 @@ define( require => {
 
           if ( self.equivalentTerm && !maxIntegerExceeded ) {
 
-            var oppositeLikeTerm = self.oppositePlate.getTermInCell( likeTermsCell );
+            let oppositeLikeTerm = self.oppositePlate.getTermInCell( likeTermsCell );
 
             if ( !oppositeLikeTerm ) {
 
               // If the cell on the opposite side is empty, make a 'big' copy of equivalentTerm and put it in the cell.
-              var equivalentTermCopy = self.equivalentTerm.copy( {
+              const equivalentTermCopy = self.equivalentTerm.copy( {
                 diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
               } );
               self.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, likeTermsCell );
@@ -236,7 +236,7 @@ define( require => {
             else {
 
               // The cell is not empty. Combine equivalentTerm with term that's in the cell
-              var oppositeCombinedTerm = oppositeLikeTerm.plus( self.equivalentTerm );
+              let oppositeCombinedTerm = oppositeLikeTerm.plus( self.equivalentTerm );
 
               if ( oppositeCombinedTerm.maxIntegerExceeded() ) {
 

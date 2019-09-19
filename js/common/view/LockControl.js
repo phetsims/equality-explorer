@@ -37,12 +37,12 @@ define( require => {
     }, options );
 
     // icons
-    var lockClosedNode = new Image( lockClosedImage );
-    var lockOpenedNode = new Image( lockOpenedImage );
+    const lockClosedNode = new Image( lockClosedImage );
+    const lockOpenedNode = new Image( lockOpenedImage );
     assert && assert( lockClosedNode.width === lockOpenedNode.width && lockClosedNode.height === lockOpenedNode.height,
       'lock images must have identical dimensions' );
 
-    var toggleNode = new BooleanToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
+    const toggleNode = new BooleanToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
 
       // put the origin at the center of the 'closed' lock, to facilitate layout
       x: -lockClosedNode.width / 2,

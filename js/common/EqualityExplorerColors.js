@@ -12,7 +12,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
 
-  var EqualityExplorerColors = {
+  const EqualityExplorerColors = {
 
     // screen background colors, see https://github.com/phetsims/equality-explorer/issues/21
     BASICS_SCREEN_BACKGROUND: 'rgb( 255, 250, 227 )',

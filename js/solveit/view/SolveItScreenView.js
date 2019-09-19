@@ -22,7 +22,7 @@ define( require => {
   const TransitionNode = require( 'TWIXT/TransitionNode' );
 
   // constants
-  var TRANSITION_OPTIONS = {
+  const TRANSITION_OPTIONS = {
     duration: 0.5, // sec
     targetOptions: {
       easing: Easing.QUADRATIC_IN_OUT
@@ -35,7 +35,7 @@ define( require => {
    */
   function SolveItScreenView( model ) {
 
-    var self = this;
+    const self = this;
 
     ScreenView.call( this, model );
 
@@ -44,10 +44,10 @@ define( require => {
     this.snapshotsAccordionBoxExpandedProperty =
       new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
-    var gameAudioPlayer = new GameAudioPlayer();
+    const gameAudioPlayer = new GameAudioPlayer();
 
     // UI for level selection and other game settings
-    var levelSelectionNode = new LevelSelectionNode( model, this.layoutBounds, {
+    const levelSelectionNode = new LevelSelectionNode( model, this.layoutBounds, {
       resetCallback: function() {
         model.reset();
         self.reset();
@@ -56,12 +56,12 @@ define( require => {
 
     // @private {SolveItSceneNode[]} a scene for each level of the game
     this.sceneNodes = [];
-    for ( var i = 0; i < model.scenes.length; i++ ) {
-      var sceneNode = new SolveItSceneNode( model.scenes[ i ], model.sceneProperty,
+    for ( let i = 0; i < model.scenes.length; i++ ) {
+      const sceneNode = new SolveItSceneNode( model.scenes[ i ], model.sceneProperty,
         this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer );
       this.sceneNodes.push( sceneNode );
     }
-    var scenesParent = new Node( {
+    const scenesParent = new Node( {
       children: this.sceneNodes
     } );
 
@@ -84,7 +84,7 @@ define( require => {
         }
 
         // make the selected scene visible
-        for ( var i = 0; i < self.sceneNodes.length; i++ ) {
+        for ( let i = 0; i < self.sceneNodes.length; i++ ) {
           self.sceneNodes[ i ].visible = ( self.sceneNodes[ i ].scene === scene );
         }
       }
@@ -108,7 +108,7 @@ define( require => {
     // @public
     reset: function() {
       this.snapshotsAccordionBoxExpandedProperty.reset();
-      for ( var i = 0; i < this.sceneNodes.length; i++ ) {
+      for ( let i = 0; i < this.sceneNodes.length; i++ ) {
         this.sceneNodes[ i ].reset();
       }
     },
@@ -123,8 +123,8 @@ define( require => {
       this.transitionNode.step( dt );
 
       // animate the view for the selected scene
-      for ( var i = 0; i < this.sceneNodes.length; i++ ) {
-        var sceneNode = this.sceneNodes[ i ];
+      for ( let i = 0; i < this.sceneNodes.length; i++ ) {
+        const sceneNode = this.sceneNodes[ i ];
         if ( sceneNode.visible ) {
           sceneNode.step && sceneNode.step( dt );
           break;

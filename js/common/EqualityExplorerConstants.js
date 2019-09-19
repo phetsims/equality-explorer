@@ -17,9 +17,9 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   // constants
-  var PANEL_CORNER_RADIUS = 3;
+  const PANEL_CORNER_RADIUS = 3;
 
-  var EqualityExplorerConstants = {
+  const EqualityExplorerConstants = {
 
     // credits, applied to the entire family of sims:
     // equality-explorer, equality-explorer-basics and equality-explorer-two-variables

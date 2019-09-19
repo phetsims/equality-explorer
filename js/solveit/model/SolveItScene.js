@@ -29,7 +29,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var POINTS_PER_CHALLENGE = 1;
+  const POINTS_PER_CHALLENGE = 1;
 
   /**
    * @param {number} level - game level, numbered from 1 in the model and view
@@ -41,7 +41,7 @@ define( require => {
 
     assert && assert( level > 0, 'invalid level, numbering starts with 1: ' + level );
 
-    var self = this;
+    const self = this;
 
     OperationsScene.call( this, {
       debugName: 'level ' + level,
@@ -94,7 +94,7 @@ define( require => {
         'scale is not balanced after applying operation ' + operation );
 
       // challenge is in a 'solved' state if x has been isolated on the scale.
-      var solved = self.isXIsolated();
+      const solved = self.isXIsolated();
 
       // The first time that the challenge has been solved, award points and notify listeners.
       if ( solved && !self.challengeHasBeenSolved ) {
@@ -138,7 +138,7 @@ define( require => {
       } );
 
       // generate the challenge, form is: ax + b = mx + n
-      var challenge = this.challengeGenerator.nextChallenge();
+      let challenge = this.challengeGenerator.nextChallenge();
       if ( EqualityExplorerQueryParameters.challenge ) {
         challenge = new DebugChallenge();
       }
@@ -150,10 +150,10 @@ define( require => {
 
       // randomize whether the scale shows 'ax + b = mx + n' or 'mx + n = ax + b'
       this.xOnLeft = phet.joist.random.nextBoolean();
-      var aTermCreator = this.xOnLeft ? this.leftVariableTermCreator : this.rightVariableTermCreator;
-      var bTermCreator = this.xOnLeft ? this.leftConstantTermCreator : this.rightConstantTermCreator;
-      var mTermCreator = this.xOnLeft ? this.rightVariableTermCreator : this.leftVariableTermCreator;
-      var nTermCreator = this.xOnLeft ? this.rightConstantTermCreator : this.leftConstantTermCreator;
+      const aTermCreator = this.xOnLeft ? this.leftVariableTermCreator : this.rightVariableTermCreator;
+      const bTermCreator = this.xOnLeft ? this.leftConstantTermCreator : this.rightConstantTermCreator;
+      const mTermCreator = this.xOnLeft ? this.rightVariableTermCreator : this.leftVariableTermCreator;
+      const nTermCreator = this.xOnLeft ? this.rightConstantTermCreator : this.leftConstantTermCreator;
 
       // Create terms on the scale that correspond to the challenge.
       this.createVariableTermOnPlate( aTermCreator, challenge.a );
@@ -178,7 +178,7 @@ define( require => {
       assert && assert( termCreator instanceof VariableTermCreator, 'invalid termCreator: ' + termCreator );
       assert && assert( coefficient instanceof Fraction, 'invalid coefficient: ' + coefficient );
       if ( coefficient.getValue() !== 0 ) {
-        var term = termCreator.createTerm( {
+        const term = termCreator.createTerm( {
           coefficient: coefficient,
           diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
         } );
@@ -196,7 +196,7 @@ define( require => {
       assert && assert( termCreator instanceof ConstantTermCreator, 'invalid termCreator: ' + termCreator );
       assert && assert( constantValue instanceof Fraction, 'invalid constantValue: ' + constantValue );
       if ( constantValue.getValue() !== 0 ) {
-        var term = termCreator.createTerm( {
+        const term = termCreator.createTerm( {
           constantValue: constantValue,
           diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
         } );
@@ -212,13 +212,13 @@ define( require => {
      */
     isXIsolated: function() {
 
-      var xIsIsolated = false;
+      let xIsIsolated = false;
 
       // a, b, m, n
-      var aTerm = this.leftVariableTermCreator.getLikeTermOnPlate();
-      var bTerm = this.leftConstantTermCreator.getLikeTermOnPlate();
-      var mTerm = this.rightVariableTermCreator.getLikeTermOnPlate();
-      var nTerm = this.rightConstantTermCreator.getLikeTermOnPlate();
+      const aTerm = this.leftVariableTermCreator.getLikeTermOnPlate();
+      const bTerm = this.leftConstantTermCreator.getLikeTermOnPlate();
+      const mTerm = this.rightVariableTermCreator.getLikeTermOnPlate();
+      const nTerm = this.rightConstantTermCreator.getLikeTermOnPlate();
 
       if ( ( aTerm && !bTerm && !mTerm && nTerm ) ) {
         // ax + 0 = 0x + n
@@ -244,13 +244,13 @@ define( require => {
       } );
 
       // x
-      var variableTerm = new VariableTerm( this.xVariable, {
+      const variableTerm = new VariableTerm( this.xVariable, {
         coefficient: Fraction.fromInteger( 1 ),
         diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
       } );
 
       // N
-      var constantTerm = new ConstantTerm( {
+      const constantTerm = new ConstantTerm( {
         constantValue: Fraction.fromInteger( this.xVariable.valueProperty.value ),
         diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
       } );

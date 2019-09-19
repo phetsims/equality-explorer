@@ -25,7 +25,7 @@ define( require => {
    */
   function EqualityExplorerScreenView( model, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 
@@ -47,7 +47,7 @@ define( require => {
     this.snapshotsAccordionBoxExpandedProperty =
       new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
-    var resetAllButton = new ResetAllButton( {
+    const resetAllButton = new ResetAllButton( {
       listener: function() {
         phet.log && phet.log( 'ResetAllButton pressed' );
         model.reset();
@@ -61,7 +61,7 @@ define( require => {
     // @private {EqualityExplorerScene[]} create the view for each scene
     this.sceneNodes = [];
     model.scenes.forEach( function( scene ) {
-      var sceneNode = self.createSceneNode( scene, model.sceneProperty,
+      const sceneNode = self.createSceneNode( scene, model.sceneProperty,
         self.equationAccordionBoxExpandedProperty,
         self.snapshotsAccordionBoxExpandedProperty,
         self.layoutBounds, {
@@ -75,10 +75,10 @@ define( require => {
     if ( model.scenes.length > 1 ) {
 
       // Get the bounds of the Snapshot accordion box, relative to this ScreenView
-      var snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
+      const snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
 
       // Center the scene control in the space below the Snapshots accordion box
-      var sceneControl = new SceneControl( model.scenes, model.sceneProperty, {
+      const sceneControl = new SceneControl( model.scenes, model.sceneProperty, {
         centerX: snapshotsAccordionBox.centerX,
         centerY: snapshotsAccordionBox.bottom + ( resetAllButton.top - snapshotsAccordionBox.bottom ) / 2
       } );
@@ -87,7 +87,7 @@ define( require => {
 
     // Make the selected scene visible. unlink not needed.
     model.sceneProperty.link( function( scene ) {
-      for ( var i = 0; i < self.sceneNodes.length; i++ ) {
+      for ( let i = 0; i < self.sceneNodes.length; i++ ) {
         self.sceneNodes[ i ].visible = ( self.sceneNodes[ i ].scene === scene );
       }
     } );
@@ -114,8 +114,8 @@ define( require => {
     step: function( dt ) {
 
       // animate the view for the selected scene
-      for ( var i = 0; i < this.sceneNodes.length; i++ ) {
-        var sceneNode = this.sceneNodes[ i ];
+      for ( let i = 0; i < this.sceneNodes.length; i++ ) {
+        const sceneNode = this.sceneNodes[ i ];
         if ( sceneNode.visible ) {
           sceneNode.step && sceneNode.step( dt );
           break;

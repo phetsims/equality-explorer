@@ -29,7 +29,7 @@ define( require => {
    */
   function CoinsScene() {
 
-    var variables = [
+    const variables = [
 
       // name, image, shadow
       new ObjectVariable( 'coin1', coin1Image, coin1ShadowImage, { value: 3 } ),

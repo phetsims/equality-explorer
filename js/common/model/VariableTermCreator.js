@@ -25,7 +25,7 @@ define( require => {
    */
   function VariableTermCreator( variable, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
@@ -57,8 +57,8 @@ define( require => {
      * @public
      */
     sumCoefficientsOnPlate: function() {
-      var sum = Fraction.fromInteger( 0 );
-      for ( var i = 0; i < this.termsOnPlate.length; i++ ) {
+      let sum = Fraction.fromInteger( 0 );
+      for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
         sum = sum.plus( this.termsOnPlate.get( i ).coefficient ).reduced();
       }
       return sum;
@@ -82,7 +82,7 @@ define( require => {
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
-      var coefficient = EqualityExplorerConstants.DEFAULT_COEFFICIENT.timesInteger( options.sign );
+      const coefficient = EqualityExplorerConstants.DEFAULT_COEFFICIENT.timesInteger( options.sign );
       return VariableTermNode.createInteractiveTermNode( coefficient, this.variable.symbol, {
         positiveFill: this.positiveFill,
         negativeFill: this.negativeFill

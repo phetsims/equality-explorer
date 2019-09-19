@@ -32,7 +32,7 @@ define( require => {
     }, options );
 
     // describe a radio button for each scene
-    var contentArray = [];
+    const contentArray = [];
     scenes.forEach( function( scene ) {
       assert && assert( scene.icon, 'scene must have an icon' );
       contentArray.push( {

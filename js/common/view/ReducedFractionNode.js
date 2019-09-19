@@ -21,8 +21,8 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
-  var DEFAULT_FRACTION_FONT = new PhetFont( 22 );
-  var DEFAULT_INTEGER_FONT = new PhetFont( 40 );
+  const DEFAULT_FRACTION_FONT = new PhetFont( 22 );
+  const DEFAULT_INTEGER_FONT = new PhetFont( 40 );
 
   /**
    * @param {Fraction} fraction
@@ -49,7 +49,7 @@ define( require => {
     if ( fraction.isInteger() ) {
 
       // integer
-      var integerNode = new Text( fraction.getValue(), {
+      const integerNode = new Text( fraction.getValue(), {
         font: options.integerFont
       } );
 
@@ -57,21 +57,21 @@ define( require => {
     }
     else {
 
-      var numeratorNode = new Text( Math.abs( fraction.numerator ), {
+      const numeratorNode = new Text( Math.abs( fraction.numerator ), {
         font: options.fractionFont
       } );
 
-      var denominatorNode = new Text( Math.abs( fraction.denominator ), {
+      const denominatorNode = new Text( Math.abs( fraction.denominator ), {
         font: options.fractionFont
       } );
 
-      var lineLength = Math.max( numeratorNode.width, denominatorNode.width );
-      var lineNode = new Line( 0, 0, lineLength, 0, {
+      const lineLength = Math.max( numeratorNode.width, denominatorNode.width );
+      const lineNode = new Line( 0, 0, lineLength, 0, {
         stroke: options.color,
         lineWidth: options.lineWidth
       } );
 
-      var absoluteFractionNode = new VBox( {
+      const absoluteFractionNode = new VBox( {
         children: [ numeratorNode, lineNode, denominatorNode ],
         align: 'center',
         spacing: options.ySpacing
@@ -81,7 +81,7 @@ define( require => {
 
       // Add sign for negative values
       if ( fraction.getValue() < 0 ) {
-        var negativeSignNode = new Text( MathSymbols.MINUS, {
+        const negativeSignNode = new Text( MathSymbols.MINUS, {
           font: options.fractionFont,
           right: lineNode.left - options.xSpacing,
           centerY: lineNode.centerY

@@ -19,7 +19,7 @@ define( require => {
   const SeparateTermsDragListener = require( 'EQUALITY_EXPLORER/common/view/SeparateTermsDragListener' );
 
   // constants
-  var DEFAULT_SHADOW_OFFSET = new Dimension2( 4, 4 );
+  const DEFAULT_SHADOW_OFFSET = new Dimension2( 4, 4 );
 
   /**
    * @param {TermCreator} termCreator
@@ -32,7 +32,7 @@ define( require => {
    */
   function TermNode( termCreator, term, contentNode, shadowNode, options ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       shadowOffset: DEFAULT_SHADOW_OFFSET,
@@ -53,8 +53,8 @@ define( require => {
     shadowNode.bottom = contentNode.bottom + options.shadowOffset.height;
 
     // halo around the content
-    var haloRadius = Math.max( contentNode.width, contentNode.height );
-    var haloNode = new HaloNode( haloRadius, {
+    const haloRadius = Math.max( contentNode.width, contentNode.height );
+    const haloNode = new HaloNode( haloRadius, {
       center: contentNode.center,
       visible: false
     } );
@@ -70,19 +70,19 @@ define( require => {
     Node.call( this, options );
 
     // Move to location
-    var locationObserver = function( location ) {
+    const locationObserver = function( location ) {
       self.center = location;
     };
     term.locationProperty.link( locationObserver ); // unlink required in dispose
 
     // Pickable (interactivity)
-    var pickableListener = function( pickable ) {
+    const pickableListener = function( pickable ) {
       self.pickable = pickable;
     };
     term.pickableProperty.link( pickableListener ); // unlink required in dispose
 
     // Whether the term is on a plate determines its rendering order
-    var onPlateListener = function( onPlate ) {
+    const onPlateListener = function( onPlate ) {
       if ( onPlate ) {
         self.moveToBack();
       }
@@ -93,18 +93,18 @@ define( require => {
     term.onPlateProperty.link( onPlateListener ); // unlink required in dispose
 
     // Show/hide shadow
-    var shadowVisibleListener = function( shadowVisible ) {
+    const shadowVisibleListener = function( shadowVisible ) {
       shadowNode.visible = shadowVisible;
     };
     term.shadowVisibleProperty.link( shadowVisibleListener ); // unlink required in dispose
 
     // Show/hide halo
-    var haloVisibleListener = function( haloVisible ) {
+    const haloVisibleListener = function( haloVisible ) {
       haloNode.visible = haloVisible;
     };
     term.haloVisibleProperty.link( haloVisibleListener ); // unlink required in dispose
 
-    var dragListenerOptions = {
+    const dragListenerOptions = {
       haloRadius: haloRadius
     };
 
