@@ -5,22 +5,22 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
-  var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
+  const BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
+  const ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const Fraction = require( 'PHETCOMMON/model/Fraction' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
 
   // images
-  var sphereImage = require( 'image!EQUALITY_EXPLORER/sphere.png' );
-  var sphereShadowImage = require( 'image!EQUALITY_EXPLORER/sphereShadow.png' );
-  var squareImage = require( 'image!EQUALITY_EXPLORER/square.png' );
-  var squareShadowImage = require( 'image!EQUALITY_EXPLORER/squareShadow.png' );
+  const sphereImage = require( 'image!EQUALITY_EXPLORER/sphere.png' );
+  const sphereShadowImage = require( 'image!EQUALITY_EXPLORER/sphereShadow.png' );
+  const squareImage = require( 'image!EQUALITY_EXPLORER/square.png' );
+  const squareShadowImage = require( 'image!EQUALITY_EXPLORER/squareShadow.png' );
 
   /**
    * @constructor

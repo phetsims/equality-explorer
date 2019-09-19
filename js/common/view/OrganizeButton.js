@@ -5,15 +5,15 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
 
   /**
    * @param {function} organizeFunction

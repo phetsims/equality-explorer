@@ -5,24 +5,24 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ChallengeGenerator1 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator1' );
-  var ChallengeGenerator2 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator2' );
-  var ChallengeGenerator3 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator3' );
-  var ChallengeGenerator4 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator4' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var SolveItScene = require( 'EQUALITY_EXPLORER/solveit/model/SolveItScene' );
+  const ChallengeGenerator1 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator1' );
+  const ChallengeGenerator2 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator2' );
+  const ChallengeGenerator3 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator3' );
+  const ChallengeGenerator4 = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator4' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const SolveItScene = require( 'EQUALITY_EXPLORER/solveit/model/SolveItScene' );
 
   // strings
-  var level1String = require( 'string!EQUALITY_EXPLORER/level1' );
-  var level2String = require( 'string!EQUALITY_EXPLORER/level2' );
-  var level3String = require( 'string!EQUALITY_EXPLORER/level3' );
-  var level4String = require( 'string!EQUALITY_EXPLORER/level4' );
+  const level1String = require( 'string!EQUALITY_EXPLORER/level1' );
+  const level2String = require( 'string!EQUALITY_EXPLORER/level2' );
+  const level3String = require( 'string!EQUALITY_EXPLORER/level3' );
+  const level4String = require( 'string!EQUALITY_EXPLORER/level4' );
 
   /**
    * @constructor

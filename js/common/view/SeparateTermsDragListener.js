@@ -7,18 +7,18 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var OopsDialog = require( 'SCENERY_PHET/OopsDialog' );
-  var TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const OopsDialog = require( 'SCENERY_PHET/OopsDialog' );
+  const TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
 
   // strings
-  var leftSideFullString = require( 'string!EQUALITY_EXPLORER/leftSideFull' );
-  var rightSideFullString = require( 'string!EQUALITY_EXPLORER/rightSideFull' );
+  const leftSideFullString = require( 'string!EQUALITY_EXPLORER/leftSideFull' );
+  const rightSideFullString = require( 'string!EQUALITY_EXPLORER/rightSideFull' );
 
   /**
    * @param {Node} termNode - Node that the listener is attached to

@@ -5,23 +5,23 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  var EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
-  var EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
-  var TermsToolbox = require( 'EQUALITY_EXPLORER/common/view/TermsToolbox' );
+  const BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
+  const EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
+  const EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
+  const TermsToolbox = require( 'EQUALITY_EXPLORER/common/view/TermsToolbox' );
 
   /**
    * @param {EqualityExplorerScene} scene

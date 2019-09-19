@@ -7,20 +7,20 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanToggleNode = require( 'SUN/BooleanToggleNode' );
-  var DownUpListener = require( 'SCENERY/input/DownUpListener' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
+  const BooleanToggleNode = require( 'SUN/BooleanToggleNode' );
+  const DownUpListener = require( 'SCENERY/input/DownUpListener' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
 
   // images
-  var lockClosedImage = require( 'image!EQUALITY_EXPLORER/lockClosed.png' );
-  var lockOpenedImage = require( 'image!EQUALITY_EXPLORER/lockOpened.png' );
+  const lockClosedImage = require( 'image!EQUALITY_EXPLORER/lockClosed.png' );
+  const lockOpenedImage = require( 'image!EQUALITY_EXPLORER/lockOpened.png' );
 
   /**
    * @param {BooleanProperty} lockedProperty - indicates whether left and right sides are "locked"

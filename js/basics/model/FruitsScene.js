@@ -5,24 +5,24 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
+  const BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
 
   // images
-  var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
-  var appleShadowImage = require( 'image!EQUALITY_EXPLORER/appleShadow.png' );
-  var lemonImage = require( 'image!EQUALITY_EXPLORER/lemon.png' );
-  var lemonShadowImage = require( 'image!EQUALITY_EXPLORER/lemonShadow.png' );
-  var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
-  var orangeShadowImage = require( 'image!EQUALITY_EXPLORER/orangeShadow.png' );
+  const appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
+  const appleShadowImage = require( 'image!EQUALITY_EXPLORER/appleShadow.png' );
+  const lemonImage = require( 'image!EQUALITY_EXPLORER/lemon.png' );
+  const lemonShadowImage = require( 'image!EQUALITY_EXPLORER/lemonShadow.png' );
+  const orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
+  const orangeShadowImage = require( 'image!EQUALITY_EXPLORER/orangeShadow.png' );
 
   /**
    * @constructor

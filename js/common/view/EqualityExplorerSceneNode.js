@@ -5,19 +5,19 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var OopsDialog = require( 'SCENERY_PHET/OopsDialog' );
-  var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const OopsDialog = require( 'SCENERY_PHET/OopsDialog' );
+  const SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
 
   // string
-  var numberTooBigString = require( 'string!EQUALITY_EXPLORER/numberTooBig' );
+  const numberTooBigString = require( 'string!EQUALITY_EXPLORER/numberTooBig' );
 
   /**
    * @param {EqualityExplorerScene} scene

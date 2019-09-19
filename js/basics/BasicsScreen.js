@@ -5,21 +5,21 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BasicsModel = require( 'EQUALITY_EXPLORER/basics/model/BasicsModel' );
-  var BasicsScreenView = require( 'EQUALITY_EXPLORER/basics/view/BasicsScreenView' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  var EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
-  var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
+  const BasicsModel = require( 'EQUALITY_EXPLORER/basics/model/BasicsModel' );
+  const BasicsScreenView = require( 'EQUALITY_EXPLORER/basics/view/BasicsScreenView' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
+  const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
 
   // strings
-  var screenBasicsString = require( 'string!EQUALITY_EXPLORER/screen.basics' );
+  const screenBasicsString = require( 'string!EQUALITY_EXPLORER/screen.basics' );
 
   /**
    * @param {Object} [options]

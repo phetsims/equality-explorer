@@ -5,21 +5,21 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  var EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
-  var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var OperationsModel = require( 'EQUALITY_EXPLORER/operations/model/OperationsModel' );
-  var OperationsScreenView = require( 'EQUALITY_EXPLORER/operations/view/OperationsScreenView' );
-  var Property = require( 'AXON/Property' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
+  const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const OperationsModel = require( 'EQUALITY_EXPLORER/operations/model/OperationsModel' );
+  const OperationsScreenView = require( 'EQUALITY_EXPLORER/operations/view/OperationsScreenView' );
+  const Property = require( 'AXON/Property' );
 
   // strings
-  var screenOperationsString = require( 'string!EQUALITY_EXPLORER/screen.operations' );
+  const screenOperationsString = require( 'string!EQUALITY_EXPLORER/screen.operations' );
 
   /**
    * @param {Object} [options]

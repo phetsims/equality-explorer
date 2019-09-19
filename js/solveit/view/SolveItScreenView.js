@@ -5,21 +5,21 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var Easing = require( 'TWIXT/Easing' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var LevelSelectionNode = require( 'EQUALITY_EXPLORER/solveit/view/LevelSelectionNode' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var SolveItSceneNode = require( 'EQUALITY_EXPLORER/solveit/view/SolveItSceneNode' );
-  var TransitionNode = require( 'TWIXT/TransitionNode' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const Easing = require( 'TWIXT/Easing' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const LevelSelectionNode = require( 'EQUALITY_EXPLORER/solveit/view/LevelSelectionNode' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const SolveItSceneNode = require( 'EQUALITY_EXPLORER/solveit/view/SolveItSceneNode' );
+  const TransitionNode = require( 'TWIXT/TransitionNode' );
 
   // constants
   var TRANSITION_OPTIONS = {

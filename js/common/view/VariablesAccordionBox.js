@@ -5,27 +5,27 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AccordionBox = require( 'SUN/AccordionBox' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Property = require( 'AXON/Property' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VariableNode = require( 'EQUALITY_EXPLORER/common/view/VariableNode' );
+  const AccordionBox = require( 'SUN/AccordionBox' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Property = require( 'AXON/Property' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VariableNode = require( 'EQUALITY_EXPLORER/common/view/VariableNode' );
 
   // strings
-  var variablesString = require( 'string!EQUALITY_EXPLORER/variables' );
-  var variableString = require( 'string!EQUALITY_EXPLORER/variable' );
+  const variablesString = require( 'string!EQUALITY_EXPLORER/variables' );
+  const variableString = require( 'string!EQUALITY_EXPLORER/variable' );
 
   /**
    * @param {Variable[]} variables - the variables that appear in this accordion box

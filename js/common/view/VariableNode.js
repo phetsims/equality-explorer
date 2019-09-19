@@ -5,17 +5,17 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
   /**
    * @param {Variable} variable

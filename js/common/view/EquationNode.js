@@ -7,26 +7,26 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
-  var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Multilink = require( 'AXON/Multilink' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var ObjectTermCreator = require( 'EQUALITY_EXPLORER/basics/model/ObjectTermCreator' );
-  var ObjectTermNode = require( 'EQUALITY_EXPLORER/basics/view/ObjectTermNode' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
-  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
+  const ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
+  const ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const Fraction = require( 'PHETCOMMON/model/Fraction' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Multilink = require( 'AXON/Multilink' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const ObjectTermCreator = require( 'EQUALITY_EXPLORER/basics/model/ObjectTermCreator' );
+  const ObjectTermNode = require( 'EQUALITY_EXPLORER/basics/view/ObjectTermNode' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
+  const VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   // constants
   var DEFAULT_FONT_SIZE = 30;

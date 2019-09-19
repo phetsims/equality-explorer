@@ -5,33 +5,33 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
-  var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var ScreenIcon = require( 'JOIST/ScreenIcon' );
-  var StarNode = require( 'SCENERY_PHET/StarNode' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  const Fraction = require( 'PHETCOMMON/model/Fraction' );
+  const HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const ScreenIcon = require( 'JOIST/ScreenIcon' );
+  const StarNode = require( 'SCENERY_PHET/StarNode' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // images
-  var appleBigImage = require( 'image!EQUALITY_EXPLORER/appleBig.png' );
-  var orangeBigImage = require( 'image!EQUALITY_EXPLORER/orangeBig.png' );
-  var phetGirlJugglingStarsImage = require( 'image!VEGAS/phet-girl-juggling-stars.png' );
+  const appleBigImage = require( 'image!EQUALITY_EXPLORER/appleBig.png' );
+  const orangeBigImage = require( 'image!EQUALITY_EXPLORER/orangeBig.png' );
+  const phetGirlJugglingStarsImage = require( 'image!VEGAS/phet-girl-juggling-stars.png' );
 
   // strings
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+  const xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   var EqualityExplorerScreenIcons = {
 

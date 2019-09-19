@@ -7,26 +7,26 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
-  var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
-  var DebugChallenge = require( 'EQUALITY_EXPLORER/solveit/model/DebugChallenge' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
-  var Property = require( 'AXON/Property' );
-  var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
-  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
+  const ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
+  const ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
+  const DebugChallenge = require( 'EQUALITY_EXPLORER/solveit/model/DebugChallenge' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
+  const Fraction = require( 'PHETCOMMON/model/Fraction' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
+  const Property = require( 'AXON/Property' );
+  const UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
+  const VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
+  const VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var POINTS_PER_CHALLENGE = 1;

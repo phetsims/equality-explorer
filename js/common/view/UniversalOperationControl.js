@@ -13,29 +13,29 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
-  var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  var Property = require( 'AXON/Property' );
-  var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
-  var RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
-  var TranslateThenFade = require( 'EQUALITY_EXPLORER/common/view/TranslateThenFade' );
-  var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
-  var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
+  const OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
+  const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  const Property = require( 'AXON/Property' );
+  const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
+  const RoundPushButton = require( 'SUN/buttons/RoundPushButton' );
+  const TranslateThenFade = require( 'EQUALITY_EXPLORER/common/view/TranslateThenFade' );
+  const UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
+  const UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
+  const VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var PICKER_OPTIONS = {

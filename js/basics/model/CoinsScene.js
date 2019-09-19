@@ -5,24 +5,24 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
+  const BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
 
   // images
-  var coin1Image = require( 'image!EQUALITY_EXPLORER/coin1.png' );
-  var coin1ShadowImage = require( 'image!EQUALITY_EXPLORER/coin1Shadow.png' );
-  var coin2Image = require( 'image!EQUALITY_EXPLORER/coin2.png' );
-  var coin2ShadowImage = require( 'image!EQUALITY_EXPLORER/coin2Shadow.png' );
-  var coin3Image = require( 'image!EQUALITY_EXPLORER/coin3.png' );
-  var coin3ShadowImage = require( 'image!EQUALITY_EXPLORER/coin3Shadow.png' );
+  const coin1Image = require( 'image!EQUALITY_EXPLORER/coin1.png' );
+  const coin1ShadowImage = require( 'image!EQUALITY_EXPLORER/coin1Shadow.png' );
+  const coin2Image = require( 'image!EQUALITY_EXPLORER/coin2.png' );
+  const coin2ShadowImage = require( 'image!EQUALITY_EXPLORER/coin2Shadow.png' );
+  const coin3Image = require( 'image!EQUALITY_EXPLORER/coin3.png' );
+  const coin3ShadowImage = require( 'image!EQUALITY_EXPLORER/coin3Shadow.png' );
 
   /**
    * @constructor

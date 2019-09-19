@@ -5,31 +5,31 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Dialog = require( 'SUN/Dialog' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var EqualityExplorerLevelSelectionButton = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerLevelSelectionButton' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
-  var InfoDialog = require( 'EQUALITY_EXPLORER/solveit/view/InfoDialog' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  const Dialog = require( 'SUN/Dialog' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const EqualityExplorerLevelSelectionButton = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerLevelSelectionButton' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const InfoButton = require( 'SCENERY_PHET/buttons/InfoButton' );
+  const InfoDialog = require( 'EQUALITY_EXPLORER/solveit/view/InfoDialog' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  var chooseYourLevelString = require( 'string!EQUALITY_EXPLORER/chooseYourLevel' );
-  var solveForString = require( 'string!EQUALITY_EXPLORER/solveFor' );
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+  const chooseYourLevelString = require( 'string!EQUALITY_EXPLORER/chooseYourLevel' );
+  const solveForString = require( 'string!EQUALITY_EXPLORER/solveFor' );
+  const xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   /**
    * @param {SolveItModel} model

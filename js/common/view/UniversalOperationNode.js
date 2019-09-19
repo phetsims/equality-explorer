@@ -6,19 +6,19 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
-  var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
-  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
+  const ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
+  const ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
+  const VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   /**
    * @param {UniversalOperation} operation

@@ -5,18 +5,18 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var CombineTermsDragListener = require( 'EQUALITY_EXPLORER/common/view/CombineTermsDragListener' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var SeparateTermsDragListener = require( 'EQUALITY_EXPLORER/common/view/SeparateTermsDragListener' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
+  const CombineTermsDragListener = require( 'EQUALITY_EXPLORER/common/view/CombineTermsDragListener' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const SeparateTermsDragListener = require( 'EQUALITY_EXPLORER/common/view/SeparateTermsDragListener' );
 
   // constants
   var DEFAULT_SHADOW_OFFSET = new Dimension2( 4, 4 );

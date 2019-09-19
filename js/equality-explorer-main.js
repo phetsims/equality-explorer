@@ -5,21 +5,21 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BasicsScreen = require( 'EQUALITY_EXPLORER/basics/BasicsScreen' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var NumbersScreen = require( 'EQUALITY_EXPLORER/numbers/NumbersScreen' );
-  var OperationsScreen = require( 'EQUALITY_EXPLORER/operations/OperationsScreen' );
-  var Sim = require( 'JOIST/Sim' );
-  var SimLauncher = require( 'JOIST/SimLauncher' );
-  var SolveItScreen = require( 'EQUALITY_EXPLORER/solveit/SolveItScreen' );
-  var VariablesScreen = require( 'EQUALITY_EXPLORER/variables/VariablesScreen' );
+  const BasicsScreen = require( 'EQUALITY_EXPLORER/basics/BasicsScreen' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const NumbersScreen = require( 'EQUALITY_EXPLORER/numbers/NumbersScreen' );
+  const OperationsScreen = require( 'EQUALITY_EXPLORER/operations/OperationsScreen' );
+  const Sim = require( 'JOIST/Sim' );
+  const SimLauncher = require( 'JOIST/SimLauncher' );
+  const SolveItScreen = require( 'EQUALITY_EXPLORER/solveit/SolveItScreen' );
+  const VariablesScreen = require( 'EQUALITY_EXPLORER/variables/VariablesScreen' );
 
   // strings
-  var equalityExplorerTitleString = require( 'string!EQUALITY_EXPLORER/equality-explorer.title' );
+  const equalityExplorerTitleString = require( 'string!EQUALITY_EXPLORER/equality-explorer.title' );
 
   SimLauncher.launch( function() {
 

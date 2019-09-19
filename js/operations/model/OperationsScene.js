@@ -6,31 +6,31 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
-  var ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Emitter = require( 'AXON/Emitter' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
-  var StringProperty = require( 'AXON/StringProperty' );
-  var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
-  var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
-  var Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
-  var VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
+  const ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
+  const ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const Emitter = require( 'AXON/Emitter' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
+  const Fraction = require( 'PHETCOMMON/model/Fraction' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
+  const StringProperty = require( 'AXON/StringProperty' );
+  const TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
+  const UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
+  const Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
+  const VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
+  const VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
 
   // string
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+  const xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
   var OPERAND_RANGE = new Range( -10, 10 );

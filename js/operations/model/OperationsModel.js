@@ -5,14 +5,14 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerModel = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerModel' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerModel = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerModel' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
 
   /**
    * @constructor

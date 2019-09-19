@@ -7,25 +7,25 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var BoxNode = require( 'EQUALITY_EXPLORER/common/view/BoxNode' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var ClearScaleButton = require( 'EQUALITY_EXPLORER/common/view/ClearScaleButton' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var PlateNode = require( 'EQUALITY_EXPLORER/common/view/PlateNode' );
-  var Shape = require( 'KITE/Shape' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  const BoxNode = require( 'EQUALITY_EXPLORER/common/view/BoxNode' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
+  const ClearScaleButton = require( 'EQUALITY_EXPLORER/common/view/ClearScaleButton' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const PlateNode = require( 'EQUALITY_EXPLORER/common/view/PlateNode' );
+  const Shape = require( 'KITE/Shape' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // base
   var BASE_WIDTH = 200;

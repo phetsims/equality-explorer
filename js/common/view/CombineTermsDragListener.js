@@ -6,15 +6,15 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
-  var TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
+  const TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
 
   /**
    * @param {Node} termNode - Node that the listener is attached to

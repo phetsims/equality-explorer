@@ -7,43 +7,43 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Animation = require( 'TWIXT/Animation' );
-  var BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
-  var ChallengeDerivationNode = require( 'EQUALITY_EXPLORER/solveit/view/ChallengeDerivationNode' );
-  var Color = require( 'SCENERY/util/Color' );
-  var Easing = require( 'TWIXT/Easing' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  var EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
-  var EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
-  var EquationPanel = require( 'EQUALITY_EXPLORER/common/view/EquationPanel' );
-  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  var InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
-  var RewardDialog = require( 'VEGAS/RewardDialog' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const Animation = require( 'TWIXT/Animation' );
+  const BalanceScaleNode = require( 'EQUALITY_EXPLORER/common/view/BalanceScaleNode' );
+  const ChallengeDerivationNode = require( 'EQUALITY_EXPLORER/solveit/view/ChallengeDerivationNode' );
+  const Color = require( 'SCENERY/util/Color' );
+  const Easing = require( 'TWIXT/Easing' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
+  const EqualityExplorerRewardNode = require( 'EQUALITY_EXPLORER/solveit/view/EqualityExplorerRewardNode' );
+  const EqualityExplorerSceneNode = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerSceneNode' );
+  const EquationPanel = require( 'EQUALITY_EXPLORER/common/view/EquationPanel' );
+  const FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  const InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const RefreshButton = require( 'SCENERY_PHET/buttons/RefreshButton' );
+  const RewardDialog = require( 'VEGAS/RewardDialog' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // strings
-  var nextString = require( 'string!EQUALITY_EXPLORER/next' );
-  var solveForString = require( 'string!EQUALITY_EXPLORER/solveFor' );
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+  const nextString = require( 'string!EQUALITY_EXPLORER/next' );
+  const solveForString = require( 'string!EQUALITY_EXPLORER/solveFor' );
+  const xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
   var LEVEL_FONT = new PhetFont( 20 );

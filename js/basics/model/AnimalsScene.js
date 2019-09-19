@@ -5,24 +5,24 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
+  const BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
 
   // images
-  var catImage = require( 'image!EQUALITY_EXPLORER/cat.png' );
-  var catShadowImage = require( 'image!EQUALITY_EXPLORER/catShadow.png' );
-  var dogImage = require( 'image!EQUALITY_EXPLORER/dog.png' );
-  var dogShadowImage = require( 'image!EQUALITY_EXPLORER/dogShadow.png' );
-  var turtleImage = require( 'image!EQUALITY_EXPLORER/turtle.png' );
-  var turtleShadowImage = require( 'image!EQUALITY_EXPLORER/turtleShadow.png' );
+  const catImage = require( 'image!EQUALITY_EXPLORER/cat.png' );
+  const catShadowImage = require( 'image!EQUALITY_EXPLORER/catShadow.png' );
+  const dogImage = require( 'image!EQUALITY_EXPLORER/dog.png' );
+  const dogShadowImage = require( 'image!EQUALITY_EXPLORER/dogShadow.png' );
+  const turtleImage = require( 'image!EQUALITY_EXPLORER/turtle.png' );
+  const turtleShadowImage = require( 'image!EQUALITY_EXPLORER/turtleShadow.png' );
 
   /**
    * @constructor

@@ -5,17 +5,17 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var SceneControl = require( 'EQUALITY_EXPLORER/common/view/SceneControl' );
-  var ScreenView = require( 'JOIST/ScreenView' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const SceneControl = require( 'EQUALITY_EXPLORER/common/view/SceneControl' );
+  const ScreenView = require( 'JOIST/ScreenView' );
 
   /**
    * @param {EqualityExplorerModel} model

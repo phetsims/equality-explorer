@@ -5,17 +5,17 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AnimalsScene = require( 'EQUALITY_EXPLORER/basics/model/AnimalsScene' );
-  var CoinsScene = require( 'EQUALITY_EXPLORER/basics/model/CoinsScene' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerModel = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerModel' );
-  var FruitsScene = require( 'EQUALITY_EXPLORER/basics/model/FruitsScene' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ShapesScene = require( 'EQUALITY_EXPLORER/basics/model/ShapesScene' );
+  const AnimalsScene = require( 'EQUALITY_EXPLORER/basics/model/AnimalsScene' );
+  const CoinsScene = require( 'EQUALITY_EXPLORER/basics/model/CoinsScene' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerModel = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerModel' );
+  const FruitsScene = require( 'EQUALITY_EXPLORER/basics/model/FruitsScene' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ShapesScene = require( 'EQUALITY_EXPLORER/basics/model/ShapesScene' );
 
   /**
    * @constructor

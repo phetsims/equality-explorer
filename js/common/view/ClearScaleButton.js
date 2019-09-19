@@ -5,13 +5,13 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
-  var inherit = require( 'PHET_CORE/inherit' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
+  const inherit = require( 'PHET_CORE/inherit' );
 
   /**
    * @param {function} clearScaleFunction

@@ -6,16 +6,16 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
+  const ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
 
   /**
    * @param {string} operator - see EqualityExplorerConstants.OPERATORS

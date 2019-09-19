@@ -5,21 +5,21 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  var EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
-  var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var NumbersModel = require( 'EQUALITY_EXPLORER/numbers/model/NumbersModel' );
-  var NumbersScreenView = require( 'EQUALITY_EXPLORER/numbers/view/NumbersScreenView' );
-  var Property = require( 'AXON/Property' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
+  const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const NumbersModel = require( 'EQUALITY_EXPLORER/numbers/model/NumbersModel' );
+  const NumbersScreenView = require( 'EQUALITY_EXPLORER/numbers/view/NumbersScreenView' );
+  const Property = require( 'AXON/Property' );
 
   // strings
-  var screenNumbersString = require( 'string!EQUALITY_EXPLORER/screen.numbers' );
+  const screenNumbersString = require( 'string!EQUALITY_EXPLORER/screen.numbers' );
 
   /**
    * @param {Object} [options]

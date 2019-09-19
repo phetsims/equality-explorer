@@ -5,21 +5,21 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  var EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
-  var EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
-  var VariablesModel = require( 'EQUALITY_EXPLORER/variables/model/VariablesModel' );
-  var VariablesScreenView = require( 'EQUALITY_EXPLORER/variables/view/VariablesScreenView' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
+  const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
+  const VariablesModel = require( 'EQUALITY_EXPLORER/variables/model/VariablesModel' );
+  const VariablesScreenView = require( 'EQUALITY_EXPLORER/variables/view/VariablesScreenView' );
 
   // strings
-  var screenVariablesString = require( 'string!EQUALITY_EXPLORER/screen.variables' );
+  const screenVariablesString = require( 'string!EQUALITY_EXPLORER/screen.variables' );
 
   /**
    * @param {Object} [options]

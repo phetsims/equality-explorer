@@ -6,11 +6,11 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
 
   var EqualityExplorerColors = {
 

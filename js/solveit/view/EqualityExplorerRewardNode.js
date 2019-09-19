@@ -6,33 +6,33 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var ChallengeGenerator = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator' );
-  var ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
-  var ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  var Fraction = require( 'PHETCOMMON/model/Fraction' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var RewardNode = require( 'VEGAS/RewardNode' );
-  var StarNode = require( 'SCENERY_PHET/StarNode' );
-  var UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
-  var UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
-  var VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
+  const ChallengeGenerator = require( 'EQUALITY_EXPLORER/solveit/model/ChallengeGenerator' );
+  const ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
+  const ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  const Fraction = require( 'PHETCOMMON/model/Fraction' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const RewardNode = require( 'VEGAS/RewardNode' );
+  const StarNode = require( 'SCENERY_PHET/StarNode' );
+  const UniversalOperation = require( 'EQUALITY_EXPLORER/common/model/UniversalOperation' );
+  const UniversalOperationNode = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationNode' );
+  const VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
 
   // images
-  var appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
-  var catImage = require( 'image!EQUALITY_EXPLORER/cat.png' );
-  var dogImage = require( 'image!EQUALITY_EXPLORER/dog.png' );
-  var orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
+  const appleImage = require( 'image!EQUALITY_EXPLORER/apple.png' );
+  const catImage = require( 'image!EQUALITY_EXPLORER/cat.png' );
+  const dogImage = require( 'image!EQUALITY_EXPLORER/dog.png' );
+  const orangeImage = require( 'image!EQUALITY_EXPLORER/orange.png' );
 
   // strings
-  var xString = require( 'string!EQUALITY_EXPLORER/x' );
+  const xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
   var DIAMETER = 40;

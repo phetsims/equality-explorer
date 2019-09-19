@@ -5,15 +5,15 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ObjectTerm = require( 'EQUALITY_EXPLORER/basics/model/ObjectTerm' );
-  var ObjectTermNode = require( 'EQUALITY_EXPLORER/basics/view/ObjectTermNode' );
-  var TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ObjectTerm = require( 'EQUALITY_EXPLORER/basics/model/ObjectTerm' );
+  const ObjectTermNode = require( 'EQUALITY_EXPLORER/basics/view/ObjectTermNode' );
+  const TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
 
   /**
    * @param {ObjectVariable} variable

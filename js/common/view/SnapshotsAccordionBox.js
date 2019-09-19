@@ -5,26 +5,26 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AccordionBox = require( 'SUN/AccordionBox' );
-  var equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  var EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  var EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var HSeparator = require( 'SUN/HSeparator' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var SnapshotControl = require( 'EQUALITY_EXPLORER/common/view/SnapshotControl' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VariableValuesVisibleCheckbox = require( 'EQUALITY_EXPLORER/common/view/VariableValuesVisibleCheckbox' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const AccordionBox = require( 'SUN/AccordionBox' );
+  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
+  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
+  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
+  const FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const HSeparator = require( 'SUN/HSeparator' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const SnapshotControl = require( 'EQUALITY_EXPLORER/common/view/SnapshotControl' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VariableValuesVisibleCheckbox = require( 'EQUALITY_EXPLORER/common/view/VariableValuesVisibleCheckbox' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var snapshotsString = require( 'string!EQUALITY_EXPLORER/snapshots' );
+  const snapshotsString = require( 'string!EQUALITY_EXPLORER/snapshots' );
 
   // constants
   var SEPARATOR_OPTIONS = {
