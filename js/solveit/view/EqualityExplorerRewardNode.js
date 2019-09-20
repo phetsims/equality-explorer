@@ -1,4 +1,4 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2018-2019, University of Colorado Boulder
 
 /**
  * This is the reward that's shown behind RewardDialog when the user gets to 10 stars.

@@ -1,4 +1,4 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2017-2019, University of Colorado Boulder
 
 /**
  * ObjectTerm is a term associated with a type of real-world object (sphere, apple, coin, dog, ...)
