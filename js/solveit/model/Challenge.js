@@ -76,4 +76,4 @@ define( require => {
       return ( f.isInteger() ? f.getValue() : ( f.numerator + '/' + f.denominator ) );
     }
   } );
-} ); 
+} );
