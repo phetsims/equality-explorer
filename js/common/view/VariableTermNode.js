@@ -17,6 +17,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -47,10 +48,10 @@ define( require => {
    */
   function VariableTermNode( termCreator, term, options ) {
 
-    options = _.extend( {}, DEFAULT_OPTIONS, options );
+    options = merge( {}, DEFAULT_OPTIONS, options );
 
     const contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.variable.symbol,
-      _.extend( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
+      merge( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
     const shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
       fill: 'black',
@@ -80,7 +81,7 @@ define( require => {
       assert && assert( coefficient.isReduced(), 'coefficient must be reduced: ' + coefficient );
       assert && assert( typeof symbol === 'string', 'invalid symbol: ' + symbol );
 
-      options = _.extend( {
+      options = merge( {
         diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       }, DEFAULT_OPTIONS, options );
 
@@ -97,7 +98,7 @@ define( require => {
         lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
       } );
 
-      const valueNode = VariableTermNode.createEquationTermNode( coefficient, symbol, _.extend( {}, options, {
+      const valueNode = VariableTermNode.createEquationTermNode( coefficient, symbol, merge( {}, options, {
         align: 'center',
         maxWidth: squareNode.width - ( 2 * options.margin ),
         maxHeight: squareNode.height - ( 2 * options.margin ),
@@ -126,7 +127,7 @@ define( require => {
       assert && assert( coefficient.isReduced(), 'coefficient must be reduced: ' + coefficient );
       assert && assert( typeof symbol === 'string', 'invalid symbol: ' + symbol );
 
-      options = _.extend( {
+      options = merge( {
         align: 'center'
       }, DEFAULT_OPTIONS, options );
 

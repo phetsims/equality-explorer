@@ -13,6 +13,7 @@ define( require => {
   const Easing = require( 'TWIXT/Easing' );
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Property = require( 'AXON/Property' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -29,7 +30,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       destination: Vector2.ZERO, // destination location
       translateDuration: 0.7, // motion duration, in seconds
       fadeDuration: 0.25, // fade duration, in seconds

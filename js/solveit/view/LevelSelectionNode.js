@@ -18,6 +18,7 @@ define( require => {
   const InfoDialog = require( 'EQUALITY_EXPLORER/solveit/view/InfoDialog' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -39,7 +40,7 @@ define( require => {
    */
   function LevelSelectionNode( model, layoutBounds, options ) {
 
-    options = _.extend( {
+    options = merge( {
       resetCallback: null // {function|null}
     }, options );
 
@@ -63,7 +64,7 @@ define( require => {
     } );
 
     // 'Choose Your Level', centered above level-selection buttons
-    const chooseYourLevelNode = new Text( chooseYourLevelString, _.extend( {}, textOptions, {
+    const chooseYourLevelNode = new Text( chooseYourLevelString, merge( {}, textOptions, {
       centerX: levelSelectionButtonsBox.centerX,
       bottom: levelSelectionButtonsBox.top - 65
     } ) );
@@ -72,7 +73,7 @@ define( require => {
     const solveForXText = StringUtils.fillIn( solveForString, {
       variable: MathSymbolFont.getRichTextMarkup( xString )
     } );
-    const solveForXNode = new RichText( solveForXText, _.extend( {}, textOptions, {
+    const solveForXNode = new RichText( solveForXText, merge( {}, textOptions, {
       centerX: chooseYourLevelNode.centerX,
       bottom: chooseYourLevelNode.top - 30
     } ) );

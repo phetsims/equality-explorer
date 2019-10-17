@@ -14,6 +14,7 @@ define( require => {
   const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
   const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumbersModel = require( 'EQUALITY_EXPLORER/numbers/model/NumbersModel' );
   const NumbersScreenView = require( 'EQUALITY_EXPLORER/numbers/view/NumbersScreenView' );
   const Property = require( 'AXON/Property' );
@@ -27,7 +28,7 @@ define( require => {
    */
   function NumbersScreen( options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // EqualityExplorerScreen options
       name: screenNumbersString,

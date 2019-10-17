@@ -14,6 +14,7 @@ define( require => {
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   const EquationPanel = require( 'EQUALITY_EXPLORER/common/view/EquationPanel' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Text = require( 'SCENERY/nodes/Text' );
 
   // strings
@@ -27,7 +28,7 @@ define( require => {
    */
   function EquationAccordionBox( leftTermCreators, rightTermCreators, options ) {
 
-    options = _.extend( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
+    options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // this accordion box is designed to be a fixed size, regardless of its content
       fixedWidth: 100,

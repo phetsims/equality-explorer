@@ -16,6 +16,7 @@ define( require => {
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Text = require( 'SCENERY/nodes/Text' );
   const VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   const VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
@@ -27,7 +28,7 @@ define( require => {
    */
   function UniversalOperationNode( operation, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // HBox options
       spacing: 4

@@ -13,6 +13,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const OopsDialog = require( 'SCENERY_PHET/OopsDialog' );
   const TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
 
@@ -106,7 +107,7 @@ define( require => {
       else {
 
         // no equivalent term on opposite plate, create an inverse term
-        this.inverseTerm = this.equivalentTermCreator.createTerm( _.extend( this.term.copyOptions(), {
+        this.inverseTerm = this.equivalentTermCreator.createTerm( merge( this.term.copyOptions(), {
           sign: -1
         } ) );
         const inverseTermLocation = this.termCreator.getEquivalentTermLocation( this.term );

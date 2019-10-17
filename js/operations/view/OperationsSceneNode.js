@@ -12,6 +12,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
   const VariablesSceneNode = require( 'EQUALITY_EXPLORER/variables/view/VariablesSceneNode' );
@@ -28,7 +29,7 @@ define( require => {
   function OperationsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
                                 snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // VariablesSceneNode options
       organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen

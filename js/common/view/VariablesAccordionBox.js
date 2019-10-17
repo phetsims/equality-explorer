@@ -15,6 +15,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -34,7 +35,7 @@ define( require => {
    */
   function VariablesAccordionBox( variables, options ) {
 
-    options = _.extend( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
+    options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // this accordion box is designed to be a fixed size, regardless of its content
       titleString: ( variables.length > 1 ) ? variablesString : variableString,

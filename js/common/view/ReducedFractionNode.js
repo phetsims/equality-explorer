@@ -15,6 +15,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -34,7 +35,7 @@ define( require => {
     assert && assert( fraction instanceof Fraction, 'invalid fraction: ' + fraction );
     assert && assert( fraction.isReduced(), 'fraction must be reduced: ' + fraction );
 
-    options = _.extend( {
+    options = merge( {
       minLineLength: 1, // length of the fraction line
       fractionFont: DEFAULT_FRACTION_FONT, // font for numerator and denominator of fraction value
       integerFont: DEFAULT_INTEGER_FONT, // font for integer value

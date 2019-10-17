@@ -18,6 +18,7 @@ define( require => {
   const FireOnHoldInputListener = require( 'SCENERY_PHET/buttons/FireOnHoldInputListener' );
   const inherit = require( 'PHET_CORE/inherit' );
   const LinearGradient = require( 'SCENERY/util/LinearGradient' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Path = require( 'SCENERY/nodes/Path' );
@@ -38,7 +39,7 @@ define( require => {
    */
   function ObjectPicker( valueProperty, items, options ) {
 
-    options = _.extend( {
+    options = merge( {
       wrapEnabled: false, // whether to wrap around at ends of range
       cursor: 'pointer',
       backgroundColor: 'white', // {Color|string} color of the background when pointer is not over it
@@ -140,7 +141,7 @@ define( require => {
       .lineTo( arrowButtonSize.width, arrowButtonSize.height )
       .lineTo( 0, arrowButtonSize.height )
       .close();
-    const upArrow = new Path( upArrowShape, _.extend( {}, arrowOptions, {
+    const upArrow = new Path( upArrowShape, merge( {}, arrowOptions, {
       centerX: upBackground.centerX,
       bottom: upBackground.top - options.arrowYSpacing
     } ) );
@@ -151,7 +152,7 @@ define( require => {
       .lineTo( 0, 0 )
       .lineTo( arrowButtonSize.width, 0 )
       .close();
-    const downArrow = new Path( downArrowShape, _.extend( {}, arrowOptions, {
+    const downArrow = new Path( downArrowShape, merge( {}, arrowOptions, {
       centerX: downBackground.centerX,
       top: downBackground.bottom + options.arrowYSpacing
     } ) );

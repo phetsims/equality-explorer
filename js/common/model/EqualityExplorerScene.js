@@ -16,6 +16,7 @@ define( require => {
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   const EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const SnapshotsCollection = require( 'EQUALITY_EXPLORER/common/model/SnapshotsCollection' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -38,7 +39,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       debugName: null, // internal name, not displayed to the user
       scaleLocation: DEFAULT_SCALE_LOCATION, // determined empirically
       lockable: true, // is the lock feature supported for this scene?

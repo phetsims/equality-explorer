@@ -13,6 +13,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
@@ -27,7 +28,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       sign: 1,  // sign that will be applied to terms created by this Node, 1 or -1
 
       // Node options

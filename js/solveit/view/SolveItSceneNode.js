@@ -26,6 +26,7 @@ define( require => {
   const InfiniteStatusBar = require( 'VEGAS/InfiniteStatusBar' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
@@ -92,7 +93,7 @@ define( require => {
       } );
 
     // Challenge equation
-    const challengePanelOptions = _.extend( {}, EQUATION_PANEL_OPTIONS, {
+    const challengePanelOptions = merge( {}, EQUATION_PANEL_OPTIONS, {
       fill: Color.WHITE.withAlpha( 0.5 ),
       stroke: Color.BLACK.withAlpha( 0.5 ),
       equationNodeOptions: {
@@ -106,7 +107,7 @@ define( require => {
 
     // Equation that reflects what is currently on the scale
     const equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators,
-      _.extend( {}, EQUATION_PANEL_OPTIONS, {
+      merge( {}, EQUATION_PANEL_OPTIONS, {
         fill: 'white',
         stroke: 'black',
         equationNodeOptions: {

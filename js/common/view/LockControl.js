@@ -16,6 +16,7 @@ define( require => {
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
 
   // images
@@ -29,7 +30,7 @@ define( require => {
    */
   function LockControl( lockedProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // Node options
       cursor: 'pointer',

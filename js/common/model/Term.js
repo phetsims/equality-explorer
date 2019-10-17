@@ -16,6 +16,7 @@ define( require => {
   const EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Util = require( 'DOT/Util' );
 
   /**
@@ -29,7 +30,7 @@ define( require => {
     assert && assert( significantValue instanceof Fraction, 'invalid significantValue: ' + significantValue );
     assert && assert( significantValue.isReduced(), 'significantValue must be reduced: ' + significantValue );
 
-    options = _.extend( {
+    options = merge( {
       pickable: true, // whether the term is pickable (interactive)
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
       toolboxLocation: null // {Vector2|null} location of the associated TermCreatorNode in the toolbox
@@ -80,7 +81,7 @@ define( require => {
      */
     copyOptions: function() {
       const superOptions = EqualityExplorerMovable.prototype.copyOptions.call( this );
-      return _.extend( {
+      return merge( {
         diameter: this.diameter
       }, superOptions );
     },

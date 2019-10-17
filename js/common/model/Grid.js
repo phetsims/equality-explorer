@@ -21,6 +21,7 @@ define( require => {
   const Bounds2 = require( 'DOT/Bounds2' );
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   const Util = require( 'DOT/Util' );
   const Vector2 = require( 'DOT/Vector2' );
@@ -38,7 +39,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       rows: 10,
       columns: 10,
       cellWidth: 5,

@@ -18,6 +18,7 @@ define( require => {
   const Emitter = require( 'AXON/Emitter' );
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
 
@@ -27,7 +28,7 @@ define( require => {
    */
   function EqualityExplorerMovable( options ) {
 
-    options = _.extend( {
+    options = merge( {
       location: Vector2.ZERO, // {Vector2} initial location
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} bounds that constrain dragging
       animationSpeed: 400 // {number} distance/second when animating
@@ -127,7 +128,7 @@ define( require => {
      */
     animateTo: function( destination, options ) {
 
-      options = _.extend( {
+      options = merge( {
         animationStepCallback: null, // {function} called when animation step occurs
         animationCompletedCallback: null // {function} called when animation has completed
       }, options );

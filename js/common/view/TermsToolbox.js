@@ -13,6 +13,7 @@ define( require => {
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Panel = require( 'SUN/Panel' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -30,7 +31,7 @@ define( require => {
    */
   function TermsToolbox( termCreators, plate, termsLayer, options ) {
 
-    options = _.extend( {
+    options = merge( {
       hasNegativeTermsInToolbox: false, // {boolean} if true, put negative terms in the toolbox, e.g. -x
       contentSize: DEFAULT_CONTENT_SIZE,
       spacing: 45, // horizontal space between TermCreatorNodes

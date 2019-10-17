@@ -18,6 +18,7 @@ define( require => {
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const Grid = require( 'EQUALITY_EXPLORER/common/model/Grid' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
@@ -38,7 +39,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       supportHeight: 10, // height of the vertical support that connects the plate to the scale
       diameter: 20, // diameter of the plate
       gridRows: 1, // rows in the 2D grid

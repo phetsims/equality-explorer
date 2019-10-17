@@ -30,6 +30,7 @@ define( require => {
   const Event = require( 'SCENERY/input/Event' );
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
   const Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
@@ -44,7 +45,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
 
       // {number} like terms will occupy this cell in the plate's 2D grid
@@ -281,7 +282,7 @@ define( require => {
      */
     createTerm: function( options ) {
 
-      options = _.extend( {
+      options = merge( {
         sign: 1,
         event: null // {Event|null} event is non-null if the term is created as the result of a user interaction
       }, options );

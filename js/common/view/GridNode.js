@@ -13,6 +13,7 @@ define( require => {
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Path = require( 'SCENERY/nodes/Path' );
   const Shape = require( 'KITE/Shape' );
 
@@ -25,7 +26,7 @@ define( require => {
    */
   function GridNode( options ) {
 
-    options = _.extend( {
+    options = merge( {
       rows: 1,
       columns: 1,
       cellSize: DEFAULT_CELL_SIZE, // {Dimension2} uniform width and height of each cell

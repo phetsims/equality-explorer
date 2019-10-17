@@ -14,6 +14,7 @@ define( require => {
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
   const VariableTerm = require( 'EQUALITY_EXPLORER/common/model/VariableTerm' );
   const VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
@@ -27,7 +28,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
       negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL
     }, options );
@@ -77,7 +78,7 @@ define( require => {
      */
     createIcon: function( options ) {
 
-      options = _.extend( {
+      options = merge( {
         sign: 1  // sign of the coefficient shown on the icon, 1 or -1
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
@@ -98,7 +99,7 @@ define( require => {
      */
     createTermProtected: function( options ) {
 
-      options = _.extend( {
+      options = merge( {
         sign: 1
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
@@ -136,7 +137,7 @@ define( require => {
      * @override
      */
     createTermNode: function( term, options ) {
-      return new VariableTermNode( this, term, _.extend( {
+      return new VariableTermNode( this, term, merge( {
         positiveFill: this.positiveFill,
         negativeFill: this.negativeFill
       }, options ) );

@@ -18,6 +18,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -31,7 +32,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       variable: null, // {Variable|null} determines whether we render '0' or '0x' (for example)
       haloRadius: 20,
       haloBaseColor: 'transparent', // no visible halo, set this if you want to see the halo

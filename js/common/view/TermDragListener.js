@@ -41,6 +41,7 @@ define( require => {
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   const EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   const SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
@@ -63,7 +64,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
 
       haloRadius: 10, // radius of the halo around terms that sum to zero
       pickableWhileAnimating: true, // is termNode pickable while term is animating?

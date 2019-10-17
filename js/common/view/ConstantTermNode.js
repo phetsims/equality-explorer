@@ -15,6 +15,7 @@ define( require => {
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const ReducedFractionNode = require( 'EQUALITY_EXPLORER/common/view/ReducedFractionNode' );
@@ -39,10 +40,10 @@ define( require => {
    */
   function ConstantTermNode( termCreator, term, options ) {
 
-    options = _.extend( {}, DEFAULT_OPTIONS, options );
+    options = merge( {}, DEFAULT_OPTIONS, options );
 
     const contentNode = ConstantTermNode.createInteractiveTermNode( term.constantValue,
-      _.extend( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
+      merge( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
     const shadowNode = new Circle( term.diameter / 2, {
       fill: 'black',
@@ -69,7 +70,7 @@ define( require => {
       assert && assert( constantValue instanceof Fraction, 'invalid constantValue: ' + constantValue );
       assert && assert( constantValue.isReduced(), 'constantValue must be reduced: ' + constantValue );
 
-      options = _.extend( {
+      options = merge( {
         diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       }, DEFAULT_OPTIONS, options );
 

@@ -15,6 +15,7 @@ define( require => {
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const HaloNode = require( 'EQUALITY_EXPLORER/common/view/HaloNode' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const SeparateTermsDragListener = require( 'EQUALITY_EXPLORER/common/view/SeparateTermsDragListener' );
 
@@ -34,7 +35,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       shadowOffset: DEFAULT_SHADOW_OFFSET,
 
       // Node options

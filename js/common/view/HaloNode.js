@@ -15,6 +15,7 @@ define( require => {
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RadialGradient = require( 'SCENERY/util/RadialGradient' );
 
   /**
@@ -24,7 +25,7 @@ define( require => {
    */
   function HaloNode( radius, options ) {
 
-    options = _.extend( {
+    options = merge( {
       baseColor: EqualityExplorerColors.HALO
     }, options );
 

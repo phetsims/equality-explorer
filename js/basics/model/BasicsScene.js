@@ -13,6 +13,7 @@ define( require => {
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const ObjectTermCreator = require( 'EQUALITY_EXPLORER/basics/model/ObjectTermCreator' );
 
   /**
@@ -23,7 +24,7 @@ define( require => {
    */
   function BasicsScene( variables, options ) {
 
-    options = _.extend( {
+    options = merge( {
       hasConstantTerms: false // does this scene allow you to create constant terms?
     }, options );
 

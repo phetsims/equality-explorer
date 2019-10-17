@@ -17,6 +17,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const HSeparator = require( 'SUN/HSeparator' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   const SnapshotControl = require( 'EQUALITY_EXPLORER/common/view/SnapshotControl' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -40,7 +41,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
+    options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // this accordion box is designed to be a fixed width, regardless of its content
       fixedWidth: 100,
@@ -59,7 +60,7 @@ define( require => {
     }, options );
 
     // options for SnapshotControl
-    options.snapshotControlOptions = _.extend( {
+    options.snapshotControlOptions = merge( {
       controlHeight: 50,
       orientation: 'horizontal',
       commaSeparated: true,
@@ -74,7 +75,7 @@ define( require => {
 
     const contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
-    options.snapshotControlOptions = _.extend( {
+    options.snapshotControlOptions = merge( {
       variableValuesVisibleProperty: options.variableValuesVisibleProperty,
       controlWidth: contentWidth
     }, options.snapshotControlOptions );

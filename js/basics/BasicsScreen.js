@@ -16,6 +16,7 @@ define( require => {
   const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
   const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
 
   // strings
@@ -27,7 +28,7 @@ define( require => {
    */
   function BasicsScreen( options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // EqualityExplorerScreen options
       name: screenBasicsString,

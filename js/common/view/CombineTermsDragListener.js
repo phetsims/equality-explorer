@@ -13,6 +13,7 @@ define( require => {
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
   const TermDragListener = require( 'EQUALITY_EXPLORER/common/view/TermDragListener' );
 
@@ -70,7 +71,7 @@ define( require => {
 
         // there was nothing on the opposite plate, so create the inverse of the equivalent term
         inverseTerm = this.equivalentTermCreator.createTerm(
-          _.extend( this.term.copyOptions(), {
+          merge( this.term.copyOptions(), {
             sign: -1
           } ) );
         this.equivalentTermCreator.putTermOnPlate( inverseTerm, this.termCreator.likeTermsCell );

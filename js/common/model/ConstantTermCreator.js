@@ -15,6 +15,7 @@ define( require => {
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
 
   /**
@@ -55,7 +56,7 @@ define( require => {
      */
     createIcon: function( options ) {
 
-      options = _.extend( {
+      options = merge( {
         sign: 1  // sign of the constant shown on the icon, 1 or -1
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
@@ -73,7 +74,7 @@ define( require => {
      */
     createTermProtected: function( options ) {
 
-      options = _.extend( {
+      options = merge( {
         sign: 1
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );

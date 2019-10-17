@@ -12,6 +12,7 @@ define( require => {
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
 
   /**
    * @param {function} clearScaleFunction
@@ -20,7 +21,7 @@ define( require => {
    */
   function ClearScaleButton( clearScaleFunction, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // EraserButton options
       touchAreaDilation: 5,

@@ -24,6 +24,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const ObjectPicker = require( 'EQUALITY_EXPLORER/common/view/ObjectPicker' );
   const OperationsScene = require( 'EQUALITY_EXPLORER/operations/model/OperationsScene' );
@@ -55,7 +56,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       timesZeroEnabled: true, // whether to include 'times 0' as one of the operations
 
       // HBox options
@@ -137,7 +138,7 @@ define( require => {
     const downEnabledProperty = new BooleanProperty( true );
 
     // picker for choosing operand
-    const operandPicker = new ObjectPicker( scene.operandProperty, operandItems, _.extend( {}, PICKER_OPTIONS, {
+    const operandPicker = new ObjectPicker( scene.operandProperty, operandItems, merge( {}, PICKER_OPTIONS, {
       xMargin: 6,
       touchAreaXDilation: 0,
       touchAreaYDilation: 15,

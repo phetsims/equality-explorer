@@ -11,6 +11,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
 
   /**
@@ -21,7 +22,7 @@ define( require => {
    */
   function SceneControl( scenes, sceneProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // RadioButtonGroup options
       orientation: 'horizontal',

@@ -12,6 +12,7 @@ define( require => {
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   // constants
@@ -59,7 +60,7 @@ define( require => {
      * @override
      */
     copy: function( options ) {
-      return new ObjectTerm( this.variable, _.extend( this.copyOptions(), options ) );
+      return new ObjectTerm( this.variable, merge( this.copyOptions(), options ) );
     },
 
     /**

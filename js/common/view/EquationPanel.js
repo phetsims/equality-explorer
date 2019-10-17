@@ -15,6 +15,7 @@ define( require => {
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   const EquationNode = require( 'EQUALITY_EXPLORER/common/view/EquationNode' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Panel = require( 'SUN/Panel' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -27,7 +28,7 @@ define( require => {
    */
   function EquationPanel( leftTermCreators, rightTermCreators, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // this panel is designed to be a fixed size, regardless of its content
       contentWidth: 100,

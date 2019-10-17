@@ -17,6 +17,7 @@ define( require => {
   const GridNode = require( 'EQUALITY_EXPLORER/common/view/GridNode' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -28,7 +29,7 @@ define( require => {
    */
   function PlateNode( plate, options ) {
 
-    options = _.extend( {
+    options = merge( {
       color: EqualityExplorerColors.PLATE_OUTSIDE_FILL, // {Color|string} color of the outside of the plate
       pivotRadius: 8  // {number} radius of the pivot point that attaches to the balance beam
     }, options );

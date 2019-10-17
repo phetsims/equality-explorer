@@ -14,6 +14,7 @@ define( require => {
   const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
   const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const SolveItModel = require( 'EQUALITY_EXPLORER/solveit/model/SolveItModel' );
   const SolveItScreenView = require( 'EQUALITY_EXPLORER/solveit/view/SolveItScreenView' );
@@ -27,7 +28,7 @@ define( require => {
    */
   function SolveItScreen( options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // EqualityExplorerScreen options
       name: screenSolveItString,

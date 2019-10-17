@@ -12,6 +12,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Path = require( 'SCENERY/nodes/Path' );
   const Shape = require( 'KITE/Shape' );
@@ -22,7 +23,7 @@ define( require => {
    */
   function BoxNode( options ) {
 
-    options = _.extend( {
+    options = merge( {
       width: 200, // width of the top face at it's center
       height: 10, // height of the front face
       depth: 20,  // depth of the top face after flattening to 2D

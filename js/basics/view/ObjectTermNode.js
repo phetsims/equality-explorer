@@ -14,6 +14,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
@@ -58,7 +59,7 @@ define( require => {
      */
     createInteractiveTermNode: function( image, options ) {
 
-      options = _.extend( {
+      options = merge( {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       }, options );
 
@@ -78,7 +79,7 @@ define( require => {
 
       assert && assert( Util.isInteger( coefficient ), 'coefficient must be an integer: ' + coefficient );
 
-      options = _.extend( {
+      options = merge( {
         font: DEFAULT_COEFFICIENT_FONT
       }, options );
 

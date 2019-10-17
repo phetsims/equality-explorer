@@ -13,6 +13,7 @@ define( require => {
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -24,7 +25,7 @@ define( require => {
    */
   function VariableNode( variable, options ) {
 
-    options = _.extend( {
+    options = merge( {
       iconScale: 1, // for variables that are displayed as an icon, e.g. apple, cat, coin
       fontSize: 24 // for variables that are displayed as a text symbol, e.g. 'x'
     }, options );

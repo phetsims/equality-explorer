@@ -18,6 +18,7 @@ define( require => {
   const EquationAccordionBox = require( 'EQUALITY_EXPLORER/common/view/EquationAccordionBox' );
   const inherit = require( 'PHET_CORE/inherit' );
   const LockControl = require( 'EQUALITY_EXPLORER/common/view/LockControl' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const SnapshotsAccordionBox = require( 'EQUALITY_EXPLORER/common/view/SnapshotsAccordionBox' );
@@ -35,7 +36,7 @@ define( require => {
   function BasicsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
                             snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
 
-    options = _.extend( {
+    options = merge( {
       hasNegativeTermsInToolbox: true, // {boolean} if true, put negative terms in the toolbox, e.g. -x
       termsToolboxContentSize: new Dimension2( 250, 50 ),
       termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale

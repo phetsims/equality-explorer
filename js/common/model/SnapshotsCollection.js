@@ -11,6 +11,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
 
@@ -19,7 +20,7 @@ define( require => {
    */
   function SnapshotsCollection( options ) {
 
-    options = _.extend( {
+    options = merge( {
       numberOfSnapshots: 5
     }, options );
 

@@ -14,6 +14,7 @@ define( require => {
   const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
   const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const VariablesModel = require( 'EQUALITY_EXPLORER/variables/model/VariablesModel' );
   const VariablesScreenView = require( 'EQUALITY_EXPLORER/variables/view/VariablesScreenView' );
@@ -27,7 +28,7 @@ define( require => {
    */
   function VariablesScreen( options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // EqualityExplorerScreen options
       name: screenVariablesString,

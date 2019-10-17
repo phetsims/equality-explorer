@@ -13,6 +13,7 @@ define( require => {
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const SceneControl = require( 'EQUALITY_EXPLORER/common/view/SceneControl' );
   const ScreenView = require( 'JOIST/ScreenView' );
@@ -27,7 +28,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
 
       // {boolean}
       // true = positive and negative terms in the toolbox, e.g. x, -x, 1, -1

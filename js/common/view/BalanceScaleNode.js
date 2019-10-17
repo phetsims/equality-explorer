@@ -20,6 +20,7 @@ define( require => {
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
   const Path = require( 'SCENERY/nodes/Path' );
@@ -51,7 +52,7 @@ define( require => {
    */
   function BalanceScaleNode( scale, options ) {
 
-    options = _.extend( {
+    options = merge( {
       clearScaleButtonVisible: true,
       organizeButtonVisible: true,
       disposeTermsNotOnScale: null // {function|null} call this to dispose of terms that are NOT on the scale

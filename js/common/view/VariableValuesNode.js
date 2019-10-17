@@ -16,6 +16,7 @@ define( require => {
   const HStrut = require( 'SCENERY/nodes/HStrut' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const Text = require( 'SCENERY/nodes/Text' );
   const VariableNode = require( 'EQUALITY_EXPLORER/common/view/VariableNode' );
@@ -27,7 +28,7 @@ define( require => {
    */
   function VariableValuesNode( variables, options ) {
 
-    options = _.extend( {
+    options = merge( {
       fontSize: 28,
       commaSeparated: true,
       spacingInsideTerms: 3,

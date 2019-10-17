@@ -37,7 +37,7 @@ define( require => {
 
     const self = this;
 
-    ScreenView.call( this, model );
+    ScreenView.call( this );
 
     // @private state of the Snapshots accordion box is global to the Screen,
     // see https://github.com/phetsims/equality-explorer/issues/124

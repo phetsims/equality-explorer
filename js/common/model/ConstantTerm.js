@@ -14,6 +14,7 @@ define( require => {
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
@@ -22,7 +23,7 @@ define( require => {
    */
   function ConstantTerm( options ) {
 
-    options = _.extend( {
+    options = merge( {
       constantValue: EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE
     }, options );
 
@@ -57,7 +58,7 @@ define( require => {
      */
     copyOptions: function() {
       const supertypeOptions = Term.prototype.copyOptions.call( this );
-      return _.extend( {}, supertypeOptions, {
+      return merge( {}, supertypeOptions, {
         constantValue: this.constantValue
       } );
     },
@@ -72,7 +73,7 @@ define( require => {
     plus: function( term, options ) {
       options = options || {};
       assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
-      return this.copy( _.extend( {
+      return this.copy( merge( {
         constantValue: this.constantValue.plus( term.constantValue ).reduce()
       }, options ) );
     },
@@ -86,7 +87,7 @@ define( require => {
     minus: function( term, options ) {
       options = options || {};
       assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
-      return this.copy( _.extend( {
+      return this.copy( merge( {
         constantValue: this.constantValue.minus( term.constantValue ).reduce()
       }, options ) );
     },
@@ -100,7 +101,7 @@ define( require => {
     times: function( term, options ) {
       options = options || {};
       assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
-      return this.copy( _.extend( {
+      return this.copy( merge( {
         constantValue: this.constantValue.times( term.constantValue ).reduce()
       }, options ) );
     },
@@ -115,7 +116,7 @@ define( require => {
       options = options || {};
       assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
       assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-      return this.copy( _.extend( {
+      return this.copy( merge( {
         constantValue: this.constantValue.divided( term.constantValue ).reduce()
       }, options ) );
     },
@@ -132,7 +133,7 @@ define( require => {
      * @override
      */
     copy: function( options ) {
-      return new ConstantTerm( _.extend( this.copyOptions(), options ) );
+      return new ConstantTerm( merge( this.copyOptions(), options ) );
     },
 
     /**
@@ -166,7 +167,7 @@ define( require => {
      */
     createSnapshot: function() {
       const supertypeOptions = Term.prototype.createSnapshot.call( this );
-      return _.extend( {}, supertypeOptions, {
+      return merge( {}, supertypeOptions, {
         constantValue: this.constantValue
       } );
     },

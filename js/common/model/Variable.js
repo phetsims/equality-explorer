@@ -11,6 +11,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Range = require( 'DOT/Range' );
 
@@ -24,7 +25,7 @@ define( require => {
    */
   function Variable( symbol, options ) {
 
-    options = _.extend( {
+    options = merge( {
       value: 1, // the initial value
       range: DEFAULT_RANGE // range of the value
     }, options );

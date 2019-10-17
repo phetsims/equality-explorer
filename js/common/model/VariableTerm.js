@@ -15,6 +15,7 @@ define( require => {
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
 
   /**
@@ -24,7 +25,7 @@ define( require => {
    */
   function VariableTerm( variable, options ) {
 
-    options = _.extend( {
+    options = merge( {
       coefficient: EqualityExplorerConstants.DEFAULT_COEFFICIENT
     }, options );
 
@@ -62,7 +63,7 @@ define( require => {
      */
     copyOptions: function() {
       const supertypeOptions = Term.prototype.copyOptions.call( this );
-      return _.extend( {}, supertypeOptions, {
+      return merge( {}, supertypeOptions, {
         coefficient: this.coefficient
       } );
     },
@@ -75,7 +76,7 @@ define( require => {
      */
     plus: function( term, options ) {
       assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
-      return this.copy( _.extend( {
+      return this.copy( merge( {
         coefficient: this.coefficient.plus( term.coefficient ).reduced()
       }, options ) );
     },
@@ -88,7 +89,7 @@ define( require => {
      */
     minus: function( term, options ) {
       assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
-      return this.copy( _.extend( {
+      return this.copy( merge( {
         coefficient: this.coefficient.minus( term.coefficient ).reduced()
       }, options ) );
     },
@@ -101,7 +102,7 @@ define( require => {
      */
     times: function( term, options ) {
       assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
-      return this.copy( _.extend( {
+      return this.copy( merge( {
         coefficient: this.coefficient.times( term.constantValue ).reduced()
       }, options ) );
     },
@@ -115,7 +116,7 @@ define( require => {
     divided: function( term, options ) {
       assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
       assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-      return this.copy( _.extend( {
+      return this.copy( merge( {
         coefficient: this.coefficient.divided( term.constantValue ).reduced()
       }, options ) );
     },
@@ -132,7 +133,7 @@ define( require => {
      * @override
      */
     copy: function( options ) {
-      return new VariableTerm( this.variable, _.extend( this.copyOptions(), options ) );
+      return new VariableTerm( this.variable, merge( this.copyOptions(), options ) );
     },
 
     /**
@@ -166,7 +167,7 @@ define( require => {
      */
     createSnapshot: function() {
       const supertypeOptions = Term.prototype.createSnapshot.call( this );
-      return _.extend( {}, supertypeOptions, {
+      return merge( {}, supertypeOptions, {
         coefficient: this.coefficient
       } );
     },

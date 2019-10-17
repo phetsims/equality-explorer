@@ -19,6 +19,7 @@ define( require => {
   const EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
@@ -43,7 +44,7 @@ define( require => {
    */
   function OperationsScene( options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // EqualityExplorerScene options
       debugName: 'operations',
