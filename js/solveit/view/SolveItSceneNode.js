@@ -301,22 +301,15 @@ define( require => {
             backButtonListener();
           },
 
-          // invisible to start
-          visible: false
-        } );
-
-        // Manage the animated reward that is shown behind the dialog when the dialog is shown/hidden.
-        rewardDialog.on( 'visibility', function() {
-          if ( rewardDialog.visible ) {
-
-            // When the dialog is shown, show the reward
+          // When the dialog is shown, show the reward
+          showCallback: function() {
             assert && assert( !self.rewardNode, 'rewardNode is not supposed to exist' );
             self.rewardNode = new EqualityExplorerRewardNode( scene.level );
             self.addChild( self.rewardNode );
-          }
-          else {
+          },
 
-            // When the dialog is hidden, dispose of the reward
+          // When the dialog is hidden, dispose of the reward
+          hideCallback: function() {
             assert && assert( self.rewardNode, 'rewardNode is supposed to exist' );
             self.removeChild( self.rewardNode );
             self.rewardNode.dispose();
