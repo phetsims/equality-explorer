@@ -26,8 +26,8 @@
  *
  * NOTE: When a Term is created, events are forward to this drag listener by TermCreatorNode, via
  * SimpleDragHandler.createForwardingListener. At the time of this writing, that means that fields in
- * Event and SimpleDragHandler will contain invalid values. In Event, currentTarget and trail will be specific
- * to the forwarding TermCreatorNode. In SimpleDragHandler, node, trail, transform and startTransformMatrix
+ * SceneryEvent and SimpleDragHandler will contain invalid values. In SceneryEvent, currentTarget and trail will be
+ * specific to the forwarding TermCreatorNode. In SimpleDragHandler, node, trail, transform and startTransformMatrix
  * fields are all invalid, and you should avoid calling cancel().
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -142,7 +142,7 @@ define( require => {
 
     /**
      * Called at the start of a drag cycle, on pointer down.
-     * @param {Event} event
+     * @param {SceneryEvent} event
      * @param {Trail} trail
      * @private
      */
@@ -192,7 +192,7 @@ define( require => {
 
     /**
      * Called while termNode is being dragged.
-     * @param {Event} event
+     * @param {SceneryEvent} event
      * @param {Trail} trail
      * @private
      */
@@ -207,7 +207,7 @@ define( require => {
 
     /**
      * Called at the end of a drag cycle, on pointer up.
-     * @param {Event} event
+     * @param {SceneryEvent} event
      * @param {Trail} trail
      * @private
      */
@@ -309,7 +309,7 @@ define( require => {
     /**
      * Converts an event to a model location with some offset, constrained to the drag bounds.
      * This is used at the start of a drag cycle to position termNode relative to the pointer.
-     * @param {Event} event
+     * @param {SceneryEvent} event
      * @returns {Vector2}
      * @private
      */

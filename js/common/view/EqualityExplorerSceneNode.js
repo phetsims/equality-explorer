@@ -39,7 +39,7 @@ define( require => {
      * When a term is created in the model, create the corresponding view.
      * @param {TermCreator} termCreator
      * @param {Term} term
-     * @param {Event|null} event - event is non-null when the term was created via user interaction
+     * @param {SceneryEvent|null} event - event is non-null when the term was created via user interaction
      */
     const termCreatedListener = function( termCreator, term, event ) {
 

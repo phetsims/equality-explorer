@@ -27,12 +27,12 @@ define( require => {
   const Emitter = require( 'AXON/Emitter' );
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  const Event = require( 'SCENERY/input/Event' );
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
+  const SceneryEvent = require( 'SCENERY/input/SceneryEvent' );
   const Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
   const Vector2 = require( 'DOT/Vector2' );
 
@@ -91,14 +91,14 @@ define( require => {
     } );
 
     // @public emit is called when a term is created.
-    // Callback signature is function( {TermCreator} termCreator, {Term} term, {Event|null} [event] ),
+    // Callback signature is function( {TermCreator} termCreator, {Term} term, {SceneryEvent|null} [event] ),
     // where event is non-null if the term was created as the result of a user interaction.
     // dispose not required.
     this.termCreatedEmitter = new Emitter( {
       parameters: [
         { valueType: TermCreator },
         { valueType: Term },
-        { valueType: [ Event, null ] }
+        { valueType: [ SceneryEvent, null ] }
       ]
     } );
 
@@ -284,7 +284,7 @@ define( require => {
 
       options = merge( {
         sign: 1,
-        event: null // {Event|null} event is non-null if the term is created as the result of a user interaction
+        event: null // {SceneryEvent|null} event is non-null if the term is created as the result of a user interaction
       }, options );
       assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
 
@@ -300,13 +300,13 @@ define( require => {
     /**
      * Tells this term creator to manage a term.  Once managed, a term cannot be unmanaged - it's a life commitment!
      * @param {Term} term
-     * @param {Event|null} [event] is provided if term was created as the result of a user interaction
+     * @param {SceneryEvent|null} [event] is provided if term was created as the result of a user interaction
      * @private
      */
     manageTerm: function( term, event ) {
       assert && assert( !term.isDisposed, 'term is disposed: ' + term );
       assert && assert( !this.isManagedTerm( term ), 'term is already managed: ' + term );
-      assert && assert( event instanceof Event || event === null, 'invalid event: ' + event );
+      assert && assert( event instanceof SceneryEvent || event === null, 'invalid event: ' + event );
 
       this.allTerms.add( term );
 
