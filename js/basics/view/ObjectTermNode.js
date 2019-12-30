@@ -19,7 +19,7 @@ define( require => {
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const TermNode = require( 'EQUALITY_EXPLORER/common/view/TermNode' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // constants
   const DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
@@ -77,7 +77,7 @@ define( require => {
      */
     createEquationTermNode: function( coefficient, icon, options ) {
 
-      assert && assert( Util.isInteger( coefficient ), 'coefficient must be an integer: ' + coefficient );
+      assert && assert( Utils.isInteger( coefficient ), 'coefficient must be an integer: ' + coefficient );
 
       options = merge( {
         font: DEFAULT_COEFFICIENT_FONT

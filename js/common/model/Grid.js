@@ -23,7 +23,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
   const Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -411,7 +411,7 @@ define( require => {
      * @private
      */
     isValidCell: function( cell ) {
-      return ( Util.isInteger( cell ) && cell >= 0 && cell < this.cells.length );
+      return ( Utils.isInteger( cell ) && cell >= 0 && cell < this.cells.length );
     },
 
     /**

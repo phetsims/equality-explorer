@@ -17,7 +17,7 @@ define( require => {
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * @param {Fraction} significantValue - significant for the purposes of determining sign and maxInteger limits
@@ -45,7 +45,7 @@ define( require => {
     // Note that sign is not related to the term's weight. For example, for variable terms, the 'significant number'
     // is the coefficient. Consider term '-5x', where x=-2. While the weight is 10 (-5 * -2), the sign is based on
     // the coefficient -5, and is therefore -1.
-    this.sign = Util.sign( significantValue.getValue() );
+    this.sign = Utils.sign( significantValue.getValue() );
 
     // @public (read-only) diameter of the term in the view, convenient to store in the model
     this.diameter = options.diameter;

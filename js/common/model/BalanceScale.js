@@ -19,7 +19,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
   const Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -36,7 +36,7 @@ define( require => {
 
       location: Vector2.ZERO, // location of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
-      maxAngle: Util.toRadians( 22 ), // max angle of the scale, in radians
+      maxAngle: Utils.toRadians( 22 ), // max angle of the scale, in radians
       maxWeight: 30, // weight at which a plate 'bottoms out'
 
       plateSupportHeight: 70, // height of vertical support that connects plate to beam
@@ -161,7 +161,7 @@ define( require => {
         return leftNumberOfTerms + rightNumberOfTerms;
       }, {
         isValidValue: function( value ) {
-          return Util.isInteger( value );
+          return Utils.isInteger( value );
         }
       } );
   }

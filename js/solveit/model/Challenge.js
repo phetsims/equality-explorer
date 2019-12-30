@@ -13,7 +13,7 @@ define( require => {
   const Fraction = require( 'PHETCOMMON/model/Fraction' );
   const inherit = require( 'PHET_CORE/inherit' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * Form: ax + b = mx + n
@@ -30,7 +30,7 @@ define( require => {
    */
   function Challenge( x, a, b, m, n, debugDerivation ) {
 
-    assert && assert( Util.isInteger( x ), 'invalid x: ' + x );
+    assert && assert( Utils.isInteger( x ), 'invalid x: ' + x );
     assert && assert( a instanceof Fraction && a.isReduced(), 'invalid a: ' + a );
     assert && assert( b instanceof Fraction && b.isReduced(), 'invalid b: ' + b );
     assert && assert( m instanceof Fraction && m.isReduced(), 'invalid m: ' + m );

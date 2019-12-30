@@ -12,7 +12,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * @constructor
@@ -87,8 +87,8 @@ define( require => {
      */
     rangeToArray: function( min, max ) {
 
-      assert && assert( Util.isInteger( min ), 'min must be an integer: ' + min );
-      assert && assert( Util.isInteger( max ), 'max must be an integer: ' + max );
+      assert && assert( Utils.isInteger( min ), 'min must be an integer: ' + min );
+      assert && assert( Utils.isInteger( max ), 'max must be an integer: ' + max );
 
       const values = []; // {number[]}
       for ( let i = min; i <= max; i++ ) {
