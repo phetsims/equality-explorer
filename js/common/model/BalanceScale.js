@@ -34,7 +34,7 @@ define( require => {
 
     options = merge( {
 
-      location: Vector2.ZERO, // location of the point where the beam balances on the fulcrum
+      position: Vector2.ZERO, // position of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
       maxAngle: Utils.toRadians( 22 ), // max angle of the scale, in radians
       maxWeight: 30, // weight at which a plate 'bottoms out'
@@ -55,7 +55,7 @@ define( require => {
     assert && assert( options.beamWidth - ( 2 * options.plateXInset ) > options.plateDiameter, 'plates will overlap' );
 
     // @public (read-only)
-    this.location = options.location;
+    this.position = options.position;
 
     // @public (read-only)
     this.beamWidth = options.beamWidth;
@@ -132,25 +132,25 @@ define( require => {
       let dy = 0;
 
       // move the right plate
-      let rightLocation = null;
+      let rightPosition = null;
       const absXInset = Math.abs( options.plateXInset );
       if ( angle === 0 ) {
-        rightLocation = new Vector2( self.location.x + ( self.beamWidth / 2 ) - absXInset,
-          self.location.y - options.plateSupportHeight );
+        rightPosition = new Vector2( self.position.x + ( self.beamWidth / 2 ) - absXInset,
+          self.position.y - options.plateSupportHeight );
       }
       else {
         const hypotenuse = ( self.beamWidth / 2 ) - absXInset;
         dx = Math.cos( angle ) * hypotenuse;
         dy = Math.sin( angle ) * hypotenuse;
-        rightLocation = new Vector2( self.location.x + dx, self.location.y + dy - options.plateSupportHeight );
+        rightPosition = new Vector2( self.position.x + dx, self.position.y + dy - options.plateSupportHeight );
       }
-      self.rightPlate.locationProperty.value = rightLocation;
+      self.rightPlate.positionProperty.value = rightPosition;
 
       // move the left plate, relative to the right plate
-      dx = rightLocation.x - self.location.x;
-      dy = ( rightLocation.y + options.plateSupportHeight ) - self.location.y;
-      self.leftPlate.locationProperty.value =
-        new Vector2( self.location.x - dx, self.location.y - dy - options.plateSupportHeight );
+      dx = rightPosition.x - self.position.x;
+      dy = ( rightPosition.y + options.plateSupportHeight ) - self.position.y;
+      self.leftPlate.positionProperty.value =
+        new Vector2( self.position.x - dx, self.position.y - dy - options.plateSupportHeight );
     } );
 
     // @public {DerivedProperty.<number>} total number of terms on the scale

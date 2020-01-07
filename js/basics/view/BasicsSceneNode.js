@@ -66,7 +66,7 @@ define( require => {
       hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
       contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
-      centerX: scale.leftPlate.locationProperty.value.x,
+      centerX: scale.leftPlate.positionProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
@@ -74,7 +74,7 @@ define( require => {
       hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
       contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
-      centerX: scale.rightPlate.locationProperty.value.x,
+      centerX: scale.rightPlate.positionProperty.value.x,
       bottom: leftTermsToolbox.bottom
     } );
 
@@ -84,7 +84,7 @@ define( require => {
 
       // Slightly off center, so that the equation's relational operator is horizontally centered
       // above the scale's arrow. The offset was determined empirically.
-      centerX: scale.location.x - 15,
+      centerX: scale.position.x - 15,
       top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
@@ -111,7 +111,7 @@ define( require => {
     // such that an action on one side results in an equivalent action on the opposite side.
     if ( scene.lockedProperty && EqualityExplorerQueryParameters.lockVisible ) {
       const lockControl = new LockControl( scene.lockedProperty, {
-        x: scale.location.x,
+        x: scale.position.x,
         y: leftTermsToolbox.centerY - 5 // offset determined empirically
       } );
       children.unshift( lockControl ); // add to beginning

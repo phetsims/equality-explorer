@@ -98,27 +98,27 @@ define( require => {
     SimpleDragHandler.call( this, options );
 
     // Equivalent term tracks the movement of the dragged term throughout the drag cycle and post-drag animation.
-    const locationListener = function( location ) {
+    const positionListener = function( position ) {
       if ( self.equivalentTerm && !self.equivalentTerm.isDisposed ) {
-        self.equivalentTerm.moveTo( termCreator.getEquivalentTermLocation( term ) );
+        self.equivalentTerm.moveTo( termCreator.getEquivalentTermPosition( term ) );
       }
     };
-    term.locationProperty.link( locationListener ); // unlink required in dispose
+    term.positionProperty.link( positionListener ); // unlink required in dispose
 
     // When the plate moves, or its contents change, refresh the halos around overlapping terms.
     const refreshHalosBound = this.refreshHalos.bind( this );
-    this.plate.locationProperty.link( refreshHalosBound ); // unlink required in dispose
+    this.plate.positionProperty.link( refreshHalosBound ); // unlink required in dispose
     this.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
 
     // @private called by dispose
     this.disposeTermDragListener = function() {
 
-      if ( term.locationProperty.hasListener( locationListener ) ) {
-        term.locationProperty.unlink( locationListener );
+      if ( term.positionProperty.hasListener( positionListener ) ) {
+        term.positionProperty.unlink( positionListener );
       }
 
-      if ( self.plate.locationProperty.hasListener( refreshHalosBound ) ) {
-        self.plate.locationProperty.unlink( refreshHalosBound );
+      if ( self.plate.positionProperty.hasListener( refreshHalosBound ) ) {
+        self.plate.positionProperty.unlink( refreshHalosBound );
       }
 
       if ( self.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
@@ -173,7 +173,7 @@ define( require => {
           'lock is on, equivalentTerm expected' );
 
         // move the term a bit, so it's obvious that we're interacting with it
-        this.term.moveTo( this.eventToLocation( event ) );
+        this.term.moveTo( this.eventToPosition( event ) );
 
         // set term properties at beginning of drag
         this.term.draggingProperty.value = true;
@@ -199,7 +199,7 @@ define( require => {
     drag: function( event, trail ) {
 
       // move the term
-      this.term.moveTo( this.eventToLocation( event ) );
+      this.term.moveTo( this.eventToPosition( event ) );
 
       // refresh the halos that appear when dragged term overlaps with an inverse term
       this.refreshHalos();
@@ -260,16 +260,16 @@ define( require => {
 
         // Do sum-to-zero animations after addressing both plates, so that plates have moved to their final position.
         sumToZeroParent.addChild( sumToZeroNode );
-        sumToZeroNode.center = this.plate.getLocationOfCell( sumToZeroCell );
+        sumToZeroNode.center = this.plate.getPositionOfCell( sumToZeroCell );
         sumToZeroNode.startAnimation();
         if ( oppositeSumToZeroNode ) {
           sumToZeroParent.addChild( oppositeSumToZeroNode );
-          oppositeSumToZeroNode.center = this.oppositePlate.getLocationOfCell( sumToZeroCell );
+          oppositeSumToZeroNode.center = this.oppositePlate.getPositionOfCell( sumToZeroCell );
           oppositeSumToZeroNode.startAnimation();
         }
       }
-      else if ( this.term.locationProperty.value.y >
-                this.plate.locationProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
+      else if ( this.term.positionProperty.value.y >
+                this.plate.positionProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
         // term was released below the plate, animate back to toolbox
         this.animateToToolbox();
@@ -286,12 +286,12 @@ define( require => {
      * @private
      */
     animateToToolbox: function() {
-      assert && assert( this.term.toolboxLocation, 'toolboxLocation was not initialized for term: ' + this.term );
+      assert && assert( this.term.toolboxPosition, 'toolboxPosition was not initialized for term: ' + this.term );
 
       this.term.pickableProperty.value = this.pickableWhileAnimating;
 
       const self = this;
-      this.term.animateTo( this.term.toolboxLocation, {
+      this.term.animateTo( this.term.toolboxPosition, {
         animationCompletedCallback: function() {
 
           // dispose of terms when they reach the toolbox
@@ -307,21 +307,21 @@ define( require => {
     },
 
     /**
-     * Converts an event to a model location with some offset, constrained to the drag bounds.
+     * Converts an event to a model position with some offset, constrained to the drag bounds.
      * This is used at the start of a drag cycle to position termNode relative to the pointer.
      * @param {SceneryEvent} event
      * @returns {Vector2}
      * @private
      */
-    eventToLocation: function( event ) {
+    eventToPosition: function( event ) {
 
-      // move bottom-center of termNode to pointer location
+      // move bottom-center of termNode to pointer position
       const dx = 0;
       const dy = this.termNode.contentNodeSize.height / 2;
-      const location = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( dx, dy );
+      const position = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( dx, dy );
 
       // constrain to drag bounds
-      return this.term.dragBounds.closestPointTo( location );
+      return this.term.dragBounds.closestPointTo( position );
     },
 
     /**
@@ -342,7 +342,7 @@ define( require => {
         this.likeTerm = null;
 
         // does this term overlap a like term on the plate?
-        const termOnPlate = this.plate.getTermAtLocation( this.term.locationProperty.value );
+        const termOnPlate = this.plate.getTermAtPosition( this.term.positionProperty.value );
         if ( termOnPlate && termOnPlate.isLikeTerm( this.term ) ) {
           this.likeTerm = termOnPlate;
         }

@@ -211,7 +211,7 @@ define( require => {
         // Tell the view which terms summed to zero.
         // Do this after the operation has been fully applied, so that sum-to-zero animations
         // appear in the cells at the scale's final position, not at the position before the
-        // operation was applied, or at some intermediate location as the operation is being applied.
+        // operation was applied, or at some intermediate position as the operation is being applied.
         if ( termCreatorsZero.length > 0 ) {
           this.sumToZeroEmitter.emit( termCreatorsZero );
         }

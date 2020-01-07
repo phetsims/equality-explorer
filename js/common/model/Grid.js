@@ -30,12 +30,12 @@ define( require => {
   const NO_TERM = null; // occupies all empty cells in the grid
 
   /**
-   * @param {Vector2Property} locationProperty
+   * @param {Vector2Property} positionProperty
    * @param {string} debugSide - which side of the scale, for debugging
    * @param {Object} [options]
    * @constructor
    */
-  function Grid( locationProperty, debugSide, options ) {
+  function Grid( positionProperty, debugSide, options ) {
 
     const self = this;
 
@@ -47,7 +47,7 @@ define( require => {
     }, options );
 
     // @private (read-only)
-    this.locationProperty = locationProperty;
+    this.positionProperty = positionProperty;
     this.debugSide = debugSide;
 
     // @public (read-only)
@@ -60,7 +60,7 @@ define( require => {
 
     // @private The 2D grid is stored as a 1D array, in row-major order (left-to-right, top-to-bottom).
     // Each entry in this array is a cell in the grid.  Empty cells contain NO_TERM.
-    // Storing as a 1D array makes it easy for snapshots to save/restore the location of terms in the grid.
+    // Storing as a 1D array makes it easy for snapshots to save/restore the position of terms in the grid.
     // See rowColumnToCell, cellToRow, cellToColumn for mapping between index and (row,column).
     this.cells = [];
     const numberOfCells = options.rows * options.columns;
@@ -68,24 +68,24 @@ define( require => {
       this.cells[ i ] = NO_TERM;
     }
 
-    // @private bounds of the grid, initialized in locationProperty listener
+    // @private bounds of the grid, initialized in positionProperty listener
     this.bounds = new Bounds2( 0, 1, 0, 1 );
 
     // When the grid moves ... unlink not required.
-    this.locationProperty.link( function( location ) {
+    this.positionProperty.link( function( position ) {
 
       // recompute the grid's bounds, origin (x,y) is at bottom center
       self.bounds.setMinMax(
-        location.x - ( self.columns * self.cellWidth / 2 ), // minX
-        location.y - ( self.rows * self.cellHeight ), // minY
-        location.x + ( self.columns * self.cellWidth / 2 ), // maxX
-        location.y // maxY
+        position.x - ( self.columns * self.cellWidth / 2 ), // minX
+        position.y - ( self.rows * self.cellHeight ), // minY
+        position.x + ( self.columns * self.cellWidth / 2 ), // maxX
+        position.y // maxY
       );
 
       // move the terms
       for ( let i = 0; i < self.cells.length; i++ ) {
         if ( self.cells[ i ] !== NO_TERM ) {
-          self.cells[ i ].moveTo( self.getLocationOfCell( i ) );
+          self.cells[ i ].moveTo( self.getPositionOfCell( i ) );
         }
       }
     } );
@@ -101,7 +101,7 @@ define( require => {
      * @public
      */
     get top() {
-      return this.locationProperty.value.y - ( this.rows * this.cellHeight );
+      return this.positionProperty.value.y - ( this.rows * this.cellHeight );
     },
 
     /**
@@ -157,19 +157,19 @@ define( require => {
     },
 
     /**
-     * Gets the cell that corresponds to a location.
-     * @param {Vector2} location
-     * @returns {number|null} the cell identifier, null if the location is outside the grid
+     * Gets the cell that corresponds to a position.
+     * @param {Vector2} position
+     * @returns {number|null} the cell identifier, null if the position is outside the grid
      * @private
      */
-    getCellAtLocation: function( location ) {
+    getCellAtPosition: function( position ) {
       let cell = null;
-      if ( this.containsLocation( location ) ) {
+      if ( this.containsPosition( position ) ) {
 
-        // row and column of the cell that contains location
-        // Math.min handles the case where location is exactly on bounds.maxX or maxY. See #39.
-        const row = Math.min( this.rows - 1, Math.floor( ( location.y - this.bounds.minY ) / this.cellHeight ) );
-        const column = Math.min( this.columns - 1, Math.floor( ( location.x - this.bounds.minX ) / this.cellWidth ) );
+        // row and column of the cell that contains position
+        // Math.min handles the case where position is exactly on bounds.maxX or maxY. See #39.
+        const row = Math.min( this.rows - 1, Math.floor( ( position.y - this.bounds.minY ) / this.cellHeight ) );
+        const column = Math.min( this.columns - 1, Math.floor( ( position.x - this.bounds.minX ) / this.cellWidth ) );
 
         cell = this.rowColumnToCell( row, column );
       }
@@ -177,14 +177,14 @@ define( require => {
     },
 
     /**
-     * Is the specified location inside the grid?
+     * Is the specified position inside the grid?
      * This needs to be fast, since it's called during a drag cycle.
-     * @param {Vector2} location
+     * @param {Vector2} position
      * @returns {boolean}
      * @private
      */
-    containsLocation: function( location ) {
-      return this.bounds.containsPoint( location );
+    containsPosition: function( position ) {
+      return this.bounds.containsPoint( position );
     },
 
     /**
@@ -211,14 +211,14 @@ define( require => {
     },
 
     /**
-     * Gets the term at a specified location in the grid.
-     * @param {Vector2} location
-     * @returns {Term|null} null if location is outside the grid, or the cell at location is empty
+     * Gets the term at a specified position in the grid.
+     * @param {Vector2} position
+     * @returns {Term|null} null if position is outside the grid, or the cell at position is empty
      * @public
      */
-    getTermAtLocation: function( location ) {
+    getTermAtPosition: function( position ) {
       let term = null;
-      const cell = this.getCellAtLocation( location );
+      const cell = this.getCellAtPosition( position );
       if ( cell !== null ) {
         term = this.getTermInCell( cell );
       }
@@ -236,7 +236,7 @@ define( require => {
       assert && assert( term instanceof Term, 'invalid term' );
       assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
 
-      const cellLocation = this.getLocationOfCell( cell );
+      const cellPosition = this.getPositionOfCell( cell );
       let equivalentTerm = null;
       let distance = null;
 
@@ -244,7 +244,7 @@ define( require => {
       for ( let i = 0; i < this.cells.length; i++ ) {
         const currentTerm = this.cells[ i ];
         if ( ( currentTerm !== NO_TERM ) && ( term.isEquivalentTerm( currentTerm ) ) ) {
-          const currentDistance = this.getLocationOfCell( i ).distance( cellLocation );
+          const currentDistance = this.getPositionOfCell( i ).distance( cellPosition );
           if ( equivalentTerm === null || currentDistance < distance ) {
             equivalentTerm = currentTerm;
             distance = currentDistance;
@@ -266,7 +266,7 @@ define( require => {
       assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
       assert && assert( this.isEmptyCell( cell ), 'cell is occupied, cell: ' + cell );
       this.cells[ cell ] = term;
-      term.moveTo( this.getLocationOfCell( cell ) );
+      term.moveTo( this.getPositionOfCell( cell ) );
     },
 
     /**
@@ -325,18 +325,18 @@ define( require => {
           term = terms[ i ];
           cell = this.rowColumnToCell( row--, column );
           this.cells[ cell ] = term;
-          term.moveTo( this.getLocationOfCell( cell ) );
+          term.moveTo( this.getPositionOfCell( cell ) );
         }
       }
     },
 
     /**
-     * Gets the location of a specific cell. A cell's location is in the center of the cell.
+     * Gets the position of a specific cell. A cell's position is in the center of the cell.
      * @param {number} cell
      * @returns {Vector2}
      * @public
      */
-    getLocationOfCell: function( cell ) {
+    getPositionOfCell: function( cell ) {
       assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
 
       const row = this.cellToRow( cell );
@@ -361,11 +361,11 @@ define( require => {
      * Gets the empty cell that would be the best fit for adding a term to the grid.
      * Start by identifying the closest empty cell.  If that cell is in a column with empty cells below it,
      * choose the empty cell that is closest to the bottom of the grid in that column.
-     * @param {Vector2} location
+     * @param {Vector2} position
      * @returns {number|null} - the cell's identifier, null if the grid is full
      * @public
      */
-    getBestEmptyCell: function( location ) {
+    getBestEmptyCell: function( position ) {
 
       // Start with the last empty cell in the array
       let closestCell = this.getLastEmptyCell();
@@ -374,13 +374,13 @@ define( require => {
       // If the grid is not full...
       if ( closestCell !== null ) {
 
-        let closestDistance = this.getLocationOfCell( closestCell ).distance( location );
+        let closestDistance = this.getPositionOfCell( closestCell ).distance( position );
 
         // Find the closest cell based on distance, working backwards from lastEmptyCell.
         // This is brute force, but straightforward, and not a performance issue because the number of cells is small.
         for ( let i = closestCell - 1; i >= 0; i-- ) {
           if ( this.isEmptyCell( i ) ) {
-            const distance = this.getLocationOfCell( i ).distance( location );
+            const distance = this.getPositionOfCell( i ).distance( position );
             if ( distance < closestDistance ) {
               closestDistance = distance;
               closestCell = i;

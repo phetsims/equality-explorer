@@ -31,7 +31,7 @@ define( require => {
     const self = this;
 
     options = merge( {
-      destination: Vector2.ZERO, // destination location
+      destination: Vector2.ZERO, // destination position
       translateDuration: 0.7, // motion duration, in seconds
       fadeDuration: 0.25, // fade duration, in seconds
       onComplete: function() {}, // called when the animation completes

@@ -22,7 +22,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  const DEFAULT_SCALE_LOCATION = new Vector2( 355, 427 );
+  const DEFAULT_SCALE_POSITION = new Vector2( 355, 427 );
   const DRAG_BOUNDS_X_MARGIN = 20;
   const DRAG_BOUNDS_Y_MARGIN = 10;
   const DRAG_BOUNDS_MIN_Y = 100;
@@ -41,7 +41,7 @@ define( require => {
 
     options = merge( {
       debugName: null, // internal name, not displayed to the user
-      scaleLocation: DEFAULT_SCALE_LOCATION, // determined empirically
+      scalePosition: DEFAULT_SCALE_POSITION, // determined empirically
       lockable: true, // is the lock feature supported for this scene?
       icon: null, // {Node|null} optional icon used to represent the scene in the scene control (radio buttons)
       maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
@@ -85,7 +85,7 @@ define( require => {
 
     // @public (read-only)
     this.scale = new BalanceScale( this.leftTermCreators, this.rightTermCreators, {
-      location: options.scaleLocation,
+      position: options.scalePosition,
       gridRows: options.gridRows,
       gridColumns: options.gridColumns,
       iconSize: options.iconSize,
@@ -94,14 +94,14 @@ define( require => {
 
     // @public (read-only, for debugging) drag bounds for left plate
     this.leftDragBounds = new Bounds2( DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
-      this.scale.location.x - DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MAX_Y );
+      this.scale.position.x - DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MAX_Y );
     leftTermCreators.forEach( function( termCreator ) {
       termCreator.dragBounds = self.leftDragBounds;
     } );
 
     // @public (read-only, for debugging) drag bounds for right plate
-    this.rightDragBounds = new Bounds2( this.scale.location.x + DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
-      this.scale.location.x + DRAG_BOUNDS_X_MARGIN + this.leftDragBounds.width, DRAG_BOUNDS_MAX_Y );
+    this.rightDragBounds = new Bounds2( this.scale.position.x + DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
+      this.scale.position.x + DRAG_BOUNDS_X_MARGIN + this.leftDragBounds.width, DRAG_BOUNDS_MAX_Y );
     rightTermCreators.forEach( function( termCreator ) {
       termCreator.dragBounds = self.rightDragBounds;
     } );

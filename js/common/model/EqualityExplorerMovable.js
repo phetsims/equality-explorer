@@ -1,11 +1,11 @@
 // Copyright 2017-2019, University of Colorado Boulder
 
 /**
- * A model element that is movable. It has a current location and a desired destination.
+ * A model element that is movable. It has a current position and a desired destination.
  *
  * The model element can be moved using either moveTo or animateTo.
- * moveTo moves immediately to a location, and is typically used while the user is dragging the model element.
- * animateTo animates to a location, and is typically used after the user releases the model element.
+ * moveTo moves immediately to a position, and is typically used while the user is dragging the model element.
+ * animateTo animates to a position, and is typically used after the user releases the model element.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -29,13 +29,13 @@ define( require => {
   function EqualityExplorerMovable( options ) {
 
     options = merge( {
-      location: Vector2.ZERO, // {Vector2} initial location
+      position: Vector2.ZERO, // {Vector2} initial position
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} bounds that constrain dragging
       animationSpeed: 400 // {number} distance/second when animating
     }, options );
 
     // @public (read-only) DO NOT set this directly! Use moveTo or animateTo.
-    this.locationProperty = new Vector2Property( options.location );
+    this.positionProperty = new Vector2Property( options.position );
 
     // @public (read-only)
     this.dragBounds = options.dragBounds;
@@ -47,7 +47,7 @@ define( require => {
     this.animationSpeed = options.animationSpeed;
 
     // @private {Vector2} destination to animate to, set using animateTo
-    this.destination = options.location.copy();
+    this.destination = options.position.copy();
 
     // @private {function|null} called when animation step occurs, set using animateTo.
     // Don't do anything expensive here!
@@ -77,7 +77,7 @@ define( require => {
      */
     copyOptions: function() {
       return {
-        location: this.locationProperty.value,
+        position: this.positionProperty.value,
         dragBounds: this.dragBounds,
         animationSpeed: this.animationSpeed
       };
@@ -87,7 +87,7 @@ define( require => {
     dispose: function() {
       assert && assert( !this.isDisposed, 'dispose called twice for ' + this );
 
-      this.locationProperty.dispose();
+      this.positionProperty.dispose();
       this.draggingProperty.dispose();
 
       // Do this last, sequence is important!
@@ -99,28 +99,28 @@ define( require => {
     // @public
     reset: function() {
 
-      // call moveTo instead of locationProperty.set, so that any animation in progress is cancelled
-      this.moveTo( this.locationProperty.initialValue );
+      // call moveTo instead of positionProperty.set, so that any animation in progress is cancelled
+      this.moveTo( this.positionProperty.initialValue );
     },
 
     /**
-     * Moves immediately to the specified location, without animation.
-     * @param {Vector2} location
+     * Moves immediately to the specified position, without animation.
+     * @param {Vector2} position
      * @public
      */
-    moveTo: function( location ) {
+    moveTo: function( position ) {
 
       // cancel any pending callbacks
       this.animationStepCallback = null;
       this.animationCompletedCallback = null;
 
-      // move immediately to the location
-      this.destination = location;
-      this.locationProperty.set( location );
+      // move immediately to the position
+      this.destination = position;
+      this.positionProperty.set( position );
     },
 
     /**
-     * Animates to the specified location.
+     * Animates to the specified position.
      * Provides optional callback that occur on animation step and completion.
      * @param {Vector2} destination
      * @param {Object} [options]
@@ -145,11 +145,11 @@ define( require => {
      */
     isAnimating: function() {
       return !this.draggingProperty.value &&
-             ( !this.locationProperty.get().equals( this.destination ) || !!this.animationCompletedCallback );
+             ( !this.positionProperty.get().equals( this.destination ) || !!this.animationCompletedCallback );
     },
 
     /**
-     * Animates location, when not being dragged by the user.
+     * Animates position, when not being dragged by the user.
      * @param {number} dt - time since the previous step, in seconds
      * @public
      */
@@ -163,7 +163,7 @@ define( require => {
         this.animationStepCallback && this.animationStepCallback();
 
         // distance from destination
-        const totalDistance = this.locationProperty.get().distance( this.destination );
+        const totalDistance = this.positionProperty.get().distance( this.destination );
 
         // distance to move on this step
         const stepDistance = this.animationSpeed * dt;
@@ -171,7 +171,7 @@ define( require => {
         if ( totalDistance <= stepDistance ) {
 
           // move directly to the destination
-          this.locationProperty.set( this.destination );
+          this.positionProperty.set( this.destination );
 
           // Perform the animationCompletedCallback, which may set a new callback by calling animateTo.
           // The new callback must be a new function instance, since equality is used to check whether
@@ -186,10 +186,10 @@ define( require => {
 
           // move one step towards the destination
           const stepAngle = Math.atan2(
-            this.destination.y - this.locationProperty.get().y,
-            this.destination.x - this.locationProperty.get().x );
+            this.destination.y - this.positionProperty.get().y,
+            this.destination.x - this.positionProperty.get().x );
           const stepVector = Vector2.createPolar( stepDistance, stepAngle );
-          this.locationProperty.set( this.locationProperty.get().plus( stepVector ) );
+          this.positionProperty.set( this.positionProperty.get().plus( stepVector ) );
         }
       }
     }

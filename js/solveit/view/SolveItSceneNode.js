@@ -100,7 +100,7 @@ define( require => {
         relationalOperatorFontWeight: 'normal',
         updateEnabled: false // static equation, to display the challenge
       },
-      centerX: scene.scale.location.x,
+      centerX: scene.scale.position.x,
       top: statusBar.bottom + 15
     } );
     let challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
@@ -134,7 +134,7 @@ define( require => {
     // @private Universal Operation control
     this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
       timesZeroEnabled: false, // disable multiplication by zero, see phetsims/equality-explorer#72
-      centerX: scene.scale.location.x, // centered on the scale
+      centerX: scene.scale.position.x, // centered on the scale
       top: equationPanel.bottom + 15
     } );
 
@@ -175,7 +175,7 @@ define( require => {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 12,
       yMargin: 8,
-      centerX: scene.scale.location.x,
+      centerX: scene.scale.position.x,
       top: this.universalOperationControl.bottom + 30, // determined empirically
       listener: function() {
         phet.log && phet.log( 'Next button pressed' );
@@ -275,7 +275,7 @@ define( require => {
         // show the reward dialog
         rewardDialog = rewardDialog || new RewardDialog( scene.scoreProperty.value, {
 
-          // Display the dialog in a location that does not obscure the challenge solution.
+          // Display the dialog in a position that does not obscure the challenge solution.
           // See https://github.com/phetsims/equality-explorer/issues/104
           layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
 

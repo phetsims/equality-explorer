@@ -33,7 +33,7 @@ define( require => {
     options = merge( {
       pickable: true, // whether the term is pickable (interactive)
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
-      toolboxLocation: null // {Vector2|null} location of the associated TermCreatorNode in the toolbox
+      toolboxPosition: null // {Vector2|null} position of the associated TermCreatorNode in the toolbox
     }, options );
 
     // @private the value that is significant for the purposes of determining sign and maxInteger limits.
@@ -50,8 +50,8 @@ define( require => {
     // @public (read-only) diameter of the term in the view, convenient to store in the model
     this.diameter = options.diameter;
 
-    // @public {Vector2|null} location of this term's corresponding TermCreatorNode in the toolbox
-    this.toolboxLocation = options.toolboxLocation;
+    // @public {Vector2|null} position of this term's corresponding TermCreatorNode in the toolbox
+    this.toolboxPosition = options.toolboxPosition;
 
     // @public whether the term is pickable (interactive)
     this.pickableProperty = new BooleanProperty( options.pickable );

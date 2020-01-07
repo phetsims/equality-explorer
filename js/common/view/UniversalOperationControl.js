@@ -231,14 +231,14 @@ define( require => {
 
       // operation on left side
       const leftOperationNode = new UniversalOperationNode( operation, {
-        centerX: scene.scale.leftPlate.locationProperty.value.x,
+        centerX: scene.scale.leftPlate.positionProperty.value.x,
         centerY: self.centerY
       } );
       animationLayer.addChild( leftOperationNode );
 
       // operation on right side
       const rightOperationNode = new UniversalOperationNode( operation, {
-        centerX: scene.scale.rightPlate.locationProperty.value.x,
+        centerX: scene.scale.rightPlate.positionProperty.value.x,
         centerY: self.centerY
       } );
       animationLayer.addChild( rightOperationNode );

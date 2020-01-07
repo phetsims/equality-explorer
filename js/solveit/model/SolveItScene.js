@@ -45,7 +45,7 @@ define( require => {
 
     OperationsScene.call( this, {
       debugName: 'level ' + level,
-      scaleLocation: new Vector2( 355, 500 ) // determined empirically
+      scalePosition: new Vector2( 355, 500 ) // determined empirically
     } );
 
     // @public (read-only)
@@ -61,13 +61,13 @@ define( require => {
       }
     } );
 
-    // Initialize locations of term creators. This is necessary because this screen has no TermToolboxes.
-    // Locations can be any value, since terms in this screen never return to a toolbox.
+    // Initialize positions of term creators. This is necessary because this screen has no TermToolboxes.
+    // Positions can be any value, since terms in this screen never return to a toolbox.
     // This is preferable to using a default value, since initialization order is important in other screens.
     // See for example frameStartedCallback in TermCreatorNode.
     this.allTermCreators.forEach( function( termCreator ) {
-      termCreator.positiveLocation = Vector2.ZERO;
-      termCreator.negativeLocation = Vector2.ZERO;
+      termCreator.positivePosition = Vector2.ZERO;
+      termCreator.negativePosition = Vector2.ZERO;
     } );
 
     // @public (read-only) {Property.<Challenge|null>} the current challenge, set by nextChallenge

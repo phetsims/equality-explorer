@@ -57,10 +57,10 @@ define( require => {
     // Deferred initialization, see set plate() for notes.
     this._plate = null;
 
-    // @private {Vector2} locations of the associated positive and negative TermCreatorNodes.
-    // Deferred initialization, see set positiveLocation() and set negativeLocation() for notes.
-    this._positiveLocation = null;
-    this._negativeLocation = null;
+    // @private {Vector2} positions of the associated positive and negative TermCreatorNodes.
+    // Deferred initialization, see set positivePosition() and set negativePosition() for notes.
+    this._positivePosition = null;
+    this._negativePosition = null;
 
     // @public (read-only) like terms will be combined in this cell in the plate's 2D grid
     this.likeTermsCell = options.likeTermsCell;
@@ -164,49 +164,49 @@ define( require => {
     },
 
     /**
-     * Initializes the location of the positive TermCreatorNode.
+     * Initializes the position of the positive TermCreatorNode.
      * The value is dependent on the view and is unknowable until the sim has loaded.
      * See TermCreatorNode.frameStartedCallback for initialization.
      * @param {Vector2} value
      * @public
      */
-    set positiveLocation( value ) {
-      assert && assert( !this._positiveLocation, 'attempted to initialize positiveLocation twice' );
-      assert && assert( value instanceof Vector2, 'invalid positiveLocation: ' + value );
-      this._positiveLocation = value;
+    set positivePosition( value ) {
+      assert && assert( !this._positivePosition, 'attempted to initialize positivePosition twice' );
+      assert && assert( value instanceof Vector2, 'invalid positivePosition: ' + value );
+      this._positivePosition = value;
     },
 
     /**
-     * Gets the location of the positive TermCreatorNode.
+     * Gets the position of the positive TermCreatorNode.
      * @returns {Vector2}
      * @public
      */
-    get positiveLocation() {
-      assert && assert( this._positiveLocation, 'attempt to access positiveLocation before it was initialized' );
-      return this._positiveLocation;
+    get positivePosition() {
+      assert && assert( this._positivePosition, 'attempt to access positivePosition before it was initialized' );
+      return this._positivePosition;
     },
 
     /**
-     * Initializes the location of the optional negative TermCreatorNode.
+     * Initializes the position of the optional negative TermCreatorNode.
      * The value is dependent on the view and is unknowable until the sim has loaded.
      * See TermCreatorNode.frameStartedCallback for initialization.
      * @param {Vector2} value
      * @public
      */
-    set negativeLocation( value ) {
-      assert && assert( !this._negativeLocation, 'attempted to initialize negativeLocation twice' );
-      assert && assert( value instanceof Vector2, 'invalid negativeLocation: ' + value );
-      this._negativeLocation = value;
+    set negativePosition( value ) {
+      assert && assert( !this._negativePosition, 'attempted to initialize negativePosition twice' );
+      assert && assert( value instanceof Vector2, 'invalid negativePosition: ' + value );
+      this._negativePosition = value;
     },
 
     /**
-     * Gets the location of the optional negative TermCreatorNode.
+     * Gets the position of the optional negative TermCreatorNode.
      * @returns {Vector2|null}
      * @public
      */
-    get negativeLocation() {
-      assert && assert( this._negativeLocation, 'attempt to access negativeLocation before it was initialized' );
-      return this._negativeLocation;
+    get negativePosition() {
+      assert && assert( this._negativePosition, 'attempt to access negativePosition before it was initialized' );
+      return this._negativePosition;
     },
 
     /**
@@ -233,25 +233,25 @@ define( require => {
     },
 
     /**
-     * Given a term, gets the location for an equivalent term on the opposite side of the scale.
+     * Given a term, gets the position for an equivalent term on the opposite side of the scale.
      * When locked, equivalent terms track the y coordinate of their associated term, but their
-     * x coordinate is offset by the distance between their associated toolbox locations.
+     * x coordinate is offset by the distance between their associated toolbox positions.
      * @param {Term} term
      * @returns {Vector2}
      * @public
      */
-    getEquivalentTermLocation: function( term ) {
+    getEquivalentTermPosition: function( term ) {
       assert && assert( this.isManagedTerm( term ), 'term is not managed by this TermCreator: ' + term );
 
       let xOffset;
       if ( term.significantValue.getValue() >= 0 ) {
-        xOffset = this.equivalentTermCreator.positiveLocation.x - this.positiveLocation.x;
+        xOffset = this.equivalentTermCreator.positivePosition.x - this.positivePosition.x;
       }
       else {
-        xOffset = this.equivalentTermCreator.negativeLocation.x - this.negativeLocation.x;
+        xOffset = this.equivalentTermCreator.negativePosition.x - this.negativePosition.x;
       }
 
-      return term.locationProperty.value.plusXY( xOffset, 0 );
+      return term.positionProperty.value.plusXY( xOffset, 0 );
     },
 
     /**
@@ -313,13 +313,13 @@ define( require => {
       // set the term's drag bounds
       term.dragBounds = this.dragBounds;
 
-      // set the term's toolboxLocation, so that it knows how to animate back to the toolbox
+      // set the term's toolboxPosition, so that it knows how to animate back to the toolbox
       if ( term.significantValue.getValue() >= 0 ) {
-        term.toolboxLocation = this.positiveLocation;
+        term.toolboxPosition = this.positivePosition;
       }
       else {
-        assert && assert( this.negativeLocation, 'negativeLocation has not been initialized' );
-        term.toolboxLocation = this.negativeLocation;
+        assert && assert( this.negativePosition, 'negativePosition has not been initialized' );
+        term.toolboxPosition = this.negativePosition;
       }
 
       // Clean up when the term is disposed.

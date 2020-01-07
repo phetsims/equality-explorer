@@ -150,12 +150,12 @@ define( require => {
 
       const self = this;
       const likeTermsCell = this.termCreator.likeTermsCell;
-      const cellLocation = this.plate.getLocationOfCell( likeTermsCell );
+      const cellPosition = this.plate.getPositionOfCell( likeTermsCell );
       const sumToZeroParent = this.termNode.getParent();
 
       self.term.pickableProperty.value = this.pickableWhileAnimating;
 
-      this.term.animateTo( cellLocation, {
+      this.term.animateTo( cellPosition, {
 
         // When the term reaches the cell ...
         animationCompletedCallback: function() {
@@ -304,12 +304,12 @@ define( require => {
             // Do sum-to-zero animations after both plates have moved.
             if ( sumToZeroNode ) {
               sumToZeroParent.addChild( sumToZeroNode );
-              sumToZeroNode.center = self.plate.getLocationOfCell( likeTermsCell );
+              sumToZeroNode.center = self.plate.getPositionOfCell( likeTermsCell );
               sumToZeroNode.startAnimation();
             }
             if ( oppositeSumToZeroNode ) {
               sumToZeroParent.addChild( oppositeSumToZeroNode );
-              oppositeSumToZeroNode.center = self.oppositePlate.getLocationOfCell( likeTermsCell );
+              oppositeSumToZeroNode.center = self.oppositePlate.getPositionOfCell( likeTermsCell );
               oppositeSumToZeroNode.startAnimation();
             }
           }

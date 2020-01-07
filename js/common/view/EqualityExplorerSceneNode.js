@@ -99,7 +99,7 @@ define( require => {
           'animateSumToZero should only be used when combineLikeTermsEnabled' );
 
         // determine where the cell that contained the term is currently located
-        const cellCenter = termCreator.plate.getLocationOfCell( termCreator.likeTermsCell );
+        const cellCenter = termCreator.plate.getPositionOfCell( termCreator.likeTermsCell );
 
         // display the animation in that cell
         const sumToZeroNode = new SumToZeroNode( {

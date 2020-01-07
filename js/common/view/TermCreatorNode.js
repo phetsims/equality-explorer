@@ -60,18 +60,18 @@ define( require => {
       }
     ) );
 
-    // Things to do after the sim has loaded, when this Node has a valid location.
+    // Things to do after the sim has loaded, when this Node has a valid position.
     var frameStartedCallback = function() {
 
-      // This Node's location
-      const location = termsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
+      // This Node's position
+      const position = termsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
 
-      // assign to termCreator's location
+      // assign to termCreator's position
       if ( options.sign === 1 ) {
-        termCreator.positiveLocation = location;
+        termCreator.positivePosition = position;
       }
       else {
-        termCreator.negativeLocation = location;
+        termCreator.negativePosition = position;
       }
 
       // Remove this function, so that it's called only once.

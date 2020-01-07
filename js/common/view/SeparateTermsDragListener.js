@@ -95,7 +95,7 @@ define( require => {
       else if ( this.oppositePlate.isFull() ) {
 
         // opposite plate is full, cannot create inverse term, show 'Oops' message
-        const thisIsLeft = ( this.termCreator.positiveLocation.x < this.equivalentTermCreator.positiveLocation.x );
+        const thisIsLeft = ( this.termCreator.positivePosition.x < this.equivalentTermCreator.positivePosition.x );
         const message = thisIsLeft ? rightSideFullString : leftSideFullString;
         const oopsDialog = new OopsDialog( message );
         oopsDialog.show();
@@ -110,8 +110,8 @@ define( require => {
         this.inverseTerm = this.equivalentTermCreator.createTerm( merge( this.term.copyOptions(), {
           sign: -1
         } ) );
-        const inverseTermLocation = this.termCreator.getEquivalentTermLocation( this.term );
-        const inverseCell = this.oppositePlate.getBestEmptyCell( inverseTermLocation );
+        const inverseTermPosition = this.termCreator.getEquivalentTermPosition( this.term );
+        const inverseCell = this.oppositePlate.getBestEmptyCell( inverseTermPosition );
         this.equivalentTermCreator.putTermOnPlate( this.inverseTerm, inverseCell );
 
         // if the inverse term is dragged, break the association to equivalentTerm
@@ -135,7 +135,7 @@ define( require => {
       assert && assert( this.termCreator.lockedProperty.value, 'endOpposite should only be called when lock is on' );
 
       // put equivalent term in an empty cell
-      const emptyCell = this.oppositePlate.getBestEmptyCell( this.equivalentTerm.locationProperty.value );
+      const emptyCell = this.oppositePlate.getBestEmptyCell( this.equivalentTerm.positionProperty.value );
       this.equivalentTermCreator.putTermOnPlate( this.equivalentTerm, emptyCell );
 
       // always null for this subtype, since terms on the opposite side don't combine
@@ -161,13 +161,13 @@ define( require => {
 
         const self = this;
 
-        // the target cell and its location
-        const cell = this.plate.getBestEmptyCell( this.term.locationProperty.value );
-        const cellLocation = this.plate.getLocationOfCell( cell );
+        // the target cell and its position
+        const cell = this.plate.getBestEmptyCell( this.term.positionProperty.value );
+        const cellPosition = this.plate.getPositionOfCell( cell );
 
         this.term.pickableProperty.value = this.pickableWhileAnimating;
 
-        this.term.animateTo( cellLocation, {
+        this.term.animateTo( cellPosition, {
 
           // On each animation step...
           animationStepCallback: function() {
@@ -185,7 +185,7 @@ define( require => {
             assert && assert( !( self.equivalentTerm && self.oppositePlate.isFull() ), 'opposite plate is full' );
 
             // Compute cell again, in case a term has been removed below the cell that we were animating to.
-            const cell = self.plate.getBestEmptyCell( self.term.locationProperty.value );
+            const cell = self.plate.getBestEmptyCell( self.term.positionProperty.value );
 
             // Put the term on the plate
             self.termCreator.putTermOnPlate( self.term, cell );
@@ -210,7 +210,7 @@ define( require => {
                 self.equivalentTerm = null;
 
                 // Put equivalent term on the opposite plate
-                const equivalentCell = self.oppositePlate.getBestEmptyCell( equivalentTerm.locationProperty.value );
+                const equivalentCell = self.oppositePlate.getBestEmptyCell( equivalentTerm.positionProperty.value );
                 self.equivalentTermCreator.putTermOnPlate( equivalentTerm, equivalentCell );
                 equivalentTerm.pickableProperty.value = true;
               }

@@ -43,7 +43,7 @@ define( require => {
 
     // @private Universal Operation, below Equation accordion box
     this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
-      centerX: scene.scale.location.x, // centered on the scale
+      centerX: scene.scale.position.x, // centered on the scale
       top: this.equationAccordionBox.bottom + 10
     } );
     this.addChild( this.universalOperationControl );

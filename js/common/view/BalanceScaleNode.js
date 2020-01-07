@@ -58,8 +58,8 @@ define( require => {
       disposeTermsNotOnScale: null // {function|null} call this to dispose of terms that are NOT on the scale
     }, options );
 
-    options.x = scale.location.x;
-    options.y = scale.location.y;
+    options.x = scale.position.x;
+    options.y = scale.position.y;
 
     // the fulcrum that the beam balances on
     const fulcrumTaper = FULCRUM_BOTTOM_WIDTH - FULCRUM_TOP_WIDTH;
@@ -121,12 +121,12 @@ define( require => {
 
     // left plate
     const leftPlateNode = new PlateNode( scale.leftPlate, {
-      center: beamNode.center // correct location will be set later in constructor
+      center: beamNode.center // correct position will be set later in constructor
     } );
 
     // right plate
     const rightPlateNode = new PlateNode( scale.rightPlate, {
-      center: beamNode.center // correct location will be set later in constructor
+      center: beamNode.center // correct position will be set later in constructor
     } );
 
     // pressing this button clears all terms from the scale
@@ -202,15 +202,15 @@ define( require => {
     } );
 
     // Move the left plate. unlink not required.
-    scale.leftPlate.locationProperty.link( function( location ) {
-      leftPlateNode.x = location.x - scale.location.x;
-      leftPlateNode.y = location.y - scale.location.y;
+    scale.leftPlate.positionProperty.link( function( position ) {
+      leftPlateNode.x = position.x - scale.position.x;
+      leftPlateNode.y = position.y - scale.position.y;
     } );
 
     // Move the right plate. unlink not required.
-    scale.rightPlate.locationProperty.link( function( location ) {
-      rightPlateNode.x = location.x - scale.location.x;
-      rightPlateNode.y = location.y - scale.location.y;
+    scale.rightPlate.positionProperty.link( function( position ) {
+      rightPlateNode.x = position.x - scale.position.x;
+      rightPlateNode.y = position.y - scale.position.y;
     } );
   }
 

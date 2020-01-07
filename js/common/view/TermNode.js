@@ -70,11 +70,11 @@ define( require => {
 
     Node.call( this, options );
 
-    // Move to location
-    const locationObserver = function( location ) {
-      self.center = location;
+    // Move to position
+    const positionObserver = function( position ) {
+      self.center = position;
     };
-    term.locationProperty.link( locationObserver ); // unlink required in dispose
+    term.positionProperty.link( positionObserver ); // unlink required in dispose
 
     // Pickable (interactivity)
     const pickableListener = function( pickable ) {
@@ -121,8 +121,8 @@ define( require => {
     // @private
     this.disposeTermNode = function() {
 
-      if ( term.locationProperty.hasListener( locationObserver ) ) {
-        term.locationProperty.unlink( locationObserver );
+      if ( term.positionProperty.hasListener( positionObserver ) ) {
+        term.positionProperty.unlink( positionObserver );
       }
 
       if ( term.pickableProperty.hasListener( pickableListener ) ) {

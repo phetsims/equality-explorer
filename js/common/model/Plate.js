@@ -48,7 +48,7 @@ define( require => {
     }, options );
 
     // @public
-    this.locationProperty = new Vector2Property( new Vector2( 0, 0 ) );
+    this.positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
     // @public (read-only)
     this.termCreators = termCreators;
@@ -62,7 +62,7 @@ define( require => {
     this.cellSize = options.cellSize;
 
     // @private
-    this.grid = new Grid( this.locationProperty, debugSide, {
+    this.grid = new Grid( this.positionProperty, debugSide, {
       rows: options.gridRows,
       columns: options.gridColumns,
       cellWidth: options.cellSize.width,
@@ -153,33 +153,33 @@ define( require => {
 
     /**
      * Gets the empty cell that would be the best fit for adding a term to the plate.
-     * @param {Vector2} location
+     * @param {Vector2} position
      * @returns {number|null} the cell's identifier, null if the grid is full
      * @public
      */
-    getBestEmptyCell: function( location ) {
-      return this.grid.getBestEmptyCell( location );
+    getBestEmptyCell: function( position ) {
+      return this.grid.getBestEmptyCell( position );
     },
 
     /**
-     * Gets the location of a specific cell, in global coordinates.
-     * A cell's location is in the center of the cell.
+     * Gets the position of a specific cell, in global coordinates.
+     * A cell's position is in the center of the cell.
      * @param {number} cell
      * @returns {Vector2}
      * @public
      */
-    getLocationOfCell: function( cell ) {
-      return this.grid.getLocationOfCell( cell );
+    getPositionOfCell: function( cell ) {
+      return this.grid.getPositionOfCell( cell );
     },
 
     /**
-     * Gets the term at a specified location in the grid.
-     * @param {Vector2} location
-     * @returns {Term|null} null if location is outside the grid, or the cell at location is empty
+     * Gets the term at a specified position in the grid.
+     * @param {Vector2} position
+     * @returns {Term|null} null if position is outside the grid, or the cell at position is empty
      * @public
      */
-    getTermAtLocation: function( location ) {
-      return this.grid.getTermAtLocation( location );
+    getTermAtPosition: function( position ) {
+      return this.grid.getTermAtPosition( position );
     },
 
     /**
