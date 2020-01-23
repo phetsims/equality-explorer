@@ -13,12 +13,7 @@ define( require => {
   // modules
   const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Range = require( 'DOT/Range' );
   const Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
-
-  // constants
-  const DEFAULT_RANGE = new Range( 1, 10 );
 
   /**
    * @param {string} symbol - symbolic name for the object type, not visible to the user
@@ -28,12 +23,6 @@ define( require => {
    * @constructor
    */
   function ObjectVariable( symbol, image, shadow, options ) {
-
-    options = merge( {
-
-      // Variable options
-      range: DEFAULT_RANGE
-    }, options );
 
     // @public (read-only)
     this.image = image;

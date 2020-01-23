@@ -39,7 +39,7 @@ define( require => {
     // @public the value of the variable
     this.valueProperty = new NumberProperty( options.value, {
       numberType: 'Integer',
-      range: this.xRange
+      range: this.range
     } );
   }
 
