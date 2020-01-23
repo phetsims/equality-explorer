@@ -29,6 +29,7 @@ define( require => {
       value: 1, // the initial value
       range: DEFAULT_RANGE // range of the value
     }, options );
+    assert && assert( options.range.contains( options.value ), `value ${options.value} is not in range ${options.range}` );
 
     // @public (read-only)
     this.symbol = symbol;
