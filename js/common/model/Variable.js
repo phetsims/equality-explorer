@@ -13,10 +13,6 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
-  const Range = require( 'DOT/Range' );
-
-  // constants
-  const DEFAULT_RANGE = new Range( -40, 40 );
 
   /**
    * @param {string} symbol - the variable's symbol, e.g. 'x'
@@ -27,9 +23,11 @@ define( require => {
 
     options = merge( {
       value: 1, // the initial value
-      range: DEFAULT_RANGE // range of the value
+      range: null // {Range|null} range of the value, null means unbounded
     }, options );
-    assert && assert( options.range.contains( options.value ), `value ${options.value} is not in range ${options.range}` );
+
+    assert && assert( !options.range || options.range.contains( options.value ),
+      `value ${options.value} is not in range ${options.range}` );
 
     // @public (read-only)
     this.symbol = symbol;

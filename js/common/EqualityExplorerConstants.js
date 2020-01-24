@@ -15,6 +15,7 @@ define( require => {
   const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Range = require( 'DOT/Range' );
 
   // constants
   const PANEL_CORNER_RADIUS = 3;
@@ -43,6 +44,10 @@ define( require => {
     SMALL_TERM_DIAMETER: 32, // diameter of small terms, like those in the TermsToolbox
     BIG_TERM_DIAMETER: 100, // diameter of big terms, like those on the scale in the Operations screen
     SHADOW_OPACITY: 0.4, // opacity of the shadow that appears on terms, 0-1 (transparent-opaque)
+
+    // ranges
+    VARIABLE_RANGE: new Range( -40, 40 ), // when x, y are user-controlled
+    OPERAND_RANGE: new Range( -10, 10 ),
 
     // universal operators, in the order that they appear in the operator picker
     OPERATORS: [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ],

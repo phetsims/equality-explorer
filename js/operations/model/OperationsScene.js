@@ -21,7 +21,6 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
-  const Range = require( 'DOT/Range' );
   const Snapshot = require( 'EQUALITY_EXPLORER/common/model/Snapshot' );
   const StringProperty = require( 'AXON/StringProperty' );
   const TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
@@ -34,7 +33,7 @@ define( require => {
   const xString = require( 'string!EQUALITY_EXPLORER/x' );
 
   // constants
-  const OPERAND_RANGE = new Range( -10, 10 );
+  const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;
   const ICON_SIZE = new Dimension2(
     EqualityExplorerConstants.BIG_TERM_DIAMETER + 10,
     EqualityExplorerConstants.BIG_TERM_DIAMETER );
@@ -46,6 +45,9 @@ define( require => {
 
     options = merge( {
 
+      // Range of the variables
+      variableRange: EqualityExplorerConstants.VARIABLE_RANGE,
+
       // EqualityExplorerScene options
       debugName: 'operations',
       gridRows: 1,
@@ -54,7 +56,9 @@ define( require => {
     }, options );
 
     // @protected
-    this.xVariable = new Variable( xString );
+    this.xVariable = new Variable( xString, {
+      range: options.variableRange
+    } );
 
     assert && assert( !options.variables, 'OperationsScene sets variables' );
     options.variables = [ this.xVariable ];

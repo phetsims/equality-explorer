@@ -80,6 +80,7 @@ define( require => {
       } );
 
       // NumberPicker.dispose not needed, VariablesAccordionBox exists for lifetime of the sim
+      assert && assert( variable.range, 'Variable must have range' );
       const valuePicker = new NumberPicker( variable.valueProperty, new Property( variable.range ), {
         color: 'black',
         font: new PhetFont( options.fontSize ),

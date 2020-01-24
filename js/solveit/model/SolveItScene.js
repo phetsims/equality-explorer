@@ -45,7 +45,8 @@ define( require => {
 
     OperationsScene.call( this, {
       debugName: 'level ' + level,
-      scalePosition: new Vector2( 355, 500 ) // determined empirically
+      scalePosition: new Vector2( 355, 500 ), // determined empirically
+      variableRange: null // because variables are not user-controlled in this scene
     } );
 
     // @public (read-only)
