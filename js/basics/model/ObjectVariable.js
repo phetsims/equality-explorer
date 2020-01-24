@@ -1,4 +1,4 @@
-// Copyright 2018-2019, University of Colorado Boulder
+// Copyright 2018-2020, University of Colorado Boulder
 
 /**
  * Describes a variable associated with a type of real-world object (sphere, apple, coin, dog, ...)
