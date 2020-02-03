@@ -570,7 +570,7 @@ define( require => {
         const term = termsOnPlate[ i ];
         snapshot.push( {
           cell: this.plate.getCellForTerm( term ), // {number} cell that the Term occupies
-          termOptions: term.createSnapshot() // {Object} options to Term's constructor, specific to subtype
+          termOptions: term.createSnapshot() // options to Term's constructor, specific to subtype
         } );
       }
       return snapshot;
