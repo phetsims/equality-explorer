@@ -7,31 +7,28 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import Variable from '../../common/model/Variable.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
-  /**
-   * @param {string} symbol - symbolic name for the object type, not visible to the user
-   * @param {HTMLImageElement} image - image that represents the object
-   * @param {HTMLImageElement} shadow - shadow shown while dragging
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ObjectVariable( symbol, image, shadow, options ) {
+/**
+ * @param {string} symbol - symbolic name for the object type, not visible to the user
+ * @param {HTMLImageElement} image - image that represents the object
+ * @param {HTMLImageElement} shadow - shadow shown while dragging
+ * @param {Object} [options]
+ * @constructor
+ */
+function ObjectVariable( symbol, image, shadow, options ) {
 
-    // @public (read-only)
-    this.image = image;
-    this.shadow = shadow;
+  // @public (read-only)
+  this.image = image;
+  this.shadow = shadow;
 
-    Variable.call( this, symbol, options );
-  }
+  Variable.call( this, symbol, options );
+}
 
-  equalityExplorer.register( 'ObjectVariable', ObjectVariable );
+equalityExplorer.register( 'ObjectVariable', ObjectVariable );
 
-  return inherit( Variable, ObjectVariable );
-} );
+inherit( Variable, ObjectVariable );
+export default ObjectVariable;

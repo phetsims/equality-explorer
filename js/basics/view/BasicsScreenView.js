@@ -5,45 +5,41 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BasicsSceneNode = require( 'EQUALITY_EXPLORER/basics/view/BasicsSceneNode' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const EqualityExplorerScreenView = require( 'EQUALITY_EXPLORER/common/view/EqualityExplorerScreenView' );
-  const inherit = require( 'PHET_CORE/inherit' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import BasicsSceneNode from './BasicsSceneNode.js';
+
+/**
+ * @param {BasicsModel} model
+ * @constructor
+ */
+function BasicsScreenView( model ) {
+  EqualityExplorerScreenView.call( this, model, {
+    hasNegativeTermsInToolbox: false // only positive terms in the toolbox
+  } );
+}
+
+equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );
+
+export default inherit( EqualityExplorerScreenView, BasicsScreenView, {
 
   /**
-   * @param {BasicsModel} model
-   * @constructor
+   * Creates the Node for this scene.
+   * @param {EqualityExplorerScene} scene
+   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
+   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
+   * @param {Bounds2} layoutBounds
+   * @param {Object} [options]
+   * @returns {Node}
+   * @protected
+   * @override
    */
-  function BasicsScreenView( model ) {
-    EqualityExplorerScreenView.call( this, model, {
-      hasNegativeTermsInToolbox: false // only positive terms in the toolbox
-    } );
+  createSceneNode: function( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                             snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+    return new BasicsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
   }
-
-  equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );
-
-  return inherit( EqualityExplorerScreenView, BasicsScreenView, {
-
-    /**
-     * Creates the Node for this scene.
-     * @param {EqualityExplorerScene} scene
-     * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
-     * @param {BooleanProperty} equationAccordionBoxExpandedProperty
-     * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
-     * @param {Bounds2} layoutBounds
-     * @param {Object} [options]
-     * @returns {Node}
-     * @protected
-     * @override
-     */
-    createSceneNode: function( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                               snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
-      return new BasicsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-        snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
-    }
-  } );
 } );

@@ -5,35 +5,32 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Challenge = require( 'EQUALITY_EXPLORER/solveit/model/Challenge' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  const Fraction = require( 'PHETCOMMON/model/Fraction' );
-  const inherit = require( 'PHET_CORE/inherit' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import Challenge from './Challenge.js';
 
-  /**
-   * @constructor
-   */
-  function DebugChallenge() {
+/**
+ * @constructor
+ */
+function DebugChallenge() {
 
-    const values = EqualityExplorerQueryParameters.challenge;
-    assert && assert( values, 'query parameter challenge is not set' );
+  const values = EqualityExplorerQueryParameters.challenge;
+  assert && assert( values, 'query parameter challenge is not set' );
 
-    let i = 0;
-    const a = new Fraction( values[ i++ ], values[ i++ ] );
-    const b = new Fraction( values[ i++ ], values[ i++ ] );
-    const m = new Fraction( values[ i++ ], values[ i++ ] );
-    const n = new Fraction( values[ i++ ], values[ i++ ] );
-    const x = values[ i++ ];
+  let i = 0;
+  const a = new Fraction( values[ i++ ], values[ i++ ] );
+  const b = new Fraction( values[ i++ ], values[ i++ ] );
+  const m = new Fraction( values[ i++ ], values[ i++ ] );
+  const n = new Fraction( values[ i++ ], values[ i++ ] );
+  const x = values[ i++ ];
 
-    Challenge.call( this, x, a, b, m, n, '?challenge' );
-  }
+  Challenge.call( this, x, a, b, m, n, '?challenge' );
+}
 
-  equalityExplorer.register( 'DebugChallenge', DebugChallenge );
+equalityExplorer.register( 'DebugChallenge', DebugChallenge );
 
-  return inherit( Challenge, DebugChallenge );
-} );
+inherit( Challenge, DebugChallenge );
+export default DebugChallenge;

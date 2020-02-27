@@ -9,185 +9,181 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const DerivedProperty = require( 'AXON/DerivedProperty' );
-  const Dimension2 = require( 'DOT/Dimension2' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Plate = require( 'EQUALITY_EXPLORER/common/model/Plate' );
-  const Utils = require( 'DOT/Utils' );
-  const Vector2 = require( 'DOT/Vector2' );
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Dimension2 from '../../../../dot/js/Dimension2.js';
+import Utils from '../../../../dot/js/Utils.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import Plate from './Plate.js';
 
-  /**
-   * @param {TermCreator[]} leftTermCreators - creators for terms on left plate
-   * @param {TermCreator[]} rightTermCreators - creators for term on right plate
-   * @param {Object} [options]
-   * @constructor
-   */
-  function BalanceScale( leftTermCreators, rightTermCreators, options ) {
+/**
+ * @param {TermCreator[]} leftTermCreators - creators for terms on left plate
+ * @param {TermCreator[]} rightTermCreators - creators for term on right plate
+ * @param {Object} [options]
+ * @constructor
+ */
+function BalanceScale( leftTermCreators, rightTermCreators, options ) {
 
-    const self = this;
+  const self = this;
 
-    options = merge( {
+  options = merge( {
 
-      position: Vector2.ZERO, // position of the point where the beam balances on the fulcrum
-      beamWidth: 450, // width of the balance beam
-      maxAngle: Utils.toRadians( 22 ), // max angle of the scale, in radians
-      maxWeight: 30, // weight at which a plate 'bottoms out'
+    position: Vector2.ZERO, // position of the point where the beam balances on the fulcrum
+    beamWidth: 450, // width of the balance beam
+    maxAngle: Utils.toRadians( 22 ), // max angle of the scale, in radians
+    maxWeight: 30, // weight at which a plate 'bottoms out'
 
-      plateSupportHeight: 70, // height of vertical support that connects plate to beam
-      plateDiameter: 300, // diameter of the plates
-      plateXInset: 45, // inset of the plates from the ends of the beam
+    plateSupportHeight: 70, // height of vertical support that connects plate to beam
+    plateDiameter: 300, // diameter of the plates
+    plateXInset: 45, // inset of the plates from the ends of the beam
 
-      // options related to the plate's 2D grid
-      gridRows: 6, // rows in the grid
-      gridColumns: 6, // columns in the grid
-      gridXMargin: 2, // horizontal space between stacks of terms
-      gridYMargin: 0,  // vertical space between terms in each stack
-      iconSize: null // {Dimension2|null} size of icons, computed if null
+    // options related to the plate's 2D grid
+    gridRows: 6, // rows in the grid
+    gridColumns: 6, // columns in the grid
+    gridXMargin: 2, // horizontal space between stacks of terms
+    gridYMargin: 0,  // vertical space between terms in each stack
+    iconSize: null // {Dimension2|null} size of icons, computed if null
 
-    }, options );
+  }, options );
 
-    assert && assert( options.beamWidth - ( 2 * options.plateXInset ) > options.plateDiameter, 'plates will overlap' );
+  assert && assert( options.beamWidth - ( 2 * options.plateXInset ) > options.plateDiameter, 'plates will overlap' );
 
-    // @public (read-only)
-    this.position = options.position;
+  // @public (read-only)
+  this.position = options.position;
 
-    // @public (read-only)
-    this.beamWidth = options.beamWidth;
-    this.maxAngle = options.maxAngle;
+  // @public (read-only)
+  this.beamWidth = options.beamWidth;
+  this.maxAngle = options.maxAngle;
 
-    // @private
-    this.leftTermCreators = leftTermCreators;
-    this.rightTermCreators = rightTermCreators;
+  // @private
+  this.leftTermCreators = leftTermCreators;
+  this.rightTermCreators = rightTermCreators;
 
-    // {TermCreator[]} all TermCreator instances
-    const termCreators = leftTermCreators.concat( rightTermCreators );
+  // {TermCreator[]} all TermCreator instances
+  const termCreators = leftTermCreators.concat( rightTermCreators );
 
-    // Compute the maximum width and height of all term icons
-    if ( !options.iconSize ) {
-      let maxIconWidth = 0;
-      let maxIconHeight = 0;
-      termCreators.forEach( function( termCreator ) {
-        maxIconWidth = Math.max( maxIconWidth, termCreator.createIcon().width );
-        maxIconHeight = Math.max( maxIconHeight, termCreator.createIcon().height );
-      } );
-      options.iconSize = new Dimension2( maxIconWidth, maxIconHeight );
-    }
-
-    // size of each cell in the grid
-    const cellSize = new Dimension2(
-      options.iconSize.width + ( 2 * options.gridXMargin ),
-      options.iconSize.height + ( 2 * options.gridYMargin ) );
-    assert && assert( options.gridColumns * cellSize.width <= options.plateDiameter, 'grid is wider than plate' );
-
-    // options that apply to both plates
-    const plateOptions = {
-      supportHeight: options.plateSupportHeight,
-      diameter: options.plateDiameter,
-      gridRows: options.gridRows,
-      gridColumns: options.gridColumns,
-      cellSize: cellSize
-    };
-
-    // @public (read-only)
-    this.leftPlate = new Plate( leftTermCreators, 'left', plateOptions );
-    this.rightPlate = new Plate( rightTermCreators, 'right', plateOptions );
-
-    // @public {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
-    // dispose not required.
-    this.angleProperty = new DerivedProperty(
-      [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
-      function( leftWeight, rightWeight ) {
-
-        // compute the weight difference between the 2 plates
-        let weightDelta = rightWeight.minus( leftWeight ).getValue();
-
-        // constrain to maxWeight so the scale bottoms out
-        if ( weightDelta > options.maxWeight ) {
-          weightDelta = options.maxWeight;
-        }
-        else if ( weightDelta < -options.maxWeight ) {
-          weightDelta = -options.maxWeight;
-        }
-
-        const angle = ( weightDelta / options.maxWeight ) * options.maxAngle;
-        assert && assert( Math.abs( angle ) <= options.maxAngle, 'angle out of range: ' + angle );
-        return angle;
-      }, {
-        isValidValue: function( value ) {
-          return typeof value === 'number';
-        }
-      } );
-
-    // Move the plates when the angle changes. unlink not required.
-    this.angleProperty.link( function( angle ) {
-
-      // hoist reusable vars
-      let dx = 0;
-      let dy = 0;
-
-      // move the right plate
-      let rightPosition = null;
-      const absXInset = Math.abs( options.plateXInset );
-      if ( angle === 0 ) {
-        rightPosition = new Vector2( self.position.x + ( self.beamWidth / 2 ) - absXInset,
-          self.position.y - options.plateSupportHeight );
-      }
-      else {
-        const hypotenuse = ( self.beamWidth / 2 ) - absXInset;
-        dx = Math.cos( angle ) * hypotenuse;
-        dy = Math.sin( angle ) * hypotenuse;
-        rightPosition = new Vector2( self.position.x + dx, self.position.y + dy - options.plateSupportHeight );
-      }
-      self.rightPlate.positionProperty.value = rightPosition;
-
-      // move the left plate, relative to the right plate
-      dx = rightPosition.x - self.position.x;
-      dy = ( rightPosition.y + options.plateSupportHeight ) - self.position.y;
-      self.leftPlate.positionProperty.value =
-        new Vector2( self.position.x - dx, self.position.y - dy - options.plateSupportHeight );
+  // Compute the maximum width and height of all term icons
+  if ( !options.iconSize ) {
+    let maxIconWidth = 0;
+    let maxIconHeight = 0;
+    termCreators.forEach( function( termCreator ) {
+      maxIconWidth = Math.max( maxIconWidth, termCreator.createIcon().width );
+      maxIconHeight = Math.max( maxIconHeight, termCreator.createIcon().height );
     } );
-
-    // @public {DerivedProperty.<number>} total number of terms on the scale
-    // dispose not required.
-    this.numberOfTermsProperty = new DerivedProperty(
-      [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
-      function( leftNumberOfTerms, rightNumberOfTerms ) {
-        return leftNumberOfTerms + rightNumberOfTerms;
-      }, {
-        isValidValue: function( value ) {
-          return Utils.isInteger( value );
-        }
-      } );
+    options.iconSize = new Dimension2( maxIconWidth, maxIconHeight );
   }
 
-  equalityExplorer.register( 'BalanceScale', BalanceScale );
+  // size of each cell in the grid
+  const cellSize = new Dimension2(
+    options.iconSize.width + ( 2 * options.gridXMargin ),
+    options.iconSize.height + ( 2 * options.gridYMargin ) );
+  assert && assert( options.gridColumns * cellSize.width <= options.plateDiameter, 'grid is wider than plate' );
 
-  return inherit( Object, BalanceScale, {
+  // options that apply to both plates
+  const plateOptions = {
+    supportHeight: options.plateSupportHeight,
+    diameter: options.plateDiameter,
+    gridRows: options.gridRows,
+    gridColumns: options.gridColumns,
+    cellSize: cellSize
+  };
 
-    /**
-     * Organizes terms on the scale, grouping like terms together.
-     * @public
-     */
-    organize: function() {
-      this.leftPlate.organize();
-      this.rightPlate.organize();
-    },
+  // @public (read-only)
+  this.leftPlate = new Plate( leftTermCreators, 'left', plateOptions );
+  this.rightPlate = new Plate( rightTermCreators, 'right', plateOptions );
 
-    /**
-     * Clears the scale, by disposing of all terms that are on the scale.
-     * @public
-     */
-    clear: function() {
-      const termCreators = this.leftTermCreators.concat( this.rightTermCreators );
-      termCreators.forEach( function( termCreator ) {
-        termCreator.disposeTermsOnPlate();
-      } );
+  // @public {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
+  // dispose not required.
+  this.angleProperty = new DerivedProperty(
+    [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
+    function( leftWeight, rightWeight ) {
+
+      // compute the weight difference between the 2 plates
+      let weightDelta = rightWeight.minus( leftWeight ).getValue();
+
+      // constrain to maxWeight so the scale bottoms out
+      if ( weightDelta > options.maxWeight ) {
+        weightDelta = options.maxWeight;
+      }
+      else if ( weightDelta < -options.maxWeight ) {
+        weightDelta = -options.maxWeight;
+      }
+
+      const angle = ( weightDelta / options.maxWeight ) * options.maxAngle;
+      assert && assert( Math.abs( angle ) <= options.maxAngle, 'angle out of range: ' + angle );
+      return angle;
+    }, {
+      isValidValue: function( value ) {
+        return typeof value === 'number';
+      }
+    } );
+
+  // Move the plates when the angle changes. unlink not required.
+  this.angleProperty.link( function( angle ) {
+
+    // hoist reusable vars
+    let dx = 0;
+    let dy = 0;
+
+    // move the right plate
+    let rightPosition = null;
+    const absXInset = Math.abs( options.plateXInset );
+    if ( angle === 0 ) {
+      rightPosition = new Vector2( self.position.x + ( self.beamWidth / 2 ) - absXInset,
+        self.position.y - options.plateSupportHeight );
     }
+    else {
+      const hypotenuse = ( self.beamWidth / 2 ) - absXInset;
+      dx = Math.cos( angle ) * hypotenuse;
+      dy = Math.sin( angle ) * hypotenuse;
+      rightPosition = new Vector2( self.position.x + dx, self.position.y + dy - options.plateSupportHeight );
+    }
+    self.rightPlate.positionProperty.value = rightPosition;
+
+    // move the left plate, relative to the right plate
+    dx = rightPosition.x - self.position.x;
+    dy = ( rightPosition.y + options.plateSupportHeight ) - self.position.y;
+    self.leftPlate.positionProperty.value =
+      new Vector2( self.position.x - dx, self.position.y - dy - options.plateSupportHeight );
   } );
+
+  // @public {DerivedProperty.<number>} total number of terms on the scale
+  // dispose not required.
+  this.numberOfTermsProperty = new DerivedProperty(
+    [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
+    function( leftNumberOfTerms, rightNumberOfTerms ) {
+      return leftNumberOfTerms + rightNumberOfTerms;
+    }, {
+      isValidValue: function( value ) {
+        return Utils.isInteger( value );
+      }
+    } );
+}
+
+equalityExplorer.register( 'BalanceScale', BalanceScale );
+
+export default inherit( Object, BalanceScale, {
+
+  /**
+   * Organizes terms on the scale, grouping like terms together.
+   * @public
+   */
+  organize: function() {
+    this.leftPlate.organize();
+    this.rightPlate.organize();
+  },
+
+  /**
+   * Clears the scale, by disposing of all terms that are on the scale.
+   * @public
+   */
+  clear: function() {
+    const termCreators = this.leftTermCreators.concat( this.rightTermCreators );
+    termCreators.forEach( function( termCreator ) {
+      termCreator.disposeTermsOnPlate();
+    } );
+  }
 } );

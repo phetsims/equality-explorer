@@ -5,208 +5,203 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const ConstantTerm = require( 'EQUALITY_EXPLORER/common/model/ConstantTerm' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  const Fraction = require( 'PHETCOMMON/model/Fraction' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import ConstantTerm from './ConstantTerm.js';
+import Term from './Term.js';
+
+/**
+ * @param {Variable} variable - the variable for this term, e.g. 'x'
+ * @param {Object} [options]
+ * @constructor
+ */
+function VariableTerm( variable, options ) {
+
+  options = merge( {
+    coefficient: EqualityExplorerConstants.DEFAULT_COEFFICIENT
+  }, options );
+
+  assert && assert( options.coefficient instanceof Fraction, 'invalid coefficient: ' + options.coefficient );
+  assert && assert( options.coefficient.isReduced(), 'coefficient must be reduced: ' + options.coefficient );
+  assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
+
+  // @public (read-only) {Fraction}
+  this.coefficient = options.coefficient;
+
+  // @public (read-only)
+  this.variable = variable;
+
+  Term.call( this, this.coefficient, options );
+}
+
+equalityExplorer.register( 'VariableTerm', VariableTerm );
+
+export default inherit( Term, VariableTerm, {
 
   /**
-   * @param {Variable} variable - the variable for this term, e.g. 'x'
-   * @param {Object} [options]
-   * @constructor
+   * For debugging only. Do not rely on the format of toString.
+   * @returns {string}
+   * @public
    */
-  function VariableTerm( variable, options ) {
+  toString: function() {
+    return 'VariableTerm: ' + this.coefficient + ' ' + this.variable;
+  },
 
-    options = merge( {
-      coefficient: EqualityExplorerConstants.DEFAULT_COEFFICIENT
-    }, options );
+  /**
+   * Creates the options that would be needed to instantiate a copy of this object.
+   * @returns {Object}
+   * @protected
+   * @override
+   */
+  copyOptions: function() {
+    const supertypeOptions = Term.prototype.copyOptions.call( this );
+    return merge( {}, supertypeOptions, {
+      coefficient: this.coefficient
+    } );
+  },
 
-    assert && assert( options.coefficient instanceof Fraction, 'invalid coefficient: ' + options.coefficient );
-    assert && assert( options.coefficient.isReduced(), 'coefficient must be reduced: ' + options.coefficient );
-    assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
+  /**
+   * Adds a variable term to this term to create a new term.
+   * @param {VariableTerm} term
+   * @param {Object} [options] - same as constructor
+   * @returns {VariableTerm}
+   */
+  plus: function( term, options ) {
+    assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
+    return this.copy( merge( {
+      coefficient: this.coefficient.plus( term.coefficient ).reduced()
+    }, options ) );
+  },
 
-    // @public (read-only) {Fraction}
-    this.coefficient = options.coefficient;
+  /**
+   * Subtracts a variable term from this term to create a new term.
+   * @param {VariableTerm} term
+   * @param {Object} [options] - same as constructor
+   * @returns {VariableTerm}
+   */
+  minus: function( term, options ) {
+    assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
+    return this.copy( merge( {
+      coefficient: this.coefficient.minus( term.coefficient ).reduced()
+    }, options ) );
+  },
 
-    // @public (read-only)
-    this.variable = variable;
+  /**
+   * Multiplies this term by a constant term to create a new term.
+   * @param {ConstantTerm} term
+   * @param {Object} [options] - same as constructor
+   * @returns {VariableTerm}
+   */
+  times: function( term, options ) {
+    assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
+    return this.copy( merge( {
+      coefficient: this.coefficient.times( term.constantValue ).reduced()
+    }, options ) );
+  },
 
-    Term.call( this, this.coefficient, options );
-  }
+  /**
+   * Divides this term by a constant term to create a new term.
+   * @param {ConstantTerm} term
+   * @param {Object} [options] - same as constructor
+   * @returns {VariableTerm}
+   */
+  divided: function( term, options ) {
+    assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
+    assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
+    return this.copy( merge( {
+      coefficient: this.coefficient.divided( term.constantValue ).reduced()
+    }, options ) );
+  },
 
-  equalityExplorer.register( 'VariableTerm', VariableTerm );
+  //-------------------------------------------------------------------------------------------------
+  // Below here is the implementation of the Term API
+  //-------------------------------------------------------------------------------------------------
 
-  return inherit( Term, VariableTerm, {
+  /**
+   * Creates a copy of this term, with modifications through options.
+   * @param {Object} [options] - same as constructor options
+   * @returns {VariableTerm}
+   * @public
+   * @override
+   */
+  copy: function( options ) {
+    return new VariableTerm( this.variable, merge( this.copyOptions(), options ) );
+  },
 
-    /**
-     * For debugging only. Do not rely on the format of toString.
-     * @returns {string}
-     * @public
-     */
-    toString: function() {
-      return 'VariableTerm: ' + this.coefficient + ' ' + this.variable;
-    },
+  /**
+   * Gets the weight of this term.
+   * @returns {Fraction}
+   * @public
+   * @override
+   */
+  get weight() {
+    return this.coefficient.timesInteger( this.variable.valueProperty.value ).reduced();
+  },
 
-    /**
-     * Creates the options that would be needed to instantiate a copy of this object.
-     * @returns {Object}
-     * @protected
-     * @override
-     */
-    copyOptions: function() {
-      const supertypeOptions = Term.prototype.copyOptions.call( this );
-      return merge( {}, supertypeOptions, {
-        coefficient: this.coefficient
-      } );
-    },
+  /**
+   * Are this term and the specified term 'like terms'?
+   * Variable terms are 'like' if they are associated with the same variable.
+   * @param {Term} term
+   * @returns {boolean}
+   * @public
+   * @override
+   */
+  isLikeTerm: function( term ) {
+    return ( term instanceof VariableTerm ) && ( term.variable === this.variable );
+  },
 
-    /**
-     * Adds a variable term to this term to create a new term.
-     * @param {VariableTerm} term
-     * @param {Object} [options] - same as constructor
-     * @returns {VariableTerm}
-     */
-    plus: function( term, options ) {
-      assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
-      return this.copy( merge( {
-        coefficient: this.coefficient.plus( term.coefficient ).reduced()
-      }, options ) );
-    },
+  /**
+   * Creates a snapshot of this term.
+   * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
+   * @returns {Object}
+   * @public
+   * @override
+   */
+  createSnapshot: function() {
+    const supertypeOptions = Term.prototype.createSnapshot.call( this );
+    return merge( {}, supertypeOptions, {
+      coefficient: this.coefficient
+    } );
+  },
 
-    /**
-     * Subtracts a variable term from this term to create a new term.
-     * @param {VariableTerm} term
-     * @param {Object} [options] - same as constructor
-     * @returns {VariableTerm}
-     */
-    minus: function( term, options ) {
-      assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
-      return this.copy( merge( {
-        coefficient: this.coefficient.minus( term.coefficient ).reduced()
-      }, options ) );
-    },
+  /**
+   * Applies an operation to this term, resulting in a new term.
+   * @param {UniversalOperation} operation
+   * @param {Object} [options] - same as constructor
+   * @returns {VariableTerm|null} - null if the operation is not applicable to this term.
+   * @public
+   * @override
+   */
+  applyOperation: function( operation, options ) {
 
-    /**
-     * Multiplies this term by a constant term to create a new term.
-     * @param {ConstantTerm} term
-     * @param {Object} [options] - same as constructor
-     * @returns {VariableTerm}
-     */
-    times: function( term, options ) {
-      assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
-      return this.copy( merge( {
-        coefficient: this.coefficient.times( term.constantValue ).reduced()
-      }, options ) );
-    },
+    let term = null;
 
-    /**
-     * Divides this term by a constant term to create a new term.
-     * @param {ConstantTerm} term
-     * @param {Object} [options] - same as constructor
-     * @returns {VariableTerm}
-     */
-    divided: function( term, options ) {
-      assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
-      assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-      return this.copy( merge( {
-        coefficient: this.coefficient.divided( term.constantValue ).reduced()
-      }, options ) );
-    },
+    if ( operation.operand instanceof VariableTerm ) {
 
-    //-------------------------------------------------------------------------------------------------
-    // Below here is the implementation of the Term API
-    //-------------------------------------------------------------------------------------------------
-
-    /**
-     * Creates a copy of this term, with modifications through options.
-     * @param {Object} [options] - same as constructor options
-     * @returns {VariableTerm}
-     * @public
-     * @override
-     */
-    copy: function( options ) {
-      return new VariableTerm( this.variable, merge( this.copyOptions(), options ) );
-    },
-
-    /**
-     * Gets the weight of this term.
-     * @returns {Fraction}
-     * @public
-     * @override
-     */
-    get weight() {
-      return this.coefficient.timesInteger( this.variable.valueProperty.value ).reduced();
-    },
-
-    /**
-     * Are this term and the specified term 'like terms'?
-     * Variable terms are 'like' if they are associated with the same variable.
-     * @param {Term} term
-     * @returns {boolean}
-     * @public
-     * @override
-     */
-    isLikeTerm: function( term ) {
-      return ( term instanceof VariableTerm ) && ( term.variable === this.variable );
-    },
-
-    /**
-     * Creates a snapshot of this term.
-     * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
-     * @returns {Object}
-     * @public
-     * @override
-     */
-    createSnapshot: function() {
-      const supertypeOptions = Term.prototype.createSnapshot.call( this );
-      return merge( {}, supertypeOptions, {
-        coefficient: this.coefficient
-      } );
-    },
-
-    /**
-     * Applies an operation to this term, resulting in a new term.
-     * @param {UniversalOperation} operation
-     * @param {Object} [options] - same as constructor
-     * @returns {VariableTerm|null} - null if the operation is not applicable to this term.
-     * @public
-     * @override
-     */
-    applyOperation: function( operation, options ) {
-
-      let term = null;
-
-      if ( operation.operand instanceof VariableTerm ) {
-
-        // plus or minus a constant
-        if ( operation.operator === MathSymbols.PLUS ) {
-          term = this.plus( operation.operand, options );
-        }
-        else if ( operation.operator === MathSymbols.MINUS ) {
-          term = this.minus( operation.operand, options );
-        }
+      // plus or minus a constant
+      if ( operation.operator === MathSymbols.PLUS ) {
+        term = this.plus( operation.operand, options );
       }
-      else if ( operation.operand instanceof ConstantTerm ) {
-
-        // times or divide by a variable
-        if ( operation.operator === MathSymbols.TIMES ) {
-          term = this.times( operation.operand, options );
-        }
-        else if ( operation.operator === MathSymbols.DIVIDE ) {
-          term = this.divided( operation.operand, options );
-        }
+      else if ( operation.operator === MathSymbols.MINUS ) {
+        term = this.minus( operation.operand, options );
       }
-
-      return term;
     }
-  } );
+    else if ( operation.operand instanceof ConstantTerm ) {
+
+      // times or divide by a variable
+      if ( operation.operator === MathSymbols.TIMES ) {
+        term = this.times( operation.operand, options );
+      }
+      else if ( operation.operator === MathSymbols.DIVIDE ) {
+        term = this.divided( operation.operand, options );
+      }
+    }
+
+    return term;
+  }
 } );
- 

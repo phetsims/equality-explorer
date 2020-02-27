@@ -6,59 +6,56 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Dialog = require( 'SUN/Dialog' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const RichText = require( 'SCENERY/nodes/RichText' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const VBox = require( 'SCENERY/nodes/VBox' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import RichText from '../../../../scenery/js/nodes/RichText.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import VBox from '../../../../scenery/js/nodes/VBox.js';
+import Dialog from '../../../../sun/js/Dialog.js';
+import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
-  // strings
-  const levelsString = require( 'string!EQUALITY_EXPLORER/levels' );
+const levelsString = equalityExplorerStrings.levels;
 
-  // constants
-  const TITLE_FONT = new PhetFont( 24 );
-  const DESCRIPTION_FONT = new PhetFont( 18 );
-  const MAX_CONTENT_WIDTH = 500;
+// constants
+const TITLE_FONT = new PhetFont( 24 );
+const DESCRIPTION_FONT = new PhetFont( 18 );
+const MAX_CONTENT_WIDTH = 500;
 
-  /**
-   * @param {string[]} levelDescriptions
-   * @constructor
-   */
-  function InfoDialog( levelDescriptions ) {
+/**
+ * @param {string[]} levelDescriptions
+ * @constructor
+ */
+function InfoDialog( levelDescriptions ) {
 
-    const children = [];
-    levelDescriptions.forEach( function( levelDescription ) {
-      children.push( new RichText( levelDescription, {
-        font: DESCRIPTION_FONT
-      } ) );
-    } );
+  const children = [];
+  levelDescriptions.forEach( function( levelDescription ) {
+    children.push( new RichText( levelDescription, {
+      font: DESCRIPTION_FONT
+    } ) );
+  } );
 
-    const content = new VBox( {
-      align: 'left',
-      spacing: 15,
-      children: children,
-      maxWidth: MAX_CONTENT_WIDTH // scale all of the descriptions uniformly
-    } );
+  const content = new VBox( {
+    align: 'left',
+    spacing: 15,
+    children: children,
+    maxWidth: MAX_CONTENT_WIDTH // scale all of the descriptions uniformly
+  } );
 
-    const titleNode = new Text( levelsString, {
-      font: TITLE_FONT,
-      maxWidth: 0.75 * MAX_CONTENT_WIDTH
-    } );
+  const titleNode = new Text( levelsString, {
+    font: TITLE_FONT,
+    maxWidth: 0.75 * MAX_CONTENT_WIDTH
+  } );
 
-    Dialog.call( this, content, {
-      title: titleNode,
-      ySpacing: 20,
-      bottomMargin: 20
-    } );
-  }
+  Dialog.call( this, content, {
+    title: titleNode,
+    ySpacing: 20,
+    bottomMargin: 20
+  } );
+}
 
-  equalityExplorer.register( 'InfoDialog', InfoDialog );
+equalityExplorer.register( 'InfoDialog', InfoDialog );
 
-  return inherit( Dialog, InfoDialog );
-} );
+inherit( Dialog, InfoDialog );
+export default InfoDialog;

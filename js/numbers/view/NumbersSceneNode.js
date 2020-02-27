@@ -6,31 +6,27 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BasicsSceneNode = require( 'EQUALITY_EXPLORER/basics/view/BasicsSceneNode' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const inherit = require( 'PHET_CORE/inherit' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import BasicsSceneNode from '../../basics/view/BasicsSceneNode.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
-  /**
-   * @param {EqualityExplorerScene} scene
-   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
-   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
-   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
-   * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
-   * @constructor
-   */
-  function NumbersSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                             snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
-    BasicsSceneNode.call( this, scene, sceneProperty, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
-  }
+/**
+ * @param {EqualityExplorerScene} scene
+ * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+ * @param {BooleanProperty} equationAccordionBoxExpandedProperty
+ * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
+ * @param {Bounds2} layoutBounds
+ * @param {Object} [options]
+ * @constructor
+ */
+function NumbersSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                           snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  BasicsSceneNode.call( this, scene, sceneProperty, equationAccordionBoxExpandedProperty,
+    snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+}
 
-  equalityExplorer.register( 'NumbersSceneNode', NumbersSceneNode );
+equalityExplorer.register( 'NumbersSceneNode', NumbersSceneNode );
 
-  return inherit( BasicsSceneNode, NumbersSceneNode );
-} );
- 
+inherit( BasicsSceneNode, NumbersSceneNode );
+export default NumbersSceneNode;

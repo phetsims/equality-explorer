@@ -7,325 +7,321 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const DerivedProperty = require( 'AXON/DerivedProperty' );
-  const Dimension2 = require( 'DOT/Dimension2' );
-  const Emitter = require( 'AXON/Emitter' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const Fraction = require( 'PHETCOMMON/model/Fraction' );
-  const Grid = require( 'EQUALITY_EXPLORER/common/model/Grid' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const NumberProperty = require( 'AXON/NumberProperty' );
-  const Vector2 = require( 'DOT/Vector2' );
-  const Vector2Property = require( 'DOT/Vector2Property' );
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Dimension2 from '../../../../dot/js/Dimension2.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import Grid from './Grid.js';
 
-  // constants
-  const DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
-  const VALID_DEBUG_SIDE_VALUES = [ 'left', 'right' ];
+// constants
+const DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
+const VALID_DEBUG_SIDE_VALUES = [ 'left', 'right' ];
 
-  /**
-   * @param {TermCreator[]} termCreators - creators associated with term on this plate
-   * @param {string} debugSide - which side of the scale, for debugging, see VALID_DEBUG_SIDE_VALUES
-   * @param {Object} [options]
-   * @constructor
-   */
-  function Plate( termCreators, debugSide, options ) {
+/**
+ * @param {TermCreator[]} termCreators - creators associated with term on this plate
+ * @param {string} debugSide - which side of the scale, for debugging, see VALID_DEBUG_SIDE_VALUES
+ * @param {Object} [options]
+ * @constructor
+ */
+function Plate( termCreators, debugSide, options ) {
 
-    assert && assert( _.includes( VALID_DEBUG_SIDE_VALUES, debugSide, 'invalid debugSide: ' + debugSide ) );
+  assert && assert( _.includes( VALID_DEBUG_SIDE_VALUES, debugSide, 'invalid debugSide: ' + debugSide ) );
 
-    const self = this;
+  const self = this;
 
-    options = merge( {
-      supportHeight: 10, // height of the vertical support that connects the plate to the scale
-      diameter: 20, // diameter of the plate
-      gridRows: 1, // rows in the 2D grid
-      gridColumns: 1, // columns in the 2D grid
-      cellSize: DEFAULT_CELL_SIZE // {Dimension2} dimensions of each cell in the grid
-    }, options );
+  options = merge( {
+    supportHeight: 10, // height of the vertical support that connects the plate to the scale
+    diameter: 20, // diameter of the plate
+    gridRows: 1, // rows in the 2D grid
+    gridColumns: 1, // columns in the 2D grid
+    cellSize: DEFAULT_CELL_SIZE // {Dimension2} dimensions of each cell in the grid
+  }, options );
 
-    // @public
-    this.positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
+  // @public
+  this.positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
-    // @public (read-only)
-    this.termCreators = termCreators;
-    this.debugSide = debugSide;
+  // @public (read-only)
+  this.termCreators = termCreators;
+  this.debugSide = debugSide;
 
-    // @public (read-only)
-    this.supportHeight = options.supportHeight;
-    this.diameter = options.diameter;
-    this.gridRows = options.gridRows;
-    this.gridColumns = options.gridColumns;
-    this.cellSize = options.cellSize;
+  // @public (read-only)
+  this.supportHeight = options.supportHeight;
+  this.diameter = options.diameter;
+  this.gridRows = options.gridRows;
+  this.gridColumns = options.gridColumns;
+  this.cellSize = options.cellSize;
 
-    // @private
-    this.grid = new Grid( this.positionProperty, debugSide, {
-      rows: options.gridRows,
-      columns: options.gridColumns,
-      cellWidth: options.cellSize.width,
-      cellHeight: options.cellSize.height
-    } );
+  // @private
+  this.grid = new Grid( this.positionProperty, debugSide, {
+    rows: options.gridRows,
+    columns: options.gridColumns,
+    cellWidth: options.cellSize.width,
+    cellHeight: options.cellSize.height
+  } );
 
-    // @public (read-only) number of terms on the plate
-    this.numberOfTermsProperty = new NumberProperty( 0, {
-      numberType: 'Integer',
-      isValidValue: function( value ) {
-        return value >= 0;
-      }
-    } );
-
-    // weightProperty is derived from the weights of each termCreator
-    const weightDependencies = [];
-    for ( let i = 0; i < termCreators.length; i++ ) {
-      weightDependencies.push( termCreators[ i ].weightOnPlateProperty );
+  // @public (read-only) number of terms on the plate
+  this.numberOfTermsProperty = new NumberProperty( 0, {
+    numberType: 'Integer',
+    isValidValue: function( value ) {
+      return value >= 0;
     }
+  } );
 
-    // @public (read-only) {Property.<Fraction>} total weight of the terms that are on the plate
-    // dispose not required.
-    this.weightProperty = new DerivedProperty( weightDependencies,
-      function() {
-        let weight = Fraction.fromInteger( 0 );
-        for ( let i = 0; i < termCreators.length; i++ ) {
-          weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value ).reduced();
-        }
-        return weight;
-      } );
-
-    // @public emit is called when the contents of the grid changes (terms added, removed, organized)
-    // dispose not required.
-    this.contentsChangedEmitter = new Emitter();
-
-    // Associate this plate with its term creators. Note that this is a 2-way association.
-    termCreators.forEach( function( termCreator ) {
-      termCreator.plate = self;
-    } );
+  // weightProperty is derived from the weights of each termCreator
+  const weightDependencies = [];
+  for ( let i = 0; i < termCreators.length; i++ ) {
+    weightDependencies.push( termCreators[ i ].weightOnPlateProperty );
   }
 
-  equalityExplorer.register( 'Plate', Plate );
+  // @public (read-only) {Property.<Fraction>} total weight of the terms that are on the plate
+  // dispose not required.
+  this.weightProperty = new DerivedProperty( weightDependencies,
+    function() {
+      let weight = Fraction.fromInteger( 0 );
+      for ( let i = 0; i < termCreators.length; i++ ) {
+        weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value ).reduced();
+      }
+      return weight;
+    } );
 
-  return inherit( Object, Plate, {
+  // @public emit is called when the contents of the grid changes (terms added, removed, organized)
+  // dispose not required.
+  this.contentsChangedEmitter = new Emitter();
 
-    /**
-     * Adds a term to the plate, in a specific cell in the grid.
-     * @param {Term} term
-     * @param {number} cell
-     * @public
-     */
-    addTerm: function( term, cell ) {
-      this.grid.putTerm( term, cell );
-      this.numberOfTermsProperty.value++;
-      this.contentsChangedEmitter.emit();
-    },
+  // Associate this plate with its term creators. Note that this is a 2-way association.
+  termCreators.forEach( function( termCreator ) {
+    termCreator.plate = self;
+  } );
+}
 
-    /**
-     * Removes a term from the plate.
-     * @param {Term} term
-     * @returns {number} the cell that the term was removed from
-     * @public
-     */
-    removeTerm: function( term ) {
-      const cell = this.grid.removeTerm( term );
-      this.numberOfTermsProperty.value--;
-      this.contentsChangedEmitter.emit();
-      return cell;
-    },
+equalityExplorer.register( 'Plate', Plate );
 
-    /**
-     * Is the plate's grid full? That is, are all cells occupied?
-     * @public
-     */
-    isFull: function() {
-      return this.grid.isFull();
-    },
+export default inherit( Object, Plate, {
 
-    /**
-     * Is the specified cell empty?
-     * @param {number} cell
-     * @returns {boolean}
-     * @public
-     */
-    isEmptyCell: function( cell ) {
-      return this.grid.isEmptyCell( cell );
-    },
+  /**
+   * Adds a term to the plate, in a specific cell in the grid.
+   * @param {Term} term
+   * @param {number} cell
+   * @public
+   */
+  addTerm: function( term, cell ) {
+    this.grid.putTerm( term, cell );
+    this.numberOfTermsProperty.value++;
+    this.contentsChangedEmitter.emit();
+  },
 
-    /**
-     * Gets the empty cell that would be the best fit for adding a term to the plate.
-     * @param {Vector2} position
-     * @returns {number|null} the cell's identifier, null if the grid is full
-     * @public
-     */
-    getBestEmptyCell: function( position ) {
-      return this.grid.getBestEmptyCell( position );
-    },
+  /**
+   * Removes a term from the plate.
+   * @param {Term} term
+   * @returns {number} the cell that the term was removed from
+   * @public
+   */
+  removeTerm: function( term ) {
+    const cell = this.grid.removeTerm( term );
+    this.numberOfTermsProperty.value--;
+    this.contentsChangedEmitter.emit();
+    return cell;
+  },
 
-    /**
-     * Gets the position of a specific cell, in global coordinates.
-     * A cell's position is in the center of the cell.
-     * @param {number} cell
-     * @returns {Vector2}
-     * @public
-     */
-    getPositionOfCell: function( cell ) {
-      return this.grid.getPositionOfCell( cell );
-    },
+  /**
+   * Is the plate's grid full? That is, are all cells occupied?
+   * @public
+   */
+  isFull: function() {
+    return this.grid.isFull();
+  },
 
-    /**
-     * Gets the term at a specified position in the grid.
-     * @param {Vector2} position
-     * @returns {Term|null} null if position is outside the grid, or the cell at position is empty
-     * @public
-     */
-    getTermAtPosition: function( position ) {
-      return this.grid.getTermAtPosition( position );
-    },
+  /**
+   * Is the specified cell empty?
+   * @param {number} cell
+   * @returns {boolean}
+   * @public
+   */
+  isEmptyCell: function( cell ) {
+    return this.grid.isEmptyCell( cell );
+  },
 
-    /**
-     * Gets the term in a specified cell.
-     * @param {number} cell
-     * @returns {Term|null} null if the cell is empty
-     * @public
-     */
-    getTermInCell: function( cell ) {
-      return this.grid.getTermInCell( cell );
-    },
+  /**
+   * Gets the empty cell that would be the best fit for adding a term to the plate.
+   * @param {Vector2} position
+   * @returns {number|null} the cell's identifier, null if the grid is full
+   * @public
+   */
+  getBestEmptyCell: function( position ) {
+    return this.grid.getBestEmptyCell( position );
+  },
 
-    /**
-     * Gets the cell that a term occupies.
-     * @param {Term} term
-     * @returns {number|null} the cell's identifier, null if the term doesn't occupy a cell
-     * @public
-     */
-    getCellForTerm: function( term ) {
-      return this.grid.getCellForTerm( term );
-    },
+  /**
+   * Gets the position of a specific cell, in global coordinates.
+   * A cell's position is in the center of the cell.
+   * @param {number} cell
+   * @returns {Vector2}
+   * @public
+   */
+  getPositionOfCell: function( cell ) {
+    return this.grid.getPositionOfCell( cell );
+  },
 
-    /**
-     * Gets the y coordinate of the top of the grid.
-     * @returns {number}
-     * @public
-     */
-    getGridTop: function() {
-      return this.grid.top;
-    },
+  /**
+   * Gets the term at a specified position in the grid.
+   * @param {Vector2} position
+   * @returns {Term|null} null if position is outside the grid, or the cell at position is empty
+   * @public
+   */
+  getTermAtPosition: function( position ) {
+    return this.grid.getTermAtPosition( position );
+  },
 
-    /**
-     * Gets an equivalent term from the grid that is closest to a specified cell.
-     * @param {Term} term
-     * @param {number} cell
-     * @returns {Term|null} - null if no equivalent term is found
-     * @public
-     */
-    getClosestEquivalentTerm: function( term, cell ) {
-      return this.grid.getClosestEquivalentTerm( term, cell );
-    },
+  /**
+   * Gets the term in a specified cell.
+   * @param {number} cell
+   * @returns {Term|null} null if the cell is empty
+   * @public
+   */
+  getTermInCell: function( cell ) {
+    return this.grid.getTermInCell( cell );
+  },
 
-    /**
-     * Organizes terms on the plate, as specified in https://github.com/phetsims/equality-explorer/issues/4
-     * @public
-     */
-    organize: function() {
+  /**
+   * Gets the cell that a term occupies.
+   * @param {Term} term
+   * @returns {number|null} the cell's identifier, null if the term doesn't occupy a cell
+   * @public
+   */
+  getCellForTerm: function( term ) {
+    return this.grid.getCellForTerm( term );
+  },
 
-      let numberOfTermsToOrganize = this.numberOfTermsProperty.value;
+  /**
+   * Gets the y coordinate of the top of the grid.
+   * @returns {number}
+   * @public
+   */
+  getGridTop: function() {
+    return this.grid.top;
+  },
 
-      if ( numberOfTermsToOrganize > 0 ) {
+  /**
+   * Gets an equivalent term from the grid that is closest to a specified cell.
+   * @param {Term} term
+   * @param {number} cell
+   * @returns {Term|null} - null if no equivalent term is found
+   * @public
+   */
+  getClosestEquivalentTerm: function( term, cell ) {
+    return this.grid.getClosestEquivalentTerm( term, cell );
+  },
 
-        const grid = this.grid;
+  /**
+   * Organizes terms on the plate, as specified in https://github.com/phetsims/equality-explorer/issues/4
+   * @public
+   */
+  organize: function() {
 
-        grid.clearAllCells();
+    let numberOfTermsToOrganize = this.numberOfTermsProperty.value;
 
-        // start with the bottom-left cell
-        let row = grid.rows - 1;
-        let column = 0;
+    if ( numberOfTermsToOrganize > 0 ) {
 
-        // Group the terms by positive and negative
-        const termGroups = []; // {Term[][]}
-        this.termCreators.forEach( function( termCreator ) {
-          termGroups.push( termCreator.getPositiveTermsOnPlate() );
-          termGroups.push( termCreator.getNegativeTermsOnPlate() );
-        } );
+      const grid = this.grid;
 
-        termGroups.forEach( function( terms ) {
+      grid.clearAllCells();
 
-          if ( terms.length > 0 ) {
+      // start with the bottom-left cell
+      let row = grid.rows - 1;
+      let column = 0;
 
-            // stack the terms in columns, from left to right
-            for ( let i = 0; i < terms.length; i++ ) {
+      // Group the terms by positive and negative
+      const termGroups = []; // {Term[][]}
+      this.termCreators.forEach( function( termCreator ) {
+        termGroups.push( termCreator.getPositiveTermsOnPlate() );
+        termGroups.push( termCreator.getNegativeTermsOnPlate() );
+      } );
 
-              const term = terms[ i ];
-              const cell = grid.rowColumnToCell( row, column );
-              grid.putTerm( term, cell );
+      termGroups.forEach( function( terms ) {
 
-              numberOfTermsToOrganize--;
+        if ( terms.length > 0 ) {
 
-              // advance to the next cell
-              if ( i < terms.length - 1 ) {
-                if ( row > 0 ) {
+          // stack the terms in columns, from left to right
+          for ( let i = 0; i < terms.length; i++ ) {
 
-                  // next cell in the current column
-                  row--;
-                }
-                else {
+            const term = terms[ i ];
+            const cell = grid.rowColumnToCell( row, column );
+            grid.putTerm( term, cell );
 
-                  // start a new column
-                  row = grid.rows - 1;
-                  column++;
-                }
+            numberOfTermsToOrganize--;
+
+            // advance to the next cell
+            if ( i < terms.length - 1 ) {
+              if ( row > 0 ) {
+
+                // next cell in the current column
+                row--;
               }
-            }
+              else {
 
-            if ( numberOfTermsToOrganize > 0 ) {
-
-              // Start a new column if we have enough cells to the right of the current column.
-              // Otherwise continue to fill the current column.
-              const numberOfCellsToRight = ( grid.columns - column - 1 ) * grid.rows;
-              if ( numberOfCellsToRight >= numberOfTermsToOrganize ) {
+                // start a new column
                 row = grid.rows - 1;
                 column++;
               }
-              else {
-                row--;
-              }
             }
           }
-        } );
-        assert && assert( numberOfTermsToOrganize === 0 );
 
-        // Center the stacks on the plate by shifting columns to the right.
-        // If it's not possible to exactly center, the additional space will appear on the right.
-        const numberOfEmptyColumns = grid.columns - column - 1;
-        const gridColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
-        if ( gridColumnsToShiftRight > 0 ) {
-          for ( row = grid.rows - 1; row >= 0; row-- ) {
-            for ( column = grid.columns - 1; column >= 0; column-- ) {
-              const cell = grid.rowColumnToCell( row, column );
-              const term = grid.getTermInCell( cell );
-              if ( term ) {
+          if ( numberOfTermsToOrganize > 0 ) {
 
-                // move term 1 column to the right
-                grid.clearCell( cell );
-                const rightCell = grid.rowColumnToCell( row, column + gridColumnsToShiftRight );
-                grid.putTerm( term, rightCell );
-              }
+            // Start a new column if we have enough cells to the right of the current column.
+            // Otherwise continue to fill the current column.
+            const numberOfCellsToRight = ( grid.columns - column - 1 ) * grid.rows;
+            if ( numberOfCellsToRight >= numberOfTermsToOrganize ) {
+              row = grid.rows - 1;
+              column++;
+            }
+            else {
+              row--;
             }
           }
         }
+      } );
+      assert && assert( numberOfTermsToOrganize === 0 );
 
-        // Verify that the same terms are on the plate after organizing.
-        assert && assert( _.xor(
-          // terms on the plate before organize
-          _.flatten( termGroups ),
-          // terms on the plate after organize
-          _.flatMap( this.termCreators, function( termCreator ) {
-            return termCreator.getTermsOnPlate();
-          } )
-        ).length === 0, // contains no elements that are different
-          'set of terms is not the same after organize' );
+      // Center the stacks on the plate by shifting columns to the right.
+      // If it's not possible to exactly center, the additional space will appear on the right.
+      const numberOfEmptyColumns = grid.columns - column - 1;
+      const gridColumnsToShiftRight = Math.floor( numberOfEmptyColumns / 2 );
+      if ( gridColumnsToShiftRight > 0 ) {
+        for ( row = grid.rows - 1; row >= 0; row-- ) {
+          for ( column = grid.columns - 1; column >= 0; column-- ) {
+            const cell = grid.rowColumnToCell( row, column );
+            const term = grid.getTermInCell( cell );
+            if ( term ) {
 
-        this.contentsChangedEmitter.emit();
+              // move term 1 column to the right
+              grid.clearCell( cell );
+              const rightCell = grid.rowColumnToCell( row, column + gridColumnsToShiftRight );
+              grid.putTerm( term, rightCell );
+            }
+          }
+        }
       }
+
+      // Verify that the same terms are on the plate after organizing.
+      assert && assert( _.xor(
+        // terms on the plate before organize
+        _.flatten( termGroups ),
+        // terms on the plate after organize
+        _.flatMap( this.termCreators, function( termCreator ) {
+          return termCreator.getTermsOnPlate();
+        } )
+      ).length === 0, // contains no elements that are different
+        'set of terms is not the same after organize' );
+
+      this.contentsChangedEmitter.emit();
     }
-  } );
+  }
 } );

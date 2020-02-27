@@ -7,214 +7,211 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  const BoxNode = require( 'EQUALITY_EXPLORER/common/view/BoxNode' );
-  const Circle = require( 'SCENERY/nodes/Circle' );
-  const ClearScaleButton = require( 'EQUALITY_EXPLORER/common/view/ClearScaleButton' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Line = require( 'SCENERY/nodes/Line' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const OrganizeButton = require( 'EQUALITY_EXPLORER/common/view/OrganizeButton' );
-  const Path = require( 'SCENERY/nodes/Path' );
-  const PlateNode = require( 'EQUALITY_EXPLORER/common/view/PlateNode' );
-  const Shape = require( 'KITE/Shape' );
-  const Vector2 = require( 'DOT/Vector2' );
+import Vector2 from '../../../../dot/js/Vector2.js';
+import Shape from '../../../../kite/js/Shape.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import Circle from '../../../../scenery/js/nodes/Circle.js';
+import HBox from '../../../../scenery/js/nodes/HBox.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import EqualityExplorerColors from '../EqualityExplorerColors.js';
+import BoxNode from './BoxNode.js';
+import ClearScaleButton from './ClearScaleButton.js';
+import OrganizeButton from './OrganizeButton.js';
+import PlateNode from './PlateNode.js';
 
-  // base
-  const BASE_WIDTH = 200;
-  const BASE_HEIGHT = 40;
-  const BASE_DEPTH = 10;
+// base
+const BASE_WIDTH = 200;
+const BASE_HEIGHT = 40;
+const BASE_DEPTH = 10;
 
-  // beam
-  const BEAM_HEIGHT = 5;
-  const BEAM_DEPTH = 8;
+// beam
+const BEAM_HEIGHT = 5;
+const BEAM_DEPTH = 8;
 
-  // fulcrum that the beam is balanced on
-  const FULCRUM_HEIGHT = 52;
-  const FULCRUM_TOP_WIDTH = 15;
-  const FULCRUM_BOTTOM_WIDTH = 25;
+// fulcrum that the beam is balanced on
+const FULCRUM_HEIGHT = 52;
+const FULCRUM_TOP_WIDTH = 15;
+const FULCRUM_BOTTOM_WIDTH = 25;
 
-  // arrow
-  const ARROW_LENGTH = 75;
+// arrow
+const ARROW_LENGTH = 75;
 
-  /**
-   * @param {BalanceScale} scale
-   * @param {Object} [options]
-   * @constructor
-   */
-  function BalanceScaleNode( scale, options ) {
+/**
+ * @param {BalanceScale} scale
+ * @param {Object} [options]
+ * @constructor
+ */
+function BalanceScaleNode( scale, options ) {
 
-    options = merge( {
-      clearScaleButtonVisible: true,
-      organizeButtonVisible: true,
-      disposeTermsNotOnScale: null // {function|null} call this to dispose of terms that are NOT on the scale
-    }, options );
+  options = merge( {
+    clearScaleButtonVisible: true,
+    organizeButtonVisible: true,
+    disposeTermsNotOnScale: null // {function|null} call this to dispose of terms that are NOT on the scale
+  }, options );
 
-    options.x = scale.position.x;
-    options.y = scale.position.y;
+  options.x = scale.position.x;
+  options.y = scale.position.y;
 
-    // the fulcrum that the beam balances on
-    const fulcrumTaper = FULCRUM_BOTTOM_WIDTH - FULCRUM_TOP_WIDTH;
-    const fulcrumShape = new Shape().polygon( [
-      new Vector2( 0, 0 ),
-      new Vector2( FULCRUM_TOP_WIDTH, 0 ),
-      new Vector2( FULCRUM_TOP_WIDTH + fulcrumTaper / 2, FULCRUM_HEIGHT ),
-      new Vector2( -fulcrumTaper / 2, FULCRUM_HEIGHT )
-    ] );
-    const fulcrumNode = new Path( fulcrumShape, {
-      stroke: 'black',
-      fill: EqualityExplorerColors.SCALE_FULCRUM_FILL,
+  // the fulcrum that the beam balances on
+  const fulcrumTaper = FULCRUM_BOTTOM_WIDTH - FULCRUM_TOP_WIDTH;
+  const fulcrumShape = new Shape().polygon( [
+    new Vector2( 0, 0 ),
+    new Vector2( FULCRUM_TOP_WIDTH, 0 ),
+    new Vector2( FULCRUM_TOP_WIDTH + fulcrumTaper / 2, FULCRUM_HEIGHT ),
+    new Vector2( -fulcrumTaper / 2, FULCRUM_HEIGHT )
+  ] );
+  const fulcrumNode = new Path( fulcrumShape, {
+    stroke: 'black',
+    fill: EqualityExplorerColors.SCALE_FULCRUM_FILL,
 
-      // origin is at center-top of fulcrum
-      centerX: 0,
-      top: 0
-    } );
+    // origin is at center-top of fulcrum
+    centerX: 0,
+    top: 0
+  } );
 
-    // the base the supports the entire scale
-    const baseNode = new BoxNode( {
-      width: BASE_WIDTH,
-      height: BASE_HEIGHT,
-      depth: BASE_DEPTH,
-      stroke: 'black',
-      topFill: EqualityExplorerColors.SCALE_TOP_FACE_FILL,
-      frontFill: EqualityExplorerColors.SCALE_FRONT_FACE_FILL,
-      centerX: fulcrumNode.centerX,
-      top: fulcrumNode.bottom - ( BASE_DEPTH / 2 )
-    } );
+  // the base the supports the entire scale
+  const baseNode = new BoxNode( {
+    width: BASE_WIDTH,
+    height: BASE_HEIGHT,
+    depth: BASE_DEPTH,
+    stroke: 'black',
+    topFill: EqualityExplorerColors.SCALE_TOP_FACE_FILL,
+    frontFill: EqualityExplorerColors.SCALE_FRONT_FACE_FILL,
+    centerX: fulcrumNode.centerX,
+    top: fulcrumNode.bottom - ( BASE_DEPTH / 2 )
+  } );
 
-    // the beam that supports a plate on either end
-    const beamNode = new BoxNode( {
-      width: scale.beamWidth,
-      height: BEAM_HEIGHT,
-      depth: BEAM_DEPTH,
-      stroke: 'black',
-      topFill: EqualityExplorerColors.SCALE_TOP_FACE_FILL,
-      frontFill: EqualityExplorerColors.SCALE_FRONT_FACE_FILL,
-      centerX: baseNode.centerX,
-      top: fulcrumNode.top - ( 0.5 * BEAM_DEPTH )
-    } );
+  // the beam that supports a plate on either end
+  const beamNode = new BoxNode( {
+    width: scale.beamWidth,
+    height: BEAM_HEIGHT,
+    depth: BEAM_DEPTH,
+    stroke: 'black',
+    topFill: EqualityExplorerColors.SCALE_TOP_FACE_FILL,
+    frontFill: EqualityExplorerColors.SCALE_FRONT_FACE_FILL,
+    centerX: baseNode.centerX,
+    top: fulcrumNode.top - ( 0.5 * BEAM_DEPTH )
+  } );
 
-    // arrow at the center on the beam, points perpendicular to the beam
-    const arrowNode = new ArrowNode( 0, 0, 0, -ARROW_LENGTH, {
-      headHeight: 20,
-      headWidth: 15,
-      centerX: beamNode.centerX,
-      bottom: 0
-    } );
+  // arrow at the center on the beam, points perpendicular to the beam
+  const arrowNode = new ArrowNode( 0, 0, 0, -ARROW_LENGTH, {
+    headHeight: 20,
+    headWidth: 15,
+    centerX: beamNode.centerX,
+    bottom: 0
+  } );
 
-    // A dashed line that is perpendicular to the base.
-    // When the scale is balanced, the arrow will be aligned with this line.
-    const dashedLine = new Line( 0, 0, 0, 1.2 * ARROW_LENGTH, {
-      lineDash: [ 4, 4 ],
-      stroke: 'black',
-      centerX: beamNode.centerX,
-      bottom: 0
-    } );
+  // A dashed line that is perpendicular to the base.
+  // When the scale is balanced, the arrow will be aligned with this line.
+  const dashedLine = new Line( 0, 0, 0, 1.2 * ARROW_LENGTH, {
+    lineDash: [ 4, 4 ],
+    stroke: 'black',
+    centerX: beamNode.centerX,
+    bottom: 0
+  } );
 
-    // left plate
-    const leftPlateNode = new PlateNode( scale.leftPlate, {
-      center: beamNode.center // correct position will be set later in constructor
-    } );
+  // left plate
+  const leftPlateNode = new PlateNode( scale.leftPlate, {
+    center: beamNode.center // correct position will be set later in constructor
+  } );
 
-    // right plate
-    const rightPlateNode = new PlateNode( scale.rightPlate, {
-      center: beamNode.center // correct position will be set later in constructor
-    } );
+  // right plate
+  const rightPlateNode = new PlateNode( scale.rightPlate, {
+    center: beamNode.center // correct position will be set later in constructor
+  } );
 
-    // pressing this button clears all terms from the scale
-    const clearScaleButton = new ClearScaleButton( scale.clear.bind( scale ), {
-      visible: options.clearScaleButtonVisible
-    } );
+  // pressing this button clears all terms from the scale
+  const clearScaleButton = new ClearScaleButton( scale.clear.bind( scale ), {
+    visible: options.clearScaleButtonVisible
+  } );
 
-    // pressing this button organizes terms on the scale, grouping like terms together
-    const organizeButton = new OrganizeButton( scale.organize.bind( scale ), {
-      visible: options.organizeButtonVisible
-    } );
+  // pressing this button organizes terms on the scale, grouping like terms together
+  const organizeButton = new OrganizeButton( scale.organize.bind( scale ), {
+    visible: options.organizeButtonVisible
+  } );
 
-    // Pressing either button disposes of any terms that are not already on the scale.
-    // removeListener not needed.
-    if ( options.disposeTermsNotOnScale ) {
-      clearScaleButton.addListener( options.disposeTermsNotOnScale );
-      organizeButton.addListener( options.disposeTermsNotOnScale );
-    }
-
-    // Disable ClearScaleButton and OrganizeButton when the scale is empty. unlink not required.
-    scale.numberOfTermsProperty.link( function( numberOfTerms ) {
-      const enabled = ( numberOfTerms !== 0 );
-      clearScaleButton.enabled = enabled;
-      organizeButton.enabled = enabled;
-    } );
-
-    // buttons on the front face of the base
-    const buttonsParent = new HBox( {
-      children: [ clearScaleButton, organizeButton ],
-      spacing: 100,
-      centerX: baseNode.centerX,
-      centerY: baseNode.bottom - ( BASE_HEIGHT / 2 )
-    } );
-
-    assert && assert( !options.children, 'BalanceNode sets children' );
-    options.children = [
-      baseNode,
-      buttonsParent,
-      fulcrumNode,
-      dashedLine,
-      beamNode,
-      arrowNode,
-      leftPlateNode,
-      rightPlateNode
-    ];
-
-    // draw a red dot at the origin
-    if ( phet.chipper.queryParameters.dev ) {
-      options.children.push( new Circle( 2, { fill: 'red' } ) );
-    }
-
-    Node.call( this, options );
-
-    // Adjust parts of the scale that depend on angle. unlink not required.
-    scale.angleProperty.link( function( angle, oldAngle ) {
-
-      const deltaAngle = angle - oldAngle;
-
-      // rotate the beam about its pivot point
-      beamNode.rotateAround( new Vector2( beamNode.centerX, beamNode.centerY ), deltaAngle );
-
-      // rotate and fill the arrow
-      arrowNode.rotateAround( new Vector2( beamNode.centerX, 0 ), deltaAngle );
-      if ( angle === 0 ) {
-        arrowNode.fill = EqualityExplorerColors.SCALE_ARROW_BALANCED; // the scale is balanced
-      }
-      else if ( Math.abs( angle ) === scale.maxAngle ) {
-        arrowNode.fill = EqualityExplorerColors.SCALE_ARROW_BOTTOMED_OUT; // the scale is bottomed out
-      }
-      else {
-        arrowNode.fill = EqualityExplorerColors.SCALE_ARROW_UNBALANCED; // the scale is unbalanced, but not bottomed out
-      }
-    } );
-
-    // Move the left plate. unlink not required.
-    scale.leftPlate.positionProperty.link( function( position ) {
-      leftPlateNode.x = position.x - scale.position.x;
-      leftPlateNode.y = position.y - scale.position.y;
-    } );
-
-    // Move the right plate. unlink not required.
-    scale.rightPlate.positionProperty.link( function( position ) {
-      rightPlateNode.x = position.x - scale.position.x;
-      rightPlateNode.y = position.y - scale.position.y;
-    } );
+  // Pressing either button disposes of any terms that are not already on the scale.
+  // removeListener not needed.
+  if ( options.disposeTermsNotOnScale ) {
+    clearScaleButton.addListener( options.disposeTermsNotOnScale );
+    organizeButton.addListener( options.disposeTermsNotOnScale );
   }
 
-  equalityExplorer.register( 'BalanceScaleNode', BalanceScaleNode );
+  // Disable ClearScaleButton and OrganizeButton when the scale is empty. unlink not required.
+  scale.numberOfTermsProperty.link( function( numberOfTerms ) {
+    const enabled = ( numberOfTerms !== 0 );
+    clearScaleButton.enabled = enabled;
+    organizeButton.enabled = enabled;
+  } );
 
-  return inherit( Node, BalanceScaleNode );
-} );
+  // buttons on the front face of the base
+  const buttonsParent = new HBox( {
+    children: [ clearScaleButton, organizeButton ],
+    spacing: 100,
+    centerX: baseNode.centerX,
+    centerY: baseNode.bottom - ( BASE_HEIGHT / 2 )
+  } );
+
+  assert && assert( !options.children, 'BalanceNode sets children' );
+  options.children = [
+    baseNode,
+    buttonsParent,
+    fulcrumNode,
+    dashedLine,
+    beamNode,
+    arrowNode,
+    leftPlateNode,
+    rightPlateNode
+  ];
+
+  // draw a red dot at the origin
+  if ( phet.chipper.queryParameters.dev ) {
+    options.children.push( new Circle( 2, { fill: 'red' } ) );
+  }
+
+  Node.call( this, options );
+
+  // Adjust parts of the scale that depend on angle. unlink not required.
+  scale.angleProperty.link( function( angle, oldAngle ) {
+
+    const deltaAngle = angle - oldAngle;
+
+    // rotate the beam about its pivot point
+    beamNode.rotateAround( new Vector2( beamNode.centerX, beamNode.centerY ), deltaAngle );
+
+    // rotate and fill the arrow
+    arrowNode.rotateAround( new Vector2( beamNode.centerX, 0 ), deltaAngle );
+    if ( angle === 0 ) {
+      arrowNode.fill = EqualityExplorerColors.SCALE_ARROW_BALANCED; // the scale is balanced
+    }
+    else if ( Math.abs( angle ) === scale.maxAngle ) {
+      arrowNode.fill = EqualityExplorerColors.SCALE_ARROW_BOTTOMED_OUT; // the scale is bottomed out
+    }
+    else {
+      arrowNode.fill = EqualityExplorerColors.SCALE_ARROW_UNBALANCED; // the scale is unbalanced, but not bottomed out
+    }
+  } );
+
+  // Move the left plate. unlink not required.
+  scale.leftPlate.positionProperty.link( function( position ) {
+    leftPlateNode.x = position.x - scale.position.x;
+    leftPlateNode.y = position.y - scale.position.y;
+  } );
+
+  // Move the right plate. unlink not required.
+  scale.rightPlate.positionProperty.link( function( position ) {
+    rightPlateNode.x = position.x - scale.position.x;
+    rightPlateNode.y = position.y - scale.position.y;
+  } );
+}
+
+equalityExplorer.register( 'BalanceScaleNode', BalanceScaleNode );
+
+inherit( Node, BalanceScaleNode );
+export default BalanceScaleNode;

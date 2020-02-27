@@ -5,36 +5,32 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BasicsScreen = require( 'EQUALITY_EXPLORER/basics/BasicsScreen' );
-  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  const NumbersScreen = require( 'EQUALITY_EXPLORER/numbers/NumbersScreen' );
-  const OperationsScreen = require( 'EQUALITY_EXPLORER/operations/OperationsScreen' );
-  const Sim = require( 'JOIST/Sim' );
-  const SimLauncher = require( 'JOIST/SimLauncher' );
-  const SolveItScreen = require( 'EQUALITY_EXPLORER/solveit/SolveItScreen' );
-  const VariablesScreen = require( 'EQUALITY_EXPLORER/variables/VariablesScreen' );
+import Sim from '../../joist/js/Sim.js';
+import SimLauncher from '../../joist/js/SimLauncher.js';
+import BasicsScreen from './basics/BasicsScreen.js';
+import EqualityExplorerConstants from './common/EqualityExplorerConstants.js';
+import equalityExplorerStrings from './equality-explorer-strings.js';
+import NumbersScreen from './numbers/NumbersScreen.js';
+import OperationsScreen from './operations/OperationsScreen.js';
+import SolveItScreen from './solveit/SolveItScreen.js';
+import VariablesScreen from './variables/VariablesScreen.js';
 
-  // strings
-  const equalityExplorerTitleString = require( 'string!EQUALITY_EXPLORER/equality-explorer.title' );
+const equalityExplorerTitleString = equalityExplorerStrings[ 'equality-explorer' ].title;
 
-  SimLauncher.launch( () => {
+SimLauncher.launch( () => {
 
-    // production screens
-    const screens = [
-      new BasicsScreen(),
-      new NumbersScreen(),
-      new VariablesScreen(),
-      new OperationsScreen(),
-      new SolveItScreen()
-    ];
+  // production screens
+  const screens = [
+    new BasicsScreen(),
+    new NumbersScreen(),
+    new VariablesScreen(),
+    new OperationsScreen(),
+    new SolveItScreen()
+  ];
 
-    const sim = new Sim( equalityExplorerTitleString, screens, {
-      credits: EqualityExplorerConstants.CREDITS
-    } );
-    sim.start();
+  const sim = new Sim( equalityExplorerTitleString, screens, {
+    credits: EqualityExplorerConstants.CREDITS
   } );
+  sim.start();
 } );

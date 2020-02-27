@@ -7,66 +7,61 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BooleanToggleNode = require( 'SUN/BooleanToggleNode' );
-  const DownUpListener = require( 'SCENERY/input/DownUpListener' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const Image = require( 'SCENERY/nodes/Image' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Node = require( 'SCENERY/nodes/Node' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import DownUpListener from '../../../../scenery/js/input/DownUpListener.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import BooleanToggleNode from '../../../../sun/js/BooleanToggleNode.js';
+import lockClosedImage from '../../../images/lockClosed_png.js';
+import lockOpenedImage from '../../../images/lockOpened_png.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
-  // images
-  const lockClosedImage = require( 'image!EQUALITY_EXPLORER/lockClosed.png' );
-  const lockOpenedImage = require( 'image!EQUALITY_EXPLORER/lockOpened.png' );
+/**
+ * @param {BooleanProperty} lockedProperty - indicates whether left and right sides are "locked"
+ * @param {Object} [options]
+ * @constructor
+ */
+function LockControl( lockedProperty, options ) {
 
-  /**
-   * @param {BooleanProperty} lockedProperty - indicates whether left and right sides are "locked"
-   * @param {Object} [options]
-   * @constructor
-   */
-  function LockControl( lockedProperty, options ) {
+  options = merge( {
 
-    options = merge( {
+    // Node options
+    cursor: 'pointer',
+    maxHeight: 45
+  }, options );
 
-      // Node options
-      cursor: 'pointer',
-      maxHeight: 45
-    }, options );
+  // icons
+  const lockClosedNode = new Image( lockClosedImage );
+  const lockOpenedNode = new Image( lockOpenedImage );
+  assert && assert( lockClosedNode.width === lockOpenedNode.width && lockClosedNode.height === lockOpenedNode.height,
+    'lock images must have identical dimensions' );
 
-    // icons
-    const lockClosedNode = new Image( lockClosedImage );
-    const lockOpenedNode = new Image( lockOpenedImage );
-    assert && assert( lockClosedNode.width === lockOpenedNode.width && lockClosedNode.height === lockOpenedNode.height,
-      'lock images must have identical dimensions' );
+  const toggleNode = new BooleanToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
 
-    const toggleNode = new BooleanToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
+    // put the origin at the center of the 'closed' lock, to facilitate layout
+    x: -lockClosedNode.width / 2,
+    y: -lockClosedNode.height / 2
+  } );
 
-      // put the origin at the center of the 'closed' lock, to facilitate layout
-      x: -lockClosedNode.width / 2,
-      y: -lockClosedNode.height / 2
-    } );
+  assert && assert( !options.children, 'LockControl sets children' );
+  options.children = [ toggleNode ];
 
-    assert && assert( !options.children, 'LockControl sets children' );
-    options.children = [ toggleNode ];
+  Node.call( this, options );
 
-    Node.call( this, options );
+  // toggle the state when the user clicks on this Node
+  this.addInputListener( new DownUpListener( {
+    up: function( event ) {
+      lockedProperty.value = !lockedProperty.value;
+      phet.log && phet.log( 'Lock pressed, value=' + lockedProperty.value );
+    }
+  } ) );
 
-    // toggle the state when the user clicks on this Node
-    this.addInputListener( new DownUpListener( {
-      up: function( event ) {
-        lockedProperty.value = !lockedProperty.value;
-        phet.log && phet.log( 'Lock pressed, value=' + lockedProperty.value );
-      }
-    } ) );
+  this.touchArea = this.localBounds.dilatedXY( 5, 10 );
+}
 
-    this.touchArea = this.localBounds.dilatedXY( 5, 10 );
-  }
+equalityExplorer.register( 'LockControl', LockControl );
 
-  equalityExplorer.register( 'LockControl', LockControl );
-
-  return inherit( Node, LockControl );
-} );
+inherit( Node, LockControl );
+export default LockControl;

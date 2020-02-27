@@ -5,45 +5,42 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const Fraction = require( 'PHETCOMMON/model/Fraction' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
-  const ScoreDisplayNumberAndStar = require( 'VEGAS/ScoreDisplayNumberAndStar' );
-  const VariableTermNode = require( 'EQUALITY_EXPLORER/common/view/VariableTermNode' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import LevelSelectionButton from '../../../../vegas/js/LevelSelectionButton.js';
+import ScoreDisplayNumberAndStar from '../../../../vegas/js/ScoreDisplayNumberAndStar.js';
+import VariableTermNode from '../../common/view/VariableTermNode.js';
+import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
-  // strings
-  const xString = require( 'string!EQUALITY_EXPLORER/x' );
+const xString = equalityExplorerStrings.x;
 
-  /**
-   * @param {SolveItScene} scene - the scene that will be selected by pressing this button
-   * @param {Property.<SolveItScene>} sceneProperty - the selected scene
-   * @constructor
-   */
-  function EqualityExplorerLevelSelectionButton( scene, sceneProperty ) {
+/**
+ * @param {SolveItScene} scene - the scene that will be selected by pressing this button
+ * @param {Property.<SolveItScene>} sceneProperty - the selected scene
+ * @constructor
+ */
+function EqualityExplorerLevelSelectionButton( scene, sceneProperty ) {
 
-    // 'x' term with level number as coefficient
-    const icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( scene.level ), xString, {
-      diameter: 50,
-      margin: 15,
-      showOne: true
-    } );
+  // 'x' term with level number as coefficient
+  const icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( scene.level ), xString, {
+    diameter: 50,
+    margin: 15,
+    showOne: true
+  } );
 
-    LevelSelectionButton.call( this, icon, scene.scoreProperty, {
-      baseColor: 'rgb( 191, 239, 254 )',
-      scoreDisplayConstructor: ScoreDisplayNumberAndStar,
-      listener: function() {
-        phet.log && phet.log( 'Level' + scene.level + ' button pressed' );
-        sceneProperty.value = scene;
-      }
-    } );
-  }
+  LevelSelectionButton.call( this, icon, scene.scoreProperty, {
+    baseColor: 'rgb( 191, 239, 254 )',
+    scoreDisplayConstructor: ScoreDisplayNumberAndStar,
+    listener: function() {
+      phet.log && phet.log( 'Level' + scene.level + ' button pressed' );
+      sceneProperty.value = scene;
+    }
+  } );
+}
 
-  equalityExplorer.register( 'EqualityExplorerLevelSelectionButton', EqualityExplorerLevelSelectionButton );
+equalityExplorer.register( 'EqualityExplorerLevelSelectionButton', EqualityExplorerLevelSelectionButton );
 
-  return inherit( LevelSelectionButton, EqualityExplorerLevelSelectionButton );
-} );
+inherit( LevelSelectionButton, EqualityExplorerLevelSelectionButton );
+export default EqualityExplorerLevelSelectionButton;

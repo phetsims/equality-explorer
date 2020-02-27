@@ -5,45 +5,42 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
-  const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const NumbersModel = require( 'EQUALITY_EXPLORER/numbers/model/NumbersModel' );
-  const NumbersScreenView = require( 'EQUALITY_EXPLORER/numbers/view/NumbersScreenView' );
-  const Property = require( 'AXON/Property' );
+import Property from '../../../axon/js/Property.js';
+import inherit from '../../../phet-core/js/inherit.js';
+import merge from '../../../phet-core/js/merge.js';
+import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
+import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
+import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
+import equalityExplorerStrings from '../equality-explorer-strings.js';
+import equalityExplorer from '../equalityExplorer.js';
+import NumbersModel from './model/NumbersModel.js';
+import NumbersScreenView from './view/NumbersScreenView.js';
 
-  // strings
-  const screenNumbersString = require( 'string!EQUALITY_EXPLORER/screen.numbers' );
+const screenNumbersString = equalityExplorerStrings.screen.numbers;
 
-  /**
-   * @param {Object} [options]
-   * @constructor
-   */
-  function NumbersScreen( options ) {
+/**
+ * @param {Object} [options]
+ * @constructor
+ */
+function NumbersScreen( options ) {
 
-    options = merge( {
+  options = merge( {
 
-      // EqualityExplorerScreen options
-      name: screenNumbersString,
-      backgroundColorProperty: new Property( EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND ),
-      homeScreenIcon: EqualityExplorerScreenIcons.createNumbersScreenIcon()
-    }, options );
+    // EqualityExplorerScreen options
+    name: screenNumbersString,
+    backgroundColorProperty: new Property( EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND ),
+    homeScreenIcon: EqualityExplorerScreenIcons.createNumbersScreenIcon()
+  }, options );
 
-    EqualityExplorerScreen.call( this,
-      function() { return new NumbersModel(); },
-      function( model ) { return new NumbersScreenView( model ); },
-      options
-    );
-  }
+  EqualityExplorerScreen.call( this,
+    function() { return new NumbersModel(); },
+    function( model ) { return new NumbersScreenView( model ); },
+    options
+  );
+}
 
-  equalityExplorer.register( 'NumbersScreen', NumbersScreen );
+equalityExplorer.register( 'NumbersScreen', NumbersScreen );
 
-  return inherit( EqualityExplorerScreen, NumbersScreen );
-} );
+inherit( EqualityExplorerScreen, NumbersScreen );
+export default NumbersScreen;

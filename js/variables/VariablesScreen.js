@@ -5,45 +5,42 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
-  const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Property = require( 'AXON/Property' );
-  const VariablesModel = require( 'EQUALITY_EXPLORER/variables/model/VariablesModel' );
-  const VariablesScreenView = require( 'EQUALITY_EXPLORER/variables/view/VariablesScreenView' );
+import Property from '../../../axon/js/Property.js';
+import inherit from '../../../phet-core/js/inherit.js';
+import merge from '../../../phet-core/js/merge.js';
+import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
+import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
+import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
+import equalityExplorerStrings from '../equality-explorer-strings.js';
+import equalityExplorer from '../equalityExplorer.js';
+import VariablesModel from './model/VariablesModel.js';
+import VariablesScreenView from './view/VariablesScreenView.js';
 
-  // strings
-  const screenVariablesString = require( 'string!EQUALITY_EXPLORER/screen.variables' );
+const screenVariablesString = equalityExplorerStrings.screen.variables;
 
-  /**
-   * @param {Object} [options]
-   * @constructor
-   */
-  function VariablesScreen( options ) {
+/**
+ * @param {Object} [options]
+ * @constructor
+ */
+function VariablesScreen( options ) {
 
-    options = merge( {
+  options = merge( {
 
-      // EqualityExplorerScreen options
-      name: screenVariablesString,
-      backgroundColorProperty: new Property( EqualityExplorerColors.VARIABLES_SCREEN_BACKGROUND ),
-      homeScreenIcon: EqualityExplorerScreenIcons.createVariablesScreenIcon()
-    }, options );
+    // EqualityExplorerScreen options
+    name: screenVariablesString,
+    backgroundColorProperty: new Property( EqualityExplorerColors.VARIABLES_SCREEN_BACKGROUND ),
+    homeScreenIcon: EqualityExplorerScreenIcons.createVariablesScreenIcon()
+  }, options );
 
-    EqualityExplorerScreen.call( this,
-      function() { return new VariablesModel(); },
-      function( model ) { return new VariablesScreenView( model ); },
-      options
-    );
-  }
+  EqualityExplorerScreen.call( this,
+    function() { return new VariablesModel(); },
+    function( model ) { return new VariablesScreenView( model ); },
+    options
+  );
+}
 
-  equalityExplorer.register( 'VariablesScreen', VariablesScreen );
+equalityExplorer.register( 'VariablesScreen', VariablesScreen );
 
-  return inherit( EqualityExplorerScreen, VariablesScreen );
-} );
+inherit( EqualityExplorerScreen, VariablesScreen );
+export default VariablesScreen;

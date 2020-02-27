@@ -5,36 +5,33 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Screen = require( 'JOIST/Screen' );
+import Screen from '../../../joist/js/Screen.js';
+import inherit from '../../../phet-core/js/inherit.js';
+import equalityExplorer from '../equalityExplorer.js';
 
-  /**
-   * @param {function} createModel
-   * @param {function(model):Node } createView
-   * @param {Object} [options]
-   * @constructor
-   * @abstract
-   */
-  function EqualityExplorerScreen( createModel, createView, options ) {
+/**
+ * @param {function} createModel
+ * @param {function(model):Node } createView
+ * @param {Object} [options]
+ * @constructor
+ * @abstract
+ */
+function EqualityExplorerScreen( createModel, createView, options ) {
 
-    const self = this;
+  const self = this;
 
-    Screen.call( this, createModel, createView, options );
+  Screen.call( this, createModel, createView, options );
 
-    // When this Screen is deactivated, deactivate the model.  unlink not needed.
-    this.activeProperty.lazyLink( function( screenActive ) {
-      if ( !screenActive && self.model.deactivate ) {
-        self.model.deactivate();
-      }
-    } );
-  }
+  // When this Screen is deactivated, deactivate the model.  unlink not needed.
+  this.activeProperty.lazyLink( function( screenActive ) {
+    if ( !screenActive && self.model.deactivate ) {
+      self.model.deactivate();
+    }
+  } );
+}
 
-  equalityExplorer.register( 'EqualityExplorerScreen', EqualityExplorerScreen );
+equalityExplorer.register( 'EqualityExplorerScreen', EqualityExplorerScreen );
 
-  return inherit( Screen, EqualityExplorerScreen );
-} );
+inherit( Screen, EqualityExplorerScreen );
+export default EqualityExplorerScreen;

@@ -6,96 +6,92 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const Fraction = require( 'PHETCOMMON/model/Fraction' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Line = require( 'SCENERY/nodes/Line' );
-  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const VBox = require( 'SCENERY/nodes/VBox' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import VBox from '../../../../scenery/js/nodes/VBox.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
-  // constants
-  const DEFAULT_FRACTION_FONT = new PhetFont( 22 );
-  const DEFAULT_INTEGER_FONT = new PhetFont( 40 );
+// constants
+const DEFAULT_FRACTION_FONT = new PhetFont( 22 );
+const DEFAULT_INTEGER_FONT = new PhetFont( 40 );
 
-  /**
-   * @param {Fraction} fraction
-   * @param {Object} [options]
-   * @constructor
-   */
-  function ReducedFractionNode( fraction, options ) {
+/**
+ * @param {Fraction} fraction
+ * @param {Object} [options]
+ * @constructor
+ */
+function ReducedFractionNode( fraction, options ) {
 
-    assert && assert( fraction instanceof Fraction, 'invalid fraction: ' + fraction );
-    assert && assert( fraction.isReduced(), 'fraction must be reduced: ' + fraction );
+  assert && assert( fraction instanceof Fraction, 'invalid fraction: ' + fraction );
+  assert && assert( fraction.isReduced(), 'fraction must be reduced: ' + fraction );
 
-    options = merge( {
-      minLineLength: 1, // length of the fraction line
-      fractionFont: DEFAULT_FRACTION_FONT, // font for numerator and denominator of fraction value
-      integerFont: DEFAULT_INTEGER_FONT, // font for integer value
-      color: 'black', // color of everything
-      lineWidth: 1, // for the fraction line
-      xSpacing: 5, // horizontal space between negative sign and fraction line
-      ySpacing: 3 // vertical spacing above/below the fraction line
-    }, options );
+  options = merge( {
+    minLineLength: 1, // length of the fraction line
+    fractionFont: DEFAULT_FRACTION_FONT, // font for numerator and denominator of fraction value
+    integerFont: DEFAULT_INTEGER_FONT, // font for integer value
+    color: 'black', // color of everything
+    lineWidth: 1, // for the fraction line
+    xSpacing: 5, // horizontal space between negative sign and fraction line
+    ySpacing: 3 // vertical spacing above/below the fraction line
+  }, options );
 
-    assert && assert( !options.children, 'ReducedFractionNode sets children' );
+  assert && assert( !options.children, 'ReducedFractionNode sets children' );
 
-    if ( fraction.isInteger() ) {
+  if ( fraction.isInteger() ) {
 
-      // integer
-      const integerNode = new Text( fraction.getValue(), {
-        font: options.integerFont
+    // integer
+    const integerNode = new Text( fraction.getValue(), {
+      font: options.integerFont
+    } );
+
+    options.children = [ integerNode ];
+  }
+  else {
+
+    const numeratorNode = new Text( Math.abs( fraction.numerator ), {
+      font: options.fractionFont
+    } );
+
+    const denominatorNode = new Text( Math.abs( fraction.denominator ), {
+      font: options.fractionFont
+    } );
+
+    const lineLength = Math.max( numeratorNode.width, denominatorNode.width );
+    const lineNode = new Line( 0, 0, lineLength, 0, {
+      stroke: options.color,
+      lineWidth: options.lineWidth
+    } );
+
+    const absoluteFractionNode = new VBox( {
+      children: [ numeratorNode, lineNode, denominatorNode ],
+      align: 'center',
+      spacing: options.ySpacing
+    } );
+
+    options.children = [ absoluteFractionNode ];
+
+    // Add sign for negative values
+    if ( fraction.getValue() < 0 ) {
+      const negativeSignNode = new Text( MathSymbols.MINUS, {
+        font: options.fractionFont,
+        right: lineNode.left - options.xSpacing,
+        centerY: lineNode.centerY
       } );
-
-      options.children = [ integerNode ];
+      options.children.push( negativeSignNode );
     }
-    else {
-
-      const numeratorNode = new Text( Math.abs( fraction.numerator ), {
-        font: options.fractionFont
-      } );
-
-      const denominatorNode = new Text( Math.abs( fraction.denominator ), {
-        font: options.fractionFont
-      } );
-
-      const lineLength = Math.max( numeratorNode.width, denominatorNode.width );
-      const lineNode = new Line( 0, 0, lineLength, 0, {
-        stroke: options.color,
-        lineWidth: options.lineWidth
-      } );
-
-      const absoluteFractionNode = new VBox( {
-        children: [ numeratorNode, lineNode, denominatorNode ],
-        align: 'center',
-        spacing: options.ySpacing
-      } );
-
-      options.children = [ absoluteFractionNode ];
-
-      // Add sign for negative values
-      if ( fraction.getValue() < 0 ) {
-        const negativeSignNode = new Text( MathSymbols.MINUS, {
-          font: options.fractionFont,
-          right: lineNode.left - options.xSpacing,
-          centerY: lineNode.centerY
-        } );
-        options.children.push( negativeSignNode );
-      }
-    }
-
-    Node.call( this, options );
   }
 
-  equalityExplorer.register( 'ReducedFractionNode', ReducedFractionNode );
+  Node.call( this, options );
+}
 
-  return inherit( Node, ReducedFractionNode );
-} );
- 
+equalityExplorer.register( 'ReducedFractionNode', ReducedFractionNode );
+
+inherit( Node, ReducedFractionNode );
+export default ReducedFractionNode;

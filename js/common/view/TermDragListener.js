@@ -32,386 +32,382 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  const EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  const SumToZeroNode = require( 'EQUALITY_EXPLORER/common/view/SumToZeroNode' );
-  const Term = require( 'EQUALITY_EXPLORER/common/model/Term' );
-  const TermCreator = require( 'EQUALITY_EXPLORER/common/model/TermCreator' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import EqualityExplorerColors from '../EqualityExplorerColors.js';
+import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
+import Term from '../model/Term.js';
+import TermCreator from '../model/TermCreator.js';
+import SumToZeroNode from './SumToZeroNode.js';
+
+/**
+ * @param {Node} termNode - Node that the listener is attached to
+ * @param {Term} term - the term being dragged
+ * @param {TermCreator} termCreator - the creator of term
+ * @param {Object} [options]
+ * @constructor
+ * @abstract
+ */
+function TermDragListener( termNode, term, termCreator, options ) {
+
+  assert && assert( termNode instanceof Node, 'invalid termNode: ' + termNode );
+  assert && assert( term instanceof Term, 'invalid term: ' + term );
+  assert && assert( termCreator instanceof TermCreator, 'invalid termCreator: ' + termCreator );
+
+  const self = this;
+
+  options = merge( {
+
+    haloRadius: 10, // radius of the halo around terms that sum to zero
+    pickableWhileAnimating: true, // is termNode pickable while term is animating?
+
+    // SimpleDragHandler options
+    allowTouchSnag: true,
+    start: this.start.bind( this ),
+    drag: this.drag.bind( this ),
+    end: this.end.bind( this )
+
+  }, options );
+
+  // @protected constructor args
+  this.termNode = termNode;
+  this.term = term;
+  this.termCreator = termCreator;
+
+  // @protected options
+  this.haloRadius = options.haloRadius;
+  this.pickableWhileAnimating = options.pickableWhileAnimating;
+
+  // @protected related terms
+  this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
+  this.equivalentTerm = null; // {Term|null} equivalent term on opposite plate, for lock feature
+
+  // @protected to improve readability
+  this.plate = termCreator.plate;
+  this.equivalentTermCreator = termCreator.equivalentTermCreator;
+  this.oppositePlate = termCreator.equivalentTermCreator.plate;
+
+  SimpleDragHandler.call( this, options );
+
+  // Equivalent term tracks the movement of the dragged term throughout the drag cycle and post-drag animation.
+  const positionListener = function( position ) {
+    if ( self.equivalentTerm && !self.equivalentTerm.isDisposed ) {
+      self.equivalentTerm.moveTo( termCreator.getEquivalentTermPosition( term ) );
+    }
+  };
+  term.positionProperty.link( positionListener ); // unlink required in dispose
+
+  // When the plate moves, or its contents change, refresh the halos around overlapping terms.
+  const refreshHalosBound = this.refreshHalos.bind( this );
+  this.plate.positionProperty.link( refreshHalosBound ); // unlink required in dispose
+  this.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
+
+  // @private called by dispose
+  this.disposeTermDragListener = function() {
+
+    if ( term.positionProperty.hasListener( positionListener ) ) {
+      term.positionProperty.unlink( positionListener );
+    }
+
+    if ( self.plate.positionProperty.hasListener( refreshHalosBound ) ) {
+      self.plate.positionProperty.unlink( refreshHalosBound );
+    }
+
+    if ( self.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
+      self.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
+    }
+  };
+}
+
+equalityExplorer.register( 'TermDragListener', TermDragListener );
+
+export default inherit( SimpleDragHandler, TermDragListener, {
 
   /**
-   * @param {Node} termNode - Node that the listener is attached to
-   * @param {Term} term - the term being dragged
-   * @param {TermCreator} termCreator - the creator of term
-   * @param {Object} [options]
-   * @constructor
-   * @abstract
+   * @public
+   * @override
    */
-  function TermDragListener( termNode, term, termCreator, options ) {
+  dispose: function() {
+    this.disposeTermDragListener();
+    SimpleDragHandler.prototype.dispose.call( this );
+  },
 
-    assert && assert( termNode instanceof Node, 'invalid termNode: ' + termNode );
-    assert && assert( term instanceof Term, 'invalid term: ' + term );
-    assert && assert( termCreator instanceof TermCreator, 'invalid termCreator: ' + termCreator );
+  /**
+   * Called at the start of a drag cycle, on pointer down.
+   * @param {SceneryEvent} event
+   * @param {Trail} trail
+   * @private
+   */
+  start: function( event, trail ) {
 
-    const self = this;
+    let success = true;
 
-    options = merge( {
+    if ( this.termCreator.isTermOnPlate( this.term ) ) {
 
-      haloRadius: 10, // radius of the halo around terms that sum to zero
-      pickableWhileAnimating: true, // is termNode pickable while term is animating?
-
-      // SimpleDragHandler options
-      allowTouchSnag: true,
-      start: this.start.bind( this ),
-      drag: this.drag.bind( this ),
-      end: this.end.bind( this )
-
-    }, options );
-
-    // @protected constructor args
-    this.termNode = termNode;
-    this.term = term;
-    this.termCreator = termCreator;
-
-    // @protected options
-    this.haloRadius = options.haloRadius;
-    this.pickableWhileAnimating = options.pickableWhileAnimating;
-
-    // @protected related terms
-    this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
-    this.equivalentTerm = null; // {Term|null} equivalent term on opposite plate, for lock feature
-
-    // @protected to improve readability
-    this.plate = termCreator.plate;
-    this.equivalentTermCreator = termCreator.equivalentTermCreator;
-    this.oppositePlate = termCreator.equivalentTermCreator.plate;
-
-    SimpleDragHandler.call( this, options );
-
-    // Equivalent term tracks the movement of the dragged term throughout the drag cycle and post-drag animation.
-    const positionListener = function( position ) {
-      if ( self.equivalentTerm && !self.equivalentTerm.isDisposed ) {
-        self.equivalentTerm.moveTo( termCreator.getEquivalentTermPosition( term ) );
-      }
-    };
-    term.positionProperty.link( positionListener ); // unlink required in dispose
-
-    // When the plate moves, or its contents change, refresh the halos around overlapping terms.
-    const refreshHalosBound = this.refreshHalos.bind( this );
-    this.plate.positionProperty.link( refreshHalosBound ); // unlink required in dispose
-    this.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
-
-    // @private called by dispose
-    this.disposeTermDragListener = function() {
-
-      if ( term.positionProperty.hasListener( positionListener ) ) {
-        term.positionProperty.unlink( positionListener );
-      }
-
-      if ( self.plate.positionProperty.hasListener( refreshHalosBound ) ) {
-        self.plate.positionProperty.unlink( refreshHalosBound );
-      }
-
-      if ( self.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
-        self.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
-      }
-    };
-  }
-
-  equalityExplorer.register( 'TermDragListener', TermDragListener );
-
-  return inherit( SimpleDragHandler, TermDragListener, {
-
-    /**
-     * @public
-     * @override
-     */
-    dispose: function() {
-      this.disposeTermDragListener();
-      SimpleDragHandler.prototype.dispose.call( this );
-    },
-
-    /**
-     * Called at the start of a drag cycle, on pointer down.
-     * @param {SceneryEvent} event
-     * @param {Trail} trail
-     * @private
-     */
-    start: function( event, trail ) {
-
-      let success = true;
-
-      if ( this.termCreator.isTermOnPlate( this.term ) ) {
-
-        if ( this.termCreator.lockedProperty.value ) {
-          success = this.startOpposite();
-        }
-
-        if ( success ) {
-          this.termCreator.removeTermFromPlate( this.term );
-        }
-      }
-      else if ( !this.term.isAnimating() ) {
-
-        // term came from toolbox. If lock is enabled, create an equivalent term on other side of the scale.
-        if ( this.termCreator.lockedProperty.value ) {
-          this.equivalentTerm = this.equivalentTermCreator.createTerm( this.term.copyOptions() );
-        }
+      if ( this.termCreator.lockedProperty.value ) {
+        success = this.startOpposite();
       }
 
       if ( success ) {
-        assert && assert( this.equivalentTerm || !this.termCreator.lockedProperty.value,
-          'lock is on, equivalentTerm expected' );
-
-        // move the term a bit, so it's obvious that we're interacting with it
-        this.term.moveTo( this.eventToPosition( event ) );
-
-        // set term properties at beginning of drag
-        this.term.draggingProperty.value = true;
-        this.term.shadowVisibleProperty.value = true;
-        if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
-          this.equivalentTerm.shadowVisibleProperty.value = true;
-          this.equivalentTerm.pickableProperty.value = false;
-        }
-
-        // move the node we're dragging to the foreground
-        this.termNode.moveToFront();
-
-        this.refreshHalos();
+        this.termCreator.removeTermFromPlate( this.term );
       }
-    },
+    }
+    else if ( !this.term.isAnimating() ) {
 
-    /**
-     * Called while termNode is being dragged.
-     * @param {SceneryEvent} event
-     * @param {Trail} trail
-     * @private
-     */
-    drag: function( event, trail ) {
+      // term came from toolbox. If lock is enabled, create an equivalent term on other side of the scale.
+      if ( this.termCreator.lockedProperty.value ) {
+        this.equivalentTerm = this.equivalentTermCreator.createTerm( this.term.copyOptions() );
+      }
+    }
 
-      // move the term
+    if ( success ) {
+      assert && assert( this.equivalentTerm || !this.termCreator.lockedProperty.value,
+        'lock is on, equivalentTerm expected' );
+
+      // move the term a bit, so it's obvious that we're interacting with it
       this.term.moveTo( this.eventToPosition( event ) );
 
-      // refresh the halos that appear when dragged term overlaps with an inverse term
-      this.refreshHalos();
-    },
-
-    /**
-     * Called at the end of a drag cycle, on pointer up.
-     * @param {SceneryEvent} event
-     * @param {Trail} trail
-     * @private
-     */
-    end: function( event, trail ) {
-
-      // drag sequence was interrupted, return immediately
-      if ( this.interrupted ) { return; }
-
-      // set term Properties at end of drag
-      this.term.draggingProperty.value = false;
-      this.term.shadowVisibleProperty.value = false;
+      // set term properties at beginning of drag
+      this.term.draggingProperty.value = true;
+      this.term.shadowVisibleProperty.value = true;
       if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
-        this.equivalentTerm.shadowVisibleProperty.value = false;
+        this.equivalentTerm.shadowVisibleProperty.value = true;
+        this.equivalentTerm.pickableProperty.value = false;
       }
 
-      if ( this.equivalentTerm && !this.termCreator.combineLikeTermsEnabled && this.oppositePlate.isFull() ) {
+      // move the node we're dragging to the foreground
+      this.termNode.moveToFront();
 
-        // there's no place to put equivalentTerm, the opposite plate is full
-        this.refreshHalos();
-        this.animateToToolbox();
-      }
-      else if ( this.likeTerm && this.term.isInverseTerm( this.likeTerm ) ) {
+      this.refreshHalos();
+    }
+  },
 
-        // overlapping terms sum to zero
-        const sumToZeroParent = this.termNode.getParent();
-        const sumToZeroNode = new SumToZeroNode( {
-          variable: this.term.variable || null,
-          haloRadius: this.haloRadius,
-          haloBaseColor: EqualityExplorerColors.HALO, // show the halo
-          fontSize: this.termCreator.combineLikeTermsEnabled ?
-                    EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE :
-                    EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
-        } );
-        const sumToZeroCell = this.plate.getCellForTerm( this.likeTerm );
+  /**
+   * Called while termNode is being dragged.
+   * @param {SceneryEvent} event
+   * @param {Trail} trail
+   * @private
+   */
+  drag: function( event, trail ) {
 
-        // dispose of terms that sum to zero
-        !this.term.isDisposed && this.term.dispose();
-        this.term = null;
-        !this.likeTerm.isDisposed && this.likeTerm.dispose();
-        this.likeTerm = null;
+    // move the term
+    this.term.moveTo( this.eventToPosition( event ) );
 
-        // put equivalent term on opposite plate
-        if ( this.equivalentTerm ) {
-          var oppositeSumToZeroNode = this.endOpposite();
-          if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
-            this.equivalentTerm.pickableProperty.value = true;
-          }
-          this.equivalentTerm = null;
-        }
+    // refresh the halos that appear when dragged term overlaps with an inverse term
+    this.refreshHalos();
+  },
 
-        // Do sum-to-zero animations after addressing both plates, so that plates have moved to their final position.
-        sumToZeroParent.addChild( sumToZeroNode );
-        sumToZeroNode.center = this.plate.getPositionOfCell( sumToZeroCell );
-        sumToZeroNode.startAnimation();
-        if ( oppositeSumToZeroNode ) {
-          sumToZeroParent.addChild( oppositeSumToZeroNode );
-          oppositeSumToZeroNode.center = this.oppositePlate.getPositionOfCell( sumToZeroCell );
-          oppositeSumToZeroNode.startAnimation();
-        }
-      }
-      else if ( this.term.positionProperty.value.y >
-                this.plate.positionProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
+  /**
+   * Called at the end of a drag cycle, on pointer up.
+   * @param {SceneryEvent} event
+   * @param {Trail} trail
+   * @private
+   */
+  end: function( event, trail ) {
 
-        // term was released below the plate, animate back to toolbox
-        this.animateToToolbox();
-      }
-      else {
+    // drag sequence was interrupted, return immediately
+    if ( this.interrupted ) { return; }
 
-        // term was released above the plate, animate to the plate
-        this.animateToPlate();
-      }
-    },
+    // set term Properties at end of drag
+    this.term.draggingProperty.value = false;
+    this.term.shadowVisibleProperty.value = false;
+    if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
+      this.equivalentTerm.shadowVisibleProperty.value = false;
+    }
 
-    /**
-     * Returns terms to the toolboxes where they were created.
-     * @private
-     */
-    animateToToolbox: function() {
-      assert && assert( this.term.toolboxPosition, 'toolboxPosition was not initialized for term: ' + this.term );
+    if ( this.equivalentTerm && !this.termCreator.combineLikeTermsEnabled && this.oppositePlate.isFull() ) {
 
-      this.term.pickableProperty.value = this.pickableWhileAnimating;
+      // there's no place to put equivalentTerm, the opposite plate is full
+      this.refreshHalos();
+      this.animateToToolbox();
+    }
+    else if ( this.likeTerm && this.term.isInverseTerm( this.likeTerm ) ) {
 
-      const self = this;
-      this.term.animateTo( this.term.toolboxPosition, {
-        animationCompletedCallback: function() {
-
-          // dispose of terms when they reach the toolbox
-          !self.term.isDisposed && self.term.dispose();
-          self.term = null;
-
-          if ( self.equivalentTerm ) {
-            !self.equivalentTerm.isDisposed && self.equivalentTerm.dispose();
-            self.equivalentTerm = null;
-          }
-        }
+      // overlapping terms sum to zero
+      const sumToZeroParent = this.termNode.getParent();
+      const sumToZeroNode = new SumToZeroNode( {
+        variable: this.term.variable || null,
+        haloRadius: this.haloRadius,
+        haloBaseColor: EqualityExplorerColors.HALO, // show the halo
+        fontSize: this.termCreator.combineLikeTermsEnabled ?
+                  EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE :
+                  EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
       } );
-    },
+      const sumToZeroCell = this.plate.getCellForTerm( this.likeTerm );
 
-    /**
-     * Converts an event to a model position with some offset, constrained to the drag bounds.
-     * This is used at the start of a drag cycle to position termNode relative to the pointer.
-     * @param {SceneryEvent} event
-     * @returns {Vector2}
-     * @private
-     */
-    eventToPosition: function( event ) {
+      // dispose of terms that sum to zero
+      !this.term.isDisposed && this.term.dispose();
+      this.term = null;
+      !this.likeTerm.isDisposed && this.likeTerm.dispose();
+      this.likeTerm = null;
 
-      // move bottom-center of termNode to pointer position
-      const dx = 0;
-      const dy = this.termNode.contentNodeSize.height / 2;
-      const position = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( dx, dy );
-
-      // constrain to drag bounds
-      return this.term.dragBounds.closestPointTo( position );
-    },
-
-    /**
-     * Refreshes the visual feedback (yellow halo) that is provided when a dragged term overlaps
-     * a like term that is on the scale. This has the side-effect of setting this.likeTerm.
-     * See https://github.com/phetsims/equality-explorer/issues/17
-     * @private
-     */
-    refreshHalos: function() {
-
-      // Bail if this drag listener is not currently active, for example when 2 terms are locked together
-      // and only one of them is being dragged. See https://github.com/phetsims/equality-explorer/issues/96
-      if ( !this.term.pickableProperty.value ) { return; }
-
-      if ( this.term.draggingProperty.value ) {
-
-        const previousLikeTerm = this.likeTerm;
-        this.likeTerm = null;
-
-        // does this term overlap a like term on the plate?
-        const termOnPlate = this.plate.getTermAtPosition( this.term.positionProperty.value );
-        if ( termOnPlate && termOnPlate.isLikeTerm( this.term ) ) {
-          this.likeTerm = termOnPlate;
+      // put equivalent term on opposite plate
+      if ( this.equivalentTerm ) {
+        var oppositeSumToZeroNode = this.endOpposite();
+        if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
+          this.equivalentTerm.pickableProperty.value = true;
         }
+        this.equivalentTerm = null;
+      }
 
-        // if the like term is new, then clean up previous like term
-        if ( previousLikeTerm && !previousLikeTerm.isDisposed && ( previousLikeTerm !== this.likeTerm ) ) {
-          previousLikeTerm.haloVisibleProperty.value = false;
-        }
+      // Do sum-to-zero animations after addressing both plates, so that plates have moved to their final position.
+      sumToZeroParent.addChild( sumToZeroNode );
+      sumToZeroNode.center = this.plate.getPositionOfCell( sumToZeroCell );
+      sumToZeroNode.startAnimation();
+      if ( oppositeSumToZeroNode ) {
+        sumToZeroParent.addChild( oppositeSumToZeroNode );
+        oppositeSumToZeroNode.center = this.oppositePlate.getPositionOfCell( sumToZeroCell );
+        oppositeSumToZeroNode.startAnimation();
+      }
+    }
+    else if ( this.term.positionProperty.value.y >
+              this.plate.positionProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
-        if ( this.likeTerm && ( this.termCreator.combineLikeTermsEnabled || this.term.isInverseTerm( this.likeTerm ) ) ) {
+      // term was released below the plate, animate back to toolbox
+      this.animateToToolbox();
+    }
+    else {
 
-          // terms will combine, show halo for term and likeTerm
-          if ( !this.term.isDisposed ) {
-            this.term.shadowVisibleProperty.value = false;
-            this.term.haloVisibleProperty.value = true;
-          }
-          if ( !this.likeTerm.isDisposed ) {
-            this.likeTerm.haloVisibleProperty.value = true;
-          }
-        }
-        else if ( !this.term.isDisposed ) {
+      // term was released above the plate, animate to the plate
+      this.animateToPlate();
+    }
+  },
 
-          // term will not combine
-          this.term.shadowVisibleProperty.value = true;
-          this.term.haloVisibleProperty.value = false;
+  /**
+   * Returns terms to the toolboxes where they were created.
+   * @private
+   */
+  animateToToolbox: function() {
+    assert && assert( this.term.toolboxPosition, 'toolboxPosition was not initialized for term: ' + this.term );
+
+    this.term.pickableProperty.value = this.pickableWhileAnimating;
+
+    const self = this;
+    this.term.animateTo( this.term.toolboxPosition, {
+      animationCompletedCallback: function() {
+
+        // dispose of terms when they reach the toolbox
+        !self.term.isDisposed && self.term.dispose();
+        self.term = null;
+
+        if ( self.equivalentTerm ) {
+          !self.equivalentTerm.isDisposed && self.equivalentTerm.dispose();
+          self.equivalentTerm = null;
         }
       }
-      else {
+    } );
+  },
+
+  /**
+   * Converts an event to a model position with some offset, constrained to the drag bounds.
+   * This is used at the start of a drag cycle to position termNode relative to the pointer.
+   * @param {SceneryEvent} event
+   * @returns {Vector2}
+   * @private
+   */
+  eventToPosition: function( event ) {
+
+    // move bottom-center of termNode to pointer position
+    const dx = 0;
+    const dy = this.termNode.contentNodeSize.height / 2;
+    const position = this.termNode.globalToParentPoint( event.pointer.point ).minusXY( dx, dy );
+
+    // constrain to drag bounds
+    return this.term.dragBounds.closestPointTo( position );
+  },
+
+  /**
+   * Refreshes the visual feedback (yellow halo) that is provided when a dragged term overlaps
+   * a like term that is on the scale. This has the side-effect of setting this.likeTerm.
+   * See https://github.com/phetsims/equality-explorer/issues/17
+   * @private
+   */
+  refreshHalos: function() {
+
+    // Bail if this drag listener is not currently active, for example when 2 terms are locked together
+    // and only one of them is being dragged. See https://github.com/phetsims/equality-explorer/issues/96
+    if ( !this.term.pickableProperty.value ) { return; }
+
+    if ( this.term.draggingProperty.value ) {
+
+      const previousLikeTerm = this.likeTerm;
+      this.likeTerm = null;
+
+      // does this term overlap a like term on the plate?
+      const termOnPlate = this.plate.getTermAtPosition( this.term.positionProperty.value );
+      if ( termOnPlate && termOnPlate.isLikeTerm( this.term ) ) {
+        this.likeTerm = termOnPlate;
+      }
+
+      // if the like term is new, then clean up previous like term
+      if ( previousLikeTerm && !previousLikeTerm.isDisposed && ( previousLikeTerm !== this.likeTerm ) ) {
+        previousLikeTerm.haloVisibleProperty.value = false;
+      }
+
+      if ( this.likeTerm && ( this.termCreator.combineLikeTermsEnabled || this.term.isInverseTerm( this.likeTerm ) ) ) {
+
+        // terms will combine, show halo for term and likeTerm
         if ( !this.term.isDisposed ) {
           this.term.shadowVisibleProperty.value = false;
-          this.term.haloVisibleProperty.value = false;
+          this.term.haloVisibleProperty.value = true;
         }
-        if ( this.likeTerm && !this.likeTerm.isDisposed ) {
-          this.likeTerm.haloVisibleProperty.value = false;
+        if ( !this.likeTerm.isDisposed ) {
+          this.likeTerm.haloVisibleProperty.value = true;
         }
       }
-    },
+      else if ( !this.term.isDisposed ) {
 
-    //-------------------------------------------------------------------------------------------------
-    // Below here are @abstract methods, to be implemented by subtypes
-    //-------------------------------------------------------------------------------------------------
-
-    /**
-     * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
-     * @returns {boolean} true=success, false=failure
-     * @protected
-     * @abstract
-     */
-    startOpposite: function() {
-      throw new Error( 'startOpposite must be implemented by subtype' );
-    },
-
-    /**
-     * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side.
-     * @returns {SumToZeroNode|null} non-null if the drag results in terms on the opposite plate summing to zero
-     * @protected
-     * @abstract
-     */
-    endOpposite: function() {
-      throw new Error( 'endOpposite must be implemented by subtype' );
-    },
-
-    /**
-     * Animates term to plates.
-     * @protected
-     * @abstract
-     */
-    animateToPlate: function() {
-      throw new Error( 'animateToPlate must be implemented by subtype' );
+        // term will not combine
+        this.term.shadowVisibleProperty.value = true;
+        this.term.haloVisibleProperty.value = false;
+      }
     }
-  } );
+    else {
+      if ( !this.term.isDisposed ) {
+        this.term.shadowVisibleProperty.value = false;
+        this.term.haloVisibleProperty.value = false;
+      }
+      if ( this.likeTerm && !this.likeTerm.isDisposed ) {
+        this.likeTerm.haloVisibleProperty.value = false;
+      }
+    }
+  },
+
+  //-------------------------------------------------------------------------------------------------
+  // Below here are @abstract methods, to be implemented by subtypes
+  //-------------------------------------------------------------------------------------------------
+
+  /**
+   * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
+   * @returns {boolean} true=success, false=failure
+   * @protected
+   * @abstract
+   */
+  startOpposite: function() {
+    throw new Error( 'startOpposite must be implemented by subtype' );
+  },
+
+  /**
+   * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side.
+   * @returns {SumToZeroNode|null} non-null if the drag results in terms on the opposite plate summing to zero
+   * @protected
+   * @abstract
+   */
+  endOpposite: function() {
+    throw new Error( 'endOpposite must be implemented by subtype' );
+  },
+
+  /**
+   * Animates term to plates.
+   * @protected
+   * @abstract
+   */
+  animateToPlate: function() {
+    throw new Error( 'animateToPlate must be implemented by subtype' );
+  }
 } );

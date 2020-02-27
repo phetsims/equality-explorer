@@ -5,53 +5,48 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  const Image = require( 'SCENERY/nodes/Image' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import catImage from '../../../images/cat_png.js';
+import catShadowImage from '../../../images/catShadow_png.js';
+import dogImage from '../../../images/dog_png.js';
+import dogShadowImage from '../../../images/dogShadow_png.js';
+import turtleImage from '../../../images/turtle_png.js';
+import turtleShadowImage from '../../../images/turtleShadow_png.js';
+import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import BasicsScene from './BasicsScene.js';
+import ObjectVariable from './ObjectVariable.js';
 
-  // images
-  const catImage = require( 'image!EQUALITY_EXPLORER/cat.png' );
-  const catShadowImage = require( 'image!EQUALITY_EXPLORER/catShadow.png' );
-  const dogImage = require( 'image!EQUALITY_EXPLORER/dog.png' );
-  const dogShadowImage = require( 'image!EQUALITY_EXPLORER/dogShadow.png' );
-  const turtleImage = require( 'image!EQUALITY_EXPLORER/turtle.png' );
-  const turtleShadowImage = require( 'image!EQUALITY_EXPLORER/turtleShadow.png' );
+/**
+ * @constructor
+ */
+function AnimalsScene() {
 
-  /**
-   * @constructor
-   */
-  function AnimalsScene() {
+  const variables = [
 
-    const variables = [
+    // name, image, shadow
+    new ObjectVariable( 'dog', dogImage, dogShadowImage, { value: 11 } ),
+    new ObjectVariable( 'cat', catImage, catShadowImage, { value: 4 } ),
+    new ObjectVariable( 'turtle', turtleImage, turtleShadowImage, { value: 6 } )
+  ];
 
-      // name, image, shadow
-      new ObjectVariable( 'dog', dogImage, dogShadowImage, { value: 11 } ),
-      new ObjectVariable( 'cat', catImage, catShadowImage, { value: 4 } ),
-      new ObjectVariable( 'turtle', turtleImage, turtleShadowImage, { value: 6 } )
-    ];
+  BasicsScene.call( this, variables, {
 
-    BasicsScene.call( this, variables, {
+    debugName: 'animals',
 
-      debugName: 'animals',
+    // icon used to represent this scene in the scene control (radio buttons)
+    icon: new Image( turtleImage, {
+      maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
+    } ),
 
-      // icon used to represent this scene in the scene control (radio buttons)
-      icon: new Image( turtleImage, {
-        maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-      } ),
+    // weight at which the scale bottoms out
+    maxWeight: 50
+  } );
+}
 
-      // weight at which the scale bottoms out
-      maxWeight: 50
-    } );
-  }
+equalityExplorer.register( 'AnimalsScene', AnimalsScene );
 
-  equalityExplorer.register( 'AnimalsScene', AnimalsScene );
-
-  return inherit( BasicsScene, AnimalsScene );
-} );
+inherit( BasicsScene, AnimalsScene );
+export default AnimalsScene;

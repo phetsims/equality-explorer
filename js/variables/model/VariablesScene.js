@@ -5,54 +5,52 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const ConstantTermCreator = require( 'EQUALITY_EXPLORER/common/model/ConstantTermCreator' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const EqualityExplorerConstants = require( 'EQUALITY_EXPLORER/common/EqualityExplorerConstants' );
-  const EqualityExplorerScene = require( 'EQUALITY_EXPLORER/common/model/EqualityExplorerScene' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Variable = require( 'EQUALITY_EXPLORER/common/model/Variable' );
-  const VariableTermCreator = require( 'EQUALITY_EXPLORER/common/model/VariableTermCreator' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
+import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
+import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
+import Variable from '../../common/model/Variable.js';
+import VariableTermCreator from '../../common/model/VariableTermCreator.js';
+import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
-  // string
-  const xString = require( 'string!EQUALITY_EXPLORER/x' );
+// string
+const xString = equalityExplorerStrings.x;
 
-  /**
-   * @constructor
-   */
-  function VariablesScene() {
+/**
+ * @constructor
+ */
+function VariablesScene() {
 
-    const xVariable = new Variable( xString, {
-      range: EqualityExplorerConstants.VARIABLE_RANGE
-    } );
+  const xVariable = new Variable( xString, {
+    range: EqualityExplorerConstants.VARIABLE_RANGE
+  } );
 
-    EqualityExplorerScene.call( this, createTermCreators( xVariable ), createTermCreators( xVariable ), {
-      debugName: 'variables',
-      variables: [ xVariable ]
-    } );
-  }
+  EqualityExplorerScene.call( this, createTermCreators( xVariable ), createTermCreators( xVariable ), {
+    debugName: 'variables',
+    variables: [ xVariable ]
+  } );
+}
 
-  equalityExplorer.register( 'VariablesScene', VariablesScene );
+equalityExplorer.register( 'VariablesScene', VariablesScene );
 
-  /**
-   * Creates the term creators for this scene.
-   * @param {Variable} xVariable
-   * @returns {TermCreator[]}
-   */
-  function createTermCreators( xVariable ) {
+/**
+ * Creates the term creators for this scene.
+ * @param {Variable} xVariable
+ * @returns {TermCreator[]}
+ */
+function createTermCreators( xVariable ) {
 
-    return [
+  return [
 
-      // x and -x
-      new VariableTermCreator( xVariable ),
+    // x and -x
+    new VariableTermCreator( xVariable ),
 
-      // 1 and -1
-      new ConstantTermCreator()
-    ];
-  }
+    // 1 and -1
+    new ConstantTermCreator()
+  ];
+}
 
-  return inherit( EqualityExplorerScene, VariablesScene );
-} );
+inherit( EqualityExplorerScene, VariablesScene );
+export default VariablesScene;

@@ -5,48 +5,43 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const BasicsScene = require( 'EQUALITY_EXPLORER/basics/model/BasicsScene' );
-  const ConstantTermNode = require( 'EQUALITY_EXPLORER/common/view/ConstantTermNode' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const Fraction = require( 'PHETCOMMON/model/Fraction' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const ObjectVariable = require( 'EQUALITY_EXPLORER/basics/model/ObjectVariable' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import sphereImage from '../../../images/sphere_png.js';
+import sphereShadowImage from '../../../images/sphereShadow_png.js';
+import squareImage from '../../../images/square_png.js';
+import squareShadowImage from '../../../images/squareShadow_png.js';
+import ConstantTermNode from '../../common/view/ConstantTermNode.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import BasicsScene from './BasicsScene.js';
+import ObjectVariable from './ObjectVariable.js';
 
-  // images
-  const sphereImage = require( 'image!EQUALITY_EXPLORER/sphere.png' );
-  const sphereShadowImage = require( 'image!EQUALITY_EXPLORER/sphereShadow.png' );
-  const squareImage = require( 'image!EQUALITY_EXPLORER/square.png' );
-  const squareShadowImage = require( 'image!EQUALITY_EXPLORER/squareShadow.png' );
+/**
+ * @constructor
+ */
+function ShapesScene() {
 
-  /**
-   * @constructor
-   */
-  function ShapesScene() {
+  const variables = [
 
-    const variables = [
+    // name, image, shadow
+    new ObjectVariable( 'sphere', sphereImage, sphereShadowImage, { value: 2 } ),
+    new ObjectVariable( 'square', squareImage, squareShadowImage, { value: 3 } )
+  ];
 
-      // name, image, shadow
-      new ObjectVariable( 'sphere', sphereImage, sphereShadowImage, { value: 2 } ),
-      new ObjectVariable( 'square', squareImage, squareShadowImage, { value: 3 } )
-    ];
+  BasicsScene.call( this, variables, {
 
-    BasicsScene.call( this, variables, {
+    debugName: 'shapes',
 
-      debugName: 'shapes',
+    // icon used to represent this scene in the scene control (radio buttons)
+    icon: ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) ),
 
-      // icon used to represent this scene in the scene control (radio buttons)
-      icon: ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) ),
+    // this scene allows you to create constant terms
+    hasConstantTerms: true
+  } );
+}
 
-      // this scene allows you to create constant terms
-      hasConstantTerms: true
-    } );
-  }
+equalityExplorer.register( 'ShapesScene', ShapesScene );
 
-  equalityExplorer.register( 'ShapesScene', ShapesScene );
-
-  return inherit( BasicsScene, ShapesScene );
-} );
+inherit( BasicsScene, ShapesScene );
+export default ShapesScene;

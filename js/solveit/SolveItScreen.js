@@ -5,46 +5,43 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const EqualityExplorerColors = require( 'EQUALITY_EXPLORER/common/EqualityExplorerColors' );
-  const EqualityExplorerScreen = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreen' );
-  const EqualityExplorerScreenIcons = require( 'EQUALITY_EXPLORER/common/EqualityExplorerScreenIcons' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Property = require( 'AXON/Property' );
-  const SolveItModel = require( 'EQUALITY_EXPLORER/solveit/model/SolveItModel' );
-  const SolveItScreenView = require( 'EQUALITY_EXPLORER/solveit/view/SolveItScreenView' );
+import Property from '../../../axon/js/Property.js';
+import inherit from '../../../phet-core/js/inherit.js';
+import merge from '../../../phet-core/js/merge.js';
+import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
+import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
+import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
+import equalityExplorerStrings from '../equality-explorer-strings.js';
+import equalityExplorer from '../equalityExplorer.js';
+import SolveItModel from './model/SolveItModel.js';
+import SolveItScreenView from './view/SolveItScreenView.js';
 
-  // strings
-  const screenSolveItString = require( 'string!EQUALITY_EXPLORER/screen.solveIt' );
+const screenSolveItString = equalityExplorerStrings.screen.solveIt;
 
-  /**
-   * @param {Object} [options]
-   * @constructor
-   */
-  function SolveItScreen( options ) {
+/**
+ * @param {Object} [options]
+ * @constructor
+ */
+function SolveItScreen( options ) {
 
-    options = merge( {
+  options = merge( {
 
-      // EqualityExplorerScreen options
-      name: screenSolveItString,
-      backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
-      homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
-      navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon()
-    }, options );
+    // EqualityExplorerScreen options
+    name: screenSolveItString,
+    backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
+    homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
+    navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon()
+  }, options );
 
-    EqualityExplorerScreen.call( this,
-      function() { return new SolveItModel(); },
-      function( model ) { return new SolveItScreenView( model ); },
-      options
-    );
-  }
+  EqualityExplorerScreen.call( this,
+    function() { return new SolveItModel(); },
+    function( model ) { return new SolveItScreenView( model ); },
+    options
+  );
+}
 
-  equalityExplorer.register( 'SolveItScreen', SolveItScreen );
+equalityExplorer.register( 'SolveItScreen', SolveItScreen );
 
-  return inherit( EqualityExplorerScreen, SolveItScreen );
-} );
+inherit( EqualityExplorerScreen, SolveItScreen );
+export default SolveItScreen;

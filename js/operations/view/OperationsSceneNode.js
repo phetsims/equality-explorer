@@ -6,79 +6,75 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const UniversalOperationControl = require( 'EQUALITY_EXPLORER/common/view/UniversalOperationControl' );
-  const VariablesSceneNode = require( 'EQUALITY_EXPLORER/variables/view/VariablesSceneNode' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import VariablesSceneNode from '../../variables/view/VariablesSceneNode.js';
+
+/**
+ * @param {EqualityExplorerScene} scene
+ * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+ * @param {BooleanProperty} equationAccordionBoxExpandedProperty
+ * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
+ * @param {Bounds2} layoutBounds
+ * @param {Object} [options]
+ * @constructor
+ */
+function OperationsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                              snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+
+  options = merge( {
+
+    // VariablesSceneNode options
+    organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
+  }, options );
+
+  VariablesSceneNode.call( this, scene, sceneProperty, equationAccordionBoxExpandedProperty,
+    snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+
+  // Layer when universal operation animation occurs
+  const operationAnimationLayer = new Node();
+
+  // @private Universal Operation, below Equation accordion box
+  this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
+    centerX: scene.scale.position.x, // centered on the scale
+    top: this.equationAccordionBox.bottom + 10
+  } );
+  this.addChild( this.universalOperationControl );
+  this.universalOperationControl.moveToBack();
+
+  // Put animation layer on top of everything
+  this.addChild( operationAnimationLayer );
+
+  // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
+  // removeListener not needed.
+  scene.sumToZeroEmitter.addListener( this.animateSumToZero.bind( this ) );
+}
+
+equalityExplorer.register( 'OperationsSceneNode', OperationsSceneNode );
+
+export default inherit( VariablesSceneNode, OperationsSceneNode, {
 
   /**
-   * @param {EqualityExplorerScene} scene
-   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
-   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
-   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
-   * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
-   * @constructor
+   * @param {number} dt - time step, in seconds
+   * @public
    */
-  function OperationsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                                snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  step: function( dt ) {
+    this.universalOperationControl.step( dt );
+  },
 
-    options = merge( {
+  /**
+   * @public
+   * @override
+   */
+  reset: function() {
 
-      // VariablesSceneNode options
-      organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
-    }, options );
+    // universal operation control has Properties and animations that may be in progress
+    this.universalOperationControl.reset();
 
-    VariablesSceneNode.call( this, scene, sceneProperty, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
-
-    // Layer when universal operation animation occurs
-    const operationAnimationLayer = new Node();
-
-    // @private Universal Operation, below Equation accordion box
-    this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
-      centerX: scene.scale.position.x, // centered on the scale
-      top: this.equationAccordionBox.bottom + 10
-    } );
-    this.addChild( this.universalOperationControl );
-    this.universalOperationControl.moveToBack();
-
-    // Put animation layer on top of everything
-    this.addChild( operationAnimationLayer );
-
-    // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
-    // removeListener not needed.
-    scene.sumToZeroEmitter.addListener( this.animateSumToZero.bind( this ) );
+    VariablesSceneNode.prototype.reset.call( this );
   }
-
-  equalityExplorer.register( 'OperationsSceneNode', OperationsSceneNode );
-
-  return inherit( VariablesSceneNode, OperationsSceneNode, {
-
-    /**
-     * @param {number} dt - time step, in seconds
-     * @public
-     */
-    step: function( dt ) {
-      this.universalOperationControl.step( dt );
-    },
-
-    /**
-     * @public
-     * @override
-     */
-    reset: function() {
-
-      // universal operation control has Properties and animations that may be in progress
-      this.universalOperationControl.reset();
-
-      VariablesSceneNode.prototype.reset.call( this );
-    }
-  } );
 } );

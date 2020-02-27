@@ -5,57 +5,54 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const Checkbox = require( 'SUN/Checkbox' );
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const VariableNode = require( 'EQUALITY_EXPLORER/common/view/VariableNode' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import HBox from '../../../../scenery/js/nodes/HBox.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import Checkbox from '../../../../sun/js/Checkbox.js';
+import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import VariableNode from './VariableNode.js';
 
-  // strings
-  const questionMarkString = require( 'string!EQUALITY_EXPLORER/questionMark' );
+const questionMarkString = equalityExplorerStrings.questionMark;
 
-  // constants
-  const FONT_SIZE = 24;
+// constants
+const FONT_SIZE = 24;
 
-  /**
-   * @param {Variable[]} variables - the variables
-   * @param {BooleanProperty} variableValueVisibleProperty - whether the variable value is visible
-   * @param {Object} [options]
-   * @constructor
-   */
-  function VariableValuesVisibleCheckbox( variables, variableValueVisibleProperty, options ) {
+/**
+ * @param {Variable[]} variables - the variables
+ * @param {BooleanProperty} variableValueVisibleProperty - whether the variable value is visible
+ * @param {Object} [options]
+ * @constructor
+ */
+function VariableValuesVisibleCheckbox( variables, variableValueVisibleProperty, options ) {
 
-    // Design decision: If there are multiple variables, use the first variable to label the checkbox.
-    // This decision was based on the limited space we have for the checkbox in Snapshots accordion box.
-    const variable = variables[ 0 ];
+  // Design decision: If there are multiple variables, use the first variable to label the checkbox.
+  // This decision was based on the limited space we have for the checkbox in Snapshots accordion box.
+  const variable = variables[ 0 ];
 
-    // variable
-    const variableNode = new VariableNode( variable, {
-      iconScale: 0.45,
-      fontSize: FONT_SIZE
-    } );
+  // variable
+  const variableNode = new VariableNode( variable, {
+    iconScale: 0.45,
+    fontSize: FONT_SIZE
+  } );
 
-    // '= ?' in normal font (no i18n requirements here, since this is an equation)
-    const rightNode = new Text( ' ' + MathSymbols.EQUAL_TO + ' ' + questionMarkString, {
-      font: new PhetFont( FONT_SIZE )
-    } );
+  // '= ?' in normal font (no i18n requirements here, since this is an equation)
+  const rightNode = new Text( ' ' + MathSymbols.EQUAL_TO + ' ' + questionMarkString, {
+    font: new PhetFont( FONT_SIZE )
+  } );
 
-    const contentNode = new HBox( {
-      children: [ variableNode, rightNode ], // x = ?
-      maxWidth: 100
-    } );
+  const contentNode = new HBox( {
+    children: [ variableNode, rightNode ], // x = ?
+    maxWidth: 100
+  } );
 
-    Checkbox.call( this, contentNode, variableValueVisibleProperty, options );
-  }
+  Checkbox.call( this, contentNode, variableValueVisibleProperty, options );
+}
 
-  equalityExplorer.register( 'VariableValuesVisibleCheckbox', VariableValuesVisibleCheckbox );
+equalityExplorer.register( 'VariableValuesVisibleCheckbox', VariableValuesVisibleCheckbox );
 
-  return inherit( Checkbox, VariableValuesVisibleCheckbox );
-} );
+inherit( Checkbox, VariableValuesVisibleCheckbox );
+export default VariableValuesVisibleCheckbox;

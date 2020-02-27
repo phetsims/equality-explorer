@@ -5,47 +5,44 @@
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const equalityExplorer = require( 'EQUALITY_EXPLORER/equalityExplorer' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
-  /**
-   * @param {EqualityExplorerScene[]} scenes - the scene choices
-   * @param {Property.<EqualityExplorerScene>} sceneProperty - the scene that is currently selected
-   * @param {Object} [options]
-   * @constructor
-   */
-  function SceneControl( scenes, sceneProperty, options ) {
+/**
+ * @param {EqualityExplorerScene[]} scenes - the scene choices
+ * @param {Property.<EqualityExplorerScene>} sceneProperty - the scene that is currently selected
+ * @param {Object} [options]
+ * @constructor
+ */
+function SceneControl( scenes, sceneProperty, options ) {
 
-    options = merge( {
+  options = merge( {
 
-      // RadioButtonGroup options
-      orientation: 'horizontal',
-      baseColor: 'white',
-      spacing: 8,
-      buttonContentXMargin: 15,
-      buttonContentYMargin: 12
-    }, options );
+    // RadioButtonGroup options
+    orientation: 'horizontal',
+    baseColor: 'white',
+    spacing: 8,
+    buttonContentXMargin: 15,
+    buttonContentYMargin: 12
+  }, options );
 
-    // describe a radio button for each scene
-    const contentArray = [];
-    scenes.forEach( function( scene ) {
-      assert && assert( scene.icon, 'scene must have an icon' );
-      contentArray.push( {
-        value: scene,
-        node: scene.icon
-      } );
+  // describe a radio button for each scene
+  const contentArray = [];
+  scenes.forEach( function( scene ) {
+    assert && assert( scene.icon, 'scene must have an icon' );
+    contentArray.push( {
+      value: scene,
+      node: scene.icon
     } );
+  } );
 
-    RadioButtonGroup.call( this, sceneProperty, contentArray, options );
-  }
+  RadioButtonGroup.call( this, sceneProperty, contentArray, options );
+}
 
-  equalityExplorer.register( 'SceneControl', SceneControl );
+equalityExplorer.register( 'SceneControl', SceneControl );
 
-  return inherit( RadioButtonGroup, SceneControl );
-} );
+inherit( RadioButtonGroup, SceneControl );
+export default SceneControl;
