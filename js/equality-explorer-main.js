@@ -21,7 +21,7 @@ define( require => {
   // strings
   const equalityExplorerTitleString = require( 'string!EQUALITY_EXPLORER/equality-explorer.title' );
 
-  SimLauncher.launch( function() {
+  SimLauncher.launch( () => {
 
     // production screens
     const screens = [
