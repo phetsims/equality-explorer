@@ -7,7 +7,6 @@
  */
 
 import Property from '../../../axon/js/Property.js';
-import inherit from '../../../phet-core/js/inherit.js';
 import merge from '../../../phet-core/js/merge.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
@@ -17,30 +16,32 @@ import equalityExplorer from '../equalityExplorer.js';
 import VariablesModel from './model/VariablesModel.js';
 import VariablesScreenView from './view/VariablesScreenView.js';
 
+// strings
 const screenVariablesString = equalityExplorerStrings.screen.variables;
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function VariablesScreen( options ) {
+class VariablesScreen extends EqualityExplorerScreen {
 
-  options = merge( {
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-    // EqualityExplorerScreen options
-    name: screenVariablesString,
-    backgroundColorProperty: new Property( EqualityExplorerColors.VARIABLES_SCREEN_BACKGROUND ),
-    homeScreenIcon: EqualityExplorerScreenIcons.createVariablesScreenIcon()
-  }, options );
+    options = merge( {
 
-  EqualityExplorerScreen.call( this,
-    function() { return new VariablesModel(); },
-    function( model ) { return new VariablesScreenView( model ); },
-    options
-  );
+      // EqualityExplorerScreen options
+      name: screenVariablesString,
+      backgroundColorProperty: new Property( EqualityExplorerColors.VARIABLES_SCREEN_BACKGROUND ),
+      homeScreenIcon: EqualityExplorerScreenIcons.createVariablesScreenIcon()
+    }, options );
+
+    super(
+      () => new VariablesModel(),
+      model => new VariablesScreenView( model ),
+      options
+    );
+  }
 }
 
 equalityExplorer.register( 'VariablesScreen', VariablesScreen );
 
-inherit( EqualityExplorerScreen, VariablesScreen );
 export default VariablesScreen;

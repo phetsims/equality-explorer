@@ -7,7 +7,6 @@
  */
 
 import Property from '../../../axon/js/Property.js';
-import inherit from '../../../phet-core/js/inherit.js';
 import merge from '../../../phet-core/js/merge.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
@@ -19,29 +18,30 @@ import SolveItScreenView from './view/SolveItScreenView.js';
 
 const screenSolveItString = equalityExplorerStrings.screen.solveIt;
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function SolveItScreen( options ) {
+class SolveItScreen extends EqualityExplorerScreen {
 
-  options = merge( {
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-    // EqualityExplorerScreen options
-    name: screenSolveItString,
-    backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
-    homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
-    navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon()
-  }, options );
+    options = merge( {
 
-  EqualityExplorerScreen.call( this,
-    function() { return new SolveItModel(); },
-    function( model ) { return new SolveItScreenView( model ); },
-    options
-  );
+      // EqualityExplorerScreen options
+      name: screenSolveItString,
+      backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
+      homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
+      navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon()
+    }, options );
+
+    super(
+      () => new SolveItModel(),
+      model => new SolveItScreenView( model ),
+      options
+    );
+  }
 }
 
 equalityExplorer.register( 'SolveItScreen', SolveItScreen );
 
-inherit( EqualityExplorerScreen, SolveItScreen );
 export default SolveItScreen;

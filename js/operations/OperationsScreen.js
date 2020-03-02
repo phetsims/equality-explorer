@@ -7,7 +7,6 @@
  */
 
 import Property from '../../../axon/js/Property.js';
-import inherit from '../../../phet-core/js/inherit.js';
 import merge from '../../../phet-core/js/merge.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
@@ -17,30 +16,32 @@ import equalityExplorer from '../equalityExplorer.js';
 import OperationsModel from './model/OperationsModel.js';
 import OperationsScreenView from './view/OperationsScreenView.js';
 
+// strings
 const screenOperationsString = equalityExplorerStrings.screen.operations;
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function OperationsScreen( options ) {
+class OperationsScreen extends EqualityExplorerScreen {
 
-  options = merge( {
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-    // EqualityExplorerScreen options
-    name: screenOperationsString,
-    backgroundColorProperty: new Property( EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND ),
-    homeScreenIcon: EqualityExplorerScreenIcons.createOperationsScreenIcon()
-  }, options );
+    options = merge( {
 
-  EqualityExplorerScreen.call( this,
-    function() { return new OperationsModel(); },
-    function( model ) { return new OperationsScreenView( model ); },
-    options
-  );
+      // EqualityExplorerScreen options
+      name: screenOperationsString,
+      backgroundColorProperty: new Property( EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND ),
+      homeScreenIcon: EqualityExplorerScreenIcons.createOperationsScreenIcon()
+    }, options );
+
+    super(
+      () => new OperationsModel(),
+      model => new OperationsScreenView( model ),
+      options
+    );
+  }
 }
 
 equalityExplorer.register( 'OperationsScreen', OperationsScreen );
 
-inherit( EqualityExplorerScreen, OperationsScreen );
 export default OperationsScreen;
