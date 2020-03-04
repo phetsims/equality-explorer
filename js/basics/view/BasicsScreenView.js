@@ -6,24 +6,20 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsSceneNode from './BasicsSceneNode.js';
 
-/**
- * @param {BasicsModel} model
- * @constructor
- */
-function BasicsScreenView( model ) {
-  EqualityExplorerScreenView.call( this, model, {
-    hasNegativeTermsInToolbox: false // only positive terms in the toolbox
-  } );
-}
+class BasicsScreenView extends EqualityExplorerScreenView {
 
-equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );
-
-export default inherit( EqualityExplorerScreenView, BasicsScreenView, {
+  /**
+   * @param {BasicsModel} model
+   */
+  constructor( model ) {
+    super( model, {
+      hasNegativeTermsInToolbox: false // only positive terms in the toolbox
+    } );
+  }
 
   /**
    * Creates the Node for this scene.
@@ -37,9 +33,13 @@ export default inherit( EqualityExplorerScreenView, BasicsScreenView, {
    * @protected
    * @override
    */
-  createSceneNode: function( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                             snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  createSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                   snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
     return new BasicsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
   }
-} );
+}
+
+equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );
+
+export default BasicsScreenView;

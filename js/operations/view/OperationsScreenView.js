@@ -6,22 +6,18 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import OperationsSceneNode from './OperationsSceneNode.js';
 
-/**
- * @param {OperationsModel} model
- * @constructor
- */
-function OperationsScreenView( model ) {
-  EqualityExplorerScreenView.call( this, model );
-}
+class OperationsScreenView extends EqualityExplorerScreenView {
 
-equalityExplorer.register( 'OperationsScreenView', OperationsScreenView );
-
-export default inherit( EqualityExplorerScreenView, OperationsScreenView, {
+  /**
+   * @param {OperationsModel} model
+   */
+  constructor( model ) {
+    super( model );
+  }
 
   /**
    * Creates the Node for this scene.
@@ -35,9 +31,13 @@ export default inherit( EqualityExplorerScreenView, OperationsScreenView, {
    * @protected
    * @override
    */
-  createSceneNode: function( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                             snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  createSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                   snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
     return new OperationsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
   }
-} );
+}
+
+equalityExplorer.register( 'OperationsScreenView', OperationsScreenView );
+
+export default OperationsScreenView;

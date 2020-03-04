@@ -6,22 +6,18 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesSceneNode from './VariablesSceneNode.js';
 
-/**
- * @param {VariablesModel} model
- * @constructor
- */
-function VariablesScreenView( model ) {
-  EqualityExplorerScreenView.call( this, model );
-}
+class VariablesScreenView extends EqualityExplorerScreenView {
 
-equalityExplorer.register( 'VariablesScreenView', VariablesScreenView );
-
-export default inherit( EqualityExplorerScreenView, VariablesScreenView, {
+  /**
+   * @param {VariablesModel} model
+   */
+  constructor( model ) {
+    super( model );
+  }
 
   /**
    * Creates the Node for this scene.
@@ -35,9 +31,13 @@ export default inherit( EqualityExplorerScreenView, VariablesScreenView, {
    * @protected
    * @override
    */
-  createSceneNode: function( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                             snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  createSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                   snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
     return new VariablesSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
   }
-} );
+}
+
+equalityExplorer.register( 'VariablesScreenView', VariablesScreenView );
+
+export default VariablesScreenView;

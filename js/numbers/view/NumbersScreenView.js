@@ -6,22 +6,18 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import NumbersSceneNode from './NumbersSceneNode.js';
 
-/**
- * @param {NumbersModel} model
- * @constructor
- */
-function NumbersScreenView( model ) {
-  EqualityExplorerScreenView.call( this, model );
-}
+class NumbersScreenView extends EqualityExplorerScreenView {
 
-equalityExplorer.register( 'NumbersScreenView', NumbersScreenView );
-
-export default inherit( EqualityExplorerScreenView, NumbersScreenView, {
+  /**
+   * @param {NumbersModel} model
+   */
+  constructor( model ) {
+    super( model );
+  }
 
   /**
    * Creates the Node for this scene.
@@ -35,9 +31,13 @@ export default inherit( EqualityExplorerScreenView, NumbersScreenView, {
    * @protected
    * @override
    */
-  createSceneNode: function( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                             snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  createSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+                   snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
     return new NumbersSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
   }
-} );
+}
+
+equalityExplorer.register( 'NumbersScreenView', NumbersScreenView );
+
+export default NumbersScreenView;
