@@ -15,73 +15,69 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function EqualityExplorerMovable( options ) {
+class EqualityExplorerMovable {
 
-  options = merge( {
-    position: Vector2.ZERO, // {Vector2} initial position
-    dragBounds: Bounds2.EVERYTHING, // {Bounds2} bounds that constrain dragging
-    animationSpeed: 400 // {number} distance/second when animating
-  }, options );
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-  // @public (read-only) DO NOT set this directly! Use moveTo or animateTo.
-  this.positionProperty = new Vector2Property( options.position );
+    options = merge( {
+      position: Vector2.ZERO, // {Vector2} initial position
+      dragBounds: Bounds2.EVERYTHING, // {Bounds2} bounds that constrain dragging
+      animationSpeed: 400 // {number} distance/second when animating
+    }, options );
 
-  // @public (read-only)
-  this.dragBounds = options.dragBounds;
+    // @public (read-only) DO NOT set this directly! Use moveTo or animateTo.
+    this.positionProperty = new Vector2Property( options.position );
 
-  // @public drag handlers must manage this flag during a drag sequence
-  this.draggingProperty = new BooleanProperty( false );
+    // @public (read-only)
+    this.dragBounds = options.dragBounds;
 
-  // @private
-  this.animationSpeed = options.animationSpeed;
+    // @public drag handlers must manage this flag during a drag sequence
+    this.draggingProperty = new BooleanProperty( false );
 
-  // @private {Vector2} destination to animate to, set using animateTo
-  this.destination = options.position.copy();
+    // @private
+    this.animationSpeed = options.animationSpeed;
 
-  // @private {function|null} called when animation step occurs, set using animateTo.
-  // Don't do anything expensive here!
-  this.animationStepCallback = null;
+    // @private {Vector2} destination to animate to, set using animateTo
+    this.destination = options.position.copy();
 
-  // @private {function|null} called when animation to destination completes, set using animateTo
-  this.animationCompletedCallback = null;
+    // @private {function|null} called when animation step occurs, set using animateTo.
+    // Don't do anything expensive here!
+    this.animationStepCallback = null;
 
-  // @public (read-only) emit when dispose has completed.
-  this.disposedEmitter = new Emitter( {
-    parameters: [ { valueType: EqualityExplorerMovable } ]
-  } );
+    // @private {function|null} called when animation to destination completes, set using animateTo
+    this.animationCompletedCallback = null;
 
-  // @public (read-only) has dispose completed?
-  this.isDisposed = false;
-}
+    // @public (read-only) emit when dispose has completed.
+    this.disposedEmitter = new Emitter( {
+      parameters: [ { valueType: EqualityExplorerMovable } ]
+    } );
 
-equalityExplorer.register( 'EqualityExplorerMovable', EqualityExplorerMovable );
-
-export default inherit( Object, EqualityExplorerMovable, {
+    // @public (read-only) has dispose completed?
+    this.isDisposed = false;
+  }
 
   /**
    * Creates the options that would be needed to instantiate a copy of this object.
-   * This is used by subtypes that implement copy.
+   * This is used by subclasses that implement copy.
    * @returns {Object}
    * @public
    */
-  copyOptions: function() {
+  copyOptions() {
     return {
       position: this.positionProperty.value,
       dragBounds: this.dragBounds,
       animationSpeed: this.animationSpeed
     };
-  },
+  }
 
   // @public
-  dispose: function() {
+  dispose() {
     assert && assert( !this.isDisposed, 'dispose called twice for ' + this );
 
     this.positionProperty.dispose();
@@ -91,21 +87,21 @@ export default inherit( Object, EqualityExplorerMovable, {
     this.isDisposed = true;
     this.disposedEmitter.emit( this );
     this.disposedEmitter.dispose();
-  },
+  }
 
   // @public
-  reset: function() {
+  reset() {
 
     // call moveTo instead of positionProperty.set, so that any animation in progress is cancelled
     this.moveTo( this.positionProperty.initialValue );
-  },
+  }
 
   /**
    * Moves immediately to the specified position, without animation.
    * @param {Vector2} position
    * @public
    */
-  moveTo: function( position ) {
+  moveTo( position ) {
 
     // cancel any pending callbacks
     this.animationStepCallback = null;
@@ -114,7 +110,7 @@ export default inherit( Object, EqualityExplorerMovable, {
     // move immediately to the position
     this.destination = position;
     this.positionProperty.set( position );
-  },
+  }
 
   /**
    * Animates to the specified position.
@@ -123,7 +119,7 @@ export default inherit( Object, EqualityExplorerMovable, {
    * @param {Object} [options]
    * @public
    */
-  animateTo: function( destination, options ) {
+  animateTo( destination, options ) {
 
     options = merge( {
       animationStepCallback: null, // {function} called when animation step occurs
@@ -133,24 +129,24 @@ export default inherit( Object, EqualityExplorerMovable, {
     this.destination = destination;
     this.animationStepCallback = options.animationStepCallback;
     this.animationCompletedCallback = options.animationCompletedCallback;
-  },
+  }
 
   /**
    * Is this model element animating?
    * @returns {boolean}
    * @public
    */
-  isAnimating: function() {
+  isAnimating() {
     return !this.draggingProperty.value &&
            ( !this.positionProperty.get().equals( this.destination ) || !!this.animationCompletedCallback );
-  },
+  }
 
   /**
    * Animates position, when not being dragged by the user.
    * @param {number} dt - time since the previous step, in seconds
    * @public
    */
-  step: function( dt ) {
+  step( dt ) {
 
     assert && assert( !this.isDisposed, 'attempt to step disposed movable' );
 
@@ -190,4 +186,8 @@ export default inherit( Object, EqualityExplorerMovable, {
       }
     }
   }
-} );
+}
+
+equalityExplorer.register( 'EqualityExplorerMovable', EqualityExplorerMovable );
+
+export default EqualityExplorerMovable;

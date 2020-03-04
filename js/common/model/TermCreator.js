@@ -25,7 +25,6 @@ import ObservableArray from '../../../../axon/js/ObservableArray.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import SceneryEvent from '../../../../scenery/js/input/SceneryEvent.js';
@@ -33,107 +32,104 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Term from './Term.js';
 
-/**
- * @param {Object} [options]
- * @constructor
- * @abstract
- */
-function TermCreator( options ) {
+class TermCreator {
 
-  options = merge( {
-    dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
+  /**
+   * @param {Object} [options]
+   * @abstract
+   */
+  constructor( options ) {
 
-    // {number} like terms will occupy this cell in the plate's 2D grid
-    // null means 'no cell', and like terms will not be combined
-    likeTermsCell: null
-  }, options );
+    options = merge( {
+      dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
 
-  // @private {Plate} the plate that this term creator is associated with.
-  // Deferred initialization, see set plate() for notes.
-  this._plate = null;
+      // {number} like terms will occupy this cell in the plate's 2D grid
+      // null means 'no cell', and like terms will not be combined
+      likeTermsCell: null
+    }, options );
 
-  // @private {Vector2} positions of the associated positive and negative TermCreatorNodes.
-  // Deferred initialization, see set positivePosition() and set negativePosition() for notes.
-  this._positivePosition = null;
-  this._negativePosition = null;
+    // @private {Plate} the plate that this term creator is associated with.
+    // Deferred initialization, see set plate() for notes.
+    this._plate = null;
 
-  // @public (read-only) like terms will be combined in this cell in the plate's 2D grid
-  this.likeTermsCell = options.likeTermsCell;
-  this.combineLikeTermsEnabled = ( options.likeTermsCell !== null ); // convenience property
+    // @private {Vector2} positions of the associated positive and negative TermCreatorNodes.
+    // Deferred initialization, see set positivePosition() and set negativePosition() for notes.
+    this._positivePosition = null;
+    this._negativePosition = null;
 
-  // @public {read-only) {Bounds2} drag bounds for terms created
-  this.dragBounds = options.dragBounds;
+    // @public (read-only) like terms will be combined in this cell in the plate's 2D grid
+    this.likeTermsCell = options.likeTermsCell;
+    this.combineLikeTermsEnabled = ( options.likeTermsCell !== null ); // convenience property
 
-  // @private {ObservableArray.<Term>} all terms that currently exist
-  this.allTerms = new ObservableArray();
+    // @public {read-only) {Bounds2} drag bounds for terms created
+    this.dragBounds = options.dragBounds;
 
-  // @protected {ObservableArray.<Term>} terms that are on the plate, a subset of this.allTerms
-  this.termsOnPlate = new ObservableArray();
+    // @private {ObservableArray.<Term>} all terms that currently exist
+    this.allTerms = new ObservableArray();
 
-  // @public (read-only) so we don't have to expose this.termsOnPlate
-  // dispose not needed.
-  this.numberOfTermsOnPlateProperty = new DerivedProperty(
-    [ this.termsOnPlate.lengthProperty ],
-    length => length
-  );
+    // @protected {ObservableArray.<Term>} terms that are on the plate, a subset of this.allTerms
+    this.termsOnPlate = new ObservableArray();
 
-  // @public (read-only) weight of the terms that are on the plate
-  // We can't use a DerivedProperty here because subtypes may have additional Properties
-  // that require updating weightOnPlateProperty.
-  this.weightOnPlateProperty = new Property( Fraction.fromInteger( 0 ), {
-    valueType: Fraction,
-    useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
-  } );
+    // @public (read-only) so we don't have to expose this.termsOnPlate
+    // dispose not needed.
+    this.numberOfTermsOnPlateProperty = new DerivedProperty(
+      [ this.termsOnPlate.lengthProperty ],
+      length => length
+    );
 
-  // @public emit is called when a term is created.
-  // Callback signature is function( {TermCreator} termCreator, {Term} term, {SceneryEvent|null} [event] ),
-  // where event is non-null if the term was created as the result of a user interaction.
-  // dispose not required.
-  this.termCreatedEmitter = new Emitter( {
-    parameters: [
-      { valueType: TermCreator },
-      { valueType: Term },
-      { valueType: [ SceneryEvent, null ] }
-    ]
-  } );
+    // @public (read-only) weight of the terms that are on the plate
+    // We can't use a DerivedProperty here because subtypes may have additional Properties
+    // that require updating weightOnPlateProperty.
+    this.weightOnPlateProperty = new Property( Fraction.fromInteger( 0 ), {
+      valueType: Fraction,
+      useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
+    } );
 
-  // @public emit is called when adding a term to the plate would cause EqualityExplorerQueryParameters.maxInteger
-  // to be exceeded.  See See https://github.com/phetsims/equality-explorer/issues/48
-  this.maxIntegerExceededEmitter = new Emitter();
+    // @public emit is called when a term is created.
+    // Callback signature is function( {TermCreator} termCreator, {Term} term, {SceneryEvent|null} [event] ),
+    // where event is non-null if the term was created as the result of a user interaction.
+    // dispose not required.
+    this.termCreatedEmitter = new Emitter( {
+      parameters: [
+        { valueType: TermCreator },
+        { valueType: Term },
+        { valueType: [ SceneryEvent, null ] }
+      ]
+    } );
 
-  // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale. This is needed
-  // for the lock feature, which involves creating an equivalent term on the opposite side of the scale.
-  // Example: When locked, if you drag -x out of the left toolbox, -x must also drag out of the right toolbox.
-  // Because this is a 2-way association, initialization is deferred until after instantiation.
-  // See set equivalentTermCreator() for notes.
-  this._equivalentTermCreator = null;
+    // @public emit is called when adding a term to the plate would cause EqualityExplorerQueryParameters.maxInteger
+    // to be exceeded.  See See https://github.com/phetsims/equality-explorer/issues/48
+    this.maxIntegerExceededEmitter = new Emitter();
 
-  // @public {BooleanProperty|null} indicates whether this term creator is locked to equivalentTermCreator
-  this.lockedProperty = new BooleanProperty( false );
+    // @public {TermCreator|null} optional equivalent term creator on the opposite side of the scale. This is needed
+    // for the lock feature, which involves creating an equivalent term on the opposite side of the scale.
+    // Example: When locked, if you drag -x out of the left toolbox, -x must also drag out of the right toolbox.
+    // Because this is a 2-way association, initialization is deferred until after instantiation.
+    // See set equivalentTermCreator() for notes.
+    this._equivalentTermCreator = null;
 
-  // @private called when Term.dispose is called
-  this.unmanageTermBound = this.unmanageTerm.bind( this );
+    // @public {BooleanProperty|null} indicates whether this term creator is locked to equivalentTermCreator
+    this.lockedProperty = new BooleanProperty( false );
 
-  // @private
-  this.updateWeightOnPlatePropertyBound = this.updateWeightOnPlateProperty.bind( this );
+    // @private called when Term.dispose is called
+    this.unmanageTermBound = this.unmanageTerm.bind( this );
 
-  // Update weight when number of terms on plate changes. unlink not required.
-  this.numberOfTermsOnPlateProperty.link( numberOfTermsOnPlate => this.updateWeightOnPlatePropertyBound() );
+    // @private
+    this.updateWeightOnPlatePropertyBound = this.updateWeightOnPlateProperty.bind( this );
 
-  // When locked changes... unlink not required.
-  this.lockedProperty.lazyLink( locked => {
+    // Update weight when number of terms on plate changes. unlink not required.
+    this.numberOfTermsOnPlateProperty.link( numberOfTermsOnPlate => this.updateWeightOnPlatePropertyBound() );
 
-    // If lock feature is turned on, verify that an equivalentTermCreator has been provided.
-    assert && assert( !locked || this.equivalentTermCreator, 'lock feature requires equivalentTermCreator' );
+    // When locked changes... unlink not required.
+    this.lockedProperty.lazyLink( locked => {
 
-    // Changing lock state causes all terms that are not on the plate to be disposed.
-    this.disposeTermsNotOnPlate();
-  } );
-}
+      // If lock feature is turned on, verify that an equivalentTermCreator has been provided.
+      assert && assert( !locked || this.equivalentTermCreator, 'lock feature requires equivalentTermCreator' );
 
-equalityExplorer.register( 'TermCreator', TermCreator );
-
-export default inherit( Object, TermCreator, {
+      // Changing lock state causes all terms that are not on the plate to be disposed.
+      this.disposeTermsNotOnPlate();
+    } );
+  }
 
   /**
    * Initializes the plate that this TermCreator is associated with. This association necessarily occurs
@@ -144,7 +140,7 @@ export default inherit( Object, TermCreator, {
   set plate( value ) {
     assert && assert( !this._plate, 'attempted to initialize plate twice' );
     this._plate = value;
-  },
+  }
 
   /**
    * Gets the plate that this TermCreator is associated with.
@@ -154,7 +150,7 @@ export default inherit( Object, TermCreator, {
   get plate() {
     assert && assert( this._plate, 'attempt to access plate before it was initialized' );
     return this._plate;
-  },
+  }
 
   /**
    * Initializes the position of the positive TermCreatorNode.
@@ -167,7 +163,7 @@ export default inherit( Object, TermCreator, {
     assert && assert( !this._positivePosition, 'attempted to initialize positivePosition twice' );
     assert && assert( value instanceof Vector2, 'invalid positivePosition: ' + value );
     this._positivePosition = value;
-  },
+  }
 
   /**
    * Gets the position of the positive TermCreatorNode.
@@ -177,7 +173,7 @@ export default inherit( Object, TermCreator, {
   get positivePosition() {
     assert && assert( this._positivePosition, 'attempt to access positivePosition before it was initialized' );
     return this._positivePosition;
-  },
+  }
 
   /**
    * Initializes the position of the optional negative TermCreatorNode.
@@ -190,7 +186,7 @@ export default inherit( Object, TermCreator, {
     assert && assert( !this._negativePosition, 'attempted to initialize negativePosition twice' );
     assert && assert( value instanceof Vector2, 'invalid negativePosition: ' + value );
     this._negativePosition = value;
-  },
+  }
 
   /**
    * Gets the position of the optional negative TermCreatorNode.
@@ -200,7 +196,7 @@ export default inherit( Object, TermCreator, {
   get negativePosition() {
     assert && assert( this._negativePosition, 'attempt to access negativePosition before it was initialized' );
     return this._negativePosition;
-  },
+  }
 
   /**
    * Initializes the optional equivalent TermCreator for the opposite plate, required for the optional 'lock' feature.
@@ -212,7 +208,7 @@ export default inherit( Object, TermCreator, {
     assert && assert( !this._equivalentTermCreator, 'attempted to initialize equivalentTermCreator twice' );
     assert && assert( this.isLikeTermCreator( value ), 'value is not a like TermCreator: ' + value );
     this._equivalentTermCreator = value;
-  },
+  }
 
   /**
    * Gets the optional equivalent TermCreator for the opposite plate.
@@ -223,7 +219,7 @@ export default inherit( Object, TermCreator, {
     assert && assert( this._equivalentTermCreator,
       'attempt to access equivalentTermCreator before it was initialized' );
     return this._equivalentTermCreator;
-  },
+  }
 
   /**
    * Given a term, gets the position for an equivalent term on the opposite side of the scale.
@@ -233,7 +229,7 @@ export default inherit( Object, TermCreator, {
    * @returns {Vector2}
    * @public
    */
-  getEquivalentTermPosition: function( term ) {
+  getEquivalentTermPosition( term ) {
     assert && assert( this.isManagedTerm( term ), 'term is not managed by this TermCreator: ' + term );
 
     let xOffset;
@@ -245,14 +241,14 @@ export default inherit( Object, TermCreator, {
     }
 
     return term.positionProperty.value.plusXY( xOffset, 0 );
-  },
+  }
 
   /**
    * Animates terms.
    * @param {number} dt - time since the previous step, in seconds
    * @public
    */
-  step: function( dt ) {
+  step( dt ) {
 
     // operate on a copy, since step may involve modifying the array
     const allTermsCopy = this.allTerms.getArray().slice();
@@ -265,7 +261,7 @@ export default inherit( Object, TermCreator, {
         allTermsCopy[ i ].step( dt );
       }
     }
-  },
+  }
 
   /**
    * Creates a term.
@@ -273,7 +269,7 @@ export default inherit( Object, TermCreator, {
    * @returns {Term}
    * @public
    */
-  createTerm: function( options ) {
+  createTerm( options ) {
 
     options = merge( {
       sign: 1,
@@ -288,7 +284,7 @@ export default inherit( Object, TermCreator, {
     this.manageTerm( term, options.event );
 
     return term;
-  },
+  }
 
   /**
    * Tells this term creator to manage a term.  Once managed, a term cannot be unmanaged - it's a life commitment!
@@ -296,7 +292,7 @@ export default inherit( Object, TermCreator, {
    * @param {SceneryEvent|null} [event] is provided if term was created as the result of a user interaction
    * @private
    */
-  manageTerm: function( term, event ) {
+  manageTerm( term, event ) {
     assert && assert( !term.isDisposed, 'term is disposed: ' + term );
     assert && assert( !this.isManagedTerm( term ), 'term is already managed: ' + term );
     assert && assert( event instanceof SceneryEvent || event === null, 'invalid event: ' + event );
@@ -322,14 +318,14 @@ export default inherit( Object, TermCreator, {
     // Notify listeners that a term is being managed by this term creator.
     // This will result in creation of the corresponding view.
     this.termCreatedEmitter.emit( this, term, event );
-  },
+  }
 
   /**
    * Called when Term.dispose is called.
    * @param {Term} term
    * @private
    */
-  unmanageTerm: function( term ) {
+  unmanageTerm( term ) {
 
     // ORDER IS VERY IMPORTANT HERE!
     if ( this.isTermOnPlate( term ) ) {
@@ -343,7 +339,7 @@ export default inherit( Object, TermCreator, {
     if ( term.disposedEmitter.hasListener( this.unmanageTermBound ) ) {
       term.disposedEmitter.removeListener( this.unmanageTermBound );
     }
-  },
+  }
 
   /**
    * Is the specified term managed by this term creator?
@@ -351,9 +347,9 @@ export default inherit( Object, TermCreator, {
    * @returns {boolean}
    * @private
    */
-  isManagedTerm: function( term ) {
+  isManagedTerm( term ) {
     return this.allTerms.contains( term );
-  },
+  }
 
   /**
    * Puts a term on the plate. If the term wasn't already managed, it becomes managed.
@@ -361,7 +357,7 @@ export default inherit( Object, TermCreator, {
    * @param {number} [cell] - cell in the plate's 2D grid, defaults to this.likeTermsCell when combining like terms
    * @public
    */
-  putTermOnPlate: function( term, cell ) {
+  putTermOnPlate( term, cell ) {
     assert && assert( !this.termsOnPlate.contains( term ), 'term already on plate: ' + term );
 
     if ( cell === undefined && this.combineLikeTermsEnabled ) {
@@ -379,7 +375,7 @@ export default inherit( Object, TermCreator, {
 
     assert && assert( !this.combineLikeTermsEnabled || this.termsOnPlate.length <= 1,
       'when combineLikeTermsEnabled, there should be at most 1 term on plate: ' + this.termsOnPlate.length );
-  },
+  }
 
   /**
    * Removes a term from the plate.
@@ -387,7 +383,7 @@ export default inherit( Object, TermCreator, {
    * @returns {number} the cell that the term was removed from
    * @public
    */
-  removeTermFromPlate: function( term ) {
+  removeTermFromPlate( term ) {
     assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
     assert && assert( this.termsOnPlate.contains( term ), 'term not on plate: ' + term );
 
@@ -398,7 +394,7 @@ export default inherit( Object, TermCreator, {
       term.onPlateProperty.value = false;
     }
     return cell;
-  },
+  }
 
   /**
    * Is the specified term on the plate?
@@ -406,86 +402,86 @@ export default inherit( Object, TermCreator, {
    * @returns {boolean}
    * @public
    */
-  isTermOnPlate: function( term ) {
+  isTermOnPlate( term ) {
     return this.termsOnPlate.contains( term );
-  },
+  }
 
   /**
    * Gets the terms that are on the plate.
    * @returns {Term[]}
    * @public
    */
-  getTermsOnPlate: function() {
+  getTermsOnPlate() {
     return this.termsOnPlate.getArray().slice(); // defensive copy
-  },
+  }
 
   /**
    * Gets the positive terms on the plate.
    * @returns {Term[]}
    * @public
    */
-  getPositiveTermsOnPlate: function() {
+  getPositiveTermsOnPlate() {
     return _.filter( this.termsOnPlate.getArray(), term => ( term.sign === 1 ) );
-  },
+  }
 
   /**
    * Gets the negative terms on the plate.
    * @returns {Term[]}
    * @public
    */
-  getNegativeTermsOnPlate: function() {
+  getNegativeTermsOnPlate() {
     return _.filter( this.termsOnPlate.getArray(), term => ( term.sign === -1 ) );
-  },
+  }
 
   /**
    * Gets the term that occupies the 'like terms' cell on the plate.
    * @returns {Term|null}
    * @public
    */
-  getLikeTermOnPlate: function() {
+  getLikeTermOnPlate() {
     assert && assert( this.combineLikeTermsEnabled,
       'getLikeTermOnPlate is only supported when combineLikeTermsEnabled' );
     assert && assert( this.termsOnPlate.length <= 1,
       'expected at most 1 term on plate' );
     return this.plate.getTermInCell( this.likeTermsCell );
-  },
+  }
 
   /**
    * Disposes of all terms.
    * @public
    */
-  disposeAllTerms: function() {
+  disposeAllTerms() {
 
     // operate on a copy, since dispose causes the ObservableArray to be modified
     this.disposeTerms( this.allTerms.getArray().slice() );
-  },
+  }
 
   /**
    * Disposes of all terms that are on the plate.
    * @public
    */
-  disposeTermsOnPlate: function() {
+  disposeTermsOnPlate() {
 
     // operate on a copy, since dispose causes the ObservableArray to be modified
     this.disposeTerms( this.termsOnPlate.getArray().slice() );
     this.hideAllTermHalos();
-  },
+  }
 
   /**
    * Disposes of all terms that are NOT on the plate.
    * @public
    */
-  disposeTermsNotOnPlate: function() {
+  disposeTermsNotOnPlate() {
     this.disposeTerms( _.difference( this.allTerms.getArray(), this.termsOnPlate.getArray() ) );
     this.hideAllTermHalos();
-  },
+  }
 
   /**
    * Disposes of some collection of terms.
    * @param {Term[]} terms
    * @private
    */
-  disposeTerms: function( terms ) {
+  disposeTerms( terms ) {
     for ( let i = 0; i < terms.length; i++ ) {
       const term = terms[ i ];
       if ( !term.isDisposed ) {
@@ -497,7 +493,7 @@ export default inherit( Object, TermCreator, {
         this.unmanageTerm( term );
       }
     }
-  },
+  }
 
   /**
    * Hides halos for all terms. This is done as part of disposeTermsOnPlate and disposeTermsNotOnPlate,
@@ -505,23 +501,23 @@ export default inherit( Object, TermCreator, {
    * See https://github.com/phetsims/equality-explorer/issues/59.
    * @private
    */
-  hideAllTermHalos: function() {
+  hideAllTermHalos() {
     for ( let i = 0; i < this.allTerms.getArray().length; i++ ) {
       this.allTerms.get( i ).haloVisibleProperty.value = false;
     }
-  },
+  }
 
   /**
    * Updates weightOnPlateProperty, the total weight of all terms on the plate.
    * @protected
    */
-  updateWeightOnPlateProperty: function() {
+  updateWeightOnPlateProperty() {
     let weight = Fraction.fromInteger( 0 );
     for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
       weight = weight.plus( this.termsOnPlate.get( i ).weight ).reduced();
     }
     this.weightOnPlateProperty.value = weight;
-  },
+  }
 
   /**
    * Do this TermCreator and the specified TermCreator create like terms?
@@ -529,7 +525,7 @@ export default inherit( Object, TermCreator, {
    * @returns {boolean}
    * @public
    */
-  isLikeTermCreator: function( termCreator ) {
+  isLikeTermCreator( termCreator ) {
 
     // Create 2 terms via createTermProtected, not createTerm, so that they are not managed.
     const thisTerm = this.createTermProtected();
@@ -543,7 +539,7 @@ export default inherit( Object, TermCreator, {
     thatTerm.dispose();
 
     return isLike;
-  },
+  }
 
   /**
    * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
@@ -552,7 +548,7 @@ export default inherit( Object, TermCreator, {
    * @returns {{cell: number, termOptions:Object }[]}
    * @public
    */
-  createSnapshot: function() {
+  createSnapshot() {
     const snapshot = [];
     const termsOnPlate = this.getTermsOnPlate();
     for ( let i = 0; i < termsOnPlate.length; i++ ) {
@@ -563,19 +559,19 @@ export default inherit( Object, TermCreator, {
       } );
     }
     return snapshot;
-  },
+  }
 
   /**
    * Restores a snapshot of terms on the plate for this TermCreator.
    * @param {*} snapshot - see return value of createSnapshot
    * @public
    */
-  restoreSnapshot: function( snapshot ) {
+  restoreSnapshot( snapshot ) {
     for ( let i = 0; i < snapshot.length; i++ ) {
       const term = this.createTerm( snapshot[ i ].termOptions );
       this.putTermOnPlate( term, snapshot[ i ].cell );
     }
-  },
+  }
 
   /**
    * Applies an operation to terms on the plate.
@@ -583,7 +579,7 @@ export default inherit( Object, TermCreator, {
    * @returns {boolean} - true if the operation resulted in a term on the plate becoming zero, false otherwise
    * @public
    */
-  applyOperation: function( operation ) {
+  applyOperation( operation ) {
 
     assert && assert( this.combineLikeTermsEnabled,
       'applyOperation is only supported when combining like terms' );
@@ -621,7 +617,7 @@ export default inherit( Object, TermCreator, {
     }
 
     return summedToZero;
-  },
+  }
 
   //-------------------------------------------------------------------------------------------------
   // Below here are @abstract methods, to be implemented by subtypes
@@ -634,9 +630,9 @@ export default inherit( Object, TermCreator, {
    * @public
    * @abstract
    */
-  createIcon: function( options ) {
+  createIcon( options ) {
     throw new Error( 'createIcon must be implemented by subtypes' );
-  },
+  }
 
   /**
    * Instantiates a term.
@@ -645,9 +641,9 @@ export default inherit( Object, TermCreator, {
    * @protected
    * @abstract
    */
-  createTermProtected: function( options ) {
+  createTermProtected( options ) {
     throw new Error( 'createTermProtected must be implemented by subtypes' );
-  },
+  }
 
   /**
    * Creates a term whose significant value is zero. The term is not managed by the TermCreator.
@@ -657,9 +653,9 @@ export default inherit( Object, TermCreator, {
    * @public
    * @abstract
    */
-  createZeroTerm: function( options ) {
+  createZeroTerm( options ) {
     throw new Error( 'createZeroTerm must be implemented by subtypes' );
-  },
+  }
 
   /**
    * Instantiates the Node that corresponds to a term.
@@ -669,7 +665,11 @@ export default inherit( Object, TermCreator, {
    * @public
    * @abstract
    */
-  createTermNode: function( term, options ) {
+  createTermNode( term, options ) {
     throw new Error( 'createTermNode must be implemented by subtypes' );
   }
-} );
+}
+
+equalityExplorer.register( 'TermCreator', TermCreator );
+
+export default TermCreator;
