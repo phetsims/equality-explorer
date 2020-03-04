@@ -9,7 +9,6 @@
  */
 
 import Multilink from '../../../../axon/js/Multilink.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
@@ -29,122 +28,130 @@ import VariableTermNode from './VariableTermNode.js';
 // constants
 const DEFAULT_FONT_SIZE = 30;
 
-/**
- * @param {TermCreator[]} leftTermCreators - left side of equation, terms appear in this order
- * @param {TermCreator[]} rightTermCreators - right side of equation, terms appear in this order
- * @param {Object} [options]
- * @constructor
- */
-function EquationNode( leftTermCreators, rightTermCreators, options ) {
+class EquationNode extends Node {
+  /**
+   * @param {TermCreator[]} leftTermCreators - left side of equation, terms appear in this order
+   * @param {TermCreator[]} rightTermCreators - right side of equation, terms appear in this order
+   * @param {Object} [options]
+   */
+  constructor( leftTermCreators, rightTermCreators, options ) {
 
-  options = merge( {
+    options = merge( {
 
-    // Update the view when the model changes?
-    // Set this to false to create a static equation.
-    updateEnabled: true,
+      // Update the view when the model changes?
+      // Set this to false to create a static equation.
+      updateEnabled: true,
 
-    // fonts sizes, optimized for EquationAccordionBox
-    symbolFontSize: DEFAULT_FONT_SIZE,
-    operatorFontSize: DEFAULT_FONT_SIZE,
-    integerFontSize: DEFAULT_FONT_SIZE,
-    fractionFontSize: 0.6 * DEFAULT_FONT_SIZE,
-    relationalOperatorFontSize: 1.5 * DEFAULT_FONT_SIZE,
+      // fonts sizes, optimized for EquationAccordionBox
+      symbolFontSize: DEFAULT_FONT_SIZE,
+      operatorFontSize: DEFAULT_FONT_SIZE,
+      integerFontSize: DEFAULT_FONT_SIZE,
+      fractionFontSize: 0.6 * DEFAULT_FONT_SIZE,
+      relationalOperatorFontSize: 1.5 * DEFAULT_FONT_SIZE,
 
-    relationalOperatorFontWeight: 'bold',
+      relationalOperatorFontWeight: 'bold',
 
-    // horizontal spacing
-    coefficientSpacing: 3, // space between coefficient and icon
-    plusSpacing: 8, // space around plus operator
-    relationalOperatorSpacing: 20 // space around the relational operator
+      // horizontal spacing
+      coefficientSpacing: 3, // space between coefficient and icon
+      plusSpacing: 8, // space around plus operator
+      relationalOperatorSpacing: 20 // space around the relational operator
 
-  }, options );
+    }, options );
 
-  Node.call( this );
+    super();
 
-  // expressions for the left and right sides of the equation
-  let leftExpressionNode = null;
-  let rightExpressionNode = null;
+    // expressions for the left and right sides of the equation
+    let leftExpressionNode = null;
+    let rightExpressionNode = null;
 
-  // relational operator that separates the two expressions
-  const relationalOperatorNode = new Text( '?', {
-    font: new PhetFont( {
-      size: options.relationalOperatorFontSize,
-      weight: options.relationalOperatorFontWeight
-    } )
-  } );
-
-  // updates the equation's layout, origin at the center of the relational operator
-  const updateLayout = () => {
-    if ( leftExpressionNode && rightExpressionNode ) {
-      relationalOperatorNode.centerX = 0;
-      relationalOperatorNode.centerY = 0;
-      leftExpressionNode.right = relationalOperatorNode.left - options.relationalOperatorSpacing;
-      leftExpressionNode.centerY = relationalOperatorNode.centerY;
-      rightExpressionNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
-      rightExpressionNode.centerY = relationalOperatorNode.centerY;
-    }
-  };
-
-  // updates the relational operator based on left vs right weight
-  const updateRelationalOperator = () => {
-    relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
-    updateLayout();
-  };
-
-  // configuration information for one side of the equation, passed to createExpressionNode
-  const expressionConfig = {
-    symbolFont: new MathSymbolFont( options.symbolFontSize ),
-    operatorFont: new PhetFont( options.operatorFontSize ),
-    integerFont: new PhetFont( options.integerFontSize ),
-    fractionFont: new PhetFont( options.fractionFontSize ),
-    coefficientSpacing: options.coefficientSpacing,
-    plusSpacing: options.plusSpacing
-  };
-
-  // updates the equation's terms
-  const updateTerms = () => {
-    leftExpressionNode = createExpressionNode( leftTermCreators, expressionConfig );
-    rightExpressionNode = createExpressionNode( rightTermCreators, expressionConfig );
-    this.children = [ leftExpressionNode, relationalOperatorNode, rightExpressionNode ];
-    updateLayout();
-  };
-
-  // if the equation needs to be dynamically updated ...
-  if ( options.updateEnabled ) {
-
-    // {Property[]} dependencies that require the relational operator to be updated
-    const relationalOperatorDependencies = [];
-
-    // {Property[]} dependencies that require the terms to be updated
-    const termDependencies = [];
-
-    // Gather dependencies for all term creators...
-    leftTermCreators.concat( rightTermCreators ).forEach( termCreator => {
-      relationalOperatorDependencies.push( termCreator.weightOnPlateProperty );
-      termDependencies.push( termCreator.numberOfTermsOnPlateProperty );
+    // relational operator that separates the two expressions
+    const relationalOperatorNode = new Text( '?', {
+      font: new PhetFont( {
+        size: options.relationalOperatorFontSize,
+        weight: options.relationalOperatorFontWeight
+      } )
     } );
 
-    // dispose required
-    var relationalOperatorMultilink = new Multilink( relationalOperatorDependencies, updateRelationalOperator );
-    var termsMultilink = new Multilink( termDependencies, updateTerms );
+    // updates the equation's layout, origin at the center of the relational operator
+    const updateLayout = () => {
+      if ( leftExpressionNode && rightExpressionNode ) {
+        relationalOperatorNode.centerX = 0;
+        relationalOperatorNode.centerY = 0;
+        leftExpressionNode.right = relationalOperatorNode.left - options.relationalOperatorSpacing;
+        leftExpressionNode.centerY = relationalOperatorNode.centerY;
+        rightExpressionNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
+        rightExpressionNode.centerY = relationalOperatorNode.centerY;
+      }
+    };
+
+    // updates the relational operator based on left vs right weight
+    const updateRelationalOperator = () => {
+      relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
+      updateLayout();
+    };
+
+    // configuration information for one side of the equation, passed to createExpressionNode
+    const expressionConfig = {
+      symbolFont: new MathSymbolFont( options.symbolFontSize ),
+      operatorFont: new PhetFont( options.operatorFontSize ),
+      integerFont: new PhetFont( options.integerFontSize ),
+      fractionFont: new PhetFont( options.fractionFontSize ),
+      coefficientSpacing: options.coefficientSpacing,
+      plusSpacing: options.plusSpacing
+    };
+
+    // updates the equation's terms
+    const updateTerms = () => {
+      leftExpressionNode = createExpressionNode( leftTermCreators, expressionConfig );
+      rightExpressionNode = createExpressionNode( rightTermCreators, expressionConfig );
+      this.children = [ leftExpressionNode, relationalOperatorNode, rightExpressionNode ];
+      updateLayout();
+    };
+
+    // if the equation needs to be dynamically updated ...
+    if ( options.updateEnabled ) {
+
+      // {Property[]} dependencies that require the relational operator to be updated
+      const relationalOperatorDependencies = [];
+
+      // {Property[]} dependencies that require the terms to be updated
+      const termDependencies = [];
+
+      // Gather dependencies for all term creators...
+      leftTermCreators.concat( rightTermCreators ).forEach( termCreator => {
+        relationalOperatorDependencies.push( termCreator.weightOnPlateProperty );
+        termDependencies.push( termCreator.numberOfTermsOnPlateProperty );
+      } );
+
+      // dispose required
+      var relationalOperatorMultilink = new Multilink( relationalOperatorDependencies, updateRelationalOperator );
+      var termsMultilink = new Multilink( termDependencies, updateTerms );
+    }
+    else {
+
+      // static equation
+      updateRelationalOperator();
+      updateTerms();
+    }
+
+    // @private
+    this.disposeEquationNode = () => {
+      relationalOperatorMultilink && relationalOperatorMultilink.dispose();
+      termsMultilink && termsMultilink.dispose();
+    };
+
+    this.mutate( options );
   }
-  else {
 
-    // static equation
-    updateRelationalOperator();
-    updateTerms();
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeEquationNode();
+    super.dispose();
   }
-
-  // @private
-  this.disposeEquationNode = () => {
-    relationalOperatorMultilink && relationalOperatorMultilink.dispose();
-    termsMultilink && termsMultilink.dispose();
-  };
-
-  this.mutate( options );
 }
-
-equalityExplorer.register( 'EquationNode', EquationNode );
 
 /**
  * Gets the operator that describes the relationship between the left and right sides.
@@ -277,14 +284,6 @@ function valueToOperatorNode( value, operatorFont ) {
   return new Text( operator, { font: operatorFont } );
 }
 
-export default inherit( Node, EquationNode, {
+equalityExplorer.register( 'EquationNode', EquationNode );
 
-  /**
-   * @public
-   * @override
-   */
-  dispose: function() {
-    this.disposeEquationNode();
-    Node.prototype.dispose.call( this );
-  }
-} );
+export default EquationNode;

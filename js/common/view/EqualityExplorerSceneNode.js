@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import equalityExplorerStrings from '../../equality-explorer-strings.js';
@@ -17,63 +16,62 @@ import SumToZeroNode from './SumToZeroNode.js';
 // string
 const numberTooBigString = equalityExplorerStrings.numberTooBig;
 
-/**
- * @param {EqualityExplorerScene} scene
- * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
- * @param {Node} termsLayer - parent for all TermNodes
- * @param {Object} [options]
- * @constructor
- * @abstract
- */
-function EqualityExplorerSceneNode( scene, sceneProperty, termsLayer, options ) {
-
-  // @public (read-only)
-  this.scene = scene;
-
-  // @private
-  this.termsLayer = termsLayer;
+class EqualityExplorerSceneNode extends Node {
 
   /**
-   * When a term is created in the model, create the corresponding view.
-   * @param {TermCreator} termCreator
-   * @param {Term} term
-   * @param {SceneryEvent|null} event - event is non-null when the term was created via user interaction
+   * @param {EqualityExplorerScene} scene
+   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+   * @param {Node} termsLayer - parent for all TermNodes
+   * @param {Object} [options]
+   * @abstract
    */
-  const termCreatedListener = ( termCreator, term, event ) => {
+  constructor( scene, sceneProperty, termsLayer, options ) {
 
-    // create a TermNode
-    const termNode = termCreator.createTermNode( term );
-    termsLayer.addChild( termNode );
+    super();
 
-    // Clean up when the term is disposed. Term.dispose handles removal of this listener.
-    term.disposedEmitter.addListener( term => termNode.dispose() );
+    // @public (read-only)
+    this.scene = scene;
 
-    // start a drag cycle by forwarding the event to termNode.
-    if ( event ) {
-      termNode.startDrag( event );
-    }
-  };
+    // @private
+    this.termsLayer = termsLayer;
 
-  // When the maxInteger limit is exceeded, dispose of all terms that are not on the scale, and display a dialog.
-  let dialog = null; // dialog will be reused
-  const maxIntegerExceededListener = () => {
-    phet.log && phet.log( 'maxInteger exceeded' );
-    scene.disposeTermsNotOnScale();
-    dialog = dialog || new OopsDialog( numberTooBigString );
-    dialog.show();
-  };
+    /**
+     * When a term is created in the model, create the corresponding view.
+     * @param {TermCreator} termCreator
+     * @param {Term} term
+     * @param {SceneryEvent|null} event - event is non-null when the term was created via user interaction
+     */
+    const termCreatedListener = ( termCreator, term, event ) => {
 
-  scene.allTermCreators.forEach( termCreator => {
-    termCreator.termCreatedEmitter.addListener( termCreatedListener ); // removeListener not needed
-    termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ); // removeListener not needed
-  } );
+      // create a TermNode
+      const termNode = termCreator.createTermNode( term );
+      termsLayer.addChild( termNode );
 
-  Node.call( this, options );
-}
+      // Clean up when the term is disposed. Term.dispose handles removal of this listener.
+      term.disposedEmitter.addListener( term => termNode.dispose() );
 
-equalityExplorer.register( 'EqualityExplorerSceneNode', EqualityExplorerSceneNode );
+      // start a drag cycle by forwarding the event to termNode.
+      if ( event ) {
+        termNode.startDrag( event );
+      }
+    };
 
-export default inherit( Node, EqualityExplorerSceneNode, {
+    // When the maxInteger limit is exceeded, dispose of all terms that are not on the scale, and display a dialog.
+    let dialog = null; // dialog will be reused
+    const maxIntegerExceededListener = () => {
+      phet.log && phet.log( 'maxInteger exceeded' );
+      scene.disposeTermsNotOnScale();
+      dialog = dialog || new OopsDialog( numberTooBigString );
+      dialog.show();
+    };
+
+    scene.allTermCreators.forEach( termCreator => {
+      termCreator.termCreatedEmitter.addListener( termCreatedListener ); // removeListener not needed
+      termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ); // removeListener not needed
+    } );
+
+    this.mutate( options );
+  }
 
   /**
    * Performs sum-to-zero animation for terms that have summed to zero.
@@ -85,7 +83,7 @@ export default inherit( Node, EqualityExplorerSceneNode, {
    * @param {TermCreator[]} termCreators - term creators whose term summed to zero
    * @public
    */
-  animateSumToZero: function( termCreators ) {
+  animateSumToZero( termCreators ) {
 
     for ( let i = 0; i < termCreators.length; i++ ) {
 
@@ -107,4 +105,8 @@ export default inherit( Node, EqualityExplorerSceneNode, {
       sumToZeroNode.startAnimation();
     }
   }
-} );
+}
+
+equalityExplorer.register( 'EqualityExplorerSceneNode', EqualityExplorerSceneNode );
+
+export default EqualityExplorerSceneNode;
