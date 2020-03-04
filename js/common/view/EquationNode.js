@@ -158,13 +158,13 @@ function getRelationalOperator( leftTermCreators, rightTermCreators ) {
 
   // evaluate the left side
   let leftWeight = Fraction.fromInteger( 0 );
-  for ( var i = 0; i < leftTermCreators.length; i++ ) {
+  for ( let i = 0; i < leftTermCreators.length; i++ ) {
     leftWeight = leftWeight.plus( leftTermCreators[ i ].weightOnPlateProperty.value );
   }
 
   // evaluate the right side
   let rightWeight = Fraction.fromInteger( 0 );
-  for ( i = 0; i < rightTermCreators.length; i++ ) {
+  for ( let i = 0; i < rightTermCreators.length; i++ ) {
     rightWeight = rightWeight.plus( rightTermCreators[ i ].weightOnPlateProperty.value );
   }
 

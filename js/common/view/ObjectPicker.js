@@ -361,7 +361,7 @@ inherit( ButtonListener, ButtonStateListener );
  * @param {Object} value
  * @returns {number}
  */
-var indexOfItemWithValue = function( items, value ) {
+function indexOfItemWithValue( items, value ) {
   let index = -1;
   for ( let i = 0; i < items.length; i++ ) {
     if ( items[ i ].value === value ) {
@@ -371,18 +371,18 @@ var indexOfItemWithValue = function( items, value ) {
   }
   assert && assert( index !== -1, 'invalid value: ' + index );
   return index;
-};
+}
 
 // creates a vertical gradient
-var createVerticalGradient = function( topColor, centerColor, bottomColor, height ) {
+function createVerticalGradient( topColor, centerColor, bottomColor, height ) {
   return new LinearGradient( 0, 0, 0, height )
     .addColorStop( 0, topColor )
     .addColorStop( 0.5, centerColor )
     .addColorStop( 1, bottomColor );
-};
+}
 
 // Update arrow and background colors
-var updateColors = function( buttonState, enabled, background, arrow, backgroundColors, arrowColors ) {
+function updateColors( buttonState, enabled, background, arrow, backgroundColors, arrowColors ) {
   if ( enabled ) {
     arrow.stroke = 'black';
     if ( buttonState === 'up' ) {
@@ -410,6 +410,6 @@ var updateColors = function( buttonState, enabled, background, arrow, background
     arrow.fill = arrowColors.disabled;
     arrow.stroke = arrowColors.disabled; // stroke so that arrow size will look the same when it's enabled/disabled
   }
-};
+}
 
 export default ObjectPicker;

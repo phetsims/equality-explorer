@@ -65,7 +65,7 @@ function UniversalOperationControl( scene, animationLayer, options ) {
 
   // items for the operator control
   const operatorItems = [];
-  for ( var i = 0; i < scene.operators.length; i++ ) {
+  for ( let i = 0; i < scene.operators.length; i++ ) {
     const operator = scene.operators[ i ];
     operatorItems.push( {
       value: operator,
@@ -122,7 +122,7 @@ function UniversalOperationControl( scene, animationLayer, options ) {
 
   // items for the operand picker
   const operandItems = [];
-  for ( i = 0; i < scene.operands.length; i++ ) {
+  for ( let i = 0; i < scene.operands.length; i++ ) {
     const operand = scene.operands[ i ];
     operandItems.push( {
       value: operand,
@@ -186,14 +186,14 @@ function UniversalOperationControl( scene, animationLayer, options ) {
 
         // up arrow is enabled if there are any constant term operands above the current selection
         let upEnabled = false;
-        for ( var i = operandIndex + 1; i < scene.operands.length && !upEnabled; i++ ) {
+        for ( let i = operandIndex + 1; i < scene.operands.length && !upEnabled; i++ ) {
           upEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
         }
         upEnabledProperty.value = upEnabled;
 
         // down arrow is enabled if there are any constant term operands below the current selection
         let downEnabled = false;
-        for ( i = operandIndex - 1; i >= 0 && !downEnabled; i-- ) {
+        for ( let i = operandIndex - 1; i >= 0 && !downEnabled; i-- ) {
           downEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
         }
         downEnabledProperty.value = downEnabled;
@@ -249,7 +249,7 @@ function UniversalOperationControl( scene, animationLayer, options ) {
     } );
 
     // animation on left side of the scale
-    var leftAnimation = new TranslateThenFade( leftOperationNode, {
+    const leftAnimation = new TranslateThenFade( leftOperationNode, {
       destination: new Vector2( leftOperationNode.x, scene.scale.leftPlate.getGridTop() - leftOperationNode.height ),
       onComplete: function() {
         numberOfAnimationsCompletedProperty.value++;
@@ -262,7 +262,7 @@ function UniversalOperationControl( scene, animationLayer, options ) {
     self.animations.push( leftAnimation );
 
     // animation on right side of the scale
-    var rightAnimation = new TranslateThenFade( rightOperationNode, {
+    const rightAnimation = new TranslateThenFade( rightOperationNode, {
       destination: new Vector2( rightOperationNode.x, scene.scale.rightPlate.getGridTop() - rightOperationNode.height ),
       onComplete: function() {
         numberOfAnimationsCompletedProperty.value++;
@@ -283,7 +283,7 @@ function UniversalOperationControl( scene, animationLayer, options ) {
   const goButtonIcon = new FontAwesomeNode( 'level_down', {
     scale: 0.75 * operandPicker.height / operandPicker.height // scale relative to the pickers
   } );
-  var goButton = new RoundPushButton( {
+  const goButton = new RoundPushButton( {
     listener: goButtonListener,
     content: goButtonIcon,
     baseColor: PhetColorScheme.BUTTON_YELLOW,

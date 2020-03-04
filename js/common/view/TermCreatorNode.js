@@ -58,7 +58,7 @@ function TermCreatorNode( termCreator, plate, termsLayer, options ) {
   ) );
 
   // Things to do after the sim has loaded, when this Node has a valid position.
-  var frameStartedCallback = function() {
+  const frameStartedCallback = function() {
 
     // This Node's position
     const position = termsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
