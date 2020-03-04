@@ -8,7 +8,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -18,73 +17,74 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariableNode from './VariableNode.js';
 
-/**
- * @param {Variable[]} variables
- * @param {Object} [options]
- * @constructor
- */
-function VariableValuesNode( variables, options ) {
+class VariableValuesNode extends HBox {
 
-  options = merge( {
-    fontSize: 28,
-    commaSeparated: true,
-    spacingInsideTerms: 3,
-    spacingBetweenTerms: 15
-  }, options );
+  /**
+   * @param {Variable[]} variables
+   * @param {Object} [options]
+   */
+  constructor( variables, options ) {
 
-  assert && assert( options.spacing === undefined, 'VariableValuesNode sets spacing' );
-  options.spacing = 0;
+    options = merge( {
+      fontSize: 28,
+      commaSeparated: true,
+      spacingInsideTerms: 3,
+      spacingBetweenTerms: 15
+    }, options );
 
-  const font = new PhetFont( options.fontSize );
+    assert && assert( options.spacing === undefined, 'VariableValuesNode sets spacing' );
+    options.spacing = 0;
 
-  const children = []; // {Node[]}
+    const font = new PhetFont( options.fontSize );
 
-  // '(' with normal font
-  const leftParenNode = new Text( '(', { font: font } );
-  children.push( leftParenNode );
+    const children = []; // {Node[]}
 
-  // E.g. {{symbol}} = {{value}}, for each variable
-  for ( let i = 0; i < variables.length; i++ ) {
+    // '(' with normal font
+    const leftParenNode = new Text( '(', { font: font } );
+    children.push( leftParenNode );
 
-    const variable = variables[ i ];
+    // E.g. {{symbol}} = {{value}}, for each variable
+    for ( let i = 0; i < variables.length; i++ ) {
 
-    children.push( new HBox( {
-      spacing: options.spacingInsideTerms,
-      children: [
+      const variable = variables[ i ];
 
-        // variable
-        new VariableNode( variable, {
-          iconScale: 0.35,
-          fontSize: options.fontSize
-        } ),
+      children.push( new HBox( {
+        spacing: options.spacingInsideTerms,
+        children: [
 
-        // =
-        new Text( MathSymbols.EQUAL_TO, { font: font } ),
+          // variable
+          new VariableNode( variable, {
+            iconScale: 0.35,
+            fontSize: options.fontSize
+          } ),
 
-        // N
-        new Text( '' + variable.valueProperty.value, { font: font } )
-      ]
-    } ) );
+          // =
+          new Text( MathSymbols.EQUAL_TO, { font: font } ),
 
-    // comma + space separator
-    if ( i < variables.length - 1 ) {
-      if ( options.commaSeparated ) {
-        children.push( new Text( ',', { font: font } ) );
+          // N
+          new Text( '' + variable.valueProperty.value, { font: font } )
+        ]
+      } ) );
+
+      // comma + space separator
+      if ( i < variables.length - 1 ) {
+        if ( options.commaSeparated ) {
+          children.push( new Text( ',', { font: font } ) );
+        }
+        children.push( new HStrut( options.spacingBetweenTerms ) );
       }
-      children.push( new HStrut( options.spacingBetweenTerms ) );
     }
+
+    const rightParenNode = new Text( ')', { font: font } );
+    children.push( rightParenNode );
+
+    assert && assert( !options.children, 'VariableValuesNode sets children' );
+    options.children = children;
+
+    super( options );
   }
-
-  const rightParenNode = new Text( ')', { font: font } );
-  children.push( rightParenNode );
-
-  assert && assert( !options.children, 'VariableValuesNode sets children' );
-  options.children = children;
-
-  HBox.call( this, options );
 }
 
 equalityExplorer.register( 'VariableValuesNode', VariableValuesNode );
 
-inherit( HBox, VariableValuesNode );
 export default VariableValuesNode;

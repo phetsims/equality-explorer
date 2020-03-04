@@ -8,7 +8,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import equalityExplorerStrings from '../../equality-explorer-strings.js';
@@ -18,53 +17,50 @@ import TermDragListener from './TermDragListener.js';
 const leftSideFullString = equalityExplorerStrings.leftSideFull;
 const rightSideFullString = equalityExplorerStrings.rightSideFull;
 
-/**
- * @param {Node} termNode - Node that the listener is attached to
- * @param {Term} term - the term being dragged
- * @param {TermCreator} termCreator - the creator of term
- * @param {Object} [options]
- * @constructor
- */
-function SeparateTermsDragListener( termNode, term, termCreator, options ) {
-  assert && assert( !termCreator.combineLikeTermsEnabled,
-    'SeparateTermsDragListener is used when like terms occupy separate cells' );
+class SeparateTermsDragListener extends TermDragListener {
 
-  TermDragListener.call( this, termNode, term, termCreator, options );
+  /**
+   * @param {Node} termNode - Node that the listener is attached to
+   * @param {Term} term - the term being dragged
+   * @param {TermCreator} termCreator - the creator of term
+   * @param {Object} [options]
+   */
+  constructor( termNode, term, termCreator, options ) {
+    assert && assert( !termCreator.combineLikeTermsEnabled,
+      'SeparateTermsDragListener is used when like terms occupy separate cells' );
 
-  // @private
-  this.inverseTerm = null; // {Term|null} inverse term on opposite plate, for lock feature
+    super( termNode, term, termCreator, options );
 
-  // @private If the inverse term is dragged, break the association between equivalentTerm and inverseTerm
-  this.inverseTermDraggingListener = dragging => {
-    assert && assert( this.inverseTerm, 'there is no associated inverse term' );
-    if ( dragging ) {
-      if ( this.inverseTerm.draggingProperty.hasListener( this.inverseTermDraggingListener ) ) {
+    // @private
+    this.inverseTerm = null; // {Term|null} inverse term on opposite plate, for lock feature
+
+    // @private If the inverse term is dragged, break the association between equivalentTerm and inverseTerm
+    this.inverseTermDraggingListener = dragging => {
+      assert && assert( this.inverseTerm, 'there is no associated inverse term' );
+      if ( dragging ) {
+        if ( this.inverseTerm.draggingProperty.hasListener( this.inverseTermDraggingListener ) ) {
+          this.inverseTerm.draggingProperty.unlink( this.inverseTermDraggingListener );
+        }
+        this.inverseTerm = null;
+      }
+    };
+
+    // @private
+    this.disposeSeparateTermsDragListener = () => {
+      if ( this.inverseTerm && this.inverseTerm.draggingProperty.hasListener( this.inverseTermDraggingListener ) ) {
         this.inverseTerm.draggingProperty.unlink( this.inverseTermDraggingListener );
       }
-      this.inverseTerm = null;
-    }
-  };
-
-  // @private
-  this.disposeSeparateTermsDragListener = () => {
-    if ( this.inverseTerm && this.inverseTerm.draggingProperty.hasListener( this.inverseTermDraggingListener ) ) {
-      this.inverseTerm.draggingProperty.unlink( this.inverseTermDraggingListener );
-    }
-  };
-}
-
-equalityExplorer.register( 'SeparateTermsDragListener', SeparateTermsDragListener );
-
-export default inherit( TermDragListener, SeparateTermsDragListener, {
+    };
+  }
 
   /**
    * @public
    * @override
    */
-  dispose: function() {
+  dispose() {
     this.disposeSeparateTermsDragListener();
-    TermDragListener.prototype.dispose.call( this );
-  },
+    super.dispose();
+  }
 
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the TermDragListener API
@@ -76,7 +72,7 @@ export default inherit( TermDragListener, SeparateTermsDragListener, {
    * @protected
    * @override
    */
-  startOpposite: function() {
+  startOpposite() {
     assert && assert( this.termCreator.lockedProperty.value, 'startOpposite should only be called when lock is on' );
 
     const termCell = this.plate.getCellForTerm( this.term );
@@ -118,7 +114,7 @@ export default inherit( TermDragListener, SeparateTermsDragListener, {
     }
 
     return true;
-  },
+  }
 
   /**
    * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side.
@@ -126,7 +122,7 @@ export default inherit( TermDragListener, SeparateTermsDragListener, {
    * @protected
    * @override
    */
-  endOpposite: function() {
+  endOpposite() {
     assert && assert( this.termCreator.lockedProperty.value, 'endOpposite should only be called when lock is on' );
 
     // put equivalent term in an empty cell
@@ -135,7 +131,7 @@ export default inherit( TermDragListener, SeparateTermsDragListener, {
 
     // always null for this subtype, since terms on the opposite side don't combine
     return null;
-  },
+  }
 
   /**
    * Animates terms to empty cells.
@@ -144,7 +140,7 @@ export default inherit( TermDragListener, SeparateTermsDragListener, {
    * @protected
    * @override
    */
-  animateToPlate: function() {
+  animateToPlate() {
     assert && assert( !this.termCreator.combineLikeTermsEnabled, 'should NOT be called when combining like terms' );
 
     if ( this.plate.isFull() || ( this.equivalentTerm && this.oppositePlate.isFull() ) ) {
@@ -221,4 +217,8 @@ export default inherit( TermDragListener, SeparateTermsDragListener, {
       } );
     }
   }
-} );
+}
+
+equalityExplorer.register( 'SeparateTermsDragListener', SeparateTermsDragListener );
+
+export default SeparateTermsDragListener;

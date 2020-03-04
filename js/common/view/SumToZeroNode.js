@@ -8,7 +8,6 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -21,83 +20,84 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import HaloNode from './HaloNode.js';
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function SumToZeroNode( options ) {
+class SumToZeroNode extends Node {
 
-  options = merge( {
-    variable: null, // {Variable|null} determines whether we render '0' or '0x' (for example)
-    haloRadius: 20,
-    haloBaseColor: 'transparent', // no visible halo, set this if you want to see the halo
-    fontSize: EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
-  }, options );
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-  const zeroNode = new Text( '0', {
-    font: new PhetFont( options.fontSize )
-  } );
+    options = merge( {
+      variable: null, // {Variable|null} determines whether we render '0' or '0x' (for example)
+      haloRadius: 20,
+      haloBaseColor: 'transparent', // no visible halo, set this if you want to see the halo
+      fontSize: EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
+    }, options );
 
-  let contentNode = null;
-  if ( options.variable ) {
-
-    const symbolNode = new Text( options.variable.symbol, {
-      font: new MathSymbolFont( options.fontSize )
+    const zeroNode = new Text( '0', {
+      font: new PhetFont( options.fontSize )
     } );
 
-    contentNode = new HBox( {
-      spacing: 0,
-      children: [ zeroNode, symbolNode ] // e.g. '0x'
+    let contentNode = null;
+    if ( options.variable ) {
+
+      const symbolNode = new Text( options.variable.symbol, {
+        font: new MathSymbolFont( options.fontSize )
+      } );
+
+      contentNode = new HBox( {
+        spacing: 0,
+        children: [ zeroNode, symbolNode ] // e.g. '0x'
+      } );
+    }
+    else {
+
+      // no variable, just show '0'
+      contentNode = zeroNode;
+    }
+    contentNode.maxWidth = 2 * options.haloRadius;
+
+    const haloNode = new HaloNode( options.haloRadius, {
+      baseColor: options.haloBaseColor,
+      center: contentNode.center
     } );
+
+    assert && assert( !options.children, 'SumToZeroNode sets children' );
+    options.children = [ haloNode, contentNode ];
+
+    super( options );
+
+    // Property to be animated
+    const opacityProperty = new NumberProperty( this.opacity );
+
+    // unlink not needed
+    opacityProperty.link( opacity => {
+      this.opacity = opacity;
+    } );
+
+    // @private
+    this.animation = new Animation( {
+      duration: 0.75,
+      targets: [ {
+        property: opacityProperty,
+        easing: Easing.QUINTIC_IN,
+        to: 0
+      } ]
+    } );
+
+    // removeListener not needed
+    this.animation.finishEmitter.addListener( () => this.dispose() ); // removes this Node from the scenegraph
   }
-  else {
-
-    // no variable, just show '0'
-    contentNode = zeroNode;
-  }
-  contentNode.maxWidth = 2 * options.haloRadius;
-
-  const haloNode = new HaloNode( options.haloRadius, {
-    baseColor: options.haloBaseColor,
-    center: contentNode.center
-  } );
-
-  assert && assert( !options.children, 'SumToZeroNode sets children' );
-  options.children = [ haloNode, contentNode ];
-
-  Node.call( this, options );
-
-  // Property to be animated
-  const opacityProperty = new NumberProperty( this.opacity );
-
-  // unlink not needed
-  opacityProperty.link( opacity => {
-    this.opacity = opacity;
-  } );
-
-  // @private
-  this.animation = new Animation( {
-    duration: 0.75,
-    targets: [ {
-      property: opacityProperty,
-      easing: Easing.QUINTIC_IN,
-      to: 0
-    } ]
-  } );
-
-  // removeListener not needed
-  this.animation.finishEmitter.addListener( () => this.dispose() ); // removes this Node from the scenegraph
-}
-
-equalityExplorer.register( 'SumToZeroNode', SumToZeroNode );
-
-export default inherit( Node, SumToZeroNode, {
 
   /**
    * Starts the animation.
    * @public
    */
-  startAnimation: function() {
+  startAnimation() {
     this.animation.start();
   }
-} );
+}
+
+equalityExplorer.register( 'SumToZeroNode', SumToZeroNode );
+
+export default SumToZeroNode;

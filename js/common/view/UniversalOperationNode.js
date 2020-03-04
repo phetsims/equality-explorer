@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
@@ -18,31 +17,27 @@ import VariableTerm from '../model/VariableTerm.js';
 import ConstantTermNode from './ConstantTermNode.js';
 import VariableTermNode from './VariableTermNode.js';
 
-/**
- * @param {UniversalOperation} operation
- * @param {Object} [options]
- * @constructor
- */
-function UniversalOperationNode( operation, options ) {
+class UniversalOperationNode extends HBox {
+  /**
+   * @param {UniversalOperation} operation
+   * @param {Object} [options]
+   */
+  constructor( operation, options ) {
 
-  options = merge( {
+    options = merge( {
 
-    // HBox options
-    spacing: 4
-  }, options );
+      // HBox options
+      spacing: 4
+    }, options );
 
-  assert && assert( !options.children, 'UniversalOperationNode sets children' );
-  options.children = [
-    UniversalOperationNode.createOperatorNode( operation.operator ),
-    UniversalOperationNode.createOperandNode( operation.operand )
-  ];
+    assert && assert( !options.children, 'UniversalOperationNode sets children' );
+    options.children = [
+      UniversalOperationNode.createOperatorNode( operation.operator ),
+      UniversalOperationNode.createOperandNode( operation.operand )
+    ];
 
-  HBox.call( this, options );
-}
-
-equalityExplorer.register( 'UniversalOperationNode', UniversalOperationNode );
-
-export default inherit( HBox, UniversalOperationNode, {}, {
+    super( options );
+  }
 
   /**
    * Creates the view for a universal operator.
@@ -51,11 +46,11 @@ export default inherit( HBox, UniversalOperationNode, {}, {
    * @public
    * @static
    */
-  createOperatorNode: function( operator ) {
+  static createOperatorNode( operator ) {
     return new Text( operator, {
       font: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT
     } );
-  },
+  }
 
   /**
    * Creates the view for a universal operand.
@@ -64,7 +59,7 @@ export default inherit( HBox, UniversalOperationNode, {}, {
    * @public
    * @static
    */
-  createOperandNode: function( operand ) {
+  static createOperandNode( operand ) {
 
     let operandNode = null;
 
@@ -88,4 +83,8 @@ export default inherit( HBox, UniversalOperationNode, {}, {
 
     return operandNode;
   }
-} );
+}
+
+equalityExplorer.register( 'UniversalOperationNode', UniversalOperationNode );
+
+export default UniversalOperationNode;
