@@ -50,8 +50,7 @@ class ConstantTerm extends Term {
    * @override
    */
   copyOptions() {
-    const supertypeOptions = Term.prototype.copyOptions.call( this );
-    return merge( {}, supertypeOptions, {
+    return merge( {}, super.copyOptions(), {
       constantValue: this.constantValue
     } );
   }
@@ -159,8 +158,7 @@ class ConstantTerm extends Term {
    * @override
    */
   createSnapshot() {
-    const supertypeOptions = Term.prototype.createSnapshot.call( this );
-    return merge( {}, supertypeOptions, {
+    return merge( {}, super.createSnapshot(), {
       constantValue: this.constantValue
     } );
   }

@@ -55,8 +55,7 @@ class VariableTerm extends Term {
    * @override
    */
   copyOptions() {
-    const supertypeOptions = Term.prototype.copyOptions.call( this );
-    return merge( {}, supertypeOptions, {
+    return merge( {}, super.copyOptions(), {
       coefficient: this.coefficient
     } );
   }
@@ -159,7 +158,7 @@ class VariableTerm extends Term {
    * @override
    */
   createSnapshot() {
-    const supertypeOptions = Term.prototype.createSnapshot.call( this );
+    const supertypeOptions = super.createSnapshot();
     return merge( {}, supertypeOptions, {
       coefficient: this.coefficient
     } );
