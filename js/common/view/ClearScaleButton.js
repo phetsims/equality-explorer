@@ -6,35 +6,35 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-/**
- * @param {function} clearScaleFunction
- * @param {Object} [options]
- * @constructor
- */
-function ClearScaleButton( clearScaleFunction, options ) {
+class ClearScaleButton extends EraserButton {
 
-  options = merge( {
+  /**
+   * @param {function} clearScaleFunction
+   * @param {Object} [options]
+   */
+  constructor( clearScaleFunction, options ) {
 
-    // EraserButton options
-    touchAreaDilation: 5,
-    iconWidth: 22
-  }, options );
+    options = merge( {
 
-  assert && assert( !options.listener, 'ClearScaleButton sets listener' );
-  options.listener = () => {
-    phet.log && phet.log( 'ClearScaleButton pressed' );
-    clearScaleFunction();
-  };
+      // EraserButton options
+      touchAreaDilation: 5,
+      iconWidth: 22
+    }, options );
 
-  EraserButton.call( this, options );
+    assert && assert( !options.listener, 'ClearScaleButton sets listener' );
+    options.listener = () => {
+      phet.log && phet.log( 'ClearScaleButton pressed' );
+      clearScaleFunction();
+    };
+
+    super( options );
+  }
 }
 
 equalityExplorer.register( 'ClearScaleButton', ClearScaleButton );
 
-inherit( EraserButton, ClearScaleButton );
 export default ClearScaleButton;

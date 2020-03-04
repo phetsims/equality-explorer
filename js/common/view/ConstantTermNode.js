@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -29,30 +28,27 @@ const DEFAULT_OPTIONS = {
   fractionFont: new PhetFont( 20 ) // font for fractional constant value
 };
 
-/**
- * @param {ConstantTermCreator} termCreator
- * @param {ConstantTerm} term
- * @param {Object} [options]
- * @constructor
- */
-function ConstantTermNode( termCreator, term, options ) {
+class ConstantTermNode extends TermNode {
 
-  options = merge( {}, DEFAULT_OPTIONS, options );
+  /**
+   * @param {ConstantTermCreator} termCreator
+   * @param {ConstantTerm} term
+   * @param {Object} [options]
+   */
+  constructor( termCreator, term, options ) {
 
-  const contentNode = ConstantTermNode.createInteractiveTermNode( term.constantValue,
-    merge( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
+    options = merge( {}, DEFAULT_OPTIONS, options );
 
-  const shadowNode = new Circle( term.diameter / 2, {
-    fill: 'black',
-    opacity: EqualityExplorerConstants.SHADOW_OPACITY
-  } );
+    const contentNode = ConstantTermNode.createInteractiveTermNode( term.constantValue,
+      merge( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
-  TermNode.call( this, termCreator, term, contentNode, shadowNode, options );
-}
+    const shadowNode = new Circle( term.diameter / 2, {
+      fill: 'black',
+      opacity: EqualityExplorerConstants.SHADOW_OPACITY
+    } );
 
-equalityExplorer.register( 'ConstantTermNode', ConstantTermNode );
-
-export default inherit( TermNode, ConstantTermNode, {}, {
+    super( termCreator, term, contentNode, shadowNode, options );
+  }
 
   /**
    * Creates the representation of a term that the user interacts with, in this case a number inside a circle.
@@ -62,7 +58,7 @@ export default inherit( TermNode, ConstantTermNode, {}, {
    * @public
    * @static
    */
-  createInteractiveTermNode: function( constantValue, options ) {
+  static createInteractiveTermNode( constantValue, options ) {
 
     assert && assert( constantValue instanceof Fraction, 'invalid constantValue: ' + constantValue );
     assert && assert( constantValue.isReduced(), 'constantValue must be reduced: ' + constantValue );
@@ -93,7 +89,7 @@ export default inherit( TermNode, ConstantTermNode, {}, {
     return new Node( {
       children: [ circleNode, constantNode ]
     } );
-  },
+  }
 
   /**
    * Creates the representation of a term that is shown in equations.
@@ -104,9 +100,13 @@ export default inherit( TermNode, ConstantTermNode, {}, {
    * @public
    * @static
    */
-  createEquationTermNode: function( constantValue, options ) {
+  static createEquationTermNode( constantValue, options ) {
     assert && assert( constantValue instanceof Fraction, 'invalid constantValue: ' + constantValue );
     assert && assert( constantValue.isReduced(), 'constantValue must be reduced: ' + constantValue );
     return new ReducedFractionNode( constantValue, options );
   }
-} );
+}
+
+equalityExplorer.register( 'ConstantTermNode', ConstantTermNode );
+
+export default ConstantTermNode;

@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
@@ -29,155 +28,156 @@ const SEPARATOR_OPTIONS = {
   stroke: 'rgb( 200, 200, 200 )'
 };
 
-/**
- * @param {EqualityExplorerScene} scene - the scene that we'll be taking snapshots of
- * @param {Object} [options]
- * @constructor
- */
-function SnapshotsAccordionBox( scene, options ) {
+class SnapshotsAccordionBox extends AccordionBox {
 
-  options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
+  /**
+   * @param {EqualityExplorerScene} scene - the scene that we'll be taking snapshots of
+   * @param {Object} [options]
+   */
+  constructor( scene, options ) {
 
-    // this accordion box is designed to be a fixed width, regardless of its content
-    fixedWidth: 100,
+    options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
-    // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
-    variableValuesVisibleProperty: null,
+      // this accordion box is designed to be a fixed width, regardless of its content
+      fixedWidth: 100,
 
-    // {Object|null} options passed to SnapshotControl
-    snapshotControlOptions: null,
+      // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
+      variableValuesVisibleProperty: null,
 
-    // supertype options
-    contentXMargin: 10,
-    contentYMargin: 10,
-    contentYSpacing: 3
+      // {Object|null} options passed to SnapshotControl
+      snapshotControlOptions: null,
 
-  }, options );
+      // supertype options
+      contentXMargin: 10,
+      contentYMargin: 10,
+      contentYSpacing: 3
 
-  // options for SnapshotControl
-  options.snapshotControlOptions = merge( {
-    controlHeight: 50,
-    orientation: 'horizontal',
-    commaSeparated: true,
-    variableValuesOpacity: 1
-  }, options.snapshotControlOptions );
+    }, options );
 
-  assert && assert( !( options.variableValuesVisibleProperty && !scene.variables ),
-    'scene has no variables to show in snapshots' );
+    // options for SnapshotControl
+    options.snapshotControlOptions = merge( {
+      controlHeight: 50,
+      orientation: 'horizontal',
+      commaSeparated: true,
+      variableValuesOpacity: 1
+    }, options.snapshotControlOptions );
 
-  assert && assert( options.maxWidth === undefined, 'SnapshotsAccordionBox sets maxWidth' );
-  options.maxWidth = options.fixedWidth;
+    assert && assert( !( options.variableValuesVisibleProperty && !scene.variables ),
+      'scene has no variables to show in snapshots' );
 
-  const contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
+    assert && assert( options.maxWidth === undefined, 'SnapshotsAccordionBox sets maxWidth' );
+    options.maxWidth = options.fixedWidth;
 
-  options.snapshotControlOptions = merge( {
-    variableValuesVisibleProperty: options.variableValuesVisibleProperty,
-    controlWidth: contentWidth
-  }, options.snapshotControlOptions );
+    const contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
 
-  // title
-  assert && assert( !options.titleNode, 'SnapshotsAccordionBox sets titleNode' );
-  options.titleNode = new Text( snapshotsString, {
-    font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
-    maxWidth: 0.85 * contentWidth
-  } );
+    options.snapshotControlOptions = merge( {
+      variableValuesVisibleProperty: options.variableValuesVisibleProperty,
+      controlWidth: contentWidth
+    }, options.snapshotControlOptions );
 
-  // Create a row for each snapshot
-  const snapshotsVBoxChildren = [];
-  for ( let i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
-    snapshotsVBoxChildren.push( new SnapshotControl( scene, scene.snapshotsCollection.snapshotProperties[ i ],
-      scene.snapshotsCollection.selectedSnapshotProperty, options.snapshotControlOptions ) );
-  }
+    // title
+    assert && assert( !options.titleNode, 'SnapshotsAccordionBox sets titleNode' );
+    options.titleNode = new Text( snapshotsString, {
+      font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
+      maxWidth: 0.85 * contentWidth
+    } );
 
-  const snapshotsVBox = new VBox( {
-    spacing: 15,
-    children: snapshotsVBoxChildren
-  } );
+    // Create a row for each snapshot
+    const snapshotsVBoxChildren = [];
+    for ( let i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
+      snapshotsVBoxChildren.push( new SnapshotControl( scene, scene.snapshotsCollection.snapshotProperties[ i ],
+        scene.snapshotsCollection.selectedSnapshotProperty, options.snapshotControlOptions ) );
+    }
 
-  // Button to restore the selected snapshot
-  const restoreIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
-  const restoreButton = new RectangularPushButton( {
-    content: restoreIcon,
-    baseColor: EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE, // button color matches selection stroke
-    xMargin: 8,
-    yMargin: 4,
-    touchAreaXDilation: 10,
-    touchAreaYDilation: 10,
-    listener: () => scene.snapshotsCollection.selectedSnapshotProperty.value.restore()
-  } );
+    const snapshotsVBox = new VBox( {
+      spacing: 15,
+      children: snapshotsVBoxChildren
+    } );
 
-  // Button to delete (trash) the selected snapshot
-  const trashIcon = new FontAwesomeNode( 'trash', { scale: 0.45 } );
-  const trashButton = new RectangularPushButton( {
-    content: trashIcon,
-    baseColor: 'white',
-    xMargin: 12,
-    yMargin: 5,
-    touchAreaXDilation: 5,
-    touchAreaYDilation: 5,
-    listener: () => scene.snapshotsCollection.deleteSelectedSnapshot()
-  } );
+    // Button to restore the selected snapshot
+    const restoreIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
+    const restoreButton = new RectangularPushButton( {
+      content: restoreIcon,
+      baseColor: EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE, // button color matches selection stroke
+      xMargin: 8,
+      yMargin: 4,
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10,
+      listener: () => scene.snapshotsCollection.selectedSnapshotProperty.value.restore()
+    } );
 
-  // Disables restore and trash buttons when there is no selection. unlink not required.
-  scene.snapshotsCollection.selectedSnapshotProperty.link( snapshot => {
-    const enabled = ( snapshot !== null );
-    restoreButton.enabled = enabled;
-    trashButton.enabled = enabled;
-  } );
+    // Button to delete (trash) the selected snapshot
+    const trashIcon = new FontAwesomeNode( 'trash', { scale: 0.45 } );
+    const trashButton = new RectangularPushButton( {
+      content: trashIcon,
+      baseColor: 'white',
+      xMargin: 12,
+      yMargin: 5,
+      touchAreaXDilation: 5,
+      touchAreaYDilation: 5,
+      listener: () => scene.snapshotsCollection.deleteSelectedSnapshot()
+    } );
 
-  const buttonGroupChildren = [ restoreButton, trashButton ];
+    // Disables restore and trash buttons when there is no selection. unlink not required.
+    scene.snapshotsCollection.selectedSnapshotProperty.link( snapshot => {
+      const enabled = ( snapshot !== null );
+      restoreButton.enabled = enabled;
+      trashButton.enabled = enabled;
+    } );
 
-  // Checkbox for making variable values visible.
-  if ( options.variableValuesVisibleProperty ) {
-    buttonGroupChildren.push( new VariableValuesVisibleCheckbox(
-      scene.variables, options.variableValuesVisibleProperty, {
-        touchAreaXDilation: 5,
-        touchAreaYDilation: 5
-      } ) );
-  }
+    const buttonGroupChildren = [ restoreButton, trashButton ];
 
-  const buttonGroup = new HBox( {
-    spacing: 40,
-    children: buttonGroupChildren,
-    maxWidth: contentWidth
-  } );
+    // Checkbox for making variable values visible.
+    if ( options.variableValuesVisibleProperty ) {
+      buttonGroupChildren.push( new VariableValuesVisibleCheckbox(
+        scene.variables, options.variableValuesVisibleProperty, {
+          touchAreaXDilation: 5,
+          touchAreaYDilation: 5
+        } ) );
+    }
 
-  snapshotsVBoxChildren.push( buttonGroup );
+    const buttonGroup = new HBox( {
+      spacing: 40,
+      children: buttonGroupChildren,
+      maxWidth: contentWidth
+    } );
 
-  const contentVBox = new VBox( {
-    spacing: 10,
-    children: [
-      snapshotsVBox,
-      new HSeparator( contentWidth, SEPARATOR_OPTIONS ),
-      buttonGroup
-    ]
-  } );
+    snapshotsVBoxChildren.push( buttonGroup );
 
-  AccordionBox.call( this, contentVBox, options );
+    const contentVBox = new VBox( {
+      spacing: 10,
+      children: [
+        snapshotsVBox,
+        new HSeparator( contentWidth, SEPARATOR_OPTIONS ),
+        buttonGroup
+      ]
+    } );
 
-  // Click outside this accordion box to clear the selected snapshot.
-  const clickToDeselectListener = {
-    down: event => {
-      if ( !this.parentToGlobalBounds( this.visibleBounds ).containsPoint( event.pointer.point ) ) {
-        scene.snapshotsCollection.selectedSnapshotProperty.value = null;
+    super( contentVBox, options );
+
+    // Click outside this accordion box to clear the selected snapshot.
+    const clickToDeselectListener = {
+      down: event => {
+        if ( !this.parentToGlobalBounds( this.visibleBounds ).containsPoint( event.pointer.point ) ) {
+          scene.snapshotsCollection.selectedSnapshotProperty.value = null;
+        }
       }
-    }
-  };
+    };
 
-  // Register input listener with the Display only when we have a selected snapshot.
-  // This technique was borrowed from circuit-construction-kit-common.CircuitElementNode.
-  // unlink not required.
-  scene.snapshotsCollection.selectedSnapshotProperty.link( ( selectedSnapshot, oldSelectedSnapshot ) => {
-    if ( oldSelectedSnapshot ) {
-      phet.joist.sim.display.removeInputListener( clickToDeselectListener );
-    }
-    if ( selectedSnapshot ) {
-      phet.joist.sim.display.addInputListener( clickToDeselectListener );
-    }
-  } );
+    // Register input listener with the Display only when we have a selected snapshot.
+    // This technique was borrowed from circuit-construction-kit-common.CircuitElementNode.
+    // unlink not required.
+    scene.snapshotsCollection.selectedSnapshotProperty.link( ( selectedSnapshot, oldSelectedSnapshot ) => {
+      if ( oldSelectedSnapshot ) {
+        phet.joist.sim.display.removeInputListener( clickToDeselectListener );
+      }
+      if ( selectedSnapshot ) {
+        phet.joist.sim.display.addInputListener( clickToDeselectListener );
+      }
+    } );
+  }
 }
 
 equalityExplorer.register( 'SnapshotsAccordionBox', SnapshotsAccordionBox );
 
-inherit( AccordionBox, SnapshotsAccordionBox );
 export default SnapshotsAccordionBox;

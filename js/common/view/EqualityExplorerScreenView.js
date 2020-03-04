@@ -15,6 +15,7 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import SceneControl from './SceneControl.js';
 
 class EqualityExplorerScreenView extends ScreenView {
+
   /**
    * @param {EqualityExplorerModel} model
    * @param {Object} [options]

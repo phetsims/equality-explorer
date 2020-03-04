@@ -8,7 +8,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import DownUpListener from '../../../../scenery/js/input/DownUpListener.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
@@ -18,50 +17,51 @@ import lockClosedImage from '../../../images/lockClosed_png.js';
 import lockOpenedImage from '../../../images/lockOpened_png.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-/**
- * @param {BooleanProperty} lockedProperty - indicates whether left and right sides are "locked"
- * @param {Object} [options]
- * @constructor
- */
-function LockControl( lockedProperty, options ) {
+class LockControl extends Node {
 
-  options = merge( {
+  /**
+   * @param {BooleanProperty} lockedProperty - indicates whether left and right sides are "locked"
+   * @param {Object} [options]
+   */
+  constructor( lockedProperty, options ) {
 
-    // Node options
-    cursor: 'pointer',
-    maxHeight: 45
-  }, options );
+    options = merge( {
 
-  // icons
-  const lockClosedNode = new Image( lockClosedImage );
-  const lockOpenedNode = new Image( lockOpenedImage );
-  assert && assert( lockClosedNode.width === lockOpenedNode.width && lockClosedNode.height === lockOpenedNode.height,
-    'lock images must have identical dimensions' );
+      // Node options
+      cursor: 'pointer',
+      maxHeight: 45
+    }, options );
 
-  const toggleNode = new BooleanToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
+    // icons
+    const lockClosedNode = new Image( lockClosedImage );
+    const lockOpenedNode = new Image( lockOpenedImage );
+    assert && assert( lockClosedNode.width === lockOpenedNode.width && lockClosedNode.height === lockOpenedNode.height,
+      'lock images must have identical dimensions' );
 
-    // put the origin at the center of the 'closed' lock, to facilitate layout
-    x: -lockClosedNode.width / 2,
-    y: -lockClosedNode.height / 2
-  } );
+    const toggleNode = new BooleanToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
 
-  assert && assert( !options.children, 'LockControl sets children' );
-  options.children = [ toggleNode ];
+      // put the origin at the center of the 'closed' lock, to facilitate layout
+      x: -lockClosedNode.width / 2,
+      y: -lockClosedNode.height / 2
+    } );
 
-  Node.call( this, options );
+    assert && assert( !options.children, 'LockControl sets children' );
+    options.children = [ toggleNode ];
 
-  // toggle the state when the user clicks on this Node
-  this.addInputListener( new DownUpListener( {
-    up: () => {
-      lockedProperty.value = !lockedProperty.value;
-      phet.log && phet.log( 'Lock pressed, value=' + lockedProperty.value );
-    }
-  } ) );
+    super( options );
 
-  this.touchArea = this.localBounds.dilatedXY( 5, 10 );
+    // toggle the state when the user clicks on this Node
+    this.addInputListener( new DownUpListener( {
+      up: () => {
+        lockedProperty.value = !lockedProperty.value;
+        phet.log && phet.log( 'Lock pressed, value=' + lockedProperty.value );
+      }
+    } ) );
+
+    this.touchArea = this.localBounds.dilatedXY( 5, 10 );
+  }
 }
 
 equalityExplorer.register( 'LockControl', LockControl );
 
-inherit( Node, LockControl );
 export default LockControl;

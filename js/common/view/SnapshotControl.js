@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import DownUpListener from '../../../../scenery/js/input/DownUpListener.js';
 import LayoutBox from '../../../../scenery/js/nodes/LayoutBox.js';
@@ -30,166 +29,167 @@ const SELECTION_RECTANGLE_X_MARGIN = 10;
 const SELECTION_RECTANGLE_Y_MARGIN = 8;
 const VALID_ORIENTATION_VALUES = [ 'horizontal', 'vertical' ];
 
-/**
- * @param {EqualityExplorerScene} scene - the scene that we'll be taking a snapshot of
- * @param {Property.<Snapshot|null>} snapshotProperty - snapshot associated with this control, null if no snapshot
- * @param {Property.<Snapshot|null>} selectedSnapshotProperty - the selected snapshot, null if no selection
- * @param {Object} [options]
- * @constructor
- */
-function SnapshotControl( scene, snapshotProperty, selectedSnapshotProperty, options ) {
+class SnapshotControl extends Node {
 
-  options = merge( {
+  /**
+   * @param {EqualityExplorerScene} scene - the scene that we'll be taking a snapshot of
+   * @param {Property.<Snapshot|null>} snapshotProperty - snapshot associated with this control, null if no snapshot
+   * @param {Property.<Snapshot|null>} selectedSnapshotProperty - the selected snapshot, null if no selection
+   * @param {Object} [options]
+   */
+  constructor( scene, snapshotProperty, selectedSnapshotProperty, options ) {
 
-    // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
-    variableValuesVisibleProperty: null,
-    controlWidth: 100,
-    controlHeight: 50,
-    orientation: 'horizontal', // layout of the equation and variable values, see VALID_ORIENTATION_VALUES
-    commaSeparated: true, // are variable values separated by commas?
-    variableValuesOpacity: 1 // [0,1], see https://github.com/phetsims/equality-explorer/issues/113
-  }, options );
+    options = merge( {
 
-  assert && assert( _.includes( VALID_ORIENTATION_VALUES, options.orientation ),
-    'invalid orientation: ' + options.orientation );
-  assert && assert( options.variableValuesOpacity >= 0 && options.variableValuesOpacity <= 1,
-    'invalid variableValuesOpacity: ' + options.variableValuesOpacity );
+      // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
+      variableValuesVisibleProperty: null,
+      controlWidth: 100,
+      controlHeight: 50,
+      orientation: 'horizontal', // layout of the equation and variable values, see VALID_ORIENTATION_VALUES
+      commaSeparated: true, // are variable values separated by commas?
+      variableValuesOpacity: 1 // [0,1], see https://github.com/phetsims/equality-explorer/issues/113
+    }, options );
 
-  // rectangle that appears around the snapshot when it's selected
-  const selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
-    cornerRadius: 3,
-    lineWidth: 3,
-    stroke: 'transparent'
-  } );
+    assert && assert( _.includes( VALID_ORIENTATION_VALUES, options.orientation ),
+      'invalid orientation: ' + options.orientation );
+    assert && assert( options.variableValuesOpacity >= 0 && options.variableValuesOpacity <= 1,
+      'invalid variableValuesOpacity: ' + options.variableValuesOpacity );
 
-  // placeholders, so that snapshotNode has valid bounds
-  let equationNode = NO_EQUATION_NODE;
-  let variableValuesNode = NO_VARIABLE_VALUES_NODE;
+    // rectangle that appears around the snapshot when it's selected
+    const selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
+      cornerRadius: 3,
+      lineWidth: 3,
+      stroke: 'transparent'
+    } );
 
-  // parent for the equation and optional display of variable values
-  const snapshotNode = new LayoutBox( {
-    orientation: options.orientation,
-    children: [ equationNode ],
-    spacing: ( options.orientation === 'horizontal' ) ? 20 : 8,
-    center: selectionRectangle.center,
-    maxWidth: options.controlWidth - 2 * SELECTION_RECTANGLE_X_MARGIN,
-    maxHeight: options.controlHeight - 2 * SELECTION_RECTANGLE_Y_MARGIN,
-    pickable: false
-  } );
+    // placeholders, so that snapshotNode has valid bounds
+    let equationNode = NO_EQUATION_NODE;
+    let variableValuesNode = NO_VARIABLE_VALUES_NODE;
 
-  // snapshot (camera) button
-  const snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
-  const snapshotButton = new RectangularPushButton( {
-    content: snapshotIcon,
-    baseColor: 'white',
-    xMargin: 8,
-    yMargin: 4,
-    touchAreaXDilation: 10,
-    touchAreaYDilation: 10,
-    center: selectionRectangle.center,
-    maxWidth: options.controlWidth,
-    maxHeight: options.controlHeight,
-    listener: () => {
-      assert && assert( !snapshotProperty.value, 'snapshot is already occupied' );
-      const snapshot = new Snapshot( scene );
-      snapshotProperty.value = snapshot; // associate the snapshot with this control
-      selectedSnapshotProperty.value = snapshot; // select the created snapshot
-    }
-  } );
+    // parent for the equation and optional display of variable values
+    const snapshotNode = new LayoutBox( {
+      orientation: options.orientation,
+      children: [ equationNode ],
+      spacing: ( options.orientation === 'horizontal' ) ? 20 : 8,
+      center: selectionRectangle.center,
+      maxWidth: options.controlWidth - 2 * SELECTION_RECTANGLE_X_MARGIN,
+      maxHeight: options.controlHeight - 2 * SELECTION_RECTANGLE_Y_MARGIN,
+      pickable: false
+    } );
 
-  assert && assert( !options.children, 'SnapshotControl sets children' );
-  options.children = [ selectionRectangle, snapshotNode, snapshotButton ];
+    // snapshot (camera) button
+    const snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
+    const snapshotButton = new RectangularPushButton( {
+      content: snapshotIcon,
+      baseColor: 'white',
+      xMargin: 8,
+      yMargin: 4,
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10,
+      center: selectionRectangle.center,
+      maxWidth: options.controlWidth,
+      maxHeight: options.controlHeight,
+      listener: () => {
+        assert && assert( !snapshotProperty.value, 'snapshot is already occupied' );
+        const snapshot = new Snapshot( scene );
+        snapshotProperty.value = snapshot; // associate the snapshot with this control
+        selectedSnapshotProperty.value = snapshot; // select the created snapshot
+      }
+    } );
 
-  Node.call( this, options );
+    assert && assert( !options.children, 'SnapshotControl sets children' );
+    options.children = [ selectionRectangle, snapshotNode, snapshotButton ];
 
-  // selects the snapshot associated with this control
-  const upListener = new DownUpListener( {
-    upInside: () => {
-      assert && assert( snapshotProperty.value, 'expected a snapshot' );
-      selectedSnapshotProperty.value = snapshotProperty.value;
-    }
-  } );
+    super( options );
 
-  // updates the layout of the snapshot, and centers it in the control
-  const updateSnapshotLayout = () => {
-    if ( options.variableValuesVisibleProperty && options.variableValuesVisibleProperty.value ) {
-      snapshotNode.children = [ equationNode, variableValuesNode ];
-    }
-    else {
-      snapshotNode.children = [ equationNode ];
-    }
-    snapshotNode.center = selectionRectangle.center;
-  };
+    // selects the snapshot associated with this control
+    const upListener = new DownUpListener( {
+      upInside: () => {
+        assert && assert( snapshotProperty.value, 'expected a snapshot' );
+        selectedSnapshotProperty.value = snapshotProperty.value;
+      }
+    } );
 
-  // Updates the view when the model changes. unlink not required.
-  snapshotProperty.link( snapshot => {
+    // updates the layout of the snapshot, and centers it in the control
+    const updateSnapshotLayout = () => {
+      if ( options.variableValuesVisibleProperty && options.variableValuesVisibleProperty.value ) {
+        snapshotNode.children = [ equationNode, variableValuesNode ];
+      }
+      else {
+        snapshotNode.children = [ equationNode ];
+      }
+      snapshotNode.center = selectionRectangle.center;
+    };
 
-    // either the button or the snapshot is visible
-    snapshotButton.visible = !snapshot;
-    snapshotNode.visible = !!snapshot;
-    selectionRectangle.visible = !!snapshot;
+    // Updates the view when the model changes. unlink not required.
+    snapshotProperty.link( snapshot => {
 
-    if ( snapshot ) {
+      // either the button or the snapshot is visible
+      snapshotButton.visible = !snapshot;
+      snapshotNode.visible = !!snapshot;
+      selectionRectangle.visible = !!snapshot;
 
-      selectionRectangle.cursor = 'pointer';
+      if ( snapshot ) {
 
-      // create the equation for the snapshot
-      equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, {
-        updateEnabled: false, // equation is static
-        symbolFontSize: EQUATION_FONT_SIZE,
-        operatorFontSize: EQUATION_FONT_SIZE,
-        integerFontSize: EQUATION_FONT_SIZE,
-        fractionFontSize: FRACTION_FONT_SIZE,
-        relationalOperatorFontSize: EQUATION_FONT_SIZE,
-        relationalOperatorSpacing: 15,
-        pickable: false
-      } );
+        selectionRectangle.cursor = 'pointer';
 
-      // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
-      if ( scene.variables ) {
-        variableValuesNode = new VariableValuesNode( scene.variables, {
-          opacity: options.variableValuesOpacity,
-          fontSize: EQUATION_FONT_SIZE,
-          commaSeparated: options.commaSeparated,
-
-          // de-emphasize variable values by scaling them down,
-          // see https://github.com/phetsims/equality-explorer/issues/110
-          scale: 0.75
+        // create the equation for the snapshot
+        equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, {
+          updateEnabled: false, // equation is static
+          symbolFontSize: EQUATION_FONT_SIZE,
+          operatorFontSize: EQUATION_FONT_SIZE,
+          integerFontSize: EQUATION_FONT_SIZE,
+          fractionFontSize: FRACTION_FONT_SIZE,
+          relationalOperatorFontSize: EQUATION_FONT_SIZE,
+          relationalOperatorSpacing: 15,
+          pickable: false
         } );
+
+        // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
+        if ( scene.variables ) {
+          variableValuesNode = new VariableValuesNode( scene.variables, {
+            opacity: options.variableValuesOpacity,
+            fontSize: EQUATION_FONT_SIZE,
+            commaSeparated: options.commaSeparated,
+
+            // de-emphasize variable values by scaling them down,
+            // see https://github.com/phetsims/equality-explorer/issues/110
+            scale: 0.75
+          } );
+        }
+
+        // add listener that selects the snapshot
+        this.addInputListener( upListener );
+      }
+      else if ( this.hasInputListener( upListener ) ) {
+
+        selectionRectangle.cursor = null;
+
+        // no associated snapshot
+        equationNode = NO_EQUATION_NODE;
+        variableValuesNode = NO_VARIABLE_VALUES_NODE;
+        this.removeInputListener( upListener );
       }
 
-      // add listener that selects the snapshot
-      this.addInputListener( upListener );
+      updateSnapshotLayout();
+    } );
+
+    // Shows that the associated snapshot has been selected. unlink not required.
+    selectedSnapshotProperty.link( selectedSnapshot => {
+      const isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
+      selectionRectangle.stroke = isSelected ?
+                                  EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE :
+                                  EqualityExplorerColors.SNAPSHOT_DESELECTED_STROKE;
+    } );
+
+    if ( options.variableValuesVisibleProperty ) {
+
+      // Shows/hides variable values. unlink not required.
+      options.variableValuesVisibleProperty.link( visible => updateSnapshotLayout() );
     }
-    else if ( this.hasInputListener( upListener ) ) {
-
-      selectionRectangle.cursor = null;
-
-      // no associated snapshot
-      equationNode = NO_EQUATION_NODE;
-      variableValuesNode = NO_VARIABLE_VALUES_NODE;
-      this.removeInputListener( upListener );
-    }
-
-    updateSnapshotLayout();
-  } );
-
-  // Shows that the associated snapshot has been selected. unlink not required.
-  selectedSnapshotProperty.link( selectedSnapshot => {
-    const isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
-    selectionRectangle.stroke = isSelected ?
-                                EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE :
-                                EqualityExplorerColors.SNAPSHOT_DESELECTED_STROKE;
-  } );
-
-  if ( options.variableValuesVisibleProperty ) {
-
-    // Shows/hides variable values. unlink not required.
-    options.variableValuesVisibleProperty.link( visible => updateSnapshotLayout() );
   }
 }
 
 equalityExplorer.register( 'SnapshotControl', SnapshotControl );
 
-inherit( Node, SnapshotControl );
 export default SnapshotControl;

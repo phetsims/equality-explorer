@@ -7,29 +7,25 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import SumToZeroNode from './SumToZeroNode.js';
 import TermDragListener from './TermDragListener.js';
 
-/**
- * @param {Node} termNode - Node that the listener is attached to
- * @param {Term} term - the term being dragged
- * @param {TermCreator} termCreator - the creator of term
- * @param {Object} [options]
- * @constructor
- */
-function CombineTermsDragListener( termNode, term, termCreator, options ) {
-  assert && assert( termCreator.combineLikeTermsEnabled,
-    'CombineTermsDragListener is used when like terms are combined' );
-  TermDragListener.call( this, termNode, term, termCreator, options );
-}
+class CombineTermsDragListener extends TermDragListener {
 
-equalityExplorer.register( 'CombineTermsDragListener', CombineTermsDragListener );
-
-export default inherit( TermDragListener, CombineTermsDragListener, {
+  /**
+   * @param {Node} termNode - Node that the listener is attached to
+   * @param {Term} term - the term being dragged
+   * @param {TermCreator} termCreator - the creator of term
+   * @param {Object} [options]
+   */
+  constructor( termNode, term, termCreator, options ) {
+    assert && assert( termCreator.combineLikeTermsEnabled,
+      'CombineTermsDragListener is used when like terms are combined' );
+    super( termNode, term, termCreator, options );
+  }
 
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the TermDragListener API
@@ -41,7 +37,7 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
    * @protected
    * @override
    */
-  startOpposite: function() {
+  startOpposite() {
     assert && assert( this.termCreator.lockedProperty.value, 'startOpposite should only be called when lock is on' );
 
     const likeTermsCell = this.termCreator.likeTermsCell;
@@ -78,7 +74,7 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
     this.equivalentTerm = this.equivalentTermCreator.createTerm( this.term.copyOptions() );
 
     return true;
-  },
+  }
 
   /**
    * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side of the scale.
@@ -86,7 +82,7 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
    * @protected
    * @override
    */
-  endOpposite: function() {
+  endOpposite() {
     assert && assert( this.termCreator.lockedProperty.value, 'endOpposite should only be called when lock is on' );
 
     const cell = this.termCreator.likeTermsCell;
@@ -133,7 +129,7 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
     }
 
     return oppositeSumToZeroNode || null;
-  },
+  }
 
   /**
    * Animates terms to the cell for like terms.
@@ -143,7 +139,7 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
    * @protected
    * @override
    */
-  animateToPlate: function() {
+  animateToPlate() {
 
     const likeTermsCell = this.termCreator.likeTermsCell;
     const cellPosition = this.plate.getPositionOfCell( likeTermsCell );
@@ -314,4 +310,8 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
       }
     } );
   }
-} );
+}
+
+equalityExplorer.register( 'CombineTermsDragListener', CombineTermsDragListener );
+
+export default CombineTermsDragListener;

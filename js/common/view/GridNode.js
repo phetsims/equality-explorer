@@ -8,7 +8,6 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Shape from '../../../../kite/js/Shape.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -17,42 +16,43 @@ import EqualityExplorerColors from '../EqualityExplorerColors.js';
 // constants
 const DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function GridNode( options ) {
+class GridNode extends Path {
 
-  options = merge( {
-    rows: 1,
-    columns: 1,
-    cellSize: DEFAULT_CELL_SIZE, // {Dimension2} uniform width and height of each cell
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-    // Path options
-    stroke: EqualityExplorerColors.GRID_STROKE,
-    lineWidth: 0.25
-  }, options );
+    options = merge( {
+      rows: 1,
+      columns: 1,
+      cellSize: DEFAULT_CELL_SIZE, // {Dimension2} uniform width and height of each cell
 
-  const gridWidth = options.columns * options.cellSize.width;
-  const gridHeight = options.rows * options.cellSize.height;
+      // Path options
+      stroke: EqualityExplorerColors.GRID_STROKE,
+      lineWidth: 0.25
+    }, options );
 
-  // border
-  const gridShape = new Shape().rect( 0, 0, gridWidth, gridHeight );
+    const gridWidth = options.columns * options.cellSize.width;
+    const gridHeight = options.rows * options.cellSize.height;
 
-  // horizontal lines
-  for ( let row = 1; row < options.rows; row++ ) {
-    gridShape.moveTo( 0, row * options.cellSize.height ).lineTo( gridWidth, row * options.cellSize.height );
+    // border
+    const gridShape = new Shape().rect( 0, 0, gridWidth, gridHeight );
+
+    // horizontal lines
+    for ( let row = 1; row < options.rows; row++ ) {
+      gridShape.moveTo( 0, row * options.cellSize.height ).lineTo( gridWidth, row * options.cellSize.height );
+    }
+
+    // vertical lines
+    for ( let column = 1; column < options.columns; column++ ) {
+      gridShape.moveTo( column * options.cellSize.width, 0 ).lineTo( column * options.cellSize.width, gridHeight );
+    }
+
+    super( gridShape, options );
   }
-
-  // vertical lines
-  for ( let column = 1; column < options.columns; column++ ) {
-    gridShape.moveTo( column * options.cellSize.width, 0 ).lineTo( column * options.cellSize.width, gridHeight );
-  }
-
-  Path.call( this, gridShape, options );
 }
 
 equalityExplorer.register( 'GridNode', GridNode );
 
-inherit( Path, GridNode );
 export default GridNode;

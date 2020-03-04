@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
@@ -37,30 +36,27 @@ const DEFAULT_OPTIONS = {
   showOne: false // show 1 or -1 coefficient
 };
 
-/**
- * @param {TermCreator} termCreator
- * @param {VariableTerm} term
- * @param {Object} [options]
- * @constructor
- */
-function VariableTermNode( termCreator, term, options ) {
+class VariableTermNode extends TermNode {
 
-  options = merge( {}, DEFAULT_OPTIONS, options );
+  /**
+   * @param {TermCreator} termCreator
+   * @param {VariableTerm} term
+   * @param {Object} [options]
+   */
+  constructor( termCreator, term, options ) {
 
-  const contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.variable.symbol,
-    merge( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
+    options = merge( {}, DEFAULT_OPTIONS, options );
 
-  const shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
-    fill: 'black',
-    opacity: EqualityExplorerConstants.SHADOW_OPACITY
-  } );
+    const contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.variable.symbol,
+      merge( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
-  TermNode.call( this, termCreator, term, contentNode, shadowNode, options );
-}
+    const shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
+      fill: 'black',
+      opacity: EqualityExplorerConstants.SHADOW_OPACITY
+    } );
 
-equalityExplorer.register( 'VariableTermNode', VariableTermNode );
-
-export default inherit( TermNode, VariableTermNode, {}, {
+    super( termCreator, term, contentNode, shadowNode, options );
+  }
 
   /**
    * Creates the representation of a term that the user interacts with,
@@ -72,7 +68,7 @@ export default inherit( TermNode, VariableTermNode, {}, {
    * @public
    * @static
    */
-  createInteractiveTermNode: function( coefficient, symbol, options ) {
+  static createInteractiveTermNode( coefficient, symbol, options ) {
 
     assert && assert( coefficient instanceof Fraction, 'invalid coefficient: ' + coefficient );
     assert && assert( coefficient.isReduced(), 'coefficient must be reduced: ' + coefficient );
@@ -106,7 +102,7 @@ export default inherit( TermNode, VariableTermNode, {}, {
     options.children = [ squareNode, valueNode ];
 
     return new Node( options );
-  },
+  }
 
   /**
    * Creates the representation of a term that is shown in equations.
@@ -118,7 +114,7 @@ export default inherit( TermNode, VariableTermNode, {}, {
    * @public
    * @static
    */
-  createEquationTermNode: function( coefficient, symbol, options ) {
+  static createEquationTermNode( coefficient, symbol, options ) {
 
     assert && assert( coefficient instanceof Fraction, 'invalid coefficient: ' + coefficient );
     assert && assert( coefficient.isReduced(), 'coefficient must be reduced: ' + coefficient );
@@ -153,4 +149,8 @@ export default inherit( TermNode, VariableTermNode, {}, {
 
     return new HBox( options );
   }
-} );
+}
+
+equalityExplorer.register( 'VariableTermNode', VariableTermNode );
+
+export default VariableTermNode;
