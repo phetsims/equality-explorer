@@ -11,7 +11,6 @@
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
@@ -28,94 +27,90 @@ import DebugChallenge from './DebugChallenge.js';
 // constants
 const POINTS_PER_CHALLENGE = 1;
 
-/**
- * @param {number} level - game level, numbered from 1 in the model and view
- * @param {string} description - displayed in the status bar
- * @param {ChallengeGenerator} challengeGenerator
- * @constructor
- */
-function SolveItScene( level, description, challengeGenerator ) {
+class SolveItScene extends OperationsScene {
+  /**
+   * @param {number} level - game level, numbered from 1 in the model and view
+   * @param {string} description - displayed in the status bar
+   * @param {ChallengeGenerator} challengeGenerator
+   */
+  constructor( level, description, challengeGenerator ) {
 
-  assert && assert( level > 0, 'invalid level, numbering starts with 1: ' + level );
+    assert && assert( level > 0, 'invalid level, numbering starts with 1: ' + level );
 
-  OperationsScene.call( this, {
-    debugName: 'level ' + level,
-    scalePosition: new Vector2( 355, 500 ), // determined empirically
-    variableRange: null // because variables are not user-controlled in this scene
-  } );
+    super( {
+      debugName: 'level ' + level,
+      scalePosition: new Vector2( 355, 500 ), // determined empirically
+      variableRange: null // because variables are not user-controlled in this scene
+    } );
 
-  // @public (read-only)
-  this.level = level;
-  this.description = description;
-  this.challengeGenerator = challengeGenerator;
+    // @public (read-only)
+    this.level = level;
+    this.description = description;
+    this.challengeGenerator = challengeGenerator;
 
-  // @public
-  this.scoreProperty = new NumberProperty( 0, {
-    numberType: 'Integer',
-    isValidValue: value => ( value >= 0 )
-  } );
+    // @public
+    this.scoreProperty = new NumberProperty( 0, {
+      numberType: 'Integer',
+      isValidValue: value => ( value >= 0 )
+    } );
 
-  // Initialize positions of term creators. This is necessary because this screen has no TermToolboxes.
-  // Positions can be any value, since terms in this screen never return to a toolbox.
-  // This is preferable to using a default value, since initialization order is important in other screens.
-  // See for example frameStartedCallback in TermCreatorNode.
-  this.allTermCreators.forEach( termCreator => {
-    termCreator.positivePosition = Vector2.ZERO;
-    termCreator.negativePosition = Vector2.ZERO;
-  } );
+    // Initialize positions of term creators. This is necessary because this screen has no TermToolboxes.
+    // Positions can be any value, since terms in this screen never return to a toolbox.
+    // This is preferable to using a default value, since initialization order is important in other screens.
+    // See for example frameStartedCallback in TermCreatorNode.
+    this.allTermCreators.forEach( termCreator => {
+      termCreator.positivePosition = Vector2.ZERO;
+      termCreator.negativePosition = Vector2.ZERO;
+    } );
 
-  // @public (read-only) {Property.<Challenge|null>} the current challenge, set by nextChallenge
-  this.challengeProperty = new Property( null, {
-    isValidValue: value => ( value instanceof Challenge ) || ( value === null )
-  } );
+    // @public (read-only) {Property.<Challenge|null>} the current challenge, set by nextChallenge
+    this.challengeProperty = new Property( null, {
+      isValidValue: value => ( value instanceof Challenge ) || ( value === null )
+    } );
 
-  // @private has the current challenge been solved?
-  this.challengeHasBeenSolved = false;
+    // @private has the current challenge been solved?
+    this.challengeHasBeenSolved = false;
 
-  // @private will x be on the left or right side of the equation in the solution?
-  this.xOnLeft = true;
+    // @private will x be on the left or right side of the equation in the solution?
+    this.xOnLeft = true;
 
-  // When a universal operation is completed, determine if the challenge is solved.
-  // removeListener not needed.
-  this.operationCompletedEmitter.addListener( operation => {
+    // When a universal operation is completed, determine if the challenge is solved.
+    // removeListener not needed.
+    this.operationCompletedEmitter.addListener( operation => {
 
-    assert && assert( operation instanceof UniversalOperation, 'invalid operation: ' + operation );
+      assert && assert( operation instanceof UniversalOperation, 'invalid operation: ' + operation );
 
-    // All challenges in the game are equalities, and applying a universal operation should result in an equality.
-    assert && assert( this.scale.angleProperty.value === 0,
-      'scale is not balanced after applying operation ' + operation );
+      // All challenges in the game are equalities, and applying a universal operation should result in an equality.
+      assert && assert( this.scale.angleProperty.value === 0,
+        'scale is not balanced after applying operation ' + operation );
 
-    // challenge is in a 'solved' state if x has been isolated on the scale.
-    const solved = this.isXIsolated();
+      // challenge is in a 'solved' state if x has been isolated on the scale.
+      const solved = this.isXIsolated();
 
-    // The first time that the challenge has been solved, award points and notify listeners.
-    if ( solved && !this.challengeHasBeenSolved ) {
-      phet.log && phet.log( 'operationCompletedEmitter listener: challenge is solved' );
-      this.challengeHasBeenSolved = true;
-      this.scoreProperty.value = this.scoreProperty.value + POINTS_PER_CHALLENGE;
-    }
-  } );
-}
-
-equalityExplorer.register( 'SolveItScene', SolveItScene );
-
-export default inherit( OperationsScene, SolveItScene, {
+      // The first time that the challenge has been solved, award points and notify listeners.
+      if ( solved && !this.challengeHasBeenSolved ) {
+        phet.log && phet.log( 'operationCompletedEmitter listener: challenge is solved' );
+        this.challengeHasBeenSolved = true;
+        this.scoreProperty.value = this.scoreProperty.value + POINTS_PER_CHALLENGE;
+      }
+    } );
+  }
 
   /**
    * @public
    * @override
    */
-  reset: function() {
+  reset() {
     this.scoreProperty.reset();
     this.challengeProperty.reset();
-    OperationsScene.prototype.reset.call( this );
-  },
+    super.reset();
+  }
 
   /**
    * Generates the next challenge.
    * @public
    */
-  nextChallenge: function() {
+  nextChallenge() {
 
     // reset the universal operation
     this.operatorProperty.reset();
@@ -156,7 +151,7 @@ export default inherit( OperationsScene, SolveItScene, {
 
     // Finally, set challengeProperty, to notify listeners that the challenge has changed.
     this.challengeProperty.value = challenge;
-  },
+  }
 
   /**
    * Creates a variable term on the plate. If coefficient is zero, this is a no-op.
@@ -164,7 +159,7 @@ export default inherit( OperationsScene, SolveItScene, {
    * @param {Fraction} coefficient
    * @private
    */
-  createVariableTermOnPlate: function( termCreator, coefficient ) {
+  createVariableTermOnPlate( termCreator, coefficient ) {
     assert && assert( termCreator instanceof VariableTermCreator, 'invalid termCreator: ' + termCreator );
     assert && assert( coefficient instanceof Fraction, 'invalid coefficient: ' + coefficient );
     if ( coefficient.getValue() !== 0 ) {
@@ -174,7 +169,7 @@ export default inherit( OperationsScene, SolveItScene, {
       } );
       termCreator.putTermOnPlate( term );
     }
-  },
+  }
 
   /**
    * Creates a constant term on the plate. If constantValue is zero, this is a no-op.
@@ -182,7 +177,7 @@ export default inherit( OperationsScene, SolveItScene, {
    * @param {Fraction} constantValue
    * @private
    */
-  createConstantTermOnPlate: function( termCreator, constantValue ) {
+  createConstantTermOnPlate( termCreator, constantValue ) {
     assert && assert( termCreator instanceof ConstantTermCreator, 'invalid termCreator: ' + termCreator );
     assert && assert( constantValue instanceof Fraction, 'invalid constantValue: ' + constantValue );
     if ( constantValue.getValue() !== 0 ) {
@@ -192,7 +187,7 @@ export default inherit( OperationsScene, SolveItScene, {
       } );
       termCreator.putTermOnPlate( term );
     }
-  },
+  }
 
   /**
    * Determines whether the value of x has been isolated on the scale.
@@ -200,7 +195,7 @@ export default inherit( OperationsScene, SolveItScene, {
    * @returns {boolean}
    * @private
    */
-  isXIsolated: function() {
+  isXIsolated() {
 
     let xIsIsolated = false;
 
@@ -220,13 +215,13 @@ export default inherit( OperationsScene, SolveItScene, {
     }
 
     return xIsIsolated;
-  },
+  }
 
   /**
    * Displays the answer to the current challenge, for debugging.
    * @public
    */
-  showAnswer: function() {
+  showAnswer() {
 
     // 0 = 0
     this.allTermCreators.forEach( termCreator => termCreator.disposeAllTerms() );
@@ -257,4 +252,8 @@ export default inherit( OperationsScene, SolveItScene, {
     this.challengeHasBeenSolved = true;
     this.scoreProperty.value = this.scoreProperty.value + POINTS_PER_CHALLENGE;
   }
-} );
+}
+
+equalityExplorer.register( 'SolveItScene', SolveItScene );
+
+export default SolveItScene;

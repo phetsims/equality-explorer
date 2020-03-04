@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
@@ -15,25 +14,23 @@ import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorerStrings from '../../equality-explorer-strings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-// string
+// strings
 const xString = equalityExplorerStrings.x;
 
-/**
- * @constructor
- */
-function VariablesScene() {
+class VariablesScene extends EqualityExplorerScene {
 
-  const xVariable = new Variable( xString, {
-    range: EqualityExplorerConstants.VARIABLE_RANGE
-  } );
+  constructor() {
 
-  EqualityExplorerScene.call( this, createTermCreators( xVariable ), createTermCreators( xVariable ), {
-    debugName: 'variables',
-    variables: [ xVariable ]
-  } );
+    const xVariable = new Variable( xString, {
+      range: EqualityExplorerConstants.VARIABLE_RANGE
+    } );
+
+    super( createTermCreators( xVariable ), createTermCreators( xVariable ), {
+      debugName: 'variables',
+      variables: [ xVariable ]
+    } );
+  }
 }
-
-equalityExplorer.register( 'VariablesScene', VariablesScene );
 
 /**
  * Creates the term creators for this scene.
@@ -52,5 +49,6 @@ function createTermCreators( xVariable ) {
   ];
 }
 
-inherit( EqualityExplorerScene, VariablesScene );
+equalityExplorer.register( 'VariablesScene', VariablesScene );
+
 export default VariablesScene;

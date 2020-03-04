@@ -6,31 +6,29 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Challenge from './Challenge.js';
 
-/**
- * @constructor
- */
-function DebugChallenge() {
+class DebugChallenge extends Challenge {
 
-  const values = EqualityExplorerQueryParameters.challenge;
-  assert && assert( values, 'query parameter challenge is not set' );
+  constructor() {
 
-  let i = 0;
-  const a = new Fraction( values[ i++ ], values[ i++ ] );
-  const b = new Fraction( values[ i++ ], values[ i++ ] );
-  const m = new Fraction( values[ i++ ], values[ i++ ] );
-  const n = new Fraction( values[ i++ ], values[ i++ ] );
-  const x = values[ i++ ];
+    const values = EqualityExplorerQueryParameters.challenge;
+    assert && assert( values, 'query parameter challenge is not set' );
 
-  Challenge.call( this, x, a, b, m, n, '?challenge' );
+    let i = 0;
+    const a = new Fraction( values[ i++ ], values[ i++ ] );
+    const b = new Fraction( values[ i++ ], values[ i++ ] );
+    const m = new Fraction( values[ i++ ], values[ i++ ] );
+    const n = new Fraction( values[ i++ ], values[ i++ ] );
+    const x = values[ i++ ];
+
+    super( x, a, b, m, n, '?challenge' );
+  }
 }
 
 equalityExplorer.register( 'DebugChallenge', DebugChallenge );
 
-inherit( Challenge, DebugChallenge );
 export default DebugChallenge;

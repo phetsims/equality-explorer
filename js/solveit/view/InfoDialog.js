@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
@@ -16,6 +15,7 @@ import Dialog from '../../../../sun/js/Dialog.js';
 import equalityExplorerStrings from '../../equality-explorer-strings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
+// strings
 const levelsString = equalityExplorerStrings.levels;
 
 // constants
@@ -23,39 +23,40 @@ const TITLE_FONT = new PhetFont( 24 );
 const DESCRIPTION_FONT = new PhetFont( 18 );
 const MAX_CONTENT_WIDTH = 500;
 
-/**
- * @param {string[]} levelDescriptions
- * @constructor
- */
-function InfoDialog( levelDescriptions ) {
+class InfoDialog extends Dialog {
 
-  const children = [];
-  levelDescriptions.forEach( levelDescription =>
-    children.push( new RichText( levelDescription, {
-      font: DESCRIPTION_FONT
-    } ) )
-  );
+  /**
+   * @param {string[]} levelDescriptions
+   */
+  constructor( levelDescriptions ) {
 
-  const content = new VBox( {
-    align: 'left',
-    spacing: 15,
-    children: children,
-    maxWidth: MAX_CONTENT_WIDTH // scale all of the descriptions uniformly
-  } );
+    const children = [];
+    levelDescriptions.forEach( levelDescription =>
+      children.push( new RichText( levelDescription, {
+        font: DESCRIPTION_FONT
+      } ) )
+    );
 
-  const titleNode = new Text( levelsString, {
-    font: TITLE_FONT,
-    maxWidth: 0.75 * MAX_CONTENT_WIDTH
-  } );
+    const content = new VBox( {
+      align: 'left',
+      spacing: 15,
+      children: children,
+      maxWidth: MAX_CONTENT_WIDTH // scale all of the descriptions uniformly
+    } );
 
-  Dialog.call( this, content, {
-    title: titleNode,
-    ySpacing: 20,
-    bottomMargin: 20
-  } );
+    const titleNode = new Text( levelsString, {
+      font: TITLE_FONT,
+      maxWidth: 0.75 * MAX_CONTENT_WIDTH
+    } );
+
+    super( content, {
+      title: titleNode,
+      ySpacing: 20,
+      bottomMargin: 20
+    } );
+  }
 }
 
 equalityExplorer.register( 'InfoDialog', InfoDialog );
 
-inherit( Dialog, InfoDialog );
 export default InfoDialog;

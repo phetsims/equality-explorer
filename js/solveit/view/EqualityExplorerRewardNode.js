@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
@@ -27,6 +26,7 @@ import equalityExplorerStrings from '../../equality-explorer-strings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ChallengeGenerator from '../model/ChallengeGenerator.js';
 
+// strings
 const xString = equalityExplorerStrings.x;
 
 // constants
@@ -50,22 +50,22 @@ const FACE_NODE = new FaceNode( DIAMETER, {
   headStroke: 'black'
 } );
 
-/**
- * @param {number} level - the game level
- * @constructor
- */
-function EqualityExplorerRewardNode( level ) {
+class EqualityExplorerRewardNode extends RewardNode {
 
-  const createNodesFunction = [ createNodes1, createNodes2, createNodes3, createNodes4 ];
+  /**
+   * @param {number} level - the game level
+   */
+  constructor( level ) {
 
-  const nodes = createNodesFunction[ level - 1 ]();
+    const createNodesFunction = [ createNodes1, createNodes2, createNodes3, createNodes4 ];
 
-  RewardNode.call( this, {
-    nodes: RewardNode.createRandomNodes( nodes, 100 /* count */ )
-  } );
+    const nodes = createNodesFunction[ level - 1 ]();
+
+    super( {
+      nodes: RewardNode.createRandomNodes( nodes, 100 /* count */ )
+    } );
+  }
 }
-
-equalityExplorer.register( 'EqualityExplorerRewardNode', EqualityExplorerRewardNode );
 
 // Creates nodes for level 1 reward.
 function createNodes1() {
@@ -203,5 +203,6 @@ function randomOperator() {
   return phet.joist.random.sample( EqualityExplorerConstants.OPERATORS );
 }
 
-inherit( RewardNode, EqualityExplorerRewardNode );
+equalityExplorer.register( 'EqualityExplorerRewardNode', EqualityExplorerRewardNode );
+
 export default EqualityExplorerRewardNode;

@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -28,16 +27,11 @@ const A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 const B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 const M_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
-/**
- * @constructor
- */
-function ChallengeGenerator4() {
-  ChallengeGenerator.call( this );
-}
+class ChallengeGenerator4 extends ChallengeGenerator {
 
-equalityExplorer.register( 'ChallengeGenerator4', ChallengeGenerator4 );
-
-export default inherit( ChallengeGenerator, ChallengeGenerator4, {
+  constructor() {
+    super();
+  }
 
   /**
    * Generates the next challenge.
@@ -53,7 +47,7 @@ export default inherit( ChallengeGenerator, ChallengeGenerator4, {
    * @protected
    * @override
    */
-  nextChallengeProtected: function() {
+  nextChallengeProtected() {
 
     const x = this.randomX( X_VALUES );
     const a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );
@@ -80,4 +74,8 @@ export default inherit( ChallengeGenerator, ChallengeGenerator4, {
       Fraction.fromInteger( m ), Fraction.fromInteger( n ),
       debugDerivation );
   }
-} );
+}
+
+equalityExplorer.register( 'ChallengeGenerator4', ChallengeGenerator4 );
+
+export default ChallengeGenerator4;

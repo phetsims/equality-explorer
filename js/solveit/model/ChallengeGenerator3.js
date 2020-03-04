@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -35,19 +34,14 @@ const B_VALUES_TYPE1 = ChallengeGenerator.rangeToArray( -3, 3 );
 const B_VALUES_TYPE2 = ChallengeGenerator.rangeToArray( -10, 10 );
 const D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
-/**
- * @constructor
- */
-function ChallengeGenerator3() {
-  ChallengeGenerator.call( this );
+class ChallengeGenerator3 extends ChallengeGenerator {
 
-  // @private methods for generating the 2 types of challenges
-  this.challengeTypeMethods = [ this.nextType1.bind( this ), this.nextType2.bind( this ) ];
-}
+  constructor() {
+    super();
 
-equalityExplorer.register( 'ChallengeGenerator3', ChallengeGenerator3 );
-
-export default inherit( ChallengeGenerator, ChallengeGenerator3, {
+    // @private methods for generating the 2 types of challenges
+    this.challengeTypeMethods = [ this.nextType1.bind( this ), this.nextType2.bind( this ) ];
+  }
 
   /**
    * Generates the next challenge.
@@ -55,11 +49,11 @@ export default inherit( ChallengeGenerator, ChallengeGenerator3, {
    * @protected
    * @override
    */
-  nextChallengeProtected: function() {
+  nextChallengeProtected() {
 
     // Randomly select the type of challenge to generate.
     return phet.joist.random.sample( this.challengeTypeMethods )();
-  },
+  }
 
   /**
    * Generates the next 'type 1' challenge.
@@ -74,7 +68,7 @@ export default inherit( ChallengeGenerator, ChallengeGenerator3, {
    * @returns {Challenge}
    * @private
    */
-  nextType1: function() {
+  nextType1() {
 
     const x = this.randomX( X_VALUES );
     const d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
@@ -101,7 +95,7 @@ export default inherit( ChallengeGenerator, ChallengeGenerator3, {
       new Fraction( a, d ).reduce(), Fraction.fromInteger( b ),
       Fraction.fromInteger( 0 ), c,
       debugDerivation );
-  },
+  }
 
   /**
    * Generates the next 'type 2' challenge.
@@ -116,7 +110,7 @@ export default inherit( ChallengeGenerator, ChallengeGenerator3, {
    * @returns @returns {Challenge}
    * @private
    */
-  nextType2: function() {
+  nextType2() {
 
     const x = this.randomX( X_VALUES );
     const d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
@@ -139,4 +133,8 @@ export default inherit( ChallengeGenerator, ChallengeGenerator3, {
       Fraction.fromInteger( 0 ), c,
       debugDerivation );
   }
-} );
+}
+
+equalityExplorer.register( 'ChallengeGenerator3', ChallengeGenerator3 );
+
+export default ChallengeGenerator3;

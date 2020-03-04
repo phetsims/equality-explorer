@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
@@ -15,28 +14,29 @@ import equalityExplorer from '../../equalityExplorer.js';
 // constants
 const DEFAULT_FONT = new PhetFont( 14 );
 
-/**
- * @param {Property.<Challenge|null>} challengeProperty
- * @param {Object} [options]
- * @constructor
- */
-function ChallengeDerivationNode( challengeProperty, options ) {
+class ChallengeDerivationNode extends RichText {
 
-  options = merge( {
+  /**
+   * @param {Property.<Challenge|null>} challengeProperty
+   * @param {Object} [options]
+   */
+  constructor( challengeProperty, options ) {
 
-    // RichText options
-    font: DEFAULT_FONT
-  }, options );
+    options = merge( {
 
-  RichText.call( this, '', options );
+      // RichText options
+      font: DEFAULT_FONT
+    }, options );
 
-  // display derivation of the current challenge. unlink not needed.
-  challengeProperty.link( challenge => {
-    this.text = ( challenge ? challenge.debugDerivation : '' );
-  } );
+    super( '', options );
+
+    // display derivation of the current challenge. unlink not needed.
+    challengeProperty.link( challenge => {
+      this.text = ( challenge ? challenge.debugDerivation : '' );
+    } );
+  }
 }
 
 equalityExplorer.register( 'ChallengeDerivationNode', ChallengeDerivationNode );
 
-inherit( RichText, ChallengeDerivationNode );
 export default ChallengeDerivationNode;
