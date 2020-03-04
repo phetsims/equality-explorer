@@ -308,7 +308,7 @@ equalityExplorer.register( 'UniversalOperationControl', UniversalOperationContro
  * @returns {boolean}
  */
 function isDivideByZero( operator, operand ) {
-  return operator === MathSymbols.DIVIDE &&
+  return ( operator === MathSymbols.DIVIDE ) &&
          ( operand instanceof ConstantTerm && operand.constantValue.getValue() === 0 );
 }
 
@@ -319,7 +319,7 @@ function isDivideByZero( operator, operand ) {
  * @returns {boolean}
  */
 function isTimesZero( operator, operand ) {
-  return operator === MathSymbols.TIMES &&
+  return ( operator === MathSymbols.TIMES ) &&
          ( operand instanceof ConstantTerm && operand.constantValue.getValue() === 0 );
 }
 
@@ -332,7 +332,7 @@ function isTimesZero( operator, operand ) {
  */
 function isUnsupportedVariableTermOperation( operator, operand ) {
   return ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
-         operand instanceof VariableTerm;
+         ( operand instanceof VariableTerm );
 }
 
 export default inherit( HBox, UniversalOperationControl, {
