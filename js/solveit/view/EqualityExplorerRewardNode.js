@@ -70,7 +70,7 @@ equalityExplorer.register( 'EqualityExplorerRewardNode', EqualityExplorerRewardN
 // Creates nodes for level 1 reward.
 function createNodes1() {
   const nodes = [];
-  INTEGER_VALUES.forEach( function( i ) {
+  INTEGER_VALUES.forEach( i => {
 
     // variable terms with integer coefficients
     nodes.push( createVariableTermNode( i ) );
@@ -88,7 +88,7 @@ function createNodes1() {
 // Creates nodes for level 2 reward.
 function createNodes2() {
   const nodes = [];
-  INTEGER_VALUES.forEach( function( i ) {
+  INTEGER_VALUES.forEach( i => {
 
     // variable terms with integer coefficients
     nodes.push( createVariableTermNode( i ) );
@@ -108,7 +108,7 @@ function createNodes2() {
 // Creates nodes for level 3 reward.
 function createNodes3() {
   const nodes = [];
-  INTEGER_VALUES.forEach( function( i ) {
+  INTEGER_VALUES.forEach( i => {
 
     // variable terms with integer coefficients
     nodes.push( createVariableTermNode( i ) );
@@ -128,7 +128,7 @@ function createNodes3() {
 // Creates nodes for level 4 reward.
 function createNodes4() {
   const nodes = [];
-  INTEGER_VALUES.forEach( function( i ) {
+  INTEGER_VALUES.forEach( i => {
 
     // variable terms with integer coefficients
     nodes.push( createVariableTermNode( i ) );
@@ -173,9 +173,8 @@ function createIntegerConstantTermNode( constantValue ) {
 function createFractionConstantTermNode() {
   const numerator = ChallengeGenerator.randomValue( INTEGER_VALUES, [ 0 ] );
   const denominator = ChallengeGenerator.randomValueBy( INTEGER_VALUES,
-    function( denominator ) {
-      return ( denominator !== 0 ) && ( Math.abs( denominator ) !== 1 ) && ( numerator % denominator !== 0 );
-    } );
+    denominator => ( denominator !== 0 ) && ( Math.abs( denominator ) !== 1 ) && ( numerator % denominator !== 0 )
+  );
   const constantValue = new Fraction( numerator, denominator ).reduced();
   return ConstantTermNode.createInteractiveTermNode( constantValue, {
     diameter: DIAMETER
@@ -188,10 +187,7 @@ function createFractionConstantTermNode() {
  */
 function createOperationNode() {
   const operator = randomOperator();
-  const constantValue = ChallengeGenerator.randomValueBy( INTEGER_VALUES,
-    function( value ) {
-      return ( value > 0 );
-    } );
+  const constantValue = ChallengeGenerator.randomValueBy( INTEGER_VALUES, value => ( value > 0 ) );
   const operand = new ConstantTerm( { constantValue: Fraction.fromInteger( constantValue ) } );
   const operation = new UniversalOperation( operator, operand );
   return new UniversalOperationNode( operation, {

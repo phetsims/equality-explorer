@@ -36,8 +36,6 @@ const SEPARATOR_OPTIONS = {
  */
 function SnapshotsAccordionBox( scene, options ) {
 
-  const self = this;
-
   options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
     // this accordion box is designed to be a fixed width, regardless of its content
@@ -105,9 +103,7 @@ function SnapshotsAccordionBox( scene, options ) {
     yMargin: 4,
     touchAreaXDilation: 10,
     touchAreaYDilation: 10,
-    listener: function() {
-      scene.snapshotsCollection.selectedSnapshotProperty.value.restore();
-    }
+    listener: () => scene.snapshotsCollection.selectedSnapshotProperty.value.restore()
   } );
 
   // Button to delete (trash) the selected snapshot
@@ -119,13 +115,11 @@ function SnapshotsAccordionBox( scene, options ) {
     yMargin: 5,
     touchAreaXDilation: 5,
     touchAreaYDilation: 5,
-    listener: function() {
-      scene.snapshotsCollection.deleteSelectedSnapshot();
-    }
+    listener: () => scene.snapshotsCollection.deleteSelectedSnapshot()
   } );
 
   // Disables restore and trash buttons when there is no selection. unlink not required.
-  scene.snapshotsCollection.selectedSnapshotProperty.link( function( snapshot ) {
+  scene.snapshotsCollection.selectedSnapshotProperty.link( snapshot => {
     const enabled = ( snapshot !== null );
     restoreButton.enabled = enabled;
     trashButton.enabled = enabled;
@@ -163,8 +157,8 @@ function SnapshotsAccordionBox( scene, options ) {
 
   // Click outside this accordion box to clear the selected snapshot.
   const clickToDeselectListener = {
-    down: function( event ) {
-      if ( !self.parentToGlobalBounds( self.visibleBounds ).containsPoint( event.pointer.point ) ) {
+    down: event => {
+      if ( !this.parentToGlobalBounds( this.visibleBounds ).containsPoint( event.pointer.point ) ) {
         scene.snapshotsCollection.selectedSnapshotProperty.value = null;
       }
     }
@@ -173,7 +167,7 @@ function SnapshotsAccordionBox( scene, options ) {
   // Register input listener with the Display only when we have a selected snapshot.
   // This technique was borrowed from circuit-construction-kit-common.CircuitElementNode.
   // unlink not required.
-  scene.snapshotsCollection.selectedSnapshotProperty.link( function( selectedSnapshot, oldSelectedSnapshot ) {
+  scene.snapshotsCollection.selectedSnapshotProperty.link( ( selectedSnapshot, oldSelectedSnapshot ) => {
     if ( oldSelectedSnapshot ) {
       phet.joist.sim.display.removeInputListener( clickToDeselectListener );
     }

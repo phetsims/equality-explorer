@@ -34,8 +34,6 @@ const DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.ma
  */
 function EqualityExplorerScene( leftTermCreators, rightTermCreators, options ) {
 
-  const self = this;
-
   options = merge( {
     debugName: null, // internal name, not displayed to the user
     scalePosition: DEFAULT_SCALE_POSITION, // determined empirically
@@ -92,15 +90,15 @@ function EqualityExplorerScene( leftTermCreators, rightTermCreators, options ) {
   // @public (read-only, for debugging) drag bounds for left plate
   this.leftDragBounds = new Bounds2( DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
     this.scale.position.x - DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MAX_Y );
-  leftTermCreators.forEach( function( termCreator ) {
-    termCreator.dragBounds = self.leftDragBounds;
+  leftTermCreators.forEach( termCreator => {
+    termCreator.dragBounds = this.leftDragBounds;
   } );
 
   // @public (read-only, for debugging) drag bounds for right plate
   this.rightDragBounds = new Bounds2( this.scale.position.x + DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
     this.scale.position.x + DRAG_BOUNDS_X_MARGIN + this.leftDragBounds.width, DRAG_BOUNDS_MAX_Y );
-  rightTermCreators.forEach( function( termCreator ) {
-    termCreator.dragBounds = self.rightDragBounds;
+  rightTermCreators.forEach( termCreator => {
+    termCreator.dragBounds = this.rightDragBounds;
   } );
 
   // @public collection of snapshots, for saving/restoring the state of a scene
@@ -117,9 +115,9 @@ function EqualityExplorerScene( leftTermCreators, rightTermCreators, options ) {
     this.lockedProperty = new BooleanProperty( EqualityExplorerQueryParameters.locked );
 
     // Update the lockedProperty of all term creators. unlink not needed.
-    this.lockedProperty.link( function( locked ) {
-      for ( let i = 0; i < self.allTermCreators.length; i++ ) {
-        self.allTermCreators[ i ].lockedProperty.value = locked;
+    this.lockedProperty.link( locked => {
+      for ( let i = 0; i < this.allTermCreators.length; i++ ) {
+        this.allTermCreators[ i ].lockedProperty.value = locked;
       }
     } );
   }
@@ -171,9 +169,7 @@ export default inherit( Object, EqualityExplorerScene, {
 
     // reset all variables
     if ( this.variables ) {
-      this.variables.forEach( function( variable ) {
-        variable.reset();
-      } );
+      this.variables.forEach( variable => variable.reset() );
     }
   },
 
@@ -182,9 +178,7 @@ export default inherit( Object, EqualityExplorerScene, {
    * @public
    */
   disposeAllTerms: function() {
-    this.allTermCreators.forEach( function( termCreator ) {
-      termCreator.disposeAllTerms();
-    } );
+    this.allTermCreators.forEach( termCreator => termCreator.disposeAllTerms() );
   },
 
   /**
@@ -192,9 +186,7 @@ export default inherit( Object, EqualityExplorerScene, {
    * @public
    */
   disposeTermsNotOnScale: function() {
-    this.allTermCreators.forEach( function( termCreator ) {
-      termCreator.disposeTermsNotOnPlate();
-    } );
+    this.allTermCreators.forEach( termCreator => termCreator.disposeTermsNotOnPlate() );
   },
 
   /**
@@ -205,8 +197,6 @@ export default inherit( Object, EqualityExplorerScene, {
   step: function( dt ) {
 
     // step all terms
-    this.allTermCreators.forEach( function( termCreator ) {
-      termCreator.step( dt );
-    } );
+    this.allTermCreators.forEach( termCreator => termCreator.step( dt ) );
   }
 } );

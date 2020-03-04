@@ -39,16 +39,14 @@ function EqualityExplorerSceneNode( scene, sceneProperty, termsLayer, options ) 
    * @param {Term} term
    * @param {SceneryEvent|null} event - event is non-null when the term was created via user interaction
    */
-  const termCreatedListener = function( termCreator, term, event ) {
+  const termCreatedListener = ( termCreator, term, event ) => {
 
     // create a TermNode
     const termNode = termCreator.createTermNode( term );
     termsLayer.addChild( termNode );
 
     // Clean up when the term is disposed. Term.dispose handles removal of this listener.
-    term.disposedEmitter.addListener( function( term ) {
-      termNode.dispose();
-    } );
+    term.disposedEmitter.addListener( term => termNode.dispose() );
 
     // start a drag cycle by forwarding the event to termNode.
     if ( event ) {
@@ -58,14 +56,14 @@ function EqualityExplorerSceneNode( scene, sceneProperty, termsLayer, options ) 
 
   // When the maxInteger limit is exceeded, dispose of all terms that are not on the scale, and display a dialog.
   let dialog = null; // dialog will be reused
-  const maxIntegerExceededListener = function() {
+  const maxIntegerExceededListener = () => {
     phet.log && phet.log( 'maxInteger exceeded' );
     scene.disposeTermsNotOnScale();
     dialog = dialog || new OopsDialog( numberTooBigString );
     dialog.show();
   };
 
-  scene.allTermCreators.forEach( function( termCreator ) {
+  scene.allTermCreators.forEach( termCreator => {
     termCreator.termCreatedEmitter.addListener( termCreatedListener ); // removeListener not needed
     termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ); // removeListener not needed
   } );

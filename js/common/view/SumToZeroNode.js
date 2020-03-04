@@ -27,8 +27,6 @@ import HaloNode from './HaloNode.js';
  */
 function SumToZeroNode( options ) {
 
-  const self = this;
-
   options = merge( {
     variable: null, // {Variable|null} determines whether we render '0' or '0x' (for example)
     haloRadius: 20,
@@ -73,8 +71,8 @@ function SumToZeroNode( options ) {
   const opacityProperty = new NumberProperty( this.opacity );
 
   // unlink not needed
-  opacityProperty.link( function( opacity ) {
-    self.opacity = opacity;
+  opacityProperty.link( opacity => {
+    this.opacity = opacity;
   } );
 
   // @private
@@ -88,9 +86,7 @@ function SumToZeroNode( options ) {
   } );
 
   // removeListener not needed
-  this.animation.finishEmitter.addListener( function() {
-    self.dispose(); // removes this Node from the scenegraph
-  } );
+  this.animation.finishEmitter.addListener( () => this.dispose() ); // removes this Node from the scenegraph
 }
 
 equalityExplorer.register( 'SumToZeroNode', SumToZeroNode );

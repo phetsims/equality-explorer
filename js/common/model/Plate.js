@@ -34,8 +34,6 @@ function Plate( termCreators, debugSide, options ) {
 
   assert && assert( _.includes( VALID_DEBUG_SIDE_VALUES, debugSide, 'invalid debugSide: ' + debugSide ) );
 
-  const self = this;
-
   options = merge( {
     supportHeight: 10, // height of the vertical support that connects the plate to the scale
     diameter: 20, // diameter of the plate
@@ -69,9 +67,7 @@ function Plate( termCreators, debugSide, options ) {
   // @public (read-only) number of terms on the plate
   this.numberOfTermsProperty = new NumberProperty( 0, {
     numberType: 'Integer',
-    isValidValue: function( value ) {
-      return value >= 0;
-    }
+    isValidValue: value => ( value >= 0 )
   } );
 
   // weightProperty is derived from the weights of each termCreator
@@ -83,7 +79,7 @@ function Plate( termCreators, debugSide, options ) {
   // @public (read-only) {Property.<Fraction>} total weight of the terms that are on the plate
   // dispose not required.
   this.weightProperty = new DerivedProperty( weightDependencies,
-    function() {
+    () => {
       let weight = Fraction.fromInteger( 0 );
       for ( let i = 0; i < termCreators.length; i++ ) {
         weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value ).reduced();
@@ -96,8 +92,8 @@ function Plate( termCreators, debugSide, options ) {
   this.contentsChangedEmitter = new Emitter();
 
   // Associate this plate with its term creators. Note that this is a 2-way association.
-  termCreators.forEach( function( termCreator ) {
-    termCreator.plate = self;
+  termCreators.forEach( termCreator => {
+    termCreator.plate = this;
   } );
 }
 
@@ -239,12 +235,12 @@ export default inherit( Object, Plate, {
 
       // Group the terms by positive and negative
       const termGroups = []; // {Term[][]}
-      this.termCreators.forEach( function( termCreator ) {
+      this.termCreators.forEach( termCreator => {
         termGroups.push( termCreator.getPositiveTermsOnPlate() );
         termGroups.push( termCreator.getNegativeTermsOnPlate() );
       } );
 
-      termGroups.forEach( function( terms ) {
+      termGroups.forEach( terms => {
 
         if ( terms.length > 0 ) {
 
@@ -315,9 +311,7 @@ export default inherit( Object, Plate, {
         // terms on the plate before organize
         _.flatten( termGroups ),
         // terms on the plate after organize
-        _.flatMap( this.termCreators, function( termCreator ) {
-          return termCreator.getTermsOnPlate();
-        } )
+        _.flatMap( this.termCreators, termCreator => termCreator.getTermsOnPlate() )
       ).length === 0, // contains no elements that are different
         'set of terms is not the same after organize' );
 

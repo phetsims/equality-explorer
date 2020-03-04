@@ -23,8 +23,6 @@ import SceneControl from './SceneControl.js';
  */
 function EqualityExplorerScreenView( model, options ) {
 
-  const self = this;
-
   options = merge( {
 
     // {boolean}
@@ -46,10 +44,10 @@ function EqualityExplorerScreenView( model, options ) {
     new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
   const resetAllButton = new ResetAllButton( {
-    listener: function() {
+    listener: () => {
       phet.log && phet.log( 'ResetAllButton pressed' );
       model.reset();
-      self.reset();
+      this.reset();
     },
     right: this.layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
     bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
@@ -58,15 +56,15 @@ function EqualityExplorerScreenView( model, options ) {
 
   // @private {EqualityExplorerScene[]} create the view for each scene
   this.sceneNodes = [];
-  model.scenes.forEach( function( scene ) {
-    const sceneNode = self.createSceneNode( scene, model.sceneProperty,
-      self.equationAccordionBoxExpandedProperty,
-      self.snapshotsAccordionBoxExpandedProperty,
-      self.layoutBounds, {
+  model.scenes.forEach( scene => {
+    const sceneNode = this.createSceneNode( scene, model.sceneProperty,
+      this.equationAccordionBoxExpandedProperty,
+      this.snapshotsAccordionBoxExpandedProperty,
+      this.layoutBounds, {
         hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox
       } );
-    self.sceneNodes.push( sceneNode );
-    self.addChild( sceneNode );
+    this.sceneNodes.push( sceneNode );
+    this.addChild( sceneNode );
   } );
 
   // If the model has more than 1 scene, create a control for scene selection.
@@ -84,9 +82,9 @@ function EqualityExplorerScreenView( model, options ) {
   }
 
   // Make the selected scene visible. unlink not needed.
-  model.sceneProperty.link( function( scene ) {
-    for ( let i = 0; i < self.sceneNodes.length; i++ ) {
-      self.sceneNodes[ i ].visible = ( self.sceneNodes[ i ].scene === scene );
+  model.sceneProperty.link( scene => {
+    for ( let i = 0; i < this.sceneNodes.length; i++ ) {
+      this.sceneNodes[ i ].visible = ( this.sceneNodes[ i ].scene === scene );
     }
   } );
 }
@@ -99,7 +97,7 @@ export default inherit( ScreenView, EqualityExplorerScreenView, {
   reset: function() {
     this.equationAccordionBoxExpandedProperty.reset();
     this.snapshotsAccordionBoxExpandedProperty.reset();
-    this.sceneNodes.forEach( function( sceneNode ) {
+    this.sceneNodes.forEach( sceneNode => {
       sceneNode.reset && sceneNode.reset();
     } );
   },

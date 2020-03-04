@@ -39,8 +39,6 @@ const VALID_ORIENTATION_VALUES = [ 'horizontal', 'vertical' ];
  */
 function SnapshotControl( scene, snapshotProperty, selectedSnapshotProperty, options ) {
 
-  const self = this;
-
   options = merge( {
 
     // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
@@ -91,7 +89,7 @@ function SnapshotControl( scene, snapshotProperty, selectedSnapshotProperty, opt
     center: selectionRectangle.center,
     maxWidth: options.controlWidth,
     maxHeight: options.controlHeight,
-    listener: function() {
+    listener: () => {
       assert && assert( !snapshotProperty.value, 'snapshot is already occupied' );
       const snapshot = new Snapshot( scene );
       snapshotProperty.value = snapshot; // associate the snapshot with this control
@@ -106,14 +104,14 @@ function SnapshotControl( scene, snapshotProperty, selectedSnapshotProperty, opt
 
   // selects the snapshot associated with this control
   const upListener = new DownUpListener( {
-    upInside: function( event, trail ) {
+    upInside: () => {
       assert && assert( snapshotProperty.value, 'expected a snapshot' );
       selectedSnapshotProperty.value = snapshotProperty.value;
     }
   } );
 
   // updates the layout of the snapshot, and centers it in the control
-  const updateSnapshotLayout = function() {
+  const updateSnapshotLayout = () => {
     if ( options.variableValuesVisibleProperty && options.variableValuesVisibleProperty.value ) {
       snapshotNode.children = [ equationNode, variableValuesNode ];
     }
@@ -124,7 +122,7 @@ function SnapshotControl( scene, snapshotProperty, selectedSnapshotProperty, opt
   };
 
   // Updates the view when the model changes. unlink not required.
-  snapshotProperty.link( function( snapshot ) {
+  snapshotProperty.link( snapshot => {
 
     // either the button or the snapshot is visible
     snapshotButton.visible = !snapshot;
@@ -161,23 +159,23 @@ function SnapshotControl( scene, snapshotProperty, selectedSnapshotProperty, opt
       }
 
       // add listener that selects the snapshot
-      self.addInputListener( upListener );
+      this.addInputListener( upListener );
     }
-    else if ( self.hasInputListener( upListener ) ) {
+    else if ( this.hasInputListener( upListener ) ) {
 
       selectionRectangle.cursor = null;
 
       // no associated snapshot
       equationNode = NO_EQUATION_NODE;
       variableValuesNode = NO_VARIABLE_VALUES_NODE;
-      self.removeInputListener( upListener );
+      this.removeInputListener( upListener );
     }
 
     updateSnapshotLayout();
   } );
 
   // Shows that the associated snapshot has been selected. unlink not required.
-  selectedSnapshotProperty.link( function( selectedSnapshot ) {
+  selectedSnapshotProperty.link( selectedSnapshot => {
     const isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
     selectionRectangle.stroke = isSelected ?
                                 EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE :
@@ -187,9 +185,7 @@ function SnapshotControl( scene, snapshotProperty, selectedSnapshotProperty, opt
   if ( options.variableValuesVisibleProperty ) {
 
     // Shows/hides variable values. unlink not required.
-    options.variableValuesVisibleProperty.link( function( visible ) {
-      updateSnapshotLayout();
-    } );
+    options.variableValuesVisibleProperty.link( visible => updateSnapshotLayout() );
   }
 }
 

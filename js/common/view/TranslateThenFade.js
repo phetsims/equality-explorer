@@ -25,14 +25,12 @@ const STEPPER = null; // Animation will be stepped via step function
  */
 function TranslateThenFade( node, options ) {
 
-  const self = this;
-
   options = merge( {
     destination: Vector2.ZERO, // destination position
     translateDuration: 0.7, // motion duration, in seconds
     fadeDuration: 0.25, // fade duration, in seconds
-    onComplete: function() {}, // called when the animation completes
-    onStop: function() {} // called when the animation is stopped (by calling stop)
+    onComplete: () => {}, // called when the animation completes
+    onStop: () => {} // called when the animation is stopped (by calling stop)
   }, options );
 
   // @private
@@ -40,13 +38,13 @@ function TranslateThenFade( node, options ) {
 
   // Property for animating position. unlink not needed.
   const positionProperty = new Property( node.translation );
-  positionProperty.link( function( position ) {
+  positionProperty.link( position => {
     node.translation = position;
   } );
 
   // Property for animating opacity. unlink not needed.
   const opacityProperty = new NumberProperty( node.opacity );
-  opacityProperty.link( function( opacity ) {
+  opacityProperty.link( opacity => {
     node.opacity = opacity;
   } );
 
@@ -73,14 +71,10 @@ function TranslateThenFade( node, options ) {
   } );
 
   // When translation finishes, start opacity animation. removeListener not needed.
-  this.translateAnimation.finishEmitter.addListener( function() {
-    self.fadeAnimation.start();
-  } );
+  this.translateAnimation.finishEmitter.addListener( () => this.fadeAnimation.start() );
 
   // When fade finishes, perform callback. removeListener not needed.
-  this.fadeAnimation.finishEmitter.addListener( function() {
-    options.onComplete();
-  } );
+  this.fadeAnimation.finishEmitter.addListener( () => options.onComplete() );
 }
 
 equalityExplorer.register( 'TranslateThenFade', TranslateThenFade );

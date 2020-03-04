@@ -30,11 +30,11 @@ const MAX_CONTENT_WIDTH = 500;
 function InfoDialog( levelDescriptions ) {
 
   const children = [];
-  levelDescriptions.forEach( function( levelDescription ) {
+  levelDescriptions.forEach( levelDescription =>
     children.push( new RichText( levelDescription, {
       font: DESCRIPTION_FONT
-    } ) );
-  } );
+    } ) )
+  );
 
   const content = new VBox( {
     align: 'left',

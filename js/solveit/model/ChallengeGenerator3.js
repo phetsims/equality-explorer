@@ -78,7 +78,7 @@ export default inherit( ChallengeGenerator, ChallengeGenerator3, {
 
     const x = this.randomX( X_VALUES );
     const d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
-    const a = ChallengeGenerator.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
+    const a = ChallengeGenerator.randomValueBy( A_VALUES, a => ( a % d !== 0 ) );
     const b = ChallengeGenerator.randomValue( B_VALUES_TYPE1, [ 0 ] );
     const c = new Fraction( a, d ).timesInteger( x ).plusInteger( b ).reduce();
 
@@ -120,8 +120,8 @@ export default inherit( ChallengeGenerator, ChallengeGenerator3, {
 
     const x = this.randomX( X_VALUES );
     const d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
-    const a = ChallengeGenerator.randomValueBy( A_VALUES, function( a ) { return ( a % d !== 0 ); } );
-    const b = ChallengeGenerator.randomValueBy( B_VALUES_TYPE2, function( b ) { return ( b % d !== 0 ); } );
+    const a = ChallengeGenerator.randomValueBy( A_VALUES, a => ( a % d !== 0 ) );
+    const b = ChallengeGenerator.randomValueBy( B_VALUES_TYPE2, b => ( b % d !== 0 ) );
     const c = new Fraction( ( a * x ) + b, d ).reduce();
 
     // Verify that computations meeting design requirements.

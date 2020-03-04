@@ -59,8 +59,6 @@ function TermDragListener( termNode, term, termCreator, options ) {
   assert && assert( term instanceof Term, 'invalid term: ' + term );
   assert && assert( termCreator instanceof TermCreator, 'invalid termCreator: ' + termCreator );
 
-  const self = this;
-
   options = merge( {
 
     haloRadius: 10, // radius of the halo around terms that sum to zero
@@ -95,9 +93,9 @@ function TermDragListener( termNode, term, termCreator, options ) {
   SimpleDragHandler.call( this, options );
 
   // Equivalent term tracks the movement of the dragged term throughout the drag cycle and post-drag animation.
-  const positionListener = function( position ) {
-    if ( self.equivalentTerm && !self.equivalentTerm.isDisposed ) {
-      self.equivalentTerm.moveTo( termCreator.getEquivalentTermPosition( term ) );
+  const positionListener = position => {
+    if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
+      this.equivalentTerm.moveTo( termCreator.getEquivalentTermPosition( term ) );
     }
   };
   term.positionProperty.link( positionListener ); // unlink required in dispose
@@ -108,18 +106,18 @@ function TermDragListener( termNode, term, termCreator, options ) {
   this.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
 
   // @private called by dispose
-  this.disposeTermDragListener = function() {
+  this.disposeTermDragListener = () => {
 
     if ( term.positionProperty.hasListener( positionListener ) ) {
       term.positionProperty.unlink( positionListener );
     }
 
-    if ( self.plate.positionProperty.hasListener( refreshHalosBound ) ) {
-      self.plate.positionProperty.unlink( refreshHalosBound );
+    if ( this.plate.positionProperty.hasListener( refreshHalosBound ) ) {
+      this.plate.positionProperty.unlink( refreshHalosBound );
     }
 
-    if ( self.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
-      self.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
+    if ( this.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
+      this.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
     }
   };
 }
@@ -287,17 +285,16 @@ export default inherit( SimpleDragHandler, TermDragListener, {
 
     this.term.pickableProperty.value = this.pickableWhileAnimating;
 
-    const self = this;
     this.term.animateTo( this.term.toolboxPosition, {
-      animationCompletedCallback: function() {
+      animationCompletedCallback: () => {
 
         // dispose of terms when they reach the toolbox
-        !self.term.isDisposed && self.term.dispose();
-        self.term = null;
+        !this.term.isDisposed && this.term.dispose();
+        this.term = null;
 
-        if ( self.equivalentTerm ) {
-          !self.equivalentTerm.isDisposed && self.equivalentTerm.dispose();
-          self.equivalentTerm = null;
+        if ( this.equivalentTerm ) {
+          !this.equivalentTerm.isDisposed && this.equivalentTerm.dispose();
+          this.equivalentTerm = null;
         }
       }
     } );

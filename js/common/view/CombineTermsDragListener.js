@@ -145,19 +145,18 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
    */
   animateToPlate: function() {
 
-    const self = this;
     const likeTermsCell = this.termCreator.likeTermsCell;
     const cellPosition = this.plate.getPositionOfCell( likeTermsCell );
     const sumToZeroParent = this.termNode.getParent();
 
-    self.term.pickableProperty.value = this.pickableWhileAnimating;
+    this.term.pickableProperty.value = this.pickableWhileAnimating;
 
     this.term.animateTo( cellPosition, {
 
       // When the term reaches the cell ...
-      animationCompletedCallback: function() {
+      animationCompletedCallback: () => {
 
-        let termInCell = self.plate.getTermInCell( likeTermsCell );
+        let termInCell = this.plate.getTermInCell( likeTermsCell );
         let maxIntegerExceeded = false;
 
         //=======================================================================
@@ -167,19 +166,19 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
         if ( !termInCell ) {
 
           // If the cell is empty, make a 'big' copy of this term and put it in the cell.
-          const termCopy = self.term.copy( {
+          const termCopy = this.term.copy( {
             diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
           } );
-          self.termCreator.putTermOnPlate( termCopy, likeTermsCell );
+          this.termCreator.putTermOnPlate( termCopy, likeTermsCell );
 
           // dispose of the original term
-          !self.term.isDisposed && self.term.dispose();
-          self.term = null;
+          !this.term.isDisposed && this.term.dispose();
+          this.term = null;
         }
         else {
 
           // If the cell is not empty. Combine the terms to create a new 'big' term.
-          var combinedTerm = termInCell.plus( self.term );
+          var combinedTerm = termInCell.plus( this.term );
 
           if ( combinedTerm.maxIntegerExceeded() ) {
 
@@ -193,13 +192,13 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
 
             // Terms sum to zero. No halo, since the terms did not overlap when drag ended.
             var sumToZeroNode = new SumToZeroNode( {
-              variable: self.term.variable || null,
+              variable: this.term.variable || null,
               fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
             } );
 
             // dispose of terms that sum to zero
-            !self.term.isDisposed && self.term.dispose();
-            self.term = null;
+            !this.term.isDisposed && this.term.dispose();
+            this.term = null;
             !termInCell.isDisposed && termInCell.dispose();
             termInCell = null;
             combinedTerm.dispose();
@@ -215,26 +214,26 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
         // On opposite side of the scale
         //=======================================================================
 
-        if ( self.equivalentTerm && !maxIntegerExceeded ) {
+        if ( this.equivalentTerm && !maxIntegerExceeded ) {
 
-          let oppositeLikeTerm = self.oppositePlate.getTermInCell( likeTermsCell );
+          let oppositeLikeTerm = this.oppositePlate.getTermInCell( likeTermsCell );
 
           if ( !oppositeLikeTerm ) {
 
             // If the cell on the opposite side is empty, make a 'big' copy of equivalentTerm and put it in the cell.
-            const equivalentTermCopy = self.equivalentTerm.copy( {
+            const equivalentTermCopy = this.equivalentTerm.copy( {
               diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
             } );
-            self.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, likeTermsCell );
+            this.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, likeTermsCell );
 
             // dispose of the original equivalentTerm
-            !self.equivalentTerm.isDisposed && self.equivalentTerm.dispose();
-            self.equivalentTerm = null;
+            !this.equivalentTerm.isDisposed && this.equivalentTerm.dispose();
+            this.equivalentTerm = null;
           }
           else {
 
             // The cell is not empty. Combine equivalentTerm with term that's in the cell
-            let oppositeCombinedTerm = oppositeLikeTerm.plus( self.equivalentTerm );
+            let oppositeCombinedTerm = oppositeLikeTerm.plus( this.equivalentTerm );
 
             if ( oppositeCombinedTerm.maxIntegerExceeded() ) {
 
@@ -249,8 +248,8 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
               // dispose of the terms used to create oppositeCombinedTerm
               oppositeLikeTerm.dispose();
               oppositeLikeTerm = null;
-              !self.equivalentTerm.isDisposed && self.equivalentTerm.dispose();
-              self.equivalentTerm = null;
+              !this.equivalentTerm.isDisposed && this.equivalentTerm.dispose();
+              this.equivalentTerm = null;
 
               if ( oppositeCombinedTerm.significantValue.getValue() === 0 ) {
 
@@ -267,51 +266,51 @@ export default inherit( TermDragListener, CombineTermsDragListener, {
               else {
 
                 // Put the combined term on the plate.
-                self.equivalentTermCreator.putTermOnPlate( oppositeCombinedTerm, likeTermsCell );
+                this.equivalentTermCreator.putTermOnPlate( oppositeCombinedTerm, likeTermsCell );
               }
             }
           }
         }
 
         // If we still have equivalentTerm, restore its pickability.
-        if ( self.equivalentTerm ) {
-          self.equivalentTerm.pickableProperty.value = true;
-          self.equivalentTerm = null;
+        if ( this.equivalentTerm ) {
+          this.equivalentTerm.pickableProperty.value = true;
+          this.equivalentTerm = null;
         }
 
         if ( maxIntegerExceeded ) {
 
           // Notify listeners that maxInteger would be exceeded by this drag sequence.
-          self.termCreator.maxIntegerExceededEmitter.emit();
+          this.termCreator.maxIntegerExceededEmitter.emit();
         }
         else {
 
           if ( combinedTerm ) {
 
             // dispose of the terms used to create the combined term
-            !self.term.isDisposed && self.term.dispose();
-            self.term = null;
+            !this.term.isDisposed && this.term.dispose();
+            this.term = null;
             !termInCell.isDisposed && termInCell.dispose();
             termInCell = null;
 
             // Put the combined term on the plate.
-            self.termCreator.putTermOnPlate( combinedTerm, likeTermsCell );
+            this.termCreator.putTermOnPlate( combinedTerm, likeTermsCell );
           }
 
           // Do sum-to-zero animations after both plates have moved.
           if ( sumToZeroNode ) {
             sumToZeroParent.addChild( sumToZeroNode );
-            sumToZeroNode.center = self.plate.getPositionOfCell( likeTermsCell );
+            sumToZeroNode.center = this.plate.getPositionOfCell( likeTermsCell );
             sumToZeroNode.startAnimation();
           }
           if ( oppositeSumToZeroNode ) {
             sumToZeroParent.addChild( oppositeSumToZeroNode );
-            oppositeSumToZeroNode.center = self.oppositePlate.getPositionOfCell( likeTermsCell );
+            oppositeSumToZeroNode.center = this.oppositePlate.getPositionOfCell( likeTermsCell );
             oppositeSumToZeroNode.startAnimation();
           }
         }
 
-        assert && assert( self.equivalentTerm === null, 'equivalentTerm should be null' );
+        assert && assert( this.equivalentTerm === null, 'equivalentTerm should be null' );
       }
     } );
   }

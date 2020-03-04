@@ -51,8 +51,6 @@ function UniversalOperationControl( scene, animationLayer, options ) {
 
   assert && assert( scene instanceof OperationsScene, 'invalid scene: ' + scene );
 
-  const self = this;
-
   options = merge( {
     timesZeroEnabled: true, // whether to include 'times 0' as one of the operations
 
@@ -89,7 +87,7 @@ function UniversalOperationControl( scene, animationLayer, options ) {
    * Adjusts the operand if it's not appropriate for a specified operator.
    * @param {string} operator - see EqualityExplorerConstants.OPERATORS
    */
-  const operatorListener = function( operator ) {
+  const operatorListener = operator => {
 
     const currentOperand = scene.operandProperty.value;
     let adjustedOperand;
@@ -98,9 +96,8 @@ function UniversalOperationControl( scene, animationLayer, options ) {
          ( !options.timesZeroEnabled && isTimesZero( operator, currentOperand ) ) ) {
 
       // If the operator would result in division or multiplication by zero, change the operand to 1.
-      adjustedOperand = _.find( scene.operands, function( operand ) {
-        return ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 );
-      } );
+      adjustedOperand = _.find( scene.operands,
+        operand => ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 ) );
       assert && assert( adjustedOperand, 'expected to find constant 1' );
       scene.operandProperty.value = adjustedOperand;
     }
@@ -110,9 +107,8 @@ function UniversalOperationControl( scene, animationLayer, options ) {
       // a constant term that has the same value as the variable term's coefficient.
       // E.g. if the operand is '5x', change the operand to '5'.
       const currentCoefficient = currentOperand.coefficient;
-      adjustedOperand = _.find( scene.operands, function( operand ) {
-        return ( operand instanceof ConstantTerm ) && ( operand.constantValue.equals( currentCoefficient ) );
-      } );
+      adjustedOperand = _.find( scene.operands,
+        operand => ( operand instanceof ConstantTerm ) && operand.constantValue.equals( currentCoefficient ) );
       assert && assert( adjustedOperand, 'expected to find constant ' + currentCoefficient );
       scene.operandProperty.value = adjustedOperand;
     }
@@ -145,10 +141,10 @@ function UniversalOperationControl( scene, animationLayer, options ) {
     downEnabledProperty: downEnabledProperty,
 
     // When the up button is pressed, skip operands that are inappropriate for the operation
-    upFunction: function( index ) {
+    upFunction: index => {
       let nextOperandIndex = index + 1;
       const operator = scene.operatorProperty.value;
-      while ( !self.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
+      while ( !this.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
         nextOperandIndex++;
         assert && assert( nextOperandIndex < scene.operands.length,
           'nextOperandIndex out of range: ' + nextOperandIndex );
@@ -157,10 +153,10 @@ function UniversalOperationControl( scene, animationLayer, options ) {
     },
 
     // When the down button is pressed, skip operands that are inappropriate for the operation
-    downFunction: function( index ) {
+    downFunction: index => {
       let nextOperandIndex = index - 1;
       const operator = scene.operatorProperty.value;
-      while ( !self.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
+      while ( !this.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
         nextOperandIndex--;
         assert && assert( nextOperandIndex >= 0, 'nextOperandIndex out of range: ' + nextOperandIndex );
       }
@@ -176,7 +172,7 @@ function UniversalOperationControl( scene, animationLayer, options ) {
      * @param {string} operator - see EqualityExplorerConstants.OPERATORS
      * @param {Term} operand
      */
-    function( operator, operand ) {
+    ( operator, operand ) => {
 
       const operandIndex = scene.operands.indexOf( operand );
       assert && assert( operandIndex !== -1, 'operand not found: ' + operand );
@@ -210,14 +206,14 @@ function UniversalOperationControl( scene, animationLayer, options ) {
   this.animations = [];
 
   // Clean up when an animation completes or is stopped.
-  const animationCleanup = function( animation, operationNode ) {
-    self.animations.splice( self.animations.indexOf( animation ), 1 );
+  const animationCleanup = ( animation, operationNode ) => {
+    this.animations.splice( this.animations.indexOf( animation ), 1 );
     !operationNode.isDisposed && operationNode.dispose();
     goButton.enabled = true;
   };
 
   // When the 'go' button is pressed, animate operations, then apply operations to terms.
-  const goButtonListener = function() {
+  const goButtonListener = () => {
 
     // Go button is disabled until the animation completes, so that students don't press the button rapid-fire.
     // See https://github.com/phetsims/equality-explorer/issues/48
@@ -229,20 +225,20 @@ function UniversalOperationControl( scene, animationLayer, options ) {
     // operation on left side
     const leftOperationNode = new UniversalOperationNode( operation, {
       centerX: scene.scale.leftPlate.positionProperty.value.x,
-      centerY: self.centerY
+      centerY: this.centerY
     } );
     animationLayer.addChild( leftOperationNode );
 
     // operation on right side
     const rightOperationNode = new UniversalOperationNode( operation, {
       centerX: scene.scale.rightPlate.positionProperty.value.x,
-      centerY: self.centerY
+      centerY: this.centerY
     } );
     animationLayer.addChild( rightOperationNode );
 
     // Apply the operation when both animations have completed.
     const numberOfAnimationsCompletedProperty = new NumberProperty( 0 );
-    numberOfAnimationsCompletedProperty.lazyLink( function( numberOfAnimationsCompleted ) {
+    numberOfAnimationsCompletedProperty.lazyLink( numberOfAnimationsCompleted => {
       if ( numberOfAnimationsCompleted === 2 ) {
         scene.applyOperation( operation );
       }
@@ -251,28 +247,28 @@ function UniversalOperationControl( scene, animationLayer, options ) {
     // animation on left side of the scale
     const leftAnimation = new TranslateThenFade( leftOperationNode, {
       destination: new Vector2( leftOperationNode.x, scene.scale.leftPlate.getGridTop() - leftOperationNode.height ),
-      onComplete: function() {
+      onComplete: () => {
         numberOfAnimationsCompletedProperty.value++;
         animationCleanup( leftAnimation, leftOperationNode );
       },
-      onStop: function() {
+      onStop: () => {
         animationCleanup( leftAnimation, leftOperationNode );
       }
     } );
-    self.animations.push( leftAnimation );
+    this.animations.push( leftAnimation );
 
     // animation on right side of the scale
     const rightAnimation = new TranslateThenFade( rightOperationNode, {
       destination: new Vector2( rightOperationNode.x, scene.scale.rightPlate.getGridTop() - rightOperationNode.height ),
-      onComplete: function() {
+      onComplete: () => {
         numberOfAnimationsCompletedProperty.value++;
         animationCleanup( rightAnimation, rightOperationNode );
       },
-      onStop: function() {
+      onStop: () => {
         animationCleanup( rightAnimation, rightOperationNode );
       }
     } );
-    self.animations.push( rightAnimation );
+    this.animations.push( rightAnimation );
 
     // start the animations
     leftAnimation.start();
@@ -298,12 +294,9 @@ function UniversalOperationControl( scene, animationLayer, options ) {
   HBox.call( this, options );
 
   // If the maxInteger limit is exceeded, stop all universal operations that are in progress
-  const maxIntegerExceededListener = function() {
-    self.stopAnimations();
-  };
-  scene.allTermCreators.forEach( function( termCreator ) {
-    termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ); // removeListener not needed
-  } );
+  const maxIntegerExceededListener = () => this.stopAnimations();
+  scene.allTermCreators.forEach( termCreator =>
+    termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ) ); // removeListener not needed
 }
 
 equalityExplorer.register( 'UniversalOperationControl', UniversalOperationControl );
@@ -351,9 +344,7 @@ export default inherit( HBox, UniversalOperationControl, {
    */
   step: function( dt ) {
     const animationsCopy = this.animations; // operate on a copy because step may modify the array
-    animationsCopy.forEach( function( animation ) {
-      animation.step( dt );
-    } );
+    animationsCopy.forEach( animation => animation.step( dt ) );
   },
 
   // @public

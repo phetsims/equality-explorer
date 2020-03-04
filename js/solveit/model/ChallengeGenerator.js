@@ -113,8 +113,6 @@ export default inherit( Object, ChallengeGenerator, {
    * @returns {number}
    */
   randomValue: function( values, excludedValues ) {
-    return ChallengeGenerator.randomValueBy( values, function( value ) {
-      return !_.includes( excludedValues, value );
-    } );
+    return ChallengeGenerator.randomValueBy( values, value => !_.includes( excludedValues, value ) );
   }
 } );

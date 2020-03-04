@@ -65,8 +65,6 @@ const EQUATION_PANEL_OPTIONS = {
 function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProperty,
                            snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, options ) {
 
-  const self = this;
-
   options = options || {};
 
   // Level description, displayed in the status bar
@@ -75,8 +73,8 @@ function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProp
     maxWidth: 650 // determined empirically
   } );
 
-  const backButtonListener = function() {
-    self.universalOperationControl.stopAnimations(); // stop any operations that are in progress
+  const backButtonListener = () => {
+    this.universalOperationControl.stopAnimations(); // stop any operations that are in progress
     sceneProperty.value = null; // back to the SettingsNode, where no scene is selected
   };
 
@@ -157,7 +155,7 @@ function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProp
     yMargin: 7,
     left: challengePanel.right + 10,
     centerY: challengePanel.centerY,
-    listener: function() {
+    listener: () => {
       phet.log && phet.log( 'Refresh button pressed' );
       scene.nextChallenge();
     }
@@ -174,7 +172,7 @@ function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProp
     yMargin: 8,
     centerX: scene.scale.position.x,
     top: this.universalOperationControl.bottom + 30, // determined empirically
-    listener: function() {
+    listener: () => {
       phet.log && phet.log( 'Next button pressed' );
       scene.nextChallenge();
     }
@@ -223,7 +221,7 @@ function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProp
       baseColor: 'red',
       centerX: scaleNode.centerX,
       bottom: scaleNode.bottom - 5,
-      listener: function() {
+      listener: () => {
         scene.showAnswer();
       }
     } );
@@ -244,7 +242,7 @@ function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProp
 
   // Property that controls opacity of smiley face
   const faceOpacityProperty = new NumberProperty( faceNode.opacity );
-  faceOpacityProperty.link( function( faceOpacity ) {
+  faceOpacityProperty.link( faceOpacity => {
     faceNode.opacity = faceOpacity;
   } );
 
@@ -252,7 +250,7 @@ function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProp
   this.faceAnimation = null;
 
   // unlink not needed.
-  scene.scoreProperty.lazyLink( function( score, oldScore ) {
+  scene.scoreProperty.lazyLink( ( score, oldScore ) => {
 
     // do nothing when the score is reset
     if ( score < oldScore ) {
@@ -274,43 +272,41 @@ function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProp
 
         // Display the dialog in a position that does not obscure the challenge solution.
         // See https://github.com/phetsims/equality-explorer/issues/104
-        layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
+        layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
 
           // center horizontally on the screen
           const screenCenterX = screenBounds.center.times( 1 / scale ).x;
 
           // top of dialog below equationPanel, so the solution is not obscured
           const localCenterTop = new Vector2( equationPanel.centerX, equationPanel.bottom + 10 );
-          const globalCenterTop = self.localToGlobalPoint( localCenterTop ).times( 1 / scale );
+          const globalCenterTop = this.localToGlobalPoint( localCenterTop ).times( 1 / scale );
 
           dialog.centerX = screenCenterX;
           dialog.top = globalCenterTop.y;
         },
 
         // 'Keep Going' hides the dialog
-        keepGoingButtonListener: function() {
-          rewardDialog.hide();
-        },
+        keepGoingButtonListener: () => rewardDialog.hide(),
 
         // 'New Level' has the same effect as the back button in the status bar
-        newLevelButtonListener: function() {
+        newLevelButtonListener: () => {
           rewardDialog.hide();
           backButtonListener();
         },
 
         // When the dialog is shown, show the reward
-        showCallback: function() {
-          assert && assert( !self.rewardNode, 'rewardNode is not supposed to exist' );
-          self.rewardNode = new EqualityExplorerRewardNode( scene.level );
-          self.addChild( self.rewardNode );
+        showCallback: () => {
+          assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
+          this.rewardNode = new EqualityExplorerRewardNode( scene.level );
+          this.addChild( this.rewardNode );
         },
 
         // When the dialog is hidden, dispose of the reward
-        hideCallback: function() {
-          assert && assert( self.rewardNode, 'rewardNode is supposed to exist' );
-          self.removeChild( self.rewardNode );
-          self.rewardNode.dispose();
-          self.rewardNode = null;
+        hideCallback: () => {
+          assert && assert( this.rewardNode, 'rewardNode is supposed to exist' );
+          this.removeChild( this.rewardNode );
+          this.rewardNode.dispose();
+          this.rewardNode = null;
         }
       } );
 
@@ -325,7 +321,7 @@ function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProp
       faceOpacityProperty.value = 0.8;
       faceNode.visible = true;
 
-      self.faceAnimation = new Animation( {
+      this.faceAnimation = new Animation( {
         stepEmitter: null, // via step function
         delay: 1,
         duration: 0.8,
@@ -337,26 +333,26 @@ function SolveItSceneNode( scene, sceneProperty, layoutBounds, visibleBoundsProp
       } );
 
       // removeListener not needed
-      self.faceAnimation.finishEmitter.addListener( function() {
+      this.faceAnimation.finishEmitter.addListener( () => {
         faceNode.visible = false;
         nextButton.visible = true;
-        self.faceAnimation = null;
+        this.faceAnimation = null;
       } );
 
-      self.faceAnimation.start();
+      this.faceAnimation.start();
     }
   } );
 
   // When the challenge changes... unlink not needed.
-  scene.challengeProperty.link( function( challenge ) {
+  scene.challengeProperty.link( challenge => {
 
     // cancel operation animations
-    self.universalOperationControl.reset();
+    this.universalOperationControl.reset();
 
     // display the challenge equation
-    self.removeChild( challengePanel );
+    this.removeChild( challengePanel );
     challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
-    self.addChild( challengePanel );
+    this.addChild( challengePanel );
     challengePanel.moveToBack();
 
     // visibility of other UI elements

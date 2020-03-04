@@ -31,26 +31,24 @@ function SeparateTermsDragListener( termNode, term, termCreator, options ) {
 
   TermDragListener.call( this, termNode, term, termCreator, options );
 
-  const self = this;
-
   // @private
   this.inverseTerm = null; // {Term|null} inverse term on opposite plate, for lock feature
 
   // @private If the inverse term is dragged, break the association between equivalentTerm and inverseTerm
-  this.inverseTermDraggingListener = function( dragging ) {
-    assert && assert( self.inverseTerm, 'there is no associated inverse term' );
+  this.inverseTermDraggingListener = dragging => {
+    assert && assert( this.inverseTerm, 'there is no associated inverse term' );
     if ( dragging ) {
-      if ( self.inverseTerm.draggingProperty.hasListener( self.inverseTermDraggingListener ) ) {
-        self.inverseTerm.draggingProperty.unlink( self.inverseTermDraggingListener );
+      if ( this.inverseTerm.draggingProperty.hasListener( this.inverseTermDraggingListener ) ) {
+        this.inverseTerm.draggingProperty.unlink( this.inverseTermDraggingListener );
       }
-      self.inverseTerm = null;
+      this.inverseTerm = null;
     }
   };
 
   // @private
-  this.disposeSeparateTermsDragListener = function() {
-    if ( self.inverseTerm && self.inverseTerm.draggingProperty.hasListener( self.inverseTermDraggingListener ) ) {
-      self.inverseTerm.draggingProperty.unlink( self.inverseTermDraggingListener );
+  this.disposeSeparateTermsDragListener = () => {
+    if ( this.inverseTerm && this.inverseTerm.draggingProperty.hasListener( this.inverseTermDraggingListener ) ) {
+      this.inverseTerm.draggingProperty.unlink( this.inverseTermDraggingListener );
     }
   };
 }
@@ -156,8 +154,6 @@ export default inherit( TermDragListener, SeparateTermsDragListener, {
     }
     else {
 
-      const self = this;
-
       // the target cell and its position
       const cell = this.plate.getBestEmptyCell( this.term.positionProperty.value );
       const cellPosition = this.plate.getPositionOfCell( cell );
@@ -167,60 +163,60 @@ export default inherit( TermDragListener, SeparateTermsDragListener, {
       this.term.animateTo( cellPosition, {
 
         // On each animation step...
-        animationStepCallback: function() {
+        animationStepCallback: () => {
 
           // If the target cell has become occupied, or the opposite plate is full, try again.
-          if ( !self.plate.isEmptyCell( cell ) || ( self.equivalentTerm && self.oppositePlate.isFull() ) ) {
-            self.animateToPlate();
+          if ( !this.plate.isEmptyCell( cell ) || ( this.equivalentTerm && this.oppositePlate.isFull() ) ) {
+            this.animateToPlate();
           }
         },
 
         // When the term reaches the cell...
-        animationCompletedCallback: function() {
+        animationCompletedCallback: () => {
 
-          assert && assert( !self.plate.isFull(), 'plate is full' );
-          assert && assert( !( self.equivalentTerm && self.oppositePlate.isFull() ), 'opposite plate is full' );
+          assert && assert( !this.plate.isFull(), 'plate is full' );
+          assert && assert( !( this.equivalentTerm && this.oppositePlate.isFull() ), 'opposite plate is full' );
 
           // Compute cell again, in case a term has been removed below the cell that we were animating to.
-          const cell = self.plate.getBestEmptyCell( self.term.positionProperty.value );
+          const cell = this.plate.getBestEmptyCell( this.term.positionProperty.value );
 
           // Put the term on the plate
-          self.termCreator.putTermOnPlate( self.term, cell );
-          self.term.pickableProperty.value = true;
+          this.termCreator.putTermOnPlate( this.term, cell );
+          this.term.pickableProperty.value = true;
 
           // Handle related terms on opposite side.
           // Note that equivalentTerm and/or inverseTerm may have been disposed of, so handle that.
-          if ( self.equivalentTerm ) {
-            if ( self.inverseTerm ) {
+          if ( this.equivalentTerm ) {
+            if ( this.inverseTerm ) {
 
               // Equivalent and inverse term cancel each other out.
-              !self.inverseTerm.isDisposed && self.inverseTerm.dispose();
-              self.inverseTerm = null;
-              !self.equivalentTerm.isDisposed && self.equivalentTerm.dispose();
-              self.equivalentTerm = null;
+              !this.inverseTerm.isDisposed && this.inverseTerm.dispose();
+              this.inverseTerm = null;
+              !this.equivalentTerm.isDisposed && this.equivalentTerm.dispose();
+              this.equivalentTerm = null;
             }
-            else if ( !self.equivalentTerm.isDisposed ) {
+            else if ( !this.equivalentTerm.isDisposed ) {
 
-              // Transfer self.equivalentTerm to a local variable and set to null, so that equivalentTerm
+              // Transfer this.equivalentTerm to a local variable and set to null, so that equivalentTerm
               // no longer tracks movement of term. See https://github.com/phetsims/equality-explorer/issues/90
-              const equivalentTerm = self.equivalentTerm;
-              self.equivalentTerm = null;
+              const equivalentTerm = this.equivalentTerm;
+              this.equivalentTerm = null;
 
               // Put equivalent term on the opposite plate
-              const equivalentCell = self.oppositePlate.getBestEmptyCell( equivalentTerm.positionProperty.value );
-              self.equivalentTermCreator.putTermOnPlate( equivalentTerm, equivalentCell );
+              const equivalentCell = this.oppositePlate.getBestEmptyCell( equivalentTerm.positionProperty.value );
+              this.equivalentTermCreator.putTermOnPlate( equivalentTerm, equivalentCell );
               equivalentTerm.pickableProperty.value = true;
             }
             else {
 
               // Do nothing - equivalentTerm was disposed before animationCompletedCallback was called.
               // See https://github.com/phetsims/equality-explorer/issues/88
-              self.equivalentTerm = null;
+              this.equivalentTerm = null;
             }
           }
 
-          assert && assert( self.equivalentTerm === null, 'equivalentTerm should be null' );
-          assert && assert( self.inverseTerm === null, 'inverseTerm should be null' );
+          assert && assert( this.equivalentTerm === null, 'equivalentTerm should be null' );
+          assert && assert( this.inverseTerm === null, 'inverseTerm should be null' );
         }
       } );
     }

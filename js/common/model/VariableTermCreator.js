@@ -23,8 +23,6 @@ import VariableTerm from './VariableTerm.js';
  */
 function VariableTermCreator( variable, options ) {
 
-  const self = this;
-
   options = merge( {
     positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
     negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL
@@ -40,9 +38,7 @@ function VariableTermCreator( variable, options ) {
   TermCreator.call( this, options );
 
   // When the variable values changes, recompute the weight of terms on the scale. unlink not needed.
-  this.variable.valueProperty.link( function( variableValue ) {
-    self.updateWeightOnPlateProperty();
-  } );
+  this.variable.valueProperty.link( variableValue => this.updateWeightOnPlateProperty() );
 }
 
 equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );

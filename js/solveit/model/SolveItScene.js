@@ -38,8 +38,6 @@ function SolveItScene( level, description, challengeGenerator ) {
 
   assert && assert( level > 0, 'invalid level, numbering starts with 1: ' + level );
 
-  const self = this;
-
   OperationsScene.call( this, {
     debugName: 'level ' + level,
     scalePosition: new Vector2( 355, 500 ), // determined empirically
@@ -54,25 +52,21 @@ function SolveItScene( level, description, challengeGenerator ) {
   // @public
   this.scoreProperty = new NumberProperty( 0, {
     numberType: 'Integer',
-    isValidValue: function( value ) {
-      return value >= 0;
-    }
+    isValidValue: value => ( value >= 0 )
   } );
 
   // Initialize positions of term creators. This is necessary because this screen has no TermToolboxes.
   // Positions can be any value, since terms in this screen never return to a toolbox.
   // This is preferable to using a default value, since initialization order is important in other screens.
   // See for example frameStartedCallback in TermCreatorNode.
-  this.allTermCreators.forEach( function( termCreator ) {
+  this.allTermCreators.forEach( termCreator => {
     termCreator.positivePosition = Vector2.ZERO;
     termCreator.negativePosition = Vector2.ZERO;
   } );
 
   // @public (read-only) {Property.<Challenge|null>} the current challenge, set by nextChallenge
   this.challengeProperty = new Property( null, {
-    isValidValue: function( value ) {
-      return ( value instanceof Challenge ) || ( value === null );
-    }
+    isValidValue: value => ( value instanceof Challenge ) || ( value === null )
   } );
 
   // @private has the current challenge been solved?
@@ -83,22 +77,22 @@ function SolveItScene( level, description, challengeGenerator ) {
 
   // When a universal operation is completed, determine if the challenge is solved.
   // removeListener not needed.
-  this.operationCompletedEmitter.addListener( function( operation ) {
+  this.operationCompletedEmitter.addListener( operation => {
 
     assert && assert( operation instanceof UniversalOperation, 'invalid operation: ' + operation );
 
     // All challenges in the game are equalities, and applying a universal operation should result in an equality.
-    assert && assert( self.scale.angleProperty.value === 0,
+    assert && assert( this.scale.angleProperty.value === 0,
       'scale is not balanced after applying operation ' + operation );
 
     // challenge is in a 'solved' state if x has been isolated on the scale.
-    const solved = self.isXIsolated();
+    const solved = this.isXIsolated();
 
     // The first time that the challenge has been solved, award points and notify listeners.
-    if ( solved && !self.challengeHasBeenSolved ) {
+    if ( solved && !this.challengeHasBeenSolved ) {
       phet.log && phet.log( 'operationCompletedEmitter listener: challenge is solved' );
-      self.challengeHasBeenSolved = true;
-      self.scoreProperty.value = self.scoreProperty.value + POINTS_PER_CHALLENGE;
+      this.challengeHasBeenSolved = true;
+      this.scoreProperty.value = this.scoreProperty.value + POINTS_PER_CHALLENGE;
     }
   } );
 }
@@ -131,9 +125,7 @@ export default inherit( OperationsScene, SolveItScene, {
     this.snapshotsCollection.reset();
 
     // dispose of all terms
-    this.allTermCreators.forEach( function( termCreator ) {
-      termCreator.disposeAllTerms();
-    } );
+    this.allTermCreators.forEach( termCreator => termCreator.disposeAllTerms() );
 
     // generate the challenge, form is: ax + b = mx + n
     let challenge = this.challengeGenerator.nextChallenge();
@@ -237,9 +229,7 @@ export default inherit( OperationsScene, SolveItScene, {
   showAnswer: function() {
 
     // 0 = 0
-    this.allTermCreators.forEach( function( termCreator ) {
-      termCreator.disposeAllTerms();
-    } );
+    this.allTermCreators.forEach( termCreator => termCreator.disposeAllTerms() );
 
     // x
     const variableTerm = new VariableTerm( this.xVariable, {

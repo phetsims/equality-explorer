@@ -32,8 +32,6 @@ const TRANSITION_OPTIONS = {
  */
 function SolveItScreenView( model ) {
 
-  const self = this;
-
   ScreenView.call( this );
 
   // @private state of the Snapshots accordion box is global to the Screen,
@@ -45,9 +43,9 @@ function SolveItScreenView( model ) {
 
   // UI for level selection and other game settings
   const levelSelectionNode = new LevelSelectionNode( model, this.layoutBounds, {
-    resetCallback: function() {
+    resetCallback: () => {
       model.reset();
-      self.reset();
+      this.reset();
     }
   } );
 
@@ -70,7 +68,7 @@ function SolveItScreenView( model ) {
   this.addChild( this.transitionNode );
 
   // Make the selected scene (level) visible. unlink not needed.
-  model.sceneProperty.link( function( scene ) {
+  model.sceneProperty.link( scene => {
 
     // Skip null (no scene selected), so that scene is shown during 'slide' transition
     if ( scene !== null ) {
@@ -81,19 +79,19 @@ function SolveItScreenView( model ) {
       }
 
       // make the selected scene visible
-      for ( let i = 0; i < self.sceneNodes.length; i++ ) {
-        self.sceneNodes[ i ].visible = ( self.sceneNodes[ i ].scene === scene );
+      for ( let i = 0; i < this.sceneNodes.length; i++ ) {
+        this.sceneNodes[ i ].visible = ( this.sceneNodes[ i ].scene === scene );
       }
     }
   } );
 
   // Transition between the level-selection UI and the selected scene.
-  model.sceneProperty.lazyLink( function( scene ) {
+  model.sceneProperty.lazyLink( scene => {
     if ( scene ) {
-      self.transitionNode.slideLeftTo( scenesParent, TRANSITION_OPTIONS );
+      this.transitionNode.slideLeftTo( scenesParent, TRANSITION_OPTIONS );
     }
     else {
-      self.transitionNode.slideRightTo( levelSelectionNode, TRANSITION_OPTIONS );
+      this.transitionNode.slideRightTo( levelSelectionNode, TRANSITION_OPTIONS );
     }
   } );
 }

@@ -22,8 +22,6 @@ const DEFAULT_FONT = new PhetFont( 14 );
  */
 function ChallengeDerivationNode( challengeProperty, options ) {
 
-  const self = this;
-
   options = merge( {
 
     // RichText options
@@ -33,8 +31,8 @@ function ChallengeDerivationNode( challengeProperty, options ) {
   RichText.call( this, '', options );
 
   // display derivation of the current challenge. unlink not needed.
-  challengeProperty.link( function( challenge ) {
-    self.text = ( challenge ? challenge.debugDerivation : '' );
+  challengeProperty.link( challenge => {
+    this.text = ( challenge ? challenge.debugDerivation : '' );
   } );
 }
 

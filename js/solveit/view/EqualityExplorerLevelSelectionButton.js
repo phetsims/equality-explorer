@@ -33,7 +33,7 @@ function EqualityExplorerLevelSelectionButton( scene, sceneProperty ) {
   LevelSelectionButton.call( this, icon, scene.scoreProperty, {
     baseColor: 'rgb( 191, 239, 254 )',
     scoreDisplayConstructor: ScoreDisplayNumberAndStar,
-    listener: function() {
+    listener: () => {
       phet.log && phet.log( 'Level' + scene.level + ' button pressed' );
       sceneProperty.value = scene;
     }

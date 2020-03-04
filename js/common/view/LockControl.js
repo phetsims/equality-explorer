@@ -52,7 +52,7 @@ function LockControl( lockedProperty, options ) {
 
   // toggle the state when the user clicks on this Node
   this.addInputListener( new DownUpListener( {
-    up: function( event ) {
+    up: () => {
       lockedProperty.value = !lockedProperty.value;
       phet.log && phet.log( 'Lock pressed, value=' + lockedProperty.value );
     }

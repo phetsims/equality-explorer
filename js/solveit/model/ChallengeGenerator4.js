@@ -58,9 +58,9 @@ export default inherit( ChallengeGenerator, ChallengeGenerator4, {
     const x = this.randomX( X_VALUES );
     const a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );
     const b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
-    const m = ChallengeGenerator.randomValueBy( M_VALUES, function( m ) {
-      return ( m !== 0 ) && ( m !== a ) && ( Math.abs( a - m ) <= 10 );
-    } );
+    const m = ChallengeGenerator.randomValueBy( M_VALUES,
+      m => ( m !== 0 ) && ( m !== a ) && ( Math.abs( a - m ) <= 10 )
+    );
     const n = ( ( a - m ) * x ) + b;
 
     // Verify that computations meeting design requirements.

@@ -40,8 +40,6 @@ import Term from './Term.js';
  */
 function TermCreator( options ) {
 
-  const self = this;
-
   options = merge( {
     dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
 
@@ -74,10 +72,10 @@ function TermCreator( options ) {
 
   // @public (read-only) so we don't have to expose this.termsOnPlate
   // dispose not needed.
-  this.numberOfTermsOnPlateProperty = new DerivedProperty( [ this.termsOnPlate.lengthProperty ],
-    function( length ) {
-      return length;
-    } );
+  this.numberOfTermsOnPlateProperty = new DerivedProperty(
+    [ this.termsOnPlate.lengthProperty ],
+    length => length
+  );
 
   // @public (read-only) weight of the terms that are on the plate
   // We can't use a DerivedProperty here because subtypes may have additional Properties
@@ -120,18 +118,16 @@ function TermCreator( options ) {
   this.updateWeightOnPlatePropertyBound = this.updateWeightOnPlateProperty.bind( this );
 
   // Update weight when number of terms on plate changes. unlink not required.
-  this.numberOfTermsOnPlateProperty.link( function( numberOfTermsOnPlate ) {
-    self.updateWeightOnPlatePropertyBound();
-  } );
+  this.numberOfTermsOnPlateProperty.link( numberOfTermsOnPlate => this.updateWeightOnPlatePropertyBound() );
 
   // When locked changes... unlink not required.
-  this.lockedProperty.lazyLink( function( locked ) {
+  this.lockedProperty.lazyLink( locked => {
 
     // If lock feature is turned on, verify that an equivalentTermCreator has been provided.
-    assert && assert( !locked || self.equivalentTermCreator, 'lock feature requires equivalentTermCreator' );
+    assert && assert( !locked || this.equivalentTermCreator, 'lock feature requires equivalentTermCreator' );
 
     // Changing lock state causes all terms that are not on the plate to be disposed.
-    self.disposeTermsNotOnPlate();
+    this.disposeTermsNotOnPlate();
   } );
 }
 
@@ -429,9 +425,7 @@ export default inherit( Object, TermCreator, {
    * @public
    */
   getPositiveTermsOnPlate: function() {
-    return _.filter( this.termsOnPlate.getArray(), function( term ) {
-      return ( term.sign === 1 );
-    } );
+    return _.filter( this.termsOnPlate.getArray(), term => ( term.sign === 1 ) );
   },
 
   /**
@@ -440,9 +434,7 @@ export default inherit( Object, TermCreator, {
    * @public
    */
   getNegativeTermsOnPlate: function() {
-    return _.filter( this.termsOnPlate.getArray(), function( term ) {
-      return ( term.sign === -1 );
-    } );
+    return _.filter( this.termsOnPlate.getArray(), term => ( term.sign === -1 ) );
   },
 
   /**

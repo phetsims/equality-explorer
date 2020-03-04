@@ -27,8 +27,6 @@ import Plate from './Plate.js';
  */
 function BalanceScale( leftTermCreators, rightTermCreators, options ) {
 
-  const self = this;
-
   options = merge( {
 
     position: Vector2.ZERO, // position of the point where the beam balances on the fulcrum
@@ -69,7 +67,7 @@ function BalanceScale( leftTermCreators, rightTermCreators, options ) {
   if ( !options.iconSize ) {
     let maxIconWidth = 0;
     let maxIconHeight = 0;
-    termCreators.forEach( function( termCreator ) {
+    termCreators.forEach( termCreator => {
       maxIconWidth = Math.max( maxIconWidth, termCreator.createIcon().width );
       maxIconHeight = Math.max( maxIconHeight, termCreator.createIcon().height );
     } );
@@ -99,7 +97,7 @@ function BalanceScale( leftTermCreators, rightTermCreators, options ) {
   // dispose not required.
   this.angleProperty = new DerivedProperty(
     [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
-    function( leftWeight, rightWeight ) {
+    ( leftWeight, rightWeight ) => {
 
       // compute the weight difference between the 2 plates
       let weightDelta = rightWeight.minus( leftWeight ).getValue();
@@ -116,13 +114,11 @@ function BalanceScale( leftTermCreators, rightTermCreators, options ) {
       assert && assert( Math.abs( angle ) <= options.maxAngle, 'angle out of range: ' + angle );
       return angle;
     }, {
-      isValidValue: function( value ) {
-        return typeof value === 'number';
-      }
+      isValidValue: value => ( typeof value === 'number' )
     } );
 
   // Move the plates when the angle changes. unlink not required.
-  this.angleProperty.link( function( angle ) {
+  this.angleProperty.link( angle => {
 
     // hoist reusable vars
     let dx = 0;
@@ -132,34 +128,30 @@ function BalanceScale( leftTermCreators, rightTermCreators, options ) {
     let rightPosition = null;
     const absXInset = Math.abs( options.plateXInset );
     if ( angle === 0 ) {
-      rightPosition = new Vector2( self.position.x + ( self.beamWidth / 2 ) - absXInset,
-        self.position.y - options.plateSupportHeight );
+      rightPosition = new Vector2( this.position.x + ( this.beamWidth / 2 ) - absXInset,
+        this.position.y - options.plateSupportHeight );
     }
     else {
-      const hypotenuse = ( self.beamWidth / 2 ) - absXInset;
+      const hypotenuse = ( this.beamWidth / 2 ) - absXInset;
       dx = Math.cos( angle ) * hypotenuse;
       dy = Math.sin( angle ) * hypotenuse;
-      rightPosition = new Vector2( self.position.x + dx, self.position.y + dy - options.plateSupportHeight );
+      rightPosition = new Vector2( this.position.x + dx, this.position.y + dy - options.plateSupportHeight );
     }
-    self.rightPlate.positionProperty.value = rightPosition;
+    this.rightPlate.positionProperty.value = rightPosition;
 
     // move the left plate, relative to the right plate
-    dx = rightPosition.x - self.position.x;
-    dy = ( rightPosition.y + options.plateSupportHeight ) - self.position.y;
-    self.leftPlate.positionProperty.value =
-      new Vector2( self.position.x - dx, self.position.y - dy - options.plateSupportHeight );
+    dx = rightPosition.x - this.position.x;
+    dy = ( rightPosition.y + options.plateSupportHeight ) - this.position.y;
+    this.leftPlate.positionProperty.value =
+      new Vector2( this.position.x - dx, this.position.y - dy - options.plateSupportHeight );
   } );
 
   // @public {DerivedProperty.<number>} total number of terms on the scale
   // dispose not required.
   this.numberOfTermsProperty = new DerivedProperty(
     [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
-    function( leftNumberOfTerms, rightNumberOfTerms ) {
-      return leftNumberOfTerms + rightNumberOfTerms;
-    }, {
-      isValidValue: function( value ) {
-        return Utils.isInteger( value );
-      }
+    ( leftNumberOfTerms, rightNumberOfTerms ) => ( leftNumberOfTerms + rightNumberOfTerms ), {
+      isValidValue: value => Utils.isInteger( value )
     } );
 }
 
@@ -182,8 +174,6 @@ export default inherit( Object, BalanceScale, {
    */
   clear: function() {
     const termCreators = this.leftTermCreators.concat( this.rightTermCreators );
-    termCreators.forEach( function( termCreator ) {
-      termCreator.disposeTermsOnPlate();
-    } );
+    termCreators.forEach( termCreator => termCreator.disposeTermsOnPlate() );
   }
 } );

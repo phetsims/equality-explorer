@@ -57,7 +57,7 @@ function TermsToolbox( termCreators, plate, termsLayer, options ) {
   }
 
   // touchAreas
-  termCreatorNodes.forEach( function( termCreatorNode ) {
+  termCreatorNodes.forEach( termCreatorNode => {
     const dx = Math.min( 5, options.spacing ); // determined empirically
     const dy = options.yMargin + ( options.contentSize.height - termCreatorNode.height ) / 2; // height of toolbox
     termCreatorNode.touchArea = termCreatorNode.localBounds.dilatedXY( dx, dy );

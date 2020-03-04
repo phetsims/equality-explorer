@@ -48,7 +48,7 @@ function LevelSelectionNode( model, layoutBounds, options ) {
 
   // Level-selection buttons
   const levelSelectionButtons = [];
-  model.scenes.forEach( function( scene ) {
+  model.scenes.forEach( scene => {
     levelSelectionButtons.push( new EqualityExplorerLevelSelectionButton( scene, model.sceneProperty ) );
   } );
 
@@ -82,7 +82,7 @@ function LevelSelectionNode( model, layoutBounds, options ) {
   const infoButton = new InfoButton( {
     iconFill: 'rgb( 41, 106, 163 )',
     maxHeight: 0.75 * chooseYourLevelNode.height,
-    listener: function() {
+    listener: () => {
       infoDialog = infoDialog || new InfoDialog( model.levelDescriptions );
       infoDialog.show();
     },
@@ -92,7 +92,7 @@ function LevelSelectionNode( model, layoutBounds, options ) {
 
   // Reset All button, at lower right
   const resetAllButton = new ResetAllButton( {
-    listener: function() {
+    listener: () => {
       phet.log && phet.log( 'ResetAllButton pressed' );
       options.resetCallback && options.resetCallback();
     },
@@ -115,7 +115,7 @@ function LevelSelectionNode( model, layoutBounds, options ) {
     const testButton = new RectangularPushButton( {
       content: new Text( 'test challenge generators', { fill: 'white', font: new PhetFont( 20 ) } ),
       baseColor: 'red',
-      listener: function() {
+      listener: () => {
         model.testChallengeGenerators();
         const messageNode = new RichText( 'Test completed.<br>See results in browser console.' );
         const dialog = new Dialog( messageNode, {

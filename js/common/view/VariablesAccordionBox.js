@@ -65,7 +65,7 @@ function VariablesAccordionBox( variables, options ) {
 
   // Create a picker for each variable
   const children = [];
-  variables.forEach( function( variable ) {
+  variables.forEach( variable => {
 
     const variableNode = new VariableNode( variable, {
       iconScale: 0.55,

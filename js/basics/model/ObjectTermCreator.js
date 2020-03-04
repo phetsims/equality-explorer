@@ -19,19 +19,15 @@ import ObjectTerm from './ObjectTerm.js';
  */
 function ObjectTermCreator( variable, options ) {
 
-  const self = this;
-
   phet.log && phet.log( 'ObjectTermCreator: ' + variable.symbol + ', weight=' + variable.valueProperty.value );
+
+  TermCreator.call( this, options );
 
   // @public (read-only)
   this.variable = variable;
 
-  TermCreator.call( this, options );
-
   // When the variable's value changes, recompute the weight of terms on the scale. unlink not needed.
-  this.variable.valueProperty.link( function( value ) {
-    self.updateWeightOnPlateProperty();
-  } );
+  this.variable.valueProperty.link( value => this.updateWeightOnPlateProperty() );
 }
 
 equalityExplorer.register( 'ObjectTermCreator', ObjectTermCreator );

@@ -37,8 +37,6 @@ const DEFAULT_FONT_SIZE = 30;
  */
 function EquationNode( leftTermCreators, rightTermCreators, options ) {
 
-  const self = this;
-
   options = merge( {
 
     // Update the view when the model changes?
@@ -76,7 +74,7 @@ function EquationNode( leftTermCreators, rightTermCreators, options ) {
   } );
 
   // updates the equation's layout, origin at the center of the relational operator
-  const updateLayout = function() {
+  const updateLayout = () => {
     if ( leftExpressionNode && rightExpressionNode ) {
       relationalOperatorNode.centerX = 0;
       relationalOperatorNode.centerY = 0;
@@ -88,7 +86,7 @@ function EquationNode( leftTermCreators, rightTermCreators, options ) {
   };
 
   // updates the relational operator based on left vs right weight
-  const updateRelationalOperator = function() {
+  const updateRelationalOperator = () => {
     relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
     updateLayout();
   };
@@ -104,10 +102,10 @@ function EquationNode( leftTermCreators, rightTermCreators, options ) {
   };
 
   // updates the equation's terms
-  const updateTerms = function() {
+  const updateTerms = () => {
     leftExpressionNode = createExpressionNode( leftTermCreators, expressionConfig );
     rightExpressionNode = createExpressionNode( rightTermCreators, expressionConfig );
-    self.children = [ leftExpressionNode, relationalOperatorNode, rightExpressionNode ];
+    this.children = [ leftExpressionNode, relationalOperatorNode, rightExpressionNode ];
     updateLayout();
   };
 
@@ -121,7 +119,7 @@ function EquationNode( leftTermCreators, rightTermCreators, options ) {
     const termDependencies = [];
 
     // Gather dependencies for all term creators...
-    leftTermCreators.concat( rightTermCreators ).forEach( function( termCreator ) {
+    leftTermCreators.concat( rightTermCreators ).forEach( termCreator => {
       relationalOperatorDependencies.push( termCreator.weightOnPlateProperty );
       termDependencies.push( termCreator.numberOfTermsOnPlateProperty );
     } );
@@ -138,7 +136,7 @@ function EquationNode( leftTermCreators, rightTermCreators, options ) {
   }
 
   // @private
-  this.disposeEquationNode = function() {
+  this.disposeEquationNode = () => {
     relationalOperatorMultilink && relationalOperatorMultilink.dispose();
     termsMultilink && termsMultilink.dispose();
   };

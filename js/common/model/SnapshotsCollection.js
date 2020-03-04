@@ -21,15 +21,11 @@ function SnapshotsCollection( options ) {
     numberOfSnapshots: 5
   }, options );
 
-  const self = this;
-
   // @public {Property.<Snapshot|null>[]} a Property for each possible snapshot, null means no snapshot
   this.snapshotProperties = [];
   for ( let i = 0; i < options.numberOfSnapshots; i++ ) {
     this.snapshotProperties.push( new Property( null, {
-      isValidValue: function( snapshot ) {
-        return ( snapshot === null ) || ( snapshot instanceof Snapshot );
-      }
+      isValidValue: snapshot => ( snapshot === null ) || ( snapshot instanceof Snapshot )
     } ) );
   }
 
@@ -37,11 +33,9 @@ function SnapshotsCollection( options ) {
   this.selectedSnapshotProperty = new Property( null, {
 
     // a valid snapshot is null or the value of one of the snapshotProperties' values
-    isValidValue: function( snapshot ) {
+    isValidValue: snapshot => {
       return ( snapshot === null ) ||
-             _.some( self.snapshotProperties, function( snapshotProperty ) {
-               return ( snapshotProperty.value === snapshot );
-             } );
+             _.some( this.snapshotProperties, snapshotProperty => ( snapshotProperty.value === snapshot ) );
     }
   } );
 }

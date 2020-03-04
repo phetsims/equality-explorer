@@ -144,7 +144,7 @@ function BalanceScaleNode( scale, options ) {
   }
 
   // Disable ClearScaleButton and OrganizeButton when the scale is empty. unlink not required.
-  scale.numberOfTermsProperty.link( function( numberOfTerms ) {
+  scale.numberOfTermsProperty.link( numberOfTerms => {
     const enabled = ( numberOfTerms !== 0 );
     clearScaleButton.enabled = enabled;
     organizeButton.enabled = enabled;
@@ -178,7 +178,7 @@ function BalanceScaleNode( scale, options ) {
   Node.call( this, options );
 
   // Adjust parts of the scale that depend on angle. unlink not required.
-  scale.angleProperty.link( function( angle, oldAngle ) {
+  scale.angleProperty.link( ( angle, oldAngle ) => {
 
     const deltaAngle = angle - oldAngle;
 
@@ -199,13 +199,13 @@ function BalanceScaleNode( scale, options ) {
   } );
 
   // Move the left plate. unlink not required.
-  scale.leftPlate.positionProperty.link( function( position ) {
+  scale.leftPlate.positionProperty.link( position => {
     leftPlateNode.x = position.x - scale.position.x;
     leftPlateNode.y = position.y - scale.position.y;
   } );
 
   // Move the right plate. unlink not required.
-  scale.rightPlate.positionProperty.link( function( position ) {
+  scale.rightPlate.positionProperty.link( position => {
     rightPlateNode.x = position.x - scale.position.x;
     rightPlateNode.y = position.y - scale.position.y;
   } );

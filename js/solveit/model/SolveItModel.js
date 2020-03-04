@@ -60,15 +60,8 @@ export default inherit( Object, SolveItModel, {
 
   // @public
   reset: function() {
-
-    this.challengeGenerators.forEach( function( challengeGenerator ) {
-      challengeGenerator.reset();
-    } );
-
-    this.scenes.forEach( function( scene ) {
-      scene.reset();
-    } );
-
+    this.challengeGenerators.forEach( challengeGenerator => challengeGenerator.reset() );
+    this.scenes.forEach( scene => scene.reset() );
     this.sceneProperty.reset();
   },
 

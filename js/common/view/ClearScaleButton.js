@@ -26,7 +26,7 @@ function ClearScaleButton( clearScaleFunction, options ) {
   }, options );
 
   assert && assert( !options.listener, 'ClearScaleButton sets listener' );
-  options.listener = function() {
+  options.listener = () => {
     phet.log && phet.log( 'ClearScaleButton pressed' );
     clearScaleFunction();
   };

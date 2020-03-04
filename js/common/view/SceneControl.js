@@ -31,7 +31,7 @@ function SceneControl( scenes, sceneProperty, options ) {
 
   // describe a radio button for each scene
   const contentArray = [];
-  scenes.forEach( function( scene ) {
+  scenes.forEach( scene => {
     assert && assert( scene.icon, 'scene must have an icon' );
     contentArray.push( {
       value: scene,

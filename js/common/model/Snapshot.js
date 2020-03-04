@@ -24,9 +24,7 @@ function Snapshot( scene ) {
   if ( scene.variables ) {
 
     // @private {number[]} save the current value of each variable
-    this.variableValues = _.map( scene.variables, function( variable ) {
-      return variable.valueProperty.value;
-    } );
+    this.variableValues = _.map( scene.variables, variable => variable.valueProperty.value );
   }
 }
 

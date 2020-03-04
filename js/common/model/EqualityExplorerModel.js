@@ -27,9 +27,7 @@ function EqualityExplorerModel( scenes ) {
 
   // When the scene changes, dispose of any terms that are being dragged or animating, see #73.
   // unlink not needed.
-  this.sceneProperty.lazyLink( function( scene ) {
-    scene.disposeTermsNotOnScale();
-  } );
+  this.sceneProperty.lazyLink( scene => scene.disposeTermsNotOnScale() );
 }
 
 equalityExplorer.register( 'EqualityExplorerModel', EqualityExplorerModel );
@@ -41,9 +39,7 @@ export default inherit( Object, EqualityExplorerModel, {
    * @public
    */
   reset: function() {
-    this.scenes.forEach( function( scene ) {
-      scene.reset();
-    } );
+    this.scenes.forEach( scene => scene.reset() );
     this.sceneProperty.reset();
   },
 
@@ -63,8 +59,6 @@ export default inherit( Object, EqualityExplorerModel, {
    * @public
    */
   deactivate: function() {
-    this.scenes.forEach( function( scene ) {
-      scene.disposeTermsNotOnScale();
-    } );
+    this.scenes.forEach( scene => scene.disposeTermsNotOnScale() );
   }
 } );

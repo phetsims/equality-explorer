@@ -59,8 +59,8 @@ function ObjectPicker( valueProperty, items, options ) {
     arrowYSpacing: 3,
     arrowStroke: 'black',
     arrowLineWidth: 0.25,
-    upFunction: function( index ) { return index + 1; },
-    downFunction: function( index ) { return index - 1; },
+    upFunction: index => index + 1,
+    downFunction: index => index - 1,
 
     // {Property.<boolean>|null} whether the up and down buttons are enabled.
     // If the client provides these, then the client is fully responsible for the state of these Properties.
@@ -79,12 +79,8 @@ function ObjectPicker( valueProperty, items, options ) {
   // Nodes
 
   // maximum dimensions of item Nodes
-  const maxWidth = _.maxBy( items, function( item ) {
-    return item.node.width;
-  } ).node.width;
-  const maxHeight = _.maxBy( items, function( item ) {
-    return item.node.height;
-  } ).node.height;
+  const maxWidth = _.maxBy( items, item => item.node.width ).node.width;
+  const maxHeight = _.maxBy( items, item => item.node.height ).node.height;
 
   // compute shape of the background behind the value
   const backgroundWidth = maxWidth + ( 2 * options.xMargin );
@@ -224,17 +220,15 @@ function ObjectPicker( valueProperty, items, options ) {
   // enables the up button
   if ( !options.upEnabledProperty ) {
     options.upEnabledProperty = new DerivedProperty( [ indexProperty ],
-      function( index ) {
-        return options.wrapEnabled || ( index < items.length - 1 );
-      } );
+      index => ( options.wrapEnabled || ( index < items.length - 1 ) )
+    );
   }
 
   // enables the down button
   if ( !options.downEnabledProperty ) {
     options.downEnabledProperty = new DerivedProperty( [ indexProperty ],
-      function( index ) {
-        return options.wrapEnabled || ( index > 0 );
-      } );
+      index => ( options.wrapEnabled || ( index > 0 ) )
+    );
   }
 
   //------------------------------------------------------------
@@ -243,7 +237,7 @@ function ObjectPicker( valueProperty, items, options ) {
   // up - removeInputListener unnecessary
   upParent.addInputListener( new ButtonStateListener( upStateProperty ) );
   const upListener = new FireOnHoldInputListener( {
-    listener: function() {
+    listener: () => {
       let index = options.upFunction( indexProperty.value );
       if ( options.wrapEnabled && index >= items.length ) {
         index = options.upFunction( -1 );
@@ -258,7 +252,7 @@ function ObjectPicker( valueProperty, items, options ) {
   // down - removeInputListener unnecessary
   downParent.addInputListener( new ButtonStateListener( downStateProperty ) );
   const downListener = new FireOnHoldInputListener( {
-    listener: function() {
+    listener: () => {
       let index = options.downFunction( indexProperty.value );
       if ( options.wrapEnabled && index < 0 ) {
         index = options.downFunction( items.length );
@@ -271,13 +265,13 @@ function ObjectPicker( valueProperty, items, options ) {
   downParent.addInputListener( downListener );
 
   // enable/disable, unlink required
-  const upEnabledListener = function( enabled ) { upListener.enabled = enabled; };
-  const downEnabledListener = function( enabled ) { downListener.enabled = enabled; };
+  const upEnabledListener = enabled => { upListener.enabled = enabled; };
+  const downEnabledListener = enabled => { downListener.enabled = enabled; };
   options.upEnabledProperty.link( upEnabledListener );
   options.downEnabledProperty.link( downEnabledListener );
 
   // Update displayed Node and index to match the curret value
-  const valueObserver = function( value ) {
+  const valueObserver = value => {
 
     valueParentNode.removeAllChildren();
 
@@ -294,24 +288,26 @@ function ObjectPicker( valueProperty, items, options ) {
   valueProperty.link( valueObserver ); // unlink required in dispose
 
   // unlink not required
-  indexProperty.link( function( index ) {
+  indexProperty.link( index => {
     valueProperty.value = items[ index ].value;
   } );
 
   // @private update colors for 'up' components, unmultilink unnecessary
-  Property.multilink( [ upStateProperty, options.upEnabledProperty ], function( buttonState, enabled ) {
-    updateColors( buttonState, enabled, upBackground, upArrow, backgroundColors, arrowColors );
-  } );
+  Property.multilink( [ upStateProperty, options.upEnabledProperty ],
+    ( buttonState, enabled ) => {
+      updateColors( buttonState, enabled, upBackground, upArrow, backgroundColors, arrowColors );
+    } );
 
   // @private update colors for 'down' components, unmultilink unnecessary
-  Property.multilink( [ downStateProperty, options.downEnabledProperty ], function( buttonState, enabled ) {
-    updateColors( buttonState, enabled, downBackground, downArrow, backgroundColors, arrowColors );
-  } );
+  Property.multilink( [ downStateProperty, options.downEnabledProperty ],
+    ( buttonState, enabled ) => {
+      updateColors( buttonState, enabled, downBackground, downArrow, backgroundColors, arrowColors );
+    } );
 
   this.mutate( options );
 
   // @private called by dispose
-  this.disposeObjectPicker = function() {
+  this.disposeObjectPicker = () => {
 
     if ( valueProperty.hasListener( valueObserver ) ) {
       valueProperty.unlink( valueObserver );
@@ -346,10 +342,10 @@ inherit( Node, ObjectPicker, {
  */
 function ButtonStateListener( stateProperty ) {
   ButtonListener.call( this, {
-    up: function() { stateProperty.set( 'up' ); },
-    over: function() { stateProperty.set( 'over' ); },
-    down: function() { stateProperty.set( 'down' ); },
-    out: function() { stateProperty.set( 'out' ); }
+    up: () => stateProperty.set( 'up' ),
+    over: () => stateProperty.set( 'over' ),
+    down: () => stateProperty.set( 'down' ),
+    out: () => stateProperty.set( 'out' )
   } );
 }
 

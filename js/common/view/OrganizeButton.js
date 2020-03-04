@@ -20,8 +20,6 @@ import equalityExplorer from '../../equalityExplorer.js';
  */
 function OrganizeButton( organizeFunction, options ) {
 
-  const self = this;
-
   options = merge( {
 
     // RectangularPushButton options
@@ -50,10 +48,10 @@ function OrganizeButton( organizeFunction, options ) {
     } );
 
   assert && assert( !options.listener, 'OrganizeButton sets listener' );
-  options.listener = function() {
+  options.listener = () => {
     phet.log && phet.log( 'OrganizeButton pressed' );
     organizeFunction();
-    self.enabled = false;
+    this.enabled = false;
   };
 
   RectangularPushButton.call( this, options );

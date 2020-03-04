@@ -23,8 +23,6 @@ import equalityExplorer from '../../equalityExplorer.js';
  */
 function TermCreatorNode( termCreator, plate, termsLayer, options ) {
 
-  const self = this;
-
   options = merge( {
     sign: 1,  // sign that will be applied to terms created by this Node, 1 or -1
 
@@ -47,7 +45,7 @@ function TermCreatorNode( termCreator, plate, termsLayer, options ) {
   // On down event, create a term and start a drag cycle by forwarding the event
   this.addInputListener( SimpleDragHandler.createForwardingListener(
     // down
-    function( event ) {
+    event => {
       termCreator.createTerm( {
         event: event,
         sign: options.sign
@@ -58,10 +56,10 @@ function TermCreatorNode( termCreator, plate, termsLayer, options ) {
   ) );
 
   // Things to do after the sim has loaded, when this Node has a valid position.
-  const frameStartedCallback = function() {
+  const frameStartedCallback = () => {
 
     // This Node's position
-    const position = termsLayer.globalToLocalPoint( self.parentToGlobalPoint( self.center ) );
+    const position = termsLayer.globalToLocalPoint( this.parentToGlobalPoint( this.center ) );
 
     // assign to termCreator's position
     if ( options.sign === 1 ) {

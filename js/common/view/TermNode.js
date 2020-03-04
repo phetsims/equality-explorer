@@ -30,8 +30,6 @@ const DEFAULT_SHADOW_OFFSET = new Dimension2( 4, 4 );
  */
 function TermNode( termCreator, term, contentNode, shadowNode, options ) {
 
-  const self = this;
-
   options = merge( {
     shadowOffset: DEFAULT_SHADOW_OFFSET,
 
@@ -68,36 +66,36 @@ function TermNode( termCreator, term, contentNode, shadowNode, options ) {
   Node.call( this, options );
 
   // Move to position
-  const positionObserver = function( position ) {
-    self.center = position;
+  const positionObserver = position => {
+    this.center = position;
   };
   term.positionProperty.link( positionObserver ); // unlink required in dispose
 
   // Pickable (interactivity)
-  const pickableListener = function( pickable ) {
-    self.pickable = pickable;
+  const pickableListener = pickable => {
+    this.pickable = pickable;
   };
   term.pickableProperty.link( pickableListener ); // unlink required in dispose
 
   // Whether the term is on a plate determines its rendering order
-  const onPlateListener = function( onPlate ) {
+  const onPlateListener = onPlate => {
     if ( onPlate ) {
-      self.moveToBack();
+      this.moveToBack();
     }
     else {
-      self.moveToFront();
+      this.moveToFront();
     }
   };
   term.onPlateProperty.link( onPlateListener ); // unlink required in dispose
 
   // Show/hide shadow
-  const shadowVisibleListener = function( shadowVisible ) {
+  const shadowVisibleListener = shadowVisible => {
     shadowNode.visible = shadowVisible;
   };
   term.shadowVisibleProperty.link( shadowVisibleListener ); // unlink required in dispose
 
   // Show/hide halo
-  const haloVisibleListener = function( haloVisible ) {
+  const haloVisibleListener = haloVisible => {
     haloNode.visible = haloVisible;
   };
   term.haloVisibleProperty.link( haloVisibleListener ); // unlink required in dispose
@@ -116,7 +114,7 @@ function TermNode( termCreator, term, contentNode, shadowNode, options ) {
   this.addInputListener( this.termDragListener ); // removeListener required in dispose
 
   // @private
-  this.disposeTermNode = function() {
+  this.disposeTermNode = () => {
 
     if ( term.positionProperty.hasListener( positionObserver ) ) {
       term.positionProperty.unlink( positionObserver );
@@ -138,8 +136,8 @@ function TermNode( termCreator, term, contentNode, shadowNode, options ) {
       term.haloVisibleProperty.unlink( haloVisibleListener );
     }
 
-    self.removeInputListener( self.termDragListener );
-    self.termDragListener.dispose();
+    this.removeInputListener( this.termDragListener );
+    this.termDragListener.dispose();
   };
 }
 

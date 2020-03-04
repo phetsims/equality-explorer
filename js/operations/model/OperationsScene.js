@@ -117,9 +117,8 @@ function OperationsScene( options ) {
   }
 
   // Start with operand 1
-  const defaultOperand = _.find( this.operands, function( operand ) {
-    return ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 );
-  } );
+  const defaultOperand = _.find( this.operands,
+    operand => ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 ) );
   assert && assert( defaultOperand, 'oops, the default was not found' );
 
   // @private {Property.<Term>}
@@ -193,7 +192,7 @@ export default inherit( EqualityExplorerScene, OperationsScene, {
     const termCreatorsZero = [];
 
     // Apply the operation to each TermCreator
-    this.allTermCreators.forEach( function( termCreator ) {
+    this.allTermCreators.forEach( termCreator => {
       const summedToZero = termCreator.applyOperation( operation );
       if ( summedToZero ) {
         termCreatorsZero.push( termCreator );
@@ -229,7 +228,7 @@ export default inherit( EqualityExplorerScene, OperationsScene, {
    * @private
    */
   findMaxIntegerExceeded: function() {
-    return _.find( this.allTermCreators, function( termCreator ) {
+    return _.find( this.allTermCreators, termCreator => {
 
       // Get the term on the plate
       const term = termCreator.getLikeTermOnPlate();

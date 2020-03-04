@@ -29,9 +29,7 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
   rows: {
     type: 'number',
     defaultValue: 6,
-    isValidValue: function( value ) {
-      return value > 0 && value <= 6;
-    }
+    isValidValue: value => ( value > 0 && value <= 6 )
   },
 
   // Number of columns in the grid on each plate in the 'Basics', 'Numbers' and 'Variables' screens.
@@ -40,9 +38,7 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
   columns: {
     type: 'number',
     defaultValue: 6,
-    isValidValue: function( value ) {
-      return value > 0 && value <= 6;
-    }
+    isValidValue: value => ( value > 0 && value <= 6 )
   },
 
   // Vertical offset, relative to center of plate, for when a term is considered 'above' the plate.
@@ -60,9 +56,7 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
   maxInteger: {
     type: 'number',
     defaultValue: 1E9,
-    isValidValue: function( value ) {
-      return value > 0;
-    }
+    isValidValue: value => ( value > 0 )
   },
 
   // Reaching this score results in a reward.
@@ -70,9 +64,7 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
   rewardScore: {
     type: 'number',
     defaultValue: 10,
-    isValidValue: function( value ) {
-      return value > 0;
-    }
+    isValidValue: value => ( value > 0 )
   },
 
   // Describes a challenge that will be used throughout the Solve It! screen.
@@ -86,9 +78,7 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
       type: 'number'
     },
     defaultValue: null,
-    isValidValue: function( value ) {
-      return ( value === null ) || ( value.length === 9 );
-    }
+    isValidValue: value => ( value === null ) || ( value.length === 9 )
   },
 
   // Turns the lock feature 'on' by default.

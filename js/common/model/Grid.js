@@ -34,8 +34,6 @@ const NO_TERM = null; // occupies all empty cells in the grid
  */
 function Grid( positionProperty, debugSide, options ) {
 
-  const self = this;
-
   options = merge( {
     rows: 10,
     columns: 10,
@@ -69,20 +67,20 @@ function Grid( positionProperty, debugSide, options ) {
   this.bounds = new Bounds2( 0, 1, 0, 1 );
 
   // When the grid moves ... unlink not required.
-  this.positionProperty.link( function( position ) {
+  this.positionProperty.link( position => {
 
     // recompute the grid's bounds, origin (x,y) is at bottom center
-    self.bounds.setMinMax(
-      position.x - ( self.columns * self.cellWidth / 2 ), // minX
-      position.y - ( self.rows * self.cellHeight ), // minY
-      position.x + ( self.columns * self.cellWidth / 2 ), // maxX
+    this.bounds.setMinMax(
+      position.x - ( this.columns * this.cellWidth / 2 ), // minX
+      position.y - ( this.rows * this.cellHeight ), // minY
+      position.x + ( this.columns * this.cellWidth / 2 ), // maxX
       position.y // maxY
     );
 
     // move the terms
-    for ( let i = 0; i < self.cells.length; i++ ) {
-      if ( self.cells[ i ] !== NO_TERM ) {
-        self.cells[ i ].moveTo( self.getPositionOfCell( i ) );
+    for ( let i = 0; i < this.cells.length; i++ ) {
+      if ( this.cells[ i ] !== NO_TERM ) {
+        this.cells[ i ].moveTo( this.getPositionOfCell( i ) );
       }
     }
   } );
