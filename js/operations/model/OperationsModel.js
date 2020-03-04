@@ -6,19 +6,17 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene from './OperationsScene.js';
 
-/**
- * @constructor
- */
-function OperationsModel() {
-  EqualityExplorerModel.call( this, [ new OperationsScene() ] );
+class OperationsModel extends EqualityExplorerModel {
+
+  constructor() {
+    super( [ new OperationsScene() ] );
+  }
 }
 
 equalityExplorer.register( 'OperationsModel', OperationsModel );
 
-inherit( EqualityExplorerModel, OperationsModel );
 export default OperationsModel;

@@ -6,19 +6,17 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesScene from './VariablesScene.js';
 
-/**
- * @constructor
- */
-function VariablesModel() {
-  EqualityExplorerModel.call( this, [ new VariablesScene() ] );
+class VariablesModel extends EqualityExplorerModel {
+
+  constructor() {
+    super( [ new VariablesScene() ] );
+  }
 }
 
 equalityExplorer.register( 'VariablesModel', VariablesModel );
 
-inherit( EqualityExplorerModel, VariablesModel );
 export default VariablesModel;

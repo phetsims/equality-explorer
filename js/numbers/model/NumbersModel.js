@@ -6,19 +6,17 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import NumbersScene from './NumbersScene.js';
 
-/**
- * @constructor
- */
-function NumbersModel() {
-  EqualityExplorerModel.call( this, [ new NumbersScene() ] );
+class NumbersModel extends EqualityExplorerModel {
+
+  constructor() {
+    super( [ new NumbersScene() ] );
+  }
 }
 
 equalityExplorer.register( 'NumbersModel', NumbersModel );
 
-inherit( EqualityExplorerModel, NumbersModel );
 export default NumbersModel;

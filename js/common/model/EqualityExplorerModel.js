@@ -7,58 +7,58 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-/**
- * @param {EqualityExplorerScene[]} scenes
- * @constructor
- * @abstract
- */
-function EqualityExplorerModel( scenes ) {
+class EqualityExplorerModel {
 
-  // @public {EqualityExplorerScene[]} scenes, in the order that they appear from left-to-right as radio buttons
-  this.scenes = scenes;
+  /**
+   * @param {EqualityExplorerScene[]} scenes
+   * @abstract
+   */
+  constructor( scenes ) {
 
-  // @public {Property.<Scene>} the selected scene
-  this.sceneProperty = new Property( scenes[ 0 ], {
-    validValues: scenes
-  } );
+    // @public {EqualityExplorerScene[]} scenes, in the order that they appear from left-to-right as radio buttons
+    this.scenes = scenes;
 
-  // When the scene changes, dispose of any terms that are being dragged or animating, see #73.
-  // unlink not needed.
-  this.sceneProperty.lazyLink( scene => scene.disposeTermsNotOnScale() );
-}
+    // @public {Property.<Scene>} the selected scene
+    this.sceneProperty = new Property( scenes[ 0 ], {
+      validValues: scenes
+    } );
 
-equalityExplorer.register( 'EqualityExplorerModel', EqualityExplorerModel );
-
-export default inherit( Object, EqualityExplorerModel, {
+    // When the scene changes, dispose of any terms that are being dragged or animating, see #73.
+    // unlink not needed.
+    this.sceneProperty.lazyLink( scene => scene.disposeTermsNotOnScale() );
+  }
 
   /**
    * Resets the model.
    * @public
    */
-  reset: function() {
+  reset() {
     this.scenes.forEach( scene => scene.reset() );
     this.sceneProperty.reset();
-  },
+  }
 
   /**
    * Updates time-dependent parts of the model.
    * @param {number} dt - time since the previous step, in seconds
    * @public
    */
-  step: function( dt ) {
+  step( dt ) {
 
     // step the selected scene
     this.sceneProperty.value.step( dt );
-  },
+  }
 
   /**
    * When the model is deactivated (by switching screens), delete all terms that are not on the scale.
    * @public
    */
-  deactivate: function() {
+  deactivate() {
     this.scenes.forEach( scene => scene.disposeTermsNotOnScale() );
   }
-} );
+}
+
+equalityExplorer.register( 'EqualityExplorerModel', EqualityExplorerModel );
+
+export default EqualityExplorerModel;
