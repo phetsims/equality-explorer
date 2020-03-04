@@ -7,45 +7,39 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Snapshot from './Snapshot.js';
 
-/**
- * @constructor
- */
-function SnapshotsCollection( options ) {
+class SnapshotsCollection {
 
-  options = merge( {
-    numberOfSnapshots: 5
-  }, options );
+  constructor( options ) {
 
-  // @public {Property.<Snapshot|null>[]} a Property for each possible snapshot, null means no snapshot
-  this.snapshotProperties = [];
-  for ( let i = 0; i < options.numberOfSnapshots; i++ ) {
-    this.snapshotProperties.push( new Property( null, {
-      isValidValue: snapshot => ( snapshot === null ) || ( snapshot instanceof Snapshot )
-    } ) );
+    options = merge( {
+      numberOfSnapshots: 5
+    }, options );
+
+    // @public {Property.<Snapshot|null>[]} a Property for each possible snapshot, null means no snapshot
+    this.snapshotProperties = [];
+    for ( let i = 0; i < options.numberOfSnapshots; i++ ) {
+      this.snapshotProperties.push( new Property( null, {
+        isValidValue: snapshot => ( snapshot === null ) || ( snapshot instanceof Snapshot )
+      } ) );
+    }
+
+    // @public {Property.<Snapshot|null>} the selected snapshot, null means no selection
+    this.selectedSnapshotProperty = new Property( null, {
+
+      // a valid snapshot is null or the value of one of the snapshotProperties' values
+      isValidValue: snapshot => {
+        return ( snapshot === null ) ||
+               _.some( this.snapshotProperties, snapshotProperty => ( snapshotProperty.value === snapshot ) );
+      }
+    } );
   }
 
-  // @public {Property.<Snapshot|null>} the selected snapshot, null means no selection
-  this.selectedSnapshotProperty = new Property( null, {
-
-    // a valid snapshot is null or the value of one of the snapshotProperties' values
-    isValidValue: snapshot => {
-      return ( snapshot === null ) ||
-             _.some( this.snapshotProperties, snapshotProperty => ( snapshotProperty.value === snapshot ) );
-    }
-  } );
-}
-
-equalityExplorer.register( 'SnapshotsCollection', SnapshotsCollection );
-
-export default inherit( Object, SnapshotsCollection, {
-
   // @public
-  reset: function() {
+  reset() {
 
     // reset the selected snapshot
     this.selectedSnapshotProperty.reset();
@@ -56,13 +50,13 @@ export default inherit( Object, SnapshotsCollection, {
         this.snapshotProperties[ i ].value = null;
       }
     }
-  },
+  }
 
   /**
    * Deletes the selected snapshot.
    * @public
    */
-  deleteSelectedSnapshot: function() {
+  deleteSelectedSnapshot() {
 
     // clear the selection
     const selectedSnapshot = this.selectedSnapshotProperty.value;
@@ -77,4 +71,8 @@ export default inherit( Object, SnapshotsCollection, {
       }
     }
   }
-} );
+}
+
+equalityExplorer.register( 'SnapshotsCollection', SnapshotsCollection );
+
+export default SnapshotsCollection;

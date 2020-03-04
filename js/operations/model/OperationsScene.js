@@ -11,7 +11,6 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
@@ -36,135 +35,136 @@ const ICON_SIZE = new Dimension2(
   EqualityExplorerConstants.BIG_TERM_DIAMETER + 10,
   EqualityExplorerConstants.BIG_TERM_DIAMETER );
 
-/**
- * @constructor
- */
-function OperationsScene( options ) {
+class OperationsScene extends EqualityExplorerScene {
 
-  options = merge( {
+  constructor( options ) {
 
-    // Range of the variables
-    variableRange: EqualityExplorerConstants.VARIABLE_RANGE,
+    options = merge( {
 
-    // EqualityExplorerScene options
-    debugName: 'operations',
-    gridRows: 1,
-    gridColumns: 2,
-    iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
-  }, options );
+      // Range of the variables
+      variableRange: EqualityExplorerConstants.VARIABLE_RANGE,
 
-  // @protected
-  this.xVariable = new Variable( xString, {
-    range: options.variableRange
-  } );
+      // EqualityExplorerScene options
+      debugName: 'operations',
+      gridRows: 1,
+      gridColumns: 2,
+      iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
+    }, options );
 
-  assert && assert( !options.variables, 'OperationsScene sets variables' );
-  options.variables = [ this.xVariable ];
-
-  // @public (read-only)
-  // emit when one or more terms become zero as the result of a universal operation
-  this.sumToZeroEmitter = new Emitter( {
-    parameters: [ {
-
-      // {TermCreator[]}
-      isValidValue: array => ( Array.isArray( array ) && _.every( array, value => value instanceof TermCreator ) )
-    } ]
-  } );
-
-  // @public (read-only)
-  this.operators = EqualityExplorerConstants.OPERATORS;
-
-  // @public
-  this.operatorProperty = new StringProperty( this.operators[ 0 ], {
-    validValues: this.operators
-  } );
-
-  // @public (read-only) {Term[]} operands that appear in the operand picker.
-  // These are the only Terms that are not created and managed by a TermCreator.
-  this.operands = [];
-  for ( let i = OPERAND_RANGE.min; i <= OPERAND_RANGE.max; i++ ) {
-
-    const constantTermOperand = new ConstantTerm( {
-      constantValue: Fraction.fromInteger( i )
+    const xVariable = new Variable( xString, {
+      range: options.variableRange
     } );
 
-    if ( i === 0 ) {
+    assert && assert( !options.variables, 'OperationsScene sets variables' );
+    options.variables = [ xVariable ];
 
-      // skip variable term with zero coefficient
-      this.operands.push( constantTermOperand );
-    }
-    else {
+    // Variable and constant terms will combined in specific cells in the plate's grid.
+    const variableTermCreatorOptions = {
+      likeTermsCell: 0 // cell on the plate that all like terms will occupy
+    };
+    const constantTermCreatorOptions = {
+      likeTermsCell: 1 // cell on the plate that all like terms will occupy
+    };
 
-      const variableTermOperand = new VariableTerm( this.xVariable, {
-        coefficient: Fraction.fromInteger( i )
+    const leftVariableTermCreator = new VariableTermCreator( xVariable, variableTermCreatorOptions );
+    const leftConstantTermCreator = new ConstantTermCreator( constantTermCreatorOptions );
+    const rightVariableTermCreator = new VariableTermCreator( xVariable, variableTermCreatorOptions );
+    const rightConstantTermCreator = new ConstantTermCreator( constantTermCreatorOptions );
+
+    super(
+      [ leftVariableTermCreator, leftConstantTermCreator ],
+      [ rightVariableTermCreator, rightConstantTermCreator ],
+      options
+    );
+
+    // @protected
+    this.xVariable = xVariable;
+    this.leftVariableTermCreator = leftVariableTermCreator;
+    this.leftConstantTermCreator = leftConstantTermCreator;
+    this.rightVariableTermCreator = rightVariableTermCreator;
+    this.rightConstantTermCreator = rightConstantTermCreator;
+
+    // @public (read-only)
+    // emit when one or more terms become zero as the result of a universal operation
+    this.sumToZeroEmitter = new Emitter( {
+      parameters: [ {
+
+        // {TermCreator[]}
+        isValidValue: array => ( Array.isArray( array ) && _.every( array, value => value instanceof TermCreator ) )
+      } ]
+    } );
+
+    // @public (read-only)
+    this.operators = EqualityExplorerConstants.OPERATORS;
+
+    // @public
+    this.operatorProperty = new StringProperty( this.operators[ 0 ], {
+      validValues: this.operators
+    } );
+
+    // @public (read-only) {Term[]} operands that appear in the operand picker.
+    // These are the only Terms that are not created and managed by a TermCreator.
+    this.operands = [];
+    for ( let i = OPERAND_RANGE.min; i <= OPERAND_RANGE.max; i++ ) {
+
+      const constantTermOperand = new ConstantTerm( {
+        constantValue: Fraction.fromInteger( i )
       } );
 
-      if ( i < 0 ) {
+      if ( i === 0 ) {
 
-        // for negative numbers, put the variable term before the constant term
-        // e.g. ... -2x, -2, -x, -1
-        this.operands.push( variableTermOperand );
+        // skip variable term with zero coefficient
         this.operands.push( constantTermOperand );
       }
       else {
 
-        // for positive numbers, put the variable term before the constant term
-        // e.g. 1, x, 2, 2x, ...
-        this.operands.push( constantTermOperand );
-        this.operands.push( variableTermOperand );
+        const variableTermOperand = new VariableTerm( this.xVariable, {
+          coefficient: Fraction.fromInteger( i )
+        } );
+
+        if ( i < 0 ) {
+
+          // for negative numbers, put the variable term before the constant term
+          // e.g. ... -2x, -2, -x, -1
+          this.operands.push( variableTermOperand );
+          this.operands.push( constantTermOperand );
+        }
+        else {
+
+          // for positive numbers, put the variable term before the constant term
+          // e.g. 1, x, 2, 2x, ...
+          this.operands.push( constantTermOperand );
+          this.operands.push( variableTermOperand );
+        }
       }
     }
+
+    // Start with operand 1
+    const defaultOperand = _.find( this.operands,
+      operand => ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 ) );
+    assert && assert( defaultOperand, 'oops, the default was not found' );
+
+    // @private {Property.<Term>}
+    this.operandProperty = new Property( defaultOperand, {
+      validValues: this.operands
+    } );
+
+    // @protected (read-only) emit is called when a universal operation has completed.
+    this.operationCompletedEmitter = new Emitter( {
+      parameters: [ { valueType: UniversalOperation } ]
+    } );
   }
-
-  // Start with operand 1
-  const defaultOperand = _.find( this.operands,
-    operand => ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 ) );
-  assert && assert( defaultOperand, 'oops, the default was not found' );
-
-  // @private {Property.<Term>}
-  this.operandProperty = new Property( defaultOperand, {
-    validValues: this.operands
-  } );
-
-  // @protected (read-only) emit is called when a universal operation has completed.
-  this.operationCompletedEmitter = new Emitter( {
-    parameters: [ { valueType: UniversalOperation } ]
-  } );
-
-  // Variable and constant terms will combined in specific cells in the plate's grid.
-  const variableTermCreatorOptions = {
-    likeTermsCell: 0 // cell on the plate that all like terms will occupy
-  };
-  const constantTermCreatorOptions = {
-    likeTermsCell: 1 // cell on the plate that all like terms will occupy
-  };
-
-  // @protected
-  this.leftVariableTermCreator = new VariableTermCreator( this.xVariable, variableTermCreatorOptions );
-  this.leftConstantTermCreator = new ConstantTermCreator( constantTermCreatorOptions );
-  this.rightVariableTermCreator = new VariableTermCreator( this.xVariable, variableTermCreatorOptions );
-  this.rightConstantTermCreator = new ConstantTermCreator( constantTermCreatorOptions );
-
-  EqualityExplorerScene.call( this,
-    [ this.leftVariableTermCreator, this.leftConstantTermCreator ],
-    [ this.rightVariableTermCreator, this.rightConstantTermCreator ],
-    options );
-}
-
-equalityExplorer.register( 'OperationsScene', OperationsScene );
-
-export default inherit( EqualityExplorerScene, OperationsScene, {
 
   /**
    * @public
    * @override
    */
-  reset: function() {
+  reset() {
     this.xVariable.reset();
     this.operatorProperty.reset();
     this.operandProperty.reset();
-    EqualityExplorerScene.prototype.reset.call( this );
-  },
+    super.reset();
+  }
 
   /**
    * Creates a snapshot of the scene.
@@ -172,18 +172,18 @@ export default inherit( EqualityExplorerScene, OperationsScene, {
    * @public
    * @override
    */
-  createSnapshot: function() {
+  createSnapshot() {
     return new Snapshot( this, {
       variables: [ this.xVariable ]
     } );
-  },
+  }
 
   /**
    * Applies a universal operation.
    * @param {UniversalOperation} operation
    * @public
    */
-  applyOperation: function( operation ) {
+  applyOperation( operation ) {
 
     // Take a snapshot of terms on the scale, so we can undo the operation if necessary.
     const snapshot = new Snapshot( this );
@@ -220,14 +220,14 @@ export default inherit( EqualityExplorerScene, OperationsScene, {
       // notify listeners that the operation successfully completed
       this.operationCompletedEmitter.emit( operation );
     }
-  },
+  }
 
   /**
    * Finds the first TermCreator that has a Term that exceeds the maxInteger limit.
    * @returns {TermCreator|null}
    * @private
    */
-  findMaxIntegerExceeded: function() {
+  findMaxIntegerExceeded() {
     return _.find( this.allTermCreators, termCreator => {
 
       // Get the term on the plate
@@ -237,4 +237,8 @@ export default inherit( EqualityExplorerScene, OperationsScene, {
       return term && term.maxIntegerExceeded();
     } );
   }
-} );
+}
+
+equalityExplorer.register( 'OperationsScene', OperationsScene );
+
+export default OperationsScene;

@@ -6,37 +6,33 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-/**
- * @param {EqualityExplorerScene} scene
- * @constructor
- */
-function Snapshot( scene ) {
+class Snapshot {
 
-  // @private
-  this.scene = scene;
-  this.leftPlateSnapshot = new PlateSnapshot( scene.scale.leftPlate );
-  this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate );
+  /**
+   * @param {EqualityExplorerScene} scene
+   */
+  constructor( scene ) {
 
-  // If the scene has variables, save their values.
-  if ( scene.variables ) {
+    // @private
+    this.scene = scene;
+    this.leftPlateSnapshot = new PlateSnapshot( scene.scale.leftPlate );
+    this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate );
 
-    // @private {number[]} save the current value of each variable
-    this.variableValues = _.map( scene.variables, variable => variable.valueProperty.value );
+    // If the scene has variables, save their values.
+    if ( scene.variables ) {
+
+      // @private {number[]} save the current value of each variable
+      this.variableValues = _.map( scene.variables, variable => variable.valueProperty.value );
+    }
   }
-}
-
-equalityExplorer.register( 'Snapshot', Snapshot );
-
-inherit( Object, Snapshot, {
 
   /**
    * Restores this snapshot.
    * @public
    */
-  restore: function() {
+  restore() {
 
     // dispose of all terms, including those that may be dragging or animating, see #73
     this.scene.disposeAllTerms();
@@ -52,43 +48,44 @@ inherit( Object, Snapshot, {
       }
     }
   }
-} );
+}
 
 /**
  * Snapshot of a plate's state.
- *
- * @param {Plate} plate
- * @constructor
- * @private
  */
-function PlateSnapshot( plate ) {
+class PlateSnapshot {
 
-  // @private
-  this.termCreators = plate.termCreators;
+  /**
+   * @param {Plate} plate
+   */
+  constructor( plate ) {
 
-  // @private {*[]} data structure that describes the terms for each termCreator.
-  // Format is specific to Term subtypes. See createSnapshot for each Term subtype.
-  this.snapshotDataStructures = [];
+    // @private
+    this.termCreators = plate.termCreators;
 
-  // Create a snapshot data structure for each termCreator.
-  for ( let i = 0; i < this.termCreators.length; i++ ) {
-    this.snapshotDataStructures[ i ] = this.termCreators[ i ].createSnapshot();
+    // @private {*[]} data structure that describes the terms for each termCreator.
+    // Format is specific to Term subtypes. See createSnapshot for each Term subtype.
+    this.snapshotDataStructures = [];
+
+    // Create a snapshot data structure for each termCreator.
+    for ( let i = 0; i < this.termCreators.length; i++ ) {
+      this.snapshotDataStructures[ i ] = this.termCreators[ i ].createSnapshot();
+    }
   }
-}
-
-inherit( Object, PlateSnapshot, {
 
   /**
    * Restores the snapshot for this plate.
    * @public
    */
-  restore: function() {
+  restore() {
     assert && assert( this.termCreators.length === this.snapshotDataStructures.length,
       'arrays should have same length' );
     for ( let i = 0; i < this.termCreators.length; i++ ) {
       this.termCreators[ i ].restoreSnapshot( this.snapshotDataStructures[ i ] );
     }
   }
-} );
+}
+
+equalityExplorer.register( 'Snapshot', Snapshot );
 
 export default Snapshot;

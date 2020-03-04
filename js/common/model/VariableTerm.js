@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
@@ -15,42 +14,39 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from './ConstantTerm.js';
 import Term from './Term.js';
 
-/**
- * @param {Variable} variable - the variable for this term, e.g. 'x'
- * @param {Object} [options]
- * @constructor
- */
-function VariableTerm( variable, options ) {
+class VariableTerm extends Term {
 
-  options = merge( {
-    coefficient: EqualityExplorerConstants.DEFAULT_COEFFICIENT
-  }, options );
+  /**
+   * @param {Variable} variable - the variable for this term, e.g. 'x'
+   * @param {Object} [options]
+   */
+  constructor( variable, options ) {
 
-  assert && assert( options.coefficient instanceof Fraction, 'invalid coefficient: ' + options.coefficient );
-  assert && assert( options.coefficient.isReduced(), 'coefficient must be reduced: ' + options.coefficient );
-  assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
+    options = merge( {
+      coefficient: EqualityExplorerConstants.DEFAULT_COEFFICIENT
+    }, options );
 
-  // @public (read-only) {Fraction}
-  this.coefficient = options.coefficient;
+    assert && assert( options.coefficient instanceof Fraction, 'invalid coefficient: ' + options.coefficient );
+    assert && assert( options.coefficient.isReduced(), 'coefficient must be reduced: ' + options.coefficient );
+    assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
 
-  // @public (read-only)
-  this.variable = variable;
+    super( options.coefficient, options );
 
-  Term.call( this, this.coefficient, options );
-}
+    // @public (read-only) {Fraction}
+    this.coefficient = options.coefficient;
 
-equalityExplorer.register( 'VariableTerm', VariableTerm );
-
-export default inherit( Term, VariableTerm, {
+    // @public (read-only)
+    this.variable = variable;
+  }
 
   /**
    * For debugging only. Do not rely on the format of toString.
    * @returns {string}
    * @public
    */
-  toString: function() {
+  toString() {
     return 'VariableTerm: ' + this.coefficient + ' ' + this.variable;
-  },
+  }
 
   /**
    * Creates the options that would be needed to instantiate a copy of this object.
@@ -58,12 +54,12 @@ export default inherit( Term, VariableTerm, {
    * @protected
    * @override
    */
-  copyOptions: function() {
+  copyOptions() {
     const supertypeOptions = Term.prototype.copyOptions.call( this );
     return merge( {}, supertypeOptions, {
       coefficient: this.coefficient
     } );
-  },
+  }
 
   /**
    * Adds a variable term to this term to create a new term.
@@ -71,12 +67,12 @@ export default inherit( Term, VariableTerm, {
    * @param {Object} [options] - same as constructor
    * @returns {VariableTerm}
    */
-  plus: function( term, options ) {
+  plus( term, options ) {
     assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
     return this.copy( merge( {
       coefficient: this.coefficient.plus( term.coefficient ).reduced()
     }, options ) );
-  },
+  }
 
   /**
    * Subtracts a variable term from this term to create a new term.
@@ -84,12 +80,12 @@ export default inherit( Term, VariableTerm, {
    * @param {Object} [options] - same as constructor
    * @returns {VariableTerm}
    */
-  minus: function( term, options ) {
+  minus( term, options ) {
     assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
     return this.copy( merge( {
       coefficient: this.coefficient.minus( term.coefficient ).reduced()
     }, options ) );
-  },
+  }
 
   /**
    * Multiplies this term by a constant term to create a new term.
@@ -97,12 +93,12 @@ export default inherit( Term, VariableTerm, {
    * @param {Object} [options] - same as constructor
    * @returns {VariableTerm}
    */
-  times: function( term, options ) {
+  times( term, options ) {
     assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
     return this.copy( merge( {
       coefficient: this.coefficient.times( term.constantValue ).reduced()
     }, options ) );
-  },
+  }
 
   /**
    * Divides this term by a constant term to create a new term.
@@ -110,13 +106,13 @@ export default inherit( Term, VariableTerm, {
    * @param {Object} [options] - same as constructor
    * @returns {VariableTerm}
    */
-  divided: function( term, options ) {
+  divided( term, options ) {
     assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
     assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
     return this.copy( merge( {
       coefficient: this.coefficient.divided( term.constantValue ).reduced()
     }, options ) );
-  },
+  }
 
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the Term API
@@ -129,9 +125,9 @@ export default inherit( Term, VariableTerm, {
    * @public
    * @override
    */
-  copy: function( options ) {
+  copy( options ) {
     return new VariableTerm( this.variable, merge( this.copyOptions(), options ) );
-  },
+  }
 
   /**
    * Gets the weight of this term.
@@ -141,7 +137,7 @@ export default inherit( Term, VariableTerm, {
    */
   get weight() {
     return this.coefficient.timesInteger( this.variable.valueProperty.value ).reduced();
-  },
+  }
 
   /**
    * Are this term and the specified term 'like terms'?
@@ -151,9 +147,9 @@ export default inherit( Term, VariableTerm, {
    * @public
    * @override
    */
-  isLikeTerm: function( term ) {
+  isLikeTerm( term ) {
     return ( term instanceof VariableTerm ) && ( term.variable === this.variable );
-  },
+  }
 
   /**
    * Creates a snapshot of this term.
@@ -162,12 +158,12 @@ export default inherit( Term, VariableTerm, {
    * @public
    * @override
    */
-  createSnapshot: function() {
+  createSnapshot() {
     const supertypeOptions = Term.prototype.createSnapshot.call( this );
     return merge( {}, supertypeOptions, {
       coefficient: this.coefficient
     } );
-  },
+  }
 
   /**
    * Applies an operation to this term, resulting in a new term.
@@ -177,7 +173,7 @@ export default inherit( Term, VariableTerm, {
    * @public
    * @override
    */
-  applyOperation: function( operation, options ) {
+  applyOperation( operation, options ) {
 
     let term = null;
 
@@ -204,4 +200,8 @@ export default inherit( Term, VariableTerm, {
 
     return term;
   }
-} );
+}
+
+equalityExplorer.register( 'VariableTerm', VariableTerm );
+
+export default VariableTerm;

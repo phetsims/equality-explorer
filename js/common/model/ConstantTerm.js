@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
@@ -14,38 +13,35 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Term from './Term.js';
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function ConstantTerm( options ) {
+class ConstantTerm extends Term {
 
-  options = merge( {
-    constantValue: EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE
-  }, options );
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
 
-  assert && assert( options.constantValue instanceof Fraction, 'invalid constantValue: ' + options.constantValue );
-  assert && assert( options.constantValue.isReduced(), 'constantValue must be reduced: ' + options.constantValue );
-  assert && assert( !options.coefficient, 'coefficient is a VariableTerm option' );
+    options = merge( {
+      constantValue: EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE
+    }, options );
 
-  // @public (read-only) {Fraction}
-  this.constantValue = options.constantValue;
+    assert && assert( options.constantValue instanceof Fraction, 'invalid constantValue: ' + options.constantValue );
+    assert && assert( options.constantValue.isReduced(), 'constantValue must be reduced: ' + options.constantValue );
+    assert && assert( !options.coefficient, 'coefficient is a VariableTerm option' );
 
-  Term.call( this, this.constantValue, options );
-}
+    super( options.constantValue, options );
 
-equalityExplorer.register( 'ConstantTerm', ConstantTerm );
-
-export default inherit( Term, ConstantTerm, {
+    // @public (read-only) {Fraction}
+    this.constantValue = options.constantValue;
+  }
 
   /**
    * For debugging only. Do not rely on the format of toString.
    * @returns {string}
    * @public
    */
-  toString: function() {
+  toString() {
     return 'ConstantTerm: ' + this.constantValue;
-  },
+  }
 
   /**
    * Creates the options that would be needed to instantiate a copy of this object.
@@ -53,12 +49,12 @@ export default inherit( Term, ConstantTerm, {
    * @protected
    * @override
    */
-  copyOptions: function() {
+  copyOptions() {
     const supertypeOptions = Term.prototype.copyOptions.call( this );
     return merge( {}, supertypeOptions, {
       constantValue: this.constantValue
     } );
-  },
+  }
 
   /**
    * Adds a term to this term to create a new term.
@@ -67,13 +63,13 @@ export default inherit( Term, ConstantTerm, {
    * @returns {ConstantTerm}
    * @public
    */
-  plus: function( term, options ) {
+  plus( term, options ) {
     options = options || {};
     assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
     return this.copy( merge( {
       constantValue: this.constantValue.plus( term.constantValue ).reduce()
     }, options ) );
-  },
+  }
 
   /**
    * Subtracts a term from this term to create a new term.
@@ -81,13 +77,13 @@ export default inherit( Term, ConstantTerm, {
    * @param {Object} [options] - same as constructor
    * @returns {ConstantTerm}
    */
-  minus: function( term, options ) {
+  minus( term, options ) {
     options = options || {};
     assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
     return this.copy( merge( {
       constantValue: this.constantValue.minus( term.constantValue ).reduce()
     }, options ) );
-  },
+  }
 
   /**
    * Multiplies this term by another term to create a new term.
@@ -95,13 +91,13 @@ export default inherit( Term, ConstantTerm, {
    * @param {Object} [options] - same as constructor
    * @returns {ConstantTerm}
    */
-  times: function( term, options ) {
+  times( term, options ) {
     options = options || {};
     assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
     return this.copy( merge( {
       constantValue: this.constantValue.times( term.constantValue ).reduce()
     }, options ) );
-  },
+  }
 
   /**
    * Divides this term by another term to create a new term.
@@ -109,14 +105,14 @@ export default inherit( Term, ConstantTerm, {
    * @param {Object} [options] - same as constructor
    * @returns {ConstantTerm}
    */
-  divided: function( term, options ) {
+  divided( term, options ) {
     options = options || {};
     assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
     assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
     return this.copy( merge( {
       constantValue: this.constantValue.divided( term.constantValue ).reduce()
     }, options ) );
-  },
+  }
 
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the Term API
@@ -129,9 +125,9 @@ export default inherit( Term, ConstantTerm, {
    * @public
    * @override
    */
-  copy: function( options ) {
+  copy( options ) {
     return new ConstantTerm( merge( this.copyOptions(), options ) );
-  },
+  }
 
   /**
    * The weight of a constant term is the same as its value.
@@ -141,7 +137,7 @@ export default inherit( Term, ConstantTerm, {
    */
   get weight() {
     return this.constantValue;
-  },
+  }
 
   /**
    * Are this term and the specified term 'like terms'?
@@ -151,9 +147,9 @@ export default inherit( Term, ConstantTerm, {
    * @public
    * @override
    */
-  isLikeTerm: function( term ) {
+  isLikeTerm( term ) {
     return ( term instanceof ConstantTerm );
-  },
+  }
 
   /**
    * Creates a snapshot of this term.
@@ -162,12 +158,12 @@ export default inherit( Term, ConstantTerm, {
    * @public
    * @override
    */
-  createSnapshot: function() {
+  createSnapshot() {
     const supertypeOptions = Term.prototype.createSnapshot.call( this );
     return merge( {}, supertypeOptions, {
       constantValue: this.constantValue
     } );
-  },
+  }
 
   /**
    * Applies an operation to this term, resulting in a new term.
@@ -177,7 +173,7 @@ export default inherit( Term, ConstantTerm, {
    * @public
    * @override
    */
-  applyOperation: function( operation, options ) {
+  applyOperation( operation, options ) {
 
     let term = null;
 
@@ -200,4 +196,8 @@ export default inherit( Term, ConstantTerm, {
 
     return term;
   }
-} );
+}
+
+equalityExplorer.register( 'ConstantTerm', ConstantTerm );
+
+export default ConstantTerm;

@@ -7,50 +7,45 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from './ConstantTerm.js';
 import VariableTerm from './VariableTerm.js';
 
-/**
- * @param {string} operator - see EqualityExplorerConstants.OPERATORS
- * @param {Term} operand
- * @constructor
- */
-function UniversalOperation( operator, operand ) {
+class UniversalOperation {
 
-  assert && assert( _.includes( EqualityExplorerConstants.OPERATORS, operator ),
-    'invalid operator: ' + operator );
-  assert && assert( operand instanceof ConstantTerm || operand instanceof VariableTerm,
-    'invalid operand: ' + operand );
+  /**
+   * @param {string} operator - see EqualityExplorerConstants.OPERATORS
+   * @param {Term} operand
+   */
+  constructor( operator, operand ) {
 
-  // @public (read-only)
-  this.operator = operator;
-  this.operand = operand;
-}
+    assert && assert( _.includes( EqualityExplorerConstants.OPERATORS, operator ),
+      'invalid operator: ' + operator );
+    assert && assert( operand instanceof ConstantTerm || operand instanceof VariableTerm,
+      'invalid operand: ' + operand );
 
-equalityExplorer.register( 'UniversalOperation', UniversalOperation );
-
-export default inherit( Object, UniversalOperation, {
+    // @public (read-only)
+    this.operator = operator;
+    this.operand = operand;
+  }
 
   /**
    * For debugging only. Do not rely on the format of toString.
    * @returns {string}
    * @public
    */
-  toString: function() {
+  toString() {
     return 'operator=' + this.operator + ', operand=' + this.operand;
-  },
-
+  }
 
   /**
    * Creates a concise human-readable string representation, intended to be used for phet.log calls.
    * @returns {string}
    * @public (debug)
    */
-  toLogString: function() {
+  toLogString() {
     if ( this.operand instanceof ConstantTerm ) {
 
       // e.g. '+ 2'
@@ -73,4 +68,8 @@ export default inherit( Object, UniversalOperation, {
       throw new Error( 'unsupported operand: ' + this.operand );
     }
   }
-} );
+}
+
+equalityExplorer.register( 'UniversalOperation', UniversalOperation );
+
+export default UniversalOperation;

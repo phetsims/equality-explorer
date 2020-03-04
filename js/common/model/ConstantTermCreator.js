@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -15,30 +14,27 @@ import ConstantTermNode from '../view/ConstantTermNode.js';
 import ConstantTerm from './ConstantTerm.js';
 import TermCreator from './TermCreator.js';
 
-/**
- * @param {Object} [options]
- * @constructor
- */
-function ConstantTermCreator( options ) {
-  TermCreator.call( this, options );
-}
+class ConstantTermCreator extends TermCreator {
 
-equalityExplorer.register( 'ConstantTermCreator', ConstantTermCreator );
-
-export default inherit( TermCreator, ConstantTermCreator, {
+  /**
+   * @param {Object} [options]
+   */
+  constructor( options ) {
+    super( options );
+  }
 
   /**
    * Returns the sum of constant values for all terms on the plate.
    * @returns {Fraction}
    * @public
    */
-  sumConstantsOnPlate: function() {
+  sumConstantsOnPlate() {
     let sum = Fraction.fromInteger( 0 );
     for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
       sum = sum.plus( this.termsOnPlate.get( i ).constantValue ).reduced();
     }
     return sum;
-  },
+  }
 
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the TermCreator API
@@ -51,7 +47,7 @@ export default inherit( TermCreator, ConstantTermCreator, {
    * @public
    * @override
    */
-  createIcon: function( options ) {
+  createIcon( options ) {
 
     options = merge( {
       sign: 1  // sign of the constant shown on the icon, 1 or -1
@@ -60,7 +56,7 @@ export default inherit( TermCreator, ConstantTermCreator, {
 
     const constantValue = EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE.timesInteger( options.sign );
     return ConstantTermNode.createInteractiveTermNode( constantValue );
-  },
+  }
 
   /**
    * Instantiates a ConstantTerm.
@@ -69,7 +65,7 @@ export default inherit( TermCreator, ConstantTermCreator, {
    * @protected
    * @override
    */
-  createTermProtected: function( options ) {
+  createTermProtected( options ) {
 
     options = merge( {
       sign: 1
@@ -83,7 +79,7 @@ export default inherit( TermCreator, ConstantTermCreator, {
     options.constantValue = options.constantValue.timesInteger( options.sign );
 
     return new ConstantTerm( options );
-  },
+  }
 
   /**
    * Creates a term whose significant value is zero. The term is not managed by the TermCreator.
@@ -93,12 +89,12 @@ export default inherit( TermCreator, ConstantTermCreator, {
    * @public
    * @override
    */
-  createZeroTerm: function( options ) {
+  createZeroTerm( options ) {
     options = options || {};
     assert && assert( !options.constantValue, 'ConstantTermCreator sets constantValue' );
     options.constantValue = Fraction.fromInteger( 0 );
     return this.createTermProtected( options );
-  },
+  }
 
   /**
    * Instantiates the Node that corresponds to this term.
@@ -108,7 +104,11 @@ export default inherit( TermCreator, ConstantTermCreator, {
    * @public
    * @override
    */
-  createTermNode: function( term, options ) {
+  createTermNode( term, options ) {
     return new ConstantTermNode( this, term, options );
   }
-} );
+}
+
+equalityExplorer.register( 'ConstantTermCreator', ConstantTermCreator );
+
+export default ConstantTermCreator;

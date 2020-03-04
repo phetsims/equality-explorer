@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -16,47 +15,44 @@ import VariableTermNode from '../view/VariableTermNode.js';
 import TermCreator from './TermCreator.js';
 import VariableTerm from './VariableTerm.js';
 
-/**
- * @param {Variable} variable
- * @param {Object} [options]
- * @constructor
- */
-function VariableTermCreator( variable, options ) {
+class VariableTermCreator extends TermCreator {
 
-  options = merge( {
-    positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
-    negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL
-  }, options );
+  /**
+   * @param {Variable} variable
+   * @param {Object} [options]
+   */
+  constructor( variable, options ) {
 
-  // @public (read-only)
-  this.variable = variable;
+    options = merge( {
+      positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
+      negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL
+    }, options );
 
-  // @private
-  this.positiveFill = options.positiveFill;
-  this.negativeFill = options.negativeFill;
+    super( options );
 
-  TermCreator.call( this, options );
+    // @public (read-only)
+    this.variable = variable;
 
-  // When the variable values changes, recompute the weight of terms on the scale. unlink not needed.
-  this.variable.valueProperty.link( variableValue => this.updateWeightOnPlateProperty() );
-}
+    // @private
+    this.positiveFill = options.positiveFill;
+    this.negativeFill = options.negativeFill;
 
-equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );
-
-export default inherit( TermCreator, VariableTermCreator, {
+    // When the variable values changes, recompute the weight of terms on the scale. unlink not needed.
+    this.variable.valueProperty.link( variableValue => this.updateWeightOnPlateProperty() );
+  }
 
   /**
    * Returns the sum of coefficients for all terms on the plate.
    * @returns {Fraction}
    * @public
    */
-  sumCoefficientsOnPlate: function() {
+  sumCoefficientsOnPlate() {
     let sum = Fraction.fromInteger( 0 );
     for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
       sum = sum.plus( this.termsOnPlate.get( i ).coefficient ).reduced();
     }
     return sum;
-  },
+  }
 
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the TermCreator API
@@ -69,7 +65,7 @@ export default inherit( TermCreator, VariableTermCreator, {
    * @public
    * @override
    */
-  createIcon: function( options ) {
+  createIcon( options ) {
 
     options = merge( {
       sign: 1  // sign of the coefficient shown on the icon, 1 or -1
@@ -81,7 +77,7 @@ export default inherit( TermCreator, VariableTermCreator, {
       positiveFill: this.positiveFill,
       negativeFill: this.negativeFill
     } );
-  },
+  }
 
   /**
    * Instantiates a VariableTerm.
@@ -90,7 +86,7 @@ export default inherit( TermCreator, VariableTermCreator, {
    * @protected
    * @override
    */
-  createTermProtected: function( options ) {
+  createTermProtected( options ) {
 
     options = merge( {
       sign: 1
@@ -104,7 +100,7 @@ export default inherit( TermCreator, VariableTermCreator, {
     options.coefficient = options.coefficient.timesInteger( options.sign );
 
     return new VariableTerm( this.variable, options );
-  },
+  }
 
   /**
    * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
@@ -114,12 +110,12 @@ export default inherit( TermCreator, VariableTermCreator, {
    * @public
    * @override
    */
-  createZeroTerm: function( options ) {
+  createZeroTerm( options ) {
     options = options || {};
     assert && assert( !options.coefficient, 'VariableTermCreator sets coefficient' );
     options.coefficient = Fraction.fromInteger( 0 );
     return this.createTermProtected( options );
-  },
+  }
 
   /**
    * Instantiates the Node that corresponds to this term.
@@ -129,10 +125,14 @@ export default inherit( TermCreator, VariableTermCreator, {
    * @public
    * @override
    */
-  createTermNode: function( term, options ) {
+  createTermNode( term, options ) {
     return new VariableTermNode( this, term, merge( {
       positiveFill: this.positiveFill,
       negativeFill: this.negativeFill
     }, options ) );
   }
-} );
+}
+
+equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );
+
+export default VariableTermCreator;

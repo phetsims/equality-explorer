@@ -14,7 +14,6 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -24,82 +23,79 @@ import Grid from './Grid.js';
 const DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
 const VALID_DEBUG_SIDE_VALUES = [ 'left', 'right' ];
 
-/**
- * @param {TermCreator[]} termCreators - creators associated with term on this plate
- * @param {string} debugSide - which side of the scale, for debugging, see VALID_DEBUG_SIDE_VALUES
- * @param {Object} [options]
- * @constructor
- */
-function Plate( termCreators, debugSide, options ) {
+class Plate {
 
-  assert && assert( _.includes( VALID_DEBUG_SIDE_VALUES, debugSide, 'invalid debugSide: ' + debugSide ) );
+  /**
+   * @param {TermCreator[]} termCreators - creators associated with term on this plate
+   * @param {string} debugSide - which side of the scale, for debugging, see VALID_DEBUG_SIDE_VALUES
+   * @param {Object} [options]
+   */
+  constructor( termCreators, debugSide, options ) {
 
-  options = merge( {
-    supportHeight: 10, // height of the vertical support that connects the plate to the scale
-    diameter: 20, // diameter of the plate
-    gridRows: 1, // rows in the 2D grid
-    gridColumns: 1, // columns in the 2D grid
-    cellSize: DEFAULT_CELL_SIZE // {Dimension2} dimensions of each cell in the grid
-  }, options );
+    assert && assert( _.includes( VALID_DEBUG_SIDE_VALUES, debugSide, 'invalid debugSide: ' + debugSide ) );
 
-  // @public
-  this.positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
+    options = merge( {
+      supportHeight: 10, // height of the vertical support that connects the plate to the scale
+      diameter: 20, // diameter of the plate
+      gridRows: 1, // rows in the 2D grid
+      gridColumns: 1, // columns in the 2D grid
+      cellSize: DEFAULT_CELL_SIZE // {Dimension2} dimensions of each cell in the grid
+    }, options );
 
-  // @public (read-only)
-  this.termCreators = termCreators;
-  this.debugSide = debugSide;
+    // @public
+    this.positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
-  // @public (read-only)
-  this.supportHeight = options.supportHeight;
-  this.diameter = options.diameter;
-  this.gridRows = options.gridRows;
-  this.gridColumns = options.gridColumns;
-  this.cellSize = options.cellSize;
+    // @public (read-only)
+    this.termCreators = termCreators;
+    this.debugSide = debugSide;
 
-  // @private
-  this.grid = new Grid( this.positionProperty, debugSide, {
-    rows: options.gridRows,
-    columns: options.gridColumns,
-    cellWidth: options.cellSize.width,
-    cellHeight: options.cellSize.height
-  } );
+    // @public (read-only)
+    this.supportHeight = options.supportHeight;
+    this.diameter = options.diameter;
+    this.gridRows = options.gridRows;
+    this.gridColumns = options.gridColumns;
+    this.cellSize = options.cellSize;
 
-  // @public (read-only) number of terms on the plate
-  this.numberOfTermsProperty = new NumberProperty( 0, {
-    numberType: 'Integer',
-    isValidValue: value => ( value >= 0 )
-  } );
-
-  // weightProperty is derived from the weights of each termCreator
-  const weightDependencies = [];
-  for ( let i = 0; i < termCreators.length; i++ ) {
-    weightDependencies.push( termCreators[ i ].weightOnPlateProperty );
-  }
-
-  // @public (read-only) {Property.<Fraction>} total weight of the terms that are on the plate
-  // dispose not required.
-  this.weightProperty = new DerivedProperty( weightDependencies,
-    () => {
-      let weight = Fraction.fromInteger( 0 );
-      for ( let i = 0; i < termCreators.length; i++ ) {
-        weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value ).reduced();
-      }
-      return weight;
+    // @private
+    this.grid = new Grid( this.positionProperty, debugSide, {
+      rows: options.gridRows,
+      columns: options.gridColumns,
+      cellWidth: options.cellSize.width,
+      cellHeight: options.cellSize.height
     } );
 
-  // @public emit is called when the contents of the grid changes (terms added, removed, organized)
-  // dispose not required.
-  this.contentsChangedEmitter = new Emitter();
+    // @public (read-only) number of terms on the plate
+    this.numberOfTermsProperty = new NumberProperty( 0, {
+      numberType: 'Integer',
+      isValidValue: value => ( value >= 0 )
+    } );
 
-  // Associate this plate with its term creators. Note that this is a 2-way association.
-  termCreators.forEach( termCreator => {
-    termCreator.plate = this;
-  } );
-}
+    // weightProperty is derived from the weights of each termCreator
+    const weightDependencies = [];
+    for ( let i = 0; i < termCreators.length; i++ ) {
+      weightDependencies.push( termCreators[ i ].weightOnPlateProperty );
+    }
 
-equalityExplorer.register( 'Plate', Plate );
+    // @public (read-only) {Property.<Fraction>} total weight of the terms that are on the plate
+    // dispose not required.
+    this.weightProperty = new DerivedProperty( weightDependencies,
+      () => {
+        let weight = Fraction.fromInteger( 0 );
+        for ( let i = 0; i < termCreators.length; i++ ) {
+          weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value ).reduced();
+        }
+        return weight;
+      } );
 
-export default inherit( Object, Plate, {
+    // @public emit is called when the contents of the grid changes (terms added, removed, organized)
+    // dispose not required.
+    this.contentsChangedEmitter = new Emitter();
+
+    // Associate this plate with its term creators. Note that this is a 2-way association.
+    termCreators.forEach( termCreator => {
+      termCreator.plate = this;
+    } );
+  }
 
   /**
    * Adds a term to the plate, in a specific cell in the grid.
@@ -107,11 +103,11 @@ export default inherit( Object, Plate, {
    * @param {number} cell
    * @public
    */
-  addTerm: function( term, cell ) {
+  addTerm( term, cell ) {
     this.grid.putTerm( term, cell );
     this.numberOfTermsProperty.value++;
     this.contentsChangedEmitter.emit();
-  },
+  }
 
   /**
    * Removes a term from the plate.
@@ -119,20 +115,20 @@ export default inherit( Object, Plate, {
    * @returns {number} the cell that the term was removed from
    * @public
    */
-  removeTerm: function( term ) {
+  removeTerm( term ) {
     const cell = this.grid.removeTerm( term );
     this.numberOfTermsProperty.value--;
     this.contentsChangedEmitter.emit();
     return cell;
-  },
+  }
 
   /**
    * Is the plate's grid full? That is, are all cells occupied?
    * @public
    */
-  isFull: function() {
+  isFull() {
     return this.grid.isFull();
-  },
+  }
 
   /**
    * Is the specified cell empty?
@@ -140,9 +136,9 @@ export default inherit( Object, Plate, {
    * @returns {boolean}
    * @public
    */
-  isEmptyCell: function( cell ) {
+  isEmptyCell( cell ) {
     return this.grid.isEmptyCell( cell );
-  },
+  }
 
   /**
    * Gets the empty cell that would be the best fit for adding a term to the plate.
@@ -150,9 +146,9 @@ export default inherit( Object, Plate, {
    * @returns {number|null} the cell's identifier, null if the grid is full
    * @public
    */
-  getBestEmptyCell: function( position ) {
+  getBestEmptyCell( position ) {
     return this.grid.getBestEmptyCell( position );
-  },
+  }
 
   /**
    * Gets the position of a specific cell, in global coordinates.
@@ -161,9 +157,9 @@ export default inherit( Object, Plate, {
    * @returns {Vector2}
    * @public
    */
-  getPositionOfCell: function( cell ) {
+  getPositionOfCell( cell ) {
     return this.grid.getPositionOfCell( cell );
-  },
+  }
 
   /**
    * Gets the term at a specified position in the grid.
@@ -171,9 +167,9 @@ export default inherit( Object, Plate, {
    * @returns {Term|null} null if position is outside the grid, or the cell at position is empty
    * @public
    */
-  getTermAtPosition: function( position ) {
+  getTermAtPosition( position ) {
     return this.grid.getTermAtPosition( position );
-  },
+  }
 
   /**
    * Gets the term in a specified cell.
@@ -181,9 +177,9 @@ export default inherit( Object, Plate, {
    * @returns {Term|null} null if the cell is empty
    * @public
    */
-  getTermInCell: function( cell ) {
+  getTermInCell( cell ) {
     return this.grid.getTermInCell( cell );
-  },
+  }
 
   /**
    * Gets the cell that a term occupies.
@@ -191,18 +187,18 @@ export default inherit( Object, Plate, {
    * @returns {number|null} the cell's identifier, null if the term doesn't occupy a cell
    * @public
    */
-  getCellForTerm: function( term ) {
+  getCellForTerm( term ) {
     return this.grid.getCellForTerm( term );
-  },
+  }
 
   /**
    * Gets the y coordinate of the top of the grid.
    * @returns {number}
    * @public
    */
-  getGridTop: function() {
+  getGridTop() {
     return this.grid.top;
-  },
+  }
 
   /**
    * Gets an equivalent term from the grid that is closest to a specified cell.
@@ -211,15 +207,15 @@ export default inherit( Object, Plate, {
    * @returns {Term|null} - null if no equivalent term is found
    * @public
    */
-  getClosestEquivalentTerm: function( term, cell ) {
+  getClosestEquivalentTerm( term, cell ) {
     return this.grid.getClosestEquivalentTerm( term, cell );
-  },
+  }
 
   /**
    * Organizes terms on the plate, as specified in https://github.com/phetsims/equality-explorer/issues/4
    * @public
    */
-  organize: function() {
+  organize() {
 
     let numberOfTermsToOrganize = this.numberOfTermsProperty.value;
 
@@ -318,4 +314,8 @@ export default inherit( Object, Plate, {
       this.contentsChangedEmitter.emit();
     }
   }
-} );
+}
+
+equalityExplorer.register( 'Plate', Plate );
+
+export default Plate;
