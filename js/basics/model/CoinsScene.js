@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import coin1Image from '../../../images/coin1_png.js';
 import coin1ShadowImage from '../../../images/coin1Shadow_png.js';
@@ -19,31 +18,30 @@ import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 import ObjectVariable from './ObjectVariable.js';
 
-/**
- * @constructor
- */
-function CoinsScene() {
+class CoinsScene extends BasicsScene {
 
-  const variables = [
+  constructor() {
 
-    // name, image, shadow
-    new ObjectVariable( 'coin1', coin1Image, coin1ShadowImage, { value: 3 } ),
-    new ObjectVariable( 'coin2', coin2Image, coin2ShadowImage, { value: 2 } ),
-    new ObjectVariable( 'coin3', coin3Image, coin3ShadowImage, { value: 5 } )
-  ];
+    const variables = [
 
-  BasicsScene.call( this, variables, {
+      // name, image, shadow
+      new ObjectVariable( 'coin1', coin1Image, coin1ShadowImage, { value: 3 } ),
+      new ObjectVariable( 'coin2', coin2Image, coin2ShadowImage, { value: 2 } ),
+      new ObjectVariable( 'coin3', coin3Image, coin3ShadowImage, { value: 5 } )
+    ];
 
-    debugName: 'coins',
+    super( variables, {
 
-    // icon used to represent this scene in the scene control (radio buttons)
-    icon: new Image( coin3Image, {
-      maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-    } )
-  } );
+      debugName: 'coins',
+
+      // icon used to represent this scene in the scene control (radio buttons)
+      icon: new Image( coin3Image, {
+        maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
+      } )
+    } );
+  }
 }
 
 equalityExplorer.register( 'CoinsScene', CoinsScene );
 
-inherit( BasicsScene, CoinsScene );
 export default CoinsScene;

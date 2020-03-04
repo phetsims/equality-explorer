@@ -7,74 +7,74 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesSceneNode from '../../variables/view/VariablesSceneNode.js';
 
-/**
- * @param {EqualityExplorerScene} scene
- * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
- * @param {BooleanProperty} equationAccordionBoxExpandedProperty
- * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
- * @param {Bounds2} layoutBounds
- * @param {Object} [options]
- * @constructor
- */
-function OperationsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                              snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+class OperationsSceneNode extends VariablesSceneNode {
 
-  options = merge( {
+  /**
+   * @param {EqualityExplorerScene} scene
+   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
+   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
+   * @param {Bounds2} layoutBounds
+   * @param {Object} [options]
+   */
+  constructor( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+               snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
 
-    // VariablesSceneNode options
-    organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
-  }, options );
+    options = merge( {
 
-  VariablesSceneNode.call( this, scene, sceneProperty, equationAccordionBoxExpandedProperty,
-    snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+      // VariablesSceneNode options
+      organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
+    }, options );
 
-  // Layer when universal operation animation occurs
-  const operationAnimationLayer = new Node();
+    super( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
-  // @private Universal Operation, below Equation accordion box
-  this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
-    centerX: scene.scale.position.x, // centered on the scale
-    top: this.equationAccordionBox.bottom + 10
-  } );
-  this.addChild( this.universalOperationControl );
-  this.universalOperationControl.moveToBack();
+    // Layer when universal operation animation occurs
+    const operationAnimationLayer = new Node();
 
-  // Put animation layer on top of everything
-  this.addChild( operationAnimationLayer );
+    // @private Universal Operation, below Equation accordion box
+    this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
+      centerX: scene.scale.position.x, // centered on the scale
+      top: this.equationAccordionBox.bottom + 10
+    } );
+    this.addChild( this.universalOperationControl );
+    this.universalOperationControl.moveToBack();
 
-  // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
-  // removeListener not needed.
-  scene.sumToZeroEmitter.addListener( this.animateSumToZero.bind( this ) );
-}
+    // Put animation layer on top of everything
+    this.addChild( operationAnimationLayer );
 
-equalityExplorer.register( 'OperationsSceneNode', OperationsSceneNode );
-
-export default inherit( VariablesSceneNode, OperationsSceneNode, {
+    // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
+    // removeListener not needed.
+    scene.sumToZeroEmitter.addListener( this.animateSumToZero.bind( this ) );
+  }
 
   /**
    * @param {number} dt - time step, in seconds
    * @public
    */
-  step: function( dt ) {
+  step( dt ) {
     this.universalOperationControl.step( dt );
-  },
+  }
 
   /**
    * @public
    * @override
    */
-  reset: function() {
+  reset() {
 
     // universal operation control has Properties and animations that may be in progress
     this.universalOperationControl.reset();
 
-    VariablesSceneNode.prototype.reset.call( this );
+    super.reset();
   }
-} );
+}
+
+equalityExplorer.register( 'OperationsSceneNode', OperationsSceneNode );
+
+export default OperationsSceneNode;

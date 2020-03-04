@@ -7,26 +7,26 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import BasicsSceneNode from '../../basics/view/BasicsSceneNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-/**
- * @param {EqualityExplorerScene} scene
- * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
- * @param {BooleanProperty} equationAccordionBoxExpandedProperty
- * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
- * @param {Bounds2} layoutBounds
- * @param {Object} [options]
- * @constructor
- */
-function NumbersSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                           snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
-  BasicsSceneNode.call( this, scene, sceneProperty, equationAccordionBoxExpandedProperty,
-    snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+class NumbersSceneNode extends BasicsSceneNode {
+
+  /**
+   * @param {EqualityExplorerScene} scene
+   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
+   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
+   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
+   * @param {Bounds2} layoutBounds
+   * @param {Object} [options]
+   */
+  constructor( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+               snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+    super( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+  }
 }
 
 equalityExplorer.register( 'NumbersSceneNode', NumbersSceneNode );
 
-inherit( BasicsSceneNode, NumbersSceneNode );
 export default NumbersSceneNode;

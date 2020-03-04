@@ -6,33 +6,29 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import TermCreator from '../../common/model/TermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermNode from '../view/ObjectTermNode.js';
 import ObjectTerm from './ObjectTerm.js';
 
-/**
- * @param {ObjectVariable} variable
- * @param {Object} [options]
- * @constructor
- */
-function ObjectTermCreator( variable, options ) {
+class ObjectTermCreator extends TermCreator {
 
-  phet.log && phet.log( 'ObjectTermCreator: ' + variable.symbol + ', weight=' + variable.valueProperty.value );
+  /**
+   * @param {ObjectVariable} variable
+   * @param {Object} [options]
+   */
+  constructor( variable, options ) {
 
-  TermCreator.call( this, options );
+    phet.log && phet.log( 'ObjectTermCreator: ' + variable.symbol + ', weight=' + variable.valueProperty.value );
 
-  // @public (read-only)
-  this.variable = variable;
+    super( options );
 
-  // When the variable's value changes, recompute the weight of terms on the scale. unlink not needed.
-  this.variable.valueProperty.link( value => this.updateWeightOnPlateProperty() );
-}
+    // @public (read-only)
+    this.variable = variable;
 
-equalityExplorer.register( 'ObjectTermCreator', ObjectTermCreator );
-
-export default inherit( TermCreator, ObjectTermCreator, {
+    // When the variable's value changes, recompute the weight of terms on the scale. unlink not needed.
+    this.variable.valueProperty.link( value => this.updateWeightOnPlateProperty() );
+  }
 
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the TermCreator API
@@ -45,9 +41,9 @@ export default inherit( TermCreator, ObjectTermCreator, {
    * @public
    * @override
    */
-  createIcon: function( options ) {
+  createIcon( options ) {
     return ObjectTermNode.createInteractiveTermNode( this.variable.image, options );
-  },
+  }
 
   /**
    * Instantiates a ObjectTerm.
@@ -56,9 +52,9 @@ export default inherit( TermCreator, ObjectTermCreator, {
    * @protected
    * @override
    */
-  createTermProtected: function( options ) {
+  createTermProtected( options ) {
     return new ObjectTerm( this.variable, options );
-  },
+  }
 
   /**
    * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
@@ -68,9 +64,9 @@ export default inherit( TermCreator, ObjectTermCreator, {
    * @public
    * @abstract
    */
-  createZeroTerm: function( options ) {
+  createZeroTerm( options ) {
     throw new Error( 'createZeroTerm is not supported for ObjectTermCreator' );
-  },
+  }
 
   /**
    * Instantiates the Node that corresponds to this term.
@@ -80,7 +76,11 @@ export default inherit( TermCreator, ObjectTermCreator, {
    * @public
    * @override
    */
-  createTermNode: function( term, options ) {
+  createTermNode( term, options ) {
     return new ObjectTermNode( this, term, options );
   }
-} );
+}
+
+equalityExplorer.register( 'ObjectTermCreator', ObjectTermCreator );
+
+export default ObjectTermCreator;

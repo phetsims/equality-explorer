@@ -8,27 +8,27 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import Variable from '../../common/model/Variable.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-/**
- * @param {string} symbol - symbolic name for the object type, not visible to the user
- * @param {HTMLImageElement} image - image that represents the object
- * @param {HTMLImageElement} shadow - shadow shown while dragging
- * @param {Object} [options]
- * @constructor
- */
-function ObjectVariable( symbol, image, shadow, options ) {
+class ObjectVariable extends Variable {
 
-  // @public (read-only)
-  this.image = image;
-  this.shadow = shadow;
+  /**
+   * @param {string} symbol - symbolic name for the object type, not visible to the user
+   * @param {HTMLImageElement} image - image that represents the object
+   * @param {HTMLImageElement} shadow - shadow shown while dragging
+   * @param {Object} [options]
+   */
+  constructor( symbol, image, shadow, options ) {
 
-  Variable.call( this, symbol, options );
+    super( symbol, options );
+
+    // @public (read-only)
+    this.image = image;
+    this.shadow = shadow;
+  }
 }
 
 equalityExplorer.register( 'ObjectVariable', ObjectVariable );
 
-inherit( Variable, ObjectVariable );
 export default ObjectVariable;

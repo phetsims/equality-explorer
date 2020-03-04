@@ -7,7 +7,6 @@
  */
 
 import Utils from '../../../../dot/js/Utils.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
@@ -22,29 +21,26 @@ import equalityExplorer from '../../equalityExplorer.js';
 const DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
 const ICON_SCALE_MULTIPLIER = 0.7; // use this to adjust size of icon relative to coefficient
 
-/**
- * @param {ObjectTermCreator} termCreator
- * @param {ObjectTerm} term
- * @param {Object} [options]
- * @constructor
- */
-function ObjectTermNode( termCreator, term, options ) {
+class ObjectTermNode extends TermNode {
 
-  const contentNode = ObjectTermNode.createInteractiveTermNode( term.variable.image, {
-    maxHeight: term.diameter
-  } );
+  /**
+   * @param {ObjectTermCreator} termCreator
+   * @param {ObjectTerm} term
+   * @param {Object} [options]
+   */
+  constructor( termCreator, term, options ) {
 
-  const shadowNode = new Image( term.variable.shadow, {
-    maxHeight: term.diameter,
-    opacity: EqualityExplorerConstants.SHADOW_OPACITY
-  } );
+    const contentNode = ObjectTermNode.createInteractiveTermNode( term.variable.image, {
+      maxHeight: term.diameter
+    } );
 
-  TermNode.call( this, termCreator, term, contentNode, shadowNode, options );
-}
+    const shadowNode = new Image( term.variable.shadow, {
+      maxHeight: term.diameter,
+      opacity: EqualityExplorerConstants.SHADOW_OPACITY
+    } );
 
-equalityExplorer.register( 'ObjectTermNode', ObjectTermNode );
-
-export default inherit( TermNode, ObjectTermNode, {}, {
+    super( termCreator, term, contentNode, shadowNode, options );
+  }
 
   /**
    * Creates the representation of a term that the user interacts with, in this case the object type's icon.
@@ -54,14 +50,14 @@ export default inherit( TermNode, ObjectTermNode, {}, {
    * @public
    * @static
    */
-  createInteractiveTermNode: function( image, options ) {
+  static createInteractiveTermNode( image, options ) {
 
     options = merge( {
       maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
     }, options );
 
     return new Image( image, options );
-  },
+  }
 
   /**
    * Creates the representation of a term that is shown in equations.
@@ -72,7 +68,7 @@ export default inherit( TermNode, ObjectTermNode, {}, {
    * @public
    * @static
    */
-  createEquationTermNode: function( coefficient, icon, options ) {
+  static createEquationTermNode( coefficient, icon, options ) {
 
     assert && assert( Utils.isInteger( coefficient ), 'coefficient must be an integer: ' + coefficient );
 
@@ -92,4 +88,8 @@ export default inherit( TermNode, ObjectTermNode, {}, {
       children: [ coefficientNode, iconWrapper ]
     } );
   }
-} );
+}
+
+equalityExplorer.register( 'ObjectTermNode', ObjectTermNode );
+
+export default ObjectTermNode;

@@ -6,39 +6,39 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermCreator from './ObjectTermCreator.js';
 
-/**
- * @param {ObjectVariable[]} variables
- * @param {Object} [options]
- * @constructor
- * @abstract
- */
-function BasicsScene( variables, options ) {
+class BasicsScene extends EqualityExplorerScene {
 
-  options = merge( {
-    hasConstantTerms: false // does this scene allow you to create constant terms?
-  }, options );
+  /**
+   * @param {ObjectVariable[]} variables
+   * @param {Object} [options]
+   * @abstract
+   */
+  constructor( variables, options ) {
 
-  assert && assert( !options.variables, 'BasicsScreen sets variables' );
-  options.variables = variables;
+    options = merge( {
+      hasConstantTerms: false // does this scene allow you to create constant terms?
+    }, options );
 
-  // the lock feature is not supported for scenes in the Basics screen
-  assert && assert( options.lockable === undefined, 'BasicsScene sets lockable' );
-  options.lockable = false;
+    assert && assert( !options.variables, 'BasicsScreen sets variables' );
+    options.variables = variables;
 
-  EqualityExplorerScene.call( this,
-    createTermCreators( variables, options.hasConstantTerms ),
-    createTermCreators( variables, options.hasConstantTerms ),
-    options );
+    // the lock feature is not supported for scenes in the Basics screen
+    assert && assert( options.lockable === undefined, 'BasicsScene sets lockable' );
+    options.lockable = false;
+
+    super(
+      createTermCreators( variables, options.hasConstantTerms ),
+      createTermCreators( variables, options.hasConstantTerms ),
+      options
+    );
+  }
 }
-
-equalityExplorer.register( 'BasicsScene', BasicsScene );
 
 /**
  * Creates the term creators for this scene.
@@ -63,5 +63,6 @@ function createTermCreators( variables, hasConstantTerms ) {
   return termCreators;
 }
 
-inherit( EqualityExplorerScene, BasicsScene );
+equalityExplorer.register( 'BasicsScene', BasicsScene );
+
 export default BasicsScene;

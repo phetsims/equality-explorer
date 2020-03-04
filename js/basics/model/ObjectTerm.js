@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import Term from '../../common/model/Term.js';
@@ -15,35 +14,32 @@ import equalityExplorer from '../../equalityExplorer.js';
 // constants
 const COEFFICIENT = Fraction.fromInteger( 1 ); // all object terms have an implicit coefficient of 1
 
-/**
- * @param {ObjectVariable} variable
- * @param {Object} [options]
- * @constructor
- */
-function ObjectTerm( variable, options ) {
+class ObjectTerm extends Term {
 
-  options = options || {};
-  assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
-  assert && assert( !options.coefficient, 'coefficient is a VariableTerm option' );
+  /**
+   * @param {ObjectVariable} variable
+   * @param {Object} [options]
+   */
+  constructor( variable, options ) {
 
-  // @public (read-only)
-  this.variable = variable;
+    options = options || {};
+    assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
+    assert && assert( !options.coefficient, 'coefficient is a VariableTerm option' );
 
-  Term.call( this, COEFFICIENT, options );
-}
+    super( COEFFICIENT, options );
 
-equalityExplorer.register( 'ObjectTerm', ObjectTerm );
-
-export default inherit( Term, ObjectTerm, {
+    // @public (read-only)
+    this.variable = variable;
+  }
 
   /**
    * For debugging only. Do not rely on the format of toString.
    * @returns {string}
    * @public
    */
-  toString: function() {
+  toString() {
     return 'ObjectTerm: ' + this.variable.symbol + ' ' + this.variable.valueProperty.value;
-  },
+  }
 
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the Term API
@@ -56,9 +52,9 @@ export default inherit( Term, ObjectTerm, {
    * @public
    * @override
    */
-  copy: function( options ) {
+  copy( options ) {
     return new ObjectTerm( this.variable, merge( this.copyOptions(), options ) );
-  },
+  }
 
   /**
    * Gets the weight of this term.
@@ -68,7 +64,7 @@ export default inherit( Term, ObjectTerm, {
    */
   get weight() {
     return Fraction.fromInteger( this.variable.valueProperty.value );
-  },
+  }
 
   /**
    * Are this term and the specified term 'like terms'?
@@ -78,9 +74,9 @@ export default inherit( Term, ObjectTerm, {
    * @public
    * @override
    */
-  isLikeTerm: function( term ) {
+  isLikeTerm( term ) {
     return ( term instanceof ObjectTerm ) && ( term.variable === this.variable );
-  },
+  }
 
   /**
    * Applies an operation to this term, resulting in a new term.
@@ -90,7 +86,11 @@ export default inherit( Term, ObjectTerm, {
    * @public
    * @override
    */
-  applyOperation: function( operation, options ) {
+  applyOperation( operation, options ) {
     return null; // operations are not applicable to these terms
   }
-} );
+}
+
+equalityExplorer.register( 'ObjectTerm', ObjectTerm );
+
+export default ObjectTerm;

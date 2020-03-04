@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import catImage from '../../../images/cat_png.js';
 import catShadowImage from '../../../images/catShadow_png.js';
@@ -19,34 +18,33 @@ import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 import ObjectVariable from './ObjectVariable.js';
 
-/**
- * @constructor
- */
-function AnimalsScene() {
+class AnimalsScene extends BasicsScene {
 
-  const variables = [
+  constructor() {
 
-    // name, image, shadow
-    new ObjectVariable( 'dog', dogImage, dogShadowImage, { value: 11 } ),
-    new ObjectVariable( 'cat', catImage, catShadowImage, { value: 4 } ),
-    new ObjectVariable( 'turtle', turtleImage, turtleShadowImage, { value: 6 } )
-  ];
+    const variables = [
 
-  BasicsScene.call( this, variables, {
+      // name, image, shadow
+      new ObjectVariable( 'dog', dogImage, dogShadowImage, { value: 11 } ),
+      new ObjectVariable( 'cat', catImage, catShadowImage, { value: 4 } ),
+      new ObjectVariable( 'turtle', turtleImage, turtleShadowImage, { value: 6 } )
+    ];
 
-    debugName: 'animals',
+    super( variables, {
 
-    // icon used to represent this scene in the scene control (radio buttons)
-    icon: new Image( turtleImage, {
-      maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-    } ),
+      debugName: 'animals',
 
-    // weight at which the scale bottoms out
-    maxWeight: 50
-  } );
+      // icon used to represent this scene in the scene control (radio buttons)
+      icon: new Image( turtleImage, {
+        maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
+      } ),
+
+      // weight at which the scale bottoms out
+      maxWeight: 50
+    } );
+  }
 }
 
 equalityExplorer.register( 'AnimalsScene', AnimalsScene );
 
-inherit( BasicsScene, AnimalsScene );
 export default AnimalsScene;

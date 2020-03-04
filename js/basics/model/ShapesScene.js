@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import sphereImage from '../../../images/sphere_png.js';
 import sphereShadowImage from '../../../images/sphereShadow_png.js';
@@ -17,31 +16,30 @@ import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 import ObjectVariable from './ObjectVariable.js';
 
-/**
- * @constructor
- */
-function ShapesScene() {
+class ShapesScene extends BasicsScene {
 
-  const variables = [
+  constructor() {
 
-    // name, image, shadow
-    new ObjectVariable( 'sphere', sphereImage, sphereShadowImage, { value: 2 } ),
-    new ObjectVariable( 'square', squareImage, squareShadowImage, { value: 3 } )
-  ];
+    const variables = [
 
-  BasicsScene.call( this, variables, {
+      // name, image, shadow
+      new ObjectVariable( 'sphere', sphereImage, sphereShadowImage, { value: 2 } ),
+      new ObjectVariable( 'square', squareImage, squareShadowImage, { value: 3 } )
+    ];
 
-    debugName: 'shapes',
+    super( variables, {
 
-    // icon used to represent this scene in the scene control (radio buttons)
-    icon: ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) ),
+      debugName: 'shapes',
 
-    // this scene allows you to create constant terms
-    hasConstantTerms: true
-  } );
+      // icon used to represent this scene in the scene control (radio buttons)
+      icon: ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) ),
+
+      // this scene allows you to create constant terms
+      hasConstantTerms: true
+    } );
+  }
 }
 
 equalityExplorer.register( 'ShapesScene', ShapesScene );
 
-inherit( BasicsScene, ShapesScene );
 export default ShapesScene;
