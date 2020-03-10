@@ -58,9 +58,6 @@ function UniversalOperationControl( scene, animationLayer, options ) {
     spacing: 15
   }, options );
 
-  // @private
-  this.timesZeroEnabled = options.timesZeroEnabled;
-
   // items for the operator control
   const operatorItems = [];
   for ( let i = 0; i < scene.operators.length; i++ ) {
@@ -144,7 +141,7 @@ function UniversalOperationControl( scene, animationLayer, options ) {
     upFunction: index => {
       let nextOperandIndex = index + 1;
       const operator = scene.operatorProperty.value;
-      while ( !this.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
+      while ( !isSupportedOperation( operator, scene.operands[ nextOperandIndex ], options.timesZeroEnabled ) ) {
         nextOperandIndex++;
         assert && assert( nextOperandIndex < scene.operands.length,
           'nextOperandIndex out of range: ' + nextOperandIndex );
@@ -156,13 +153,25 @@ function UniversalOperationControl( scene, animationLayer, options ) {
     downFunction: index => {
       let nextOperandIndex = index - 1;
       const operator = scene.operatorProperty.value;
-      while ( !this.isSupportedOperation( operator, scene.operands[ nextOperandIndex ] ) ) {
+      while ( !isSupportedOperation( operator, scene.operands[ nextOperandIndex ], options.timesZeroEnabled ) ) {
         nextOperandIndex--;
         assert && assert( nextOperandIndex >= 0, 'nextOperandIndex out of range: ' + nextOperandIndex );
       }
       return nextOperandIndex;
     }
   } ) );
+
+  // 'go' button, applies the operation
+  const goButtonIcon = new FontAwesomeNode( 'level_down', {
+    scale: 0.75 * operandPicker.height / operandPicker.height // scale relative to the pickers
+  } );
+  const goButton = new RoundPushButton( {
+    content: goButtonIcon,
+    baseColor: PhetColorScheme.BUTTON_YELLOW,
+    minXMargin: 10,
+    minYMargin: 10,
+    touchAreaDilation: 5
+  } );
 
   // Adjust the enabled state of the operand picker's up/down arrows.
   // dispose not needed
@@ -201,6 +210,11 @@ function UniversalOperationControl( scene, animationLayer, options ) {
         downEnabledProperty.value = ( operandIndex > 0 );
       }
     } );
+
+  assert && assert( !options.children, 'UniversalOperationControl sets children' );
+  options.children = [ operatorControl, operandPicker, goButton ];
+
+  HBox.call( this, options );
 
   // @private Tween animations that are running
   this.animations = [];
@@ -274,24 +288,7 @@ function UniversalOperationControl( scene, animationLayer, options ) {
     leftAnimation.start();
     rightAnimation.start();
   };
-
-  // 'go' button, applies the operation
-  const goButtonIcon = new FontAwesomeNode( 'level_down', {
-    scale: 0.75 * operandPicker.height / operandPicker.height // scale relative to the pickers
-  } );
-  const goButton = new RoundPushButton( {
-    listener: goButtonListener,
-    content: goButtonIcon,
-    baseColor: PhetColorScheme.BUTTON_YELLOW,
-    minXMargin: 10,
-    minYMargin: 10,
-    touchAreaDilation: 5
-  } );
-
-  assert && assert( !options.children, 'UniversalOperationControl sets children' );
-  options.children = [ operatorControl, operandPicker, goButton ];
-
-  HBox.call( this, options );
+  goButton.addListener( goButtonListener );
 
   // If the maxInteger limit is exceeded, stop all universal operations that are in progress
   const maxIntegerExceededListener = () => this.stopAnimations();
@@ -335,6 +332,20 @@ function isUnsupportedVariableTermOperation( operator, operand ) {
          ( operand instanceof VariableTerm );
 }
 
+/**
+ * Are the specified operator and operand a supported combination?
+ * @param {string} operator - see EqualityExplorerConstants.OPERATORS
+ * @param {Term} operand - the proposed operand
+ * @param {boolean} timesZeroEnabled - whether 'times 0' is a supported operation
+ * @returns {boolean}
+ * @private
+ */
+function isSupportedOperation( operator, operand, timesZeroEnabled ) {
+  return !isDivideByZero( operator, operand ) &&
+         ( timesZeroEnabled || !isTimesZero( operator, operand ) ) &&
+         !isUnsupportedVariableTermOperation( operator, operand );
+}
+
 export default inherit( HBox, UniversalOperationControl, {
 
   /**
@@ -365,18 +376,5 @@ export default inherit( HBox, UniversalOperationControl, {
     for ( let i = 0; i < arrayCopy.length; i++ ) {
       arrayCopy[ i ].stop();
     }
-  },
-
-  /**
-   * Are the specified operator and operand a supported combination?
-   * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-   * @param {Term} operand - the proposed operand
-   * @returns {boolean}
-   * @private
-   */
-  isSupportedOperation: function( operator, operand ) {
-    return !isDivideByZero( operator, operand ) &&
-           ( this.timesZeroEnabled || !isTimesZero( operator, operand ) ) &&
-           !isUnsupportedVariableTermOperation( operator, operand );
   }
 } );
