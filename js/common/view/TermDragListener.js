@@ -33,7 +33,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -45,101 +44,99 @@ import Term from '../model/Term.js';
 import TermCreator from '../model/TermCreator.js';
 import SumToZeroNode from './SumToZeroNode.js';
 
-/**
- * @param {Node} termNode - Node that the listener is attached to
- * @param {Term} term - the term being dragged
- * @param {TermCreator} termCreator - the creator of term
- * @param {Object} [options]
- * @constructor
- * @abstract
- */
-function TermDragListener( termNode, term, termCreator, options ) {
+class TermDragListener extends SimpleDragHandler {
 
-  assert && assert( termNode instanceof Node, 'invalid termNode: ' + termNode );
-  assert && assert( term instanceof Term, 'invalid term: ' + term );
-  assert && assert( termCreator instanceof TermCreator, 'invalid termCreator: ' + termCreator );
+  /**
+   * @param {Node} termNode - Node that the listener is attached to
+   * @param {Term} term - the term being dragged
+   * @param {TermCreator} termCreator - the creator of term
+   * @param {Object} [options]
+   * @abstract
+   */
+  constructor( termNode, term, termCreator, options ) {
 
-  // Workaround for not being able to use this before calling super.
-  // See https://github.com/phetsims/tasks/issues/1026#issuecomment-594357784
-  let self = null; /* eslint-disable-line consistent-this */
+    assert && assert( termNode instanceof Node, 'invalid termNode: ' + termNode );
+    assert && assert( term instanceof Term, 'invalid term: ' + term );
+    assert && assert( termCreator instanceof TermCreator, 'invalid termCreator: ' + termCreator );
 
-  options = merge( {
+    // Workaround for not being able to use this before calling super.
+    // See https://github.com/phetsims/tasks/issues/1026#issuecomment-594357784
+    let self = null; /* eslint-disable-line consistent-this */
 
-    haloRadius: 10, // radius of the halo around terms that sum to zero
-    pickableWhileAnimating: true, // is termNode pickable while term is animating?
+    options = merge( {
 
-    // SimpleDragHandler options
-    allowTouchSnag: true,
-    start: ( event, trail ) => self.start( event, trail ),
-    drag: ( event, trail ) => self.drag( event, trail ),
-    end: ( event, trail ) => self.end( event, trail )
+      haloRadius: 10, // radius of the halo around terms that sum to zero
+      pickableWhileAnimating: true, // is termNode pickable while term is animating?
 
-  }, options );
+      // SimpleDragHandler options
+      allowTouchSnag: true,
+      start: ( event, trail ) => self.start( event, trail ),
+      drag: ( event, trail ) => self.drag( event, trail ),
+      end: ( event, trail ) => self.end( event, trail )
 
-  SimpleDragHandler.call( this, options );
+    }, options );
 
-  self = this;
+    super( options );
 
-  // @protected constructor args
-  this.termNode = termNode;
-  this.term = term;
-  this.termCreator = termCreator;
+    // Now that we've called super, set self to be an alias for this.
+    self = this;
 
-  // @protected options
-  this.haloRadius = options.haloRadius;
-  this.pickableWhileAnimating = options.pickableWhileAnimating;
+    // @protected constructor args
+    this.termNode = termNode;
+    this.term = term;
+    this.termCreator = termCreator;
 
-  // @protected related terms
-  this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
-  this.equivalentTerm = null; // {Term|null} equivalent term on opposite plate, for lock feature
+    // @protected options
+    this.haloRadius = options.haloRadius;
+    this.pickableWhileAnimating = options.pickableWhileAnimating;
 
-  // @protected to improve readability
-  this.plate = termCreator.plate;
-  this.equivalentTermCreator = termCreator.equivalentTermCreator;
-  this.oppositePlate = termCreator.equivalentTermCreator.plate;
+    // @protected related terms
+    this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
+    this.equivalentTerm = null; // {Term|null} equivalent term on opposite plate, for lock feature
 
-  // Equivalent term tracks the movement of the dragged term throughout the drag cycle and post-drag animation.
-  const positionListener = position => {
-    if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
-      this.equivalentTerm.moveTo( termCreator.getEquivalentTermPosition( term ) );
-    }
-  };
-  term.positionProperty.link( positionListener ); // unlink required in dispose
+    // @protected to improve readability
+    this.plate = termCreator.plate;
+    this.equivalentTermCreator = termCreator.equivalentTermCreator;
+    this.oppositePlate = termCreator.equivalentTermCreator.plate;
 
-  // When the plate moves, or its contents change, refresh the halos around overlapping terms.
-  const refreshHalosBound = this.refreshHalos.bind( this );
-  this.plate.positionProperty.link( refreshHalosBound ); // unlink required in dispose
-  this.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
+    // Equivalent term tracks the movement of the dragged term throughout the drag cycle and post-drag animation.
+    const positionListener = position => {
+      if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
+        this.equivalentTerm.moveTo( termCreator.getEquivalentTermPosition( term ) );
+      }
+    };
+    term.positionProperty.link( positionListener ); // unlink required in dispose
 
-  // @private called by dispose
-  this.disposeTermDragListener = () => {
+    // When the plate moves, or its contents change, refresh the halos around overlapping terms.
+    const refreshHalosBound = this.refreshHalos.bind( this );
+    this.plate.positionProperty.link( refreshHalosBound ); // unlink required in dispose
+    this.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
 
-    if ( term.positionProperty.hasListener( positionListener ) ) {
-      term.positionProperty.unlink( positionListener );
-    }
+    // @private called by dispose
+    this.disposeTermDragListener = () => {
 
-    if ( this.plate.positionProperty.hasListener( refreshHalosBound ) ) {
-      this.plate.positionProperty.unlink( refreshHalosBound );
-    }
+      if ( term.positionProperty.hasListener( positionListener ) ) {
+        term.positionProperty.unlink( positionListener );
+      }
 
-    if ( this.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
-      this.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
-    }
-  };
-}
+      if ( this.plate.positionProperty.hasListener( refreshHalosBound ) ) {
+        this.plate.positionProperty.unlink( refreshHalosBound );
+      }
 
-equalityExplorer.register( 'TermDragListener', TermDragListener );
-
-export default inherit( SimpleDragHandler, TermDragListener, {
+      if ( this.plate.contentsChangedEmitter.hasListener( refreshHalosBound ) ) {
+        this.plate.contentsChangedEmitter.removeListener( refreshHalosBound );
+      }
+    };
+  }
 
   /**
    * @public
    * @override
    */
-  dispose: function() {
+  dispose() {
     this.disposeTermDragListener();
-    SimpleDragHandler.prototype.dispose.call( this );
-  },
+    super.dispose();
+  }
 
   /**
    * Called at the start of a drag cycle, on pointer down.
@@ -147,7 +144,7 @@ export default inherit( SimpleDragHandler, TermDragListener, {
    * @param {Trail} trail
    * @private
    */
-  start: function( event, trail ) {
+  start( event, trail ) {
 
     let success = true;
 
@@ -189,7 +186,7 @@ export default inherit( SimpleDragHandler, TermDragListener, {
 
       this.refreshHalos();
     }
-  },
+  }
 
   /**
    * Called while termNode is being dragged.
@@ -197,14 +194,14 @@ export default inherit( SimpleDragHandler, TermDragListener, {
    * @param {Trail} trail
    * @private
    */
-  drag: function( event, trail ) {
+  drag( event, trail ) {
 
     // move the term
     this.term.moveTo( this.eventToPosition( event ) );
 
     // refresh the halos that appear when dragged term overlaps with an inverse term
     this.refreshHalos();
-  },
+  }
 
   /**
    * Called at the end of a drag cycle, on pointer up.
@@ -212,7 +209,7 @@ export default inherit( SimpleDragHandler, TermDragListener, {
    * @param {Trail} trail
    * @private
    */
-  end: function( event, trail ) {
+  end( event, trail ) {
 
     // drag sequence was interrupted, return immediately
     if ( this.interrupted ) { return; }
@@ -280,13 +277,13 @@ export default inherit( SimpleDragHandler, TermDragListener, {
       // term was released above the plate, animate to the plate
       this.animateToPlate();
     }
-  },
+  }
 
   /**
    * Returns terms to the toolboxes where they were created.
    * @private
    */
-  animateToToolbox: function() {
+  animateToToolbox() {
     assert && assert( this.term.toolboxPosition, 'toolboxPosition was not initialized for term: ' + this.term );
 
     this.term.pickableProperty.value = this.pickableWhileAnimating;
@@ -304,7 +301,7 @@ export default inherit( SimpleDragHandler, TermDragListener, {
         }
       }
     } );
-  },
+  }
 
   /**
    * Converts an event to a model position with some offset, constrained to the drag bounds.
@@ -313,7 +310,7 @@ export default inherit( SimpleDragHandler, TermDragListener, {
    * @returns {Vector2}
    * @private
    */
-  eventToPosition: function( event ) {
+  eventToPosition( event ) {
 
     // move bottom-center of termNode to pointer position
     const dx = 0;
@@ -322,7 +319,7 @@ export default inherit( SimpleDragHandler, TermDragListener, {
 
     // constrain to drag bounds
     return this.term.dragBounds.closestPointTo( position );
-  },
+  }
 
   /**
    * Refreshes the visual feedback (yellow halo) that is provided when a dragged term overlaps
@@ -330,7 +327,7 @@ export default inherit( SimpleDragHandler, TermDragListener, {
    * See https://github.com/phetsims/equality-explorer/issues/17
    * @private
    */
-  refreshHalos: function() {
+  refreshHalos() {
 
     // Bail if this drag listener is not currently active, for example when 2 terms are locked together
     // and only one of them is being dragged. See https://github.com/phetsims/equality-explorer/issues/96
@@ -379,7 +376,7 @@ export default inherit( SimpleDragHandler, TermDragListener, {
         this.likeTerm.haloVisibleProperty.value = false;
       }
     }
-  },
+  }
 
   //-------------------------------------------------------------------------------------------------
   // Below here are @abstract methods, to be implemented by subtypes
@@ -391,9 +388,9 @@ export default inherit( SimpleDragHandler, TermDragListener, {
    * @protected
    * @abstract
    */
-  startOpposite: function() {
+  startOpposite() {
     throw new Error( 'startOpposite must be implemented by subtype' );
-  },
+  }
 
   /**
    * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side.
@@ -401,16 +398,20 @@ export default inherit( SimpleDragHandler, TermDragListener, {
    * @protected
    * @abstract
    */
-  endOpposite: function() {
+  endOpposite() {
     throw new Error( 'endOpposite must be implemented by subtype' );
-  },
+  }
 
   /**
    * Animates term to plates.
    * @protected
    * @abstract
    */
-  animateToPlate: function() {
+  animateToPlate() {
     throw new Error( 'animateToPlate must be implemented by subtype' );
   }
-} );
+}
+
+equalityExplorer.register( 'TermDragListener', TermDragListener );
+
+export default TermDragListener;
