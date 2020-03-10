@@ -72,6 +72,8 @@ function TermDragListener( termNode, term, termCreator, options ) {
 
   }, options );
 
+  SimpleDragHandler.call( this, options );
+
   // @protected constructor args
   this.termNode = termNode;
   this.term = term;
@@ -89,8 +91,6 @@ function TermDragListener( termNode, term, termCreator, options ) {
   this.plate = termCreator.plate;
   this.equivalentTermCreator = termCreator.equivalentTermCreator;
   this.oppositePlate = termCreator.equivalentTermCreator.plate;
-
-  SimpleDragHandler.call( this, options );
 
   // Equivalent term tracks the movement of the dragged term throughout the drag cycle and post-drag animation.
   const positionListener = position => {
