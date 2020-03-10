@@ -59,6 +59,10 @@ function TermDragListener( termNode, term, termCreator, options ) {
   assert && assert( term instanceof Term, 'invalid term: ' + term );
   assert && assert( termCreator instanceof TermCreator, 'invalid termCreator: ' + termCreator );
 
+  // Workaround for not being able to use this before calling super.
+  // See https://github.com/phetsims/tasks/issues/1026#issuecomment-594357784
+  let self = null; /* eslint-disable-line consistent-this */
+
   options = merge( {
 
     haloRadius: 10, // radius of the halo around terms that sum to zero
@@ -66,13 +70,15 @@ function TermDragListener( termNode, term, termCreator, options ) {
 
     // SimpleDragHandler options
     allowTouchSnag: true,
-    start: this.start.bind( this ),
-    drag: this.drag.bind( this ),
-    end: this.end.bind( this )
+    start: ( event, trail ) => self.start( event, trail ),
+    drag: ( event, trail ) => self.drag( event, trail ),
+    end: ( event, trail ) => self.end( event, trail )
 
   }, options );
 
   SimpleDragHandler.call( this, options );
+
+  self = this;
 
   // @protected constructor args
   this.termNode = termNode;
