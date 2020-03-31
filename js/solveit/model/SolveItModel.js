@@ -7,7 +7,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
 import ChallengeGenerator2 from './ChallengeGenerator2.js';

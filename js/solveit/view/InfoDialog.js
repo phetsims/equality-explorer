@@ -12,7 +12,7 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import Dialog from '../../../../sun/js/Dialog.js';
-import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 // strings

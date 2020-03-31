@@ -8,7 +8,7 @@
 
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import SumToZeroNode from './SumToZeroNode.js';

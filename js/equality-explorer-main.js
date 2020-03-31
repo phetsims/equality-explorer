@@ -10,7 +10,7 @@ import Sim from '../../joist/js/Sim.js';
 import SimLauncher from '../../joist/js/SimLauncher.js';
 import BasicsScreen from './basics/BasicsScreen.js';
 import EqualityExplorerConstants from './common/EqualityExplorerConstants.js';
-import equalityExplorerStrings from './equality-explorer-strings.js';
+import equalityExplorerStrings from './equalityExplorerStrings.js';
 import NumbersScreen from './numbers/NumbersScreen.js';
 import OperationsScreen from './operations/OperationsScreen.js';
 import SolveItScreen from './solveit/SolveItScreen.js';

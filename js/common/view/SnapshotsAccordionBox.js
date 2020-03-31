@@ -14,7 +14,7 @@ import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import HSeparator from '../../../../sun/js/HSeparator.js';
-import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';

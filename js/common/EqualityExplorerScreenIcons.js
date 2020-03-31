@@ -19,7 +19,7 @@ import VBox from '../../../scenery/js/nodes/VBox.js';
 import phetGirlJugglingStarsImage from '../../../vegas/images/phet-girl-juggling-stars_png.js';
 import appleBigImage from '../../images/appleBig_png.js';
 import orangeBigImage from '../../images/orangeBig_png.js';
-import equalityExplorerStrings from '../equality-explorer-strings.js';
+import equalityExplorerStrings from '../equalityExplorerStrings.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerColors from './EqualityExplorerColors.js';
 import ConstantTermNode from './view/ConstantTermNode.js';

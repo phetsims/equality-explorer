@@ -19,7 +19,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
-import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerLevelSelectionButton from './EqualityExplorerLevelSelectionButton.js';
 import InfoDialog from './InfoDialog.js';

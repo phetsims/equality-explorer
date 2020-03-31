@@ -10,7 +10,7 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
-import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import TermDragListener from './TermDragListener.js';
 

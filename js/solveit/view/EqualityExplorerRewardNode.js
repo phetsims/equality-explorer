@@ -22,7 +22,7 @@ import UniversalOperation from '../../common/model/UniversalOperation.js';
 import ConstantTermNode from '../../common/view/ConstantTermNode.js';
 import UniversalOperationNode from '../../common/view/UniversalOperationNode.js';
 import VariableTermNode from '../../common/view/VariableTermNode.js';
-import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ChallengeGenerator from '../model/ChallengeGenerator.js';
 

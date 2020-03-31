@@ -23,7 +23,7 @@ import UniversalOperation from '../../common/model/UniversalOperation.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
-import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 // string

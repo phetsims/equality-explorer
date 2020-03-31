@@ -11,7 +11,7 @@ import merge from '../../../phet-core/js/merge.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
-import equalityExplorerStrings from '../equality-explorer-strings.js';
+import equalityExplorerStrings from '../equalityExplorerStrings.js';
 import equalityExplorer from '../equalityExplorer.js';
 import OperationsModel from './model/OperationsModel.js';
 import OperationsScreenView from './view/OperationsScreenView.js';

@@ -33,7 +33,7 @@ import EqualityExplorerSceneNode from '../../common/view/EqualityExplorerSceneNo
 import EquationPanel from '../../common/view/EquationPanel.js';
 import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
-import equalityExplorerStrings from '../../equality-explorer-strings.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ChallengeDerivationNode from './ChallengeDerivationNode.js';
 import EqualityExplorerRewardNode from './EqualityExplorerRewardNode.js';
