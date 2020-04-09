@@ -53,7 +53,7 @@ class EquationPanel extends Panel {
     const equationParent = new Node( { children: [ equationNode ] } );
 
     // off is not needed
-    equationNode.on( 'bounds', () => {
+    equationNode.boundsProperty.lazyLink( () => {
 
       // Compute the scale required to keep the equation centered on the relational operator.
       // This is more complicated than setting maxWidth because the equation's relation operator is
