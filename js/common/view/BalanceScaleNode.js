@@ -155,7 +155,8 @@ class BalanceScaleNode extends Node {
       children: [ clearScaleButton, organizeButton ],
       spacing: 100,
       centerX: baseNode.centerX,
-      centerY: baseNode.bottom - ( BASE_HEIGHT / 2 )
+      centerY: baseNode.bottom - ( BASE_HEIGHT / 2 ),
+      excludeInvisibleChildrenFromBounds: false
     } );
 
     assert && assert( !options.children, 'BalanceNode sets children' );
