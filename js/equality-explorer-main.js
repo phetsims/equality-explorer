@@ -16,8 +16,6 @@ import OperationsScreen from './operations/OperationsScreen.js';
 import SolveItScreen from './solveit/SolveItScreen.js';
 import VariablesScreen from './variables/VariablesScreen.js';
 
-const equalityExplorerTitleString = equalityExplorerStrings[ 'equality-explorer' ].title;
-
 SimLauncher.launch( () => {
 
   // production screens
@@ -29,7 +27,7 @@ SimLauncher.launch( () => {
     new SolveItScreen()
   ];
 
-  const sim = new Sim( equalityExplorerTitleString, screens, {
+  const sim = new Sim( equalityExplorerStrings[ 'equality-explorer' ].title, screens, {
     credits: EqualityExplorerConstants.CREDITS
   } );
   sim.start();

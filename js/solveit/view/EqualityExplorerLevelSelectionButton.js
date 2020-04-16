@@ -10,11 +10,8 @@ import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import LevelSelectionButton from '../../../../vegas/js/LevelSelectionButton.js';
 import ScoreDisplayNumberAndStar from '../../../../vegas/js/ScoreDisplayNumberAndStar.js';
 import VariableTermNode from '../../common/view/VariableTermNode.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
-
-// strings
-const xString = equalityExplorerStrings.x;
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 
 class EqualityExplorerLevelSelectionButton extends LevelSelectionButton {
 
@@ -25,7 +22,7 @@ class EqualityExplorerLevelSelectionButton extends LevelSelectionButton {
   constructor( scene, sceneProperty ) {
 
     // 'x' term with level number as coefficient
-    const icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( scene.level ), xString, {
+    const icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( scene.level ), equalityExplorerStrings.x, {
       diameter: 50,
       margin: 15,
       showOne: true

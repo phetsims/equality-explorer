@@ -9,12 +9,10 @@
 import merge from '../../../../phet-core/js/merge.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EquationPanel from './EquationPanel.js';
-
-const equationOrInequalityString = equalityExplorerStrings.equationOrInequality;
 
 class EquationAccordionBox extends AccordionBox {
   /**
@@ -50,7 +48,7 @@ class EquationAccordionBox extends AccordionBox {
     } );
 
     assert && assert( !options.titleNode, 'EquationAccordionBox sets titleNode' );
-    options.titleNode = options.titleNode || new Text( equationOrInequalityString, {
+    options.titleNode = options.titleNode || new Text( equalityExplorerStrings.equationOrInequality, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentNode.width
     } );

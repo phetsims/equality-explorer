@@ -11,13 +11,10 @@ import merge from '../../../phet-core/js/merge.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
-import equalityExplorerStrings from '../equalityExplorerStrings.js';
 import equalityExplorer from '../equalityExplorer.js';
+import equalityExplorerStrings from '../equalityExplorerStrings.js';
 import NumbersModel from './model/NumbersModel.js';
 import NumbersScreenView from './view/NumbersScreenView.js';
-
-// strings
-const screenNumbersString = equalityExplorerStrings.screen.numbers;
 
 class NumbersScreen extends EqualityExplorerScreen {
 
@@ -29,7 +26,7 @@ class NumbersScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: screenNumbersString,
+      name: equalityExplorerStrings.screen.numbers,
       backgroundColorProperty: new Property( EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createNumbersScreenIcon()
     }, options );

@@ -19,14 +19,10 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import EqualityExplorerLevelSelectionButton from './EqualityExplorerLevelSelectionButton.js';
 import InfoDialog from './InfoDialog.js';
-
-const chooseYourLevelString = equalityExplorerStrings.chooseYourLevel;
-const solveForString = equalityExplorerStrings.solveFor;
-const xString = equalityExplorerStrings.x;
 
 class LevelSelectionNode extends Node {
 
@@ -61,14 +57,14 @@ class LevelSelectionNode extends Node {
     } );
 
     // 'Choose Your Level', centered above level-selection buttons
-    const chooseYourLevelNode = new Text( chooseYourLevelString, merge( {}, textOptions, {
+    const chooseYourLevelNode = new Text( equalityExplorerStrings.chooseYourLevel, merge( {}, textOptions, {
       centerX: levelSelectionButtonsBox.centerX,
       bottom: levelSelectionButtonsBox.top - 65
     } ) );
 
     // 'Solve for x', centered above 'Choose You Level'
-    const solveForXText = StringUtils.fillIn( solveForString, {
-      variable: MathSymbolFont.getRichTextMarkup( xString )
+    const solveForXText = StringUtils.fillIn( equalityExplorerStrings.solveFor, {
+      variable: MathSymbolFont.getRichTextMarkup( equalityExplorerStrings.x )
     } );
     const solveForXNode = new RichText( solveForXText, merge( {}, textOptions, {
       centerX: chooseYourLevelNode.centerX,

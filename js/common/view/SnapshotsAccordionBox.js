@@ -14,14 +14,12 @@ import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import HSeparator from '../../../../sun/js/HSeparator.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import SnapshotControl from './SnapshotControl.js';
 import VariableValuesVisibleCheckbox from './VariableValuesVisibleCheckbox.js';
-
-const snapshotsString = equalityExplorerStrings.snapshots;
 
 // constants
 const SEPARATOR_OPTIONS = {
@@ -77,7 +75,7 @@ class SnapshotsAccordionBox extends AccordionBox {
 
     // title
     assert && assert( !options.titleNode, 'SnapshotsAccordionBox sets titleNode' );
-    options.titleNode = new Text( snapshotsString, {
+    options.titleNode = new Text( equalityExplorerStrings.snapshots, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
     } );

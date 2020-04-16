@@ -11,17 +11,14 @@ import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
-
-// strings
-const xString = equalityExplorerStrings.x;
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 
 class VariablesScene extends EqualityExplorerScene {
 
   constructor() {
 
-    const xVariable = new Variable( xString, {
+    const xVariable = new Variable( equalityExplorerStrings.x, {
       range: EqualityExplorerConstants.VARIABLE_RANGE
     } );
 

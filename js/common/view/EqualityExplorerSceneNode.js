@@ -8,13 +8,10 @@
 
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import SumToZeroNode from './SumToZeroNode.js';
-
-// string
-const numberTooBigString = equalityExplorerStrings.numberTooBig;
 
 class EqualityExplorerSceneNode extends Node {
 
@@ -61,7 +58,7 @@ class EqualityExplorerSceneNode extends Node {
     const maxIntegerExceededListener = () => {
       phet.log && phet.log( 'maxInteger exceeded' );
       scene.disposeTermsNotOnScale();
-      dialog = dialog || new OopsDialog( numberTooBigString );
+      dialog = dialog || new OopsDialog( equalityExplorerStrings.numberTooBig );
       dialog.show();
     };
 

@@ -7,19 +7,13 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
 import ChallengeGenerator2 from './ChallengeGenerator2.js';
 import ChallengeGenerator3 from './ChallengeGenerator3.js';
 import ChallengeGenerator4 from './ChallengeGenerator4.js';
 import SolveItScene from './SolveItScene.js';
-
-// strings
-const level1String = equalityExplorerStrings.level1;
-const level2String = equalityExplorerStrings.level2;
-const level3String = equalityExplorerStrings.level3;
-const level4String = equalityExplorerStrings.level4;
 
 class SolveItModel {
 
@@ -27,10 +21,10 @@ class SolveItModel {
 
     // @public (read-only) descriptions for each game level, ordered by ascending level number
     this.levelDescriptions = [
-      level1String,
-      level2String,
-      level3String,
-      level4String
+      equalityExplorerStrings.level1,
+      equalityExplorerStrings.level2,
+      equalityExplorerStrings.level3,
+      equalityExplorerStrings.level4
     ];
 
     // @private challenge generators, ordered by ascending level number

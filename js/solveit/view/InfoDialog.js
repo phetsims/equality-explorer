@@ -12,11 +12,8 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import Dialog from '../../../../sun/js/Dialog.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
-
-// strings
-const levelsString = equalityExplorerStrings.levels;
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 
 // constants
 const TITLE_FONT = new PhetFont( 24 );
@@ -44,7 +41,7 @@ class InfoDialog extends Dialog {
       maxWidth: MAX_CONTENT_WIDTH // scale all of the descriptions uniformly
     } );
 
-    const titleNode = new Text( levelsString, {
+    const titleNode = new Text( equalityExplorerStrings.levels, {
       font: TITLE_FONT,
       maxWidth: 0.75 * MAX_CONTENT_WIDTH
     } );

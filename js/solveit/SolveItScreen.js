@@ -11,12 +11,10 @@ import merge from '../../../phet-core/js/merge.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
-import equalityExplorerStrings from '../equalityExplorerStrings.js';
 import equalityExplorer from '../equalityExplorer.js';
+import equalityExplorerStrings from '../equalityExplorerStrings.js';
 import SolveItModel from './model/SolveItModel.js';
 import SolveItScreenView from './view/SolveItScreenView.js';
-
-const screenSolveItString = equalityExplorerStrings.screen.solveIt;
 
 class SolveItScreen extends EqualityExplorerScreen {
 
@@ -28,7 +26,7 @@ class SolveItScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: screenSolveItString,
+      name: equalityExplorerStrings.screen.solveIt,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
       navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon()

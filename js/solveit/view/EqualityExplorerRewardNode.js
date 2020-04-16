@@ -22,12 +22,9 @@ import UniversalOperation from '../../common/model/UniversalOperation.js';
 import ConstantTermNode from '../../common/view/ConstantTermNode.js';
 import UniversalOperationNode from '../../common/view/UniversalOperationNode.js';
 import VariableTermNode from '../../common/view/VariableTermNode.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import ChallengeGenerator from '../model/ChallengeGenerator.js';
-
-// strings
-const xString = equalityExplorerStrings.x;
 
 // constants
 const DIAMETER = 40;
@@ -149,7 +146,7 @@ function createNodes4() {
  * @returns {Node}
  */
 function createVariableTermNode( coefficient ) {
-  return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), xString, {
+  return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), equalityExplorerStrings.x, {
     diameter: DIAMETER,
     showOne: true // show coefficient for '1x'
   } );

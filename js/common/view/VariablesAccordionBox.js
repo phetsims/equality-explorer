@@ -16,13 +16,10 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import VariableNode from './VariableNode.js';
-
-const variablesString = equalityExplorerStrings.variables;
-const variableString = equalityExplorerStrings.variable;
 
 class VariablesAccordionBox extends AccordionBox {
 
@@ -35,7 +32,7 @@ class VariablesAccordionBox extends AccordionBox {
     options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // this accordion box is designed to be a fixed size, regardless of its content
-      titleString: ( variables.length > 1 ) ? variablesString : variableString,
+      titleString: ( variables.length > 1 ) ? equalityExplorerStrings.variables : equalityExplorerStrings.variable,
       fixedWidth: 100,
       fixedHeight: 75,
       fontSize: 24,

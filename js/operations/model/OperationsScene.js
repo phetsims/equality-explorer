@@ -23,11 +23,8 @@ import UniversalOperation from '../../common/model/UniversalOperation.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
-
-// string
-const xString = equalityExplorerStrings.x;
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 
 // constants
 const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;
@@ -51,7 +48,7 @@ class OperationsScene extends EqualityExplorerScene {
       iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
     }, options );
 
-    const xVariable = new Variable( xString, {
+    const xVariable = new Variable( equalityExplorerStrings.x, {
       range: options.variableRange
     } );
 

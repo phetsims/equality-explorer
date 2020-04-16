@@ -11,13 +11,10 @@ import merge from '../../../phet-core/js/merge.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
-import equalityExplorerStrings from '../equalityExplorerStrings.js';
 import equalityExplorer from '../equalityExplorer.js';
+import equalityExplorerStrings from '../equalityExplorerStrings.js';
 import OperationsModel from './model/OperationsModel.js';
 import OperationsScreenView from './view/OperationsScreenView.js';
-
-// strings
-const screenOperationsString = equalityExplorerStrings.screen.operations;
 
 class OperationsScreen extends EqualityExplorerScreen {
 
@@ -29,7 +26,7 @@ class OperationsScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: screenOperationsString,
+      name: equalityExplorerStrings.screen.operations,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createOperationsScreenIcon()
     }, options );
