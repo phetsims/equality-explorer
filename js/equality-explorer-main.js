@@ -7,7 +7,7 @@
  */
 
 import Sim from '../../joist/js/Sim.js';
-import SimLauncher from '../../joist/js/SimLauncher.js';
+import simLauncher from '../../joist/js/simLauncher.js';
 import BasicsScreen from './basics/BasicsScreen.js';
 import EqualityExplorerConstants from './common/EqualityExplorerConstants.js';
 import equalityExplorerStrings from './equalityExplorerStrings.js';
@@ -16,7 +16,7 @@ import OperationsScreen from './operations/OperationsScreen.js';
 import SolveItScreen from './solveit/SolveItScreen.js';
 import VariablesScreen from './variables/VariablesScreen.js';
 
-SimLauncher.launch( () => {
+simLauncher.launch( () => {
 
   // production screens
   const screens = [
