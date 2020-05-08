@@ -60,6 +60,7 @@ class ChallengeGenerator {
    * Randomly samples a value for x from a set of values, excluding zero and the previous value of x.
    * @param {number[]} values
    * @returns {number}
+   * @public
    */
   randomX( values ) {
     const x = ChallengeGenerator.randomValue( values, [ 0, this.xPrevious ] );

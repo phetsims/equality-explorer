@@ -75,6 +75,7 @@ class ConstantTerm extends Term {
    * @param {ConstantTerm} term
    * @param {Object} [options] - same as constructor
    * @returns {ConstantTerm}
+   * @public
    */
   minus( term, options ) {
     options = options || {};
@@ -89,6 +90,7 @@ class ConstantTerm extends Term {
    * @param {ConstantTerm} term
    * @param {Object} [options] - same as constructor
    * @returns {ConstantTerm}
+   * @public
    */
   times( term, options ) {
     options = options || {};
@@ -103,6 +105,7 @@ class ConstantTerm extends Term {
    * @param {ConstantTerm} term
    * @param {Object} [options] - same as constructor
    * @returns {ConstantTerm}
+   * @public
    */
   divided( term, options ) {
     options = options || {};

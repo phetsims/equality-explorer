@@ -65,6 +65,7 @@ class VariableTerm extends Term {
    * @param {VariableTerm} term
    * @param {Object} [options] - same as constructor
    * @returns {VariableTerm}
+   * @public
    */
   plus( term, options ) {
     assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
@@ -78,6 +79,7 @@ class VariableTerm extends Term {
    * @param {VariableTerm} term
    * @param {Object} [options] - same as constructor
    * @returns {VariableTerm}
+   * @public
    */
   minus( term, options ) {
     assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
@@ -91,6 +93,7 @@ class VariableTerm extends Term {
    * @param {ConstantTerm} term
    * @param {Object} [options] - same as constructor
    * @returns {VariableTerm}
+   * @public
    */
   times( term, options ) {
     assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
@@ -104,6 +107,7 @@ class VariableTerm extends Term {
    * @param {ConstantTerm} term
    * @param {Object} [options] - same as constructor
    * @returns {VariableTerm}
+   * @public
    */
   divided( term, options ) {
     assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
