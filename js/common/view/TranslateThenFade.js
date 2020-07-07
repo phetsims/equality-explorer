@@ -58,7 +58,6 @@ class TranslateThenFade {
         to: options.destination
       } ]
     } );
-    console.log( 'options.fadeDuration = ' + options.fadeDuration );
 
     // Animation for fade
     this.fadeAnimation = new Animation( {
