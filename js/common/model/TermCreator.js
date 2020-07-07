@@ -251,7 +251,7 @@ class TermCreator {
   step( dt ) {
 
     // operate on a copy, since step may involve modifying the array
-    const allTermsCopy = this.allTerms.getArray().slice();
+    const allTermsCopy = this.allTerms.getArrayCopy();
     for ( let i = 0; i < allTermsCopy.length; i++ ) {
       const term = allTermsCopy[ i ];
 
@@ -412,7 +412,7 @@ class TermCreator {
    * @public
    */
   getTermsOnPlate() {
-    return this.termsOnPlate.getArray().slice(); // defensive copy
+    return this.termsOnPlate.getArrayCopy(); // defensive copy
   }
 
   /**
@@ -453,7 +453,7 @@ class TermCreator {
   disposeAllTerms() {
 
     // operate on a copy, since dispose causes the ObservableArray to be modified
-    this.disposeTerms( this.allTerms.getArray().slice() );
+    this.disposeTerms( this.allTerms.getArrayCopy() );
   }
 
   /**
@@ -463,7 +463,7 @@ class TermCreator {
   disposeTermsOnPlate() {
 
     // operate on a copy, since dispose causes the ObservableArray to be modified
-    this.disposeTerms( this.termsOnPlate.getArray().slice() );
+    this.disposeTerms( this.termsOnPlate.getArrayCopy() );
     this.hideAllTermHalos();
   }
 
