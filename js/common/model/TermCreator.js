@@ -332,7 +332,7 @@ class TermCreator {
       this.removeTermFromPlate( term );
     }
 
-    if ( this.allTerms.contains( term ) ) {
+    if ( this.allTerms.includes( term ) ) {
       this.allTerms.remove( term );
     }
 
@@ -348,7 +348,7 @@ class TermCreator {
    * @private
    */
   isManagedTerm( term ) {
-    return this.allTerms.contains( term );
+    return this.allTerms.includes( term );
   }
 
   /**
@@ -358,7 +358,7 @@ class TermCreator {
    * @public
    */
   putTermOnPlate( term, cell ) {
-    assert && assert( !this.termsOnPlate.contains( term ), 'term already on plate: ' + term );
+    assert && assert( !this.termsOnPlate.includes( term ), 'term already on plate: ' + term );
 
     if ( cell === undefined && this.combineLikeTermsEnabled ) {
       cell = this.likeTermsCell;
@@ -384,8 +384,8 @@ class TermCreator {
    * @public
    */
   removeTermFromPlate( term ) {
-    assert && assert( this.allTerms.contains( term ), 'term not found: ' + term );
-    assert && assert( this.termsOnPlate.contains( term ), 'term not on plate: ' + term );
+    assert && assert( this.allTerms.includes( term ), 'term not found: ' + term );
+    assert && assert( this.termsOnPlate.includes( term ), 'term not on plate: ' + term );
 
     // ORDER IS VERY IMPORTANT HERE!
     const cell = this.plate.removeTerm( term );
@@ -403,7 +403,7 @@ class TermCreator {
    * @public
    */
   isTermOnPlate( term ) {
-    return this.termsOnPlate.contains( term );
+    return this.termsOnPlate.includes( term );
   }
 
   /**
