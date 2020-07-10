@@ -7,7 +7,6 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -44,7 +43,7 @@ class Term extends EqualityExplorerMovable {
     // Note that sign is not related to the term's weight. For example, for variable terms, the 'significant number'
     // is the coefficient. Consider term '-5x', where x=-2. While the weight is 10 (-5 * -2), the sign is based on
     // the coefficient -5, and is therefore -1.
-    this.sign = Utils.sign( significantValue.getValue() );
+    this.sign = Math.sign( significantValue.getValue() );
 
     // @public (read-only) diameter of the term in the view, convenient to store in the model
     this.diameter = options.diameter;
