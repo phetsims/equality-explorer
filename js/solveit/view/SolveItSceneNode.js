@@ -9,7 +9,6 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
@@ -274,14 +273,10 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
           layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
 
             // center horizontally on the screen
-            const screenCenterX = screenBounds.center.times( 1 / scale ).x;
+            dialog.centerX = dialog.layoutBounds.centerX;
 
             // top of dialog below equationPanel, so the solution is not obscured
-            const localCenterTop = new Vector2( equationPanel.centerX, equationPanel.bottom + 10 );
-            const globalCenterTop = this.localToGlobalPoint( localCenterTop ).times( 1 / scale );
-
-            dialog.centerX = screenCenterX;
-            dialog.top = globalCenterTop.y;
+            dialog.top = equationPanel.bottom + 10;
           },
 
           // 'Keep Going' hides the dialog
