@@ -16,9 +16,9 @@ import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 
 // constants
-const TITLE_FONT = new PhetFont( 24 );
-const DESCRIPTION_FONT = new PhetFont( 18 );
-const MAX_CONTENT_WIDTH = 500;
+const TITLE_FONT = new PhetFont( 32 );
+const DESCRIPTION_FONT = new PhetFont( 24 );
+const MAX_CONTENT_WIDTH = 600;
 
 class InfoDialog extends Dialog {
 
@@ -36,7 +36,7 @@ class InfoDialog extends Dialog {
 
     const content = new VBox( {
       align: 'left',
-      spacing: 15,
+      spacing: 20,
       children: children,
       maxWidth: MAX_CONTENT_WIDTH // scale all of the descriptions uniformly
     } );
