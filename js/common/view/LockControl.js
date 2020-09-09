@@ -9,7 +9,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import DownUpListener from '../../../../scenery/js/input/DownUpListener.js';
+import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import BooleanToggleNode from '../../../../sun/js/BooleanToggleNode.js';
@@ -51,8 +51,8 @@ class LockControl extends Node {
     super( options );
 
     // toggle the state when the user clicks on this Node
-    this.addInputListener( new DownUpListener( {
-      up: () => {
+    this.addInputListener( new FireListener( {
+      fire: () => {
         lockedProperty.value = !lockedProperty.value;
         phet.log && phet.log( 'Lock pressed, value=' + lockedProperty.value );
       }
