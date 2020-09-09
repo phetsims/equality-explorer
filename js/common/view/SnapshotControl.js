@@ -8,7 +8,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import DownUpListener from '../../../../scenery/js/input/DownUpListener.js';
+import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import LayoutBox from '../../../../scenery/js/nodes/LayoutBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
@@ -103,8 +103,8 @@ class SnapshotControl extends Node {
     super( options );
 
     // selects the snapshot associated with this control
-    const upListener = new DownUpListener( {
-      upInside: () => {
+    const upListener = new FireListener( {
+      fire: () => {
         assert && assert( snapshotProperty.value, 'expected a snapshot' );
         selectedSnapshotProperty.value = snapshotProperty.value;
       }
