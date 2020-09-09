@@ -102,13 +102,14 @@ class SnapshotControl extends Node {
 
     super( options );
 
-    // selects the snapshot associated with this control
-    const upListener = new FireListener( {
+    // Selects the snapshot associated with this control. unlink is not necessary.
+    this.addInputListener( new FireListener( {
       fire: () => {
-        assert && assert( snapshotProperty.value, 'expected a snapshot' );
-        selectedSnapshotProperty.value = snapshotProperty.value;
+        if ( snapshotProperty.value ) {
+          selectedSnapshotProperty.value = snapshotProperty.value;
+        }
       }
-    } );
+    } ) );
 
     // updates the layout of the snapshot, and centers it in the control
     const updateSnapshotLayout = () => {
@@ -124,14 +125,15 @@ class SnapshotControl extends Node {
     // Updates the view when the model changes. unlink not required.
     snapshotProperty.link( snapshot => {
 
+      const hasSnapShot = !!snapshot;
+
       // either the button or the snapshot is visible
-      snapshotButton.visible = !snapshot;
-      snapshotNode.visible = !!snapshot;
-      selectionRectangle.visible = !!snapshot;
+      snapshotButton.visible = !hasSnapShot;
+      snapshotNode.visible = hasSnapShot;
+      selectionRectangle.visible = hasSnapShot;
+      selectionRectangle.cursor = hasSnapShot ? 'pointer' : null;
 
-      if ( snapshot ) {
-
-        selectionRectangle.cursor = 'pointer';
+      if ( hasSnapShot ) {
 
         // create the equation for the snapshot
         equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, {
@@ -157,18 +159,12 @@ class SnapshotControl extends Node {
             scale: 0.75
           } );
         }
-
-        // add listener that selects the snapshot
-        this.addInputListener( upListener );
       }
-      else if ( this.hasInputListener( upListener ) ) {
-
-        selectionRectangle.cursor = null;
+      else {
 
         // no associated snapshot
         equationNode = NO_EQUATION_NODE;
         variableValuesNode = NO_VARIABLE_VALUES_NODE;
-        this.removeInputListener( upListener );
       }
 
       updateSnapshotLayout();
