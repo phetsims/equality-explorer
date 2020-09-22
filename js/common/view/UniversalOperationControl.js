@@ -117,8 +117,8 @@ class UniversalOperationControl extends HBox {
     }
 
     // Take control of enabling up/down arrows for operand picker
-    const upEnabledProperty = new BooleanProperty( true );
-    const downEnabledProperty = new BooleanProperty( true );
+    const incrementEnabledProperty = new BooleanProperty( true );
+    const decrementEnabledProperty = new BooleanProperty( true );
 
     // picker for choosing operand
     const operandPicker = new ObjectPicker( scene.operandProperty, operandItems, {
@@ -129,11 +129,11 @@ class UniversalOperationControl extends HBox {
       touchAreaYDilation: 15,
 
       // Providing these Properties means that we're responsible for up/down enabled state
-      upEnabledProperty: upEnabledProperty,
-      downEnabledProperty: downEnabledProperty,
+      incrementEnabledProperty: incrementEnabledProperty,
+      decrementEnabledProperty: decrementEnabledProperty,
 
-      // When the up button is pressed, skip operands that are inappropriate for the operation
-      upFunction: index => {
+      // When the increment button is pressed, skip operands that are inappropriate for the operation
+      incrementFunction: index => {
         let nextOperandIndex = index + 1;
         const operator = scene.operatorProperty.value;
         while ( !isSupportedOperation( operator, scene.operands[ nextOperandIndex ], options.timesZeroEnabled ) ) {
@@ -144,8 +144,8 @@ class UniversalOperationControl extends HBox {
         return nextOperandIndex;
       },
 
-      // When the down button is pressed, skip operands that are inappropriate for the operation
-      downFunction: index => {
+      // When the decrement button is pressed, skip operands that are inappropriate for the operation
+      decrementFunction: index => {
         let nextOperandIndex = index - 1;
         const operator = scene.operatorProperty.value;
         while ( !isSupportedOperation( operator, scene.operands[ nextOperandIndex ], options.timesZeroEnabled ) ) {
@@ -173,7 +173,7 @@ class UniversalOperationControl extends HBox {
 
     super( options );
 
-    // Adjust the enabled state of the operand picker's up/down arrows.
+    // Adjust the enabled state of the operand picker's increment/decrement arrows.
     // dispose not needed
     Property.multilink( [ scene.operatorProperty, scene.operandProperty ],
 
@@ -189,25 +189,25 @@ class UniversalOperationControl extends HBox {
         if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) ) {
           assert && assert( operand instanceof ConstantTerm, 'unexpected operand type: ' + operand );
 
-          // up arrow is enabled if there are any constant term operands above the current selection
-          let upEnabled = false;
-          for ( let i = operandIndex + 1; i < scene.operands.length && !upEnabled; i++ ) {
-            upEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
+          // increment arrow is enabled if there are any constant term operands above the current selection
+          let incrementEnabled = false;
+          for ( let i = operandIndex + 1; i < scene.operands.length && !incrementEnabled; i++ ) {
+            incrementEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
           }
-          upEnabledProperty.value = upEnabled;
+          incrementEnabledProperty.value = incrementEnabled;
 
           // down arrow is enabled if there are any constant term operands below the current selection
-          let downEnabled = false;
-          for ( let i = operandIndex - 1; i >= 0 && !downEnabled; i-- ) {
-            downEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
+          let decrementEnabled = false;
+          for ( let i = operandIndex - 1; i >= 0 && !decrementEnabled; i-- ) {
+            decrementEnabled = ( scene.operands[ i ] instanceof ConstantTerm );
           }
-          downEnabledProperty.value = downEnabled;
+          decrementEnabledProperty.value = decrementEnabled;
         }
         else {
 
           // other operators are supported for all operands
-          upEnabledProperty.value = ( operandIndex < operandItems.length - 1 );
-          downEnabledProperty.value = ( operandIndex > 0 );
+          incrementEnabledProperty.value = ( operandIndex < operandItems.length - 1 );
+          decrementEnabledProperty.value = ( operandIndex > 0 );
         }
       } );
 
