@@ -64,10 +64,10 @@ class TermCreator {
     // @public {read-only) {Bounds2} drag bounds for terms created
     this.dragBounds = options.dragBounds;
 
-    // @private {ObservableArray.<Term>} all terms that currently exist
+    // @private {ObservableArrayDef.<Term>} all terms that currently exist
     this.allTerms = createObservableArray();
 
-    // @protected {ObservableArray.<Term>} terms that are on the plate, a subset of this.allTerms
+    // @protected {ObservableArrayDef.<Term>} terms that are on the plate, a subset of this.allTerms
     this.termsOnPlate = createObservableArray();
 
     // @public (read-only) so we don't have to expose this.termsOnPlate
@@ -452,7 +452,7 @@ class TermCreator {
    */
   disposeAllTerms() {
 
-    // operate on a copy, since dispose causes the ObservableArray to be modified
+    // operate on a copy, since dispose causes the ObservableArrayDef to be modified
     this.disposeTerms( this.allTerms.getArrayCopy() );
   }
 
@@ -462,7 +462,7 @@ class TermCreator {
    */
   disposeTermsOnPlate() {
 
-    // operate on a copy, since dispose causes the ObservableArray to be modified
+    // operate on a copy, since dispose causes the ObservableArrayDef to be modified
     this.disposeTerms( this.termsOnPlate.getArrayCopy() );
     this.hideAllTermHalos();
   }
