@@ -21,7 +21,7 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import ObservableArray from '../../../../axon/js/ObservableArray.js';
+import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -65,10 +65,10 @@ class TermCreator {
     this.dragBounds = options.dragBounds;
 
     // @private {ObservableArray.<Term>} all terms that currently exist
-    this.allTerms = new ObservableArray();
+    this.allTerms = createObservableArray();
 
     // @protected {ObservableArray.<Term>} terms that are on the plate, a subset of this.allTerms
-    this.termsOnPlate = new ObservableArray();
+    this.termsOnPlate = createObservableArray();
 
     // @public (read-only) so we don't have to expose this.termsOnPlate
     // dispose not needed.
