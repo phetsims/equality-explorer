@@ -421,7 +421,7 @@ class TermCreator {
    * @public
    */
   getPositiveTermsOnPlate() {
-    return _.filter( this.termsOnPlate.getArray(), term => ( term.sign === 1 ) );
+    return _.filter( this.termsOnPlate, term => ( term.sign === 1 ) );
   }
 
   /**
@@ -430,7 +430,7 @@ class TermCreator {
    * @public
    */
   getNegativeTermsOnPlate() {
-    return _.filter( this.termsOnPlate.getArray(), term => ( term.sign === -1 ) );
+    return _.filter( this.termsOnPlate, term => ( term.sign === -1 ) );
   }
 
   /**
@@ -472,7 +472,7 @@ class TermCreator {
    * @public
    */
   disposeTermsNotOnPlate() {
-    this.disposeTerms( _.difference( this.allTerms.getArray(), this.termsOnPlate.getArray() ) );
+    this.disposeTerms( _.difference( this.allTerms, this.termsOnPlate ) );
     this.hideAllTermHalos();
   }
 
@@ -502,7 +502,7 @@ class TermCreator {
    * @private
    */
   hideAllTermHalos() {
-    for ( let i = 0; i < this.allTerms.getArray().length; i++ ) {
+    for ( let i = 0; i < this.allTerms.length; i++ ) {
       this.allTerms.get( i ).haloVisibleProperty.value = false;
     }
   }
