@@ -163,8 +163,8 @@ class UniversalOperationControl extends HBox {
     const goButton = new RoundPushButton( {
       content: goButtonIcon,
       baseColor: PhetColorScheme.BUTTON_YELLOW,
-      minXMargin: 10,
-      minYMargin: 10,
+      xMargin: 10,
+      yMargin: 10,
       touchAreaDilation: 5
     } );
 
