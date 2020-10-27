@@ -7,10 +7,10 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class SceneControl extends RadioButtonGroup {
+class SceneControl extends RectangularRadioButtonGroup {
 
   /**
    * @param {EqualityExplorerScene[]} scenes - the scene choices
@@ -21,7 +21,7 @@ class SceneControl extends RadioButtonGroup {
 
     options = merge( {
 
-      // RadioButtonGroup options
+      // RectangularRadioButtonGroup options
       orientation: 'horizontal',
       baseColor: 'white',
       spacing: 8,

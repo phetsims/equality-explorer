@@ -22,7 +22,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
-import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
 import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -62,7 +62,7 @@ class UniversalOperationControl extends HBox {
     }
 
     // radio buttons for selecting the operator
-    const operatorControl = new RadioButtonGroup( scene.operatorProperty, operatorItems, {
+    const operatorControl = new RectangularRadioButtonGroup( scene.operatorProperty, operatorItems, {
       orientation: 'horizontal',
       spacing: 2,
       selectedLineWidth: 2,
