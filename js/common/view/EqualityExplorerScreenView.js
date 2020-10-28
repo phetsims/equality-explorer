@@ -12,7 +12,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
-import SceneControl from './SceneControl.js';
+import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 
 class EqualityExplorerScreenView extends ScreenView {
 
@@ -73,12 +73,12 @@ class EqualityExplorerScreenView extends ScreenView {
       // Get the bounds of the Snapshot accordion box, relative to this ScreenView
       const snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
 
-      // Center the scene control in the space below the Snapshots accordion box
-      const sceneControl = new SceneControl( model.scenes, model.sceneProperty, {
+      // Center the scene radio button group in the space below the Snapshots accordion box
+      const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.scenes, model.sceneProperty, {
         centerX: snapshotsAccordionBox.centerX,
         centerY: snapshotsAccordionBox.bottom + ( resetAllButton.top - snapshotsAccordionBox.bottom ) / 2
       } );
-      this.addChild( sceneControl );
+      this.addChild( sceneRadioButtonGroup );
     }
 
     // Make the selected scene visible. unlink not needed.
