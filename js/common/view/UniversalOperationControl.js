@@ -62,7 +62,7 @@ class UniversalOperationControl extends HBox {
     }
 
     // radio buttons for selecting the operator
-    const operatorControl = new RectangularRadioButtonGroup( scene.operatorProperty, operatorItems, {
+    const operatorRadioButtonGroup = new RectangularRadioButtonGroup( scene.operatorProperty, operatorItems, {
       orientation: 'horizontal',
       spacing: 2,
       selectedLineWidth: 2,
@@ -169,7 +169,7 @@ class UniversalOperationControl extends HBox {
     } );
 
     assert && assert( !options.children, 'UniversalOperationControl sets children' );
-    options.children = [ operatorControl, operandPicker, goButton ];
+    options.children = [ operatorRadioButtonGroup, operandPicker, goButton ];
 
     super( options );
 
