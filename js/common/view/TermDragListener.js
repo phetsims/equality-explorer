@@ -25,16 +25,15 @@
  * - inverse term is created on a plate based on term's cell - choose closest
  *
  * NOTE: When a Term is created, events are forward to this drag listener by TermCreatorNode, via
- * SimpleDragHandler.createForwardingListener. At the time of this writing, that means that fields in
- * SceneryEvent and SimpleDragHandler will contain invalid values. In SceneryEvent, currentTarget and trail will be
- * specific to the forwarding TermCreatorNode. In SimpleDragHandler, node, trail, transform and startTransformMatrix
- * fields are all invalid, and you should avoid calling cancel().
+ * DragListener.createForwardingListener. At the time of this writing, that means that fields in SceneryEvent and
+ * DragListener will contain invalid values. In SceneryEvent, currentTarget and trail will be specific to the
+ * forwarding TermCreatorNode. In DragListener, node, trail, transform and startTransformMatrix fields are invalid.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
+import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
@@ -44,7 +43,7 @@ import Term from '../model/Term.js';
 import TermCreator from '../model/TermCreator.js';
 import SumToZeroNode from './SumToZeroNode.js';
 
-class TermDragListener extends SimpleDragHandler {
+class TermDragListener extends DragListener {
 
   /**
    * @param {Node} termNode - Node that the listener is attached to

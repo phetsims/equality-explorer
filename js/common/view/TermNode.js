@@ -159,7 +159,7 @@ class TermNode extends Node {
    * @public
    */
   startDrag( event ) {
-    this.termDragListener.startDrag( event );
+    this.termDragListener.press( event );
   }
 }
 
