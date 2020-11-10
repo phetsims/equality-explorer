@@ -9,7 +9,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
+import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
@@ -43,17 +43,14 @@ class TermCreatorNode extends Node {
     this.termsLayer = termsLayer;
 
     // On down event, create a term and start a drag cycle by forwarding the event
-    this.addInputListener( SimpleDragHandler.createForwardingListener(
+    this.addInputListener( DragListener.createForwardingListener(
       // down
       event => {
         termCreator.createTerm( {
           event: event,
           sign: options.sign
         } );
-      }, {
-        allowTouchSnag: true
-      }
-    ) );
+      } ) );
 
     // Things to do after the sim has loaded, when this Node has a valid position.
     const frameStartedCallback = () => {
