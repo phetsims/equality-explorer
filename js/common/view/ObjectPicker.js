@@ -245,11 +245,13 @@ class ObjectPicker extends Node {
     const incrementInputListener = new ObjectPickerInputListener( incrementButtonStateProperty,
       merge( {
         fire: () => {
-          let index = options.incrementFunction( indexProperty.value );
-          if ( options.wrapEnabled && index >= items.length ) {
-            index = options.incrementFunction( -1 );
+          if ( incrementInputListener.enabled ) {
+            let index = options.incrementFunction( indexProperty.value );
+            if ( options.wrapEnabled && index >= items.length ) {
+              index = options.incrementFunction( -1 );
+            }
+            indexProperty.value = index;
           }
-          indexProperty.value = index;
         }
       }, inputListenerOptions ) );
     incrementParent.addInputListener( incrementInputListener );
@@ -258,18 +260,26 @@ class ObjectPicker extends Node {
     const decrementInputListener = new ObjectPickerInputListener( decrementButtonStateProperty,
       merge( {
         fire: () => {
-          let index = options.decrementFunction( indexProperty.value );
-          if ( options.wrapEnabled && index < 0 ) {
-            index = options.decrementFunction( items.length );
+          if ( decrementInputListener.enabled ) {
+            let index = options.decrementFunction( indexProperty.value );
+            if ( options.wrapEnabled && index < 0 ) {
+              index = options.decrementFunction( items.length );
+            }
+            indexProperty.value = index;
           }
-          indexProperty.value = index;
         }
       }, inputListenerOptions ) );
     decrementParent.addInputListener( decrementInputListener );
 
     // enable/disable, unlink required
-    const incrementEnabledListener = enabled => { incrementInputListener.enabled = enabled; };
-    const decrementEnabledListener = enabled => { decrementInputListener.enabled = enabled; };
+    const incrementEnabledListener = enabled => {
+      incrementInputListener.enabled = enabled;
+      console.log( `incrementEnabledListener.enabled = ${enabled}`);//XXX
+    };
+    const decrementEnabledListener = enabled => {
+      decrementInputListener.enabled = enabled;
+      console.log( `decrementInputListener.enabled = ${enabled}`);//XXX
+    };
     options.incrementEnabledProperty.link( incrementEnabledListener );
     options.decrementEnabledProperty.link( decrementEnabledListener );
 
@@ -360,6 +370,9 @@ class ObjectPickerInputListener extends FireListener {
           assert && assert( 'bad state' )
         );
       } );
+
+    // @public
+    this.enabled = true;
   }
 }
 
