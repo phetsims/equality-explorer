@@ -274,11 +274,9 @@ class ObjectPicker extends Node {
     // enable/disable, unlink required
     const incrementEnabledListener = enabled => {
       incrementInputListener.enabled = enabled;
-      console.log( `incrementEnabledListener.enabled = ${enabled}`);//XXX
     };
     const decrementEnabledListener = enabled => {
       decrementInputListener.enabled = enabled;
-      console.log( `decrementInputListener.enabled = ${enabled}`);//XXX
     };
     options.incrementEnabledProperty.link( incrementEnabledListener );
     options.decrementEnabledProperty.link( decrementEnabledListener );
