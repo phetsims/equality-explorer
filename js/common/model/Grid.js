@@ -16,7 +16,6 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -402,7 +401,7 @@ class Grid {
    * @private
    */
   isValidCell( cell ) {
-    return ( Utils.isInteger( cell ) && cell >= 0 && cell < this.cells.length );
+    return ( Number.isInteger( cell ) && cell >= 0 && cell < this.cells.length );
   }
 
   /**

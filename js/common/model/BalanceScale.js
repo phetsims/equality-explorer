@@ -150,7 +150,7 @@ class BalanceScale {
     this.numberOfTermsProperty = new DerivedProperty(
       [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
       ( leftNumberOfTerms, rightNumberOfTerms ) => ( leftNumberOfTerms + rightNumberOfTerms ), {
-        isValidValue: value => Utils.isInteger( value )
+        isValidValue: value => Number.isInteger( value )
       } );
   }
 

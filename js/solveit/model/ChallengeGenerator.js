@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Utils from '../../../../dot/js/Utils.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 class ChallengeGenerator {
@@ -80,8 +79,8 @@ class ChallengeGenerator {
    */
   static rangeToArray( min, max ) {
 
-    assert && assert( Utils.isInteger( min ), 'min must be an integer: ' + min );
-    assert && assert( Utils.isInteger( max ), 'max must be an integer: ' + max );
+    assert && assert( Number.isInteger( min ), 'min must be an integer: ' + min );
+    assert && assert( Number.isInteger( max ), 'max must be an integer: ' + max );
 
     const values = []; // {number[]}
     for ( let i = min; i <= max; i++ ) {

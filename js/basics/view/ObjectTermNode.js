@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
@@ -70,7 +69,7 @@ class ObjectTermNode extends TermNode {
    */
   static createEquationTermNode( coefficient, icon, options ) {
 
-    assert && assert( Utils.isInteger( coefficient ), 'coefficient must be an integer: ' + coefficient );
+    assert && assert( Number.isInteger( coefficient ), 'coefficient must be an integer: ' + coefficient );
 
     options = merge( {
       font: DEFAULT_COEFFICIENT_FONT

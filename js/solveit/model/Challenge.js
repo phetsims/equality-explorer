@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Utils from '../../../../dot/js/Utils.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -27,7 +26,7 @@ class Challenge {
    */
   constructor( x, a, b, m, n, debugDerivation ) {
 
-    assert && assert( Utils.isInteger( x ), 'invalid x: ' + x );
+    assert && assert( Number.isInteger( x ), 'invalid x: ' + x );
     assert && assert( a instanceof Fraction && a.isReduced(), 'invalid a: ' + a );
     assert && assert( b instanceof Fraction && b.isReduced(), 'invalid b: ' + b );
     assert && assert( m instanceof Fraction && m.isReduced(), 'invalid m: ' + m );
