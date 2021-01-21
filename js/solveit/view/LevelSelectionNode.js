@@ -107,7 +107,7 @@ class LevelSelectionNode extends Node {
     // Press this button to test challenge generators. See output in console.
     // This test is only useful if assertions are enabled.
     // Also disable if fuzz is enabled, since this takes a long time and is not relevant to fuzz testing.
-    if ( assert && phet.chipper.queryParameters.showAnswers && !phet.chipper.queryParameters.fuzz ) {
+    if ( assert && phet.chipper.queryParameters.showAnswers && !phet.chipper.isFuzzEnabled() ) {
       const testButton = new RectangularPushButton( {
         content: new Text( 'test challenge generators', { fill: 'white', font: new PhetFont( 20 ) } ),
         baseColor: 'red',
