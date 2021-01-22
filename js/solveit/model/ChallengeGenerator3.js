@@ -7,6 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -52,7 +53,7 @@ class ChallengeGenerator3 extends ChallengeGenerator {
   nextChallengeProtected() {
 
     // Randomly select the type of challenge to generate.
-    return phet.joist.random.sample( this.challengeTypeMethods )();
+    return dotRandom.sample( this.challengeTypeMethods )();
   }
 
   /**

@@ -10,6 +10,7 @@
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
@@ -134,7 +135,7 @@ class SolveItScene extends OperationsScene {
     this.xVariable.valueProperty.value = challenge.x;
 
     // randomize whether the scale shows 'ax + b = mx + n' or 'mx + n = ax + b'
-    this.xOnLeft = phet.joist.random.nextBoolean();
+    this.xOnLeft = dotRandom.nextBoolean();
     const aTermCreator = this.xOnLeft ? this.leftVariableTermCreator : this.rightVariableTermCreator;
     const bTermCreator = this.xOnLeft ? this.leftConstantTermCreator : this.rightConstantTermCreator;
     const mTermCreator = this.xOnLeft ? this.rightVariableTermCreator : this.leftVariableTermCreator;

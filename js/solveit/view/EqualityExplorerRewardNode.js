@@ -7,6 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
@@ -197,7 +198,7 @@ function createOperationNode() {
  * @returns {string} see EqualityExplorerConstants.OPERATORS
  */
 function randomOperator() {
-  return phet.joist.random.sample( EqualityExplorerConstants.OPERATORS );
+  return dotRandom.sample( EqualityExplorerConstants.OPERATORS );
 }
 
 equalityExplorer.register( 'EqualityExplorerRewardNode', EqualityExplorerRewardNode );

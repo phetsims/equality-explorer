@@ -7,6 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 class ChallengeGenerator {
@@ -100,7 +101,7 @@ class ChallengeGenerator {
   static randomValueBy( values, predicate ) {
     const filteredValues = _.filter( values, predicate );
     assert && assert( filteredValues.length > 0, 'all values were excluded' );
-    return phet.joist.random.sample( filteredValues );
+    return dotRandom.sample( filteredValues );
   }
 
   /**
