@@ -167,10 +167,10 @@ class SnapshotsAccordionBox extends AccordionBox {
     // unlink not required.
     scene.snapshotsCollection.selectedSnapshotProperty.link( ( selectedSnapshot, oldSelectedSnapshot ) => {
       if ( oldSelectedSnapshot ) {
-        phet.joist.sim.display.removeInputListener( clickToDeselectListener );
+        phet.joist.display.removeInputListener( clickToDeselectListener );
       }
       if ( selectedSnapshot ) {
-        phet.joist.sim.display.addInputListener( clickToDeselectListener );
+        phet.joist.display.addInputListener( clickToDeselectListener );
       }
     } );
   }
