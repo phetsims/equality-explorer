@@ -15,6 +15,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import logGlobal from '../../../phet-core/js/logGlobal.js';
 import equalityExplorer from '../equalityExplorer.js';
 
 const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
@@ -97,7 +98,9 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
 equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
 
-// log the values of all sim-specific query parameters
-phet.log && phet.log( 'query parameters: ' + JSON.stringify( EqualityExplorerQueryParameters, null, 2 ) );
+// Log query parameters
+logGlobal( 'phet.chipper.queryParameters' );
+logGlobal( 'phet.preloads.phetio.queryParameters' );
+logGlobal( 'phet.equalityExplorer.EqualityExplorerQueryParameters' );
 
 export default EqualityExplorerQueryParameters;
