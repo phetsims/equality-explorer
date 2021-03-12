@@ -148,8 +148,8 @@ class ChallengeGenerator1 extends ChallengeGenerator {
     let attempts = 0; // to prevent an improbable infinite while loop
     while ( x === this.xPrevious && attempts < MAX_ATTEMPTS ) {
       attempts++;
-      var c = ChallengeGenerator.randomValue( C_VALUES, [ 0 ] );
-      var d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1 ] );
+      var c = ChallengeGenerator.randomValue( C_VALUES, [ 0 ] ); // eslint-disable-line no-var
+      var d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1 ] ); // eslint-disable-line no-var
       x = c * d;
     }
 

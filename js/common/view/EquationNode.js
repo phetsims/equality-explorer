@@ -124,8 +124,8 @@ class EquationNode extends Node {
       } );
 
       // dispose required
-      var relationalOperatorMultilink = new Multilink( relationalOperatorDependencies, updateRelationalOperator );
-      var termsMultilink = new Multilink( termDependencies, updateTerms );
+      var relationalOperatorMultilink = new Multilink( relationalOperatorDependencies, updateRelationalOperator ); // eslint-disable-line no-var
+      var termsMultilink = new Multilink( termDependencies, updateTerms ); // eslint-disable-line no-var
     }
     else {
 

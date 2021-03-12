@@ -290,7 +290,7 @@ class Grid {
     let cell; // the current cell identifier
 
     // Get all terms in the column, from top down
-    for ( var row = 0; row < this.rows; row++ ) {
+    for ( let row = 0; row < this.rows; row++ ) {
       cell = this.rowColumnToCell( row, column );
       term = this.getTermInCell( cell );
       if ( term ) {
@@ -310,7 +310,7 @@ class Grid {
       this.clearColumn( column );
 
       // Put terms back into the column, from bottom up.
-      row = this.rows - 1;
+      let row = this.rows - 1;
       for ( let i = terms.length - 1; i >= 0; i-- ) {
         term = terms[ i ];
         cell = this.rowColumnToCell( row--, column );
