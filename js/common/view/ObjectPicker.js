@@ -388,7 +388,7 @@ function indexOfItemWithValue( items, value ) {
       break;
     }
   }
-  assert && assert( index !== -1, 'invalid value: ' + index );
+  assert && assert( index !== -1, `invalid value: ${index}` );
   return index;
 }
 

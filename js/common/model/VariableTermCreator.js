@@ -70,7 +70,7 @@ class VariableTermCreator extends TermCreator {
     options = merge( {
       sign: 1  // sign of the coefficient shown on the icon, 1 or -1
     }, options );
-    assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
+    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     const coefficient = EqualityExplorerConstants.DEFAULT_COEFFICIENT.timesInteger( options.sign );
     return VariableTermNode.createInteractiveTermNode( coefficient, this.variable.symbol, {
@@ -91,7 +91,7 @@ class VariableTermCreator extends TermCreator {
     options = merge( {
       sign: 1
     }, options );
-    assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
+    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     // If the coefficient wasn't specified, use the default.
     options.coefficient = options.coefficient || EqualityExplorerConstants.DEFAULT_COEFFICIENT;

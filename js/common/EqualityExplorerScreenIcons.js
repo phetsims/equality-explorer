@@ -179,7 +179,7 @@ const EqualityExplorerScreenIcons = {
    */
   createSolveItNavigationBarIcon: function() {
 
-    const numberNode = new Text( MathSymbols.UNARY_PLUS + '1', { font: new PhetFont( 25 ) } );
+    const numberNode = new Text( `${MathSymbols.UNARY_PLUS}1`, { font: new PhetFont( 25 ) } );
     const starNode = new StarNode();
 
     const iconNode = new HBox( {

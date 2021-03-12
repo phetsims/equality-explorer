@@ -70,9 +70,9 @@ class VariableTermNode extends TermNode {
    */
   static createInteractiveTermNode( coefficient, symbol, options ) {
 
-    assert && assert( coefficient instanceof Fraction, 'invalid coefficient: ' + coefficient );
-    assert && assert( coefficient.isReduced(), 'coefficient must be reduced: ' + coefficient );
-    assert && assert( typeof symbol === 'string', 'invalid symbol: ' + symbol );
+    assert && assert( coefficient instanceof Fraction, `invalid coefficient: ${coefficient}` );
+    assert && assert( coefficient.isReduced(), `coefficient must be reduced: ${coefficient}` );
+    assert && assert( typeof symbol === 'string', `invalid symbol: ${symbol}` );
 
     options = merge( {
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
@@ -116,9 +116,9 @@ class VariableTermNode extends TermNode {
    */
   static createEquationTermNode( coefficient, symbol, options ) {
 
-    assert && assert( coefficient instanceof Fraction, 'invalid coefficient: ' + coefficient );
-    assert && assert( coefficient.isReduced(), 'coefficient must be reduced: ' + coefficient );
-    assert && assert( typeof symbol === 'string', 'invalid symbol: ' + symbol );
+    assert && assert( coefficient instanceof Fraction, `invalid coefficient: ${coefficient}` );
+    assert && assert( coefficient.isReduced(), `coefficient must be reduced: ${coefficient}` );
+    assert && assert( typeof symbol === 'string', `invalid symbol: ${symbol}` );
 
     options = merge( {
       align: 'center'

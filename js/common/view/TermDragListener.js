@@ -54,9 +54,9 @@ class TermDragListener extends DragListener {
    */
   constructor( termNode, term, termCreator, options ) {
 
-    assert && assert( termNode instanceof Node, 'invalid termNode: ' + termNode );
-    assert && assert( term instanceof Term, 'invalid term: ' + term );
-    assert && assert( termCreator instanceof TermCreator, 'invalid termCreator: ' + termCreator );
+    assert && assert( termNode instanceof Node, `invalid termNode: ${termNode}` );
+    assert && assert( term instanceof Term, `invalid term: ${term}` );
+    assert && assert( termCreator instanceof TermCreator, `invalid termCreator: ${termCreator}` );
 
     // Workaround for not being able to use this before calling super.
     // See https://github.com/phetsims/tasks/issues/1026#issuecomment-594357784
@@ -283,7 +283,7 @@ class TermDragListener extends DragListener {
    * @private
    */
   animateToToolbox() {
-    assert && assert( this.term.toolboxPosition, 'toolboxPosition was not initialized for term: ' + this.term );
+    assert && assert( this.term.toolboxPosition, `toolboxPosition was not initialized for term: ${this.term}` );
 
     this.term.pickableProperty.value = this.pickableWhileAnimating;
 

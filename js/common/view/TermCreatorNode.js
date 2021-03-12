@@ -30,7 +30,7 @@ class TermCreatorNode extends Node {
       cursor: 'pointer'
     }, options );
 
-    assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
+    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     assert && assert( !options.children, 'TermCreatorNode sets children' );
     options.children = [ termCreator.createIcon( { sign: options.sign } ) ];

@@ -51,9 +51,9 @@ class SnapshotControl extends Node {
     }, options );
 
     assert && assert( _.includes( VALID_ORIENTATION_VALUES, options.orientation ),
-      'invalid orientation: ' + options.orientation );
+      `invalid orientation: ${options.orientation}` );
     assert && assert( options.variableValuesOpacity >= 0 && options.variableValuesOpacity <= 1,
-      'invalid variableValuesOpacity: ' + options.variableValuesOpacity );
+      `invalid variableValuesOpacity: ${options.variableValuesOpacity}` );
 
     // rectangle that appears around the snapshot when it's selected
     const selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {

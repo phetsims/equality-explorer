@@ -50,7 +50,7 @@ class Variable {
    * @public
    */
   toString() {
-    return 'Variable: ' + this.symbol + '=' + this.valueProperty.value;
+    return `Variable: ${this.symbol}=${this.valueProperty.value}`;
   }
 }
 

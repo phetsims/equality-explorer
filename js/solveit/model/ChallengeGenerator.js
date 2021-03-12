@@ -65,7 +65,7 @@ class ChallengeGenerator {
   randomX( values ) {
     const x = ChallengeGenerator.randomValue( values, [ 0, this.xPrevious ] );
     assert && assert( x !== 0, 'x is 0' );
-    assert && assert( x !== this.xPrevious, 'x === xPrevious: ' + x );
+    assert && assert( x !== this.xPrevious, `x === xPrevious: ${x}` );
     this.xPrevious = x;
     return x;
   }
@@ -80,8 +80,8 @@ class ChallengeGenerator {
    */
   static rangeToArray( min, max ) {
 
-    assert && assert( Number.isInteger( min ), 'min must be an integer: ' + min );
-    assert && assert( Number.isInteger( max ), 'max must be an integer: ' + max );
+    assert && assert( Number.isInteger( min ), `min must be an integer: ${min}` );
+    assert && assert( Number.isInteger( max ), `max must be an integer: ${max}` );
 
     const values = []; // {number[]}
     for ( let i = min; i <= max; i++ ) {

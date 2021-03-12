@@ -110,7 +110,7 @@ class Grid {
    * @public
    */
   isEmptyCell( cell ) {
-    assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+    assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
     return ( this.getTermInCell( cell ) === NO_TERM );
   }
 
@@ -120,7 +120,7 @@ class Grid {
    * @public
    */
   clearCell( cell ) {
-    assert && assert( this.isValidCell( cell ), 'invalid v: ' + cell );
+    assert && assert( this.isValidCell( cell ), `invalid v: ${cell}` );
     this.cells[ cell ] = NO_TERM;
   }
 
@@ -140,7 +140,7 @@ class Grid {
    * @private
    */
   clearColumn( column ) {
-    assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
+    assert && assert( column >= 0 && column < this.columns, `invalid column: ${column}` );
     for ( let row = 0; row < this.rows; row++ ) {
       this.clearCell( this.rowColumnToCell( row, column ) );
     }
@@ -196,7 +196,7 @@ class Grid {
    * @public
    */
   getTermInCell( cell ) {
-    assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+    assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
     return this.cells[ cell ];
   }
 
@@ -224,7 +224,7 @@ class Grid {
    */
   getClosestEquivalentTerm( term, cell ) {
     assert && assert( term instanceof Term, 'invalid term' );
-    assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+    assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
 
     const cellPosition = this.getPositionOfCell( cell );
     let equivalentTerm = null;
@@ -253,8 +253,8 @@ class Grid {
    */
   putTerm( term, cell ) {
     assert && assert( term instanceof Term, 'invalid term' );
-    assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
-    assert && assert( this.isEmptyCell( cell ), 'cell is occupied, cell: ' + cell );
+    assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
+    assert && assert( this.isEmptyCell( cell ), `cell is occupied, cell: ${cell}` );
     this.cells[ cell ] = term;
     term.moveTo( this.getPositionOfCell( cell ) );
   }
@@ -266,9 +266,9 @@ class Grid {
    * @public
    */
   removeTerm( term ) {
-    assert && assert( term instanceof Term, 'invalid term: ' + term );
+    assert && assert( term instanceof Term, `invalid term: ${term}` );
     const cell = this.getCellForTerm( term );
-    assert && assert( cell !== null, 'term not found: ' + term );
+    assert && assert( cell !== null, `term not found: ${term}` );
     this.clearCell( cell );
     this.compactColumn( this.cellToColumn( cell ) );
     return cell;
@@ -281,7 +281,7 @@ class Grid {
    * @private
    */
   compactColumn( column ) {
-    assert && assert( column >= 0 && column < this.columns, 'invalid column: ' + column );
+    assert && assert( column >= 0 && column < this.columns, `invalid column: ${column}` );
 
     let hasHoles = false; // does the column have one or more holes?
     const terms = []; // terms in the column
@@ -304,7 +304,7 @@ class Grid {
     // If the column has holes ...
     if ( hasHoles ) {
 
-      phet.log && phet.log( 'Grid: compacting holes identified in column ' + column );
+      phet.log && phet.log( `Grid: compacting holes identified in column ${column}` );
 
       // clear the column
       this.clearColumn( column );
@@ -327,7 +327,7 @@ class Grid {
    * @public
    */
   getPositionOfCell( cell ) {
-    assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+    assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
 
     const row = this.cellToRow( cell );
     const column = this.cellToColumn( cell );
@@ -411,7 +411,7 @@ class Grid {
    * @private
    */
   cellToRow( cell ) {
-    assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+    assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
     const row = Math.ceil( ( cell + 1 ) / this.columns ) - 1;
     assert && assert( row >= 0 && row < this.rows );
     return row;
@@ -424,7 +424,7 @@ class Grid {
    * @private
    */
   cellToColumn( cell ) {
-    assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+    assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
     const column = cell % this.columns;
     assert && assert( column >= 0 && column < this.columns );
     return column;
@@ -438,10 +438,10 @@ class Grid {
    * @public
    */
   rowColumnToCell( row, column ) {
-    assert && assert( row >= 0 && row < this.rows, 'row out of range: ' + row );
-    assert && assert( column >= 0 && column < this.columns, 'column out of range: ' + column );
+    assert && assert( row >= 0 && row < this.rows, `row out of range: ${row}` );
+    assert && assert( column >= 0 && column < this.columns, `column out of range: ${column}` );
     const cell = ( row * this.columns ) + column;
-    assert && assert( this.isValidCell( cell ), 'invalid cell: ' + cell );
+    assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
     return cell;
   }
 }

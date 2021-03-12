@@ -49,7 +49,7 @@ class EqualityExplorerScene {
 
     // @public (read-only)
     this.debugName = options.debugName;
-    phet.log && phet.log( 'scene: ' + this.debugName + ', maxWeight=' + options.maxWeight );
+    phet.log && phet.log( `scene: ${this.debugName}, maxWeight=${options.maxWeight}` );
 
     // @private {Node|null} used to represent the scene. See ES5 getter.
     this._icon = options.icon;

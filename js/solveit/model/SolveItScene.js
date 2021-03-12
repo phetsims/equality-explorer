@@ -36,10 +36,10 @@ class SolveItScene extends OperationsScene {
    */
   constructor( level, description, challengeGenerator ) {
 
-    assert && assert( level > 0, 'invalid level, numbering starts with 1: ' + level );
+    assert && assert( level > 0, `invalid level, numbering starts with 1: ${level}` );
 
     super( {
-      debugName: 'level ' + level,
+      debugName: `level ${level}`,
       scalePosition: new Vector2( 355, 500 ), // determined empirically
       variableRange: null // because variables are not user-controlled in this scene
     } );
@@ -79,11 +79,11 @@ class SolveItScene extends OperationsScene {
     // removeListener not needed.
     this.operationCompletedEmitter.addListener( operation => {
 
-      assert && assert( operation instanceof UniversalOperation, 'invalid operation: ' + operation );
+      assert && assert( operation instanceof UniversalOperation, `invalid operation: ${operation}` );
 
       // All challenges in the game are equalities, and applying a universal operation should result in an equality.
       assert && assert( this.scale.angleProperty.value === 0,
-        'scale is not balanced after applying operation ' + operation );
+        `scale is not balanced after applying operation ${operation}` );
 
       // challenge is in a 'solved' state if x has been isolated on the scale.
       const solved = this.isXIsolated();
@@ -128,8 +128,8 @@ class SolveItScene extends OperationsScene {
     if ( EqualityExplorerQueryParameters.challenge ) {
       challenge = new DebugChallenge();
     }
-    phet.log && phet.log( 'nextChallenge: challenge=' + challenge.toString() );
-    phet.log && phet.log( 'nextChallenge: derivation=' + challenge.debugDerivation.replace( /<br>/g, ', ' ) );
+    phet.log && phet.log( `nextChallenge: challenge=${challenge.toString()}` );
+    phet.log && phet.log( `nextChallenge: derivation=${challenge.debugDerivation.replace( /<br>/g, ', ' )}` );
 
     // set the value of x
     this.xVariable.valueProperty.value = challenge.x;
@@ -161,8 +161,8 @@ class SolveItScene extends OperationsScene {
    * @private
    */
   createVariableTermOnPlate( termCreator, coefficient ) {
-    assert && assert( termCreator instanceof VariableTermCreator, 'invalid termCreator: ' + termCreator );
-    assert && assert( coefficient instanceof Fraction, 'invalid coefficient: ' + coefficient );
+    assert && assert( termCreator instanceof VariableTermCreator, `invalid termCreator: ${termCreator}` );
+    assert && assert( coefficient instanceof Fraction, `invalid coefficient: ${coefficient}` );
     if ( coefficient.getValue() !== 0 ) {
       const term = termCreator.createTerm( {
         coefficient: coefficient,
@@ -179,8 +179,8 @@ class SolveItScene extends OperationsScene {
    * @private
    */
   createConstantTermOnPlate( termCreator, constantValue ) {
-    assert && assert( termCreator instanceof ConstantTermCreator, 'invalid termCreator: ' + termCreator );
-    assert && assert( constantValue instanceof Fraction, 'invalid constantValue: ' + constantValue );
+    assert && assert( termCreator instanceof ConstantTermCreator, `invalid termCreator: ${termCreator}` );
+    assert && assert( constantValue instanceof Fraction, `invalid constantValue: ${constantValue}` );
     if ( constantValue.getValue() !== 0 ) {
       const term = termCreator.createTerm( {
         constantValue: constantValue,

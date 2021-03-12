@@ -38,7 +38,7 @@ class VariableValuesVisibleCheckbox extends Checkbox {
     } );
 
     // '= ?' in normal font (no i18n requirements here, since this is an equation)
-    const rightNode = new Text( ' ' + MathSymbols.EQUAL_TO + ' ' + equalityExplorerStrings.questionMark, {
+    const rightNode = new Text( ` ${MathSymbols.EQUAL_TO} ${equalityExplorerStrings.questionMark}`, {
       font: new PhetFont( FONT_SIZE )
     } );
 

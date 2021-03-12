@@ -26,11 +26,11 @@ class Challenge {
    */
   constructor( x, a, b, m, n, debugDerivation ) {
 
-    assert && assert( Number.isInteger( x ), 'invalid x: ' + x );
-    assert && assert( a instanceof Fraction && a.isReduced(), 'invalid a: ' + a );
-    assert && assert( b instanceof Fraction && b.isReduced(), 'invalid b: ' + b );
-    assert && assert( m instanceof Fraction && m.isReduced(), 'invalid m: ' + m );
-    assert && assert( n instanceof Fraction && n.isReduced(), 'invalid n: ' + n );
+    assert && assert( Number.isInteger( x ), `invalid x: ${x}` );
+    assert && assert( a instanceof Fraction && a.isReduced(), `invalid a: ${a}` );
+    assert && assert( b instanceof Fraction && b.isReduced(), `invalid b: ${b}` );
+    assert && assert( m instanceof Fraction && m.isReduced(), `invalid m: ${m}` );
+    assert && assert( n instanceof Fraction && n.isReduced(), `invalid n: ${n}` );
 
     // @public (read-only)
     this.x = x;
@@ -48,7 +48,7 @@ class Challenge {
 
     // verify that the we have an equality
     assert && assert( a.timesInteger( x ).plus( b ).reduce().equals( m.timesInteger( x ).plus( n ).reduce() ),
-      'challenge is an inequality: ' + this.toString() );
+      `challenge is an inequality: ${this.toString()}` );
   }
 
   // @public (debug) do not rely on format!
@@ -73,8 +73,8 @@ class Challenge {
  * @returns {string}
  */
 function fractionToString( f ) {
-  assert && assert( f instanceof Fraction, 'invalid f: ' + f );
-  return ( f.isInteger() ? f.getValue() : ( f.numerator + '/' + f.denominator ) );
+  assert && assert( f instanceof Fraction, `invalid f: ${f}` );
+  return ( f.isInteger() ? f.getValue() : ( `${f.numerator}/${f.denominator}` ) );
 }
 
 equalityExplorer.register( 'Challenge', Challenge );

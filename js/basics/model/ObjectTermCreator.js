@@ -19,7 +19,7 @@ class ObjectTermCreator extends TermCreator {
    */
   constructor( variable, options ) {
 
-    phet.log && phet.log( 'ObjectTermCreator: ' + variable.symbol + ', weight=' + variable.valueProperty.value );
+    phet.log && phet.log( `ObjectTermCreator: ${variable.symbol}, weight=${variable.valueProperty.value}` );
 
     super( options );
 

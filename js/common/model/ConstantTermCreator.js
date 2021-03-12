@@ -52,7 +52,7 @@ class ConstantTermCreator extends TermCreator {
     options = merge( {
       sign: 1  // sign of the constant shown on the icon, 1 or -1
     }, options );
-    assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
+    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     const constantValue = EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE.timesInteger( options.sign );
     return ConstantTermNode.createInteractiveTermNode( constantValue );
@@ -70,7 +70,7 @@ class ConstantTermCreator extends TermCreator {
     options = merge( {
       sign: 1
     }, options );
-    assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
+    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     // If the constant value wasn't specified, use the default.
     options.constantValue = options.constantValue || EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE;

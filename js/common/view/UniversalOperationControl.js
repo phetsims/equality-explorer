@@ -42,7 +42,7 @@ class UniversalOperationControl extends HBox {
    */
   constructor( scene, animationLayer, options ) {
 
-    assert && assert( scene instanceof OperationsScene, 'invalid scene: ' + scene );
+    assert && assert( scene instanceof OperationsScene, `invalid scene: ${scene}` );
 
     options = merge( {
       timesZeroEnabled: true, // whether to include 'times 0' as one of the operations
@@ -99,7 +99,7 @@ class UniversalOperationControl extends HBox {
         const currentCoefficient = currentOperand.coefficient;
         adjustedOperand = _.find( scene.operands,
           operand => ( operand instanceof ConstantTerm ) && operand.constantValue.equals( currentCoefficient ) );
-        assert && assert( adjustedOperand, 'expected to find constant ' + currentCoefficient );
+        assert && assert( adjustedOperand, `expected to find constant ${currentCoefficient}` );
         scene.operandProperty.value = adjustedOperand;
       }
     };
@@ -139,7 +139,7 @@ class UniversalOperationControl extends HBox {
         while ( !isSupportedOperation( operator, scene.operands[ nextOperandIndex ], options.timesZeroEnabled ) ) {
           nextOperandIndex++;
           assert && assert( nextOperandIndex < scene.operands.length,
-            'nextOperandIndex out of range: ' + nextOperandIndex );
+            `nextOperandIndex out of range: ${nextOperandIndex}` );
         }
         return nextOperandIndex;
       },
@@ -150,7 +150,7 @@ class UniversalOperationControl extends HBox {
         const operator = scene.operatorProperty.value;
         while ( !isSupportedOperation( operator, scene.operands[ nextOperandIndex ], options.timesZeroEnabled ) ) {
           nextOperandIndex--;
-          assert && assert( nextOperandIndex >= 0, 'nextOperandIndex out of range: ' + nextOperandIndex );
+          assert && assert( nextOperandIndex >= 0, `nextOperandIndex out of range: ${nextOperandIndex}` );
         }
         return nextOperandIndex;
       }
@@ -184,10 +184,10 @@ class UniversalOperationControl extends HBox {
       ( operator, operand ) => {
 
         const operandIndex = scene.operands.indexOf( operand );
-        assert && assert( operandIndex !== -1, 'operand not found: ' + operand );
+        assert && assert( operandIndex !== -1, `operand not found: ${operand}` );
 
         if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) ) {
-          assert && assert( operand instanceof ConstantTerm, 'unexpected operand type: ' + operand );
+          assert && assert( operand instanceof ConstantTerm, `unexpected operand type: ${operand}` );
 
           // increment arrow is enabled if there are any constant term operands above the current selection
           let incrementEnabled = false;
@@ -229,7 +229,7 @@ class UniversalOperationControl extends HBox {
       goButton.enabled = false;
 
       const operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
-      phet.log && phet.log( 'Go ' + operation.toLogString() );
+      phet.log && phet.log( `Go ${operation.toLogString()}` );
 
       // operation on left side
       const leftOperationNode = new UniversalOperationNode( operation, {

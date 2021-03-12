@@ -69,7 +69,7 @@ class ObjectTermNode extends TermNode {
    */
   static createEquationTermNode( coefficient, icon, options ) {
 
-    assert && assert( Number.isInteger( coefficient ), 'coefficient must be an integer: ' + coefficient );
+    assert && assert( Number.isInteger( coefficient ), `coefficient must be an integer: ${coefficient}` );
 
     options = merge( {
       font: DEFAULT_COEFFICIENT_FONT

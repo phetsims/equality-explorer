@@ -161,7 +161,7 @@ class TermCreator {
    */
   set positivePosition( value ) {
     assert && assert( !this._positivePosition, 'attempted to initialize positivePosition twice' );
-    assert && assert( value instanceof Vector2, 'invalid positivePosition: ' + value );
+    assert && assert( value instanceof Vector2, `invalid positivePosition: ${value}` );
     this._positivePosition = value;
   }
 
@@ -184,7 +184,7 @@ class TermCreator {
    */
   set negativePosition( value ) {
     assert && assert( !this._negativePosition, 'attempted to initialize negativePosition twice' );
-    assert && assert( value instanceof Vector2, 'invalid negativePosition: ' + value );
+    assert && assert( value instanceof Vector2, `invalid negativePosition: ${value}` );
     this._negativePosition = value;
   }
 
@@ -206,7 +206,7 @@ class TermCreator {
    */
   set equivalentTermCreator( value ) {
     assert && assert( !this._equivalentTermCreator, 'attempted to initialize equivalentTermCreator twice' );
-    assert && assert( this.isLikeTermCreator( value ), 'value is not a like TermCreator: ' + value );
+    assert && assert( this.isLikeTermCreator( value ), `value is not a like TermCreator: ${value}` );
     this._equivalentTermCreator = value;
   }
 
@@ -230,7 +230,7 @@ class TermCreator {
    * @public
    */
   getEquivalentTermPosition( term ) {
-    assert && assert( this.isManagedTerm( term ), 'term is not managed by this TermCreator: ' + term );
+    assert && assert( this.isManagedTerm( term ), `term is not managed by this TermCreator: ${term}` );
 
     let xOffset;
     if ( term.significantValue.getValue() >= 0 ) {
@@ -275,7 +275,7 @@ class TermCreator {
       sign: 1,
       event: null // {SceneryEvent|null} event is non-null if the term is created as the result of a user interaction
     }, options );
-    assert && assert( options.sign === 1 || options.sign === -1, 'invalid sign: ' + options.sign );
+    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     // create term
     const term = this.createTermProtected( options );
@@ -293,9 +293,9 @@ class TermCreator {
    * @private
    */
   manageTerm( term, event ) {
-    assert && assert( !term.isDisposed, 'term is disposed: ' + term );
-    assert && assert( !this.isManagedTerm( term ), 'term is already managed: ' + term );
-    assert && assert( event instanceof SceneryEvent || event === null, 'invalid event: ' + event );
+    assert && assert( !term.isDisposed, `term is disposed: ${term}` );
+    assert && assert( !this.isManagedTerm( term ), `term is already managed: ${term}` );
+    assert && assert( event instanceof SceneryEvent || event === null, `invalid event: ${event}` );
 
     this.allTerms.add( term );
 
@@ -358,7 +358,7 @@ class TermCreator {
    * @public
    */
   putTermOnPlate( term, cell ) {
-    assert && assert( !this.termsOnPlate.includes( term ), 'term already on plate: ' + term );
+    assert && assert( !this.termsOnPlate.includes( term ), `term already on plate: ${term}` );
 
     if ( cell === undefined && this.combineLikeTermsEnabled ) {
       cell = this.likeTermsCell;
@@ -374,7 +374,7 @@ class TermCreator {
     term.onPlateProperty.value = true;
 
     assert && assert( !this.combineLikeTermsEnabled || this.termsOnPlate.length <= 1,
-      'when combineLikeTermsEnabled, there should be at most 1 term on plate: ' + this.termsOnPlate.length );
+      `when combineLikeTermsEnabled, there should be at most 1 term on plate: ${this.termsOnPlate.length}` );
   }
 
   /**
@@ -384,8 +384,8 @@ class TermCreator {
    * @public
    */
   removeTermFromPlate( term ) {
-    assert && assert( this.allTerms.includes( term ), 'term not found: ' + term );
-    assert && assert( this.termsOnPlate.includes( term ), 'term not on plate: ' + term );
+    assert && assert( this.allTerms.includes( term ), `term not found: ${term}` );
+    assert && assert( this.termsOnPlate.includes( term ), `term not on plate: ${term}` );
 
     // ORDER IS VERY IMPORTANT HERE!
     const cell = this.plate.removeTerm( term );
@@ -489,7 +489,7 @@ class TermCreator {
       }
       else {
         // workaround for https://github.com/phetsims/equality-explorer/issues/88
-        phet.log && phet.log( 'Oops! term was already disposed, cleaning up: ' + term, { color: 'red' } );
+        phet.log && phet.log( `Oops! term was already disposed, cleaning up: ${term}`, { color: 'red' } );
         this.unmanageTerm( term );
       }
     }
@@ -584,7 +584,7 @@ class TermCreator {
     assert && assert( this.combineLikeTermsEnabled,
       'applyOperation is only supported when combining like terms' );
     assert && assert( this.termsOnPlate.length <= 1,
-      'expected at most 1 term on plate: ' + this.termsOnPlate.length );
+      `expected at most 1 term on plate: ${this.termsOnPlate.length}` );
 
     let summedToZero = false;
     let plateWasEmpty = false;

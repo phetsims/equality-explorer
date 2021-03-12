@@ -23,8 +23,8 @@ class Term extends EqualityExplorerMovable {
    */
   constructor( significantValue, options ) {
 
-    assert && assert( significantValue instanceof Fraction, 'invalid significantValue: ' + significantValue );
-    assert && assert( significantValue.isReduced(), 'significantValue must be reduced: ' + significantValue );
+    assert && assert( significantValue instanceof Fraction, `invalid significantValue: ${significantValue}` );
+    assert && assert( significantValue.isReduced(), `significantValue must be reduced: ${significantValue}` );
 
     options = merge( {
       pickable: true, // whether the term is pickable (interactive)

@@ -80,13 +80,13 @@ class ChallengeGenerator3 extends ChallengeGenerator {
     // Verify that computations meeting design requirements.
     assert && assert( x !== 0, 'x is 0' );
     assert && assert( d !== 0, 'd is 0' );
-    assert && assert( a % d !== 0, 'a/d reduces to an integer, a=' + a + ', d=' + d );
+    assert && assert( a % d !== 0, `a/d reduces to an integer, a=${a}, d=${d}` );
     assert && assert( b !== 0, 'b is 0' );
 
     // Verify that we fixed the 'too many steps to solve' problem.
     // see https://github.com/phetsims/equality-explorer/issues/38#issuecomment-384761619
     const bd = b * d;
-    assert && assert( bd >= -30 && bd <= 30, '(b * d) out of range: ' + bd );
+    assert && assert( bd >= -30 && bd <= 30, `(b * d) out of range: ${bd}` );
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
     const debugDerivation = StringUtils.fillIn( PATTERN1, { x: x, a: a, b: b, c: c, d: d } );
@@ -122,8 +122,8 @@ class ChallengeGenerator3 extends ChallengeGenerator {
     // Verify that computations meeting design requirements.
     assert && assert( x !== 0, 'x is 0' );
     assert && assert( d !== 0, 'd is 0' );
-    assert && assert( a % d !== 0, 'a/d reduces to an integer, a=' + a + ', d=' + d );
-    assert && assert( b % d !== 0, 'b/d reduces to an integer, b=' + b + ', d=' + d );
+    assert && assert( a % d !== 0, `a/d reduces to an integer, a=${a}, d=${d}` );
+    assert && assert( b % d !== 0, `b/d reduces to an integer, b=${b}, d=${d}` );
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
     const debugDerivation = StringUtils.fillIn( PATTERN2, { x: x, a: a, b: b, c: c, d: d } );

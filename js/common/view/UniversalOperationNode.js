@@ -78,7 +78,7 @@ class UniversalOperationNode extends HBox {
       } );
     }
     else {
-      throw new Error( 'unsupported operand type: ' + operand );
+      throw new Error( `unsupported operand type: ${operand}` );
     }
 
     return operandNode;

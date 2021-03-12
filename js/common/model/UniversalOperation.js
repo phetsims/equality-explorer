@@ -22,9 +22,9 @@ class UniversalOperation {
   constructor( operator, operand ) {
 
     assert && assert( _.includes( EqualityExplorerConstants.OPERATORS, operator ),
-      'invalid operator: ' + operator );
+      `invalid operator: ${operator}` );
     assert && assert( operand instanceof ConstantTerm || operand instanceof VariableTerm,
-      'invalid operand: ' + operand );
+      `invalid operand: ${operand}` );
 
     // @public (read-only)
     this.operator = operator;
@@ -37,7 +37,7 @@ class UniversalOperation {
    * @public
    */
   toString() {
-    return 'operator=' + this.operator + ', operand=' + this.operand;
+    return `operator=${this.operator}, operand=${this.operand}`;
   }
 
   /**
@@ -65,7 +65,7 @@ class UniversalOperation {
       } );
     }
     else {
-      throw new Error( 'unsupported operand: ' + this.operand );
+      throw new Error( `unsupported operand: ${this.operand}` );
     }
   }
 }

@@ -60,8 +60,8 @@ class ConstantTermNode extends TermNode {
    */
   static createInteractiveTermNode( constantValue, options ) {
 
-    assert && assert( constantValue instanceof Fraction, 'invalid constantValue: ' + constantValue );
-    assert && assert( constantValue.isReduced(), 'constantValue must be reduced: ' + constantValue );
+    assert && assert( constantValue instanceof Fraction, `invalid constantValue: ${constantValue}` );
+    assert && assert( constantValue.isReduced(), `constantValue must be reduced: ${constantValue}` );
 
     options = merge( {
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
@@ -101,8 +101,8 @@ class ConstantTermNode extends TermNode {
    * @static
    */
   static createEquationTermNode( constantValue, options ) {
-    assert && assert( constantValue instanceof Fraction, 'invalid constantValue: ' + constantValue );
-    assert && assert( constantValue.isReduced(), 'constantValue must be reduced: ' + constantValue );
+    assert && assert( constantValue instanceof Fraction, `invalid constantValue: ${constantValue}` );
+    assert && assert( constantValue.isReduced(), `constantValue must be reduced: ${constantValue}` );
     return new ReducedFractionNode( constantValue, options );
   }
 }

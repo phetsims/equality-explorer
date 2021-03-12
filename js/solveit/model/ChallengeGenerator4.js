@@ -62,8 +62,8 @@ class ChallengeGenerator4 extends ChallengeGenerator {
     assert && assert( a !== 0, 'a is 0' );
     assert && assert( b !== 0, 'b is 0' );
     assert && assert( m !== 0, 'm is 0' );
-    assert && assert( m !== a, 'm === a: ' + m );
-    assert && assert( Math.abs( a - m ) <= 10, '|a-m| is too large: ' + Math.abs( a - m ) );
+    assert && assert( m !== a, `m === a: ${m}` );
+    assert && assert( Math.abs( a - m ) <= 10, `|a-m| is too large: ${Math.abs( a - m )}` );
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
     const debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, m: m, n: n } );

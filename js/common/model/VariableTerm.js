@@ -26,8 +26,8 @@ class VariableTerm extends Term {
       coefficient: EqualityExplorerConstants.DEFAULT_COEFFICIENT
     }, options );
 
-    assert && assert( options.coefficient instanceof Fraction, 'invalid coefficient: ' + options.coefficient );
-    assert && assert( options.coefficient.isReduced(), 'coefficient must be reduced: ' + options.coefficient );
+    assert && assert( options.coefficient instanceof Fraction, `invalid coefficient: ${options.coefficient}` );
+    assert && assert( options.coefficient.isReduced(), `coefficient must be reduced: ${options.coefficient}` );
     assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
 
     super( options.coefficient, options );
@@ -45,7 +45,7 @@ class VariableTerm extends Term {
    * @public
    */
   toString() {
-    return 'VariableTerm: ' + this.coefficient + ' ' + this.variable;
+    return `VariableTerm: ${this.coefficient} ${this.variable}`;
   }
 
   /**
@@ -68,7 +68,7 @@ class VariableTerm extends Term {
    * @public
    */
   plus( term, options ) {
-    assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
+    assert && assert( this.isLikeTerm( term ), `not a like term: ${term}` );
     return this.copy( merge( {
       coefficient: this.coefficient.plus( term.coefficient ).reduced()
     }, options ) );
@@ -82,7 +82,7 @@ class VariableTerm extends Term {
    * @public
    */
   minus( term, options ) {
-    assert && assert( this.isLikeTerm( term ), 'not a like term: ' + term );
+    assert && assert( this.isLikeTerm( term ), `not a like term: ${term}` );
     return this.copy( merge( {
       coefficient: this.coefficient.minus( term.coefficient ).reduced()
     }, options ) );
@@ -96,7 +96,7 @@ class VariableTerm extends Term {
    * @public
    */
   times( term, options ) {
-    assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
+    assert && assert( term instanceof ConstantTerm, `invalid term: ${term}` );
     return this.copy( merge( {
       coefficient: this.coefficient.times( term.constantValue ).reduced()
     }, options ) );
@@ -110,7 +110,7 @@ class VariableTerm extends Term {
    * @public
    */
   divided( term, options ) {
-    assert && assert( term instanceof ConstantTerm, 'invalid term: ' + term );
+    assert && assert( term instanceof ConstantTerm, `invalid term: ${term}` );
     assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
     return this.copy( merge( {
       coefficient: this.coefficient.divided( term.constantValue ).reduced()

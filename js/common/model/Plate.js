@@ -32,7 +32,7 @@ class Plate {
    */
   constructor( termCreators, debugSide, options ) {
 
-    assert && assert( _.includes( VALID_DEBUG_SIDE_VALUES, debugSide, 'invalid debugSide: ' + debugSide ) );
+    assert && assert( _.includes( VALID_DEBUG_SIDE_VALUES, debugSide, `invalid debugSide: ${debugSide}` ) );
 
     options = merge( {
       supportHeight: 10, // height of the vertical support that connects the plate to the scale

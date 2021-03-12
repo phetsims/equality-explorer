@@ -256,7 +256,7 @@ function createExpressionNode( termCreators, config ) {
         }
       }
       else {
-        throw new Error( 'unsupported termCreator: ' + termCreator );
+        throw new Error( `unsupported termCreator: ${termCreator}` );
       }
     }
   }
@@ -279,7 +279,7 @@ function createExpressionNode( termCreators, config ) {
  * @returns {Node}
  */
 function valueToOperatorNode( value, operatorFont ) {
-  assert && assert( typeof value === 'number', 'invalid value: ' + value );
+  assert && assert( typeof value === 'number', `invalid value: ${value}` );
   const operator = ( value > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
   return new Text( operator, { font: operatorFont } );
 }

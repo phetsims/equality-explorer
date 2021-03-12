@@ -62,7 +62,7 @@ class VariableValuesNode extends HBox {
           new Text( MathSymbols.EQUAL_TO, { font: font } ),
 
           // N
-          new Text( '' + variable.valueProperty.value, { font: font } )
+          new Text( `${variable.valueProperty.value}`, { font: font } )
         ]
       } ) );
 

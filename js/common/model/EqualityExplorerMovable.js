@@ -78,7 +78,7 @@ class EqualityExplorerMovable {
 
   // @public
   dispose() {
-    assert && assert( !this.isDisposed, 'dispose called twice for ' + this );
+    assert && assert( !this.isDisposed, `dispose called twice for ${this}` );
 
     this.positionProperty.dispose();
     this.draggingProperty.dispose();

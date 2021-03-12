@@ -158,7 +158,7 @@ class ChallengeGenerator1 extends ChallengeGenerator {
     assert && assert( d !== 0, 'd is 0' );
     assert && assert( d !== 1, 'd is 1' );
     assert && assert( x !== 0, 'x is 0' );
-    assert && assert( x !== this.xPrevious || attempts === MAX_ATTEMPTS, 'x === xPrevious: ' + x );
+    assert && assert( x !== this.xPrevious || attempts === MAX_ATTEMPTS, `x === xPrevious: ${x}` );
     this.xPrevious = x;
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter

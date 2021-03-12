@@ -24,8 +24,8 @@ class ConstantTerm extends Term {
       constantValue: EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE
     }, options );
 
-    assert && assert( options.constantValue instanceof Fraction, 'invalid constantValue: ' + options.constantValue );
-    assert && assert( options.constantValue.isReduced(), 'constantValue must be reduced: ' + options.constantValue );
+    assert && assert( options.constantValue instanceof Fraction, `invalid constantValue: ${options.constantValue}` );
+    assert && assert( options.constantValue.isReduced(), `constantValue must be reduced: ${options.constantValue}` );
     assert && assert( !options.coefficient, 'coefficient is a VariableTerm option' );
 
     super( options.constantValue, options );
@@ -40,7 +40,7 @@ class ConstantTerm extends Term {
    * @public
    */
   toString() {
-    return 'ConstantTerm: ' + this.constantValue;
+    return `ConstantTerm: ${this.constantValue}`;
   }
 
   /**

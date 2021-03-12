@@ -110,7 +110,7 @@ class BalanceScale {
         }
 
         const angle = ( weightDelta / options.maxWeight ) * options.maxAngle;
-        assert && assert( Math.abs( angle ) <= options.maxAngle, 'angle out of range: ' + angle );
+        assert && assert( Math.abs( angle ) <= options.maxAngle, `angle out of range: ${angle}` );
         return angle;
       }, {
         isValidValue: value => ( typeof value === 'number' )

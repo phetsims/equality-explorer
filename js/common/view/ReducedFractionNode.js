@@ -29,8 +29,8 @@ class ReducedFractionNode extends Node {
    */
   constructor( fraction, options ) {
 
-    assert && assert( fraction instanceof Fraction, 'invalid fraction: ' + fraction );
-    assert && assert( fraction.isReduced(), 'fraction must be reduced: ' + fraction );
+    assert && assert( fraction instanceof Fraction, `invalid fraction: ${fraction}` );
+    assert && assert( fraction.isReduced(), `fraction must be reduced: ${fraction}` );
 
     options = merge( {
       minLineLength: 1, // length of the fraction line

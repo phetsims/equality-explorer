@@ -65,12 +65,12 @@ class SolveItModel {
 
     for ( let i = 0; i < this.challengeGenerators.length; i++ ) {
 
-      console.log( '>>> Testing level ' + ( i + 1 ) );
+      console.log( `>>> Testing level ${i + 1}` );
       const challengeGenerator = this.challengeGenerators[ i ];
 
       for ( let j = 0; j < testsPerLevel; j++ ) {
         const challenge = challengeGenerator.nextChallenge();
-        console.log( j + ': ' + challenge.toString() );
+        console.log( `${j}: ${challenge.toString()}` );
       }
     }
 
