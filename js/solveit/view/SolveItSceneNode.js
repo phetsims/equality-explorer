@@ -199,6 +199,7 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
       faceNode // face in front of everything
     ];
 
+    let showAnswerButton;
     if ( phet.chipper.queryParameters.showAnswers ) {
 
       // shows how the current challenge was derived
@@ -208,7 +209,7 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
       } ) );
 
       // button that takes you directly to the answer. debug only, i18n not needed.
-      var showAnswerButton = new RectangularPushButton( { // eslint-disable-line no-var
+      showAnswerButton = new RectangularPushButton( {
         content: new Text( 'show answer', {
           font: new PhetFont( 16 ),
           fill: 'white'

@@ -247,8 +247,9 @@ class TermDragListener extends DragListener {
       this.likeTerm = null;
 
       // put equivalent term on opposite plate
+      let oppositeSumToZeroNode; // {SumToZeroNode|undefined} defined if terms on the opposite plate sum to zero
       if ( this.equivalentTerm ) {
-        var oppositeSumToZeroNode = this.endOpposite(); // eslint-disable-line no-var
+        oppositeSumToZeroNode = this.endOpposite();
         if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
           this.equivalentTerm.pickableProperty.value = true;
         }

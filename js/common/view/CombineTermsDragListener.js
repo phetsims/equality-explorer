@@ -85,6 +85,9 @@ class CombineTermsDragListener extends TermDragListener {
   endOpposite() {
     assert && assert( this.termCreator.lockedProperty.value, 'endOpposite should only be called when lock is on' );
 
+    // {SumToZeroNode|null} truthy when terms sum to zero
+    let oppositeSumToZeroNode = null;
+
     const cell = this.termCreator.likeTermsCell;
     let oppositeLikeTerm = this.oppositePlate.getTermInCell( cell );
     if ( oppositeLikeTerm ) {
@@ -102,7 +105,7 @@ class CombineTermsDragListener extends TermDragListener {
       if ( combinedTerm.significantValue.getValue() === 0 ) {
 
         // Combined term is zero. No halo, since the terms are on the opposite side.
-        var oppositeSumToZeroNode = new SumToZeroNode( { // eslint-disable-line no-var
+        oppositeSumToZeroNode = new SumToZeroNode( {
           variable: combinedTerm.variable || null,
           fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
         } );
@@ -128,7 +131,7 @@ class CombineTermsDragListener extends TermDragListener {
       this.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, cell );
     }
 
-    return oppositeSumToZeroNode || null;
+    return oppositeSumToZeroNode;
   }
 
   /**
@@ -154,6 +157,8 @@ class CombineTermsDragListener extends TermDragListener {
 
         let termInCell = this.plate.getTermInCell( likeTermsCell );
         let maxIntegerExceeded = false;
+        let combinedTerm; // {Term|undefined} defined when terms are combined to create a new 'big' term
+        let sumToZeroNode; // {SumToZeroNode|undefined} defined when terms sum to zero
 
         //=======================================================================
         // On dragged term's side of the scale
@@ -174,7 +179,7 @@ class CombineTermsDragListener extends TermDragListener {
         else {
 
           // If the cell is not empty. Combine the terms to create a new 'big' term.
-          var combinedTerm = termInCell.plus( this.term ); // eslint-disable-line no-var
+          combinedTerm = termInCell.plus( this.term );
 
           if ( combinedTerm.maxIntegerExceeded() ) {
 
@@ -187,7 +192,7 @@ class CombineTermsDragListener extends TermDragListener {
           else if ( combinedTerm.sign === 0 ) {
 
             // Terms sum to zero. No halo, since the terms did not overlap when drag ended.
-            var sumToZeroNode = new SumToZeroNode( { // eslint-disable-line no-var
+            sumToZeroNode = new SumToZeroNode( {
               variable: this.term.variable || null,
               fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
             } );
@@ -210,6 +215,7 @@ class CombineTermsDragListener extends TermDragListener {
         // On opposite side of the scale
         //=======================================================================
 
+        let oppositeSumToZeroNode; // {undefined|SumToZeroNode} defined if terms summed to zero on opposite plate
         if ( this.equivalentTerm && !maxIntegerExceeded ) {
 
           let oppositeLikeTerm = this.oppositePlate.getTermInCell( likeTermsCell );
@@ -250,7 +256,7 @@ class CombineTermsDragListener extends TermDragListener {
               if ( oppositeCombinedTerm.significantValue.getValue() === 0 ) {
 
                 // terms summed to zero on opposite plate. No halo, since these terms are on opposite side.
-                var oppositeSumToZeroNode = new SumToZeroNode( { // eslint-disable-line no-var
+                oppositeSumToZeroNode = new SumToZeroNode( {
                   variable: oppositeCombinedTerm.variable || null,
                   fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
                 } );

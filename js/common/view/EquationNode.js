@@ -108,8 +108,11 @@ class EquationNode extends Node {
       updateLayout();
     };
 
-    // if the equation needs to be dynamically updated ...
+    let relationalOperatorMultilink; // {Multilink|undefined} defined for dynamic equations
+    let termsMultilink; // {Multilink|undefined} defined for dynamic equations
     if ( options.updateEnabled ) {
+
+      // The equation needs to be dynamically updated.
 
       // {Property[]} dependencies that require the relational operator to be updated
       const relationalOperatorDependencies = [];
@@ -124,8 +127,8 @@ class EquationNode extends Node {
       } );
 
       // dispose required
-      var relationalOperatorMultilink = new Multilink( relationalOperatorDependencies, updateRelationalOperator ); // eslint-disable-line no-var
-      var termsMultilink = new Multilink( termDependencies, updateTerms ); // eslint-disable-line no-var
+      relationalOperatorMultilink = new Multilink( relationalOperatorDependencies, updateRelationalOperator );
+      termsMultilink = new Multilink( termDependencies, updateTerms );
     }
     else {
 
