@@ -10,6 +10,7 @@
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
@@ -30,10 +31,14 @@ const PATTERN3 = 'level 1, type 3, x/d = c<br>' +
 
 // constants
 const X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
-const A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+const A_VALUES = EqualityExplorerQueryParameters.easyLevel1 ?
+                 ChallengeGenerator.rangeToArray( 2, 10 ) :
+                 ChallengeGenerator.rangeToArray( -10, 10 );
 const B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 const C_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-const D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+const D_VALUES = EqualityExplorerQueryParameters.easyLevel1 ?
+                 ChallengeGenerator.rangeToArray( 2, 10 ) :
+                 ChallengeGenerator.rangeToArray( -10, 10 );
 const MAX_ATTEMPTS = 50; // max attempts in a while loop
 
 class ChallengeGenerator1 extends ChallengeGenerator {
