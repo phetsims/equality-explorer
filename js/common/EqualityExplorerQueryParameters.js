@@ -22,7 +22,7 @@ define( function( require ) {
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
-    // Constrains challenges for Level 1 have positive coefficients.
+    // Constrains challenges for Level 1 to have positive coefficients.
     // See https://github.com/phetsims/equality-explorer/issues/163
     easyLevel1: {
       type: 'flag'
