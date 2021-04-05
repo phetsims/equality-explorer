@@ -22,6 +22,12 @@ define( function( require ) {
 
   var EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
+    // Constrains challenges for Level 1 have positive coefficients.
+    // See https://github.com/phetsims/equality-explorer/issues/163
+    easyLevel1: {
+      type: 'flag'
+    },
+
     // Shows the grid on each of the plates.
     // For internal use only, not public facing.
     showGrid: { type: 'flag' },
