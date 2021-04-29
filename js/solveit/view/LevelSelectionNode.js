@@ -79,7 +79,7 @@ class LevelSelectionNode extends Node {
       iconFill: 'rgb( 41, 106, 163 )',
       maxHeight: 0.75 * chooseYourLevelNode.height,
       listener: () => {
-        infoDialog = infoDialog || new InfoDialog( model.levelDescriptions );
+        infoDialog = infoDialog || new InfoDialog( model.challengeGenerators );
         infoDialog.show();
       },
       left: chooseYourLevelNode.right + 20,

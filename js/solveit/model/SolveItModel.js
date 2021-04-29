@@ -8,7 +8,6 @@
 
 import Property from '../../../../axon/js/Property.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
 import ChallengeGenerator2 from './ChallengeGenerator2.js';
 import ChallengeGenerator3 from './ChallengeGenerator3.js';
@@ -20,15 +19,6 @@ class SolveItModel {
 
   constructor() {
 
-    // @public (read-only) descriptions for each game level, ordered by ascending level number
-    this.levelDescriptions = [
-      equalityExplorerStrings.level1Description,
-      equalityExplorerStrings.level2Description,
-      equalityExplorerStrings.level3Description,
-      equalityExplorerStrings.level4Description,
-      equalityExplorerStrings.level5Description
-    ];
-
     // @private challenge generators, ordered by ascending level number
     this.challengeGenerators = [
       new ChallengeGenerator1(),
@@ -37,14 +27,9 @@ class SolveItModel {
       new ChallengeGenerator4(),
       new ChallengeGenerator5()
     ];
-    assert && assert( this.challengeGenerators.length === this.levelDescriptions.length,
-      'levelDescriptions and challengeGenerators must have the same number of elements' );
 
-    // @public (read-only) {SolveItScene[]} a scene for each level
-    this.scenes = [];
-    for ( let i = 0; i < this.levelDescriptions.length; i++ ) {
-      this.scenes.push( new SolveItScene( i + 1, this.levelDescriptions[ i ], this.challengeGenerators[ i ] ) );
-    }
+    // @public (read-only) {SolveItScene[]} a scene for each challenge generator
+    this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItScene( challengeGenerator ) );
 
     // @public {SolveItScene|null} the selected scene, null if no scene is currently selected
     this.sceneProperty = new Property( null );

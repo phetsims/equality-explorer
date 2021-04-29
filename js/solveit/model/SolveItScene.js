@@ -23,30 +23,27 @@ import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene from '../../operations/model/OperationsScene.js';
 import Challenge from './Challenge.js';
+import ChallengeGenerator from './ChallengeGenerator.js';
 import DebugChallenge from './DebugChallenge.js';
 
 // constants
 const POINTS_PER_CHALLENGE = 1;
 
 class SolveItScene extends OperationsScene {
+
   /**
-   * @param {number} level - game level, numbered from 1 in the model and view
-   * @param {string} description - displayed in the status bar
    * @param {ChallengeGenerator} challengeGenerator
    */
-  constructor( level, description, challengeGenerator ) {
-
-    assert && assert( level > 0, `invalid level, numbering starts with 1: ${level}` );
+  constructor( challengeGenerator ) {
+    assert && assert( challengeGenerator instanceof ChallengeGenerator );
 
     super( {
-      debugName: `level ${level}`,
+      debugName: `level ${challengeGenerator.level}`,
       scalePosition: new Vector2( 355, 500 ), // determined empirically
       variableRange: null // because variables are not user-controlled in this scene
     } );
 
     // @public (read-only)
-    this.level = level;
-    this.description = description;
     this.challengeGenerator = challengeGenerator;
 
     // @public

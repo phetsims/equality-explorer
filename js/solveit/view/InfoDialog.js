@@ -23,13 +23,13 @@ const MAX_CONTENT_WIDTH = 600;
 class InfoDialog extends Dialog {
 
   /**
-   * @param {string[]} levelDescriptions
+   * @param {ChallengeGenerator[]} challengeGenerators
    */
-  constructor( levelDescriptions ) {
+  constructor( challengeGenerators ) {
 
     const children = [];
-    levelDescriptions.forEach( levelDescription =>
-      children.push( new RichText( levelDescription, {
+    challengeGenerators.forEach( challengeGenerators =>
+      children.push( new RichText( challengeGenerators.description, {
         font: DESCRIPTION_FONT
       } ) )
     );

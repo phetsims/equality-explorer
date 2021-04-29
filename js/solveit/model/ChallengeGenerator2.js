@@ -11,6 +11,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 
@@ -39,7 +40,7 @@ const MAX_ATTEMPTS = 50; // max attempts in a while loop
 class ChallengeGenerator2 extends ChallengeGenerator {
 
   constructor() {
-    super();
+    super( 2, equalityExplorerStrings.level2Description );
 
     // @private methods for generating the 3 types of challenges
     this.challengeTypeMethods = [

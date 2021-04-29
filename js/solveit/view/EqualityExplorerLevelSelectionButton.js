@@ -22,17 +22,18 @@ class EqualityExplorerLevelSelectionButton extends LevelSelectionButton {
   constructor( scene, sceneProperty ) {
 
     // 'x' term with level number as coefficient
-    const icon = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( scene.level ), equalityExplorerStrings.x, {
-      diameter: 50,
-      margin: 15,
-      showOne: true
-    } );
+    const icon = VariableTermNode.createInteractiveTermNode(
+      Fraction.fromInteger( scene.challengeGenerator.level ), equalityExplorerStrings.x, {
+        diameter: 50,
+        margin: 15,
+        showOne: true
+      } );
 
     super( icon, scene.scoreProperty, {
       baseColor: 'rgb( 191, 239, 254 )',
       scoreDisplayConstructor: ScoreDisplayNumberAndStar,
       listener: () => {
-        phet.log && phet.log( `Level${scene.level} button pressed` );
+        phet.log && phet.log( `Level${scene.challengeGenerator.level} button pressed` );
         sceneProperty.value = scene;
       }
     } );

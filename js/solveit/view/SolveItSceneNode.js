@@ -34,6 +34,7 @@ import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import SolveItScene from '../model/SolveItScene.js';
 import ChallengeDerivationNode from './ChallengeDerivationNode.js';
 import EqualityExplorerRewardNode from './EqualityExplorerRewardNode.js';
 
@@ -59,11 +60,12 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
    */
   constructor( scene, sceneProperty, layoutBounds, visibleBoundsProperty,
                snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, options ) {
+    assert && assert( scene instanceof SolveItScene );
 
     options = options || {};
 
     // Level description, displayed in the status bar
-    const levelDescriptionNode = new RichText( scene.description, {
+    const levelDescriptionNode = new RichText( scene.challengeGenerator.description, {
       font: LEVEL_FONT,
       maxWidth: 650 // determined empirically
     } );
@@ -292,7 +294,7 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
           // When the dialog is shown, show the reward
           showCallback: () => {
             assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
-            this.rewardNode = new EqualityExplorerRewardNode( scene.level );
+            this.rewardNode = new EqualityExplorerRewardNode( scene.challengeGenerator.level );
             this.addChild( this.rewardNode );
           },
 

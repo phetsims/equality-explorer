@@ -8,14 +8,23 @@
  */
 
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import AssertUtils from '../../../../phetcommon/js/AssertUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 class ChallengeGenerator {
 
   /**
+   * @param {number} level - unique integer level number
+   * @param {string} description - description that appear in the UI for the level
    * @abstract
    */
-  constructor() {
+  constructor( level, description ) {
+    assert && AssertUtils.assertPositiveInteger( level );
+    assert && assert( typeof description === 'string', `invalid description: ${description}` );
+
+    // @public (read-only)
+    this.level = level;
+    this.description = description;
 
     // @public (read-only) number of challenges generated
     this.numberOfChallenges = 0;

@@ -10,6 +10,7 @@
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 
@@ -28,7 +29,7 @@ const B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 class ChallengeGenerator3 extends ChallengeGenerator {
 
   constructor() {
-    super();
+    super( 3, equalityExplorerStrings.level3Description );
   }
 
   /**
