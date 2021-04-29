@@ -29,8 +29,8 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
   },
 
   // The levels to show in the game (Solve It!) screen.
+  // The levels numbers must be unique, valid, and in ascending order.
   // See https://github.com/phetsims/equality-explorer/issues/165
-  // The numbers must be unique, must be valid, and can be in any order.
   gameLevels: {
     public: true,
     type: 'array',
@@ -42,8 +42,12 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
     isValidValue: array => {
       return ( array === null ) || (
         array.length > 0 &&
+        // unique level numbers
         array.length === _.uniq( array ).length &&
-        _.every( array, element => element > 0 && element <= EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS )
+        // valid level numbers
+        _.every( array, element => element > 0 && element <= EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS ) &&
+        // sorted by ascending level number
+        _.every( array, ( value, index, array ) => ( index === 0 || array[ index - 1 ] <= value ) )
       );
     }
   },
