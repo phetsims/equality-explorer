@@ -1,7 +1,7 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
 /**
- * Challenge generator for game level 3.
+ * Challenge generator for game level 5.
  * See specification in https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo/edit.
  *
  * @author Chris Malley (PixelZoom, Inc.)
@@ -14,18 +14,20 @@ import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 
 // strings (debug)
-const PATTERN = 'level 3, ax + b = c<br>' +
+const PATTERN = 'level 5, ax + b = mx + n<br>' +
                 'x = {{x}}<br>' +
                 'a = {{a}}<br>' +
                 'b = {{b}}<br>' +
-                'c = ax + b = {{c}}';
+                'm = {{m}}<br>' +
+                'n = (a–m)x + b = {{n}}';
 
 // constants
 const X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
 const A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 const B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
+const M_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
-class ChallengeGenerator3 extends ChallengeGenerator {
+class ChallengeGenerator5 extends ChallengeGenerator {
 
   constructor() {
     super();
@@ -34,11 +36,12 @@ class ChallengeGenerator3 extends ChallengeGenerator {
   /**
    * Generates the next challenge.
    *
-   * Form: ax + b = c
+   * Form: ax + b = mx + n
    * Let x be a random integer between [-40,40], x !== 0
    * Let a be a random integer between [-10,10], a !== 0
    * Let b be a random integer between [-10,10], b !== 0
-   * Let c = ax + b, c == 0 is OK
+   * Let m be a random integer between [-10,10], m !== 0, m !== a, |a-m| <= 10
+   * Let n = (a – m)x + b, n == 0 is OK
    *
    * @returns {Challenge}
    * @protected
@@ -49,24 +52,30 @@ class ChallengeGenerator3 extends ChallengeGenerator {
     const x = this.randomX( X_VALUES );
     const a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );
     const b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
-    const c = ( a * x ) + b;
+    const m = ChallengeGenerator.randomValueBy( M_VALUES,
+      m => ( m !== 0 ) && ( m !== a ) && ( Math.abs( a - m ) <= 10 )
+    );
+    const n = ( ( a - m ) * x ) + b;
 
     // Verify that computations meeting design requirements.
     assert && assert( x !== 0, 'x is 0' );
     assert && assert( a !== 0, 'a is 0' );
     assert && assert( b !== 0, 'b is 0' );
+    assert && assert( m !== 0, 'm is 0' );
+    assert && assert( m !== a, `m === a: ${m}` );
+    assert && assert( Math.abs( a - m ) <= 10, `|a-m| is too large: ${Math.abs( a - m )}` );
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-    const debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, c: c } );
+    const debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, m: m, n: n } );
 
-    // ax + b = 0x + c
+    // ax + b = mx + n
     return new Challenge( x,
       Fraction.fromInteger( a ), Fraction.fromInteger( b ),
-      Fraction.fromInteger( 0 ), Fraction.fromInteger( c ),
+      Fraction.fromInteger( m ), Fraction.fromInteger( n ),
       debugDerivation );
   }
 }
 
-equalityExplorer.register( 'ChallengeGenerator3', ChallengeGenerator3 );
+equalityExplorer.register( 'ChallengeGenerator5', ChallengeGenerator5 );
 
-export default ChallengeGenerator3;
+export default ChallengeGenerator5;

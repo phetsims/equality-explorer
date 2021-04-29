@@ -51,7 +51,7 @@ class LevelSelectionNode extends Node {
     // Layout the level-selection buttons horizontally
     const levelSelectionButtonsBox = new HBox( {
       children: levelSelectionButtons,
-      spacing: 40,
+      spacing: 20,
       centerX: layoutBounds.centerX,
       top: layoutBounds.centerY - 25 // top of buttons slightly above center
     } );

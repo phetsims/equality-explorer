@@ -13,6 +13,7 @@ import ChallengeGenerator1 from './ChallengeGenerator1.js';
 import ChallengeGenerator2 from './ChallengeGenerator2.js';
 import ChallengeGenerator3 from './ChallengeGenerator3.js';
 import ChallengeGenerator4 from './ChallengeGenerator4.js';
+import ChallengeGenerator5 from './ChallengeGenerator5.js';
 import SolveItScene from './SolveItScene.js';
 
 class SolveItModel {
@@ -21,10 +22,11 @@ class SolveItModel {
 
     // @public (read-only) descriptions for each game level, ordered by ascending level number
     this.levelDescriptions = [
-      equalityExplorerStrings.level1,
-      equalityExplorerStrings.level2,
-      equalityExplorerStrings.level3,
-      equalityExplorerStrings.level4
+      equalityExplorerStrings.level1Description,
+      equalityExplorerStrings.level2Description,
+      equalityExplorerStrings.level3Description,
+      equalityExplorerStrings.level4Description,
+      equalityExplorerStrings.level5Description
     ];
 
     // @private challenge generators, ordered by ascending level number
@@ -32,7 +34,8 @@ class SolveItModel {
       new ChallengeGenerator1(),
       new ChallengeGenerator2(),
       new ChallengeGenerator3(),
-      new ChallengeGenerator4()
+      new ChallengeGenerator4(),
+      new ChallengeGenerator5()
     ];
     assert && assert( this.challengeGenerators.length === this.levelDescriptions.length,
       'levelDescriptions and challengeGenerators must have the same number of elements' );

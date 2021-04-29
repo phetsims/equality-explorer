@@ -44,17 +44,20 @@
   "levels": {
     "value": "Levels"
   },
-  "level1": {
+  "level1Description": {
     "value": "<b>Level 1</b>  One-step equations"
   },
-  "level2": {
-    "value": "<b>Level 2</b>  Two-step equations"
+  "level2Description": {
+    "value": "<b>Level 2</b>  One-step equations with negative coefficients"
   },
-  "level3": {
-    "value": "<b>Level 3</b>  Multi-step equations with fractions"
+  "level3Description": {
+    "value": "<b>Level 3</b>  Two-step equations"
   },
-  "level4": {
-    "value": "<b>Level 4</b>  Multi-step equations with variables on both sides"
+  "level4Description": {
+    "value": "<b>Level 4</b>  Multi-step equations with fractions"
+  },
+  "level5Description": {
+    "value": "<b>Level 5</b>  Multi-step equations with variables on both sides"
   },
   "next": {
     "value": "Next"
