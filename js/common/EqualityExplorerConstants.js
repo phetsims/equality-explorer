@@ -35,6 +35,9 @@ const EqualityExplorerConstants = {
   SCREEN_VIEW_X_MARGIN: 20,
   SCREEN_VIEW_Y_MARGIN: 16,
 
+  // Solve It! game
+  NUMBER_OF_GAME_LEVELS: 5,
+
   // terms
   DEFAULT_CONSTANT_VALUE: Fraction.fromInteger( 1 ), // constant terms are created with this value by default
   DEFAULT_COEFFICIENT: Fraction.fromInteger( 1 ), // variable terms are created with this coefficient by default

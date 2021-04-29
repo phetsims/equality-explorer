@@ -27,6 +27,8 @@ class SolveItModel {
       new ChallengeGenerator4(),
       new ChallengeGenerator5()
     ];
+    assert && assert( this.challengeGenerators.length === _.uniqBy( _.map( this.challengeGenerators, challengeGenerator => challengeGenerator.level ) ).length,
+      'Challenge generators must have unique level numbers' );
 
     // @public (read-only) {SolveItScene[]} a scene for each challenge generator
     this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItScene( challengeGenerator ) );
