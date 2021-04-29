@@ -17,6 +17,7 @@
 
 import logGlobal from '../../../phet-core/js/logGlobal.js';
 import equalityExplorer from '../equalityExplorer.js';
+import EqualityExplorerConstants from './EqualityExplorerConstants.js';
 
 const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
@@ -25,6 +26,26 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
   easyLevel1: {
     type: 'flag',
     public: true
+  },
+
+  // The levels to show in the game (Solve It!) screen.
+  // See https://github.com/phetsims/equality-explorer/issues/165
+  // The numbers must be unique, must be valid, and can be in any order.
+  gameLevels: {
+    public: true,
+    type: 'array',
+    elementSchema: {
+      type: 'number',
+      isValidValue: Number.isInteger
+    },
+    defaultValue: null,
+    isValidValue: array => {
+      return ( array === null ) || (
+        array.length > 0 &&
+        array.length === _.uniq( array ).length &&
+        _.every( array, element => element > 0 && element <= EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS )
+      );
+    }
   },
 
   // Shows the grid on each of the plates.
