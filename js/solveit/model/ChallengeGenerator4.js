@@ -16,13 +16,13 @@ import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 
 // strings (debug)
-const PATTERN1 = 'level 4, type 1, (a/d)x + b = c<br>' +
+const PATTERN1 = 'level {{level}}, type 1, (a/d)x + b = c<br>' +
                  'x = {{x}}<br>' +
                  'd = {{d}}<br>' +
                  'a = {{a}}<br>' +
                  'b = {{b}}<br>' +
                  'c = (a/d)x + b = {{c}}';
-const PATTERN2 = 'level 4, type 2, (a/d)x + b/d = c<br>' +
+const PATTERN2 = 'level {{level}}, type 2, (a/d)x + b/d = c<br>' +
                  'x = {{x}}<br>' +
                  'd = {{d}}<br>' +
                  'a = {{a}}<br>' +
@@ -90,7 +90,7 @@ class ChallengeGenerator4 extends ChallengeGenerator {
     assert && assert( bd >= -30 && bd <= 30, `(b * d) out of range: ${bd}` );
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-    const debugDerivation = StringUtils.fillIn( PATTERN1, { x: x, a: a, b: b, c: c, d: d } );
+    const debugDerivation = StringUtils.fillIn( PATTERN1, { level: this.level, x: x, a: a, b: b, c: c, d: d } );
 
     // (a/d)x + b = 0x + c
     return new Challenge( x,
@@ -127,7 +127,7 @@ class ChallengeGenerator4 extends ChallengeGenerator {
     assert && assert( b % d !== 0, `b/d reduces to an integer, b=${b}, d=${d}` );
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-    const debugDerivation = StringUtils.fillIn( PATTERN2, { x: x, a: a, b: b, c: c, d: d } );
+    const debugDerivation = StringUtils.fillIn( PATTERN2, { level: this.level, x: x, a: a, b: b, c: c, d: d } );
 
     // (a/d)x + (b/d) = 0x + c
     return new Challenge( x,
