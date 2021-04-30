@@ -22,7 +22,7 @@ import EqualityExplorerConstants from './EqualityExplorerConstants.js';
 const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
   // The levels to show in the game (Solve It!) screen.
-  // The levels numbers must be unique, valid, and in ascending order.
+  // The level numbers must be unique, valid, and in ascending order.
   // See https://github.com/phetsims/equality-explorer/issues/165
   gameLevels: {
     public: true,
