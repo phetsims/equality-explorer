@@ -16,7 +16,6 @@ define( function( require ) {
   var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var EqualityExplorerQueryParameters = require( 'EQUALITY_EXPLORER/common/EqualityExplorerQueryParameters' );
 
   // strings (debug)
   var PATTERN1 = 'level 1, type 1, ax = c<br>' +
@@ -34,14 +33,10 @@ define( function( require ) {
 
   // constants
   var X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
-  var A_VALUES = EqualityExplorerQueryParameters.easyLevel1 ?
-                 ChallengeGenerator.rangeToArray( 2, 10 ) :
-                 ChallengeGenerator.rangeToArray( -10, 10 );
+  var A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
   var B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
   var C_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
-  var D_VALUES = EqualityExplorerQueryParameters.easyLevel1 ?
-                 ChallengeGenerator.rangeToArray( 2, 10 ) :
-                 ChallengeGenerator.rangeToArray( -10, 10 );
+  var D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
   var MAX_ATTEMPTS = 50; // max attempts in a while loop
 
   /**
