@@ -21,13 +21,6 @@ import EqualityExplorerConstants from './EqualityExplorerConstants.js';
 
 const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
-  // Constrains challenges for Level 1 to have positive coefficients.
-  // See https://github.com/phetsims/equality-explorer/issues/163
-  easyLevel1: {
-    type: 'flag',
-    public: true
-  },
-
   // The levels to show in the game (Solve It!) screen.
   // The levels numbers must be unique, valid, and in ascending order.
   // See https://github.com/phetsims/equality-explorer/issues/165
