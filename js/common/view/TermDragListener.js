@@ -210,9 +210,6 @@ class TermDragListener extends DragListener {
    */
   end( event, trail ) {
 
-    // drag sequence was interrupted, return immediately
-    if ( this.interrupted ) { return; }
-
     // set term Properties at end of drag
     this.term.draggingProperty.value = false;
     this.term.shadowVisibleProperty.value = false;
