@@ -67,7 +67,7 @@ class TermDragListener extends DragListener {
       haloRadius: 10, // radius of the halo around terms that sum to zero
       pickableWhileAnimating: true, // is termNode pickable while term is animating?
 
-      // SimpleDragHandler options
+      // TermDragListener options
       allowTouchSnag: true,
       start: ( event, trail ) => self.start( event, trail ),
       drag: ( event, trail ) => self.drag( event, trail ),
