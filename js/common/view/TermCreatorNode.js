@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+// Copyright 2017-2021, University of Colorado Boulder
 
 /**
  * Node that creates terms. These nodes appear in the toolboxes that appear below the scale's plates.

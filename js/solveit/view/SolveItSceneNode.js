@@ -1,4 +1,4 @@
-// Copyright 2018-2020, University of Colorado Boulder
+// Copyright 2018-2021, University of Colorado Boulder
 
 /**
  * Display a scene in the 'Solve It!' screen.  Each scene corresponds to a game level.
