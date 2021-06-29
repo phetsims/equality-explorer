@@ -35,7 +35,8 @@ class EqualityExplorerLevelSelectionButton extends LevelSelectionButton {
       listener: () => {
         phet.log && phet.log( `Level${scene.challengeGenerator.level} button pressed` );
         sceneProperty.value = scene;
-      }
+      },
+      soundPlayerIndex: scene.challengeGenerator.level - 1
     } );
   }
 }
