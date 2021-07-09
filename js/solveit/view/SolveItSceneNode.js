@@ -147,7 +147,7 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
 
     // Refresh button, generates a new challenge, effectively skipping the current challenge
     const refreshButton = new RefreshButton( {
-      iconScale: 0.6,
+      iconHeight: 23,
       xMargin: 14,
       yMargin: 7,
       left: challengePanel.right + 10,
