@@ -11,9 +11,10 @@ import merge from '../../../../phet-core/js/merge.js';
 import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import LayoutBox from '../../../../scenery/js/nodes/LayoutBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import cameraSolidShape from '../../../../sherpa/js/fontawesome-5/cameraSolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import Snapshot from '../model/Snapshot.js';
@@ -78,7 +79,10 @@ class SnapshotControl extends Node {
     } );
 
     // snapshot (camera) button
-    const snapshotIcon = new FontAwesomeNode( 'camera', { scale: 0.4 } );
+    const snapshotIcon = new Path( cameraSolidShape, {
+      scale: 0.037,
+      fill: 'black'
+    } );
     const snapshotButton = new RectangularPushButton( {
       content: snapshotIcon,
       baseColor: 'white',

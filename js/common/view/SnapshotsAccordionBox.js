@@ -8,11 +8,13 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
+import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
+import trashAltRegularShape from '../../../../sherpa/js/fontawesome-5/trashAltRegularShape.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import HSeparator from '../../../../sun/js/HSeparator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
@@ -93,7 +95,10 @@ class SnapshotsAccordionBox extends AccordionBox {
     } );
 
     // Button to restore the selected snapshot
-    const restoreIcon = new FontAwesomeNode( 'reply', { scale: 0.45 } );
+    const restoreIcon = new Path( replySolidShape, {
+      scale: 0.04,
+      fill: 'black'
+    } );
     const restoreButton = new RectangularPushButton( {
       content: restoreIcon,
       baseColor: EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE, // button color matches selection stroke
@@ -105,7 +110,10 @@ class SnapshotsAccordionBox extends AccordionBox {
     } );
 
     // Button to delete (trash) the selected snapshot
-    const trashIcon = new FontAwesomeNode( 'trash', { scale: 0.45 } );
+    const trashIcon = new Path( trashAltRegularShape, {
+      scale: 0.034,
+      fill: 'black'
+    } );
     const trashButton = new RectangularPushButton( {
       content: trashIcon,
       baseColor: 'white',

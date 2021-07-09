@@ -22,9 +22,10 @@ import merge from '../../../../phet-core/js/merge.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import levelDownAltSolidShape from '../../../../sherpa/js/fontawesome-5/levelDownAltSolidShape.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
-import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene from '../../operations/model/OperationsScene.js';
 import ConstantTerm from '../model/ConstantTerm.js';
@@ -157,8 +158,9 @@ class UniversalOperationControl extends HBox {
     } );
 
     // 'go' button, applies the operation
-    const goButtonIcon = new FontAwesomeNode( 'level_down', {
-      scale: 0.75 * operandPicker.height / operandPicker.height // scale relative to the pickers
+    const goButtonIcon = new Path( levelDownAltSolidShape, {
+      fill: 'black',
+      maxHeight: 0.5 * operandPicker.height // scale relative to the pickers
     } );
     const goButton = new RoundPushButton( {
       content: goButtonIcon,
