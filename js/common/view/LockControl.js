@@ -13,8 +13,8 @@ import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import BooleanToggleNode from '../../../../sun/js/BooleanToggleNode.js';
-import lockClosedImage from '../../../images/lockClosed_png.js';
-import lockOpenedImage from '../../../images/lockOpened_png.js';
+import lockClosed_png from '../../../images/lockClosed_png.js';
+import lockOpened_png from '../../../images/lockOpened_png.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 class LockControl extends Node {
@@ -33,8 +33,8 @@ class LockControl extends Node {
     }, options );
 
     // icons
-    const lockClosedNode = new Image( lockClosedImage );
-    const lockOpenedNode = new Image( lockOpenedImage );
+    const lockClosedNode = new Image( lockClosed_png );
+    const lockOpenedNode = new Image( lockOpened_png );
     assert && assert( lockClosedNode.width === lockOpenedNode.width && lockClosedNode.height === lockOpenedNode.height,
       'lock images must have identical dimensions' );
 

@@ -7,12 +7,12 @@
  */
 
 import Image from '../../../../scenery/js/nodes/Image.js';
-import catImage from '../../../images/cat_png.js';
-import catShadowImage from '../../../images/catShadow_png.js';
-import dogImage from '../../../images/dog_png.js';
-import dogShadowImage from '../../../images/dogShadow_png.js';
-import turtleImage from '../../../images/turtle_png.js';
-import turtleShadowImage from '../../../images/turtleShadow_png.js';
+import cat_png from '../../../images/cat_png.js';
+import catShadow_png from '../../../images/catShadow_png.js';
+import dog_png from '../../../images/dog_png.js';
+import dogShadow_png from '../../../images/dogShadow_png.js';
+import turtle_png from '../../../images/turtle_png.js';
+import turtleShadow_png from '../../../images/turtleShadow_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
@@ -25,9 +25,9 @@ class AnimalsScene extends BasicsScene {
     const variables = [
 
       // name, image, shadow
-      new ObjectVariable( 'dog', dogImage, dogShadowImage, { value: 11 } ),
-      new ObjectVariable( 'cat', catImage, catShadowImage, { value: 4 } ),
-      new ObjectVariable( 'turtle', turtleImage, turtleShadowImage, { value: 6 } )
+      new ObjectVariable( 'dog', dog_png, dogShadow_png, { value: 11 } ),
+      new ObjectVariable( 'cat', cat_png, catShadow_png, { value: 4 } ),
+      new ObjectVariable( 'turtle', turtle_png, turtleShadow_png, { value: 6 } )
     ];
 
     super( variables, {
@@ -35,7 +35,7 @@ class AnimalsScene extends BasicsScene {
       debugName: 'animals',
 
       // icon used to represent this scene in the scene control (radio buttons)
-      icon: new Image( turtleImage, {
+      icon: new Image( turtle_png, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
       } ),
 

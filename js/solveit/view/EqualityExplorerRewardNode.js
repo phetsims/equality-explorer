@@ -13,10 +13,10 @@ import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
 import Image from '../../../../scenery/js/nodes/Image.js';
 import RewardNode from '../../../../vegas/js/RewardNode.js';
-import appleImage from '../../../images/apple_png.js';
-import catImage from '../../../images/cat_png.js';
-import dogImage from '../../../images/dog_png.js';
-import orangeImage from '../../../images/orange_png.js';
+import apple_png from '../../../images/apple_png.js';
+import cat_png from '../../../images/cat_png.js';
+import dog_png from '../../../images/dog_png.js';
+import orange_png from '../../../images/orange_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ConstantTerm from '../../common/model/ConstantTerm.js';
 import UniversalOperation from '../../common/model/UniversalOperation.js';
@@ -36,10 +36,10 @@ const INTEGER_VALUES = ChallengeGenerator.rangeToArray( -9, 9 );
 INTEGER_VALUES.splice( INTEGER_VALUES.indexOf( 0 ), 1 );
 
 // Node instances that are reused throughout the rewards
-const APPLE_NODE = new Image( appleImage, IMAGE_OPTIONS );
-const CAT_NODE = new Image( catImage, IMAGE_OPTIONS );
-const DOG_NODE = new Image( dogImage, IMAGE_OPTIONS );
-const ORANGE_NODE = new Image( orangeImage, IMAGE_OPTIONS );
+const APPLE_NODE = new Image( apple_png, IMAGE_OPTIONS );
+const CAT_NODE = new Image( cat_png, IMAGE_OPTIONS );
+const DOG_NODE = new Image( dog_png, IMAGE_OPTIONS );
+const ORANGE_NODE = new Image( orange_png, IMAGE_OPTIONS );
 const STAR_NODE = new StarNode( {
   innerRadius: DIAMETER / 4,
   outerRadius: DIAMETER / 2

@@ -16,9 +16,9 @@ import Image from '../../../scenery/js/nodes/Image.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
-import phetGirlJugglingStarsImage from '../../../vegas/images/phet-girl-juggling-stars_png.js';
-import appleBigImage from '../../images/appleBig_png.js';
-import orangeBigImage from '../../images/orangeBig_png.js';
+import phetGirlJugglingStars_png from '../../../vegas/images/phet-girl-juggling-stars_png.js';
+import appleBig_png from '../../images/appleBig_png.js';
+import orangeBig_png from '../../images/orangeBig_png.js';
 import equalityExplorer from '../equalityExplorer.js';
 import equalityExplorerStrings from '../equalityExplorerStrings.js';
 import EqualityExplorerColors from './EqualityExplorerColors.js';
@@ -35,8 +35,8 @@ const EqualityExplorerScreenIcons = {
   createBasicsScreenIcon: function() {
 
     // apples on left side of the equation
-    const appleNode1 = new Image( appleBigImage );
-    const appleNode2 = new Image( appleBigImage, {
+    const appleNode1 = new Image( appleBig_png );
+    const appleNode2 = new Image( appleBig_png, {
       left: appleNode1.left - 10,
       top: appleNode1.bottom + 5
     } );
@@ -51,7 +51,7 @@ const EqualityExplorerScreenIcons = {
     } );
 
     // an orange on right side of the equation
-    const orangeNode = new Image( orangeBigImage );
+    const orangeNode = new Image( orangeBig_png );
 
     const iconNode = new HBox( {
       spacing: 15,
@@ -167,7 +167,7 @@ const EqualityExplorerScreenIcons = {
    * @returns {ScreenIcon}
    */
   createSolveItHomeScreenIcon: function() {
-    const iconNode = new Image( phetGirlJugglingStarsImage );
+    const iconNode = new Image( phetGirlJugglingStars_png );
     return new ScreenIcon( iconNode, {
       fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
     } );
