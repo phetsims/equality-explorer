@@ -16,7 +16,7 @@ import Image from '../../../scenery/js/nodes/Image.js';
 import Node from '../../../scenery/js/nodes/Node.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import VBox from '../../../scenery/js/nodes/VBox.js';
-import phetGirlJugglingStars_png from '../../../vegas/images/phet-girl-juggling-stars_png.js';
+import phetGirlJugglingStars_png from '../../../vegas/images/phetGirlJugglingStars_png.js';
 import appleBig_png from '../../images/appleBig_png.js';
 import orangeBig_png from '../../images/orangeBig_png.js';
 import equalityExplorer from '../equalityExplorer.js';
