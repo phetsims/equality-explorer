@@ -7,7 +7,6 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
 import ChallengeGenerator2 from './ChallengeGenerator2.js';
@@ -32,14 +31,6 @@ class SolveItModel {
       'Challenge generators must have unique level numbers.' );
     assert && assert( _.every( this.challengeGenerators, ( value, index, array ) => ( index === 0 || array[ index - 1 ].level <= value.level ) ),
       'Challenge generators must be ordered by ascending level number.' );
-
-    // Filter challenge generators by gameLevels query parameter.
-    // See https://github.com/phetsims/equality-explorer/issues/165
-    if ( EqualityExplorerQueryParameters.gameLevels ) {
-      this.challengeGenerators = _.filter( this.challengeGenerators, challengeGenerator =>
-        EqualityExplorerQueryParameters.gameLevels.includes( challengeGenerator.level )
-      );
-    }
 
     // @public (read-only) {SolveItScene[]} a scene for each challenge generator
     this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItScene( challengeGenerator ) );

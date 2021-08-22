@@ -19,6 +19,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
+import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import EqualityExplorerLevelSelectionButton from './EqualityExplorerLevelSelectionButton.js';
@@ -42,11 +43,21 @@ class LevelSelectionNode extends Node {
       maxWidth: 0.65 * layoutBounds.width
     };
 
-    // Level-selection buttons
+    // Level-selection buttons, ordered by ascending level number.
     const levelSelectionButtons = [];
     model.scenes.forEach( scene => {
       levelSelectionButtons.push( new EqualityExplorerLevelSelectionButton( scene, model.sceneProperty ) );
     } );
+
+    // Hide buttons for levels that are not included in gameLevels query parameter.
+    // We must still create these buttons so that we don't change the PhET-iO API.
+    // See https://github.com/phetsims/equality-explorer/issues/165
+    if ( EqualityExplorerQueryParameters.gameLevels ) {
+      for ( let i = 0; i < levelSelectionButtons.length; i++ ) {
+        const levelNumber = i + 1;
+        levelSelectionButtons[ i ].visible = EqualityExplorerQueryParameters.gameLevels.includes( levelNumber );
+      }
+    }
 
     // Layout the level-selection buttons horizontally
     const levelSelectionButtonsBox = new HBox( {
