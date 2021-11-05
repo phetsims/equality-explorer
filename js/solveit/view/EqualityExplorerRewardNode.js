@@ -17,6 +17,8 @@ import apple_png from '../../../images/apple_png.js';
 import cat_png from '../../../images/cat_png.js';
 import dog_png from '../../../images/dog_png.js';
 import orange_png from '../../../images/orange_png.js';
+import sphere_png from '../../../images/sphere_png.js';
+import square_png from '../../../images/square_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ConstantTerm from '../../common/model/ConstantTerm.js';
 import UniversalOperation from '../../common/model/UniversalOperation.js';
@@ -31,15 +33,18 @@ import ChallengeGenerator from '../model/ChallengeGenerator.js';
 const DIAMETER = 40;
 const IMAGE_OPTIONS = { maxHeight: DIAMETER };
 
-// Range for coefficients and constants, zero excluded
-const INTEGER_VALUES = ChallengeGenerator.rangeToArray( -9, 9 );
-INTEGER_VALUES.splice( INTEGER_VALUES.indexOf( 0 ), 1 );
+// Ranges for coefficients and constants, zero excluded
+const POSITIVE_INTEGER_VALUES = ChallengeGenerator.rangeToArray( 1, 9 );
+const NEGATIVE_INTEGER_VALUES = ChallengeGenerator.rangeToArray( -9, 1 );
+const INTEGER_VALUES = [ ...POSITIVE_INTEGER_VALUES, ...NEGATIVE_INTEGER_VALUES ];
 
 // Node instances that are reused throughout the rewards
 const APPLE_NODE = new Image( apple_png, IMAGE_OPTIONS );
 const CAT_NODE = new Image( cat_png, IMAGE_OPTIONS );
 const DOG_NODE = new Image( dog_png, IMAGE_OPTIONS );
 const ORANGE_NODE = new Image( orange_png, IMAGE_OPTIONS );
+const SPHERE_NODE = new Image( sphere_png, IMAGE_OPTIONS );
+const SQUARE_NODE = new Image( square_png, IMAGE_OPTIONS );
 const STAR_NODE = new StarNode( {
   innerRadius: DIAMETER / 4,
   outerRadius: DIAMETER / 2
@@ -67,16 +72,35 @@ class EqualityExplorerRewardNode extends RewardNode {
 
 // Creates nodes for level 1 reward.
 function createNodes1() {
-  return createNodes2(); //TODO https://github.com/phetsims/equality-explorer/issues/164 what reward for level 1?
+  const nodes = [];
+
+  // variable terms with positive integer coefficients
+  POSITIVE_INTEGER_VALUES.forEach( i => {
+    nodes.push( createVariableTermNode( i ) );
+  } );
+
+  INTEGER_VALUES.forEach( i => {
+
+    // constant terms with integer values
+    nodes.push( createIntegerConstantTermNode( i ) );
+
+    // spheres & rectangles
+    nodes.push( SPHERE_NODE );
+    nodes.push( SQUARE_NODE );
+  } );
+  return nodes;
 }
 
 // Creates nodes for level 2 reward.
 function createNodes2() {
   const nodes = [];
-  INTEGER_VALUES.forEach( i => {
 
-    // variable terms with integer coefficients
+  // variable terms with negative integer coefficients
+  NEGATIVE_INTEGER_VALUES.forEach( i => {
     nodes.push( createVariableTermNode( i ) );
+  } );
+
+  INTEGER_VALUES.forEach( i => {
 
     // constant terms with integer values
     nodes.push( createIntegerConstantTermNode( i ) );
