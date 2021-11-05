@@ -55,7 +55,7 @@ class EqualityExplorerRewardNode extends RewardNode {
    */
   constructor( level ) {
 
-    const createNodesFunction = [ createNodes1, createNodes2, createNodes3, createNodes4 ];
+    const createNodesFunction = [ createNodes1, createNodes2, createNodes3, createNodes4, createNodes5 ];
 
     const nodes = createNodesFunction[ level - 1 ]();
 
@@ -67,6 +67,11 @@ class EqualityExplorerRewardNode extends RewardNode {
 
 // Creates nodes for level 1 reward.
 function createNodes1() {
+  return createNodes2(); //TODO https://github.com/phetsims/equality-explorer/issues/164 what reward for level 1?
+}
+
+// Creates nodes for level 2 reward.
+function createNodes2() {
   const nodes = [];
   INTEGER_VALUES.forEach( i => {
 
@@ -83,8 +88,8 @@ function createNodes1() {
   return nodes;
 }
 
-// Creates nodes for level 2 reward.
-function createNodes2() {
+// Creates nodes for level 3 reward.
+function createNodes3() {
   const nodes = [];
   INTEGER_VALUES.forEach( i => {
 
@@ -103,8 +108,8 @@ function createNodes2() {
   return nodes;
 }
 
-// Creates nodes for level 3 reward.
-function createNodes3() {
+// Creates nodes for level 4 reward.
+function createNodes4() {
   const nodes = [];
   INTEGER_VALUES.forEach( i => {
 
@@ -123,8 +128,8 @@ function createNodes3() {
   return nodes;
 }
 
-// Creates nodes for level 4 reward.
-function createNodes4() {
+// Creates nodes for level 5 reward.
+function createNodes5() {
   const nodes = [];
   INTEGER_VALUES.forEach( i => {
 
