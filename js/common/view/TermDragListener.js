@@ -263,16 +263,18 @@ class TermDragListener extends DragListener {
         oppositeSumToZeroNode.startAnimation();
       }
     }
-    else if ( this.term.positionProperty.value.y >
-              this.plate.positionProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
+    else if ( !this.term.onPlateProperty.value ) {
+      if ( this.term.positionProperty.value.y >
+           this.plate.positionProperty.value.y + EqualityExplorerQueryParameters.plateYOffset ) {
 
-      // term was released below the plate, animate back to toolbox
-      this.animateToToolbox();
-    }
-    else {
+        // term was released below the plate, animate back to toolbox
+        this.animateToToolbox();
+      }
+      else {
 
-      // term was released above the plate, animate to the plate
-      this.animateToPlate();
+        // term was released above the plate, animate to the plate
+        this.animateToPlate();
+      }
     }
   }
 
