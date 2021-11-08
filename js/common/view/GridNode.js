@@ -30,7 +30,7 @@ class GridNode extends Path {
 
       // Path options
       stroke: EqualityExplorerColors.GRID_STROKE,
-      lineWidth: 0.25
+      lineWidth: 0.5
     }, options );
 
     const gridWidth = options.columns * options.cellSize.width;

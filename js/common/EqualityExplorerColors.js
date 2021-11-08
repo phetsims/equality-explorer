@@ -44,7 +44,7 @@ const EqualityExplorerColors = {
   PLATE_OUTSIDE_FILL: '#666666',
   PLATE_INSIDE_FILL: '#B1B1B1',
   PLATE_SURFACE_FILL: '#E4E4E4',
-  GRID_STROKE: 'rgb( 160, 160, 160 )'
+  GRID_STROKE: 'red'
 };
 
 equalityExplorer.register( 'EqualityExplorerColors', EqualityExplorerColors );
