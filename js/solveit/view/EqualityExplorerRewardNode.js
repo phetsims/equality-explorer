@@ -35,7 +35,7 @@ const IMAGE_OPTIONS = { maxHeight: DIAMETER };
 
 // Ranges for coefficients and constants, zero excluded
 const POSITIVE_INTEGER_VALUES = ChallengeGenerator.rangeToArray( 1, 9 );
-const NEGATIVE_INTEGER_VALUES = ChallengeGenerator.rangeToArray( -9, 1 );
+const NEGATIVE_INTEGER_VALUES = ChallengeGenerator.rangeToArray( -9, -1 );
 const INTEGER_VALUES = [ ...POSITIVE_INTEGER_VALUES, ...NEGATIVE_INTEGER_VALUES ];
 
 // Node instances that are reused throughout the rewards
