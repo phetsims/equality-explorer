@@ -124,7 +124,7 @@ class TermNode extends Node {
         term.pickableProperty.unlink( pickableListener );
       }
 
-      if ( term.onPlateProperty.hasListener( onPlateListener() ) ) {
+      if ( term.onPlateProperty.hasListener( onPlateListener ) ) {
         term.onPlateProperty.unlink( onPlateListener );
       }
 
