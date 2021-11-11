@@ -6,8 +6,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Bounds2 from '../../../dot/js/Bounds2.js';
 import Range from '../../../dot/js/Range.js';
+import ScreenView from '../../../joist/js/ScreenView.js';
 import Fraction from '../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../scenery-phet/js/MathSymbolFont.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
@@ -31,9 +31,15 @@ const EqualityExplorerConstants = {
   },
 
   // ScreenView
-  SCREEN_VIEW_LAYOUT_BOUNDS: new Bounds2( 0, 0, 1024, 618 ),
   SCREEN_VIEW_X_MARGIN: 20,
   SCREEN_VIEW_Y_MARGIN: 16,
+  SCREEN_VIEW_OPTIONS: {
+    layoutBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS,
+
+    // Workaround for things shifting around that aren't supposed to move
+    // See https://github.com/phetsims/scenery/issues/1289 and https://github.com/phetsims/equality-explorer/issues/174
+    preventFit: true
+  },
 
   // Solve It! game
   NUMBER_OF_GAME_LEVELS: 5,

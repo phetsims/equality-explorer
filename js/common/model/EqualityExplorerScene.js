@@ -22,7 +22,7 @@ const DEFAULT_SCALE_POSITION = new Vector2( 355, 427 );
 const DRAG_BOUNDS_X_MARGIN = 20;
 const DRAG_BOUNDS_Y_MARGIN = 10;
 const DRAG_BOUNDS_MIN_Y = 100;
-const DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.maxY - DRAG_BOUNDS_Y_MARGIN;
+const DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_OPTIONS.layoutBounds.maxY - DRAG_BOUNDS_Y_MARGIN;
 
 class EqualityExplorerScene {
 

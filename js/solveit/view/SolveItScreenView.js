@@ -32,7 +32,7 @@ class SolveItScreenView extends ScreenView {
    */
   constructor( model ) {
 
-    super();
+    super( EqualityExplorerConstants.SCREEN_VIEW_OPTIONS );
 
     // @private state of the Snapshots accordion box is global to the Screen,
     // see https://github.com/phetsims/equality-explorer/issues/124

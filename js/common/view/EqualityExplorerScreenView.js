@@ -23,7 +23,7 @@ class EqualityExplorerScreenView extends ScreenView {
    */
   constructor( model, options ) {
 
-    options = merge( {
+    options = merge( {}, EqualityExplorerConstants.SCREEN_VIEW_OPTIONS, {
 
       // {boolean}
       // true = positive and negative terms in the toolbox, e.g. x, -x, 1, -1
@@ -31,7 +31,7 @@ class EqualityExplorerScreenView extends ScreenView {
       hasNegativeTermsInToolbox: true
     }, options );
 
-    super();
+    super( options );
 
     // @private state of the Equation accordion box is global to the Screen,
     // see https://github.com/phetsims/equality-explorer/issues/124
