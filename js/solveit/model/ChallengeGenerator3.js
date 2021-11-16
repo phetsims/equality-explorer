@@ -37,7 +37,7 @@ class ChallengeGenerator3 extends ChallengeGenerator {
    *
    * Form: ax + b = c
    * Let x be a random integer between [-40,40], x !== 0
-   * Let a be a random integer between [-10,10], a !== 0
+   * Let a be a random integer between [-10,10], a !== 0, a !== 1
    * Let b be a random integer between [-10,10], b !== 0
    * Let c = ax + b, c == 0 is OK
    *
@@ -48,7 +48,7 @@ class ChallengeGenerator3 extends ChallengeGenerator {
   nextChallengeProtected() {
 
     const x = this.randomX( X_VALUES );
-    const a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );
+    const a = ChallengeGenerator.randomValue( A_VALUES, [ 0, 1 ] );
     const b = ChallengeGenerator.randomValue( B_VALUES, [ 0 ] );
     const c = ( a * x ) + b;
 
