@@ -8,6 +8,7 @@
 
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
+import soundManager from '../../tambo/js/soundManager.js';
 import BasicsScreen from './basics/BasicsScreen.js';
 import EqualityExplorerConstants from './common/EqualityExplorerConstants.js';
 import equalityExplorerStrings from './equalityExplorerStrings.js';
@@ -31,4 +32,6 @@ simLauncher.launch( () => {
     credits: EqualityExplorerConstants.CREDITS
   } );
   sim.start();
+
+  soundManager.setOutputLevelForCategory( 'user-interface', 0 );
 } );
