@@ -1,5 +1,5 @@
 {
-  "comment": "# equality-explorer 1.1.0-rc.1 Thu Nov 18 2021 14:23:36 GMT-0700 (Mountain Standard Time)",
+  "comment": "# equality-explorer 1.1.0-rc.2 Fri Nov 19 2021 20:34:09 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "767b2f345518ceca5144a152ecf40cd4f9206136",
     "branch": "HEAD"
@@ -21,7 +21,7 @@
     "branch": "HEAD"
   },
   "equality-explorer": {
-    "sha": "65e8241cd3553ec976bed120b909b437664bf619",
+    "sha": "e820d0598b03c8e3d332c0128ed161cd0334b26c",
     "branch": "1.1"
   },
   "joist": {
@@ -70,7 +70,7 @@
   },
   "scenery-phet": {
     "sha": "8a4f7f6b1d3592327f9ed1d22c32ac15ccdaeb5e",
-    "branch": "equality-explorer-1.1"
+    "branch": "HEAD"
   },
   "sherpa": {
     "sha": "25221dc10050e87daeba7ace6bcefb750a785c99",
@@ -102,6 +102,6 @@
   },
   "vegas": {
     "sha": "e2629f81b185932a4404c74952724241f60611ab",
-    "branch": "equality-explorer-1.1"
+    "branch": "HEAD"
   }
 }
