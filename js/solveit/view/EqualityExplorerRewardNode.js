@@ -11,7 +11,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
-import Image from '../../../../scenery/js/nodes/Image.js';
+import { Image } from '../../../../scenery/js/imports.js';
 import RewardNode from '../../../../vegas/js/RewardNode.js';
 import apple_png from '../../../images/apple_png.js';
 import cat_png from '../../../images/cat_png.js';

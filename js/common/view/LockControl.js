@@ -9,9 +9,9 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import FireListener from '../../../../scenery/js/listeners/FireListener.js';
-import Image from '../../../../scenery/js/nodes/Image.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { FireListener } from '../../../../scenery/js/imports.js';
+import { Image } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import BooleanToggleNode from '../../../../sun/js/BooleanToggleNode.js';
 import lockClosed_png from '../../../images/lockClosed_png.js';
 import lockOpened_png from '../../../images/lockOpened_png.js';

@@ -7,7 +7,7 @@
  */
 
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';

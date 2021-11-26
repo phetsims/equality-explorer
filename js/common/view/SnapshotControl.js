@@ -8,11 +8,11 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import FireListener from '../../../../scenery/js/listeners/FireListener.js';
-import LayoutBox from '../../../../scenery/js/nodes/LayoutBox.js';
-import Node from '../../../../scenery/js/nodes/Node.js';
-import Path from '../../../../scenery/js/nodes/Path.js';
-import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import { FireListener } from '../../../../scenery/js/imports.js';
+import { LayoutBox } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import { Path } from '../../../../scenery/js/imports.js';
+import { Rectangle } from '../../../../scenery/js/imports.js';
 import cameraSolidShape from '../../../../sherpa/js/fontawesome-5/cameraSolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import equalityExplorer from '../../equalityExplorer.js';

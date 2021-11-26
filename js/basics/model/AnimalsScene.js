@@ -6,7 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Image from '../../../../scenery/js/nodes/Image.js';
+import { Image } from '../../../../scenery/js/imports.js';
 import cat_png from '../../../images/cat_png.js';
 import catShadow_png from '../../../images/catShadow_png.js';
 import dog_png from '../../../images/dog_png.js';

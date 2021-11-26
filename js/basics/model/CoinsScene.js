@@ -6,7 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Image from '../../../../scenery/js/nodes/Image.js';
+import { Image } from '../../../../scenery/js/imports.js';
 import coin1_png from '../../../images/coin1_png.js';
 import coin1Shadow_png from '../../../images/coin1Shadow_png.js';
 import coin2_png from '../../../images/coin2_png.js';
