@@ -28,9 +28,3 @@ from these .svg files were copied to strings in `PlateNode.js`.  Refer to commen
 for the icon appears in `organize-icon.ai`. In Illustrator, `Object > Compound Path > Make` was used to turn the icon
 into a single path, then "Save As" `organize-icon.svg`. The contents of the `"d=..."` field from `organize-icon.svg` 
 was copied to a string in `OrganizeButton.js`.
-
-## Lock toggle button
-
-`LockControl` creates the toggle buttons used to turn the lock feature on and off. The two associated image files
-are `lockClosed.png` and `lockOpened.png`. They must have identical dimensions. If you regenerate them, you will
-need to add padding.

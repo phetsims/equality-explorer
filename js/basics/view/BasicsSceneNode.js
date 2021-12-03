@@ -8,14 +8,13 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import merge from '../../../../phet-core/js/merge.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import BalanceScaleNode from '../../common/view/BalanceScaleNode.js';
+import EqualityExplorerLockNode from '../../common/view/EqualityExplorerLockNode.js';
 import EqualityExplorerSceneNode from '../../common/view/EqualityExplorerSceneNode.js';
 import EquationAccordionBox from '../../common/view/EquationAccordionBox.js';
-import LockControl from '../../common/view/LockControl.js';
 import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import TermsToolbox from '../../common/view/TermsToolbox.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -107,11 +106,13 @@ class BasicsSceneNode extends EqualityExplorerSceneNode {
     // Some scenes support locking the left and right sides of the equation,
     // such that an action on one side results in an equivalent action on the opposite side.
     if ( scene.lockedProperty && EqualityExplorerQueryParameters.lockVisible ) {
-      const lockControl = new LockControl( scene.lockedProperty, {
-        x: scale.position.x,
-        y: leftTermsToolbox.centerY - 5 // offset determined empirically
+      const lockNode = new EqualityExplorerLockNode( scene.lockedProperty, {
+
+        // offsets determined empirically, so that the body of the lock appears to be centered between the toolboxes
+        centerX: leftTermsToolbox.right + ( rightTermsToolbox.left - leftTermsToolbox.right ) / 2 + 4,
+        centerY: leftTermsToolbox.centerY - 5
       } );
-      children.unshift( lockControl ); // add to beginning
+      children.unshift( lockNode ); // add to beginning
     }
 
     // Render the drag bounds for the left and right plates

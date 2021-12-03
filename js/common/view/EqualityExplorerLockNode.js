@@ -9,15 +9,11 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
+import LockNode from '../../../../scenery-phet/js/LockNode.js';
 import { FireListener } from '../../../../scenery/js/imports.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import BooleanToggleNode from '../../../../sun/js/BooleanToggleNode.js';
-import lockClosed_png from '../../../images/lockClosed_png.js';
-import lockOpened_png from '../../../images/lockOpened_png.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class LockControl extends Node {
+class EqualityExplorerLockNode extends LockNode {
 
   /**
    * @param {BooleanProperty} lockedProperty - indicates whether left and right sides are "locked"
@@ -32,23 +28,7 @@ class LockControl extends Node {
       maxHeight: 45
     }, options );
 
-    // icons
-    const lockClosedNode = new Image( lockClosed_png );
-    const lockOpenedNode = new Image( lockOpened_png );
-    assert && assert( lockClosedNode.width === lockOpenedNode.width && lockClosedNode.height === lockOpenedNode.height,
-      'lock images must have identical dimensions' );
-
-    const toggleNode = new BooleanToggleNode( lockClosedNode, lockOpenedNode, lockedProperty, {
-
-      // put the origin at the center of the 'closed' lock, to facilitate layout
-      x: -lockClosedNode.width / 2,
-      y: -lockClosedNode.height / 2
-    } );
-
-    assert && assert( !options.children, 'LockControl sets children' );
-    options.children = [ toggleNode ];
-
-    super( options );
+    super( lockedProperty, options );
 
     // toggle the state when the user clicks on this Node
     this.addInputListener( new FireListener( {
@@ -62,6 +42,6 @@ class LockControl extends Node {
   }
 }
 
-equalityExplorer.register( 'LockControl', LockControl );
+equalityExplorer.register( 'EqualityExplorerLockNode', EqualityExplorerLockNode );
 
-export default LockControl;
+export default EqualityExplorerLockNode;
