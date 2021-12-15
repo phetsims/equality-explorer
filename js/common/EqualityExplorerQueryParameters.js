@@ -18,32 +18,12 @@
 import logGlobal from '../../../phet-core/js/logGlobal.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerConstants from './EqualityExplorerConstants.js';
+import getGameLevelsSchema from '../../../vegas/js/getGameLevelsSchema.js';
 
 const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
   // The levels to show in the game (Solve It!) screen.
-  // The level numbers must be unique, valid, and in ascending order.
-  // See https://github.com/phetsims/equality-explorer/issues/165
-  gameLevels: {
-    public: true,
-    type: 'array',
-    elementSchema: {
-      type: 'number',
-      isValidValue: Number.isInteger
-    },
-    defaultValue: null,
-    isValidValue: array => {
-      return ( array === null ) || (
-        array.length > 0 &&
-        // unique level numbers
-        array.length === _.uniq( array ).length &&
-        // valid level numbers
-        _.every( array, element => element > 0 && element <= EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS ) &&
-        // sorted by ascending level number
-        _.every( array, ( value, index, array ) => ( index === 0 || array[ index - 1 ] <= value ) )
-      );
-    }
-  },
+  gameLevels: getGameLevelsSchema( EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS ),
 
   // Shows the grid on each of the plates.
   // For internal use only, not public facing.
