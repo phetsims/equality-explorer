@@ -14,7 +14,7 @@ import Property from '../../../../axon/js/Property.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import Shape from '../../../../kite/js/Shape.js';
-import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
 import merge from '../../../../phet-core/js/merge.js';
 import { FireListener } from '../../../../scenery/js/imports.js';
 import { Node } from '../../../../scenery/js/imports.js';
@@ -25,7 +25,7 @@ import { LinearGradient } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 // constants
-const ButtonState = Enumeration.byKeys( [ 'UP', 'DOWN', 'OVER', 'OUT' ] );
+const ButtonState = EnumerationDeprecated.byKeys( [ 'UP', 'DOWN', 'OVER', 'OUT' ] );
 
 class ObjectPicker extends Node {
 
