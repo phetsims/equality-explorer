@@ -67,11 +67,11 @@ class TermDragListener extends DragListener {
       haloRadius: 10, // radius of the halo around terms that sum to zero
       pickableWhileAnimating: true, // is termNode pickable while term is animating?
 
-      // TermDragListener options
+      // DragListener options
       allowTouchSnag: true,
-      start: ( event, trail ) => self.start( event, trail ),
-      drag: ( event, trail ) => self.drag( event, trail ),
-      end: ( event, trail ) => self.end( event, trail )
+      start: event => self.start( event ),
+      drag: event => self.drag( event ),
+      end: () => self.end()
 
     }, options );
 
@@ -140,10 +140,9 @@ class TermDragListener extends DragListener {
   /**
    * Called at the start of a drag cycle, on pointer down.
    * @param {SceneryEvent} event
-   * @param {Trail} trail
    * @private
    */
-  start( event, trail ) {
+  start( event ) {
 
     let success = true;
 
@@ -190,10 +189,9 @@ class TermDragListener extends DragListener {
   /**
    * Called while termNode is being dragged.
    * @param {SceneryEvent} event
-   * @param {Trail} trail
    * @private
    */
-  drag( event, trail ) {
+  drag( event ) {
 
     // move the term
     this.term.moveTo( this.eventToPosition( event ) );
@@ -204,11 +202,9 @@ class TermDragListener extends DragListener {
 
   /**
    * Called at the end of a drag cycle, on pointer up.
-   * @param {SceneryEvent} event
-   * @param {Trail} trail
    * @private
    */
-  end( event, trail ) {
+  end() {
 
     // set term Properties at end of drag
     this.term.draggingProperty.value = false;
