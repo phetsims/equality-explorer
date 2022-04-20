@@ -365,7 +365,7 @@ class ObjectPickerInputListener extends FireListener {
           isOver && isPressed ? ButtonState.DOWN :
           !isOver && !isPressed ? ButtonState.UP :
           !isOver && isPressed ? ButtonState.OUT :
-          assert && assert( 'bad state' )
+          assert && assert( false, 'bad state' )
         );
       } );
 
