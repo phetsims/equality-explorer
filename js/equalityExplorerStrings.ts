@@ -9,33 +9,33 @@ import equalityExplorer from './equalityExplorer.js';
 
 type StringsType = {
   'equality-explorer': {
-    'title': string
-  },
+    'title': string;
+  };
   'screen': {
-    'basics': string,
-    'numbers': string,
-    'variables': string,
-    'operations': string,
-    'solveIt': string
-  },
-  'snapshots': string,
-  'equationOrInequality': string,
-  'variable': string,
-  'variables': string,
-  'x': string,
-  'questionMark': string,
-  'chooseYourLevel': string,
-  'solveFor': string,
-  'levels': string,
-  'level1Description': string,
-  'level2Description': string,
-  'level3Description': string,
-  'level4Description': string,
-  'level5Description': string,
-  'next': string,
-  'numberTooBig': string,
-  'leftSideFull': string,
-  'rightSideFull': string
+    'basics': string;
+    'numbers': string;
+    'variables': string;
+    'operations': string;
+    'solveIt': string;
+  };
+  'snapshots': string;
+  'equationOrInequality': string;
+  'variable': string;
+  'variables': string;
+  'x': string;
+  'questionMark': string;
+  'chooseYourLevel': string;
+  'solveFor': string;
+  'levels': string;
+  'level1Description': string;
+  'level2Description': string;
+  'level3Description': string;
+  'level4Description': string;
+  'level5Description': string;
+  'next': string;
+  'numberTooBig': string;
+  'leftSideFull': string;
+  'rightSideFull': string;
 };
 
 const equalityExplorerStrings = getStringModule( 'EQUALITY_EXPLORER' ) as StringsType;
