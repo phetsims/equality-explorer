@@ -146,14 +146,14 @@ const EqualityExplorerScreenIcons = {
     const variableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ), equalityExplorerStrings.x );
 
     // =
-    const greaterThanNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );
+    const equalsNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );
 
     // 6 on right side of equation
     const constantTermNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 6 ) );
 
     const iconNode = new HBox( {
       spacing: 5,
-      children: [ variableTermNode, greaterThanNode, constantTermNode ]
+      children: [ variableTermNode, equalsNode, constantTermNode ]
     } );
 
     return new ScreenIcon( iconNode, {

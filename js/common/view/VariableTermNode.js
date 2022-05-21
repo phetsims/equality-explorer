@@ -147,7 +147,7 @@ class VariableTermNode extends TermNode {
     assert && assert( options.spacing === undefined, 'VariableTermNode sets spacing' );
     options.spacing = coefficient.isInteger() ? options.integerXSpacing : options.fractionXSpacing;
 
-    return new HBox( options );
+    return new HBox( _.omit( options, 'margin' ) );
   }
 }
 
