@@ -16,7 +16,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
@@ -177,7 +177,7 @@ class UniversalOperationControl extends HBox {
 
     // Adjust the enabled state of the operand picker's increment/decrement arrows.
     // dispose not needed
-    Property.multilink( [ scene.operatorProperty, scene.operandProperty ],
+    Multilink.multilink( [ scene.operatorProperty, scene.operandProperty ],
 
       /**
        * @param {string} operator - see EqualityExplorerConstants.OPERATORS

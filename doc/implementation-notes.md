@@ -68,7 +68,7 @@ testing. Sim-specific query parameters are documented in
 
 **Assertions**: The implementation makes heavy use of `assert` to verify pre/post assumptions and perform type checking. If you are making modifications to this sim, do so with assertions enabled via the `ea` query parameter.
 
-**Memory management**: All calls that register a listener or observer have associated documentation indicating whether a corresponding call is required to deregister. This includes calls to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Property.multilink`, `new Multilink` and `Events.on`.  When deregistering is not needed, it's typically because an instance exists for the lifetime of the sim. Examples:
+**Memory management**: All calls that register a listener or observer have associated documentation indicating whether a corresponding call is required to deregister. This includes calls to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Multilink.multilink`, `new Multilink` and `Events.on`.  When deregistering is not needed, it's typically because an instance exists for the lifetime of the sim. Examples:
 
 ```js
 // unlink not needed

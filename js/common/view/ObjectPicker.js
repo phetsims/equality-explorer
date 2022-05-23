@@ -10,7 +10,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import EnumerationDeprecatedProperty from '../../../../axon/js/EnumerationDeprecatedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -304,14 +304,14 @@ class ObjectPicker extends Node {
     } );
 
     // update colors for increment components, unmultilink unnecessary
-    Property.multilink(
+    Multilink.multilink(
       [ incrementButtonStateProperty, options.incrementEnabledProperty ],
       ( buttonState, enabled ) => {
         updateColors( buttonState, enabled, incrementBackgroundNode, incrementArrow, backgroundColors, arrowColors );
       } );
 
     // update colors for decrement components, unmultilink unnecessary
-    Property.multilink(
+    Multilink.multilink(
       [ decrementButtonStateProperty, options.decrementEnabledProperty ],
       ( buttonState, enabled ) => {
         updateColors( buttonState, enabled, decrementBackgroundNode, decrementArrow, backgroundColors, arrowColors );
@@ -357,7 +357,7 @@ class ObjectPickerInputListener extends FireListener {
    */
   constructor( buttonStateProperty, options ) {
     super( options );
-    Property.multilink(
+    Multilink.multilink(
       [ this.isOverProperty, this.isPressedProperty ],
       ( isOver, isPressed ) => {
         buttonStateProperty.set(
