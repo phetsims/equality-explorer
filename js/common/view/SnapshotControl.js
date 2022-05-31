@@ -8,11 +8,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import { FireListener } from '../../../../scenery/js/imports.js';
-import { LayoutBox } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { FireListener, FlowBox, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import cameraSolidShape from '../../../../sherpa/js/fontawesome-5/cameraSolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -22,8 +18,6 @@ import EquationNode from './EquationNode.js';
 import VariableValuesNode from './VariableValuesNode.js';
 
 // constants
-const NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for equation, so bounds are valid
-const NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for variable values, so bounds are valid
 const EQUATION_FONT_SIZE = 22;
 const FRACTION_FONT_SIZE = 14;
 const SELECTION_RECTANGLE_X_MARGIN = 10;
@@ -63,12 +57,17 @@ class SnapshotControl extends Node {
       stroke: 'transparent'
     } );
 
+    // Placeholders for equation and variable values. These cannot be shared by instances of SnapshotControl,
+    // because FlowBox does not support scenery's DAG feature.
+    const NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for equation, so bounds are valid
+    const NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for variable values, so bounds are valid
+
     // placeholders, so that snapshotNode has valid bounds
     let equationNode = NO_EQUATION_NODE;
     let variableValuesNode = NO_VARIABLE_VALUES_NODE;
 
     // parent for the equation and optional display of variable values
-    const snapshotNode = new LayoutBox( {
+    const snapshotNode = new FlowBox( {
       orientation: options.orientation,
       children: [ equationNode ],
       spacing: ( options.orientation === 'horizontal' ) ? 20 : 8,
