@@ -31,7 +31,7 @@ class EqualityExplorerLevelSelectionButton extends LevelSelectionButton {
 
     super( icon, scene.scoreProperty, {
       baseColor: 'rgb( 191, 239, 254 )',
-      scoreDisplayConstructor: ScoreDisplayNumberAndStar,
+      createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty ),
       listener: () => {
         phet.log && phet.log( `Level${scene.challengeGenerator.level} button pressed` );
         sceneProperty.value = scene;

@@ -46,8 +46,10 @@ const ORANGE_NODE = new Image( orange_png, IMAGE_OPTIONS );
 const SPHERE_NODE = new Image( sphere_png, IMAGE_OPTIONS );
 const SQUARE_NODE = new Image( square_png, IMAGE_OPTIONS );
 const STAR_NODE = new StarNode( {
-  innerRadius: DIAMETER / 4,
-  outerRadius: DIAMETER / 2
+  starShapeOptions: {
+    innerRadius: DIAMETER / 4,
+    outerRadius: DIAMETER / 2
+  }
 } );
 const FACE_NODE = new FaceNode( DIAMETER, {
   headStroke: 'black'
