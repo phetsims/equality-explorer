@@ -7,12 +7,9 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import { HBox } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import { VBox } from '../../../../scenery/js/imports.js';
+import TrashButton from '../../../../scenery-phet/js/buttons/TrashButton.js';
+import { HBox, Path, Text, VBox } from '../../../../scenery/js/imports.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
-import trashAltRegularShape from '../../../../sherpa/js/fontawesome-5/trashAltRegularShape.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import HSeparator from '../../../../sun/js/HSeparator.js';
@@ -110,12 +107,8 @@ class SnapshotsAccordionBox extends AccordionBox {
     } );
 
     // Button to delete (trash) the selected snapshot
-    const trashIcon = new Path( trashAltRegularShape, {
-      scale: 0.034,
-      fill: 'black'
-    } );
-    const trashButton = new RectangularPushButton( {
-      content: trashIcon,
+    const trashButton = new TrashButton( {
+      iconOptions: { scale: 0.034 },
       baseColor: 'white',
       xMargin: 12,
       yMargin: 5,
