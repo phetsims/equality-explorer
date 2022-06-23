@@ -21,11 +21,11 @@ const FONT_SIZE = 24;
 class VariableValuesVisibleCheckbox extends Checkbox {
 
   /**
-   * @param {Variable[]} variables - the variables
    * @param {BooleanProperty} variableValueVisibleProperty - whether the variable value is visible
+   * @param {Variable[]} variables - the variables
    * @param {Object} [options]
    */
-  constructor( variables, variableValueVisibleProperty, options ) {
+  constructor( variableValueVisibleProperty, variables, options ) {
 
     // Design decision: If there are multiple variables, use the first variable to label the checkbox.
     // This decision was based on the limited space we have for the checkbox in Snapshots accordion box.
@@ -47,7 +47,7 @@ class VariableValuesVisibleCheckbox extends Checkbox {
       maxWidth: 100
     } );
 
-    super( contentNode, variableValueVisibleProperty, options );
+    super( variableValueVisibleProperty, contentNode, options );
   }
 }
 

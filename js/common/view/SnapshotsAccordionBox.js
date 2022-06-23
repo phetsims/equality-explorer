@@ -128,11 +128,10 @@ class SnapshotsAccordionBox extends AccordionBox {
 
     // Checkbox for making variable values visible.
     if ( options.variableValuesVisibleProperty ) {
-      buttonGroupChildren.push( new VariableValuesVisibleCheckbox(
-        scene.variables, options.variableValuesVisibleProperty, {
-          touchAreaXDilation: 5,
-          touchAreaYDilation: 5
-        } ) );
+      buttonGroupChildren.push( new VariableValuesVisibleCheckbox( options.variableValuesVisibleProperty, scene.variables, {
+        touchAreaXDilation: 5,
+        touchAreaYDilation: 5
+      } ) );
     }
 
     const buttonGroup = new HBox( {
