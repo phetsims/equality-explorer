@@ -12,10 +12,7 @@ import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { RichText } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { HBox, Node, RichText, Text } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
@@ -23,7 +20,7 @@ import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryP
 import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import EqualityExplorerLevelSelectionButton from './EqualityExplorerLevelSelectionButton.js';
-import InfoDialog from './InfoDialog.js';
+import SolveItInfoDialog from './SolveItInfoDialog.js';
 
 class LevelSelectionNode extends Node {
 
@@ -90,7 +87,7 @@ class LevelSelectionNode extends Node {
       iconFill: 'rgb( 41, 106, 163 )',
       maxHeight: 0.75 * chooseYourLevelNode.height,
       listener: () => {
-        infoDialog = infoDialog || new InfoDialog( model.challengeGenerators );
+        infoDialog = infoDialog || new SolveItInfoDialog( model.challengeGenerators );
         infoDialog.show();
       },
       left: chooseYourLevelNode.right + 20,
