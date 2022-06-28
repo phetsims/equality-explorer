@@ -1,4 +1,4 @@
-// Copyright 2018-2022, University of Colorado Boulder
+// Copyright 2022, University of Colorado Boulder
 
 /**
  * SolveItInfoDialog describes the game levels in the 'Solve It!' screen.
