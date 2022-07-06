@@ -23,10 +23,12 @@ class SceneRadioButtonGroup extends RectangularRadioButtonGroup {
 
       // RectangularRadioButtonGroup options
       orientation: 'horizontal',
-      baseColor: 'white',
       spacing: 8,
-      buttonContentXMargin: 15,
-      buttonContentYMargin: 12
+      radioButtonOptions: {
+        baseColor: 'white',
+        xMargin: 15,
+        yMargin: 12
+      }
     }, options );
 
     // describe a radio button for each scene

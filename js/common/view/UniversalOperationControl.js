@@ -66,12 +66,14 @@ class UniversalOperationControl extends HBox {
     const operatorRadioButtonGroup = new RectangularRadioButtonGroup( scene.operatorProperty, operatorItems, {
       orientation: 'horizontal',
       spacing: 2,
-      selectedLineWidth: 2,
-      buttonContentXMargin: 8,
-      buttonContentYMargin: 3,
-      baseColor: 'white',
       touchAreaXDilation: 0,
-      touchAreaYDilation: 15
+      touchAreaYDilation: 15,
+      radioButtonOptions: {
+        baseColor: 'white',
+        selectedLineWidth: 2,
+        xMargin: 8,
+        yMargin: 3
+      }
     } );
 
     /*
