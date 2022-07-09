@@ -13,7 +13,7 @@ import VariableTermNode from '../../common/view/VariableTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 
-class EqualityExplorerLevelSelectionButton extends LevelSelectionButton {
+class SolveItLevelSelectionButton extends LevelSelectionButton {
 
   /**
    * @param {SolveItScene} scene - the scene that will be selected by pressing this button
@@ -41,6 +41,6 @@ class EqualityExplorerLevelSelectionButton extends LevelSelectionButton {
   }
 }
 
-equalityExplorer.register( 'EqualityExplorerLevelSelectionButton', EqualityExplorerLevelSelectionButton );
+equalityExplorer.register( 'SolveItLevelSelectionButton', SolveItLevelSelectionButton );
 
-export default EqualityExplorerLevelSelectionButton;
+export default SolveItLevelSelectionButton;

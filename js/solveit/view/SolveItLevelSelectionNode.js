@@ -19,7 +19,7 @@ import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
-import EqualityExplorerLevelSelectionButton from './EqualityExplorerLevelSelectionButton.js';
+import SolveItLevelSelectionButton from './SolveItLevelSelectionButton.js';
 import SolveItInfoDialog from './SolveItInfoDialog.js';
 
 class SolveItLevelSelectionNode extends Node {
@@ -43,7 +43,7 @@ class SolveItLevelSelectionNode extends Node {
     // Level-selection buttons, ordered by ascending level number.
     const levelSelectionButtons = [];
     model.scenes.forEach( scene => {
-      levelSelectionButtons.push( new EqualityExplorerLevelSelectionButton( scene, model.sceneProperty ) );
+      levelSelectionButtons.push( new SolveItLevelSelectionButton( scene, model.sceneProperty ) );
     } );
 
     // Hide buttons for levels that are not included in gameLevels query parameter.
