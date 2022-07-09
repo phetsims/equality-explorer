@@ -14,7 +14,7 @@ import TransitionNode from '../../../../twixt/js/TransitionNode.js';
 import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import LevelSelectionNode from './LevelSelectionNode.js';
+import SolveItLevelSelectionNode from './SolveItLevelSelectionNode.js';
 import SolveItSceneNode from './SolveItSceneNode.js';
 
 // constants
@@ -42,7 +42,7 @@ class SolveItScreenView extends ScreenView {
     const gameAudioPlayer = new GameAudioPlayer();
 
     // UI for level selection and other game settings
-    const levelSelectionNode = new LevelSelectionNode( model, this.layoutBounds, {
+    const levelSelectionNode = new SolveItLevelSelectionNode( model, this.layoutBounds, {
       resetCallback: () => {
         model.reset();
         this.reset();
