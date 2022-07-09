@@ -12,15 +12,14 @@ import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, RichText, Text } from '../../../../scenery/js/imports.js';
+import { Node, RichText, Text } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
-import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
-import SolveItLevelSelectionButton from './SolveItLevelSelectionButton.js';
 import SolveItInfoDialog from './SolveItInfoDialog.js';
+import SolveItLevelSelectionButtonGroup from './SolveItLevelSelectionButtonGroup.js';
 
 class SolveItLevelSelectionNode extends Node {
 
@@ -35,39 +34,21 @@ class SolveItLevelSelectionNode extends Node {
       resetCallback: null // {function|null}
     }, options );
 
+    // Level-selection buttons
+    const levelSelectionButtonGroup = new SolveItLevelSelectionButtonGroup( model.sceneProperty, model.scenes, {
+      centerX: layoutBounds.centerX,
+      top: layoutBounds.centerY - 25 // top of buttons slightly above center
+    } );
+
     const textOptions = {
       font: new PhetFont( 50 ),
       maxWidth: 0.65 * layoutBounds.width
     };
 
-    // Level-selection buttons, ordered by ascending level number.
-    const levelSelectionButtons = [];
-    model.scenes.forEach( scene => {
-      levelSelectionButtons.push( new SolveItLevelSelectionButton( scene, model.sceneProperty ) );
-    } );
-
-    // Hide buttons for levels that are not included in gameLevels query parameter.
-    // We must still create these buttons so that we don't change the PhET-iO API.
-    // See https://github.com/phetsims/equality-explorer/issues/165
-    if ( EqualityExplorerQueryParameters.gameLevels ) {
-      for ( let i = 0; i < levelSelectionButtons.length; i++ ) {
-        const levelNumber = i + 1;
-        levelSelectionButtons[ i ].visible = EqualityExplorerQueryParameters.gameLevels.includes( levelNumber );
-      }
-    }
-
-    // Layout the level-selection buttons horizontally
-    const levelSelectionButtonsBox = new HBox( {
-      children: levelSelectionButtons,
-      spacing: 20,
-      centerX: layoutBounds.centerX,
-      top: layoutBounds.centerY - 25 // top of buttons slightly above center
-    } );
-
     // 'Choose Your Level', centered above level-selection buttons
     const chooseYourLevelNode = new Text( equalityExplorerStrings.chooseYourLevel, merge( {}, textOptions, {
-      centerX: levelSelectionButtonsBox.centerX,
-      bottom: levelSelectionButtonsBox.top - 65
+      centerX: levelSelectionButtonGroup.centerX,
+      bottom: levelSelectionButtonGroup.top - 65
     } ) );
 
     // 'Solve for x', centered above 'Choose You Level'
@@ -108,7 +89,7 @@ class SolveItLevelSelectionNode extends Node {
       solveForXNode,
       chooseYourLevelNode,
       infoButton,
-      levelSelectionButtonsBox,
+      levelSelectionButtonGroup,
       resetAllButton
     ];
 
