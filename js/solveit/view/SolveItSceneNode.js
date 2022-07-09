@@ -36,7 +36,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 import SolveItScene from '../model/SolveItScene.js';
 import ChallengeDerivationNode from './ChallengeDerivationNode.js';
-import EqualityExplorerRewardNode from './EqualityExplorerRewardNode.js';
+import SolveItRewardNode from './SolveItRewardNode.js';
 
 // constants
 const LEVEL_FONT = new PhetFont( 20 );
@@ -238,7 +238,7 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
     // Created on demand and reused, so we don't have to deal with buggy Dialog.dispose.
     let rewardDialog = null;
 
-    // @private {EqualityExplorerRewardNode} reward shown while rewardDialog is open
+    // @private {SolveItRewardNode} reward shown while rewardDialog is open
     this.rewardNode = null;
 
     // Property that controls opacity of smiley face
@@ -294,7 +294,7 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
           // When the dialog is shown, show the reward
           showCallback: () => {
             assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
-            this.rewardNode = new EqualityExplorerRewardNode( scene.challengeGenerator.level );
+            this.rewardNode = new SolveItRewardNode( scene.challengeGenerator.level );
             this.addChild( this.rewardNode );
           },
 

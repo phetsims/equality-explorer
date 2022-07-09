@@ -90,7 +90,7 @@ Instances of the types listed below are dynamic &mdash; they come and go during 
 - `UniversalOperation`
 - `UniversalOperationNode`
 - `Challenge`
-- `EqualityExplorerRewardNode`
+- `SolveItRewardNode`
 
 Instances of all other types are static. They are created at startup or lazily, and exist for the lifetime of the sim.
 
