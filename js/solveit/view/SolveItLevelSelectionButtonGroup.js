@@ -28,7 +28,7 @@ class SolveItLevelSelectionButtonGroup extends LevelSelectionButtonGroup {
       levelSelectionButtonOptions: {
         baseColor: 'rgb( 191, 239, 254 )'
       },
-      defaultLayoutNodeOptions: {
+      flowBoxOptions: {
         spacing: 20
       },
       gameLevels: EqualityExplorerQueryParameters.gameLevels
