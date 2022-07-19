@@ -38,9 +38,6 @@ class SolveItInfoDialog extends GameInfoDialog {
         spacing: 20,
         maxWidth: MAX_CONTENT_WIDTH // scale all descriptions uniformly
       },
-      descriptionTextOptions: {
-        font: new PhetFont( 24 )
-      },
       ySpacing: 20,
       bottomMargin: 20
     } );
