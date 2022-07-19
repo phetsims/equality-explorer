@@ -14,8 +14,6 @@ import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryP
 import equalityExplorer from '../../equalityExplorer.js';
 import equalityExplorerStrings from '../../equalityExplorerStrings.js';
 
-const MAX_CONTENT_WIDTH = 600;
-
 class SolveItInfoDialog extends GameInfoDialog {
 
   /**
@@ -26,8 +24,7 @@ class SolveItInfoDialog extends GameInfoDialog {
     const descriptions = challengeGenerators.map( challengeGenerator => challengeGenerator.description );
 
     const titleNode = new Text( equalityExplorerStrings.levels, {
-      font: new PhetFont( 32 ),
-      maxWidth: 0.75 * MAX_CONTENT_WIDTH
+      font: new PhetFont( 32 )
     } );
 
     super( descriptions, {
@@ -35,8 +32,7 @@ class SolveItInfoDialog extends GameInfoDialog {
       title: titleNode,
       vBoxOptions: {
         align: 'left',
-        spacing: 20,
-        maxWidth: MAX_CONTENT_WIDTH // scale all descriptions uniformly
+        spacing: 20
       },
       ySpacing: 20,
       bottomMargin: 20
