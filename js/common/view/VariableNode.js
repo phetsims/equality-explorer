@@ -8,9 +8,7 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { Image, Node, Text } from '../../../../scenery/js/imports.js';
 import ObjectVariable from '../../basics/model/ObjectVariable.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
