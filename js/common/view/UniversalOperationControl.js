@@ -69,9 +69,11 @@ class UniversalOperationControl extends HBox {
       touchAreaYDilation: 15,
       radioButtonOptions: {
         baseColor: 'white',
-        selectedLineWidth: 2,
         xMargin: 8,
-        yMargin: 3
+        yMargin: 3,
+        buttonAppearanceStrategyOptions: {
+          selectedLineWidth: 2
+        }
       }
     } );
 
