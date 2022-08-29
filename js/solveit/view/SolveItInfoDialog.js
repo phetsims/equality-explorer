@@ -30,10 +30,6 @@ class SolveItInfoDialog extends GameInfoDialog {
     super( descriptions, {
       gameLevels: EqualityExplorerQueryParameters.gameLevels,
       title: titleNode,
-      vBoxOptions: {
-        align: 'left',
-        spacing: 20
-      },
       ySpacing: 20,
       bottomMargin: 20
     } );
