@@ -28,7 +28,7 @@ simLauncher.launch( () => {
     new SolveItScreen()
   ];
 
-  const sim = new Sim( equalityExplorerStrings[ 'equality-explorer' ].title, screens, {
+  const sim = new Sim( equalityExplorerStrings[ 'equality-explorer' ].titleStringProperty, screens, {
     credits: EqualityExplorerConstants.CREDITS
   } );
   sim.start();
