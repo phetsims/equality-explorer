@@ -24,7 +24,7 @@ import Variable from '../../common/model/Variable.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
 // constants
 const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;
@@ -48,7 +48,7 @@ class OperationsScene extends EqualityExplorerScene {
       iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
     }, options );
 
-    const xVariable = new Variable( equalityExplorerStrings.x, {
+    const xVariable = new Variable( EqualityExplorerStrings.x, {
       range: options.variableRange
     } );
 

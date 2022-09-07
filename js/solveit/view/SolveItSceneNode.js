@@ -30,7 +30,7 @@ import EquationPanel from '../../common/view/EquationPanel.js';
 import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItScene from '../model/SolveItScene.js';
 import ChallengeDerivationNode from './ChallengeDerivationNode.js';
 import SolveItRewardNode from './SolveItRewardNode.js';
@@ -117,8 +117,8 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
     } );
 
     // 'Solve for x'
-    const solveForXText = StringUtils.fillIn( equalityExplorerStrings.solveFor, {
-      variable: MathSymbolFont.getRichTextMarkup( equalityExplorerStrings.x )
+    const solveForXText = StringUtils.fillIn( EqualityExplorerStrings.solveFor, {
+      variable: MathSymbolFont.getRichTextMarkup( EqualityExplorerStrings.x )
     } );
     const solveForXNode = new RichText( solveForXText, {
       font: new PhetFont( { size: 24, weight: 'bold' } ),
@@ -157,7 +157,7 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
 
     // Next button, takes us to the next challenge
     const nextButton = new RectangularPushButton( {
-      content: new Text( equalityExplorerStrings.next, {
+      content: new Text( EqualityExplorerStrings.next, {
         font: NEXT_BUTTON_FONT,
         maxWidth: 100 // determined empirically
       } ),

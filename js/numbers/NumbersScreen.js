@@ -12,7 +12,7 @@ import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
-import equalityExplorerStrings from '../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import NumbersModel from './model/NumbersModel.js';
 import NumbersScreenView from './view/NumbersScreenView.js';
 
@@ -26,7 +26,7 @@ class NumbersScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: equalityExplorerStrings.screen.numbers,
+      name: EqualityExplorerStrings.screen.numbers,
       backgroundColorProperty: new Property( EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createNumbersScreenIcon()
     }, options );

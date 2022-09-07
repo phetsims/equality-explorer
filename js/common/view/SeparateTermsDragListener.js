@@ -11,7 +11,7 @@
 import merge from '../../../../phet-core/js/merge.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import TermDragListener from './TermDragListener.js';
 
 class SeparateTermsDragListener extends TermDragListener {
@@ -84,7 +84,7 @@ class SeparateTermsDragListener extends TermDragListener {
 
       // opposite plate is full, cannot create inverse term, show 'Oops' message
       const thisIsLeft = ( this.termCreator.positivePosition.x < this.equivalentTermCreator.positivePosition.x );
-      const message = thisIsLeft ? equalityExplorerStrings.rightSideFull : equalityExplorerStrings.leftSideFull;
+      const message = thisIsLeft ? EqualityExplorerStrings.rightSideFull : EqualityExplorerStrings.leftSideFull;
       const oopsDialog = new OopsDialog( message );
       oopsDialog.show();
 

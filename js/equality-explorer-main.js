@@ -11,7 +11,7 @@ import simLauncher from '../../joist/js/simLauncher.js';
 import soundManager from '../../tambo/js/soundManager.js';
 import BasicsScreen from './basics/BasicsScreen.js';
 import EqualityExplorerConstants from './common/EqualityExplorerConstants.js';
-import equalityExplorerStrings from './equalityExplorerStrings.js';
+import EqualityExplorerStrings from './EqualityExplorerStrings.js';
 import NumbersScreen from './numbers/NumbersScreen.js';
 import OperationsScreen from './operations/OperationsScreen.js';
 import SolveItScreen from './solveit/SolveItScreen.js';
@@ -28,7 +28,7 @@ simLauncher.launch( () => {
     new SolveItScreen()
   ];
 
-  const sim = new Sim( equalityExplorerStrings[ 'equality-explorer' ].titleStringProperty, screens, {
+  const sim = new Sim( EqualityExplorerStrings[ 'equality-explorer' ].titleStringProperty, screens, {
     credits: EqualityExplorerConstants.CREDITS
   } );
   sim.start();

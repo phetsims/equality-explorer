@@ -26,7 +26,7 @@ import ConstantTermNode from '../../common/view/ConstantTermNode.js';
 import UniversalOperationNode from '../../common/view/UniversalOperationNode.js';
 import VariableTermNode from '../../common/view/VariableTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import ChallengeGenerator from '../model/ChallengeGenerator.js';
 
 // constants
@@ -178,7 +178,7 @@ function createNodes5() {
  * @returns {Node}
  */
 function createVariableTermNode( coefficient ) {
-  return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), equalityExplorerStrings.x, {
+  return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), EqualityExplorerStrings.x, {
     diameter: DIAMETER,
     showOne: true // show coefficient for '1x'
   } );

@@ -13,7 +13,7 @@ import ScoreDisplayNumberAndStar from '../../../../vegas/js/ScoreDisplayNumberAn
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import VariableTermNode from '../../common/view/VariableTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
 class SolveItLevelSelectionButtonGroup extends LevelSelectionButtonGroup {
 
@@ -38,7 +38,7 @@ class SolveItLevelSelectionButtonGroup extends LevelSelectionButtonGroup {
     const items = scenes.map( scene => {
       return {
         icon: VariableTermNode.createInteractiveTermNode(
-          Fraction.fromInteger( scene.challengeGenerator.level ), equalityExplorerStrings.x, {
+          Fraction.fromInteger( scene.challengeGenerator.level ), EqualityExplorerStrings.x, {
             diameter: 50,
             margin: 15,
             showOne: true

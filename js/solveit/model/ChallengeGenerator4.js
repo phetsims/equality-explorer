@@ -11,7 +11,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 
@@ -39,7 +39,7 @@ const D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 class ChallengeGenerator4 extends ChallengeGenerator {
 
   constructor() {
-    super( 4, equalityExplorerStrings.level4Description );
+    super( 4, EqualityExplorerStrings.level4Description );
 
     // @private methods for generating the 2 types of challenges
     this.challengeTypeMethods = [ this.nextType1.bind( this ), this.nextType2.bind( this ) ];

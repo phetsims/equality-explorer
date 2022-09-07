@@ -12,7 +12,7 @@ import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
-import equalityExplorerStrings from '../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import VariablesModel from './model/VariablesModel.js';
 import VariablesScreenView from './view/VariablesScreenView.js';
 
@@ -26,7 +26,7 @@ class VariablesScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: equalityExplorerStrings.screen.variables,
+      name: EqualityExplorerStrings.screen.variables,
       backgroundColorProperty: new Property( EqualityExplorerColors.VARIABLES_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createVariablesScreenIcon()
     }, options );

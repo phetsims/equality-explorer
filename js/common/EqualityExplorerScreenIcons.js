@@ -16,7 +16,7 @@ import phetGirlJugglingStars_png from '../../../vegas/images/phetGirlJugglingSta
 import appleBig_png from '../../images/appleBig_png.js';
 import orangeBig_png from '../../images/orangeBig_png.js';
 import equalityExplorer from '../equalityExplorer.js';
-import equalityExplorerStrings from '../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import EqualityExplorerColors from './EqualityExplorerColors.js';
 import ConstantTermNode from './view/ConstantTermNode.js';
 import HaloNode from './view/HaloNode.js';
@@ -101,8 +101,8 @@ const EqualityExplorerScreenIcons = {
   createVariablesScreenIcon: function() {
 
     // x and -x on left side of the equation
-    const leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), equalityExplorerStrings.x );
-    const leftNegativeXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ), equalityExplorerStrings.x );
+    const leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), EqualityExplorerStrings.x );
+    const leftNegativeXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ), EqualityExplorerStrings.x );
     const leftGroupNode = new VBox( {
       children: [ leftPositiveXNode, leftNegativeXNode ]
     } );
@@ -114,7 +114,7 @@ const EqualityExplorerScreenIcons = {
 
     // 1 and x on right side of the equation
     const rightPositiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
-    const rightPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), equalityExplorerStrings.x );
+    const rightPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), EqualityExplorerStrings.x );
     const rightGroupNode = new VBox( {
       children: [ rightPositiveOneNode, rightPositiveXNode ]
     } );
@@ -139,7 +139,7 @@ const EqualityExplorerScreenIcons = {
     const operatorOptions = { font: new PhetFont( 30 ) };
 
     // 3x on left side of equation
-    const variableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ), equalityExplorerStrings.x );
+    const variableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ), EqualityExplorerStrings.x );
 
     // =
     const equalsNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );

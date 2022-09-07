@@ -12,13 +12,13 @@ import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
 class VariablesScene extends EqualityExplorerScene {
 
   constructor() {
 
-    const xVariable = new Variable( equalityExplorerStrings.x, {
+    const xVariable = new Variable( EqualityExplorerStrings.x, {
       range: EqualityExplorerConstants.VARIABLE_RANGE
     } );
 

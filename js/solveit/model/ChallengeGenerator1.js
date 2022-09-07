@@ -12,7 +12,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 
@@ -48,7 +48,7 @@ class ChallengeGenerator1 extends ChallengeGenerator {
       debugLevel: null
     }, options );
 
-    super( 1, equalityExplorerStrings.level1Description );
+    super( 1, EqualityExplorerStrings.level1Description );
 
     // @private
     this.debugLevel = options.debugLevel || this.level;

@@ -12,7 +12,7 @@ import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
-import equalityExplorerStrings from '../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import OperationsModel from './model/OperationsModel.js';
 import OperationsScreenView from './view/OperationsScreenView.js';
 
@@ -26,7 +26,7 @@ class OperationsScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: equalityExplorerStrings.screen.operations,
+      name: EqualityExplorerStrings.screen.operations,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createOperationsScreenIcon()
     }, options );

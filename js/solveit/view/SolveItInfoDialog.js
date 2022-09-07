@@ -12,7 +12,7 @@ import { Text } from '../../../../scenery/js/imports.js';
 import GameInfoDialog from '../../../../vegas/js/GameInfoDialog.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
 class SolveItInfoDialog extends GameInfoDialog {
 
@@ -23,7 +23,7 @@ class SolveItInfoDialog extends GameInfoDialog {
 
     const descriptions = challengeGenerators.map( challengeGenerator => challengeGenerator.description );
 
-    const titleNode = new Text( equalityExplorerStrings.levels, {
+    const titleNode = new Text( EqualityExplorerStrings.levels, {
       font: new PhetFont( 32 )
     } );
 

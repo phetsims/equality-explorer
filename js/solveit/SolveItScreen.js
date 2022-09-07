@@ -12,7 +12,7 @@ import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
-import equalityExplorerStrings from '../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import SolveItModel from './model/SolveItModel.js';
 import SolveItScreenView from './view/SolveItScreenView.js';
 
@@ -26,7 +26,7 @@ class SolveItScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: equalityExplorerStrings.screen.solveIt,
+      name: EqualityExplorerStrings.screen.solveIt,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
       navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon()

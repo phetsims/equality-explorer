@@ -9,14 +9,14 @@
 
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
 
 class ChallengeGenerator2 extends ChallengeGenerator {
 
   constructor() {
-    super( 2, equalityExplorerStrings.level2Description );
+    super( 2, EqualityExplorerStrings.level2Description );
 
     // @private ChallengeGenerator2 is a variation and subset of ChallengeGenerator1, so we'll use composition
     this.challengeGenerator1 = new ChallengeGenerator1( {

@@ -63,8 +63,8 @@ type StringsType = {
   'rightSideFullStringProperty': TReadOnlyProperty<string>;
 };
 
-const equalityExplorerStrings = getStringModule( 'EQUALITY_EXPLORER' ) as StringsType;
+const EqualityExplorerStrings = getStringModule( 'EQUALITY_EXPLORER' ) as StringsType;
 
-equalityExplorer.register( 'equalityExplorerStrings', equalityExplorerStrings );
+equalityExplorer.register( 'EqualityExplorerStrings', EqualityExplorerStrings );
 
-export default equalityExplorerStrings;
+export default EqualityExplorerStrings;

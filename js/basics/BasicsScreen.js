@@ -12,7 +12,7 @@ import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
-import equalityExplorerStrings from '../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import BasicsModel from './model/BasicsModel.js';
 import BasicsScreenView from './view/BasicsScreenView.js';
 
@@ -26,7 +26,7 @@ class BasicsScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: equalityExplorerStrings.screen.basics,
+      name: EqualityExplorerStrings.screen.basics,
       backgroundColorProperty: new Property( EqualityExplorerColors.BASICS_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createBasicsScreenIcon()
     }, options );

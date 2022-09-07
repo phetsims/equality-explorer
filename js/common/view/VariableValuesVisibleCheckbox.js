@@ -11,7 +11,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, Text } from '../../../../scenery/js/imports.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import VariableNode from './VariableNode.js';
 
 // constants
@@ -37,7 +37,7 @@ class VariableValuesVisibleCheckbox extends Checkbox {
     } );
 
     // '= ?' in normal font (no i18n requirements here, since this is an equation)
-    const rightNode = new Text( ` ${MathSymbols.EQUAL_TO} ${equalityExplorerStrings.questionMark}`, {
+    const rightNode = new Text( ` ${MathSymbols.EQUAL_TO} ${EqualityExplorerStrings.questionMark}`, {
       font: new PhetFont( FONT_SIZE )
     } );
 

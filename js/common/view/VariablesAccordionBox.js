@@ -14,7 +14,7 @@ import { HBox, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import VariableNode from './VariableNode.js';
 
@@ -29,7 +29,7 @@ class VariablesAccordionBox extends AccordionBox {
     options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // this accordion box is designed to be a fixed size, regardless of its content
-      titleString: ( variables.length > 1 ) ? equalityExplorerStrings.variables : equalityExplorerStrings.variable,
+      titleString: ( variables.length > 1 ) ? EqualityExplorerStrings.variables : EqualityExplorerStrings.variable,
       fixedWidth: 100,
       fixedHeight: 75,
       fontSize: 24,

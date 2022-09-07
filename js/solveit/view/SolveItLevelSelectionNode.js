@@ -17,7 +17,7 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItInfoDialog from './SolveItInfoDialog.js';
 import SolveItLevelSelectionButtonGroup from './SolveItLevelSelectionButtonGroup.js';
 
@@ -46,14 +46,14 @@ class SolveItLevelSelectionNode extends Node {
     };
 
     // 'Choose Your Level', centered above level-selection buttons
-    const chooseYourLevelNode = new Text( equalityExplorerStrings.chooseYourLevel, merge( {}, textOptions, {
+    const chooseYourLevelNode = new Text( EqualityExplorerStrings.chooseYourLevel, merge( {}, textOptions, {
       centerX: levelSelectionButtonGroup.centerX,
       bottom: levelSelectionButtonGroup.top - 65
     } ) );
 
     // 'Solve for x', centered above 'Choose You Level'
-    const solveForXText = StringUtils.fillIn( equalityExplorerStrings.solveFor, {
-      variable: MathSymbolFont.getRichTextMarkup( equalityExplorerStrings.x )
+    const solveForXText = StringUtils.fillIn( EqualityExplorerStrings.solveFor, {
+      variable: MathSymbolFont.getRichTextMarkup( EqualityExplorerStrings.x )
     } );
     const solveForXNode = new RichText( solveForXText, merge( {}, textOptions, {
       centerX: chooseYourLevelNode.centerX,

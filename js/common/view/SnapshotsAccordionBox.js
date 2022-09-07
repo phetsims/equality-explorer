@@ -14,7 +14,7 @@ import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import HSeparator from '../../../../sun/js/HSeparator.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import equalityExplorerStrings from '../../equalityExplorerStrings.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import SnapshotControl from './SnapshotControl.js';
@@ -74,7 +74,7 @@ class SnapshotsAccordionBox extends AccordionBox {
 
     // title
     assert && assert( !options.titleNode, 'SnapshotsAccordionBox sets titleNode' );
-    options.titleNode = new Text( equalityExplorerStrings.snapshots, {
+    options.titleNode = new Text( EqualityExplorerStrings.snapshots, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
     } );
