@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-//TODO consolidate with NumberPicker when needed by another sim, see https://github.com/phetsims/scenery-phet/issues/345
 /**
  * User-interface component for picking one of several values. The values are arbitry Objects.
  *
