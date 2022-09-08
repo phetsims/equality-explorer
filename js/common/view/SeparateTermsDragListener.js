@@ -1,4 +1,4 @@
-// Copyright 2018-2020, University of Colorado Boulder
+// Copyright 2018-2022, University of Colorado Boulder
 
 /**
  * Drag listener used when like terms occupy separate cells on a plate.
