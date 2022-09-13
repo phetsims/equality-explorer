@@ -12,7 +12,7 @@ import { HBox, Path, Text, VBox } from '../../../../scenery/js/imports.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import HSeparator from '../../../../sun/js/HSeparator.js';
+import HSeparatorDeprecated from '../../../../sun/js/HSeparatorDeprecated.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
@@ -146,7 +146,7 @@ class SnapshotsAccordionBox extends AccordionBox {
       spacing: 10,
       children: [
         snapshotsVBox,
-        new HSeparator( contentWidth, SEPARATOR_OPTIONS ),
+        new HSeparatorDeprecated( contentWidth, SEPARATOR_OPTIONS ),
         buttonGroup
       ]
     } );
