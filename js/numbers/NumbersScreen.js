@@ -26,7 +26,7 @@ class NumbersScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: EqualityExplorerStrings.screen.numbers,
+      name: EqualityExplorerStrings.screen.numbersStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createNumbersScreenIcon()
     }, options );

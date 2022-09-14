@@ -26,7 +26,7 @@ class OperationsScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: EqualityExplorerStrings.screen.operations,
+      name: EqualityExplorerStrings.screen.operationsStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createOperationsScreenIcon()
     }, options );

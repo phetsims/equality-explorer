@@ -26,7 +26,7 @@ class VariablesScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: EqualityExplorerStrings.screen.variables,
+      name: EqualityExplorerStrings.screen.variablesStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.VARIABLES_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createVariablesScreenIcon()
     }, options );

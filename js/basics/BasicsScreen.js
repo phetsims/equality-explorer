@@ -26,7 +26,7 @@ class BasicsScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: EqualityExplorerStrings.screen.basics,
+      name: EqualityExplorerStrings.screen.basicsStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.BASICS_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createBasicsScreenIcon()
     }, options );

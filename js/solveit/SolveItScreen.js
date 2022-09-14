@@ -26,7 +26,7 @@ class SolveItScreen extends EqualityExplorerScreen {
     options = merge( {
 
       // EqualityExplorerScreen options
-      name: EqualityExplorerStrings.screen.solveIt,
+      name: EqualityExplorerStrings.screen.solveItStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
       navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon()
