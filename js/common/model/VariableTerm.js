@@ -1,5 +1,6 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Term whose value is a coefficient times some variable value.
  *
