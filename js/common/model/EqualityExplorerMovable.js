@@ -1,5 +1,6 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * A model element that is movable. It has a current position and a desired destination.
  *
