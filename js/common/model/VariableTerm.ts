@@ -1,6 +1,5 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Term whose value is a coefficient times some variable value.
  *
@@ -8,114 +7,100 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from './ConstantTerm.js';
-import Term from './Term.js';
+import Term, { TermOptions } from './Term.js';
+import UniversalOperation from './UniversalOperation.js';
+import Variable from './Variable.js';
 
-class VariableTerm extends Term {
+type SelfOptions = {
+  coefficient?: Fraction;
+};
+
+type VariableTermOptions = SelfOptions & TermOptions;
+
+export default class VariableTerm extends Term {
+
+  public readonly coefficient: Fraction;
+  public readonly variable: Variable;
 
   /**
-   * @param {Variable} variable - the variable for this term, e.g. 'x'
-   * @param {Object} [options]
+   * @param variable - the variable for this term, e.g. 'x'
+   * @param [providedOptions]
    */
-  constructor( variable, options ) {
+  public constructor( variable: Variable, providedOptions?: VariableTermOptions ) {
 
-    options = merge( {
+    const options = optionize<VariableTermOptions, SelfOptions, TermOptions>()( {
+
+      // SelfOptions
       coefficient: EqualityExplorerConstants.DEFAULT_COEFFICIENT
-    }, options );
+    }, providedOptions );
 
-    assert && assert( options.coefficient instanceof Fraction, `invalid coefficient: ${options.coefficient}` );
     assert && assert( options.coefficient.isReduced(), `coefficient must be reduced: ${options.coefficient}` );
-    assert && assert( !options.constantValue, 'constantValue is a ConstantTerm option' );
 
     super( options.coefficient, options );
 
-    // @public (read-only) {Fraction}
     this.coefficient = options.coefficient;
-
-    // @public (read-only)
     this.variable = variable;
   }
 
   /**
    * For debugging only. Do not rely on the format of toString.
-   * @returns {string}
-   * @public
    */
-  toString() {
+  public override toString(): string {
     return `VariableTerm: ${this.coefficient} ${this.variable}`;
   }
 
   /**
    * Creates the options that would be needed to instantiate a copy of this object.
-   * @returns {Object}
-   * @protected
-   * @override
    */
-  copyOptions() {
-    return merge( {}, super.copyOptions(), {
+  public override copyOptions(): VariableTermOptions {
+    return combineOptions<VariableTermOptions>( {}, super.copyOptions(), {
       coefficient: this.coefficient
     } );
   }
 
   /**
    * Adds a variable term to this term to create a new term.
-   * @param {VariableTerm} term
-   * @param {Object} [options] - same as constructor
-   * @returns {VariableTerm}
-   * @public
    */
-  plus( term, options ) {
+  public plus( term: VariableTerm, providedOptions?: VariableTermOptions ): VariableTerm {
     assert && assert( this.isLikeTerm( term ), `not a like term: ${term}` );
-    return this.copy( merge( {
+    return this.copy( combineOptions<VariableTermOptions>( {
       coefficient: this.coefficient.plus( term.coefficient ).reduced()
-    }, options ) );
+    }, providedOptions ) );
   }
 
   /**
    * Subtracts a variable term from this term to create a new term.
-   * @param {VariableTerm} term
-   * @param {Object} [options] - same as constructor
-   * @returns {VariableTerm}
-   * @public
    */
-  minus( term, options ) {
+  public minus( term: VariableTerm, providedOptions?: VariableTermOptions ): VariableTerm {
     assert && assert( this.isLikeTerm( term ), `not a like term: ${term}` );
-    return this.copy( merge( {
+    return this.copy( combineOptions<VariableTermOptions>( {
       coefficient: this.coefficient.minus( term.coefficient ).reduced()
-    }, options ) );
+    }, providedOptions ) );
   }
 
   /**
    * Multiplies this term by a constant term to create a new term.
-   * @param {ConstantTerm} term
-   * @param {Object} [options] - same as constructor
-   * @returns {VariableTerm}
-   * @public
    */
-  times( term, options ) {
-    assert && assert( term instanceof ConstantTerm, `invalid term: ${term}` );
-    return this.copy( merge( {
+  public times( term: ConstantTerm, providedOptions?: VariableTermOptions ): VariableTerm {
+    return this.copy( combineOptions<VariableTermOptions>( {
       coefficient: this.coefficient.times( term.constantValue ).reduced()
-    }, options ) );
+    }, providedOptions ) );
   }
 
   /**
    * Divides this term by a constant term to create a new term.
-   * @param {ConstantTerm} term
-   * @param {Object} [options] - same as constructor
-   * @returns {VariableTerm}
-   * @public
    */
-  divided( term, options ) {
-    assert && assert( term instanceof ConstantTerm, `invalid term: ${term}` );
+  public divided( term: ConstantTerm, providedOptions?: VariableTermOptions ): VariableTerm {
     assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-    return this.copy( merge( {
+    return this.copy( combineOptions<VariableTermOptions>( {
       coefficient: this.coefficient.divided( term.constantValue ).reduced()
-    }, options ) );
+    }, providedOptions ) );
   }
 
   //-------------------------------------------------------------------------------------------------
@@ -124,60 +109,40 @@ class VariableTerm extends Term {
 
   /**
    * Creates a copy of this term, with modifications through options.
-   * @param {Object} [options] - same as constructor options
-   * @returns {VariableTerm}
-   * @public
-   * @override
    */
-  copy( options ) {
-    return new VariableTerm( this.variable, merge( this.copyOptions(), options ) );
+  public override copy( providedOptions?: VariableTermOptions ): VariableTerm {
+    return new VariableTerm( this.variable, merge( this.copyOptions(), providedOptions ) );
   }
 
   /**
    * Gets the weight of this term.
-   * @returns {Fraction}
-   * @public
-   * @override
    */
-  get weight() {
+  public override get weight(): Fraction {
     return this.coefficient.timesInteger( this.variable.valueProperty.value ).reduced();
   }
 
   /**
    * Are this term and the specified term 'like terms'?
    * Variable terms are 'like' if they are associated with the same variable.
-   * @param {Term} term
-   * @returns {boolean}
-   * @public
-   * @override
    */
-  isLikeTerm( term ) {
+  public override isLikeTerm( term: Term ): boolean {
     return ( term instanceof VariableTerm ) && ( term.variable === this.variable );
   }
 
   /**
    * Creates a snapshot of this term.
    * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
-   * @returns {Object}
-   * @public
-   * @override
    */
-  createSnapshot() {
-    const supertypeOptions = super.createSnapshot();
-    return merge( {}, supertypeOptions, {
+  public override createSnapshot(): VariableTermOptions {
+    return combineOptions<VariableTermOptions>( {}, super.createSnapshot(), {
       coefficient: this.coefficient
     } );
   }
 
   /**
    * Applies an operation to this term, resulting in a new term.
-   * @param {UniversalOperation} operation
-   * @param {Object} [options] - same as constructor
-   * @returns {VariableTerm|null} - null if the operation is not applicable to this term.
-   * @public
-   * @override
    */
-  applyOperation( operation, options ) {
+  public applyOperation( operation: UniversalOperation, providedOptions?: VariableTermOptions ): VariableTerm | null {
 
     let term = null;
 
@@ -185,20 +150,20 @@ class VariableTerm extends Term {
 
       // plus or minus a constant
       if ( operation.operator === MathSymbols.PLUS ) {
-        term = this.plus( operation.operand, options );
+        term = this.plus( operation.operand, providedOptions );
       }
       else if ( operation.operator === MathSymbols.MINUS ) {
-        term = this.minus( operation.operand, options );
+        term = this.minus( operation.operand, providedOptions );
       }
     }
     else if ( operation.operand instanceof ConstantTerm ) {
 
       // times or divide by a variable
       if ( operation.operator === MathSymbols.TIMES ) {
-        term = this.times( operation.operand, options );
+        term = this.times( operation.operand, providedOptions );
       }
       else if ( operation.operator === MathSymbols.DIVIDE ) {
-        term = this.divided( operation.operand, options );
+        term = this.divided( operation.operand, providedOptions );
       }
     }
 
@@ -207,5 +172,3 @@ class VariableTerm extends Term {
 }
 
 equalityExplorer.register( 'VariableTerm', VariableTerm );
-
-export default VariableTerm;

@@ -1,120 +1,96 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Term whose value is a constant.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
-import Term from './Term.js';
+import Term, { TermOptions } from './Term.js';
+import UniversalOperation from './UniversalOperation.js';
 
-class ConstantTerm extends Term {
+type SelfOptions = {
+  constantValue?: Fraction;
+};
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+type ConstantTermOptions = SelfOptions & TermOptions;
 
-    options = merge( {
+export default class ConstantTerm extends Term {
+
+  public readonly constantValue: Fraction;
+
+  public constructor( providedOptions?: ConstantTermOptions ) {
+
+    const options = optionize<ConstantTermOptions, SelfOptions, TermOptions>()( {
+
+      // SelfOptions
       constantValue: EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE
-    }, options );
+    }, providedOptions );
 
-    assert && assert( options.constantValue instanceof Fraction, `invalid constantValue: ${options.constantValue}` );
     assert && assert( options.constantValue.isReduced(), `constantValue must be reduced: ${options.constantValue}` );
-    assert && assert( !options.coefficient, 'coefficient is a VariableTerm option' );
 
     super( options.constantValue, options );
 
-    // @public (read-only) {Fraction}
     this.constantValue = options.constantValue;
   }
 
   /**
    * For debugging only. Do not rely on the format of toString.
-   * @returns {string}
-   * @public
    */
-  toString() {
+  public override toString(): string {
     return `ConstantTerm: ${this.constantValue}`;
   }
 
   /**
    * Creates the options that would be needed to instantiate a copy of this object.
-   * @returns {Object}
-   * @protected
-   * @override
    */
-  copyOptions() {
-    return merge( {}, super.copyOptions(), {
+  public override copyOptions(): ConstantTermOptions {
+    return combineOptions<ConstantTermOptions>( {}, super.copyOptions(), {
       constantValue: this.constantValue
     } );
   }
 
   /**
    * Adds a term to this term to create a new term.
-   * @param {ConstantTerm} term
-   * @param {Object} [options] - same as constructor
-   * @returns {ConstantTerm}
-   * @public
    */
-  plus( term, options ) {
-    options = options || {};
-    assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
-    return this.copy( merge( {
+  public plus( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
+    return this.copy( combineOptions<ConstantTermOptions>( {
       constantValue: this.constantValue.plus( term.constantValue ).reduce()
-    }, options ) );
+    }, providedOptions ) );
   }
 
   /**
    * Subtracts a term from this term to create a new term.
-   * @param {ConstantTerm} term
-   * @param {Object} [options] - same as constructor
-   * @returns {ConstantTerm}
-   * @public
    */
-  minus( term, options ) {
-    options = options || {};
-    assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
-    return this.copy( merge( {
+  public minus( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
+    return this.copy( combineOptions<ConstantTermOptions>( {
       constantValue: this.constantValue.minus( term.constantValue ).reduce()
-    }, options ) );
+    }, providedOptions ) );
   }
 
   /**
    * Multiplies this term by another term to create a new term.
-   * @param {ConstantTerm} term
-   * @param {Object} [options] - same as constructor
-   * @returns {ConstantTerm}
-   * @public
    */
-  times( term, options ) {
-    options = options || {};
-    assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
-    return this.copy( merge( {
+  public times( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
+    return this.copy( combineOptions<ConstantTermOptions>( {
       constantValue: this.constantValue.times( term.constantValue ).reduce()
-    }, options ) );
+    }, providedOptions ) );
   }
 
   /**
    * Divides this term by another term to create a new term.
-   * @param {ConstantTerm} term
-   * @param {Object} [options] - same as constructor
-   * @returns {ConstantTerm}
-   * @public
    */
-  divided( term, options ) {
-    options = options || {};
-    assert && assert( !options.constantValue, 'ConstantTerm sets constantValue' );
+  public divided( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
     assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-    return this.copy( merge( {
+    return this.copy( combineOptions<ConstantTermOptions>( {
       constantValue: this.constantValue.divided( term.constantValue ).reduce()
-    }, options ) );
+    }, providedOptions ) );
   }
 
   //-------------------------------------------------------------------------------------------------
@@ -123,59 +99,40 @@ class ConstantTerm extends Term {
 
   /**
    * Creates a copy of this term, with modifications through options.
-   * @param {Object} [options] - same as constructor options
-   * @returns {ConstantTerm}
-   * @public
-   * @override
    */
-  copy( options ) {
-    return new ConstantTerm( merge( this.copyOptions(), options ) );
+  public override copy( providedOptions?: ConstantTermOptions ): ConstantTerm {
+    return new ConstantTerm( combineOptions<ConstantTermOptions>( this.copyOptions(), providedOptions ) );
   }
 
   /**
    * The weight of a constant term is the same as its value.
-   * @returns {Fraction}
-   * @public
-   * @override
    */
-  get weight() {
+  public override get weight(): Fraction {
     return this.constantValue;
   }
 
   /**
-   * Are this term and the specified term 'like terms'?
-   * All constant terms are like terms.
-   * @param {Term} term
-   * @returns {boolean}
-   * @public
-   * @override
+   * Are this term and the specified term 'like terms'? All constant terms are like terms.
    */
-  isLikeTerm( term ) {
+  public override isLikeTerm( term: Term ): boolean {
     return ( term instanceof ConstantTerm );
   }
 
   /**
    * Creates a snapshot of this term.
    * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
-   * @returns {Object}
-   * @public
-   * @override
    */
-  createSnapshot() {
-    return merge( {}, super.createSnapshot(), {
+  public override createSnapshot(): ConstantTermOptions {
+    return combineOptions<ConstantTermOptions>( {}, super.createSnapshot(), {
       constantValue: this.constantValue
     } );
   }
 
   /**
    * Applies an operation to this term, resulting in a new term.
-   * @param {UniversalOperation} operation
-   * @param {Object} [options] - same as constructor
-   * @returns {ConstantTerm|null} - null if the operation is not applicable to this term.
-   * @public
-   * @override
+   * Returns null if the operation is not applicable to this term.
    */
-  applyOperation( operation, options ) {
+  public override applyOperation( operation: UniversalOperation, providedOptions?: ConstantTermOptions ): ConstantTerm | null {
 
     let term = null;
 
@@ -183,16 +140,16 @@ class ConstantTerm extends Term {
     if ( operation.operand instanceof ConstantTerm ) {
 
       if ( operation.operator === MathSymbols.PLUS ) {
-        term = this.plus( operation.operand, options );
+        term = this.plus( operation.operand, providedOptions );
       }
       else if ( operation.operator === MathSymbols.MINUS ) {
-        term = this.minus( operation.operand, options );
+        term = this.minus( operation.operand, providedOptions );
       }
       else if ( operation.operator === MathSymbols.TIMES ) {
-        term = this.times( operation.operand, options );
+        term = this.times( operation.operand, providedOptions );
       }
       else if ( operation.operator === MathSymbols.DIVIDE ) {
-        term = this.divided( operation.operand, options );
+        term = this.divided( operation.operand, providedOptions );
       }
     }
 
@@ -201,5 +158,3 @@ class ConstantTerm extends Term {
 }
 
 equalityExplorer.register( 'ConstantTerm', ConstantTerm );
-
-export default ConstantTerm;

@@ -145,7 +145,7 @@ export default abstract class Term extends EqualityExplorerMovable {
   /**
    * Creates a copy of this term, with modifications through options.
    */
-  public abstract copy( options: TermOptions ): Term;
+  public abstract copy( providedOptions: TermOptions ): Term;
 
   /**
    * Gets the weight of this term.
@@ -162,7 +162,7 @@ export default abstract class Term extends EqualityExplorerMovable {
    * Applies an operation to this term, resulting in a new term.
    * Returns null if the operation is not applicable to this term.
    */
-  public abstract applyOperation( operation: UniversalOperation, options: TermOptions ): Term | null;
+  public abstract applyOperation( operation: UniversalOperation, providedOptions: TermOptions ): Term | null;
 }
 
 equalityExplorer.register( 'Term', Term );
