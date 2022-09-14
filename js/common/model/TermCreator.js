@@ -417,7 +417,7 @@ class TermCreator {
 
   /**
    * Gets the positive terms on the plate.
-   * @returns {Term[]}
+   * @returns {equality-explorer.Term[]}
    * @public
    */
   getPositiveTermsOnPlate() {
@@ -426,7 +426,7 @@ class TermCreator {
 
   /**
    * Gets the negative terms on the plate.
-   * @returns {Term[]}
+   * @returns {equality-explorer.Term[]}
    * @public
    */
   getNegativeTermsOnPlate() {
