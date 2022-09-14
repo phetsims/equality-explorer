@@ -1,6 +1,5 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Data structure that describes a 'universal operation', a term specific to this sim,
  * an operation that will be applied to both sides of the equation.
@@ -12,41 +11,36 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from './ConstantTerm.js';
+import Term from './Term.js';
 import VariableTerm from './VariableTerm.js';
 
-class UniversalOperation {
+export default class UniversalOperation {
 
-  /**
-   * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-   * @param {Term} operand
-   */
-  constructor( operator, operand ) {
+  public readonly operator: string; //TODO https://github.com/phetsims/equality-explorer/issues/186 create a rich enum for operator
+  public readonly operand: Term;
+
+  public constructor( operator: string, operand: Term ) {
 
     assert && assert( _.includes( EqualityExplorerConstants.OPERATORS, operator ),
       `invalid operator: ${operator}` );
     assert && assert( operand instanceof ConstantTerm || operand instanceof VariableTerm,
       `invalid operand: ${operand}` );
 
-    // @public (read-only)
     this.operator = operator;
     this.operand = operand;
   }
 
   /**
    * For debugging only. Do not rely on the format of toString.
-   * @returns {string}
-   * @public
    */
-  toString() {
+  public toString(): string {
     return `operator=${this.operator}, operand=${this.operand}`;
   }
 
   /**
    * Creates a concise human-readable string representation, intended to be used for phet.log calls.
-   * @returns {string}
-   * @public (debug)
    */
-  toLogString() {
+  public toLogString(): string {
     if ( this.operand instanceof ConstantTerm ) {
 
       // e.g. '+ 2'
@@ -72,5 +66,3 @@ class UniversalOperation {
 }
 
 equalityExplorer.register( 'UniversalOperation', UniversalOperation );
-
-export default UniversalOperation;
