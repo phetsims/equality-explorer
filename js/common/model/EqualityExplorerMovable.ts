@@ -37,10 +37,10 @@ type AnimateToOptions = {
 
 export default class EqualityExplorerMovable {
 
-  // DO NOT set this directly! Use moveTo or animateTo.
   private readonly _positionProperty: Property<Vector2>;
 
-  // The same Property as _positionProperty, but with a read-only API
+  // The same Property as _positionProperty, but with a read-only API.
+  // Callers should use moveTo or animateTo instead of setting positionProperty.
   public readonly positionProperty: TReadOnlyProperty<Vector2>;
 
   public readonly dragBounds: Bounds2;
