@@ -1,6 +1,5 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Model of a variable, e.g. 'x', used in variable terms.
  *
@@ -8,53 +7,58 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import merge from '../../../../phet-core/js/merge.js';
+import Range from '../../../../dot/js/Range.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
-class Variable {
+type SelfOptions = {
+  value?: number; // initial value
+  range?: Range | null; // range of the value, null means unbounded
+};
+
+type VariableOptions = SelfOptions;
+
+export default class Variable {
+
+  public readonly symbol: string;
+  public readonly range: Range | null;
+  public readonly valueProperty: NumberProperty; // the value of the variable
 
   /**
-   * @param {string} symbol - the variable's symbol, e.g. 'x'
-   * @param {Object} [options]
+   * @param symbol - the variable's symbol, e.g. 'x'
+   * @param [providedOptions]
    */
-  constructor( symbol, options ) {
+  public constructor( symbol: string, providedOptions?: VariableOptions ) {
 
-    options = merge( {
-      value: 1, // the initial value
-      range: null // {Range|null} range of the value, null means unbounded
-    }, options );
+    const options = optionize<VariableOptions, SelfOptions>()( {
+
+      // SelfOptions
+      value: 1,
+      range: null
+    }, providedOptions );
 
     assert && assert( !options.range || options.range.contains( options.value ),
       `value ${options.value} is not in range ${options.range}` );
 
-    // @public (read-only)
     this.symbol = symbol;
-
-    // @public (read-only)
     this.range = options.range;
 
-    // @public the value of the variable
     this.valueProperty = new NumberProperty( options.value, {
       numberType: 'Integer',
       range: this.range
     } );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.valueProperty.reset();
   }
 
   /**
    * For debugging only. Do not rely on the format of toString.
-   * @returns {string}
-   * @public
    */
-  toString() {
+  public toString(): string {
     return `Variable: ${this.symbol}=${this.valueProperty.value}`;
   }
 }
 
 equalityExplorer.register( 'Variable', Variable );
-
-export default Variable;
