@@ -1,13 +1,12 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * 2D grid on a plate on the balance scale.
  *
  * A grid contains terms. The grid is filled from the bottom up, so that there are no empty cells
  * below an occupied cell. Origin is at the bottom center of the grid.
  *
- * A cell in the grid is identified by an integer index. This index acts as an opaque identifer for the cell.
+ * A cell in the grid is identified by an integer index. This index acts as an opaque identifier for the cell.
  * The client doesn't need to know how to interpret this identifier. It gets a cell identifier from the grid,
  * and uses the identifier to refer to the cell. Using an integer index has a couple of advantages: fast lookup
  * of terms in the grid, and low memory footprint. The main disadvantage is the need to map between (row,column)
@@ -18,42 +17,60 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import merge from '../../../../phet-core/js/merge.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Term from './Term.js';
+import { BalanceScaleSide } from './BalanceScale.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 // constants
 const NO_TERM = null; // occupies all empty cells in the grid
 
-class Grid {
+type SelfOptions = {
+  rows?: number;
+  columns?: number;
+  cellWidth?: number;
+  cellHeight?: number;
+};
+
+type GridOptions = SelfOptions;
+
+export default class Grid {
+
+  public readonly rows: number;
+  public readonly columns: number;
+
+  private readonly positionProperty: TReadOnlyProperty<Vector2>;
+  private readonly debugSide: BalanceScaleSide;
+  private readonly cellWidth: number;
+  private readonly cellHeight: number;
+  private readonly cells: ( Term | null )[]; // see documentation below
+  private bounds: Bounds2;
 
   /**
-   * @param {Vector2Property} positionProperty
-   * @param {string} debugSide - which side of the scale, for debugging
-   * @param {Object} [options]
+   * @param positionProperty
+   * @param debugSide - which side of the scale, for debugging
+   * @param [providedOptions]
    */
-  constructor( positionProperty, debugSide, options ) {
+  public constructor( positionProperty: TReadOnlyProperty<Vector2>, debugSide: BalanceScaleSide, providedOptions?: GridOptions ) {
 
-    options = merge( {
+    const options = optionize<GridOptions, SelfOptions>()( {
+
+      // SelfOptions
       rows: 10,
       columns: 10,
       cellWidth: 5,
       cellHeight: 5
-    }, options );
+    }, providedOptions );
 
-    // @private (read-only)
+    this.rows = options.rows;
+    this.columns = options.columns;
+    this.cellWidth = options.cellWidth;
+    this.cellHeight = options.cellHeight;
     this.positionProperty = positionProperty;
     this.debugSide = debugSide;
 
-    // @public (read-only)
-    this.rows = options.rows;
-    this.columns = options.columns;
-
-    // @private
-    this.cellWidth = options.cellWidth;
-    this.cellHeight = options.cellHeight;
-
-    // @private The 2D grid is stored as a 1D array, in row-major order (left-to-right, top-to-bottom).
+    // The 2D grid is stored as a 1D array, in row-major order (left-to-right, top-to-bottom).
     // Each entry in this array is a cell in the grid.  Empty cells contain NO_TERM.
     // Storing as a 1D array makes it easy for snapshots to save/restore the position of terms in the grid.
     // See rowColumnToCell, cellToRow, cellToColumn for mapping between index and (row,column).
@@ -63,7 +80,7 @@ class Grid {
       this.cells[ i ] = NO_TERM;
     }
 
-    // @private bounds of the grid, initialized in positionProperty listener
+    // bounds of the grid, initialized in positionProperty listener
     this.bounds = new Bounds2( 0, 1, 0, 1 );
 
     // When the grid moves ... unlink not required.
@@ -79,8 +96,9 @@ class Grid {
 
       // move the terms
       for ( let i = 0; i < this.cells.length; i++ ) {
-        if ( this.cells[ i ] !== NO_TERM ) {
-          this.cells[ i ].moveTo( this.getPositionOfCell( i ) );
+        const cell = this.cells[ i ];
+        if ( cell !== NO_TERM ) {
+          cell.moveTo( this.getPositionOfCell( i ) );
         }
       }
     } );
@@ -88,48 +106,38 @@ class Grid {
 
   /**
    * Gets the y coordinate of the top of the grid.
-   * @returns {number}
-   * @public
    */
-  get top() {
+  public get top(): number {
     return this.positionProperty.value.y - ( this.rows * this.cellHeight );
   }
 
   /**
    * Is the grid full? That is, are all cells occupied?
-   * @returns {boolean}
-   * @public
    */
-  isFull() {
-    return ( this.cells.indexOf( NO_TERM ) === -1 );
+  public isFull(): boolean {
+    return !this.cells.includes( NO_TERM );
   }
 
   /**
    * Is the specified cell empty?
-   * @param {number} cell
-   * @returns {boolean}
-   * @public
    */
-  isEmptyCell( cell ) {
+  public isEmptyCell( cell: number ): boolean {
     assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
     return ( this.getTermInCell( cell ) === NO_TERM );
   }
 
   /**
    * Clears the specified cell
-   * @param cell
-   * @public
    */
-  clearCell( cell ) {
+  public clearCell( cell: number ): void {
     assert && assert( this.isValidCell( cell ), `invalid v: ${cell}` );
     this.cells[ cell ] = NO_TERM;
   }
 
   /**
    * Clears all cells.
-   * @public
    */
-  clearAllCells() {
+  public clearAllCells(): void {
     for ( let i = 0; i < this.cells.length; i++ ) {
       this.clearCell( i );
     }
@@ -137,10 +145,8 @@ class Grid {
 
   /**
    * Clears the specified column. Used by compactColumn.
-   * @param {number} column
-   * @private
    */
-  clearColumn( column ) {
+  private clearColumn( column: number ): void {
     assert && assert( column >= 0 && column < this.columns, `invalid column: ${column}` );
     for ( let row = 0; row < this.rows; row++ ) {
       this.clearCell( this.rowColumnToCell( row, column ) );
@@ -149,11 +155,10 @@ class Grid {
 
   /**
    * Gets the cell that corresponds to a position.
-   * @param {Vector2} position
-   * @returns {number|null} the cell identifier, null if the position is outside the grid
-   * @private
+   * @param position
+   * @returns the cell identifier, null if the position is outside the grid
    */
-  getCellAtPosition( position ) {
+  private getCellAtPosition( position: Vector2 ): number | null {
     let cell = null;
     if ( this.containsPosition( position ) ) {
 
@@ -170,44 +175,37 @@ class Grid {
   /**
    * Is the specified position inside the grid?
    * This needs to be fast, since it's called during a drag cycle.
-   * @param {Vector2} position
-   * @returns {boolean}
-   * @private
    */
-  containsPosition( position ) {
+  private containsPosition( position: Vector2 ): boolean {
     return this.bounds.containsPoint( position );
   }
 
   /**
    * Gets the cell that a term occupies.
-   * @param {Term} term
-   * @returns {number|null} the cell's identifier, null if the term doesn't occupy a cell
-   * @public
+   * @param term
+   * @returns the cell's identifier, null if the term doesn't occupy a cell
    */
-  getCellForTerm( term ) {
-    assert && assert( term instanceof Term, 'invalid term' );
+  public getCellForTerm( term: Term ): number | null {
     const index = this.cells.indexOf( term );
     return ( index === -1 ) ? null : index;
   }
 
   /**
    * Gets the term that occupies a specified cell.
-   * @param {number} cell
-   * @returns {Term|null} - null if the cell is empty
-   * @public
+   * @param cell
+   * @returns null if the cell is empty
    */
-  getTermInCell( cell ) {
+  public getTermInCell( cell: number ): Term | null {
     assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
     return this.cells[ cell ];
   }
 
   /**
    * Gets the term at a specified position in the grid.
-   * @param {Vector2} position
-   * @returns {Term|null} null if position is outside the grid, or the cell at position is empty
-   * @public
+   * @param position
+   * @returns null if position is outside the grid, or the cell at position is empty
    */
-  getTermAtPosition( position ) {
+  public getTermAtPosition( position: Vector2 ): Term | null {
     let term = null;
     const cell = this.getCellAtPosition( position );
     if ( cell !== null ) {
@@ -218,13 +216,8 @@ class Grid {
 
   /**
    * Gets an equivalent term from the grid that is closest to a specified cell.
-   * @param {Term} term
-   * @param {number} cell
-   * @returns {Term|null} null if no equivalent term is found
-   * @public
    */
-  getClosestEquivalentTerm( term, cell ) {
-    assert && assert( term instanceof Term, 'invalid term' );
+  public getClosestEquivalentTerm( term: Term, cell: number ): Term | null {
     assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
 
     const cellPosition = this.getPositionOfCell( cell );
@@ -236,7 +229,7 @@ class Grid {
       const currentTerm = this.cells[ i ];
       if ( ( currentTerm !== NO_TERM ) && ( term.isEquivalentTerm( currentTerm ) ) ) {
         const currentDistance = this.getPositionOfCell( i ).distance( cellPosition );
-        if ( equivalentTerm === null || currentDistance < distance ) {
+        if ( equivalentTerm === null || distance === null || currentDistance < distance ) {
           equivalentTerm = currentTerm;
           distance = currentDistance;
         }
@@ -248,12 +241,8 @@ class Grid {
 
   /**
    * Puts a term in the specified cell. The cell must be empty.
-   * @param {Term} term
-   * @param {number} cell
-   * @public
    */
-  putTerm( term, cell ) {
-    assert && assert( term instanceof Term, 'invalid term' );
+  public putTerm( term: Term, cell: number ): void {
     assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
     assert && assert( this.isEmptyCell( cell ), `cell is occupied, cell: ${cell}` );
     this.cells[ cell ] = term;
@@ -262,13 +251,11 @@ class Grid {
 
   /**
    * Removes a term from the grid. Any terms above it move down to fill the empty cell.
-   * @param {Term} term
-   * @returns {number} the cell that the term was removed from
-   * @public
+   * @param term
+   * @returns the cell that the term was removed from
    */
-  removeTerm( term ) {
-    assert && assert( term instanceof Term, `invalid term: ${term}` );
-    const cell = this.getCellForTerm( term );
+  public removeTerm( term: Term ): number {
+    const cell = this.getCellForTerm( term )!;
     assert && assert( cell !== null, `term not found: ${term}` );
     this.clearCell( cell );
     this.compactColumn( this.cellToColumn( cell ) );
@@ -278,10 +265,8 @@ class Grid {
   /**
    * Compacts a column so that it contains no empty cells below terms.
    * If the column contains no holes, then the grid in not modified.
-   * @param {number} column
-   * @private
    */
-  compactColumn( column ) {
+  private compactColumn( column: number ): void {
     assert && assert( column >= 0 && column < this.columns, `invalid column: ${column}` );
 
     let hasHoles = false; // does the column have one or more holes?
@@ -323,11 +308,8 @@ class Grid {
 
   /**
    * Gets the position of a specific cell. A cell's position is in the center of the cell.
-   * @param {number} cell
-   * @returns {Vector2}
-   * @public
    */
-  getPositionOfCell( cell ) {
+  public getPositionOfCell( cell: number ): Vector2 {
     assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
 
     const row = this.cellToRow( cell );
@@ -340,10 +322,9 @@ class Grid {
 
   /**
    * Finds the last empty cell in the array.
-   * @returns {number|null} - the cell's identifier, null if the grid is full
-   * @private
+   * @returns the cell's identifier, null if the grid is full
    */
-  getLastEmptyCell() {
+  private getLastEmptyCell(): number | null {
     const index = this.cells.lastIndexOf( NO_TERM );
     return ( index === -1 ) ? null : index;
   }
@@ -352,11 +333,8 @@ class Grid {
    * Gets the empty cell that would be the best fit for adding a term to the grid.
    * Start by identifying the closest empty cell.  If that cell is in a column with empty cells below it,
    * choose the empty cell that is closest to the bottom of the grid in that column.
-   * @param {Vector2} position
-   * @returns {number|null} - the cell's identifier, null if the grid is full
-   * @public
    */
-  getBestEmptyCell( position ) {
+  public getBestEmptyCell( position: Vector2 ): number | null {
 
     // Start with the last empty cell in the array
     let closestCell = this.getLastEmptyCell();
@@ -397,21 +375,15 @@ class Grid {
 
   /**
    * Is the specified cell identifier valid?
-   * @param {number} cell
-   * @returns {boolean}
-   * @private
    */
-  isValidCell( cell ) {
+  private isValidCell( cell: number ): boolean {
     return ( Number.isInteger( cell ) && cell >= 0 && cell < this.cells.length );
   }
 
   /**
    * Converts a cell identifier to a row number.
-   * @param {number} cell
-   * @returns {number}
-   * @private
    */
-  cellToRow( cell ) {
+  private cellToRow( cell: number ): number {
     assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
     const row = Math.ceil( ( cell + 1 ) / this.columns ) - 1;
     assert && assert( row >= 0 && row < this.rows );
@@ -420,11 +392,8 @@ class Grid {
 
   /**
    * Converts a cell identifier to a column number.
-   * @param {number} cell
-   * @returns {number}
-   * @private
    */
-  cellToColumn( cell ) {
+  private cellToColumn( cell: number ): number {
     assert && assert( this.isValidCell( cell ), `invalid cell: ${cell}` );
     const column = cell % this.columns;
     assert && assert( column >= 0 && column < this.columns );
@@ -433,12 +402,8 @@ class Grid {
 
   /**
    * Converts row and column to a cell identifier.
-   * @param {number} row
-   * @param {number} column
-   * @returns {number}
-   * @public
    */
-  rowColumnToCell( row, column ) {
+  public rowColumnToCell( row: number, column: number ): number {
     assert && assert( row >= 0 && row < this.rows, `row out of range: ${row}` );
     assert && assert( column >= 0 && column < this.columns, `column out of range: ${column}` );
     const cell = ( row * this.columns ) + column;
@@ -448,5 +413,3 @@ class Grid {
 }
 
 equalityExplorer.register( 'Grid', Grid );
-
-export default Grid;

@@ -40,6 +40,8 @@ type SelfOptions = {
 
 type BalanceScaleOptions = SelfOptions;
 
+export type BalanceScaleSide = 'left' | 'right';
+
 export default class BalanceScale {
 
   public readonly position: Vector2;

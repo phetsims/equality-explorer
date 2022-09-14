@@ -22,10 +22,10 @@ import equalityExplorer from '../../equalityExplorer.js';
 import Grid from './Grid.js';
 import Term from './Term.js';
 import TermCreator from './TermCreator.js';
+import { BalanceScaleSide } from './BalanceScale.js';
 
 // constants
 const DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
-const VALID_DEBUG_SIDE_VALUES = [ 'left', 'right' ];
 
 type SelfOptions = {
   supportHeight?: number; // height of the vertical support that connects the plate to the scale
@@ -41,7 +41,7 @@ export default class Plate {
 
   public readonly positionProperty: Property<Vector2>;
   public readonly termCreators: TermCreator[];
-  public readonly debugSide: string;
+  public readonly debugSide: BalanceScaleSide;
   public readonly supportHeight: number;
   public readonly diameter: number;
   public readonly gridRows: number;
@@ -55,12 +55,10 @@ export default class Plate {
 
   /**
    * @param termCreators - creators associated with term on this plate
-   * @param debugSide - which side of the scale, for debugging, see VALID_DEBUG_SIDE_VALUES
+   * @param debugSide - which side of the scale, for debugging
    * @param [providedOptions]
    */
-  public constructor( termCreators: TermCreator[], debugSide: string, providedOptions?: PlateOptions ) {
-
-    assert && assert( _.includes( VALID_DEBUG_SIDE_VALUES, debugSide ), `invalid debugSide: ${debugSide}` );
+  public constructor( termCreators: TermCreator[], debugSide: BalanceScaleSide, providedOptions?: PlateOptions ) {
 
     const options = optionize<PlateOptions, SelfOptions>()( {
       supportHeight: 10, // height of the vertical support that connects the plate to the scale
