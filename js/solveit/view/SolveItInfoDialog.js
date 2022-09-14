@@ -21,13 +21,13 @@ class SolveItInfoDialog extends GameInfoDialog {
    */
   constructor( challengeGenerators ) {
 
-    const descriptions = challengeGenerators.map( challengeGenerator => challengeGenerator.description );
+    const descriptionProperties = challengeGenerators.map( challengeGenerator => challengeGenerator.descriptionProperty );
 
     const titleNode = new Text( EqualityExplorerStrings.levelsStringProperty, {
       font: new PhetFont( 32 )
     } );
 
-    super( descriptions, {
+    super( descriptionProperties, {
       gameLevels: EqualityExplorerQueryParameters.gameLevels,
       title: titleNode,
       ySpacing: 20,

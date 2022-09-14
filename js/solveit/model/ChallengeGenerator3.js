@@ -29,7 +29,7 @@ const B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 class ChallengeGenerator3 extends ChallengeGenerator {
 
   constructor() {
-    super( 3, EqualityExplorerStrings.level3Description );
+    super( 3, EqualityExplorerStrings.level3DescriptionStringProperty );
   }
 
   /**

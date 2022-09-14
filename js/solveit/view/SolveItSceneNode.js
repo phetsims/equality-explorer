@@ -62,7 +62,7 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
     options = options || {};
 
     // Level description, displayed in the status bar
-    const levelDescriptionNode = new RichText( scene.challengeGenerator.description, {
+    const levelDescriptionNode = new RichText( scene.challengeGenerator.descriptionProperty, {
       font: LEVEL_FONT,
       maxWidth: 650 // determined empirically
     } );

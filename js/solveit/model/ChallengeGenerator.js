@@ -16,17 +16,16 @@ class ChallengeGenerator {
 
   /**
    * @param {number} level - unique integer level number
-   * @param {string} description - description that appear in the UI for the level
+   * @param {TReadOnlyProperty.<string>} descriptionProperty - description that appear in the UI for the level
    * @abstract
    */
-  constructor( level, description ) {
+  constructor( level, descriptionProperty ) {
     assert && AssertUtils.assertPositiveInteger( level );
     assert && assert( level > 0 && level <= EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS );
-    assert && assert( typeof description === 'string', `invalid description: ${description}` );
 
     // @public (read-only)
     this.level = level;
-    this.description = description;
+    this.descriptionProperty = descriptionProperty;
 
     // @public (read-only) number of challenges generated
     this.numberOfChallenges = 0;

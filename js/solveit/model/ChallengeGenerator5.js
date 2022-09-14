@@ -31,7 +31,7 @@ const M_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 class ChallengeGenerator5 extends ChallengeGenerator {
 
   constructor() {
-    super( 5, EqualityExplorerStrings.level5Description );
+    super( 5, EqualityExplorerStrings.level5DescriptionStringProperty );
   }
 
   /**

@@ -16,7 +16,7 @@ import ChallengeGenerator1 from './ChallengeGenerator1.js';
 class ChallengeGenerator2 extends ChallengeGenerator {
 
   constructor() {
-    super( 2, EqualityExplorerStrings.level2Description );
+    super( 2, EqualityExplorerStrings.level2DescriptionStringProperty );
 
     // @private ChallengeGenerator2 is a variation and subset of ChallengeGenerator1, so we'll use composition
     this.challengeGenerator1 = new ChallengeGenerator1( {

@@ -48,7 +48,7 @@ class ChallengeGenerator1 extends ChallengeGenerator {
       debugLevel: null
     }, options );
 
-    super( 1, EqualityExplorerStrings.level1Description );
+    super( 1, EqualityExplorerStrings.level1DescriptionStringProperty );
 
     // @private
     this.debugLevel = options.debugLevel || this.level;
