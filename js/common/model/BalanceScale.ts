@@ -1,33 +1,65 @@
-// Copyright 2017-2021, University of Colorado Boulder
+// Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
- * Model of a balance scale.
- * Consists of 2 plates that sit on either ends of a beam.
+ * BalanceScale is the model of a balance scale.
+ * It consists of 2 plates that sit on either ends of a beam.
  * The center of the beam is balanced on a fulcrum.
- * Origin is at the point where the beam is balanced on the fulcrum.
+ * The origin is at the point where the beam is balanced on the fulcrum.
  * Terms are arranged in a 2D grid on each plate.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Plate from './Plate.js';
+import TermCreator from './TermCreator.js';
 
-class BalanceScale {
-  /**
-   * @param {TermCreator[]} leftTermCreators - creators for terms on left plate
-   * @param {TermCreator[]} rightTermCreators - creators for term on right plate
-   * @param {Object} [options]
-   */
-  constructor( leftTermCreators, rightTermCreators, options ) {
+type SelfOptions = {
+  position: Vector2; // position of the point where the beam balances on the fulcrum
+  beamWidth: number; // width of the balance beam
+  maxAngle: number; // max angle of the scale, in radians
+  maxWeight: number; // weight at which a plate 'bottoms out'
 
-    options = merge( {
+  plateSupportHeight: number; // height of vertical support that connects plate to beam
+  plateDiameter: number; // diameter of the plates
+  plateXInset: number; // inset of the plates from the ends of the beam
+
+  // options related to the plate's 2D grid
+  gridRows: number; // rows in the grid
+  gridColumns: number; // columns in the grid
+  gridXMargin: number; // horizontal space between stacks of terms
+  gridYMargin: number;  // vertical space between terms in each stack
+  iconSize: Dimension2 | null; // size of icons, computed if null
+};
+
+type BalanceScaleOptions = SelfOptions;
+
+export default class BalanceScale {
+
+  public readonly position: Vector2;
+  public readonly beamWidth: number;
+  public readonly maxAngle: number;
+  public readonly leftPlate: Plate;
+  public readonly rightPlate: Plate;
+
+  // angle of the scale in radians, zero is balanced
+  public readonly angleProperty: TReadOnlyProperty<number>;
+
+  // total number of terms on the scale
+  public readonly numberOfTermsProperty: TReadOnlyProperty<number>;
+
+  private readonly leftTermCreators: TermCreator[];
+  private readonly rightTermCreators: TermCreator[];
+
+  public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[], providedOptions: BalanceScaleOptions ) {
+
+    const options = optionize<BalanceScaleOptions, SelfOptions>()( {
 
       position: Vector2.ZERO, // position of the point where the beam balances on the fulcrum
       beamWidth: 450, // width of the balance beam
@@ -45,18 +77,14 @@ class BalanceScale {
       gridYMargin: 0,  // vertical space between terms in each stack
       iconSize: null // {Dimension2|null} size of icons, computed if null
 
-    }, options );
+    }, providedOptions );
 
     assert && assert( options.beamWidth - ( 2 * options.plateXInset ) > options.plateDiameter, 'plates will overlap' );
 
-    // @public (read-only)
     this.position = options.position;
-
-    // @public (read-only)
     this.beamWidth = options.beamWidth;
     this.maxAngle = options.maxAngle;
 
-    // @private
     this.leftTermCreators = leftTermCreators;
     this.rightTermCreators = rightTermCreators;
 
@@ -89,12 +117,9 @@ class BalanceScale {
       cellSize: cellSize
     };
 
-    // @public (read-only)
     this.leftPlate = new Plate( leftTermCreators, 'left', plateOptions );
     this.rightPlate = new Plate( rightTermCreators, 'right', plateOptions );
 
-    // @public {DerivedProperty.<number>} angle of the scale in radians, zero is balanced
-    // dispose not required.
     this.angleProperty = new DerivedProperty(
       [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
       ( leftWeight, rightWeight ) => {
@@ -146,8 +171,6 @@ class BalanceScale {
         new Vector2( this.position.x - dx, this.position.y - dy - options.plateSupportHeight );
     } );
 
-    // @public {DerivedProperty.<number>} total number of terms on the scale
-    // dispose not required.
     this.numberOfTermsProperty = new DerivedProperty(
       [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
       ( leftNumberOfTerms, rightNumberOfTerms ) => ( leftNumberOfTerms + rightNumberOfTerms ), {
@@ -155,25 +178,25 @@ class BalanceScale {
       } );
   }
 
+  public dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+  }
+
   /**
    * Organizes terms on the scale, grouping like terms together.
-   * @public
    */
-  organize() {
+  public organize(): void {
     this.leftPlate.organize();
     this.rightPlate.organize();
   }
 
   /**
    * Clears the scale, by disposing of all terms that are on the scale.
-   * @public
    */
-  clear() {
+  public clear(): void {
     const termCreators = this.leftTermCreators.concat( this.rightTermCreators );
     termCreators.forEach( termCreator => termCreator.disposeTermsOnPlate() );
   }
 }
 
 equalityExplorer.register( 'BalanceScale', BalanceScale );
-
-export default BalanceScale;
