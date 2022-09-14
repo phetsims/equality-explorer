@@ -1,5 +1,6 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Model of a balance scale.
  * Consists of 2 plates that sit on either ends of a beam.
