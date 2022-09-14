@@ -6,6 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
@@ -46,19 +47,23 @@ class SolveItLevelSelectionNode extends Node {
     };
 
     // 'Choose Your Level', centered above level-selection buttons
-    const chooseYourLevelNode = new Text( EqualityExplorerStrings.chooseYourLevel, merge( {}, textOptions, {
-      centerX: levelSelectionButtonGroup.centerX,
-      bottom: levelSelectionButtonGroup.top - 65
-    } ) );
-
-    // 'Solve for x', centered above 'Choose You Level'
-    const solveForXText = StringUtils.fillIn( EqualityExplorerStrings.solveFor, {
-      variable: MathSymbolFont.getRichTextMarkup( EqualityExplorerStrings.x )
+    const chooseYourLevelNode = new Text( EqualityExplorerStrings.chooseYourLevelStringProperty, textOptions );
+    chooseYourLevelNode.boundsProperty.link( bounds => {
+      chooseYourLevelNode.centerX = levelSelectionButtonGroup.centerX;
+      chooseYourLevelNode.bottom = levelSelectionButtonGroup.top - 65;
     } );
-    const solveForXNode = new RichText( solveForXText, merge( {}, textOptions, {
-      centerX: chooseYourLevelNode.centerX,
-      bottom: chooseYourLevelNode.top - 30
-    } ) );
+
+    // 'Solve for x', centered above 'Choose Your Level'
+    const solveToXStringProperty = new DerivedProperty(
+      [ EqualityExplorerStrings.solveForStringProperty, EqualityExplorerStrings.xStringProperty ],
+      ( solveForString, xString ) => StringUtils.fillIn( solveForString, {
+        variable: MathSymbolFont.getRichTextMarkup( xString )
+      } ) );
+    const solveForXNode = new RichText( solveToXStringProperty, textOptions );
+    solveForXNode.boundsProperty.link( bounds => {
+      solveForXNode.centerX = chooseYourLevelNode.centerX;
+      solveForXNode.bottom = chooseYourLevelNode.top - 30;
+    } );
 
     // Info dialog is created on demand, then reused so we don't have to deal with buggy Dialog.dispose.
     let infoDialog = null;
@@ -70,9 +75,11 @@ class SolveItLevelSelectionNode extends Node {
       listener: () => {
         infoDialog = infoDialog || new SolveItInfoDialog( model.challengeGenerators );
         infoDialog.show();
-      },
-      left: chooseYourLevelNode.right + 20,
-      centerY: chooseYourLevelNode.centerY
+      }
+    } );
+    chooseYourLevelNode.boundsProperty.link( bounds => {
+      infoButton.left = chooseYourLevelNode.right + 20;
+      infoButton.centerY = chooseYourLevelNode.centerY;
     } );
 
     // Reset All button, at lower right

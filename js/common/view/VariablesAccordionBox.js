@@ -29,7 +29,9 @@ class VariablesAccordionBox extends AccordionBox {
     options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // this accordion box is designed to be a fixed size, regardless of its content
-      titleString: ( variables.length > 1 ) ? EqualityExplorerStrings.variables : EqualityExplorerStrings.variable,
+      titleStringProperty: ( variables.length > 1 ) ?
+                           EqualityExplorerStrings.variablesStringProperty :
+                           EqualityExplorerStrings.variableStringProperty,
       fixedWidth: 100,
       fixedHeight: 75,
       fontSize: 24,
@@ -50,7 +52,7 @@ class VariablesAccordionBox extends AccordionBox {
     const contentHeight = options.fixedHeight - ( 2 * options.contentYMargin );
 
     assert && assert( !options.titleNode, 'VariablesAccordionBox sets titleNode' );
-    options.titleNode = new Text( options.titleString, {
+    options.titleNode = new Text( options.titleStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
     } );

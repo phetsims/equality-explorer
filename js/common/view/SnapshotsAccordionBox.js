@@ -74,7 +74,7 @@ class SnapshotsAccordionBox extends AccordionBox {
 
     // title
     assert && assert( !options.titleNode, 'SnapshotsAccordionBox sets titleNode' );
-    options.titleNode = new Text( EqualityExplorerStrings.snapshots, {
+    options.titleNode = new Text( EqualityExplorerStrings.snapshotsStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
     } );

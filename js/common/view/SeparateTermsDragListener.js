@@ -84,8 +84,10 @@ class SeparateTermsDragListener extends TermDragListener {
 
       // opposite plate is full, cannot create inverse term, show 'Oops' message
       const thisIsLeft = ( this.termCreator.positivePosition.x < this.equivalentTermCreator.positivePosition.x );
-      const message = thisIsLeft ? EqualityExplorerStrings.rightSideFull : EqualityExplorerStrings.leftSideFull;
-      const oopsDialog = new OopsDialog( message );
+      const messageStringProperty = thisIsLeft ?
+                      EqualityExplorerStrings.rightSideFullStringProperty :
+                      EqualityExplorerStrings.leftSideFullStringProperty;
+      const oopsDialog = new OopsDialog( messageStringProperty );
       oopsDialog.show();
 
       // interrupt this drag sequence, since we can't take term off the plate

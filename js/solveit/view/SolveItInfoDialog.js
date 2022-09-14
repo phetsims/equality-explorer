@@ -23,7 +23,7 @@ class SolveItInfoDialog extends GameInfoDialog {
 
     const descriptions = challengeGenerators.map( challengeGenerator => challengeGenerator.description );
 
-    const titleNode = new Text( EqualityExplorerStrings.levels, {
+    const titleNode = new Text( EqualityExplorerStrings.levelsStringProperty, {
       font: new PhetFont( 32 )
     } );
 

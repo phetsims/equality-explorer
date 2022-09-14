@@ -157,7 +157,7 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
 
     // Next button, takes us to the next challenge
     const nextButton = new RectangularPushButton( {
-      content: new Text( EqualityExplorerStrings.next, {
+      content: new Text( EqualityExplorerStrings.nextStringProperty, {
         font: NEXT_BUTTON_FONT,
         maxWidth: 100 // determined empirically
       } ),

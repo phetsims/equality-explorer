@@ -48,7 +48,7 @@ class EquationAccordionBox extends AccordionBox {
     } );
 
     assert && assert( !options.titleNode, 'EquationAccordionBox sets titleNode' );
-    options.titleNode = options.titleNode || new Text( EqualityExplorerStrings.equationOrInequality, {
+    options.titleNode = options.titleNode || new Text( EqualityExplorerStrings.equationOrInequalityStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentNode.width
     } );

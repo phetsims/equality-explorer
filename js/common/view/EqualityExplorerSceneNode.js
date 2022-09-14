@@ -58,7 +58,7 @@ class EqualityExplorerSceneNode extends Node {
     const maxIntegerExceededListener = () => {
       phet.log && phet.log( 'maxInteger exceeded' );
       scene.disposeTermsNotOnScale();
-      dialog = dialog || new OopsDialog( EqualityExplorerStrings.numberTooBig );
+      dialog = dialog || new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty );
       dialog.show();
     };
 
