@@ -41,7 +41,7 @@ export default abstract class Term extends EqualityExplorerMovable {
   public readonly diameter: number;
 
   // position of this term's corresponding TermCreatorNode in the toolbox
-  public readonly toolboxPosition: Vector2 | null;
+  public toolboxPosition: Vector2 | null;
 
   // whether the term is pickable (interactive)
   public readonly pickableProperty: Property<boolean>;

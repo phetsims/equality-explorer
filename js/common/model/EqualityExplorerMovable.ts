@@ -43,7 +43,7 @@ export default class EqualityExplorerMovable {
   // Callers should use moveTo or animateTo instead of setting positionProperty.
   public readonly positionProperty: TReadOnlyProperty<Vector2>;
 
-  public readonly dragBounds: Bounds2;
+  public dragBounds: Bounds2;
   private readonly animationSpeed: number;
 
   // drag handlers must manage this flag during a drag sequence
