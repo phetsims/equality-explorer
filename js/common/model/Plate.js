@@ -1,5 +1,6 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Plate where terms are placed to be weighed on a balance scale.
  * (The correct term is 'weighing platform', but 'plate' was used throughout the design.)
