@@ -57,7 +57,7 @@ export default class BalanceScale {
   private readonly leftTermCreators: TermCreator[];
   private readonly rightTermCreators: TermCreator[];
 
-  public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[], providedOptions: BalanceScaleOptions ) {
+  public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[], providedOptions?: BalanceScaleOptions ) {
 
     const options = optionize<BalanceScaleOptions, SelfOptions>()( {
 

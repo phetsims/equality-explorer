@@ -1,8 +1,7 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
- * A model element that is movable. It has a current position and a desired destination.
+ * EqualityExplorerMovable is a model element that is movable. It has a current position and a desired destination.
  *
  * The model element can be moved using either moveTo or animateTo.
  * moveTo moves immediately to a position, and is typically used while the user is dragging the model element.
@@ -13,63 +12,90 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class EqualityExplorerMovable {
+type SelfOptions = {
+  position: Vector2; // initial position
+  dragBounds: Bounds2; // bounds that constrain dragging
+  animationSpeed: number; // distance/second when animating
+};
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+export type EqualityExplorerMovableOptions = SelfOptions;
 
-    options = merge( {
-      position: Vector2.ZERO, // {Vector2} initial position
-      dragBounds: Bounds2.EVERYTHING, // {Bounds2} bounds that constrain dragging
-      animationSpeed: 400 // {number} distance/second when animating
-    }, options );
+type AnimationCallback = ( () => void ) | null;
 
-    // @public (read-only) DO NOT set this directly! Use moveTo or animateTo.
-    this.positionProperty = new Vector2Property( options.position );
+type AnimateToOptions = {
+  animationStepCallback: AnimationCallback; // called when animation step occurs
+  animationCompletedCallback: AnimationCallback; // called when animation has completed
+};
 
-    // @public (read-only)
+export default class EqualityExplorerMovable {
+
+  // DO NOT set this directly! Use moveTo or animateTo.
+  private readonly _positionProperty: Property<Vector2>;
+
+  // The same Property as _positionProperty, but with a read-only API
+  public readonly positionProperty: TReadOnlyProperty<Vector2>;
+
+  public readonly dragBounds: Bounds2;
+  private readonly animationSpeed: number;
+
+  // drag handlers must manage this flag during a drag sequence
+  public readonly draggingProperty: Property<boolean>;
+
+  // destination to animate to, set using animateTo
+  private destination: Vector2;
+
+  // Called when animation step occurs, set using animateTo. Don't do anything expensive here!
+  private animationStepCallback: AnimationCallback;
+
+  // called when animation to destination completes, set using animateTo
+  private animationCompletedCallback: AnimationCallback;
+
+  // has dispose completed?
+  private _isDisposed: boolean;
+
+  // emits when dispose has completed
+  public readonly disposedEmitter: Emitter<[ EqualityExplorerMovable ]>;
+
+  public constructor( providedOptions?: EqualityExplorerMovableOptions ) {
+
+    const options = optionize<EqualityExplorerMovableOptions, SelfOptions>()( {
+
+      // SelfOptions
+      position: Vector2.ZERO,
+      dragBounds: Bounds2.EVERYTHING,
+      animationSpeed: 400
+    }, providedOptions );
+
+    this._positionProperty = new Vector2Property( options.position );
+    this.positionProperty = this._positionProperty;
     this.dragBounds = options.dragBounds;
-
-    // @public drag handlers must manage this flag during a drag sequence
-    this.draggingProperty = new BooleanProperty( false );
-
-    // @private
     this.animationSpeed = options.animationSpeed;
-
-    // @private {Vector2} destination to animate to, set using animateTo
+    this.draggingProperty = new BooleanProperty( false );
     this.destination = options.position.copy();
-
-    // @private {function|null} called when animation step occurs, set using animateTo.
-    // Don't do anything expensive here!
     this.animationStepCallback = null;
-
-    // @private {function|null} called when animation to destination completes, set using animateTo
     this.animationCompletedCallback = null;
+    this._isDisposed = false;
 
-    // @public (read-only) emit when dispose has completed.
     this.disposedEmitter = new Emitter( {
       parameters: [ { valueType: EqualityExplorerMovable } ]
     } );
-
-    // @public (read-only) has dispose completed?
-    this.isDisposed = false;
   }
+
+  public get isDisposed(): boolean { return this._isDisposed; }
 
   /**
    * Creates the options that would be needed to instantiate a copy of this object.
    * This is used by subclasses that implement copy.
-   * @returns {Object}
-   * @public
    */
-  copyOptions() {
+  public copyOptions(): EqualityExplorerMovableOptions {
     return {
       position: this.positionProperty.value,
       dragBounds: this.dragBounds,
@@ -77,32 +103,28 @@ class EqualityExplorerMovable {
     };
   }
 
-  // @public
-  dispose() {
+  public dispose(): void {
     assert && assert( !this.isDisposed, `dispose called twice for ${this}` );
 
     this.positionProperty.dispose();
     this.draggingProperty.dispose();
 
     // Do this last, sequence is important!
-    this.isDisposed = true;
+    this._isDisposed = true;
     this.disposedEmitter.emit( this );
     this.disposedEmitter.dispose();
   }
 
-  // @public
-  reset() {
+  public reset(): void {
 
     // call moveTo instead of positionProperty.set, so that any animation in progress is cancelled
-    this.moveTo( this.positionProperty.initialValue );
+    this.moveTo( this._positionProperty.initialValue );
   }
 
   /**
    * Moves immediately to the specified position, without animation.
-   * @param {Vector2} position
-   * @public
    */
-  moveTo( position ) {
+  public moveTo( position: Vector2 ): void {
 
     // cancel any pending callbacks
     this.animationStepCallback = null;
@@ -110,22 +132,18 @@ class EqualityExplorerMovable {
 
     // move immediately to the position
     this.destination = position;
-    this.positionProperty.set( position );
+    this._positionProperty.set( position );
   }
 
   /**
-   * Animates to the specified position.
-   * Provides optional callback that occur on animation step and completion.
-   * @param {Vector2} destination
-   * @param {Object} [options]
-   * @public
+   * Animates to the specified position, with optional callbacks.
    */
-  animateTo( destination, options ) {
+  public animateTo( destination: Vector2, providedOptions?: AnimateToOptions ): void {
 
-    options = merge( {
+    const options = combineOptions<AnimateToOptions>( {
       animationStepCallback: null, // {function} called when animation step occurs
       animationCompletedCallback: null // {function} called when animation has completed
-    }, options );
+    }, providedOptions );
 
     this.destination = destination;
     this.animationStepCallback = options.animationStepCallback;
@@ -134,20 +152,17 @@ class EqualityExplorerMovable {
 
   /**
    * Is this model element animating?
-   * @returns {boolean}
-   * @public
    */
-  isAnimating() {
+  public isAnimating(): boolean {
     return !this.draggingProperty.value &&
            ( !this.positionProperty.get().equals( this.destination ) || !!this.animationCompletedCallback );
   }
 
   /**
    * Animates position, when not being dragged by the user.
-   * @param {number} dt - time since the previous step, in seconds
-   * @public
+   * @param dt - time since the previous step, in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
 
     assert && assert( !this.isDisposed, 'attempt to step disposed movable' );
 
@@ -165,7 +180,7 @@ class EqualityExplorerMovable {
       if ( totalDistance <= stepDistance ) {
 
         // move directly to the destination
-        this.positionProperty.set( this.destination );
+        this._positionProperty.set( this.destination );
 
         // Perform the animationCompletedCallback, which may set a new callback by calling animateTo.
         // The new callback must be a new function instance, since equality is used to check whether
@@ -183,12 +198,10 @@ class EqualityExplorerMovable {
           this.destination.y - this.positionProperty.get().y,
           this.destination.x - this.positionProperty.get().x );
         const stepVector = Vector2.createPolar( stepDistance, stepAngle );
-        this.positionProperty.set( this.positionProperty.get().plus( stepVector ) );
+        this._positionProperty.set( this.positionProperty.get().plus( stepVector ) );
       }
     }
   }
 }
 
 equalityExplorer.register( 'EqualityExplorerMovable', EqualityExplorerMovable );
-
-export default EqualityExplorerMovable;
