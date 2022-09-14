@@ -1,5 +1,6 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Data structure that describes a 'universal operation', a term specific to this sim,
  * an operation that will be applied to both sides of the equation.
