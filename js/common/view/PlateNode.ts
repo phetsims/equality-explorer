@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * A plate on the balance scale. Includes both the plate and the vertical support that attaches
  * the plate to the balance beam, since they move together.
@@ -8,25 +7,31 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import { Circle, Line, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { Circle, Color, Line, Node, NodeOptions, NodeTranslationOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
+import Plate from '../model/Plate.js';
 import GridNode from './GridNode.js';
 
-class PlateNode extends Node {
+type SelfOptions = {
+  color?: Color | string; // color of the outside of the plate
+  pivotRadius?: number;  // radius of the pivot point that attaches to the balance beam
+};
 
-  /**
-   * @param {Plate} plate - associated model element
-   * @param {Object} [options]
-   */
-  constructor( plate, options ) {
+type PlateNodeOptions = SelfOptions & NodeTranslationOptions;
 
-    options = merge( {
+export default class PlateNode extends Node {
+
+  public constructor( plate: Plate, providedOptions?: PlateNodeOptions ) {
+
+    const options = optionize<PlateNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
       color: EqualityExplorerColors.PLATE_OUTSIDE_FILL, // {Color|string} color of the outside of the plate
       pivotRadius: 8  // {number} radius of the pivot point that attaches to the balance beam
-    }, options );
+    }, providedOptions );
 
     // Outside surface of the plate.
     // Path description (d= field) from assets/scale/plate-outside.svg
@@ -89,7 +94,6 @@ class PlateNode extends Node {
       centerY: supportNode.bottom
     } );
 
-    assert && assert( !options.children, 'PlateNode sets children' );
     options.children = [ supportNode, pivotNode, plateNode ];
 
     // Grid where terms appear
@@ -122,5 +126,3 @@ class PlateNode extends Node {
 }
 
 equalityExplorer.register( 'PlateNode', PlateNode );
-
-export default PlateNode;

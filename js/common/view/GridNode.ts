@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * A rectangular 2D grid of cells.
  *
@@ -9,30 +8,37 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import merge from '../../../../phet-core/js/merge.js';
-import { Path } from '../../../../scenery/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { NodeTranslationOptions, Path, PathOptions } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 
 // constants
 const DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
 
-class GridNode extends Path {
+type SelfOptions = {
+  rows?: number; // number of rows in the grid
+  columns?: number; // number of columns in the grid
+  cellSize?: Dimension2; // uniform width and height of each cell
+};
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+type GridNodeOptions = SelfOptions & NodeTranslationOptions;
 
-    options = merge( {
+export default class GridNode extends Path {
+
+  public constructor( providedOptions?: GridNodeOptions ) {
+
+    const options = optionize<GridNodeOptions, SelfOptions, PathOptions>()( {
+
+      // SelfOptions
       rows: 1,
       columns: 1,
-      cellSize: DEFAULT_CELL_SIZE, // {Dimension2} uniform width and height of each cell
+      cellSize: DEFAULT_CELL_SIZE,
 
-      // Path options
+      // PathOptions
       stroke: EqualityExplorerColors.GRID_STROKE,
       lineWidth: 0.5
-    }, options );
+    }, providedOptions );
 
     const gridWidth = options.columns * options.cellSize.width;
     const gridHeight = options.rows * options.cellSize.height;
@@ -55,5 +61,3 @@ class GridNode extends Path {
 }
 
 equalityExplorer.register( 'GridNode', GridNode );
-
-export default GridNode;

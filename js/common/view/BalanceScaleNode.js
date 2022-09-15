@@ -123,7 +123,8 @@ class BalanceScaleNode extends Node {
     } );
 
     // pressing this button clears all terms from the scale
-    const clearScaleButton = new ClearScaleButton( scale.clear.bind( scale ), {
+    const clearScaleButton = new ClearScaleButton( {
+      listener: () => scale.clear(),
       visible: options.clearScaleButtonVisible
     } );
 
