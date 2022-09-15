@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * A pseudo-3D box, with perspective. The front and top faces are visible.
  * Used for various parts of the scale in Equality Explorer.
