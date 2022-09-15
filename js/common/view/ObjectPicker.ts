@@ -1,7 +1,7 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
 /**
- * User-interface component for picking one of several values. The values are arbitry Objects.
+ * User-interface component for picking one of several values. The values are arbitrary Objects.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
