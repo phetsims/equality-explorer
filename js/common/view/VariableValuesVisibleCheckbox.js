@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Checkbox used to show/hide the values of variables in the Snapshots accordion box.
  *
