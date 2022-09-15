@@ -1,5 +1,6 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Pressing this button organizes terms on the scale, grouping like terms together.
  *
