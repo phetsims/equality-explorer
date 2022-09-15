@@ -1,5 +1,6 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Padlock used to lock/unlock the 2 sides of the scale.
  * When locked, every action on one side is balanced by an equivalent action on the opposite side.
