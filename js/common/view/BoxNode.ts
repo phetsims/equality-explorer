@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * A pseudo-3D box, with perspective. The front and top faces are visible.
  * Used for various parts of the scale in Equality Explorer.
@@ -9,26 +8,37 @@
  */
 
 import { Shape } from '../../../../kite/js/imports.js';
-import merge from '../../../../phet-core/js/merge.js';
-import { Node, Path } from '../../../../scenery/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { Color, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class BoxNode extends Node {
+type SelfOptions = {
+  width?: number; // width of the top face at it's center
+  height?: number; // height of the front face
+  depth?: number;  // depth of the top face after flattening to 2D
+  vanishingPointDistance?: number; // distance of the vanishing point from the center of the top face
+  topFill?: Color | string; // fill for the top face of the box
+  frontFill?: Color | string; // fill fo the front face of the box
+  stroke?: Color | string; // stroke used for both faces of the box
+};
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+type BoxNodeOptions = SelfOptions;
 
-    options = merge( {
-      width: 200, // width of the top face at it's center
-      height: 10, // height of the front face
-      depth: 20,  // depth of the top face after flattening to 2D
-      vanishingPointDistance: 100, // distance of the vanishing point from the center of the top face
-      topFill: 'white', // {Color|string} fill for the top face of the box
-      frontFill: 'white', // {Color|string} fill fo the front face of the box
-      stroke: 'black' // {Color|string} stroke used for both faces of the box
-    }, options );
+export default class BoxNode extends Node {
+
+  public constructor( providedOptions?: BoxNodeOptions ) {
+
+    const options = optionize<BoxNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
+      width: 200,
+      height: 10,
+      depth: 20,
+      vanishingPointDistance: 100,
+      topFill: 'white',
+      frontFill: 'white',
+      stroke: 'black'
+    }, providedOptions );
 
     const hypotenuse = Math.sqrt( options.vanishingPointDistance * options.vanishingPointDistance +
                                   ( options.width / 2 ) * ( options.width / 2 ) );
@@ -56,7 +66,6 @@ class BoxNode extends Node {
       stroke: options.stroke
     } );
 
-    assert && assert( !options.children, 'BoxNode sets children' );
     options.children = [ topNode, frontNode ];
 
     super( options );
@@ -64,5 +73,3 @@ class BoxNode extends Node {
 }
 
 equalityExplorer.register( 'BoxNode', BoxNode );
-
-export default BoxNode;
