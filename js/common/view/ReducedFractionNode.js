@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Displays a reduced fraction.
  * Origin is at the top center of the numerator, to support positioning that is independent of sign.
