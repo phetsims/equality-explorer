@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Circular halo that appears around a Node.
  * Used to indicate that two overlapping terms will sum to zero.
