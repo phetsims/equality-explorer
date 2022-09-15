@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Displays a reduced fraction.
  * Origin is at the top center of the numerator, to support positioning that is independent of sign.
@@ -8,39 +7,45 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Line, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Font, Line, Node, NodeOptions, TColor, Text, VBox } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 // constants
 const DEFAULT_FRACTION_FONT = new PhetFont( 22 );
 const DEFAULT_INTEGER_FONT = new PhetFont( 40 );
 
-class ReducedFractionNode extends Node {
+type SelfOptions = {
+  minLineLength?: number; // length of the fraction line
+  fractionFont?: Font; // font for numerator and denominator of fraction value
+  integerFont?: Font; // font for integer value
+  color?: TColor; // color of everything
+  lineWidth?: number; // for the fraction line
+  xSpacing?: number; // horizontal space between negative sign and fraction line
+  ySpacing?: number; // vertical spacing above/below the fraction line
+};
 
-  /**
-   * @param {Fraction} fraction
-   * @param {Object} [options]
-   */
-  constructor( fraction, options ) {
+type ReducedFractionNodeOptions = SelfOptions;
 
-    assert && assert( fraction instanceof Fraction, `invalid fraction: ${fraction}` );
+export default class ReducedFractionNode extends Node {
+
+  public constructor( fraction: Fraction, providedOptions?: ReducedFractionNodeOptions ) {
     assert && assert( fraction.isReduced(), `fraction must be reduced: ${fraction}` );
 
-    options = merge( {
-      minLineLength: 1, // length of the fraction line
-      fractionFont: DEFAULT_FRACTION_FONT, // font for numerator and denominator of fraction value
-      integerFont: DEFAULT_INTEGER_FONT, // font for integer value
-      color: 'black', // color of everything
-      lineWidth: 1, // for the fraction line
-      xSpacing: 5, // horizontal space between negative sign and fraction line
-      ySpacing: 3 // vertical spacing above/below the fraction line
-    }, options );
+    const options = optionize<ReducedFractionNodeOptions, SelfOptions, NodeOptions>()( {
 
-    assert && assert( !options.children, 'ReducedFractionNode sets children' );
+      // SelfOptions
+      minLineLength: 1,
+      fractionFont: DEFAULT_FRACTION_FONT,
+      integerFont: DEFAULT_INTEGER_FONT,
+      color: 'black',
+      lineWidth: 1,
+      xSpacing: 5,
+      ySpacing: 3
+    }, providedOptions );
 
     if ( fraction.isInteger() ) {
 
@@ -91,5 +96,3 @@ class ReducedFractionNode extends Node {
 }
 
 equalityExplorer.register( 'ReducedFractionNode', ReducedFractionNode );
-
-export default ReducedFractionNode;
