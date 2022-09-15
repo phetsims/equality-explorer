@@ -136,7 +136,7 @@ export default class BalanceScaleNode extends Node {
     } );
 
     // pressing this button organizes terms on the scale, grouping like terms together
-    const organizeButton = new OrganizeButton( scale.organize.bind( scale ), {
+    const organizeButton = new OrganizeButton( () => scale.organize(), {
       visible: options.organizeButtonVisible
     } );
 

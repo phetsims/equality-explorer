@@ -1,38 +1,36 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Pressing this button organizes terms on the scale, grouping like terms together.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import { Path } from '../../../../scenery/js/imports.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class OrganizeButton extends RectangularPushButton {
+type SelfOptions = EmptySelfOptions;
 
-  /**
-   * @param {function} organizeFunction
-   * @param {Object} [options]
-   */
-  constructor( organizeFunction, options ) {
+type OrganizeButtonOptions = SelfOptions & PickOptional<RectangularPushButtonOptions, 'visible'>;
 
-    options = merge( {
+export default class OrganizeButton extends RectangularPushButton {
 
-      // RectangularPushButton options
+  public constructor( organizeFunction: () => void, providedOptions: OrganizeButtonOptions ) {
+
+    const options = optionize<OrganizeButtonOptions, SelfOptions, RectangularPushButtonOptions>()( {
+
+      // RectangularPushButtonOptions
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 8,
       yMargin: 4,
       touchAreaXDilation: 5,
       touchAreaYDilation: 5
 
-    }, options );
-
-    assert && assert( !options.content, 'OrganizeButton sets content' );
+    }, providedOptions );
 
     // SVG path description is the "d=" field from organize-icon.svg
     // See assets/README.md for more details.
@@ -48,7 +46,6 @@ class OrganizeButton extends RectangularPushButton {
         scale: 0.105
       } );
 
-    assert && assert( !options.listener, 'OrganizeButton sets listener' );
     options.listener = () => {
       phet.log && phet.log( 'OrganizeButton pressed' );
       organizeFunction();
@@ -60,5 +57,3 @@ class OrganizeButton extends RectangularPushButton {
 }
 
 equalityExplorer.register( 'OrganizeButton', OrganizeButton );
-
-export default OrganizeButton;
