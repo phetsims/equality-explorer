@@ -1,6 +1,5 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Padlock used to lock/unlock the 2 sides of the scale.
  * When locked, every action on one side is balanced by an equivalent action on the opposite side.
@@ -9,25 +8,30 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import LockNode from '../../../../scenery-phet/js/LockNode.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import LockNode, { LockNodeOptions } from '../../../../scenery-phet/js/LockNode.js';
 import { FireListener } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class EqualityExplorerLockNode extends LockNode {
+type SelfOptions = EmptySelfOptions;
+
+type EqualityExplorerLockNodeOptions = SelfOptions;
+
+export default class EqualityExplorerLockNode extends LockNode {
 
   /**
-   * @param {BooleanProperty} lockedProperty - indicates whether left and right sides are "locked"
-   * @param {Object} [options]
+   * @param lockedProperty - indicates whether left and right sides are "locked"
+   * @param [providedOptions]
    */
-  constructor( lockedProperty, options ) {
+  public constructor( lockedProperty: Property<boolean>, providedOptions?: EqualityExplorerLockNodeOptions ) {
 
-    options = merge( {
+    const options = optionize<EqualityExplorerLockNodeOptions, SelfOptions, LockNodeOptions>()( {
 
-      // Node options
+      // LockNodeOptions
       cursor: 'pointer',
       maxHeight: 45
-    }, options );
+    }, providedOptions );
 
     super( lockedProperty, options );
 
@@ -44,5 +48,3 @@ class EqualityExplorerLockNode extends LockNode {
 }
 
 equalityExplorer.register( 'EqualityExplorerLockNode', EqualityExplorerLockNode );
-
-export default EqualityExplorerLockNode;
