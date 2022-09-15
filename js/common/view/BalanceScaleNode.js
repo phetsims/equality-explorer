@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * The balance scale used throughout Equality Explorer.
  * Origin is at the point where the beam is balanced on the fulcrum.
