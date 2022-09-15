@@ -1,6 +1,5 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Abstract base type for a scene in Equality Explorer sim.
  *
@@ -9,14 +8,18 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
 import BalanceScale from './BalanceScale.js';
 import SnapshotsCollection from './SnapshotsCollection.js';
+import TermCreator from './TermCreator.js';
+import Variable from './Variable.js';
+import Property from '../../../../axon/js/Property.js';
 
 // constants
 const DEFAULT_SCALE_POSITION = new Vector2( 355, 427 );
@@ -25,48 +28,81 @@ const DRAG_BOUNDS_Y_MARGIN = 10;
 const DRAG_BOUNDS_MIN_Y = 100;
 const DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_OPTIONS.layoutBounds.maxY - DRAG_BOUNDS_Y_MARGIN;
 
-class EqualityExplorerScene {
+type SelfOptions = {
+  debugName?: string | null; // internal name, not displayed to the user
+  scalePosition?: Vector2; // determined empirically
+  lockable?: boolean; // is the lock feature supported for this scene?
+  icon?: Node | null; // optional icon used to represent the scene in the scene control (radio buttons)
+  maxWeight?: number; // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
+  gridRows?: number; // rows in the grid on the scale
+  gridColumns?: number; // columns in the grid on the scale
+  numberOfSnapshots?: number; // number of snapshots in the Snapshots accordion box
+  iconSize?: Dimension2 | null; // size of term icons on the scale, computed if null
+  variables?: Variable[] | null; // variables associated with the scene
+};
+
+type EqualityExplorerSceneOptions = SelfOptions;
+
+export default abstract class EqualityExplorerScene {
+
+  public readonly debugName: string | null;
+  private readonly _icon: Node | null;
+  public readonly variables: Variable[] | null;
+
+  // creators for terms on left and right sides of scale
+  public readonly leftTermCreators: TermCreator[];
+  public readonly rightTermCreators: TermCreator[];
+
+  // for operations that need to be performed on all term creators
+  public readonly allTermCreators: TermCreator[];
+
+  public readonly scale: BalanceScale;
+
+  // drag bounds for the plates
+  public readonly leftDragBounds: Bounds2;
+  public readonly rightDragBounds: Bounds2;
+
+  // collection of snapshots, for saving/restoring the state of a scene
+  public readonly snapshotsCollection: SnapshotsCollection;
+
+  // locks equivalent terms, null if this feature is not supported
+  public readonly lockedProperty: Property<boolean> | null;
 
   /**
-   * @param {TermCreator[]} leftTermCreators - in order that they appear in left toolbox and left side of equations
-   * @param {TermCreator[]} rightTermCreators - in order that they appear in right toolbox and right side of equations
-   * @param {Object} [options]
+   * @param leftTermCreators - in order that they appear in left toolbox and left side of equations
+   * @param rightTermCreators - in order that they appear in right toolbox and right side of equations
+   * @param [providedOptions]
    * @abstract
    */
-  constructor( leftTermCreators, rightTermCreators, options ) {
+  public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[], providedOptions?: EqualityExplorerSceneOptions ) {
 
-    options = merge( {
-      debugName: null, // internal name, not displayed to the user
-      scalePosition: DEFAULT_SCALE_POSITION, // determined empirically
-      lockable: true, // is the lock feature supported for this scene?
-      icon: null, // {Node|null} optional icon used to represent the scene in the scene control (radio buttons)
-      maxWeight: 30, // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
-      gridRows: EqualityExplorerQueryParameters.rows, // rows in the grid on the scale
-      gridColumns: EqualityExplorerQueryParameters.columns, // columns in the grid on the scale
-      numberOfSnapshots: 5, // number of snapshots in the Snapshots accordion box
-      iconSize: null, // {Dimension2|null} size of term icons on the scale, computed if null
-      variables: null // {Variable[]|null} variables associated with the scene
-    }, options );
+    const options = optionize<EqualityExplorerSceneOptions, SelfOptions>()( {
 
-    // @public (read-only)
+      // SelfOptions
+      debugName: null,
+      scalePosition: DEFAULT_SCALE_POSITION,
+      lockable: true,
+      icon: null,
+      maxWeight: 30,
+      gridRows: EqualityExplorerQueryParameters.rows,
+      gridColumns: EqualityExplorerQueryParameters.columns,
+      numberOfSnapshots: 5,
+      iconSize: null,
+      variables: null
+    }, providedOptions );
+
     this.debugName = options.debugName;
     phet.log && phet.log( `scene: ${this.debugName}, maxWeight=${options.maxWeight}` );
 
-    // @private {Node|null} used to represent the scene. See ES5 getter.
     this._icon = options.icon;
-
-    // @public {Variable[]|null} variables associated with the scene
     this.variables = options.variables;
 
     // Check for potential bad combinations of term creators
     assert && validateTermCreators( leftTermCreators );
     assert && validateTermCreators( rightTermCreators );
 
-    // @public (read-only) {TermCreator[]} creators for terms on left and right sides of scale
     this.leftTermCreators = leftTermCreators;
     this.rightTermCreators = rightTermCreators;
-
-    // @public (read-only) for operations that need to be performed on all term creators
     this.allTermCreators = leftTermCreators.concat( rightTermCreators );
 
     // Associate each term creator with a 'like term' creator on the opposite side of the scale.
@@ -79,7 +115,6 @@ class EqualityExplorerScene {
       rightTermCreators[ i ].equivalentTermCreator = leftTermCreators[ i ];
     }
 
-    // @public (read-only)
     this.scale = new BalanceScale( this.leftTermCreators, this.rightTermCreators, {
       position: options.scalePosition,
       gridRows: options.gridRows,
@@ -88,26 +123,22 @@ class EqualityExplorerScene {
       maxWeight: options.maxWeight
     } );
 
-    // @public (read-only, for debugging) drag bounds for left plate
     this.leftDragBounds = new Bounds2( DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
       this.scale.position.x - DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MAX_Y );
     leftTermCreators.forEach( termCreator => {
       termCreator.dragBounds = this.leftDragBounds;
     } );
 
-    // @public (read-only, for debugging) drag bounds for right plate
     this.rightDragBounds = new Bounds2( this.scale.position.x + DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
       this.scale.position.x + DRAG_BOUNDS_X_MARGIN + this.leftDragBounds.width, DRAG_BOUNDS_MAX_Y );
     rightTermCreators.forEach( termCreator => {
       termCreator.dragBounds = this.rightDragBounds;
     } );
 
-    // @public collection of snapshots, for saving/restoring the state of a scene
     this.snapshotsCollection = new SnapshotsCollection( {
       numberOfSnapshots: options.numberOfSnapshots
     } );
 
-    // @public {BooleanProperty|null} locks equivalent terms, null if this feature is not supported
     this.lockedProperty = null;
 
     // if the 'lock' feature is supported...
@@ -127,15 +158,13 @@ class EqualityExplorerScene {
   /**
    * Gets the icon used to represent this scene.
    * Since this icon is used in multiple places in the scenery DAG, it must be wrapped.
-   * @returns {Node}
-   * @public
    */
-  get icon() {
-    return new Node( { children: [ this._icon ] } );
+  public get icon(): Node {
+    assert && assert( this._icon );
+    return new Node( { children: [ this._icon! ] } );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
 
     this.lockedProperty && this.lockedProperty.reset();
 
@@ -153,26 +182,23 @@ class EqualityExplorerScene {
 
   /**
    * Disposes of all terms that are managed by term creators.
-   * @public
    */
-  disposeAllTerms() {
+  public disposeAllTerms(): void {
     this.allTermCreators.forEach( termCreator => termCreator.disposeAllTerms() );
   }
 
   /**
    * Disposes of all terms that are managed by term creators and are not on the scale.
-   * @public
    */
-  disposeTermsNotOnScale() {
+  public disposeTermsNotOnScale(): void {
     this.allTermCreators.forEach( termCreator => termCreator.disposeTermsNotOnPlate() );
   }
 
   /**
    * Updates time-dependent parts of the scene.
-   * @param {number} dt - time since the previous step, in seconds
-   * @public
+   * @param dt - time since the previous step, in seconds
    */
-  step( dt ) {
+  public step( dt: number ) : void {
 
     // step all terms
     this.allTermCreators.forEach( termCreator => termCreator.step( dt ) );
@@ -183,9 +209,8 @@ class EqualityExplorerScene {
  * Verifies that none of the specified term creators are 'like term' creators.
  * Like term creators are not allowed on the same side of the equation.
  * For example, there should not be 2 creators for constants, or 2 creators for 'x'.
- * @param {TermCreator[]} termCreators
  */
-function validateTermCreators( termCreators ) {
+function validateTermCreators( termCreators: TermCreator[] ): void {
   for ( let i = 0; i < termCreators.length; i++ ) {
     for ( let j = 0; j < termCreators.length; j++ ) {
 
@@ -199,5 +224,3 @@ function validateTermCreators( termCreators ) {
 }
 
 equalityExplorer.register( 'EqualityExplorerScene', EqualityExplorerScene );
-
-export default EqualityExplorerScene;

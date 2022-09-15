@@ -21,21 +21,21 @@ import Plate from './Plate.js';
 import TermCreator from './TermCreator.js';
 
 type SelfOptions = {
-  position: Vector2; // position of the point where the beam balances on the fulcrum
-  beamWidth: number; // width of the balance beam
-  maxAngle: number; // max angle of the scale, in radians
-  maxWeight: number; // weight at which a plate 'bottoms out'
+  position?: Vector2; // position of the point where the beam balances on the fulcrum
+  beamWidth?: number; // width of the balance beam
+  maxAngle?: number; // max angle of the scale, in radians
+  maxWeight?: number; // weight at which a plate 'bottoms out'
 
-  plateSupportHeight: number; // height of vertical support that connects plate to beam
-  plateDiameter: number; // diameter of the plates
-  plateXInset: number; // inset of the plates from the ends of the beam
+  plateSupportHeight?: number; // height of vertical support that connects plate to beam
+  plateDiameter?: number; // diameter of the plates
+  plateXInset?: number; // inset of the plates from the ends of the beam
 
   // options related to the plate's 2D grid
-  gridRows: number; // rows in the grid
-  gridColumns: number; // columns in the grid
-  gridXMargin: number; // horizontal space between stacks of terms
-  gridYMargin: number;  // vertical space between terms in each stack
-  iconSize: Dimension2 | null; // size of icons, computed if null
+  gridRows?: number; // rows in the grid
+  gridColumns?: number; // columns in the grid
+  gridXMargin?: number; // horizontal space between stacks of terms
+  gridYMargin?: number;  // vertical space between terms in each stack
+  iconSize?: Dimension2 | null; // size of icons, computed if null
 };
 
 type BalanceScaleOptions = SelfOptions;
