@@ -1,5 +1,6 @@
 // Copyright 2017-2020, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Pressing this button clears all terms from the scale.
  *
