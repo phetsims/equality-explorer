@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * User-interface component for picking one of several values. The values are arbitry Objects.
  *
