@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * User-interface component for picking one of several values. The values are arbitry Objects.
  *
@@ -8,42 +7,102 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import EnumerationDeprecatedProperty from '../../../../axon/js/EnumerationDeprecatedProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import StringEnumerationProperty from '../../../../axon/js/StringEnumerationProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
-import merge from '../../../../phet-core/js/merge.js';
-import { Color, FireListener, LinearGradient, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import { Color, FireListener, FireListenerOptions, LinearGradient, Node, NodeOptions, Path, PathOptions, Rectangle, TColor } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-// constants
-const ButtonState = EnumerationDeprecated.byKeys( [ 'UP', 'DOWN', 'OVER', 'OUT' ] );
+const ButtonStateValues = [ 'up', 'down', 'over', 'out' ] as const;
+type ButtonState = ( typeof ButtonStateValues )[number];
 
-class ObjectPicker extends Node {
+type ArrowColors = {
+  up: TColor;
+  over: TColor;
+  down: TColor;
+  out: TColor;
+  disabled: TColor;
+};
+
+type BackgroundColors = {
+  up: TColor;
+  over: LinearGradient;
+  down: LinearGradient;
+  out: LinearGradient;
+  disabled: TColor;
+};
+
+export type ObjectPickerItem<T> = {
+  value: T;
+  node: Node;
+};
+
+type SelfOptions = {
+  wrapEnabled?: boolean; // whether to wrap around at ends of range
+  backgroundColor?: TColor; // color of the background when pointer is not over it
+  arrowsColor?: TColor; // color of arrows
+  arrowsPressedColor?: TColor; // color of arrows when pressed, computed if null
+  gradientColor?: TColor; // base color of top/bottom gradient on pointer over, defaults to options.arrowsColor if null
+  gradientPressedColor?: TColor; // {Color|string|null} color top/bottom gradient when pressed, computed if null
+  cornerRadius?: number;
+  xMargin?: number;
+  yMargin?: number;
+  timerDelay?: number; // start to fire continuously after pressing for this long (milliseconds)
+  timerInterval?: number; // fire continuously at this frequency (milliseconds),
+  touchAreaXDilation?: number;
+  touchAreaYDilation?: number;
+  mouseAreaXDilation?: number;
+  mouseAreaYDilation?: number;
+  backgroundStroke?: TColor;
+  backgroundLineWidth?: number;
+  arrowHeight?: number;
+  arrowYSpacing?: number;
+  arrowStroke?: TColor;
+  arrowLineWidth?: number;
+  incrementFunction?: ( index: number ) => number;
+  decrementFunction?: ( index: number ) => number;
+
+  // whether increment and decrement are enabled.
+  // If the client provides these, then the client is fully responsible for the state of these Properties.
+  // If null, a default implementation is used.
+  incrementEnabledProperty?: TReadOnlyProperty<boolean> | null;
+  decrementEnabledProperty?: TReadOnlyProperty<boolean> | null;
+};
+
+type ObjectPickerOptions = SelfOptions;
+
+class ObjectPicker<T> extends Node {
+
+  private readonly disposeObjectPicker: () => void;
 
   /**
-   * @param {Property.<Object>} valueProperty - value of the current item that is displayed
-   * @param {{value:Object, node:Node}[]} items - the set of items that you can select from
-   * @param {Object} [options]
+   * @param valueProperty - value of the current item that is displayed
+   * @param items - the set of items that you can select from
+   * @param [providedOptions]
    */
-  constructor( valueProperty, items, options ) {
+  public constructor( valueProperty: Property<T>, items: ObjectPickerItem<T>[], providedOptions?: ObjectPickerOptions ) {
 
-    options = merge( {
-      wrapEnabled: false, // whether to wrap around at ends of range
+    const options = optionize<ObjectPickerOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
+      wrapEnabled: false,
       cursor: 'pointer',
-      backgroundColor: 'white', // {Color|string} color of the background when pointer is not over it
-      arrowsColor: 'blue', // {Color|string} color of arrows
-      arrowsPressedColor: null, // {Color|string|null} color of arrows when pressed, computed if null
-      gradientColor: null, // base color of top/bottom gradient on pointer over, defaults to options.arrowsColor if null
-      gradientPressedColor: null, // {Color|string|null} color top/bottom gradient when pressed, computed if null
+      backgroundColor: 'white',
+      arrowsColor: 'blue',
+      arrowsPressedColor: null,
+      gradientColor: null,
+      gradientPressedColor: null,
       cornerRadius: 6,
       xMargin: 3,
       yMargin: 3,
-      timerDelay: 400, // start to fire continuously after pressing for this long (milliseconds)
-      timerInterval: 100, // fire continuously at this frequency (milliseconds),
+      timerDelay: 400,
+      timerInterval: 100,
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
       mouseAreaXDilation: 0,
@@ -54,15 +113,11 @@ class ObjectPicker extends Node {
       arrowYSpacing: 3,
       arrowStroke: 'black',
       arrowLineWidth: 0.25,
-      incrementFunction: index => index + 1,
-      decrementFunction: index => index - 1,
-
-      // {Property.<boolean>|null} whether increment and decrement are enabled.
-      // If the client provides these, then the client is fully responsible for the state of these Properties.
-      // If null, a default implementation is used.
+      incrementFunction: ( index: number ) => index + 1,
+      decrementFunction: ( index: number ) => index - 1,
       incrementEnabledProperty: null,
       decrementEnabledProperty: null
-    }, options );
+    }, providedOptions );
 
     options.arrowsPressedColor = options.arrowsPressedColor || Color.toColor( options.arrowsColor ).darkerColor();
     options.gradientColor = options.gradientColor || options.arrowsColor;
@@ -74,8 +129,9 @@ class ObjectPicker extends Node {
     // Nodes
 
     // maximum dimensions of item Nodes
-    const maxWidth = _.maxBy( items, item => item.node.width ).node.width;
-    const maxHeight = _.maxBy( items, item => item.node.height ).node.height;
+    assert && assert( items.length > 0 );
+    const maxWidth = _.maxBy( items, item => item.node.width )!.node.width;
+    const maxHeight = _.maxBy( items, item => item.node.height )!.node.height;
 
     // compute shape of the background behind the value
     const backgroundWidth = maxWidth + ( 2 * options.xMargin );
@@ -131,7 +187,7 @@ class ObjectPicker extends Node {
         .lineTo( arrowButtonSize.width, arrowButtonSize.height )
         .lineTo( 0, arrowButtonSize.height )
         .close(),
-      merge( {}, arrowOptions, {
+      combineOptions<PathOptions>( {}, arrowOptions, {
         centerX: incrementBackgroundNode.centerX,
         bottom: incrementBackgroundNode.top - options.arrowYSpacing
       } ) );
@@ -142,7 +198,7 @@ class ObjectPicker extends Node {
         .lineTo( 0, 0 )
         .lineTo( arrowButtonSize.width, 0 )
         .close(),
-      merge( {}, arrowOptions, {
+      combineOptions<PathOptions>( {}, arrowOptions, {
         centerX: decrementBackgroundNode.centerX,
         top: decrementBackgroundNode.bottom + options.arrowYSpacing
       } ) );
@@ -205,32 +261,34 @@ class ObjectPicker extends Node {
     // Properties
 
     // index of the item that's currently selected
-    const indexProperty = new NumberProperty( indexOfItemWithValue( items, valueProperty.value ), {
+    const indexProperty = new NumberProperty( indexOfItemWithValue<T>( items, valueProperty.value ), {
       numberType: 'Integer',
       range: new Range( 0, items.length - 1 )
     } );
 
-    const incrementButtonStateProperty = new EnumerationDeprecatedProperty( ButtonState, ButtonState.UP );
-    const decrementButtonStateProperty = new EnumerationDeprecatedProperty( ButtonState, ButtonState.UP );
+    const incrementButtonStateProperty = new StringEnumerationProperty( 'up', {
+      validValues: ButtonStateValues
+    } );
+    const decrementButtonStateProperty = new StringEnumerationProperty( 'down', {
+      validValues: ButtonStateValues
+    } );
 
     // enables the increment button
-    if ( !options.incrementEnabledProperty ) {
-      options.incrementEnabledProperty = new DerivedProperty( [ indexProperty ],
-        index => ( options.wrapEnabled || ( index < items.length - 1 ) )
-      );
-    }
+    const incrementEnabledProperty = options.incrementEnabledProperty ||
+                                     new DerivedProperty( [ indexProperty ],
+                                       index => ( options.wrapEnabled || ( index < items.length - 1 ) )
+                                     );
 
     // enables the decrement button
-    if ( !options.decrementEnabledProperty ) {
-      options.decrementEnabledProperty = new DerivedProperty( [ indexProperty ],
-        index => ( options.wrapEnabled || ( index > 0 ) )
-      );
-    }
+    const decrementEnabledProperty = options.decrementEnabledProperty ||
+                                     new DerivedProperty( [ indexProperty ],
+                                       index => ( options.wrapEnabled || ( index > 0 ) )
+                                     );
 
     //------------------------------------------------------------
     // Observers and InputListeners
 
-    const inputListenerOptions = {
+    const inputListenerOptions: ObjectPickerInputListenerOptions = {
       fireOnHold: true,
       fireOnHoldDelay: options.timerDelay,
       fireOnHoldInterval: options.timerInterval
@@ -238,7 +296,7 @@ class ObjectPicker extends Node {
 
     // increment - removeInputListener unnecessary
     const incrementInputListener = new ObjectPickerInputListener( incrementButtonStateProperty,
-      merge( {
+      combineOptions<ObjectPickerInputListenerOptions>( {
         fire: () => {
           if ( incrementInputListener.enabled ) {
             let index = options.incrementFunction( indexProperty.value );
@@ -253,7 +311,7 @@ class ObjectPicker extends Node {
 
     // decrement - removeInputListener unnecessary
     const decrementInputListener = new ObjectPickerInputListener( decrementButtonStateProperty,
-      merge( {
+      combineOptions<ObjectPickerInputListenerOptions>( {
         fire: () => {
           if ( decrementInputListener.enabled ) {
             let index = options.decrementFunction( indexProperty.value );
@@ -267,22 +325,22 @@ class ObjectPicker extends Node {
     decrementParent.addInputListener( decrementInputListener );
 
     // enable/disable, unlink required
-    const incrementEnabledListener = enabled => {
+    const incrementEnabledListener = ( enabled: boolean ) => {
       incrementInputListener.enabled = enabled;
     };
-    const decrementEnabledListener = enabled => {
+    const decrementEnabledListener = ( enabled: boolean ) => {
       decrementInputListener.enabled = enabled;
     };
-    options.incrementEnabledProperty.link( incrementEnabledListener );
-    options.decrementEnabledProperty.link( decrementEnabledListener );
+    incrementEnabledProperty.link( incrementEnabledListener );
+    decrementEnabledProperty.link( decrementEnabledListener );
 
     // Update displayed Node and index to match the current value
-    const valueObserver = value => {
+    const valueObserver = ( value: T ) => {
 
       valueParentNode.removeAllChildren();
 
       // show the node associated with the value
-      const index = indexOfItemWithValue( items, value );
+      const index = indexOfItemWithValue<T>( items, value );
       const valueNode = items[ index ].node;
       valueParentNode.addChild( valueNode );
       valueNode.centerX = backgroundWidth / 2;
@@ -300,42 +358,37 @@ class ObjectPicker extends Node {
 
     // update colors for increment components, unmultilink unnecessary
     Multilink.multilink(
-      [ incrementButtonStateProperty, options.incrementEnabledProperty ],
+      [ incrementButtonStateProperty, incrementEnabledProperty ],
       ( buttonState, enabled ) => {
         updateColors( buttonState, enabled, incrementBackgroundNode, incrementArrow, backgroundColors, arrowColors );
       } );
 
     // update colors for decrement components, unmultilink unnecessary
     Multilink.multilink(
-      [ decrementButtonStateProperty, options.decrementEnabledProperty ],
+      [ decrementButtonStateProperty, decrementEnabledProperty ],
       ( buttonState, enabled ) => {
         updateColors( buttonState, enabled, decrementBackgroundNode, decrementArrow, backgroundColors, arrowColors );
       } );
 
     this.mutate( options );
 
-    // @private called by dispose
     this.disposeObjectPicker = () => {
 
       if ( valueProperty.hasListener( valueObserver ) ) {
         valueProperty.unlink( valueObserver );
       }
 
-      if ( options.incrementEnabledProperty.hasListener( incrementEnabledListener ) ) {
-        options.incrementEnabledProperty.unlink( incrementEnabledListener );
+      if ( incrementEnabledProperty.hasListener( incrementEnabledListener ) ) {
+        incrementEnabledProperty.unlink( incrementEnabledListener );
       }
 
-      if ( options.decrementEnabledProperty.hasListener( decrementEnabledListener ) ) {
-        options.decrementEnabledProperty.unlink( decrementEnabledListener );
+      if ( decrementEnabledProperty.hasListener( decrementEnabledListener ) ) {
+        decrementEnabledProperty.unlink( decrementEnabledListener );
       }
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeObjectPicker();
     super.dispose();
   }
@@ -344,38 +397,30 @@ class ObjectPicker extends Node {
 /**
  * Converts FireListener events to ButtonState changes.
  */
-class ObjectPickerInputListener extends FireListener {
+type ObjectPickerInputListenerOptions = FireListenerOptions<FireListener>;
 
-  /**
-   * @param {EnumerationDeprecatedProperty.<ButtonState>} buttonStateProperty
-   * @param {Object} [options]
-   */
-  constructor( buttonStateProperty, options ) {
+class ObjectPickerInputListener extends FireListener {
+  public constructor( buttonStateProperty: StringEnumerationProperty<ButtonState>, options: ObjectPickerInputListenerOptions ) {
     super( options );
     Multilink.multilink(
       [ this.isOverProperty, this.isPressedProperty ],
       ( isOver, isPressed ) => {
         buttonStateProperty.set(
-          isOver && !isPressed ? ButtonState.OVER :
-          isOver && isPressed ? ButtonState.DOWN :
-          !isOver && !isPressed ? ButtonState.UP :
-          !isOver && isPressed ? ButtonState.OUT :
-          assert && assert( false, 'bad state' )
+          isOver && !isPressed ? 'over' :
+          isOver && isPressed ? 'down' :
+          !isOver && !isPressed ? 'up' :
+          'out'
         );
       } );
 
-    // @public
     this.enabled = true;
   }
 }
 
 /**
  * Gets the index of the item that has a specified value.
- * @param {{value:Object, node:Node}} items
- * @param {Object} value
- * @returns {number}
  */
-function indexOfItemWithValue( items, value ) {
+function indexOfItemWithValue<T>( items: ObjectPickerItem<T>[], value: T ): number {
   let index = -1;
   for ( let i = 0; i < items.length; i++ ) {
     if ( items[ i ].value === value ) {
@@ -389,13 +434,8 @@ function indexOfItemWithValue( items, value ) {
 
 /**
  * Creates a vertical gradient.
- * @param {ColorDef} topColor
- * @param {ColorDef} centerColor
- * @param {ColorDef} bottomColor
- * @param {number} height
- * @returns {LinearGradient}
  */
-function createVerticalGradient( topColor, centerColor, bottomColor, height ) {
+function createVerticalGradient( topColor: TColor, centerColor: TColor, bottomColor: TColor, height: number ): LinearGradient {
   return new LinearGradient( 0, 0, 0, height )
     .addColorStop( 0, topColor )
     .addColorStop( 0.5, centerColor )
@@ -404,29 +444,24 @@ function createVerticalGradient( topColor, centerColor, bottomColor, height ) {
 
 /**
  * Updates arrow and background colors
- * @param {ButtonState} buttonState
- * @param {boolean} enabled
- * @param {ColorDef} background
- * @param {Path} arrow
- * @param {Object} backgroundColors - see backgroundColors in constructor
- * @param {Object} arrowColors - see arrowColors in constructor
  */
-function updateColors( buttonState, enabled, background, arrow, backgroundColors, arrowColors ) {
+function updateColors( buttonState: ButtonState, enabled: boolean, background: Path, arrow: Path,
+                       backgroundColors: BackgroundColors, arrowColors: ArrowColors ): void {
   if ( enabled ) {
     arrow.stroke = 'black';
-    if ( buttonState === ButtonState.UP ) {
+    if ( buttonState === 'up' ) {
       background.fill = backgroundColors.up;
       arrow.fill = arrowColors.up;
     }
-    else if ( buttonState === ButtonState.OVER ) {
+    else if ( buttonState === 'over' ) {
       background.fill = backgroundColors.over;
       arrow.fill = arrowColors.over;
     }
-    else if ( buttonState === ButtonState.DOWN ) {
+    else if ( buttonState === 'down' ) {
       background.fill = backgroundColors.down;
       arrow.fill = arrowColors.down;
     }
-    else if ( buttonState === ButtonState.OUT ) {
+    else if ( buttonState === 'out' ) {
       background.fill = backgroundColors.out;
       arrow.fill = arrowColors.out;
     }
