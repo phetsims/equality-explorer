@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * The balance scale used throughout Equality Explorer.
  * Origin is at the point where the beam is balanced on the fulcrum.
@@ -11,11 +10,12 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import { Circle, HBox, Line, Node, Path } from '../../../../scenery/js/imports.js';
+import { Circle, HBox, Line, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
+import BalanceScale from '../model/BalanceScale.js';
 import BoxNode from './BoxNode.js';
 import ClearScaleButton from './ClearScaleButton.js';
 import OrganizeButton from './OrganizeButton.js';
@@ -38,19 +38,25 @@ const FULCRUM_BOTTOM_WIDTH = 25;
 // arrow
 const ARROW_LENGTH = 75;
 
-class BalanceScaleNode extends Node {
+type SelfOptions = {
+  clearScaleButtonVisible?: boolean;
+  organizeButtonVisible?: boolean;
+  disposeTermsNotOnScale?: ( () => void ) | null; // call this to dispose of terms that are NOT on the scale
+};
 
-  /**
-   * @param {BalanceScale} scale
-   * @param {Object} [options]
-   */
-  constructor( scale, options ) {
+type BalanceScaleNodeOptions = SelfOptions;
 
-    options = merge( {
+export default class BalanceScaleNode extends Node {
+
+  public constructor( scale: BalanceScale, providedOptions?: BalanceScaleNodeOptions ) {
+
+    const options = optionize<BalanceScaleNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
       clearScaleButtonVisible: true,
       organizeButtonVisible: true,
-      disposeTermsNotOnScale: null // {function|null} call this to dispose of terms that are NOT on the scale
-    }, options );
+      disposeTermsNotOnScale: null
+    }, providedOptions );
 
     options.x = scale.position.x;
     options.y = scale.position.y;
@@ -135,7 +141,6 @@ class BalanceScaleNode extends Node {
     } );
 
     // Pressing either button disposes of any terms that are not already on the scale.
-    // removeListener not needed.
     if ( options.disposeTermsNotOnScale ) {
       clearScaleButton.addListener( options.disposeTermsNotOnScale );
       organizeButton.addListener( options.disposeTermsNotOnScale );
@@ -157,7 +162,6 @@ class BalanceScaleNode extends Node {
       excludeInvisibleChildrenFromBounds: false
     } );
 
-    assert && assert( !options.children, 'BalanceNode sets children' );
     options.children = [
       baseNode,
       buttonsParent,
@@ -176,10 +180,10 @@ class BalanceScaleNode extends Node {
 
     super( options );
 
-    // Adjust parts of the scale that depend on angle. unlink not required.
+    // Adjust parts of the scale that depend on angle.
     scale.angleProperty.link( ( angle, oldAngle ) => {
 
-      const deltaAngle = angle - oldAngle;
+      const deltaAngle = ( oldAngle === null ) ? 0 : ( angle - oldAngle );
 
       // rotate the beam about its pivot point
       beamNode.rotateAround( new Vector2( beamNode.centerX, beamNode.centerY ), deltaAngle );
@@ -197,20 +201,23 @@ class BalanceScaleNode extends Node {
       }
     } );
 
-    // Move the left plate. unlink not required.
+    // Move the left plate.
     scale.leftPlate.positionProperty.link( position => {
       leftPlateNode.x = position.x - scale.position.x;
       leftPlateNode.y = position.y - scale.position.y;
     } );
 
-    // Move the right plate. unlink not required.
+    // Move the right plate.
     scale.rightPlate.positionProperty.link( position => {
       rightPlateNode.x = position.x - scale.position.x;
       rightPlateNode.y = position.y - scale.position.y;
     } );
   }
+
+  public override dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
 }
 
 equalityExplorer.register( 'BalanceScaleNode', BalanceScaleNode );
-
-export default BalanceScaleNode;

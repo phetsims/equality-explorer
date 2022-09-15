@@ -9,7 +9,7 @@
 
 import { Shape } from '../../../../kite/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import { Color, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import { Color, Node, NodeOptions, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = {
@@ -22,7 +22,7 @@ type SelfOptions = {
   stroke?: Color | string; // stroke used for both faces of the box
 };
 
-type BoxNodeOptions = SelfOptions;
+type BoxNodeOptions = SelfOptions & NodeTranslationOptions;
 
 export default class BoxNode extends Node {
 
