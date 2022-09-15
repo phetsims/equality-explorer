@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Circular halo that appears around a Node.
  * Used to indicate that two overlapping terms will sum to zero.
@@ -8,27 +7,30 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import { Circle, Color, RadialGradient } from '../../../../scenery/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { Circle, CircleOptions, Color, RadialGradient } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 
-class HaloNode extends Circle {
+type SelfOptions = {
+  baseColor?: Color | string;
+};
 
-  /**
-   * @param {number} radius
-   * @param {Object} [options]
-   */
-  constructor( radius, options ) {
+type HaloNodeOptions = SelfOptions;
 
-    options = merge( {
+export default class HaloNode extends Circle {
+
+  public constructor( radius: number, providedOptions?: HaloNodeOptions ) {
+
+    const options = optionize<HaloNodeOptions, SelfOptions, CircleOptions>()( {
+
+      // SelfOptions
       baseColor: EqualityExplorerColors.HALO
-    }, options );
+    }, providedOptions );
 
-    // halo is fully transparent at the edges
+    // fully transparent at the edges
     const edgeColor = Color.toColor( options.baseColor ).withAlpha( 0 );
 
-    assert && assert( !options.fill, 'HaloNode sets fill' );
     options.fill = new RadialGradient( 0, 0, 0, 0, 0, radius )
       .addColorStop( 0.5, options.baseColor )
       .addColorStop( 1, edgeColor );
@@ -38,5 +40,3 @@ class HaloNode extends Circle {
 }
 
 equalityExplorer.register( 'HaloNode', HaloNode );
-
-export default HaloNode;
