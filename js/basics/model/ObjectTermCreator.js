@@ -37,7 +37,7 @@ class ObjectTermCreator extends TermCreator {
   /**
    * Creates the icon used to represent this term in the TermsToolbox and equations.
    * @param {Object} [options]
-   * @returns {Node}
+   * @returns {scenery.Node}
    * @public
    * @override
    */

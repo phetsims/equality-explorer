@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Displays an equation or inequality.
  * Designed to support multiple variables, but has only been tested extensively with 1 variable.
@@ -10,16 +9,18 @@
  */
 
 import Multilink from '../../../../axon/js/Multilink.js';
-import merge from '../../../../phet-core/js/merge.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
+import { Font, FontWeight, HBox, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import ObjectTermCreator from '../../basics/model/ObjectTermCreator.js';
 import ObjectTermNode from '../../basics/view/ObjectTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ConstantTermCreator from '../model/ConstantTermCreator.js';
+import TermCreator from '../model/TermCreator.js';
 import VariableTermCreator from '../model/VariableTermCreator.js';
 import ConstantTermNode from './ConstantTermNode.js';
 import VariableTermNode from './VariableTermNode.js';
@@ -27,41 +28,69 @@ import VariableTermNode from './VariableTermNode.js';
 // constants
 const DEFAULT_FONT_SIZE = 30;
 
-class EquationNode extends Node {
+type SelfOptions = {
+
+  // Update the view when the model changes? Set this to false to create a static equation.
+  updateEnabled?: boolean;
+
+  // fonts sizes, optimized for EquationAccordionBox
+  symbolFontSize?: number;
+  operatorFontSize?: number;
+  integerFontSize?: number;
+  fractionFontSize?: number;
+  relationalOperatorFontSize?: number;
+
+  relationalOperatorFontWeight?: FontWeight;
+
+  // horizontal spacing
+  coefficientSpacing?: number; // space between coefficient and icon
+  plusSpacing?: number; // space around plus operator
+  relationalOperatorSpacing?: number; // space around the relational operator
+};
+
+export type EquationNodeOptions = SelfOptions;
+
+type ExpressionNodeOptions = {
+  symbolFont: Font;
+  operatorFont: Font;
+  integerFont: Font;
+  fractionFont: Font;
+  coefficientSpacing: number;
+  plusSpacing: number;
+};
+
+export default class EquationNode extends Node {
+
+  private readonly disposeEquationNode: () => void;
+
   /**
-   * @param {TermCreator[]} leftTermCreators - left side of equation, terms appear in this order
-   * @param {TermCreator[]} rightTermCreators - right side of equation, terms appear in this order
-   * @param {Object} [options]
+   * @param leftTermCreators - left side of equation, terms appear in this order
+   * @param rightTermCreators - right side of equation, terms appear in this order
+   * @param [providedOptions]
    */
-  constructor( leftTermCreators, rightTermCreators, options ) {
+  public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[],
+                      providedOptions?: EquationNodeOptions ) {
 
-    options = merge( {
+    const options = optionize<EquationNodeOptions, SelfOptions, NodeOptions>()( {
 
-      // Update the view when the model changes?
-      // Set this to false to create a static equation.
+      // SelfOptions
       updateEnabled: true,
-
-      // fonts sizes, optimized for EquationAccordionBox
       symbolFontSize: DEFAULT_FONT_SIZE,
       operatorFontSize: DEFAULT_FONT_SIZE,
       integerFontSize: DEFAULT_FONT_SIZE,
       fractionFontSize: 0.6 * DEFAULT_FONT_SIZE,
       relationalOperatorFontSize: 1.5 * DEFAULT_FONT_SIZE,
-
       relationalOperatorFontWeight: 'bold',
-
-      // horizontal spacing
-      coefficientSpacing: 3, // space between coefficient and icon
-      plusSpacing: 8, // space around plus operator
-      relationalOperatorSpacing: 20 // space around the relational operator
-
-    }, options );
+      coefficientSpacing: 3,
+      plusSpacing: 8,
+      relationalOperatorSpacing: 20
+    }, providedOptions );
 
     super();
 
     // expressions for the left and right sides of the equation
-    let leftExpressionNode = null;
-    let rightExpressionNode = null;
+    let leftExpressionNode: Node;
+    let rightExpressionNode: Node;
 
     // relational operator that separates the two expressions
     const relationalOperatorNode = new Text( '?', {
@@ -85,12 +114,12 @@ class EquationNode extends Node {
 
     // updates the relational operator based on left vs right weight
     const updateRelationalOperator = () => {
-      relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
+      relationalOperatorNode.text = getRelationalOperatorString( leftTermCreators, rightTermCreators );
       updateLayout();
     };
 
-    // configuration information for one side of the equation, passed to createExpressionNode
-    const expressionConfig = {
+    // information for one side of the equation, passed to createExpressionNode
+    const expressionNodeOptions: ExpressionNodeOptions = {
       symbolFont: new MathSymbolFont( options.symbolFontSize ),
       operatorFont: new PhetFont( options.operatorFontSize ),
       integerFont: new PhetFont( options.integerFontSize ),
@@ -101,23 +130,25 @@ class EquationNode extends Node {
 
     // updates the equation's terms
     const updateTerms = () => {
-      leftExpressionNode = createExpressionNode( leftTermCreators, expressionConfig );
-      rightExpressionNode = createExpressionNode( rightTermCreators, expressionConfig );
+      leftExpressionNode = createExpressionNode( leftTermCreators, expressionNodeOptions );
+      rightExpressionNode = createExpressionNode( rightTermCreators, expressionNodeOptions );
       this.children = [ leftExpressionNode, relationalOperatorNode, rightExpressionNode ];
       updateLayout();
     };
 
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
     let relationalOperatorMultilink; // {Multilink|undefined} defined for dynamic equations
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
     let termsMultilink; // {Multilink|undefined} defined for dynamic equations
     if ( options.updateEnabled ) {
 
       // The equation needs to be dynamically updated.
 
       // {Property[]} dependencies that require the relational operator to be updated
-      const relationalOperatorDependencies = [];
+      const relationalOperatorDependencies: TReadOnlyProperty<Fraction>[] = [];
 
       // {Property[]} dependencies that require the terms to be updated
-      const termDependencies = [];
+      const termDependencies: TReadOnlyProperty<number>[] = [];
 
       // Gather dependencies for all term creators...
       leftTermCreators.concat( rightTermCreators ).forEach( termCreator => {
@@ -126,7 +157,9 @@ class EquationNode extends Node {
       } );
 
       // dispose required
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
       relationalOperatorMultilink = new Multilink( relationalOperatorDependencies, updateRelationalOperator );
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
       termsMultilink = new Multilink( termDependencies, updateTerms );
     }
     else {
@@ -136,20 +169,17 @@ class EquationNode extends Node {
       updateTerms();
     }
 
-    // @private
     this.disposeEquationNode = () => {
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
       relationalOperatorMultilink && relationalOperatorMultilink.dispose();
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
       termsMultilink && termsMultilink.dispose();
     };
 
     this.mutate( options );
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeEquationNode();
     super.dispose();
   }
@@ -157,11 +187,8 @@ class EquationNode extends Node {
 
 /**
  * Gets the operator that describes the relationship between the left and right sides.
- * @param {TermCreator[]} leftTermCreators
- * @param {TermCreator[]} rightTermCreators
- * @returns {string}
  */
-function getRelationalOperator( leftTermCreators, rightTermCreators ) {
+function getRelationalOperatorString( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[] ): string {
 
   // evaluate the left side
   let leftWeight = Fraction.fromInteger( 0 );
@@ -192,11 +219,8 @@ function getRelationalOperator( leftTermCreators, rightTermCreators ) {
 
 /**
  * Creates an expression, one side of the equation.
- * @param {TermCreator[]} termCreators
- * @param {Object} config - see createExpressionNodeConfig in constructor
- * @returns {Node}
  */
-function createExpressionNode( termCreators, config ) {
+function createExpressionNode( termCreators: TermCreator[], expressionNodeOptions: ExpressionNodeOptions ): Node {
 
   const children = [];
   for ( let i = 0; i < termCreators.length; i++ ) {
@@ -210,13 +234,13 @@ function createExpressionNode( termCreators, config ) {
 
         // if there were previous terms, add an operator
         if ( children.length > 0 ) {
-          children.push( valueToOperatorNode( numberOfTermsOnPlate, config.operatorFont ) );
+          children.push( valueToOperatorNode( numberOfTermsOnPlate, expressionNodeOptions.operatorFont ) );
         }
 
         // Each ObjectTerm has an implicit coefficient of 1, so use the number of terms as the coefficient.
         children.push( ObjectTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.createIcon(), {
-          font: config.integerFont,
-          spacing: config.coefficientSpacing
+          font: expressionNodeOptions.integerFont,
+          spacing: expressionNodeOptions.coefficientSpacing
         } ) );
       }
       else if ( termCreator instanceof VariableTermCreator ) {
@@ -227,15 +251,15 @@ function createExpressionNode( termCreators, config ) {
 
           // if there were previous terms, replace the coefficient's sign with an operator
           if ( children.length > 0 ) {
-            children.push( valueToOperatorNode( coefficient.getValue(), config.operatorFont ) );
+            children.push( valueToOperatorNode( coefficient.getValue(), expressionNodeOptions.operatorFont ) );
             coefficient = coefficient.abs();
           }
 
           children.push( VariableTermNode.createEquationTermNode( coefficient, termCreator.variable.symbol, {
-            integerFont: config.integerFont,
-            fractionFont: config.fractionFont,
-            symbolFont: config.symbolFont,
-            coefficientSpacing: config.coefficientSpacing
+            integerFont: expressionNodeOptions.integerFont,
+            fractionFont: expressionNodeOptions.fractionFont,
+            symbolFont: expressionNodeOptions.symbolFont,
+            coefficientSpacing: expressionNodeOptions.coefficientSpacing
           } ) );
         }
       }
@@ -247,13 +271,13 @@ function createExpressionNode( termCreators, config ) {
 
           // if there were previous terms, replace the constant's sign with an operator
           if ( children.length > 0 ) {
-            children.push( valueToOperatorNode( constantValue.getValue(), config.operatorFont ) );
+            children.push( valueToOperatorNode( constantValue.getValue(), expressionNodeOptions.operatorFont ) );
             constantValue = constantValue.abs();
           }
 
           children.push( ConstantTermNode.createEquationTermNode( constantValue, {
-            integerFont: config.integerFont,
-            fractionFont: config.fractionFont
+            integerFont: expressionNodeOptions.integerFont,
+            fractionFont: expressionNodeOptions.fractionFont
           } ) );
         }
       }
@@ -265,27 +289,21 @@ function createExpressionNode( termCreators, config ) {
 
   // if there were no terms, then this side of the equation evaluated to zero
   if ( children.length === 0 ) {
-    children.push( new Text( '0', { font: config.integerFont } ) );
+    children.push( new Text( '0', { font: expressionNodeOptions.integerFont } ) );
   }
 
   return new HBox( {
-    spacing: config.plusSpacing,
+    spacing: expressionNodeOptions.plusSpacing,
     children: children
   } );
 }
 
 /**
  * Given the value that determines a term's sign, create the corresponding operator node.
- * @param {number} value
- * @param {Font} operatorFont
- * @returns {Node}
  */
-function valueToOperatorNode( value, operatorFont ) {
-  assert && assert( typeof value === 'number', `invalid value: ${value}` );
+function valueToOperatorNode( value: number, operatorFont: Font ): Node {
   const operator = ( value > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
   return new Text( operator, { font: operatorFont } );
 }
 
 equalityExplorer.register( 'EquationNode', EquationNode );
-
-export default EquationNode;

@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Fixed-size panel that displays an equation or inequality.
  * The equation is scaled to fix the panel.
@@ -9,32 +8,43 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { Node, Rectangle } from '../../../../scenery/js/imports.js';
-import Panel from '../../../../sun/js/Panel.js';
+import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
-import EquationNode from './EquationNode.js';
+import TermCreator from '../model/TermCreator.js';
+import EquationNode, { EquationNodeOptions } from './EquationNode.js';
 
-class EquationPanel extends Panel {
+type SelfOptions = {
+
+  // this panel is designed to be a fixed size, regardless of its content
+  contentWidth?: number;
+  contentHeight?: number;
+
+  // options passed to EquationNode constructor
+  equationNodeOptions?: EquationNodeOptions;
+};
+
+type EquationPanelOptions = SelfOptions;
+
+export default class EquationPanel extends Panel {
 
   /**
-   * @param {TermCreator[]} leftTermCreators - left side of equation
-   * @param {TermCreator[]} rightTermCreators - right side of equation
-   * @param {Object} [options]
+   * @param leftTermCreators - left side of equation
+   * @param rightTermCreators - right side of equation
+   * @param [providedOptions]
    */
-  constructor( leftTermCreators, rightTermCreators, options ) {
+  public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[], providedOptions?: EquationPanelOptions ) {
 
-    options = merge( {
+    const options = optionize<EquationPanelOptions, StrictOmit<SelfOptions, 'equationNodeOptions'>, PanelOptions>()( {
 
-      // this panel is designed to be a fixed size, regardless of its content
+      // SelfOptions
       contentWidth: 100,
       contentHeight: 60,
 
-      // options passed to EquationNode constructor
-      equationNodeOptions: null,
-
-      // Panel options
+      // PanelOptions
       fill: null,
       stroke: null,
       resize: false,
@@ -42,7 +52,7 @@ class EquationPanel extends Panel {
       xMargin: 5,
       yMargin: 5
 
-    }, options );
+    }, providedOptions );
 
     // use an invisible rectangle to enforce fixed content size, stroke 'red' with ?dev
     const invisibleRectangle = new Rectangle( 0, 0, options.contentWidth, options.contentHeight );
@@ -83,5 +93,3 @@ class EquationPanel extends Panel {
 }
 
 equalityExplorer.register( 'EquationPanel', EquationPanel );
-
-export default EquationPanel;
