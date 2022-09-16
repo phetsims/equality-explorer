@@ -1,5 +1,6 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Animation sequence that translates a Node, then fades it out.
  *
