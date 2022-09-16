@@ -47,7 +47,9 @@ class SolveItModel {
   }
 
   // @public
-  step( dt ) {}
+  step( dt ) {
+    // required by TModel
+  }
 
   /**
    * Tests challenge generators by generating a large number of challenges.
