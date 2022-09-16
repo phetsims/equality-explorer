@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Methods for creating screen icons.
  *
@@ -27,9 +26,8 @@ const EqualityExplorerScreenIcons = {
 
   /**
    * Creates the icon for the 'Basics' screen: apples > oranges
-   * @returns {ScreenIcon}
    */
-  createBasicsScreenIcon: function() {
+  createBasicsScreenIcon: function(): ScreenIcon {
 
     // apples on left side of the equation
     const appleNode1 = new Image( appleBig_png );
@@ -63,9 +61,8 @@ const EqualityExplorerScreenIcons = {
 
   /**
    * Creates the icon for the 'Numbers' screen: 1 and -1 overlapping
-   * @returns {ScreenIcon}
    */
-  createNumbersScreenIcon: function() {
+  createNumbersScreenIcon: function(): ScreenIcon {
 
     // 1
     const positiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
@@ -97,9 +94,8 @@ const EqualityExplorerScreenIcons = {
 
   /**
    * Creates the icon for the 'Variables' screen: x, -x < 1, x
-   * @returns {ScreenIcon}
    */
-  createVariablesScreenIcon: function() {
+  createVariablesScreenIcon: function(): ScreenIcon {
 
     // x and -x on left side of the equation
     const leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), EqualityExplorerStrings.x );
@@ -133,9 +129,8 @@ const EqualityExplorerScreenIcons = {
 
   /**
    * Creates the icon for the 'Operations' screen: 3x = 6
-   * @returns {ScreenIcon}
    */
-  createOperationsScreenIcon: function() {
+  createOperationsScreenIcon: function(): ScreenIcon {
 
     const operatorOptions = { font: new PhetFont( 30 ) };
 
@@ -161,9 +156,8 @@ const EqualityExplorerScreenIcons = {
 
   /**
    * Creates the home screen icon for the 'Solve It!' screen: PhET girl juggling stars
-   * @returns {ScreenIcon}
    */
-  createSolveItHomeScreenIcon: function() {
+  createSolveItHomeScreenIcon: function(): ScreenIcon {
     const iconNode = new Image( phetGirlJugglingStars_png );
     return new ScreenIcon( iconNode, {
       fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
@@ -172,9 +166,8 @@ const EqualityExplorerScreenIcons = {
 
   /**
    * Creates the navigation bar icon for the 'Solve It!' screen: +1 star
-   * @returns {ScreenIcon}
    */
-  createSolveItNavigationBarIcon: function() {
+  createSolveItNavigationBarIcon: function(): ScreenIcon {
 
     const numberNode = new Text( `${MathSymbols.UNARY_PLUS}1`, { font: new PhetFont( 25 ) } );
     const starNode = new StarNode();
