@@ -74,7 +74,8 @@ export default abstract class EqualityExplorerScene {
    * @param [providedOptions]
    * @abstract
    */
-  public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[], providedOptions?: EqualityExplorerSceneOptions ) {
+  protected constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[],
+                         providedOptions?: EqualityExplorerSceneOptions ) {
 
     const options = optionize<EqualityExplorerSceneOptions, SelfOptions>()( {
 
