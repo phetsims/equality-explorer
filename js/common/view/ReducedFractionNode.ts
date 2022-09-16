@@ -11,7 +11,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Font, Line, Node, NodeOptions, TColor, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Font, Line, Node, NodeOptions, NodeTranslationOptions, TColor, Text, VBox } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 // constants
@@ -28,7 +28,7 @@ type SelfOptions = {
   ySpacing?: number; // vertical spacing above/below the fraction line
 };
 
-type ReducedFractionNodeOptions = SelfOptions;
+type ReducedFractionNodeOptions = SelfOptions & NodeTranslationOptions;
 
 export default class ReducedFractionNode extends Node {
 
