@@ -17,13 +17,13 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = {
-  position: Vector2; // initial position
-  dragBounds: Bounds2; // bounds that constrain dragging
-  animationSpeed: number; // distance/second when animating
+  position?: Vector2; // initial position
+  dragBounds?: Bounds2; // bounds that constrain dragging
+  animationSpeed?: number; // distance/second when animating
 };
 
 export type EqualityExplorerMovableOptions = SelfOptions;
@@ -31,8 +31,8 @@ export type EqualityExplorerMovableOptions = SelfOptions;
 type AnimationCallback = ( () => void ) | null;
 
 type AnimateToOptions = {
-  animationStepCallback: AnimationCallback; // called when animation step occurs
-  animationCompletedCallback: AnimationCallback; // called when animation has completed
+  animationStepCallback?: AnimationCallback; // called when animation step occurs
+  animationCompletedCallback?: AnimationCallback; // called when animation has completed
 };
 
 export default class EqualityExplorerMovable {
@@ -139,15 +139,9 @@ export default class EqualityExplorerMovable {
    * Animates to the specified position, with optional callbacks.
    */
   public animateTo( destination: Vector2, providedOptions?: AnimateToOptions ): void {
-
-    const options = combineOptions<AnimateToOptions>( {
-      animationStepCallback: null, // {function} called when animation step occurs
-      animationCompletedCallback: null // {function} called when animation has completed
-    }, providedOptions );
-
     this.destination = destination;
-    this.animationStepCallback = options.animationStepCallback;
-    this.animationCompletedCallback = options.animationCompletedCallback;
+    this.animationStepCallback = ( providedOptions && providedOptions.animationStepCallback ) || null;
+    this.animationCompletedCallback = ( providedOptions && providedOptions.animationCompletedCallback ) || null;
   }
 
   /**
