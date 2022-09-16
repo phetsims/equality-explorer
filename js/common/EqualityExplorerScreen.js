@@ -1,5 +1,6 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Abstract base class for Screens in this sim.
  *
