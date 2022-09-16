@@ -1,28 +1,29 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Radio buttons for selecting a scene.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions, RectangularRadioButtonItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 
-class SceneRadioButtonGroup extends RectangularRadioButtonGroup {
+type SelfOptions = EmptySelfOptions;
 
-  /**
-   * @param {EqualityExplorerScene[]} scenes - the scene choices
-   * @param {Property.<EqualityExplorerScene>} sceneProperty - the scene that is currently selected
-   * @param {Object} [options]
-   */
-  constructor( scenes, sceneProperty, options ) {
+type SceneRadioButtonGroupOptions = SelfOptions;
 
-    options = merge( {
+export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<EqualityExplorerScene> {
 
-      // RectangularRadioButtonGroup options
+  public constructor( scenes: EqualityExplorerScene[], sceneProperty: Property<EqualityExplorerScene>,
+                      providedOptions?: SceneRadioButtonGroupOptions ) {
+
+    const options = optionize<SceneRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
+
+      // RectangularRadioButtonGroupOptions
       orientation: 'horizontal',
       spacing: 8,
       radioButtonOptions: {
@@ -30,10 +31,10 @@ class SceneRadioButtonGroup extends RectangularRadioButtonGroup {
         xMargin: 15,
         yMargin: 12
       }
-    }, options );
+    }, providedOptions );
 
     // describe a radio button for each scene
-    const contentArray = [];
+    const contentArray: RectangularRadioButtonItem<EqualityExplorerScene>[] = [];
     scenes.forEach( scene => {
       assert && assert( scene.icon, 'scene must have an icon' );
       contentArray.push( {
@@ -47,5 +48,3 @@ class SceneRadioButtonGroup extends RectangularRadioButtonGroup {
 }
 
 equalityExplorer.register( 'SceneRadioButtonGroup', SceneRadioButtonGroup );
-
-export default SceneRadioButtonGroup;
