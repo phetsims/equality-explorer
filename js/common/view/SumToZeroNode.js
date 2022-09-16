@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * A '0' or '0x' (with optional halo) that fades out.
  * Used to indicate that 1 and -1, or x and -x, have summed to zero.
