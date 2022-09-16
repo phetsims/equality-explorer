@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Displays an equation or inequality.
  * Designed to support multiple variables, but has only been tested extensively with 1 variable.
