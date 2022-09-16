@@ -32,7 +32,7 @@ import UniversalOperationControl from '../../common/view/UniversalOperationContr
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItScene from '../model/SolveItScene.js';
-import ChallengeDerivationNode from './ChallengeDerivationNode.js';
+import ChallengeDerivationText from './ChallengeDerivationText.js';
 import SolveItRewardNode from './SolveItRewardNode.js';
 
 // constants
@@ -202,7 +202,7 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
     if ( phet.chipper.queryParameters.showAnswers ) {
 
       // shows how the current challenge was derived
-      children.push( new ChallengeDerivationNode( scene.challengeProperty, {
+      children.push( new ChallengeDerivationText( scene.challengeProperty, {
         left: snapshotsAccordionBox.left,
         top: snapshotsAccordionBox.bottom + 5
       } ) );
