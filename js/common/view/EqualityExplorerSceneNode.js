@@ -95,8 +95,8 @@ class EqualityExplorerSceneNode extends Node {
       // display the animation in that cell
       const sumToZeroNode = new SumToZeroNode( {
         variable: termCreator.variable || null,
-        center: cellCenter,
-        fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
+        fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE,
+        center: cellCenter
       } );
       this.termsLayer.addChild( sumToZeroNode );
       sumToZeroNode.startAnimation();

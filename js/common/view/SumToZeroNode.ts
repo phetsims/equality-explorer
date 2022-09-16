@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * A '0' or '0x' (with optional halo) that fades out.
  * Used to indicate that 1 and -1, or x and -x, have summed to zero.
@@ -9,29 +8,40 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
+import { HBox, Node, NodeOptions, NodeTranslationOptions, TColor, Text } from '../../../../scenery/js/imports.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import Variable from '../model/Variable.js';
 import HaloNode from './HaloNode.js';
 
-class SumToZeroNode extends Node {
+type SelfOptions = {
+  variable?: Variable | null; // determines whether we render '0' or '0x' (for example)
+  haloRadius?: number;
+  haloBaseColor?: TColor; // no visible halo, set this if you want to see the halo
+  fontSize?: number;
+};
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+type SumToZeroNodeOptions = SelfOptions & NodeTranslationOptions;
 
-    options = merge( {
-      variable: null, // {Variable|null} determines whether we render '0' or '0x' (for example)
+export default class SumToZeroNode extends Node {
+
+  private animation: Animation;
+
+  public constructor( providedOptions?: SumToZeroNodeOptions ) {
+
+    const options = optionize<SumToZeroNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
+      variable: null,
       haloRadius: 20,
-      haloBaseColor: 'transparent', // no visible halo, set this if you want to see the halo
+      haloBaseColor: 'transparent',
       fontSize: EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
-    }, options );
+    }, providedOptions );
 
     const zeroNode = new Text( '0', {
       font: new PhetFont( options.fontSize )
@@ -61,7 +71,6 @@ class SumToZeroNode extends Node {
       center: contentNode.center
     } );
 
-    assert && assert( !options.children, 'SumToZeroNode sets children' );
     options.children = [ haloNode, contentNode ];
 
     super( options );
@@ -74,7 +83,6 @@ class SumToZeroNode extends Node {
       this.opacity = opacity;
     } );
 
-    // @private
     this.animation = new Animation( {
       duration: 0.75,
       targets: [ {
@@ -90,13 +98,10 @@ class SumToZeroNode extends Node {
 
   /**
    * Starts the animation.
-   * @public
    */
-  startAnimation() {
+  public startAnimation(): void {
     this.animation.start();
   }
 }
 
 equalityExplorer.register( 'SumToZeroNode', SumToZeroNode );
-
-export default SumToZeroNode;

@@ -8,15 +8,16 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import { Circle, CircleOptions, Color, NodeTranslationOptions, RadialGradient } from '../../../../scenery/js/imports.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import { Circle, CircleOptions, Color, NodeTranslationOptions, RadialGradient, TColor } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 
 type SelfOptions = {
-  baseColor?: Color | string;
+  baseColor?: TColor;
 };
 
-type HaloNodeOptions = SelfOptions & NodeTranslationOptions;
+type HaloNodeOptions = SelfOptions & NodeTranslationOptions & PickOptional<CircleOptions, 'visible'>;
 
 export default class HaloNode extends Circle {
 
