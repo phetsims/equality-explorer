@@ -20,7 +20,6 @@ import VariablesScreen from './variables/VariablesScreen.js';
 
 simLauncher.launch( () => {
 
-  // production screens
   const screens = [
     new BasicsScreen( { tandem: Tandem.ROOT.createTandem( 'basicsScreen' ) } ),
     new NumbersScreen( { tandem: Tandem.ROOT.createTandem( 'numbersScreen' ) } ),
