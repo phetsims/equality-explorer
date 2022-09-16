@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * The 'Operations' screen.
  *
@@ -8,29 +7,31 @@
  */
 
 import Property from '../../../axon/js/Property.js';
-import merge from '../../../phet-core/js/merge.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
-import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
+import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import OperationsModel from './model/OperationsModel.js';
 import OperationsScreenView from './view/OperationsScreenView.js';
 
-class OperationsScreen extends EqualityExplorerScreen {
+type SelfOptions = EmptySelfOptions;
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+type OperationsScreenOptions = SelfOptions & PickRequired<EqualityExplorerScreenOptions, 'tandem'>;
 
-    options = merge( {
+export default class OperationsScreen extends EqualityExplorerScreen<OperationsModel, OperationsScreenView> {
 
-      // EqualityExplorerScreen options
+  public constructor( providedOptions: OperationsScreenOptions ) {
+
+    const options = optionize<OperationsScreenOptions, SelfOptions, EqualityExplorerScreenOptions>()( {
+
+      // EqualityExplorerScreenOptions
       name: EqualityExplorerStrings.screen.operationsStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createOperationsScreenIcon()
-    }, options );
+    }, providedOptions );
 
     super(
       () => new OperationsModel(),
@@ -41,5 +42,3 @@ class OperationsScreen extends EqualityExplorerScreen {
 }
 
 equalityExplorer.register( 'OperationsScreen', OperationsScreen );
-
-export default OperationsScreen;

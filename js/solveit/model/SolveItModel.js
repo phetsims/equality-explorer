@@ -46,6 +46,9 @@ class SolveItModel {
     this.sceneProperty.reset();
   }
 
+  // @public
+  step( dt ) {}
+
   /**
    * Tests challenge generators by generating a large number of challenges.
    * Each challenge is printed to the browser console.

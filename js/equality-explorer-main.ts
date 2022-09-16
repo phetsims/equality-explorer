@@ -9,6 +9,7 @@
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import soundManager from '../../tambo/js/soundManager.js';
+import Tandem from '../../tandem/js/Tandem.js';
 import BasicsScreen from './basics/BasicsScreen.js';
 import EqualityExplorerConstants from './common/EqualityExplorerConstants.js';
 import EqualityExplorerStrings from './EqualityExplorerStrings.js';
@@ -21,11 +22,11 @@ simLauncher.launch( () => {
 
   // production screens
   const screens = [
-    new BasicsScreen(),
-    new NumbersScreen(),
-    new VariablesScreen(),
-    new OperationsScreen(),
-    new SolveItScreen()
+    new BasicsScreen( { tandem: Tandem.ROOT.createTandem( 'basicsScreen' ) } ),
+    new NumbersScreen( { tandem: Tandem.ROOT.createTandem( 'numbersScreen' ) } ),
+    new VariablesScreen( { tandem: Tandem.ROOT.createTandem( 'variablesScreen' ) } ),
+    new OperationsScreen( { tandem: Tandem.ROOT.createTandem( 'operationsScreen' ) } ),
+    new SolveItScreen( { tandem: Tandem.ROOT.createTandem( 'solveItScreen' ) } )
   ];
 
   const sim = new Sim( EqualityExplorerStrings[ 'equality-explorer' ].titleStringProperty, screens, {

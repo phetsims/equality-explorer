@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * The 'Solve It!' screen.
  *
@@ -8,30 +7,32 @@
  */
 
 import Property from '../../../axon/js/Property.js';
-import merge from '../../../phet-core/js/merge.js';
+import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
-import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import SolveItModel from './model/SolveItModel.js';
 import SolveItScreenView from './view/SolveItScreenView.js';
 
-class SolveItScreen extends EqualityExplorerScreen {
+type SelfOptions = EmptySelfOptions;
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+type SolveItScreenOptions = SelfOptions & PickRequired<ScreenOptions, 'tandem'>;
 
-    options = merge( {
+export default class SolveItScreen extends Screen<SolveItModel, SolveItScreenView> {
 
-      // EqualityExplorerScreen options
+  public constructor( providedOptions: SolveItScreenOptions ) {
+
+    const options = optionize<SolveItScreenOptions, SelfOptions, ScreenOptions>()( {
+
+      // ScreenOptions
       name: EqualityExplorerStrings.screen.solveItStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
       navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon()
-    }, options );
+    }, providedOptions );
 
     super(
       () => new SolveItModel(),
@@ -42,5 +43,3 @@ class SolveItScreen extends EqualityExplorerScreen {
 }
 
 equalityExplorer.register( 'SolveItScreen', SolveItScreen );
-
-export default SolveItScreen;

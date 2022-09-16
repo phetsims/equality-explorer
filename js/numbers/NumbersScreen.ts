@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * The 'Numbers' screen.
  *
@@ -8,29 +7,31 @@
  */
 
 import Property from '../../../axon/js/Property.js';
-import merge from '../../../phet-core/js/merge.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
-import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
+import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import NumbersModel from './model/NumbersModel.js';
 import NumbersScreenView from './view/NumbersScreenView.js';
 
-class NumbersScreen extends EqualityExplorerScreen {
+type SelfOptions = EmptySelfOptions;
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+type NumbersScreenOptions = SelfOptions & PickRequired<EqualityExplorerScreenOptions, 'tandem'>;
 
-    options = merge( {
+export default class NumbersScreen extends EqualityExplorerScreen<NumbersModel, NumbersScreenView> {
 
-      // EqualityExplorerScreen options
+  public constructor( providedOptions: NumbersScreenOptions ) {
+
+    const options = optionize<NumbersScreenOptions, SelfOptions, EqualityExplorerScreenOptions>()( {
+
+      // EqualityExplorerScreenOptions
       name: EqualityExplorerStrings.screen.numbersStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createNumbersScreenIcon()
-    }, options );
+    }, providedOptions );
 
     super(
       () => new NumbersModel(),
@@ -41,5 +42,3 @@ class NumbersScreen extends EqualityExplorerScreen {
 }
 
 equalityExplorer.register( 'NumbersScreen', NumbersScreen );
-
-export default NumbersScreen;

@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * The 'Basics' screen.
  *
@@ -8,29 +7,31 @@
  */
 
 import Property from '../../../axon/js/Property.js';
-import merge from '../../../phet-core/js/merge.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
-import EqualityExplorerScreen from '../common/EqualityExplorerScreen.js';
+import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
 import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import BasicsModel from './model/BasicsModel.js';
 import BasicsScreenView from './view/BasicsScreenView.js';
 
-class BasicsScreen extends EqualityExplorerScreen {
+type SelfOptions = EmptySelfOptions;
 
-  /**
-   * @param {Object} [options]
-   */
-  constructor( options ) {
+type BasicsScreenOptions = SelfOptions & PickRequired<EqualityExplorerScreenOptions, 'tandem'>;
 
-    options = merge( {
+export default class BasicsScreen extends EqualityExplorerScreen<BasicsModel, BasicsScreenView> {
 
-      // EqualityExplorerScreen options
+  public constructor( providedOptions: BasicsScreenOptions ) {
+
+    const options = optionize<BasicsScreenOptions, SelfOptions, EqualityExplorerScreenOptions>()( {
+
+      // EqualityExplorerScreenOptions
       name: EqualityExplorerStrings.screen.basicsStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.BASICS_SCREEN_BACKGROUND ),
       homeScreenIcon: EqualityExplorerScreenIcons.createBasicsScreenIcon()
-    }, options );
+    }, providedOptions );
 
     super(
       () => new BasicsModel(),
@@ -41,5 +42,3 @@ class BasicsScreen extends EqualityExplorerScreen {
 }
 
 equalityExplorer.register( 'BasicsScreen', BasicsScreen );
-
-export default BasicsScreen;

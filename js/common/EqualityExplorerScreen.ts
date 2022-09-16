@@ -1,30 +1,32 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
-// @ts-nocheck
 /**
- * Abstract base class for Screens in this sim.
+ * Base class for most all Screens in this suite of sims, except for SolveItScreen (the game).
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Screen from '../../../joist/js/Screen.js';
+import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
+import { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import equalityExplorer from '../equalityExplorer.js';
+import EqualityExplorerModel from './model/EqualityExplorerModel.js';
+import EqualityExplorerScreenView from './view/EqualityExplorerScreenView.js';
 
-class EqualityExplorerScreen extends Screen {
+type SelfOptions = EmptySelfOptions;
 
-  /**
-   * @param {function} createModel
-   * @param {function(model):Node } createView
-   * @param {Object} [options]
-   * @abstract
-   */
-  constructor( createModel, createView, options ) {
+export type EqualityExplorerScreenOptions = SelfOptions & ScreenOptions & PickRequired<ScreenOptions, 'tandem'>;
 
-    super( createModel, createView, options );
+export default class EqualityExplorerScreen<M extends EqualityExplorerModel, V extends EqualityExplorerScreenView>
+  extends Screen<M, V> {
+
+  protected constructor( createModel: () => M, createView: ( model: M ) => V, providedOptions: EqualityExplorerScreenOptions ) {
+
+    super( createModel, createView, providedOptions );
 
     // When this Screen is deactivated, deactivate the model.  unlink not needed.
     this.activeProperty.lazyLink( screenActive => {
-      if ( !screenActive && this.model.deactivate ) {
+      if ( !screenActive ) {
         this.model.deactivate();
       }
     } );
@@ -32,5 +34,3 @@ class EqualityExplorerScreen extends Screen {
 }
 
 equalityExplorer.register( 'EqualityExplorerScreen', EqualityExplorerScreen );
-
-export default EqualityExplorerScreen;
