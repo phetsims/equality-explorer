@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * This is the reward that's shown behind RewardDialog when the user gets to 10 stars.
  * The reward varies by level.
@@ -12,7 +11,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
-import { Image } from '../../../../scenery/js/imports.js';
+import { Image, Node } from '../../../../scenery/js/imports.js';
 import RewardNode from '../../../../vegas/js/RewardNode.js';
 import apple_png from '../../../images/apple_png.js';
 import cat_png from '../../../images/cat_png.js';
@@ -59,9 +58,9 @@ const FACE_NODE = new FaceNode( DIAMETER, {
 export default class SolveItRewardNode extends RewardNode {
 
   /**
-   * @param {number} level - the game level
+   * @param level - the game level
    */
-  constructor( level ) {
+  public constructor( level: number ) {
 
     const createNodesFunction = [ createNodes1, createNodes2, createNodes3, createNodes4, createNodes5 ];
 
@@ -73,9 +72,11 @@ export default class SolveItRewardNode extends RewardNode {
   }
 }
 
-// Creates nodes for level 1 reward.
-function createNodes1() {
-  const nodes = [];
+/**
+ * Creates nodes for level 1 reward.
+ */
+function createNodes1(): Node[] {
+  const nodes: Node[] = [];
 
   // variable terms with positive integer coefficients
   POSITIVE_INTEGER_VALUES.forEach( i => {
@@ -94,9 +95,11 @@ function createNodes1() {
   return nodes;
 }
 
-// Creates nodes for level 2 reward.
-function createNodes2() {
-  const nodes = [];
+/**
+ * Creates nodes for level 2 reward.
+ */
+function createNodes2(): Node[] {
+  const nodes: Node[] = [];
 
   // variable terms with negative integer coefficients
   NEGATIVE_INTEGER_VALUES.forEach( i => {
@@ -115,9 +118,11 @@ function createNodes2() {
   return nodes;
 }
 
-// Creates nodes for level 3 reward.
-function createNodes3() {
-  const nodes = [];
+/**
+ * Creates nodes for level 3 reward.
+ */
+function createNodes3(): Node[] {
+  const nodes: Node[] = [];
   INTEGER_VALUES.forEach( i => {
 
     // variable terms with integer coefficients
@@ -135,9 +140,11 @@ function createNodes3() {
   return nodes;
 }
 
-// Creates nodes for level 4 reward.
-function createNodes4() {
-  const nodes = [];
+/**
+ * Creates nodes for level 4 reward.
+ */
+function createNodes4(): Node[] {
+  const nodes: Node[] = [];
   INTEGER_VALUES.forEach( i => {
 
     // variable terms with integer coefficients
@@ -155,9 +162,11 @@ function createNodes4() {
   return nodes;
 }
 
-// Creates nodes for level 5 reward.
-function createNodes5() {
-  const nodes = [];
+/**
+ * Creates nodes for level 5 reward.
+ */
+function createNodes5(): Node[] {
+  const nodes: Node[] = [];
   INTEGER_VALUES.forEach( i => {
 
     // variable terms with integer coefficients
@@ -175,10 +184,8 @@ function createNodes5() {
 
 /**
  * Create a variable term node with a specified integer coefficient.
- * @param {number} coefficient
- * @returns {Node}
  */
-function createVariableTermNode( coefficient ) {
+function createVariableTermNode( coefficient: number ): Node {
   return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), EqualityExplorerStrings.x, {
     diameter: DIAMETER,
     showOne: true // show coefficient for '1x'
@@ -187,10 +194,8 @@ function createVariableTermNode( coefficient ) {
 
 /**
  * Creates a constant term node with a specified integer value.
- * @param {number} constantValue
- * @returns {Node}
  */
-function createIntegerConstantTermNode( constantValue ) {
+function createIntegerConstantTermNode( constantValue: number ): Node {
   return ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( constantValue ), {
     diameter: DIAMETER
   } );
@@ -198,9 +203,8 @@ function createIntegerConstantTermNode( constantValue ) {
 
 /**
  * Creates a constant term node with a random fraction value.
- * @returns {Node}
  */
-function createFractionConstantTermNode() {
+function createFractionConstantTermNode(): Node {
   const numerator = ChallengeGenerator.randomValue( INTEGER_VALUES, [ 0 ] );
   const denominator = ChallengeGenerator.randomValueBy( INTEGER_VALUES,
     denominator => ( denominator !== 0 ) && ( Math.abs( denominator ) !== 1 ) && ( numerator % denominator !== 0 )
@@ -213,9 +217,8 @@ function createFractionConstantTermNode() {
 
 /**
  * Creates an operation node with a random operator and a random positive integer operand.
- * @returns {Node}
  */
-function createOperationNode() {
+function createOperationNode(): Node {
   const operator = randomOperator();
   const constantValue = ChallengeGenerator.randomValueBy( INTEGER_VALUES, value => ( value > 0 ) );
   const operand = new ConstantTerm( { constantValue: Fraction.fromInteger( constantValue ) } );
@@ -226,10 +229,9 @@ function createOperationNode() {
 }
 
 /**
- * Chooses a random operator.
- * @returns {string} see EqualityExplorerConstants.OPERATORS
+ * Chooses a random operator from EqualityExplorerConstants.OPERATORS.
  */
-function randomOperator() {
+function randomOperator(): string {
   return dotRandom.sample( EqualityExplorerConstants.OPERATORS );
 }
 
