@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * User interface for level selection and other game settings in the 'Solve It!' screen.
  *
