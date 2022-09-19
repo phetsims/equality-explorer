@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Shows how the current challenge was derived. Used exclusively for debugging.
  *

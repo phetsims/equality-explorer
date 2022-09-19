@@ -1,5 +1,6 @@
 // Copyright 2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * SolveItInfoDialog describes the game levels in the 'Solve It!' screen.
  * This is intended primarily for use by teachers, to remind them of the types of challenges for each level.
