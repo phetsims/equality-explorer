@@ -27,7 +27,7 @@ type SelfOptions = {
   equationNodeOptions?: EquationNodeOptions;
 };
 
-type EquationPanelOptions = SelfOptions;
+export type EquationPanelOptions = SelfOptions & PanelOptions;
 
 export default class EquationPanel extends Panel {
 

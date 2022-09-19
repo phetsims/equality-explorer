@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Display a scene in the 'Solve It!' screen.  Each scene corresponds to a game level.
  * This shares several UI components with the Operations screen, but there are too many differences
@@ -10,7 +9,10 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import merge from '../../../../phet-core/js/merge.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
@@ -21,13 +23,14 @@ import { Color, Node, RichText, Text } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
+import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
 import InfiniteStatusBar from '../../../../vegas/js/InfiniteStatusBar.js';
 import RewardDialog from '../../../../vegas/js/RewardDialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import BalanceScaleNode from '../../common/view/BalanceScaleNode.js';
-import EqualityExplorerSceneNode from '../../common/view/EqualityExplorerSceneNode.js';
-import EquationPanel from '../../common/view/EquationPanel.js';
+import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from '../../common/view/EqualityExplorerSceneNode.js';
+import EquationPanel, { EquationPanelOptions } from '../../common/view/EquationPanel.js';
 import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -45,22 +48,32 @@ const EQUATION_PANEL_OPTIONS = {
   yMargin: 0
 };
 
+type SelfOptions = EmptySelfOptions;
+
+type SolveItSceneNodeOptions = SelfOptions;
+
 export default class SolveItSceneNode extends EqualityExplorerSceneNode {
 
-  /**
-   * @param {SolveItScene} scene - the scene associated with this Node
-   * @param {Property.<SolveItScene|null>} sceneProperty - the selected scene
-   * @param {Bounds2} layoutBounds - of the parent ScreenView
-   * @param {Property.<Bounds2>} visibleBoundsProperty - of the parent ScreenView
-   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty - whether Snapshots is expanded
-   * @param {GameAudioPlayer} gameAudioPlayer
-   * @param {Object} [options]
-   */
-  constructor( scene, sceneProperty, layoutBounds, visibleBoundsProperty,
-               snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, options ) {
-    assert && assert( scene instanceof SolveItScene );
+  // animation that fades out the smiley face
+  private faceAnimation: Animation | null;
 
-    options = options || {};
+  // reward shown while rewardDialog is open
+  private rewardNode: SolveItRewardNode | null;
+
+  // control for applying a universal operation to the terms that are on the scale
+  private readonly universalOperationControl: UniversalOperationControl;
+
+  public constructor( scene: SolveItScene,
+                      sceneProperty: Property<SolveItScene | null>,
+                      layoutBounds: Bounds2,
+                      visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
+                      snapshotsAccordionBoxExpandedProperty: Property<boolean>,
+                      gameAudioPlayer: GameAudioPlayer,
+                      providedOptions?: SolveItSceneNodeOptions ) {
+
+    const options = optionize<SolveItSceneNodeOptions, SelfOptions, EqualityExplorerSceneNodeOptions>()( {
+      // empty optionize because we're setting options.children below
+    }, providedOptions );
 
     // Level description, displayed in the status bar
     const levelDescriptionNode = new RichText( scene.challengeGenerator.descriptionProperty, {
@@ -83,7 +96,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       } );
 
     // Challenge equation
-    const challengePanelOptions = merge( {}, EQUATION_PANEL_OPTIONS, {
+    const challengePanelOptions = combineOptions<EquationPanelOptions>( {}, EQUATION_PANEL_OPTIONS, {
       fill: Color.WHITE.withAlpha( 0.5 ),
       stroke: Color.BLACK.withAlpha( 0.5 ),
       equationNodeOptions: {
@@ -97,7 +110,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
 
     // Equation that reflects what is currently on the scale
     const equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators,
-      merge( {}, EQUATION_PANEL_OPTIONS, {
+      combineOptions<EquationPanelOptions>( {}, EQUATION_PANEL_OPTIONS, {
         fill: 'white',
         stroke: 'black',
         equationNodeOptions: {
@@ -199,7 +212,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       faceNode // face in front of everything
     ];
 
-    let showAnswerButton;
+    let showAnswerButton: Node;
     if ( phet.chipper.queryParameters.showAnswers ) {
 
       // shows how the current challenge was derived
@@ -227,16 +240,14 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     assert && assert( !options.children, 'SolveItSceneNode sets children' );
     options.children = children;
 
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 sceneProperty has wrong type
     super( scene, sceneProperty, termsLayer, options );
 
-    // @private
     this.universalOperationControl = universalOperationControl;
 
-    // {RewardDialog} dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
+    // Dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
     // Created on demand and reused, so we don't have to deal with buggy Dialog.dispose.
-    let rewardDialog = null;
-
-    // @private {SolveItRewardNode} reward shown while rewardDialog is open
+    let rewardDialog: RewardDialog | null = null;
     this.rewardNode = null;
 
     // Property that controls opacity of smiley face
@@ -245,7 +256,6 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       faceNode.opacity = faceOpacity;
     } );
 
-    // @private
     this.faceAnimation = null;
 
     // unlink not needed.
@@ -274,18 +284,20 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
           layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
 
             // center horizontally on the screen
-            dialog.centerX = dialog.layoutBounds.centerX;
+            const dialogLayoutBounds = dialog.layoutBounds!;
+            assert && assert( dialogLayoutBounds );
+            dialog.centerX = dialogLayoutBounds.centerX;
 
             // top of dialog below equationPanel, so the solution is not obscured
             dialog.top = equationPanel.bottom + 10;
           },
 
           // 'Keep Going' hides the dialog
-          keepGoingButtonListener: () => rewardDialog.hide(),
+          keepGoingButtonListener: () => rewardDialog!.hide(),
 
           // 'New Level' has the same effect as the back button in the status bar
           newLevelButtonListener: () => {
-            rewardDialog.hide();
+            rewardDialog!.hide();
             backButtonListener();
           },
 
@@ -298,9 +310,10 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
 
           // When the dialog is hidden, dispose of the reward
           hideCallback: () => {
-            assert && assert( this.rewardNode, 'rewardNode is supposed to exist' );
-            this.removeChild( this.rewardNode );
-            this.rewardNode.dispose();
+            const rewardNode = this.rewardNode!;
+            assert && assert( rewardNode, 'rewardNode is supposed to exist' );
+            this.removeChild( rewardNode );
+            rewardNode.dispose();
             this.rewardNode = null;
           }
         } );
@@ -362,22 +375,19 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     scene.sumToZeroEmitter.addListener( this.animateSumToZero.bind( this ) );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.universalOperationControl.reset();
   }
 
   /**
-   * @param {number} dt - elapsed time, in seconds
-   * @public
+   * @param dt - elapsed time, in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
     this.universalOperationControl.step( dt );
     this.faceAnimation && this.faceAnimation.step( dt );
     this.rewardNode && this.rewardNode.step( dt );

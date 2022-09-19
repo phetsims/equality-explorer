@@ -9,7 +9,7 @@
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { RichText, RichTextOptions } from '../../../../scenery/js/imports.js';
+import { NodeTranslationOptions, RichText, RichTextOptions } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Challenge from '../model/Challenge.js';
 
@@ -18,7 +18,7 @@ const DEFAULT_FONT = new PhetFont( 14 );
 
 type SelfOptions = EmptySelfOptions;
 
-type ChallengeDerivationTextOptions = SelfOptions;
+type ChallengeDerivationTextOptions = SelfOptions & NodeTranslationOptions;
 
 export default class ChallengeDerivationText extends RichText {
 

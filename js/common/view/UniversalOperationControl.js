@@ -38,7 +38,7 @@ export default class UniversalOperationControl extends HBox {
 
   /**
    * @param {OperationsScene} scene
-   * @param {Node} animationLayer
+   * @param {scenery.Node} animationLayer
    * @param {Object} [options]
    */
   constructor( scene, animationLayer, options ) {
