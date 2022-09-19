@@ -20,7 +20,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class SolveItModel implements TModel {
 
-  private readonly challengeGenerators: ChallengeGenerator[];
+  public readonly challengeGenerators: ChallengeGenerator[];
 
   // a scene for each challenge generator
   public readonly scenes: SolveItScene[];

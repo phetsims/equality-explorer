@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * User interface for level selection and other game settings in the 'Solve It!' screen.
  *
@@ -8,7 +7,7 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import merge from '../../../../phet-core/js/merge.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
@@ -20,21 +19,23 @@ import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
+import SolveItModel from '../model/SolveItModel.js';
 import SolveItInfoDialog from './SolveItInfoDialog.js';
 import SolveItLevelSelectionButtonGroup from './SolveItLevelSelectionButtonGroup.js';
 
+type SelfOptions = {
+
+  // called when the Reset All button is pressed
+  resetCallback: () => void;
+};
+
+type SolveItLevelSelectionNodeOptions = SelfOptions;
+
 export default class SolveItLevelSelectionNode extends Node {
 
-  /**
-   * @param {SolveItModel} model
-   * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
-   */
-  constructor( model, layoutBounds, options ) {
+  public constructor( model: SolveItModel, layoutBounds: Bounds2, providedOptions: SolveItLevelSelectionNodeOptions ) {
 
-    options = merge( {
-      resetCallback: null // {function|null}
-    }, options );
+    const options = providedOptions;
 
     // Level-selection buttons
     const levelSelectionButtonGroup = new SolveItLevelSelectionButtonGroup( model.sceneProperty, model.scenes, {
@@ -86,13 +87,13 @@ export default class SolveItLevelSelectionNode extends Node {
     const resetAllButton = new ResetAllButton( {
       listener: () => {
         phet.log && phet.log( 'ResetAllButton pressed' );
-        options.resetCallback && options.resetCallback();
+        options.resetCallback();
       },
       right: layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       bottom: layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
     } );
 
-    const children = [
+    const children: Node[] = [
       solveForXNode,
       chooseYourLevelNode,
       infoButton,
@@ -113,8 +114,7 @@ export default class SolveItLevelSelectionNode extends Node {
           const dialog = new Dialog( messageNode, {
             topMargin: 20,
             bottomMargin: 20,
-            leftMargin: 20,
-            rightMargin: 20
+            leftMargin: 20
           } );
           dialog.show();
         },
