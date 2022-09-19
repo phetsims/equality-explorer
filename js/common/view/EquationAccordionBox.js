@@ -15,6 +15,7 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EquationPanel from './EquationPanel.js';
 
 export default class EquationAccordionBox extends AccordionBox {
+
   /**
    * @param {TermCreator[]} leftTermCreators - left side of equation
    * @param {TermCreator[]} rightTermCreators - right side of equation
@@ -54,6 +55,12 @@ export default class EquationAccordionBox extends AccordionBox {
     } );
 
     super( contentNode, options );
+  }
+
+  // @public
+  dispose() {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
   }
 }
 

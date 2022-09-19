@@ -102,6 +102,12 @@ export default class VariablesAccordionBox extends AccordionBox {
 
     super( contentNode, options );
   }
+
+  // @public
+  dispose() {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
 }
 
 equalityExplorer.register( 'VariablesAccordionBox', VariablesAccordionBox );

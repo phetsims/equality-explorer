@@ -107,6 +107,12 @@ export default class SolveItScreenView extends ScreenView {
   }
 
   // @public
+  dispose() {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
+
+  // @public
   reset() {
     this.snapshotsAccordionBoxExpandedProperty.reset();
     for ( let i = 0; i < this.sceneNodes.length; i++ ) {

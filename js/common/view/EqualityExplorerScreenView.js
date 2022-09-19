@@ -96,6 +96,12 @@ export default class EqualityExplorerScreenView extends ScreenView {
   }
 
   // @public
+  dispose() {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
+
+  // @public
   reset() {
     this.equationAccordionBoxExpandedProperty.reset();
     this.snapshotsAccordionBoxExpandedProperty.reset();

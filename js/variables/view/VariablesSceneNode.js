@@ -63,9 +63,13 @@ export default class VariablesSceneNode extends BasicsSceneNode {
     this.variableValuesVisibleProperty = variableValuesVisibleProperty;
   }
 
-  /**
-   * @public
-   */
+  // @public
+  dispose() {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
+
+  // @public
   reset() {
     this.variablesAccordionBoxExpandedProperty.reset();
     this.variableValuesVisibleProperty.reset();

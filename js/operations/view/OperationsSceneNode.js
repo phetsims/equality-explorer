@@ -54,6 +54,12 @@ export default class OperationsSceneNode extends VariablesSceneNode {
     scene.sumToZeroEmitter.addListener( this.animateSumToZero.bind( this ) );
   }
 
+  // @public
+  dispose() {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
+
   /**
    * @param {number} dt - time step, in seconds
    * @public

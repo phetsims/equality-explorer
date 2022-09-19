@@ -35,6 +35,7 @@ import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
 
 export default class UniversalOperationControl extends HBox {
+
   /**
    * @param {OperationsScene} scene
    * @param {Node} animationLayer
@@ -294,6 +295,12 @@ export default class UniversalOperationControl extends HBox {
     const maxIntegerExceededListener = () => this.stopAnimations();
     scene.allTermCreators.forEach( termCreator =>
       termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ) ); // removeListener not needed
+  }
+
+  // @public
+  dispose() {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
   }
 
   /**
