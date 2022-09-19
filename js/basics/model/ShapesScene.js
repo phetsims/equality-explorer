@@ -1,5 +1,6 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * The 'Shapes' scene in the 'Basics' screen.
  *
