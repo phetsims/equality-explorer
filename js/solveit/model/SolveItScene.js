@@ -1,5 +1,6 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * A scene in the 'Solve It!' screen.  A scene is created for each level in the game.
  * This is an extension of the Operations scene (variable and constant terms on both sides of the equation),

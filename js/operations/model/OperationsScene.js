@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * The sole scene in the 'Operations' screen.
  * This scene has variable and constant terms on both sides of the equation.

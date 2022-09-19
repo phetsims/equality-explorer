@@ -1,5 +1,6 @@
 // Copyright 2017-2020, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * The sole scene in the 'Numbers' screen.
  * This scene has constant terms only on both sides of the equation.
