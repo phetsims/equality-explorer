@@ -67,15 +67,7 @@ testing. Sim-specific query parameters are documented in `EqualityExplorerQueryP
 
 **Assertions**: The implementation makes heavy use of `assert` to verify pre/post assumptions and perform type checking. If you are making modifications to this sim, do so with assertions enabled via the `ea` query parameter.
 
-**Memory management**: All calls that register a listener or observer have associated documentation indicating whether a corresponding call is required to deregister. This includes calls to `link`, `lazyLink`, `addListener`, `new DerivedProperty`, `Multilink.multilink`, `new Multilink` and `Events.on`.  When deregistering is not needed, it's typically because an instance exists for the lifetime of the sim. Examples:
-
-```js
-// unlink not needed
-this.variable.valueProperty.link( function( value ) { ... } );
-
-// removeListener required in dispose
-this.addInputListener( this.termDragListener );
-```
+**Memory management**:
 
 Instances of the classes listed below are dynamic &mdash; they come and go during the lifetime of the sim. They require memory management, so `dispose` must be implemented and called. If you make modifications that involve dynamic types, you should perform memory leak testing similar to [equality-explorer#64](https://github.com/phetsims/equality-explorer/issues/64).
 
