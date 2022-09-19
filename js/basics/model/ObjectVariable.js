@@ -1,5 +1,6 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Describes a variable associated with a type of real-world object (sphere, apple, coin, dog, ...)
  * This is a specialization of Variable (which is a symbolic variable, e.g. 'x') that carries additional
