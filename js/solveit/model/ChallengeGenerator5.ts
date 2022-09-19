@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Challenge generator for game level 5.
  * See specification in https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo/edit.
@@ -31,7 +30,7 @@ const M_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
 export default class ChallengeGenerator5 extends ChallengeGenerator {
 
-  constructor() {
+  public constructor() {
     super( 5, EqualityExplorerStrings.level5DescriptionStringProperty );
   }
 
@@ -44,12 +43,8 @@ export default class ChallengeGenerator5 extends ChallengeGenerator {
    * Let b be a random integer between [-10,10], b !== 0
    * Let m be a random integer between [-10,10], m !== 0, m !== a, |a-m| <= 10
    * Let n = (a – m)x + b, n == 0 is OK
-   *
-   * @returns {Challenge}
-   * @protected
-   * @override
    */
-  nextChallengeProtected() {
+  protected override nextChallengeProtected(): Challenge {
 
     const x = this.randomX( X_VALUES );
     const a = ChallengeGenerator.randomValue( A_VALUES, [ 0 ] );

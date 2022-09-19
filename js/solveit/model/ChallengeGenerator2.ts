@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Challenge generator for game level 2.
  * See specification in https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo/edit.
@@ -13,33 +12,35 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
+import Challenge from './Challenge.js';
 
 export default class ChallengeGenerator2 extends ChallengeGenerator {
 
-  constructor() {
+  // ChallengeGenerator2 is a variation and subset of ChallengeGenerator1, so we'll use composition
+  private readonly challengeGenerator1: ChallengeGenerator1;
+
+  // methods for generating the 2 types of challenges
+  private readonly challengeTypeMethods: ( () => Challenge )[];
+
+  public constructor() {
     super( 2, EqualityExplorerStrings.level2DescriptionStringProperty );
 
-    // @private ChallengeGenerator2 is a variation and subset of ChallengeGenerator1, so we'll use composition
     this.challengeGenerator1 = new ChallengeGenerator1( {
       aValues: ChallengeGenerator.rangeToArray( -10, -1 ),
       dValues: ChallengeGenerator.rangeToArray( -10, -1 ),
-      debugLevel: this.level
+      debugLevel: 2
     } );
 
-    // @private methods for generating the 2 types of challenges
     this.challengeTypeMethods = [
-      this.nextType1.bind( this ),
-      this.nextType3.bind( this )
+      () => this.nextType1(),
+      () => this.nextType3()
     ];
   }
 
   /**
    * Generates the next challenge.
-   * @returns {Challenge}
-   * @protected
-   * @override
    */
-  nextChallengeProtected() {
+  protected override nextChallengeProtected(): Challenge {
 
     if ( this.numberOfChallenges === 0 ) {
 
@@ -55,20 +56,16 @@ export default class ChallengeGenerator2 extends ChallengeGenerator {
 
   /**
    * Generates the next 'type 1' challenge. Delegates to ChallengeGenerator1.
-   * @param {number} [a] - if you'd like to use a specific value of a, otherwise randomly selected
-   * @returns {Challenge}
-   * @private
+   * @param [a] - if you'd like to use a specific value of a, otherwise randomly selected
    */
-  nextType1( a ) {
+  public nextType1( a?: number ): Challenge {
     return this.challengeGenerator1.nextType1( a );
   }
 
   /**
    * Generates the next 'type 3' challenge. Delegates to ChallengeGenerator1.
-   * @returns {Challenge}
-   * @private
    */
-  nextType3() {
+  private nextType3(): Challenge {
     return this.challengeGenerator1.nextType3();
   }
 }

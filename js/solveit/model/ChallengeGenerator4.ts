@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Challenge generator for game level 4.
  * See specification in https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo/edit.
@@ -39,20 +38,22 @@ const D_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
 export default class ChallengeGenerator4 extends ChallengeGenerator {
 
-  constructor() {
+  // methods for generating the 2 types of challenges
+  private readonly challengeTypeMethods: ( () => Challenge )[];
+
+  public constructor() {
     super( 4, EqualityExplorerStrings.level4DescriptionStringProperty );
 
-    // @private methods for generating the 2 types of challenges
-    this.challengeTypeMethods = [ this.nextType1.bind( this ), this.nextType2.bind( this ) ];
+    this.challengeTypeMethods = [
+      () => this.nextType1(),
+      () => this.nextType2()
+    ];
   }
 
   /**
    * Generates the next challenge.
-   * @returns {Challenge}
-   * @protected
-   * @override
    */
-  nextChallengeProtected() {
+  protected override nextChallengeProtected(): Challenge {
 
     // Randomly select the type of challenge to generate.
     return dotRandom.sample( this.challengeTypeMethods )();
@@ -67,11 +68,8 @@ export default class ChallengeGenerator4 extends ChallengeGenerator {
    * Let a be a random integer between [-10,10], a % d !== 0
    * Let b be a random integer between [-10,10], b !== 0
    * Let c = (a/d)x + b, c == 0 is OK
-   *
-   * @returns {Challenge}
-   * @private
    */
-  nextType1() {
+  private nextType1(): Challenge {
 
     const x = this.randomX( X_VALUES );
     const d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );
@@ -109,11 +107,8 @@ export default class ChallengeGenerator4 extends ChallengeGenerator {
    * Let a be a random integer between [-10,10], a % d !== 0
    * Let b be a random integer between [-10,10], b % d !== 0
    * Let c = ( ax + b )/d, c == 0 is OK
-   *
-   * @returns @returns {Challenge}
-   * @private
    */
-  nextType2() {
+  private nextType2(): Challenge {
 
     const x = this.randomX( X_VALUES );
     const d = ChallengeGenerator.randomValue( D_VALUES, [ 0, 1, -1 ] );

@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Abstract base class for challenge generators.
  * See specification in https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo/edit.
@@ -8,50 +7,48 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import AssertUtils from '../../../../phetcommon/js/AssertUtils.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import Challenge from './Challenge.js';
 
-export default class ChallengeGenerator {
+export default abstract class ChallengeGenerator {
 
-  /**
-   * @param {number} level - unique integer level number
-   * @param {TReadOnlyProperty.<string>} descriptionProperty - description that appear in the UI for the level
-   * @abstract
-   */
-  constructor( level, descriptionProperty ) {
-    assert && AssertUtils.assertPositiveInteger( level );
+  // unique integer level number
+  public readonly level: number;
+
+  // description that appear in the UI for the level
+  public readonly descriptionProperty: TReadOnlyProperty<string>;
+
+  // number of challenges generated
+  public numberOfChallenges: number;
+
+  // Value of x for the previous challenge, so we don't use the same value for consecutive challenges.
+  // The design document says "It’s OK to generate the same coefficient or constant for consecutive challenges.
+  // Do not generate the exact same challenge (coefficient, constant, AND value for x) twice in a row." So we
+  // only need to pick one quantity that is not the same, and we have chosen 'x', since it's common to all
+  // challenges.
+  protected xPrevious: number;
+
+  protected constructor( level: number, descriptionProperty: TReadOnlyProperty<string> ) {
+    assert && assert( Number.isInteger( level ) && level > 0 );
     assert && assert( level > 0 && level <= EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS );
 
-    // @public (read-only)
     this.level = level;
     this.descriptionProperty = descriptionProperty;
-
-    // @public (read-only) number of challenges generated
     this.numberOfChallenges = 0;
-
-    // @protected value of x for the previous challenge, so we don't use the same value for consecutive challenges.
-    // The design document says "It’s OK to generate the same coefficient or constant for consecutive challenges.
-    // Do not generate the exact same challenge (coefficient, constant, AND value for x) twice in a row." So we
-    // only need to pick one quantity that is not the same, and we have chosen 'x', since it's common to all
-    // challenges.
     this.xPrevious = 0;
   }
 
-  /**
-   * @public
-   */
-  reset() {
+  public reset(): void {
     this.numberOfChallenges = 0;
   }
 
   /**
    * Generates the next challenge for this level.
-   * @returns {Challenge}
-   * @public
    */
-  nextChallenge() {
+  public nextChallenge(): Challenge {
     const challenge = this.nextChallengeProtected();
     this.numberOfChallenges++;
     return challenge;
@@ -59,21 +56,13 @@ export default class ChallengeGenerator {
 
   /**
    * Subtype-specific method of generating the next challenge for this level.
-   * @returns {Challenge}
-   * @protected
-   * @abstract
    */
-  nextChallengeProtected() {
-    throw new Error( 'nextChallengeProtected must be implemented by subtype' );
-  }
+  protected abstract nextChallengeProtected(): Challenge;
 
   /**
    * Randomly samples a value for x from a set of values, excluding zero and the previous value of x.
-   * @param {number[]} values
-   * @returns {number}
-   * @public
    */
-  randomX( values ) {
+  public randomX( values: number[] ): number {
     const x = ChallengeGenerator.randomValue( values, [ 0, this.xPrevious ] );
     assert && assert( x !== 0, 'x is 0' );
     assert && assert( x !== this.xPrevious, `x === xPrevious: ${x}` );
@@ -83,13 +72,8 @@ export default class ChallengeGenerator {
 
   /**
    * Converts an integer range to an array of integer values.
-   * @param {number} min
-   * @param {number} max
-   * @returns {number[]}
-   * @public
-   * @static
    */
-  static rangeToArray( min, max ) {
+  public static rangeToArray( min: number, max: number ): number[] {
 
     assert && assert( Number.isInteger( min ), `min must be an integer: ${min}` );
     assert && assert( Number.isInteger( max ), `max must be an integer: ${max}` );
@@ -103,13 +87,8 @@ export default class ChallengeGenerator {
 
   /**
    * Randomly samples a value from a set of values, after filtering out values that don't meet some predicate.
-   * @param {number[]} values
-   * @param {function(number)} predicate - values that don't satisfy this predicate will be filtered out
-   * @returns {number}
-   * @public
-   * @static
    */
-  static randomValueBy( values, predicate ) {
+  public static randomValueBy( values: number[], predicate: ( value: number ) => boolean ): number {
     const filteredValues = _.filter( values, predicate );
     assert && assert( filteredValues.length > 0, 'all values were excluded' );
     return dotRandom.sample( filteredValues );
@@ -117,13 +96,8 @@ export default class ChallengeGenerator {
 
   /**
    * Randomly samples a value from a set of values, after excluding an optional set of values.
-   * @param {number[]} values
-   * @param {number[]} [excludedValues]
-   * @returns {number}
-   * @public
-   * @static
    */
-  static randomValue( values, excludedValues ) {
+  public static randomValue( values: number[], excludedValues?: number[] ): number {
     return ChallengeGenerator.randomValueBy( values, value => !_.includes( excludedValues, value ) );
   }
 }

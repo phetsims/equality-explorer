@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Challenge generator for game level 3.
  * See specification in https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo/edit.
@@ -29,7 +28,7 @@ const B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
 export default class ChallengeGenerator3 extends ChallengeGenerator {
 
-  constructor() {
+  public constructor() {
     super( 3, EqualityExplorerStrings.level3DescriptionStringProperty );
   }
 
@@ -41,12 +40,8 @@ export default class ChallengeGenerator3 extends ChallengeGenerator {
    * Let a be a random integer between [-10,10], a !== 0, a !== 1
    * Let b be a random integer between [-10,10], b !== 0
    * Let c = ax + b, c == 0 is OK
-   *
-   * @returns {Challenge}
-   * @protected
-   * @override
    */
-  nextChallengeProtected() {
+  protected override nextChallengeProtected(): Challenge {
 
     const x = this.randomX( X_VALUES );
     const a = ChallengeGenerator.randomValue( A_VALUES, [ 0, 1 ] );

@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Challenge generator for game level 1.
  * See specification in https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo/edit.
@@ -9,7 +8,7 @@
  */
 
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -34,48 +33,61 @@ const PATTERN3 = 'level {{level}}, type 3, x/d = c<br>' +
 // constants
 const MAX_ATTEMPTS = 50; // max attempts in a while loop
 
+type SelfOptions = {
+
+  // These sets of values are different for Level 2, so are provided as options.
+  aValues?: number[];
+  dValues?: number[];
+
+  // The level number to appear in debugging output.
+  // Level 2 delegates to Level 1, so that debugging output identifies the challenge as Level 2.
+  debugLevel?: 1 | 2;
+};
+
+type ChallengeGenerator1Options = SelfOptions;
+
 export default class ChallengeGenerator1 extends ChallengeGenerator {
 
-  constructor( options ) {
+  private readonly xValues: number[];
+  private readonly aValues: number[];
+  private readonly bValues: number[];
+  private readonly cValues: number[];
+  private readonly dValues: number[];
+  private readonly debugLevel: number;
 
-    options = merge( {
+  // methods for generating the 3 types of challenges
+  private readonly challengeTypeMethods: ( () => Challenge )[];
 
-      // These sets of values are different for Level 2
+  public constructor( providedOptions?: ChallengeGenerator1Options ) {
+
+    const options = optionize<ChallengeGenerator1Options, SelfOptions>()( {
+
+      // SelfOptions
       aValues: ChallengeGenerator.rangeToArray( 2, 10 ),
       dValues: ChallengeGenerator.rangeToArray( 2, 10 ),
-
-      // {number|null} The level number to appear in debugging output, defaults to this.level.
-      // This is used Level 2 delegates to Level 1, so that debugging output identifies the challenge as Level 2.
-      debugLevel: null
-    }, options );
+      debugLevel: 1
+    }, providedOptions );
 
     super( 1, EqualityExplorerStrings.level1DescriptionStringProperty );
 
-    // @private
-    this.debugLevel = options.debugLevel || this.level;
-
-    // @private
     this.xValues = ChallengeGenerator.rangeToArray( -40, 40 );
     this.aValues = options.aValues;
     this.bValues = ChallengeGenerator.rangeToArray( -10, 10 );
     this.cValues = ChallengeGenerator.rangeToArray( -10, 10 );
     this.dValues = options.dValues;
+    this.debugLevel = options.debugLevel;
 
-    // @private methods for generating the 3 types of challenges
     this.challengeTypeMethods = [
-      this.nextType1.bind( this ),
-      this.nextType2.bind( this ),
-      this.nextType3.bind( this )
+      () => this.nextType1(),
+      () => this.nextType2(),
+      () => this.nextType3()
     ];
   }
 
   /**
    * Generates the next challenge.
-   * @returns {Challenge}
-   * @protected
-   * @override
    */
-  nextChallengeProtected() {
+  protected override nextChallengeProtected(): Challenge {
     if ( this.numberOfChallenges < 3 ) {
 
       // For the first 3 challenges, generate 1 of each type, in order.
@@ -96,11 +108,9 @@ export default class ChallengeGenerator1 extends ChallengeGenerator {
    * Let a be a random integer between [-10, 10], a !== [0, 1]
    * Let c = a*x, c !== 0
    *
-   * @param {number} [a] - if you'd like to use a specific value of a, otherwise randomly selected
-   * @returns {Challenge}
-   * @protected
+   * @param [a] - if you'd like to use a specific value of a, otherwise randomly selected
    */
-  nextType1( a ) {
+  public nextType1( a?: number ): Challenge {
 
     const x = this.randomX( this.xValues );
     a = ( a !== undefined ) ? a : ChallengeGenerator.randomValue( this.aValues, [ 0, 1 ] );
@@ -128,11 +138,8 @@ export default class ChallengeGenerator1 extends ChallengeGenerator {
    * Let x be a random integer between [-40,40], x !== 0
    * Let b be a random integer between [-10, 10], b !== 0
    * Let c = x + b, c == 0 is OK
-   *
-   * @returns {Challenge}
-   * @private
    */
-  nextType2() {
+  protected nextType2(): Challenge {
 
     const x = this.randomX( this.xValues );
     const b = ChallengeGenerator.randomValue( this.bValues, [ 0 ] );
@@ -159,20 +166,17 @@ export default class ChallengeGenerator1 extends ChallengeGenerator {
    * Let c be a random integer between [-10,10], c !== 0
    * Let d be a random integer between [-10, 10], d !== [0, 1]
    * Let x = c * d, x !== 0
-   *
-   * @returns {Challenge}
-   * @private
    */
-  nextType3() {
+  public nextType3(): Challenge {
 
     let x = this.xPrevious;
-    let c;
-    let d;
+    let c = 0;
+    let d = 0;
     let attempts = 0; // to prevent an improbable infinite while loop
     while ( x === this.xPrevious && attempts < MAX_ATTEMPTS ) {
       attempts++;
       c = ChallengeGenerator.randomValue( this.cValues, [ 0 ] );
-      d = ( d !== undefined ) ? d : ChallengeGenerator.randomValue( this.dValues, [ 0, 1 ] );
+      d = ChallengeGenerator.randomValue( this.dValues, [ 0, 1 ] );
       x = c * d;
     }
 

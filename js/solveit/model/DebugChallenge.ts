@@ -1,6 +1,5 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * A challenge created by reading the 'challenge' query parameter. See EqualityExplorerQueryParameters.
  *
@@ -14,7 +13,7 @@ import Challenge from './Challenge.js';
 
 export default class DebugChallenge extends Challenge {
 
-  constructor() {
+  public constructor() {
 
     const values = EqualityExplorerQueryParameters.challenge;
     assert && assert( values, 'query parameter challenge is not set' );
