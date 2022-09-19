@@ -1,5 +1,6 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * A challenge created by reading the 'challenge' query parameter. See EqualityExplorerQueryParameters.
  *
