@@ -65,15 +65,14 @@ export default class SolveItLevelSelectionNode extends Node {
       solveForXNode.bottom = chooseYourLevelNode.top - 30;
     } );
 
-    // Info dialog is created on demand, then reused so we don't have to deal with buggy Dialog.dispose.
-    let infoDialog = null;
+    // Info dialog is created eagerly and reused, so we don't have to deal with PhetioCapsule.
+    const infoDialog = new SolveItInfoDialog( model.challengeGenerators );
 
     // Info button, to right of 'Choose Your Level', opens the Info dialog.
     const infoButton = new InfoButton( {
       iconFill: 'rgb( 41, 106, 163 )',
       maxHeight: 0.75 * chooseYourLevelNode.height,
       listener: () => {
-        infoDialog = infoDialog || new SolveItInfoDialog( model.challengeGenerators );
         infoDialog.show();
       }
     } );
