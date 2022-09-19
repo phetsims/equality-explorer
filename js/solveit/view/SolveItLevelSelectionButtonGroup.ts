@@ -1,31 +1,35 @@
 // Copyright 2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * SolveItLevelSelectionButtonGroup is the group of level-selection buttons for the 'Solve It!' game.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import Property from '../../../../axon/js/Property.js';
+import TProperty from '../../../../axon/js/TProperty.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import LevelSelectionButtonGroup from '../../../../vegas/js/LevelSelectionButtonGroup.js';
+import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem, LevelSelectionButtonGroupOptions } from '../../../../vegas/js/LevelSelectionButtonGroup.js';
 import ScoreDisplayNumberAndStar from '../../../../vegas/js/ScoreDisplayNumberAndStar.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import VariableTermNode from '../../common/view/VariableTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
+import SolveItScene from '../model/SolveItScene.js';
+
+type SelfOptions = EmptySelfOptions;
+
+type SolveItLevelSelectionButtonGroupOptions = SelfOptions;
 
 export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButtonGroup {
 
-  /**
-   * @param {Property<SolveItScene|null>} sceneProperty
-   * @param {SolveItScene[]} scenes
-   * @param {Object} [options]
-   */
-  constructor( sceneProperty, scenes, options ) {
+  public constructor( sceneProperty: Property<SolveItScene | null>, scenes: SolveItScene[],
+                      providedOptions?: SolveItLevelSelectionButtonGroupOptions ) {
 
-    options = merge( {
+    const options = optionize<SolveItLevelSelectionButtonGroupOptions, SelfOptions, LevelSelectionButtonGroupOptions>()( {
+
+      // LevelSelectionButtonGroupOptions
       levelSelectionButtonOptions: {
         baseColor: 'rgb( 191, 239, 254 )'
       },
@@ -33,10 +37,9 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
         spacing: 20
       },
       gameLevels: EqualityExplorerQueryParameters.gameLevels
-    }, options );
+    }, providedOptions );
 
-    // {LevelSelectionButtonGroup[]}
-    const items = scenes.map( scene => {
+    const items: LevelSelectionButtonGroupItem[] = scenes.map( scene => {
       return {
         icon: VariableTermNode.createInteractiveTermNode(
           Fraction.fromInteger( scene.challengeGenerator.level ), EqualityExplorerStrings.x, {
@@ -46,7 +49,7 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
           } ),
         scoreProperty: scene.scoreProperty,
         options: {
-          createScoreDisplay: scoreProperty => new ScoreDisplayNumberAndStar( scoreProperty ),
+          createScoreDisplay: ( scoreProperty: TProperty<number> ) => new ScoreDisplayNumberAndStar( scoreProperty ),
           listener: () => {
             sceneProperty.value = scene;
           },
