@@ -16,7 +16,7 @@ type SelfOptions = {
   range?: Range | null; // range of the value, null means unbounded
 };
 
-type VariableOptions = SelfOptions;
+export type VariableOptions = SelfOptions;
 
 export default class Variable {
 

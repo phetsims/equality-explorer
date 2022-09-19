@@ -1,6 +1,5 @@
 // Copyright 2018-2020, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Describes a variable associated with a type of real-world object (sphere, apple, coin, dog, ...)
  * This is a specialization of Variable (which is a symbolic variable, e.g. 'x') that carries additional
@@ -9,22 +8,26 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Variable from '../../common/model/Variable.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import Variable, { VariableOptions } from '../../common/model/Variable.js';
 import equalityExplorer from '../../equalityExplorer.js';
+
+type SelfOptions = EmptySelfOptions;
+
+type ObjectVariableOptions = SelfOptions & VariableOptions;
 
 export default class ObjectVariable extends Variable {
 
-  /**
-   * @param {string} symbol - symbolic name for the object type, not visible to the user
-   * @param {HTMLImageElement} image - image that represents the object
-   * @param {HTMLImageElement} shadow - shadow shown while dragging
-   * @param {Object} [options]
-   */
-  constructor( symbol, image, shadow, options ) {
+  // image that represents the object
+  public readonly image: HTMLImageElement;
 
-    super( symbol, options );
+  // shadow shown while dragging the object
+  public readonly shadow: HTMLImageElement;
 
-    // @public (read-only)
+  public constructor( symbol: string, image: HTMLImageElement, shadow: HTMLImageElement, providedOptions?: ObjectVariableOptions ) {
+
+    super( symbol, providedOptions );
+
     this.image = image;
     this.shadow = shadow;
   }
