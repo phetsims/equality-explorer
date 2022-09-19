@@ -86,7 +86,7 @@ Instances of the classes listed below are dynamic &mdash; they come and go durin
 - `ReducedFractionNode`
 - `SumToZeroNode`
 
-Instances of all other types are static. They are created at startup or lazily, exist for the lifetime of the sim, and were not designed (or intended) to be disposed. They (or their superclass) typically have a `dispose` method that looks like this:
+Instances of other classes are static. They are created at startup or lazily, exist for the lifetime of the sim, and were not designed (or intended) to be disposed. They (or their superclass) typically have a `dispose` method that looks like this:
 
 ```typescript
 public override dispose(): void {
