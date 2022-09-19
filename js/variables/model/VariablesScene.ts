@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * The sole scene in the 'Variables' screen.
  *
@@ -10,6 +9,7 @@
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
+import TermCreator from '../../common/model/TermCreator.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -17,7 +17,7 @@ import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
 export default class VariablesScene extends EqualityExplorerScene {
 
-  constructor() {
+  public constructor() {
 
     const xVariable = new Variable( EqualityExplorerStrings.x, {
       range: EqualityExplorerConstants.VARIABLE_RANGE
@@ -32,10 +32,8 @@ export default class VariablesScene extends EqualityExplorerScene {
 
 /**
  * Creates the term creators for this scene.
- * @param {Variable} xVariable
- * @returns {TermCreator[]}
  */
-function createTermCreators( xVariable ) {
+function createTermCreators( xVariable: Variable ): TermCreator[] {
 
   return [
 

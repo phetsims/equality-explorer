@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * The sole scene in the 'Operations' screen.
  * This scene has variable and constant terms on both sides of the equation.
@@ -11,13 +10,14 @@
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
+import Range from '../../../../dot/js/Range.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ConstantTerm from '../../common/model/ConstantTerm.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
-import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
+import EqualityExplorerScene, { EqualityExplorerSceneOptions } from '../../common/model/EqualityExplorerScene.js';
 import Snapshot from '../../common/model/Snapshot.js';
 import TermCreator from '../../common/model/TermCreator.js';
 import UniversalOperation from '../../common/model/UniversalOperation.js';
@@ -26,6 +26,7 @@ import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
+import Term from '../../common/model/Term.js';
 
 // constants
 const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;
@@ -33,21 +34,47 @@ const ICON_SIZE = new Dimension2(
   EqualityExplorerConstants.BIG_TERM_DIAMETER + 10,
   EqualityExplorerConstants.BIG_TERM_DIAMETER );
 
+type SelfOptions = {
+  variableRange?: Range | null; // range of the variables
+};
+
+export type OperationsSceneOptions = SelfOptions & EqualityExplorerSceneOptions;
+
 export default class OperationsScene extends EqualityExplorerScene {
 
-  constructor( options ) {
+  protected readonly xVariable: Variable;
+  protected readonly leftVariableTermCreator: VariableTermCreator;
+  protected readonly leftConstantTermCreator: ConstantTermCreator;
+  protected readonly rightVariableTermCreator: VariableTermCreator;
+  protected readonly rightConstantTermCreator: ConstantTermCreator;
 
-    options = merge( {
+  // emits when one or more terms become zero as the result of a universal operation
+  public readonly sumToZeroEmitter: Emitter<[ TermCreator[] ]>;
 
-      // Range of the variables
+  // emits is called when a universal operation has completed.
+  protected readonly operationCompletedEmitter: Emitter<[ UniversalOperation ]>;
+
+  //TODO https://github.com/phetsims/equality-explorer/issues/186 create a type for operators
+  public readonly operators: string[];
+  public readonly operatorProperty: Property<string>;
+
+  // operands that appear in the operand picker. These are the only Terms that are not created and managed by a TermCreator.
+  public readonly operands: Term[];
+  protected readonly operandProperty: Property<Term>;
+
+  public constructor( providedOptions?: OperationsSceneOptions ) {
+
+    const options = optionize<OperationsSceneOptions, SelfOptions, EqualityExplorerSceneOptions>()( {
+
+      // SelfOptions
       variableRange: EqualityExplorerConstants.VARIABLE_RANGE,
 
-      // EqualityExplorerScene options
+      // EqualityExplorerSceneOptions
       debugName: 'operations',
       gridRows: 1,
       gridColumns: 2,
       iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
-    }, options );
+    }, providedOptions );
 
     const xVariable = new Variable( EqualityExplorerStrings.x, {
       range: options.variableRange
@@ -56,7 +83,7 @@ export default class OperationsScene extends EqualityExplorerScene {
     assert && assert( !options.variables, 'OperationsScene sets variables' );
     options.variables = [ xVariable ];
 
-    // Variable and constant terms will combined in specific cells in the plate's grid.
+    // Variable and constant terms will be combined in specific cells in the plate's grid.
     const variableTermCreatorOptions = {
       likeTermsCell: 0 // cell on the plate that all like terms will occupy
     };
@@ -75,15 +102,12 @@ export default class OperationsScene extends EqualityExplorerScene {
       options
     );
 
-    // @protected
     this.xVariable = xVariable;
     this.leftVariableTermCreator = leftVariableTermCreator;
     this.leftConstantTermCreator = leftConstantTermCreator;
     this.rightVariableTermCreator = rightVariableTermCreator;
     this.rightConstantTermCreator = rightConstantTermCreator;
 
-    // @public (read-only)
-    // emit when one or more terms become zero as the result of a universal operation
     this.sumToZeroEmitter = new Emitter( {
       parameters: [ {
 
@@ -92,16 +116,12 @@ export default class OperationsScene extends EqualityExplorerScene {
       } ]
     } );
 
-    // @public (read-only)
     this.operators = EqualityExplorerConstants.OPERATORS;
 
-    // @public
     this.operatorProperty = new StringProperty( this.operators[ 0 ], {
       validValues: this.operators
     } );
 
-    // @public (read-only) {Term[]} operands that appear in the operand picker.
-    // These are the only Terms that are not created and managed by a TermCreator.
     this.operands = [];
     for ( let i = OPERAND_RANGE.min; i <= OPERAND_RANGE.max; i++ ) {
 
@@ -139,31 +159,24 @@ export default class OperationsScene extends EqualityExplorerScene {
 
     // Start with operand 1
     const defaultOperand = _.find( this.operands,
-      operand => ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 ) );
+      operand => ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 ) )!;
     assert && assert( defaultOperand, 'oops, the default was not found' );
 
-    // @private {Property.<Term>}
     this.operandProperty = new Property( defaultOperand, {
       validValues: this.operands
     } );
 
-    // @protected (read-only) emit is called when a universal operation has completed.
     this.operationCompletedEmitter = new Emitter( {
       parameters: [ { valueType: UniversalOperation } ]
     } );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
 
-  /**
-   * @public
-   * @override
-   */
-  reset() {
+  public override reset(): void {
     this.xVariable.reset();
     this.operatorProperty.reset();
     this.operandProperty.reset();
@@ -172,11 +185,9 @@ export default class OperationsScene extends EqualityExplorerScene {
 
   /**
    * Creates a snapshot of the scene.
-   * @returns {Snapshot}
-   * @public
-   * @override
    */
-  createSnapshot() {
+  public createSnapshot(): Snapshot {
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 Snapshot constructor has 1 param
     return new Snapshot( this, {
       variables: [ this.xVariable ]
     } );
@@ -184,16 +195,14 @@ export default class OperationsScene extends EqualityExplorerScene {
 
   /**
    * Applies a universal operation.
-   * @param {UniversalOperation} operation
-   * @public
    */
-  applyOperation( operation ) {
+  public applyOperation( operation: UniversalOperation ): void {
 
     // Take a snapshot of terms on the scale, so we can undo the operation if necessary.
     const snapshot = new Snapshot( this );
 
-    // {TermCreator[]} TermCreators whose term summed to zero as the result of applying this operation.
-    const termCreatorsZero = [];
+    // TermCreators whose terms summed to zero as the result of applying this operation.
+    const termCreatorsZero: TermCreator[] = [];
 
     // Apply the operation to each TermCreator
     this.allTermCreators.forEach( termCreator => {
@@ -228,18 +237,17 @@ export default class OperationsScene extends EqualityExplorerScene {
 
   /**
    * Finds the first TermCreator that has a Term that exceeds the maxInteger limit.
-   * @returns {TermCreator|null}
-   * @private
    */
-  findMaxIntegerExceeded() {
-    return _.find( this.allTermCreators, termCreator => {
+  private findMaxIntegerExceeded(): TermCreator | null {
+    const termCreator = _.find( this.allTermCreators, termCreator => {
 
       // Get the term on the plate
       const term = termCreator.getLikeTermOnPlate();
 
       // Does the term exceed the limit?
-      return term && term.maxIntegerExceeded();
+      return ( term !== null ) && term.maxIntegerExceeded();
     } );
+    return termCreator || null;
   }
 }
 

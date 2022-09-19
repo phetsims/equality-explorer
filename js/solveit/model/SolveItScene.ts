@@ -1,6 +1,5 @@
 // Copyright 2018-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * A scene in the 'Solve It!' screen.  A scene is created for each level in the game.
  * This is an extension of the Operations scene (variable and constant terms on both sides of the equation),
@@ -13,6 +12,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
@@ -22,7 +22,7 @@ import UniversalOperation from '../../common/model/UniversalOperation.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import OperationsScene from '../../operations/model/OperationsScene.js';
+import OperationsScene, { OperationsSceneOptions } from '../../operations/model/OperationsScene.js';
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import DebugChallenge from './DebugChallenge.js';
@@ -30,24 +30,38 @@ import DebugChallenge from './DebugChallenge.js';
 // constants
 const POINTS_PER_CHALLENGE = 1;
 
+type SelfOptions = EmptySelfOptions;
+
+type SolveItSceneOptions = SelfOptions;
+
 export default class SolveItScene extends OperationsScene {
 
-  /**
-   * @param {ChallengeGenerator} challengeGenerator
-   */
-  constructor( challengeGenerator ) {
-    assert && assert( challengeGenerator instanceof ChallengeGenerator );
+  public readonly challengeGenerator: ChallengeGenerator;
+  public readonly scoreProperty: NumberProperty;
 
-    super( {
+  // the current challenge, set by nextChallenge
+  public readonly challengeProperty: Property<Challenge | null>;
+
+  // has the current challenge been solved?
+  private challengeHasBeenSolved: boolean;
+
+  // will x be on the left-side (true) or right-side (false) of the equation in the solution?
+  private xOnLeft: boolean;
+
+  public constructor( challengeGenerator: ChallengeGenerator, providedOptions?: SolveItSceneOptions ) {
+
+    const options = optionize<SolveItSceneOptions, SelfOptions, OperationsSceneOptions>()( {
+
+      // OperationsSceneOptions
       debugName: `level ${challengeGenerator.level}`,
       scalePosition: new Vector2( 355, 500 ), // determined empirically
       variableRange: null // because variables are not user-controlled in this scene
-    } );
+    }, providedOptions );
 
-    // @public (read-only)
+    super( options );
+
     this.challengeGenerator = challengeGenerator;
 
-    // @public
     this.scoreProperty = new NumberProperty( 0, {
       numberType: 'Integer',
       isValidValue: value => ( value >= 0 )
@@ -62,15 +76,11 @@ export default class SolveItScene extends OperationsScene {
       termCreator.negativePosition = Vector2.ZERO;
     } );
 
-    // @public (read-only) {Property.<Challenge|null>} the current challenge, set by nextChallenge
-    this.challengeProperty = new Property( null, {
+    this.challengeProperty = new Property<Challenge | null>( null, {
       isValidValue: value => ( value instanceof Challenge ) || ( value === null )
     } );
 
-    // @private has the current challenge been solved?
     this.challengeHasBeenSolved = false;
-
-    // @private will x be on the left or right side of the equation in the solution?
     this.xOnLeft = true;
 
     // When a universal operation is completed, determine if the challenge is solved.
@@ -95,17 +105,12 @@ export default class SolveItScene extends OperationsScene {
     } );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
 
-  /**
-   * @public
-   * @override
-   */
-  reset() {
+  public override reset(): void {
     this.scoreProperty.reset();
     this.challengeProperty.reset();
     super.reset();
@@ -113,9 +118,8 @@ export default class SolveItScene extends OperationsScene {
 
   /**
    * Generates the next challenge.
-   * @public
    */
-  nextChallenge() {
+  public nextChallenge(): void {
 
     // reset the universal operation
     this.operatorProperty.reset();
@@ -160,13 +164,8 @@ export default class SolveItScene extends OperationsScene {
 
   /**
    * Creates a variable term on the plate. If coefficient is zero, this is a no-op.
-   * @param {VariableTermCreator} termCreator
-   * @param {Fraction} coefficient
-   * @private
    */
-  createVariableTermOnPlate( termCreator, coefficient ) {
-    assert && assert( termCreator instanceof VariableTermCreator, `invalid termCreator: ${termCreator}` );
-    assert && assert( coefficient instanceof Fraction, `invalid coefficient: ${coefficient}` );
+  private createVariableTermOnPlate( termCreator: VariableTermCreator, coefficient: Fraction ): void {
     if ( coefficient.getValue() !== 0 ) {
       const term = termCreator.createTerm( {
         coefficient: coefficient,
@@ -178,13 +177,8 @@ export default class SolveItScene extends OperationsScene {
 
   /**
    * Creates a constant term on the plate. If constantValue is zero, this is a no-op.
-   * @param {ConstantTermCreator} termCreator
-   * @param {Fraction} constantValue
-   * @private
    */
-  createConstantTermOnPlate( termCreator, constantValue ) {
-    assert && assert( termCreator instanceof ConstantTermCreator, `invalid termCreator: ${termCreator}` );
-    assert && assert( constantValue instanceof Fraction, `invalid constantValue: ${constantValue}` );
+  private createConstantTermOnPlate( termCreator: ConstantTermCreator, constantValue: Fraction ): void {
     if ( constantValue.getValue() !== 0 ) {
       const term = termCreator.createTerm( {
         constantValue: constantValue,
@@ -197,10 +191,8 @@ export default class SolveItScene extends OperationsScene {
   /**
    * Determines whether the value of x has been isolated on the scale.
    * This means that the scale contains either 'x = n' or 'b = x', where 'ax + b = mx + n' is the general form.
-   * @returns {boolean}
-   * @private
    */
-  isXIsolated() {
+  private isXIsolated(): boolean {
 
     let xIsIsolated = false;
 
@@ -212,10 +204,12 @@ export default class SolveItScene extends OperationsScene {
 
     if ( ( aTerm && !bTerm && !mTerm && nTerm ) ) {
       // ax + 0 = 0x + n
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 coefficient does not exist on type Term
       xIsIsolated = ( aTerm.coefficient.getValue() === 1 ); // x = n
     }
     else if ( !aTerm && bTerm && mTerm && !nTerm ) {
       // 0x + b = mx + 0
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 coefficient does not exist on type Term
       xIsIsolated = ( mTerm.coefficient.getValue() === 1 ); // b = x
     }
 
@@ -224,9 +218,8 @@ export default class SolveItScene extends OperationsScene {
 
   /**
    * Displays the answer to the current challenge, for debugging.
-   * @public
    */
-  showAnswer() {
+  public showAnswer(): void {
 
     // 0 = 0
     this.allTermCreators.forEach( termCreator => termCreator.disposeAllTerms() );
