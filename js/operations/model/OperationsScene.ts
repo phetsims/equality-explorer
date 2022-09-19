@@ -26,8 +26,8 @@ import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
-import Term from '../../common/model/Term.js';
 import { UniversalOperator, UniversalOperatorValues } from '../../common/model/UniversalOperator.js';
+import { UniversalOperand } from '../../common/model/UniversalOperand.js';
 
 // constants
 const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;
@@ -59,8 +59,8 @@ export default class OperationsScene extends EqualityExplorerScene {
   public readonly operatorProperty: Property<UniversalOperator>;
 
   // operands that appear in the operand picker. These are the only Terms that are not created and managed by a TermCreator.
-  public readonly operands: Term[];
-  public readonly operandProperty: Property<Term>;
+  public readonly operands: UniversalOperand[];
+  public readonly operandProperty: Property<UniversalOperand>;
 
   public constructor( providedOptions?: OperationsSceneOptions ) {
 

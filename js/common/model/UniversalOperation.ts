@@ -10,21 +10,16 @@
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ConstantTerm from './ConstantTerm.js';
-import Term from './Term.js';
 import VariableTerm from './VariableTerm.js';
 import { UniversalOperator } from './UniversalOperator.js';
+import { UniversalOperand } from './UniversalOperand.js';
 
 export default class UniversalOperation {
 
   public readonly operator: UniversalOperator;
-  public readonly operand: Term;
+  public readonly operand: UniversalOperand;
 
-  //TODO https://github.com/phetsims/equality-explorer/issues/186 operand: ConstantTerm | VariableTerm
-  public constructor( operator: UniversalOperator, operand: Term ) {
-
-    assert && assert( operand instanceof ConstantTerm || operand instanceof VariableTerm,
-      `invalid operand: ${operand}` );
-
+  public constructor( operator: UniversalOperator, operand: UniversalOperand ) {
     this.operator = operator;
     this.operand = operand;
   }

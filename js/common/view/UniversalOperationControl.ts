@@ -35,6 +35,7 @@ import ObjectPicker, { ObjectPickerItem } from './ObjectPicker.js';
 import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
 import { UniversalOperator } from '../model/UniversalOperator.js';
+import { UniversalOperand } from '../model/UniversalOperand.js';
 
 type SelfOptions = {
   timesZeroEnabled?: boolean; // whether to include 'times 0' as one of the operations
@@ -118,7 +119,7 @@ export default class UniversalOperationControl extends HBox {
     scene.operatorProperty.lazyLink( operatorListener ); // unlink not needed
 
     // items for the operand picker
-    const operandItems: ObjectPickerItem<Term>[] = [];
+    const operandItems: ObjectPickerItem<UniversalOperand>[] = [];
     for ( let i = 0; i < scene.operands.length; i++ ) {
       const operand = scene.operands[ i ];
       operandItems.push( {
