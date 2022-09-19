@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * This is the reward that's shown behind RewardDialog when the user gets to 10 stars.
  * The reward varies by level.
