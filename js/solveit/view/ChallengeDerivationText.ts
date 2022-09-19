@@ -1,41 +1,48 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Shows how the current challenge was derived. Used exclusively for debugging.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { RichText } from '../../../../scenery/js/imports.js';
+import { RichText, RichTextOptions } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import Challenge from '../model/Challenge.js';
 
 // constants
 const DEFAULT_FONT = new PhetFont( 14 );
 
+type SelfOptions = EmptySelfOptions;
+
+type ChallengeDerivationTextOptions = SelfOptions;
+
 export default class ChallengeDerivationText extends RichText {
 
-  /**
-   * @param {Property.<Challenge|null>} challengeProperty
-   * @param {Object} [options]
-   */
-  constructor( challengeProperty, options ) {
+  public constructor( challengeProperty: Property<Challenge | null>, providedOptions?: ChallengeDerivationTextOptions ) {
 
-    options = merge( {
+    const options = optionize<ChallengeDerivationTextOptions, SelfOptions, RichTextOptions>()( {
 
-      // RichText options
+      // RichTextOptions
       font: DEFAULT_FONT
-    }, options );
+    }, providedOptions );
 
     super( '', options );
 
-    // display derivation of the current challenge. unlink not needed.
+    // display derivation of the current challenge
     challengeProperty.link( challenge => {
       this.text = ( challenge ? challenge.debugDerivation : '' );
     } );
   }
+
+  public override dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
+
 }
 
 equalityExplorer.register( 'ChallengeDerivationText', ChallengeDerivationText );
