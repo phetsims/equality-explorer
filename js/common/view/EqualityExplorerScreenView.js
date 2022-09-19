@@ -10,25 +10,31 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import merge from '../../../../phet-core/js/merge.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import EqualityExplorerModel from '../model/EqualityExplorerModel.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 
 class EqualityExplorerScreenView extends ScreenView {
 
   /**
    * @param {EqualityExplorerModel} model
+   * @param {Tandem} tandem
    * @param {Object} [options]
    * @abstract
    */
-  constructor( model, options ) {
+  constructor( model, tandem, options ) {
+    assert && assert( model instanceof EqualityExplorerModel );
+    assert && assert( tandem instanceof Tandem );
 
     options = merge( {}, EqualityExplorerConstants.SCREEN_VIEW_OPTIONS, {
 
       // {boolean}
       // true = positive and negative terms in the toolbox, e.g. x, -x, 1, -1
       // false = only positive terms in the toolbox, e.g. x, 1
-      hasNegativeTermsInToolbox: true
+      hasNegativeTermsInToolbox: true,
+      tandem: tandem
     }, options );
 
     super( options );

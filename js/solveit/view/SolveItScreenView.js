@@ -8,12 +8,15 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
+import merge from '../../../../phet-core/js/merge.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import TransitionNode from '../../../../twixt/js/TransitionNode.js';
 import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import SolveItModel from '../model/SolveItModel.js';
 import SolveItLevelSelectionNode from './SolveItLevelSelectionNode.js';
 import SolveItSceneNode from './SolveItSceneNode.js';
 
@@ -29,10 +32,17 @@ class SolveItScreenView extends ScreenView {
 
   /**
    * @param {SolveItModel} model
+   * @param {Tandem} tandem
    */
-  constructor( model ) {
+  constructor( model, tandem ) {
+    assert && assert( model instanceof SolveItModel );
+    assert && assert( tandem instanceof Tandem );
 
-    super( EqualityExplorerConstants.SCREEN_VIEW_OPTIONS );
+    const options = merge( {
+      tandem: tandem
+    }, EqualityExplorerConstants.SCREEN_VIEW_OPTIONS );
+
+    super( options );
 
     // @private state of the Snapshots accordion box is global to the Screen,
     // see https://github.com/phetsims/equality-explorer/issues/124

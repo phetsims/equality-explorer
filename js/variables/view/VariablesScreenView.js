@@ -14,9 +14,10 @@ class VariablesScreenView extends EqualityExplorerScreenView {
 
   /**
    * @param {VariablesModel} model
+   * @param {Tandem} tandem
    */
-  constructor( model ) {
-    super( model );
+  constructor( model, tandem ) {
+    super( model, tandem );
   }
 
   /**

@@ -14,9 +14,10 @@ class BasicsScreenView extends EqualityExplorerScreenView {
 
   /**
    * @param {BasicsModel} model
+   * @param {Tandem} tandem
    */
-  constructor( model ) {
-    super( model, {
+  constructor( model, tandem ) {
+    super( model, tandem, {
       hasNegativeTermsInToolbox: false // only positive terms in the toolbox
     } );
   }

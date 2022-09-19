@@ -33,7 +33,7 @@ class VariablesScreen extends EqualityExplorerScreen {
 
     super(
       () => new VariablesModel( options.tandem.createTandem( 'model' ) ),
-      model => new VariablesScreenView( model ),
+      model => new VariablesScreenView( model, options.tandem.createTandem( 'view' ) ),
       options
     );
   }

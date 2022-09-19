@@ -14,9 +14,10 @@ class OperationsScreenView extends EqualityExplorerScreenView {
 
   /**
    * @param {OperationsModel} model
+   * @param {Tandem} tandem
    */
-  constructor( model ) {
-    super( model );
+  constructor( model, tandem ) {
+    super( model, tandem );
   }
 
   /**

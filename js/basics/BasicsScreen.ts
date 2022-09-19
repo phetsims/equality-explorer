@@ -35,7 +35,7 @@ export default class BasicsScreen extends EqualityExplorerScreen<BasicsModel, Ba
 
     super(
       () => new BasicsModel( options.tandem.createTandem( 'model' ) ),
-      model => new BasicsScreenView( model ),
+      model => new BasicsScreenView( model, options.tandem.createTandem( 'view' ) ),
       options
     );
   }

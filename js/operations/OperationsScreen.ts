@@ -35,7 +35,7 @@ export default class OperationsScreen extends EqualityExplorerScreen<OperationsM
 
     super(
       () => new OperationsModel( options.tandem.createTandem( 'model' ) ),
-      model => new OperationsScreenView( model ),
+      model => new OperationsScreenView( model, options.tandem.createTandem( 'view' ) ),
       options
     );
   }

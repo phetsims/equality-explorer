@@ -14,17 +14,18 @@ class NumbersScreenView extends EqualityExplorerScreenView {
 
   /**
    * @param {NumbersModel} model
+   * @param {Tandem} tandem
    */
-  constructor( model ) {
-    super( model );
+  constructor( model, tandem ) {
+    super( model, tandem );
   }
 
   /**
    * Creates the Node for this scene.
    * @param {EqualityExplorerScene} scene
    * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
-   * param {BooleanProperty} equationAccordionBoxExpandedProperty
-   * param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
+   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
+   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
    * @returns {Node}

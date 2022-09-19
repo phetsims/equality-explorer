@@ -35,7 +35,7 @@ export default class NumbersScreen extends EqualityExplorerScreen<NumbersModel, 
 
     super(
       () => new NumbersModel( options.tandem.createTandem( 'model' ) ),
-      model => new NumbersScreenView( model ),
+      model => new NumbersScreenView( model, options.tandem.createTandem( 'view' ) ),
       options
     );
   }
