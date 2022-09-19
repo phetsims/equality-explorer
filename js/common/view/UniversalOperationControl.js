@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * The 'universal operation' control (as it's referred to in the design document)
  * allows the user to apply an operation to both sides of the scale and equation.
