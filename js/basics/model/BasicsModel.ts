@@ -6,6 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import AnimalsScene from './AnimalsScene.js';
@@ -16,7 +17,7 @@ import ShapesScene from './ShapesScene.js';
 
 export default class BasicsModel extends EqualityExplorerModel<BasicsScene> {
 
-  public constructor() {
+  public constructor( tandem: Tandem ) {
     super( [
 
       // in the order that they appear (left to right) in the scene control (radio buttons)
@@ -24,7 +25,7 @@ export default class BasicsModel extends EqualityExplorerModel<BasicsScene> {
       new FruitsScene(),
       new CoinsScene(),
       new AnimalsScene()
-    ] );
+    ], tandem );
   }
 }
 

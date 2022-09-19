@@ -16,6 +16,7 @@ import ChallengeGenerator5 from './ChallengeGenerator5.js';
 import SolveItScene from './SolveItScene.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import TModel from '../../../../joist/js/TModel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class SolveItModel implements TModel {
 
@@ -27,7 +28,7 @@ export default class SolveItModel implements TModel {
   // the selected scene, null if no scene is currently selected
   public readonly sceneProperty: Property<SolveItScene | null>;
 
-  public constructor() {
+  public constructor( tandem: Tandem ) {
 
     this.challengeGenerators = [
       new ChallengeGenerator1(),
@@ -43,7 +44,9 @@ export default class SolveItModel implements TModel {
 
     this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItScene( challengeGenerator ) );
 
-    this.sceneProperty = new Property<SolveItScene | null>( null );
+    this.sceneProperty = new Property<SolveItScene | null>( null, {
+      validValues: [ ...this.scenes, null ]
+    } );
   }
 
   public dispose(): void {

@@ -35,7 +35,7 @@ export default class SolveItScreen extends Screen<SolveItModel, SolveItScreenVie
     }, providedOptions );
 
     super(
-      () => new SolveItModel(),
+      () => new SolveItModel( options.tandem.createTandem( 'model' ) ),
       model => new SolveItScreenView( model ),
       options
     );

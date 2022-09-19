@@ -8,6 +8,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import TModel from '../../../../joist/js/TModel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from './EqualityExplorerScene.js';
 
@@ -19,11 +20,12 @@ export default class EqualityExplorerModel<T extends EqualityExplorerScene> impl
   // the selected scene
   public readonly sceneProperty: Property<T>;
 
-  protected constructor( scenes: T[] ) {
+  protected constructor( scenes: T[], tandem: Tandem ) {
 
     this.scenes = scenes;
     this.sceneProperty = new Property( scenes[ 0 ], {
-      validValues: scenes
+      validValues: scenes,
+      tandem: tandem.createTandem( 'sceneProperty' )
     } );
 
     // When the scene changes, dispose of any terms that are being dragged or animating.

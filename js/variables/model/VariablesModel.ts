@@ -6,14 +6,15 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesScene from './VariablesScene.js';
 
 export default class VariablesModel extends EqualityExplorerModel<VariablesScene> {
 
-  public constructor() {
-    super( [ new VariablesScene() ] );
+  public constructor( tandem: Tandem ) {
+    super( [ new VariablesScene() ], tandem );
   }
 }
 
