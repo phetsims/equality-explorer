@@ -32,7 +32,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Term from './Term.js';
 
-class TermCreator {
+export default class TermCreator {
 
   /**
    * @param {Object} [options]
@@ -671,5 +671,3 @@ class TermCreator {
 }
 
 equalityExplorer.register( 'TermCreator', TermCreator );
-
-export default TermCreator;

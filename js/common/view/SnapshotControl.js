@@ -24,7 +24,7 @@ const SELECTION_RECTANGLE_X_MARGIN = 10;
 const SELECTION_RECTANGLE_Y_MARGIN = 8;
 const VALID_ORIENTATION_VALUES = [ 'horizontal', 'vertical' ];
 
-class SnapshotControl extends Node {
+export default class SnapshotControl extends Node {
 
   /**
    * @param {EqualityExplorerScene} scene - the scene that we'll be taking a snapshot of
@@ -190,5 +190,3 @@ class SnapshotControl extends Node {
 }
 
 equalityExplorer.register( 'SnapshotControl', SnapshotControl );
-
-export default SnapshotControl;

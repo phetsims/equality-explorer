@@ -11,7 +11,7 @@ import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class NumbersScene extends EqualityExplorerScene {
+export default class NumbersScene extends EqualityExplorerScene {
 
   constructor() {
     super( [ new ConstantTermCreator() ], [ new ConstantTermCreator() ], {
@@ -21,5 +21,3 @@ class NumbersScene extends EqualityExplorerScene {
 }
 
 equalityExplorer.register( 'NumbersScene', NumbersScene );
-
-export default NumbersScene;

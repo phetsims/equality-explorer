@@ -28,7 +28,7 @@ const TRANSITION_OPTIONS = {
   }
 };
 
-class SolveItScreenView extends ScreenView {
+export default class SolveItScreenView extends ScreenView {
 
   /**
    * @param {SolveItModel} model
@@ -135,5 +135,3 @@ class SolveItScreenView extends ScreenView {
 }
 
 equalityExplorer.register( 'SolveItScreenView', SolveItScreenView );
-
-export default SolveItScreenView;

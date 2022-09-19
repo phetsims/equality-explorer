@@ -13,7 +13,7 @@ import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
 
-class ChallengeGenerator2 extends ChallengeGenerator {
+export default class ChallengeGenerator2 extends ChallengeGenerator {
 
   constructor() {
     super( 2, EqualityExplorerStrings.level2DescriptionStringProperty );
@@ -73,5 +73,3 @@ class ChallengeGenerator2 extends ChallengeGenerator {
 }
 
 equalityExplorer.register( 'ChallengeGenerator2', ChallengeGenerator2 );
-
-export default ChallengeGenerator2;

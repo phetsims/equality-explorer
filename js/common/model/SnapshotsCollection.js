@@ -11,7 +11,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Snapshot from './Snapshot.js';
 
-class SnapshotsCollection {
+export default class SnapshotsCollection {
 
   constructor( options ) {
 
@@ -74,5 +74,3 @@ class SnapshotsCollection {
 }
 
 equalityExplorer.register( 'SnapshotsCollection', SnapshotsCollection );
-
-export default SnapshotsCollection;

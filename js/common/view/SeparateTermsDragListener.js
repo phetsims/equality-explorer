@@ -14,7 +14,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import TermDragListener from './TermDragListener.js';
 
-class SeparateTermsDragListener extends TermDragListener {
+export default class SeparateTermsDragListener extends TermDragListener {
 
   /**
    * @param {Node} termNode - Node that the listener is attached to
@@ -219,5 +219,3 @@ class SeparateTermsDragListener extends TermDragListener {
 }
 
 equalityExplorer.register( 'SeparateTermsDragListener', SeparateTermsDragListener );
-
-export default SeparateTermsDragListener;

@@ -10,7 +10,7 @@ import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class Challenge {
+export default class Challenge {
 
   /**
    * Form: ax + b = mx + n
@@ -78,5 +78,3 @@ function fractionToString( f ) {
 }
 
 equalityExplorer.register( 'Challenge', Challenge );
-
-export default Challenge;

@@ -17,7 +17,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 const DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
 const ICON_SCALE_MULTIPLIER = 0.7; // use this to adjust size of icon relative to coefficient
 
-class ObjectTermNode extends TermNode {
+export default class ObjectTermNode extends TermNode {
 
   /**
    * @param {ObjectTermCreator} termCreator
@@ -87,5 +87,3 @@ class ObjectTermNode extends TermNode {
 }
 
 equalityExplorer.register( 'ObjectTermNode', ObjectTermNode );
-
-export default ObjectTermNode;

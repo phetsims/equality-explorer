@@ -16,7 +16,7 @@ import TermCreatorNode from './TermCreatorNode.js';
 // constants
 const DEFAULT_CONTENT_SIZE = new Dimension2( 250, 50 );
 
-class TermsToolbox extends Panel {
+export default class TermsToolbox extends Panel {
 
   /**
    * @param {TermCreator[]} termCreators - creators for terms, appear in this order left-to-right
@@ -79,5 +79,3 @@ class TermsToolbox extends Panel {
 }
 
 equalityExplorer.register( 'TermsToolbox', TermsToolbox );
-
-export default TermsToolbox;

@@ -27,7 +27,7 @@ const DEFAULT_OPTIONS = {
   fractionFont: new PhetFont( 20 ) // font for fractional constant value
 };
 
-class ConstantTermNode extends TermNode {
+export default class ConstantTermNode extends TermNode {
 
   /**
    * @param {ConstantTermCreator} termCreator
@@ -107,5 +107,3 @@ class ConstantTermNode extends TermNode {
 }
 
 equalityExplorer.register( 'ConstantTermNode', ConstantTermNode );
-
-export default ConstantTermNode;

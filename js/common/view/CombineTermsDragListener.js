@@ -13,7 +13,7 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import SumToZeroNode from './SumToZeroNode.js';
 import TermDragListener from './TermDragListener.js';
 
-class CombineTermsDragListener extends TermDragListener {
+export default class CombineTermsDragListener extends TermDragListener {
 
   /**
    * @param {Node} termNode - Node that the listener is attached to
@@ -319,5 +319,3 @@ class CombineTermsDragListener extends TermDragListener {
 }
 
 equalityExplorer.register( 'CombineTermsDragListener', CombineTermsDragListener );
-
-export default CombineTermsDragListener;

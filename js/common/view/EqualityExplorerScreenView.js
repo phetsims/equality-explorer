@@ -16,7 +16,7 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerModel from '../model/EqualityExplorerModel.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 
-class EqualityExplorerScreenView extends ScreenView {
+export default class EqualityExplorerScreenView extends ScreenView {
 
   /**
    * @param {EqualityExplorerModel} model
@@ -140,5 +140,3 @@ class EqualityExplorerScreenView extends ScreenView {
 }
 
 equalityExplorer.register( 'EqualityExplorerScreenView', EqualityExplorerScreenView );
-
-export default EqualityExplorerScreenView;

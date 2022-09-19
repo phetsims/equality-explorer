@@ -10,7 +10,7 @@ import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreen
 import equalityExplorer from '../../equalityExplorer.js';
 import OperationsSceneNode from './OperationsSceneNode.js';
 
-class OperationsScreenView extends EqualityExplorerScreenView {
+export default class OperationsScreenView extends EqualityExplorerScreenView {
 
   /**
    * @param {OperationsModel} model
@@ -40,5 +40,3 @@ class OperationsScreenView extends EqualityExplorerScreenView {
 }
 
 equalityExplorer.register( 'OperationsScreenView', OperationsScreenView );
-
-export default OperationsScreenView;

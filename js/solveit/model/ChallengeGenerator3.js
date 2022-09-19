@@ -26,7 +26,7 @@ const X_VALUES = ChallengeGenerator.rangeToArray( -40, 40 );
 const A_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 const B_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 
-class ChallengeGenerator3 extends ChallengeGenerator {
+export default class ChallengeGenerator3 extends ChallengeGenerator {
 
   constructor() {
     super( 3, EqualityExplorerStrings.level3DescriptionStringProperty );
@@ -69,5 +69,3 @@ class ChallengeGenerator3 extends ChallengeGenerator {
 }
 
 equalityExplorer.register( 'ChallengeGenerator3', ChallengeGenerator3 );
-
-export default ChallengeGenerator3;

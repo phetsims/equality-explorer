@@ -15,7 +15,7 @@ import { HBox, HStrut, Text } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariableNode from './VariableNode.js';
 
-class VariableValuesNode extends HBox {
+export default class VariableValuesNode extends HBox {
 
   /**
    * @param {Variable[]} variables
@@ -84,5 +84,3 @@ class VariableValuesNode extends HBox {
 }
 
 equalityExplorer.register( 'VariableValuesNode', VariableValuesNode );
-
-export default VariableValuesNode;

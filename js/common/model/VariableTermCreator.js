@@ -15,7 +15,7 @@ import VariableTermNode from '../view/VariableTermNode.js';
 import TermCreator from './TermCreator.js';
 import VariableTerm from './VariableTerm.js';
 
-class VariableTermCreator extends TermCreator {
+export default class VariableTermCreator extends TermCreator {
 
   /**
    * @param {Variable} variable
@@ -134,5 +134,3 @@ class VariableTermCreator extends TermCreator {
 }
 
 equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );
-
-export default VariableTermCreator;

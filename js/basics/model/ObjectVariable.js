@@ -11,7 +11,7 @@
 import Variable from '../../common/model/Variable.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class ObjectVariable extends Variable {
+export default class ObjectVariable extends Variable {
 
   /**
    * @param {string} symbol - symbolic name for the object type, not visible to the user
@@ -30,5 +30,3 @@ class ObjectVariable extends Variable {
 }
 
 equalityExplorer.register( 'ObjectVariable', ObjectVariable );
-
-export default ObjectVariable;

@@ -25,7 +25,7 @@ const SEPARATOR_OPTIONS = {
   stroke: 'rgb( 200, 200, 200 )'
 };
 
-class SnapshotsAccordionBox extends AccordionBox {
+export default class SnapshotsAccordionBox extends AccordionBox {
 
   /**
    * @param {EqualityExplorerScene} scene - the scene that we'll be taking snapshots of
@@ -177,5 +177,3 @@ class SnapshotsAccordionBox extends AccordionBox {
 }
 
 equalityExplorer.register( 'SnapshotsAccordionBox', SnapshotsAccordionBox );
-
-export default SnapshotsAccordionBox;

@@ -33,7 +33,7 @@ const PATTERN3 = 'level {{level}}, type 3, x/d = c<br>' +
 // constants
 const MAX_ATTEMPTS = 50; // max attempts in a while loop
 
-class ChallengeGenerator1 extends ChallengeGenerator {
+export default class ChallengeGenerator1 extends ChallengeGenerator {
 
   constructor( options ) {
 
@@ -195,5 +195,3 @@ class ChallengeGenerator1 extends ChallengeGenerator {
 }
 
 equalityExplorer.register( 'ChallengeGenerator1', ChallengeGenerator1 );
-
-export default ChallengeGenerator1;

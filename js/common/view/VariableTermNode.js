@@ -33,7 +33,7 @@ const DEFAULT_OPTIONS = {
   showOne: false // show 1 or -1 coefficient
 };
 
-class VariableTermNode extends TermNode {
+export default class VariableTermNode extends TermNode {
 
   /**
    * @param {TermCreator} termCreator
@@ -149,5 +149,3 @@ class VariableTermNode extends TermNode {
 }
 
 equalityExplorer.register( 'VariableTermNode', VariableTermNode );
-
-export default VariableTermNode;

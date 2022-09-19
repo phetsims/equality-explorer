@@ -55,7 +55,7 @@ const FACE_NODE = new FaceNode( DIAMETER, {
   headStroke: 'black'
 } );
 
-class SolveItRewardNode extends RewardNode {
+export default class SolveItRewardNode extends RewardNode {
 
   /**
    * @param {number} level - the game level
@@ -233,5 +233,3 @@ function randomOperator() {
 }
 
 equalityExplorer.register( 'SolveItRewardNode', SolveItRewardNode );
-
-export default SolveItRewardNode;

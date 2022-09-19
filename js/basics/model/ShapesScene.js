@@ -16,7 +16,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 import ObjectVariable from './ObjectVariable.js';
 
-class ShapesScene extends BasicsScene {
+export default class ShapesScene extends BasicsScene {
 
   constructor() {
 
@@ -41,5 +41,3 @@ class ShapesScene extends BasicsScene {
 }
 
 equalityExplorer.register( 'ShapesScene', ShapesScene );
-
-export default ShapesScene;

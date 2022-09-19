@@ -14,7 +14,7 @@ import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EquationPanel from './EquationPanel.js';
 
-class EquationAccordionBox extends AccordionBox {
+export default class EquationAccordionBox extends AccordionBox {
   /**
    * @param {TermCreator[]} leftTermCreators - left side of equation
    * @param {TermCreator[]} rightTermCreators - right side of equation
@@ -58,5 +58,3 @@ class EquationAccordionBox extends AccordionBox {
 }
 
 equalityExplorer.register( 'EquationAccordionBox', EquationAccordionBox );
-
-export default EquationAccordionBox;

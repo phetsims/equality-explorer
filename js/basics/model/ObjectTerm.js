@@ -14,7 +14,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 // constants
 const COEFFICIENT = Fraction.fromInteger( 1 ); // all object terms have an implicit coefficient of 1
 
-class ObjectTerm extends Term {
+export default class ObjectTerm extends Term {
 
   /**
    * @param {ObjectVariable} variable
@@ -92,5 +92,3 @@ class ObjectTerm extends Term {
 }
 
 equalityExplorer.register( 'ObjectTerm', ObjectTerm );
-
-export default ObjectTerm;

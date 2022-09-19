@@ -13,7 +13,7 @@ import UniversalOperationControl from '../../common/view/UniversalOperationContr
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesSceneNode from '../../variables/view/VariablesSceneNode.js';
 
-class OperationsSceneNode extends VariablesSceneNode {
+export default class OperationsSceneNode extends VariablesSceneNode {
 
   /**
    * @param {EqualityExplorerScene} scene
@@ -76,5 +76,3 @@ class OperationsSceneNode extends VariablesSceneNode {
 }
 
 equalityExplorer.register( 'OperationsSceneNode', OperationsSceneNode );
-
-export default OperationsSceneNode;

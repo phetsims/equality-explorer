@@ -14,7 +14,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 // constants
 const DEFAULT_FONT = new PhetFont( 14 );
 
-class ChallengeDerivationText extends RichText {
+export default class ChallengeDerivationText extends RichText {
 
   /**
    * @param {Property.<Challenge|null>} challengeProperty
@@ -38,5 +38,3 @@ class ChallengeDerivationText extends RichText {
 }
 
 equalityExplorer.register( 'ChallengeDerivationText', ChallengeDerivationText );
-
-export default ChallengeDerivationText;

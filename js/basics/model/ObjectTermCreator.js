@@ -11,7 +11,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermNode from '../view/ObjectTermNode.js';
 import ObjectTerm from './ObjectTerm.js';
 
-class ObjectTermCreator extends TermCreator {
+export default class ObjectTermCreator extends TermCreator {
 
   /**
    * @param {ObjectVariable} variable
@@ -82,5 +82,3 @@ class ObjectTermCreator extends TermCreator {
 }
 
 equalityExplorer.register( 'ObjectTermCreator', ObjectTermCreator );
-
-export default ObjectTermCreator;

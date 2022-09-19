@@ -10,7 +10,7 @@
 import BasicsSceneNode from '../../basics/view/BasicsSceneNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class NumbersSceneNode extends BasicsSceneNode {
+export default class NumbersSceneNode extends BasicsSceneNode {
 
   /**
    * @param {EqualityExplorerScene} scene
@@ -28,5 +28,3 @@ class NumbersSceneNode extends BasicsSceneNode {
 }
 
 equalityExplorer.register( 'NumbersSceneNode', NumbersSceneNode );
-
-export default NumbersSceneNode;

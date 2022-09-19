@@ -14,7 +14,7 @@ import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryP
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
-class SolveItInfoDialog extends GameInfoDialog {
+export default class SolveItInfoDialog extends GameInfoDialog {
 
   /**
    * @param {ChallengeGenerator[]} challengeGenerators
@@ -37,5 +37,3 @@ class SolveItInfoDialog extends GameInfoDialog {
 }
 
 equalityExplorer.register( 'SolveItInfoDialog', SolveItInfoDialog );
-
-export default SolveItInfoDialog;

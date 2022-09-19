@@ -34,7 +34,7 @@ import ObjectPicker from './ObjectPicker.js';
 import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
 
-class UniversalOperationControl extends HBox {
+export default class UniversalOperationControl extends HBox {
   /**
    * @param {OperationsScene} scene
    * @param {Node} animationLayer
@@ -376,5 +376,3 @@ function isSupportedOperation( operator, operand, timesZeroEnabled ) {
 }
 
 equalityExplorer.register( 'UniversalOperationControl', UniversalOperationControl );
-
-export default UniversalOperationControl;

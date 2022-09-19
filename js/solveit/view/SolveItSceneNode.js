@@ -44,7 +44,7 @@ const EQUATION_PANEL_OPTIONS = {
   yMargin: 0
 };
 
-class SolveItSceneNode extends EqualityExplorerSceneNode {
+export default class SolveItSceneNode extends EqualityExplorerSceneNode {
 
   /**
    * @param {SolveItScene} scene - the scene associated with this Node
@@ -378,5 +378,3 @@ class SolveItSceneNode extends EqualityExplorerSceneNode {
 }
 
 equalityExplorer.register( 'SolveItSceneNode', SolveItSceneNode );
-
-export default SolveItSceneNode;

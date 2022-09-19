@@ -8,7 +8,7 @@
 
 import equalityExplorer from '../../equalityExplorer.js';
 
-class Snapshot {
+export default class Snapshot {
 
   /**
    * @param {EqualityExplorerScene} scene
@@ -87,5 +87,3 @@ class PlateSnapshot {
 }
 
 equalityExplorer.register( 'Snapshot', Snapshot );
-
-export default Snapshot;

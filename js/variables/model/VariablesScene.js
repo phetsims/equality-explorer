@@ -14,7 +14,7 @@ import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
-class VariablesScene extends EqualityExplorerScene {
+export default class VariablesScene extends EqualityExplorerScene {
 
   constructor() {
 
@@ -47,5 +47,3 @@ function createTermCreators( xVariable ) {
 }
 
 equalityExplorer.register( 'VariablesScene', VariablesScene );
-
-export default VariablesScene;

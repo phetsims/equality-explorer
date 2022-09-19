@@ -32,7 +32,7 @@ const ICON_SIZE = new Dimension2(
   EqualityExplorerConstants.BIG_TERM_DIAMETER + 10,
   EqualityExplorerConstants.BIG_TERM_DIAMETER );
 
-class OperationsScene extends EqualityExplorerScene {
+export default class OperationsScene extends EqualityExplorerScene {
 
   constructor( options ) {
 
@@ -237,5 +237,3 @@ class OperationsScene extends EqualityExplorerScene {
 }
 
 equalityExplorer.register( 'OperationsScene', OperationsScene );
-
-export default OperationsScene;

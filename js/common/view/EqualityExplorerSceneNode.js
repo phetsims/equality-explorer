@@ -13,7 +13,7 @@ import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import SumToZeroNode from './SumToZeroNode.js';
 
-class EqualityExplorerSceneNode extends Node {
+export default class EqualityExplorerSceneNode extends Node {
 
   /**
    * @param {EqualityExplorerScene} scene
@@ -105,5 +105,3 @@ class EqualityExplorerSceneNode extends Node {
 }
 
 equalityExplorer.register( 'EqualityExplorerSceneNode', EqualityExplorerSceneNode );
-
-export default EqualityExplorerSceneNode;

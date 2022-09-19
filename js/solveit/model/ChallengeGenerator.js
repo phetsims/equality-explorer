@@ -12,7 +12,7 @@ import AssertUtils from '../../../../phetcommon/js/AssertUtils.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class ChallengeGenerator {
+export default class ChallengeGenerator {
 
   /**
    * @param {number} level - unique integer level number
@@ -128,5 +128,3 @@ class ChallengeGenerator {
 }
 
 equalityExplorer.register( 'ChallengeGenerator', ChallengeGenerator );
-
-export default ChallengeGenerator;

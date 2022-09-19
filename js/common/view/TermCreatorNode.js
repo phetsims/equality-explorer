@@ -12,7 +12,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import { DragListener, Node } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class TermCreatorNode extends Node {
+export default class TermCreatorNode extends Node {
 
   /**
    * @param {TermCreator} termCreator - model element associated with this Node
@@ -73,5 +73,3 @@ class TermCreatorNode extends Node {
 }
 
 equalityExplorer.register( 'TermCreatorNode', TermCreatorNode );
-
-export default TermCreatorNode;

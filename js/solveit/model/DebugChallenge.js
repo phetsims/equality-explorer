@@ -11,7 +11,7 @@ import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryP
 import equalityExplorer from '../../equalityExplorer.js';
 import Challenge from './Challenge.js';
 
-class DebugChallenge extends Challenge {
+export default class DebugChallenge extends Challenge {
 
   constructor() {
 
@@ -30,5 +30,3 @@ class DebugChallenge extends Challenge {
 }
 
 equalityExplorer.register( 'DebugChallenge', DebugChallenge );
-
-export default DebugChallenge;

@@ -22,7 +22,7 @@ import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItInfoDialog from './SolveItInfoDialog.js';
 import SolveItLevelSelectionButtonGroup from './SolveItLevelSelectionButtonGroup.js';
 
-class SolveItLevelSelectionNode extends Node {
+export default class SolveItLevelSelectionNode extends Node {
 
   /**
    * @param {SolveItModel} model
@@ -129,5 +129,3 @@ class SolveItLevelSelectionNode extends Node {
 }
 
 equalityExplorer.register( 'SolveItLevelSelectionNode', SolveItLevelSelectionNode );
-
-export default SolveItLevelSelectionNode;

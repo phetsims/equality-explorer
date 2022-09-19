@@ -19,7 +19,7 @@ import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import TermsToolbox from '../../common/view/TermsToolbox.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class BasicsSceneNode extends EqualityExplorerSceneNode {
+export default class BasicsSceneNode extends EqualityExplorerSceneNode {
 
   /**
    * @param {EqualityExplorerScene} scene
@@ -136,5 +136,3 @@ class BasicsSceneNode extends EqualityExplorerSceneNode {
 }
 
 equalityExplorer.register( 'BasicsSceneNode', BasicsSceneNode );
-
-export default BasicsSceneNode;

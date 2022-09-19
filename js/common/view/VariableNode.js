@@ -12,7 +12,7 @@ import { Image, Node, Text } from '../../../../scenery/js/imports.js';
 import ObjectVariable from '../../basics/model/ObjectVariable.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class VariableNode extends Node {
+export default class VariableNode extends Node {
 
   /**
    * @param {Variable} variable
@@ -49,5 +49,3 @@ class VariableNode extends Node {
 }
 
 equalityExplorer.register( 'VariableNode', VariableNode );
-
-export default VariableNode;

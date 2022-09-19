@@ -12,7 +12,7 @@ import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermCreator from './ObjectTermCreator.js';
 
-class BasicsScene extends EqualityExplorerScene {
+export default class BasicsScene extends EqualityExplorerScene {
 
   /**
    * @param {ObjectVariable[]} variables
@@ -64,5 +64,3 @@ function createTermCreators( variables, hasConstantTerms ) {
 }
 
 equalityExplorer.register( 'BasicsScene', BasicsScene );
-
-export default BasicsScene;

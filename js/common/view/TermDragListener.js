@@ -42,7 +42,7 @@ import Term from '../model/Term.js';
 import TermCreator from '../model/TermCreator.js';
 import SumToZeroNode from './SumToZeroNode.js';
 
-class TermDragListener extends DragListener {
+export default class TermDragListener extends DragListener {
 
   /**
    * @param {Node} termNode - Node that the listener is attached to
@@ -407,5 +407,3 @@ class TermDragListener extends DragListener {
 }
 
 equalityExplorer.register( 'TermDragListener', TermDragListener );
-
-export default TermDragListener;

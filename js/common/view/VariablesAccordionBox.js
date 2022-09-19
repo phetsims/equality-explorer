@@ -18,7 +18,7 @@ import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import VariableNode from './VariableNode.js';
 
-class VariablesAccordionBox extends AccordionBox {
+export default class VariablesAccordionBox extends AccordionBox {
 
   /**
    * @param {Variable[]} variables - the variables that appear in this accordion box
@@ -105,5 +105,3 @@ class VariablesAccordionBox extends AccordionBox {
 }
 
 equalityExplorer.register( 'VariablesAccordionBox', VariablesAccordionBox );
-
-export default VariablesAccordionBox;

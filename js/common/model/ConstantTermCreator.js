@@ -14,7 +14,7 @@ import ConstantTermNode from '../view/ConstantTermNode.js';
 import ConstantTerm from './ConstantTerm.js';
 import TermCreator from './TermCreator.js';
 
-class ConstantTermCreator extends TermCreator {
+export default class ConstantTermCreator extends TermCreator {
 
   /**
    * @param {Object} [options]
@@ -110,5 +110,3 @@ class ConstantTermCreator extends TermCreator {
 }
 
 equalityExplorer.register( 'ConstantTermCreator', ConstantTermCreator );
-
-export default ConstantTermCreator;

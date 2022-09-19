@@ -16,7 +16,7 @@ import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import VariablesModel from './model/VariablesModel.js';
 import VariablesScreenView from './view/VariablesScreenView.js';
 
-class VariablesScreen extends EqualityExplorerScreen {
+export default class VariablesScreen extends EqualityExplorerScreen {
 
   /**
    * @param {Object} [options]
@@ -40,5 +40,3 @@ class VariablesScreen extends EqualityExplorerScreen {
 }
 
 equalityExplorer.register( 'VariablesScreen', VariablesScreen );
-
-export default VariablesScreen;

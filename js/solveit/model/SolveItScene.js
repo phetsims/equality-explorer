@@ -29,7 +29,7 @@ import DebugChallenge from './DebugChallenge.js';
 // constants
 const POINTS_PER_CHALLENGE = 1;
 
-class SolveItScene extends OperationsScene {
+export default class SolveItScene extends OperationsScene {
 
   /**
    * @param {ChallengeGenerator} challengeGenerator
@@ -253,5 +253,3 @@ class SolveItScene extends OperationsScene {
 }
 
 equalityExplorer.register( 'SolveItScene', SolveItScene );
-
-export default SolveItScene;

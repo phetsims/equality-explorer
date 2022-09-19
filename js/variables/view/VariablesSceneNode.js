@@ -14,7 +14,7 @@ import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js
 import VariablesAccordionBox from '../../common/view/VariablesAccordionBox.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
-class VariablesSceneNode extends BasicsSceneNode {
+export default class VariablesSceneNode extends BasicsSceneNode {
 
   /**
    * @param {VariablesScene} scene
@@ -73,5 +73,3 @@ class VariablesSceneNode extends BasicsSceneNode {
 }
 
 equalityExplorer.register( 'VariablesSceneNode', VariablesSceneNode );
-
-export default VariablesSceneNode;

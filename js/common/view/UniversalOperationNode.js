@@ -16,7 +16,7 @@ import VariableTerm from '../model/VariableTerm.js';
 import ConstantTermNode from './ConstantTermNode.js';
 import VariableTermNode from './VariableTermNode.js';
 
-class UniversalOperationNode extends HBox {
+export default class UniversalOperationNode extends HBox {
   /**
    * @param {UniversalOperation} operation
    * @param {Object} [options]
@@ -85,5 +85,3 @@ class UniversalOperationNode extends HBox {
 }
 
 equalityExplorer.register( 'UniversalOperationNode', UniversalOperationNode );
-
-export default UniversalOperationNode;

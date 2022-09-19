@@ -18,7 +18,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 import ObjectVariable from './ObjectVariable.js';
 
-class FruitsScene extends BasicsScene {
+export default class FruitsScene extends BasicsScene {
 
   constructor() {
 
@@ -43,5 +43,3 @@ class FruitsScene extends BasicsScene {
 }
 
 equalityExplorer.register( 'FruitsScene', FruitsScene );
-
-export default FruitsScene;

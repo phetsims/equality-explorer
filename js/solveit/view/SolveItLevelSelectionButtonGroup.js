@@ -15,7 +15,7 @@ import VariableTermNode from '../../common/view/VariableTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
-class SolveItLevelSelectionButtonGroup extends LevelSelectionButtonGroup {
+export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButtonGroup {
 
   /**
    * @param {Property<SolveItScene|null>} sceneProperty
@@ -59,4 +59,3 @@ class SolveItLevelSelectionButtonGroup extends LevelSelectionButtonGroup {
 }
 
 equalityExplorer.register( 'SolveItLevelSelectionButtonGroup', SolveItLevelSelectionButtonGroup );
-export default SolveItLevelSelectionButtonGroup;

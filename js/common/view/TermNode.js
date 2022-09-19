@@ -17,7 +17,7 @@ import SeparateTermsDragListener from './SeparateTermsDragListener.js';
 // constants
 const DEFAULT_SHADOW_OFFSET = new Dimension2( 4, 4 );
 
-class TermNode extends Node {
+export default class TermNode extends Node {
 
   /**
    * @param {TermCreator} termCreator
@@ -163,5 +163,3 @@ class TermNode extends Node {
 }
 
 equalityExplorer.register( 'TermNode', TermNode );
-
-export default TermNode;
