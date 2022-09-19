@@ -41,7 +41,7 @@ type SelfOptions = {
   variables?: Variable[] | null; // variables associated with the scene
 };
 
-type EqualityExplorerSceneOptions = SelfOptions;
+export type EqualityExplorerSceneOptions = SelfOptions;
 
 export default abstract class EqualityExplorerScene {
 
@@ -154,6 +154,10 @@ export default abstract class EqualityExplorerScene {
         }
       } );
     }
+  }
+
+  public dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
   }
 
   /**

@@ -1,6 +1,5 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * The 'Shapes' scene in the 'Basics' screen.
  *
@@ -19,7 +18,7 @@ import ObjectVariable from './ObjectVariable.js';
 
 export default class ShapesScene extends BasicsScene {
 
-  constructor() {
+  public constructor() {
 
     const variables = [
 

@@ -1,6 +1,5 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * The 'Animals' scene in the 'Basics' screen.
  *
@@ -21,7 +20,7 @@ import ObjectVariable from './ObjectVariable.js';
 
 export default class AnimalsScene extends BasicsScene {
 
-  constructor() {
+  public constructor() {
 
     const variables = [
 
