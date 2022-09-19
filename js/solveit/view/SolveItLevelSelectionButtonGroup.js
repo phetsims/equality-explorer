@@ -1,5 +1,6 @@
 // Copyright 2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * SolveItLevelSelectionButtonGroup is the group of level-selection buttons for the 'Solve It!' game.
  *
