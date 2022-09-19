@@ -1,6 +1,5 @@
 // Copyright 2017-2020, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Model for the 'Variables' screen.
  *
@@ -11,13 +10,11 @@ import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesScene from './VariablesScene.js';
 
-class VariablesModel extends EqualityExplorerModel {
+export default class VariablesModel extends EqualityExplorerModel<VariablesScene> {
 
-  constructor() {
+  public constructor() {
     super( [ new VariablesScene() ] );
   }
 }
 
 equalityExplorer.register( 'VariablesModel', VariablesModel );
-
-export default VariablesModel;

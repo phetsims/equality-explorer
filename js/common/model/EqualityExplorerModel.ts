@@ -1,51 +1,53 @@
 // Copyright 2017-2020, University of Colorado Boulder
 
-// @ts-nocheck
 /**
- * Abstract base type for models in the Equality Explorer sim.
+ * Base class for models in the Equality Explorer sim, except for SolveItModel (the game).
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
 import Property from '../../../../axon/js/Property.js';
+import TModel from '../../../../joist/js/TModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import EqualityExplorerScene from './EqualityExplorerScene.js';
 
-class EqualityExplorerModel {
+export default class EqualityExplorerModel<T extends EqualityExplorerScene> implements TModel {
 
-  /**
-   * @param {EqualityExplorerScene[]} scenes
-   * @abstract
-   */
-  constructor( scenes ) {
+  // scenes, in the order that they appear from left-to-right as radio buttons
+  public readonly scenes: T[];
 
-    // @public {EqualityExplorerScene[]} scenes, in the order that they appear from left-to-right as radio buttons
+  // the selected scene
+  public readonly sceneProperty: Property<T>;
+
+  protected constructor( scenes: T[] ) {
+
     this.scenes = scenes;
-
-    // @public {Property.<Scene>} the selected scene
     this.sceneProperty = new Property( scenes[ 0 ], {
       validValues: scenes
     } );
 
-    // When the scene changes, dispose of any terms that are being dragged or animating, see #73.
-    // unlink not needed.
+    // When the scene changes, dispose of any terms that are being dragged or animating.
+    // See https://github.com/phetsims/equality-explorer/issues/73
     this.sceneProperty.lazyLink( scene => scene.disposeTermsNotOnScale() );
+  }
+
+  public dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
   }
 
   /**
    * Resets the model.
-   * @public
    */
-  reset() {
+  public reset(): void {
     this.scenes.forEach( scene => scene.reset() );
     this.sceneProperty.reset();
   }
 
   /**
    * Updates time-dependent parts of the model.
-   * @param {number} dt - time since the previous step, in seconds
-   * @public
+   * @param dt - time since the previous step, in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
 
     // step the selected scene
     this.sceneProperty.value.step( dt );
@@ -53,13 +55,10 @@ class EqualityExplorerModel {
 
   /**
    * When the model is deactivated (by switching screens), delete all terms that are not on the scale.
-   * @public
    */
-  deactivate() {
+  public deactivate(): void {
     this.scenes.forEach( scene => scene.disposeTermsNotOnScale() );
   }
 }
 
 equalityExplorer.register( 'EqualityExplorerModel', EqualityExplorerModel );
-
-export default EqualityExplorerModel;

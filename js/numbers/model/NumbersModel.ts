@@ -1,6 +1,5 @@
 // Copyright 2017-2020, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Model for the 'Numbers' screen.
  *
@@ -11,13 +10,11 @@ import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import NumbersScene from './NumbersScene.js';
 
-class NumbersModel extends EqualityExplorerModel {
+export default class NumbersModel extends EqualityExplorerModel<NumbersScene> {
 
-  constructor() {
+  public constructor() {
     super( [ new NumbersScene() ] );
   }
 }
 
 equalityExplorer.register( 'NumbersModel', NumbersModel );
-
-export default NumbersModel;

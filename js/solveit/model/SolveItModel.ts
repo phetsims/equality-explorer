@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Model for the 'Solve It!' screen.
  *
@@ -15,12 +14,21 @@ import ChallengeGenerator3 from './ChallengeGenerator3.js';
 import ChallengeGenerator4 from './ChallengeGenerator4.js';
 import ChallengeGenerator5 from './ChallengeGenerator5.js';
 import SolveItScene from './SolveItScene.js';
+import ChallengeGenerator from './ChallengeGenerator.js';
+import TModel from '../../../../joist/js/TModel.js';
 
-class SolveItModel {
+export default class SolveItModel implements TModel {
 
-  constructor() {
+  private readonly challengeGenerators: ChallengeGenerator[];
 
-    // @private challenge generators
+  // a scene for each challenge generator
+  public readonly scenes: SolveItScene[];
+
+  // the selected scene, null if no scene is currently selected
+  public readonly sceneProperty: Property<SolveItScene | null>;
+
+  public constructor() {
+
     this.challengeGenerators = [
       new ChallengeGenerator1(),
       new ChallengeGenerator2(),
@@ -28,36 +36,36 @@ class SolveItModel {
       new ChallengeGenerator4(),
       new ChallengeGenerator5()
     ];
-    assert && assert( this.challengeGenerators.length === _.uniqBy( _.map( this.challengeGenerators, challengeGenerator => challengeGenerator.level ) ).length,
+    assert && assert( this.challengeGenerators.length === _.uniq( _.map( this.challengeGenerators, challengeGenerator => challengeGenerator.level ) ).length,
       'Challenge generators must have unique level numbers.' );
     assert && assert( _.every( this.challengeGenerators, ( value, index, array ) => ( index === 0 || array[ index - 1 ].level <= value.level ) ),
       'Challenge generators must be ordered by ascending level number.' );
 
-    // @public (read-only) {SolveItScene[]} a scene for each challenge generator
     this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItScene( challengeGenerator ) );
 
-    // @public {SolveItScene|null} the selected scene, null if no scene is currently selected
-    this.sceneProperty = new Property( null );
+    this.sceneProperty = new Property<SolveItScene | null>( null );
   }
 
-  // @public
-  reset() {
+  public dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+  }
+
+  public reset(): void {
     this.challengeGenerators.forEach( challengeGenerator => challengeGenerator.reset() );
     this.scenes.forEach( scene => scene.reset() );
     this.sceneProperty.reset();
   }
 
-  // @public
-  step( dt ) {
+  public step( dt: number ): void {
     // required by TModel
   }
 
   /**
    * Tests challenge generators by generating a large number of challenges.
    * Each challenge is printed to the browser console.
-   * @public (debug)
+   * For debugging and testing.
    */
-  testChallengeGenerators() {
+  public testChallengeGenerators(): void {
 
     const testsPerLevel = 1000;
 
@@ -77,5 +85,3 @@ class SolveItModel {
 }
 
 equalityExplorer.register( 'SolveItModel', SolveItModel );
-
-export default SolveItModel;

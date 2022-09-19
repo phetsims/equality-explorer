@@ -1,6 +1,5 @@
 // Copyright 2017-2020, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Model for the 'Basics' screen.
  *
@@ -10,13 +9,14 @@
 import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import AnimalsScene from './AnimalsScene.js';
+import BasicsScene from './BasicsScene.js';
 import CoinsScene from './CoinsScene.js';
 import FruitsScene from './FruitsScene.js';
 import ShapesScene from './ShapesScene.js';
 
-class BasicsModel extends EqualityExplorerModel {
+export default class BasicsModel extends EqualityExplorerModel<BasicsScene> {
 
-  constructor() {
+  public constructor() {
     super( [
 
       // in the order that they appear (left to right) in the scene control (radio buttons)
@@ -29,5 +29,3 @@ class BasicsModel extends EqualityExplorerModel {
 }
 
 equalityExplorer.register( 'BasicsModel', BasicsModel );
-
-export default BasicsModel;
