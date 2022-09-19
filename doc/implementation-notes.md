@@ -77,7 +77,7 @@ this.variable.valueProperty.link( function( value ) { ... } );
 this.addInputListener( this.termDragListener );
 ```
 
-Instances of the types listed below are dynamic &mdash; they come and go during the lifetime of the sim. They require memory management, so `dispose` must be implemented and called. If you make modifications that involve dynamic types, you should perform memory leak testing similar to [equality-explorer#64](https://github.com/phetsims/equality-explorer/issues/64).
+Instances of the classes listed below are dynamic &mdash; they come and go during the lifetime of the sim. They require memory management, so `dispose` must be implemented and called. If you make modifications that involve dynamic types, you should perform memory leak testing similar to [equality-explorer#64](https://github.com/phetsims/equality-explorer/issues/64).
 
 - `Term` and its subtypes (`ConstantTerm`, `VariableTerm`, `ObjectTerm`)
 - `TermNode` and its subtypes (`ConstantTermNode`, `VariableTermNode`, `ObjectTermNode`)
@@ -90,8 +90,18 @@ Instances of the types listed below are dynamic &mdash; they come and go during 
 - `UniversalOperationNode`
 - `Challenge`
 - `SolveItRewardNode`
+- `HaloNode`
+- `ReducedFractionNode`
+- `SumToZeroNode`
 
-Instances of all other types are static. They are created at startup or lazily, and exist for the lifetime of the sim.
+Instances of all other types are static. They are created at startup or lazily, exist for the lifetime of the sim, and were not designed (or intended) to be disposed. They (or their superclass) typically have a `dispose` method that looks like this:
+
+```typescript
+public override dispose(): void {
+  assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+  super.dispose();
+}
+```
 
 **Creator Pattern**: Discussion about this pattern can be found in [scenery-phet#214](https://github.com/phetsims/scenery-phet/issues/214). What you won't find there is a summary of the pattern or a canonical example.  So I'll attempt to summarize what it is, and how it's applied in this simulation.
 
