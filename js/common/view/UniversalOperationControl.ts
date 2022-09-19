@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * The 'universal operation' control (as it's referred to in the design document)
  * allows the user to apply an operation to both sides of the scale and equation.
@@ -19,42 +18,48 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
-import { HBox, Path } from '../../../../scenery/js/imports.js';
+import { HBox, HBoxOptions, Node, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
 import levelDownAltSolidShape from '../../../../sherpa/js/fontawesome-5/levelDownAltSolidShape.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene from '../../operations/model/OperationsScene.js';
 import ConstantTerm from '../model/ConstantTerm.js';
+import Term from '../model/Term.js';
 import UniversalOperation from '../model/UniversalOperation.js';
 import VariableTerm from '../model/VariableTerm.js';
-import ObjectPicker from './ObjectPicker.js';
+import ObjectPicker, { ObjectPickerItem } from './ObjectPicker.js';
 import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
+import { UniversalOperator } from '../model/UniversalOperator.js';
+
+type SelfOptions = {
+  timesZeroEnabled?: boolean; // whether to include 'times 0' as one of the operations
+};
+
+type UniversalOperationControlOptions = SelfOptions & NodeTranslationOptions;
 
 export default class UniversalOperationControl extends HBox {
 
-  /**
-   * @param {OperationsScene} scene
-   * @param {scenery.Node} animationLayer
-   * @param {Object} [options]
-   */
-  constructor( scene, animationLayer, options ) {
+  // Tween animations that are running
+  private readonly animations: TranslateThenFade[];
 
-    assert && assert( scene instanceof OperationsScene, `invalid scene: ${scene}` );
+  public constructor( scene: OperationsScene, animationLayer: Node, providedOptions?: UniversalOperationControlOptions ) {
 
-    options = merge( {
-      timesZeroEnabled: true, // whether to include 'times 0' as one of the operations
+    const options = optionize<UniversalOperationControlOptions, SelfOptions, HBoxOptions>()( {
 
-      // HBox options
+      // SelfOptions
+      timesZeroEnabled: true,
+
+      // HBoxOptions
       spacing: 15
-    }, options );
+    }, providedOptions );
 
-    // items for the operator control
-    const operatorItems = [];
+    // items for the radio buttons that are used to choose the operator
+    const operatorItems: RectangularRadioButtonItem<UniversalOperator>[] = [];
     for ( let i = 0; i < scene.operators.length; i++ ) {
       const operator = scene.operators[ i ];
       operatorItems.push( {
@@ -81,9 +86,8 @@ export default class UniversalOperationControl extends HBox {
 
     /*
      * Adjusts the operand if it's not appropriate for a specified operator.
-     * @param {string} operator - see EqualityExplorerConstants.OPERATORS
      */
-    const operatorListener = operator => {
+    const operatorListener = ( operator: UniversalOperator ) => {
 
       const currentOperand = scene.operandProperty.value;
       let adjustedOperand;
@@ -95,25 +99,26 @@ export default class UniversalOperationControl extends HBox {
         adjustedOperand = _.find( scene.operands,
           operand => ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 ) );
         assert && assert( adjustedOperand, 'expected to find constant 1' );
-        scene.operandProperty.value = adjustedOperand;
+        scene.operandProperty.value = adjustedOperand!;
       }
       else if ( isUnsupportedVariableTermOperation( operator, currentOperand ) ) {
 
         // If the operator is not supported for a variable term operand, change the operand to
         // a constant term that has the same value as the variable term's coefficient.
         // E.g. if the operand is '5x', change the operand to '5'.
+        // @ts-ignore https://github.com/phetsims/equality-explorer/issues/186 coefficient does not exist on currentOperand
         const currentCoefficient = currentOperand.coefficient;
         adjustedOperand = _.find( scene.operands,
           operand => ( operand instanceof ConstantTerm ) && operand.constantValue.equals( currentCoefficient ) );
         assert && assert( adjustedOperand, `expected to find constant ${currentCoefficient}` );
-        scene.operandProperty.value = adjustedOperand;
+        scene.operandProperty.value = adjustedOperand!;
       }
     };
 
     scene.operatorProperty.lazyLink( operatorListener ); // unlink not needed
 
     // items for the operand picker
-    const operandItems = [];
+    const operandItems: ObjectPickerItem<Term>[] = [];
     for ( let i = 0; i < scene.operands.length; i++ ) {
       const operand = scene.operands[ i ];
       operandItems.push( {
@@ -183,11 +188,6 @@ export default class UniversalOperationControl extends HBox {
     // Adjust the enabled state of the operand picker's increment/decrement arrows.
     // dispose not needed
     Multilink.multilink( [ scene.operatorProperty, scene.operandProperty ],
-
-      /**
-       * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-       * @param {Term} operand
-       */
       ( operator, operand ) => {
 
         const operandIndex = scene.operands.indexOf( operand );
@@ -218,11 +218,10 @@ export default class UniversalOperationControl extends HBox {
         }
       } );
 
-    // @private Tween animations that are running
     this.animations = [];
 
     // Clean up when an animation completes or is stopped.
-    const animationCleanup = ( animation, operationNode ) => {
+    const animationCleanup = ( animation: TranslateThenFade, operationNode: UniversalOperationNode ) => {
       this.animations.splice( this.animations.indexOf( animation ), 1 );
       !operationNode.isDisposed && operationNode.dispose();
       goButton.enabled = true;
@@ -298,34 +297,28 @@ export default class UniversalOperationControl extends HBox {
       termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ) ); // removeListener not needed
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
 
   /**
    * Steps the animations.
-   * @param {number} dt - time step, in seconds
-   * @public
+   * @param dt - time step, in seconds
    */
-  step( dt ) {
+  public step( dt: number ): void {
     const animationsCopy = this.animations; // operate on a copy because step may modify the array
     animationsCopy.forEach( animation => animation.step( dt ) );
   }
 
-  // @public
-  reset() {
-
-    // Stop all animations.
+  public reset(): void {
     this.stopAnimations();
   }
 
   /**
    * Stops all animations that are in progress.
-   * @public
    */
-  stopAnimations() {
+  public stopAnimations(): void {
 
     // Operate on a copy of the array, since animations remove themselves from the array when stopped.
     const arrayCopy = this.animations.slice( 0 );
@@ -337,22 +330,16 @@ export default class UniversalOperationControl extends HBox {
 
 /**
  * Does this operation result in division by zero?
- * @param {string} operator - see EqualityExplorerConstants.OPERATORS
- * @param {Term} operand
- * @returns {boolean}
  */
-function isDivideByZero( operator, operand ) {
+function isDivideByZero( operator: UniversalOperator, operand: Term ): boolean {
   return ( operator === MathSymbols.DIVIDE ) &&
          ( operand instanceof ConstantTerm && operand.constantValue.getValue() === 0 );
 }
 
 /**
  * Does this operation result in multiplication by zero?
- * @param {string} operator - see EqualityExplorerConstants.OPERATORS
- * @param {Term} operand
- * @returns {boolean}
  */
-function isTimesZero( operator, operand ) {
+function isTimesZero( operator: UniversalOperator, operand: Term ): boolean {
   return ( operator === MathSymbols.TIMES ) &&
          ( operand instanceof ConstantTerm && operand.constantValue.getValue() === 0 );
 }
@@ -360,24 +347,19 @@ function isTimesZero( operator, operand ) {
 /**
  * Is the operation an attempt to do something that is unsupported with a variable term operand?
  * Times and divide are unsupported for variable term operands.
- * @param {string} operator - see EqualityExplorerConstants.OPERATORS
- * @param {Term} operand
- * @returns {boolean}
  */
-function isUnsupportedVariableTermOperation( operator, operand ) {
+function isUnsupportedVariableTermOperation( operator: UniversalOperator, operand: Term ): boolean {
   return ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
          ( operand instanceof VariableTerm );
 }
 
 /**
  * Are the specified operator and operand a supported combination?
- * @param {string} operator - see EqualityExplorerConstants.OPERATORS
- * @param {Term} operand - the proposed operand
- * @param {boolean} timesZeroEnabled - whether 'times 0' is a supported operation
- * @returns {boolean}
- * @private
+ * @param operator
+ * @param operand
+ * @param timesZeroEnabled - whether 'times 0' is a supported operation
  */
-function isSupportedOperation( operator, operand, timesZeroEnabled ) {
+function isSupportedOperation( operator: UniversalOperator, operand: Term, timesZeroEnabled: boolean ): boolean {
   return !isDivideByZero( operator, operand ) &&
          ( timesZeroEnabled || !isTimesZero( operator, operand ) ) &&
          !isUnsupportedVariableTermOperation( operator, operand );

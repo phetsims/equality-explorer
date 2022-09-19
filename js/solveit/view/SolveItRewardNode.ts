@@ -19,7 +19,6 @@ import dog_png from '../../../images/dog_png.js';
 import orange_png from '../../../images/orange_png.js';
 import sphere_png from '../../../images/sphere_png.js';
 import square_png from '../../../images/square_png.js';
-import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ConstantTerm from '../../common/model/ConstantTerm.js';
 import UniversalOperation from '../../common/model/UniversalOperation.js';
 import ConstantTermNode from '../../common/view/ConstantTermNode.js';
@@ -28,6 +27,7 @@ import VariableTermNode from '../../common/view/VariableTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import ChallengeGenerator from '../model/ChallengeGenerator.js';
+import { UniversalOperatorValues } from '../../common/model/UniversalOperator.js';
 
 // constants
 const DIAMETER = 40;
@@ -229,10 +229,10 @@ function createOperationNode(): Node {
 }
 
 /**
- * Chooses a random operator from EqualityExplorerConstants.OPERATORS.
+ * Chooses a random operator.
  */
 function randomOperator(): string {
-  return dotRandom.sample( EqualityExplorerConstants.OPERATORS );
+  return dotRandom.sample( [ ...UniversalOperatorValues ] );
 }
 
 equalityExplorer.register( 'SolveItRewardNode', SolveItRewardNode );

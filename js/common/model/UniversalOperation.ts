@@ -9,20 +9,19 @@
 
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from './ConstantTerm.js';
 import Term from './Term.js';
 import VariableTerm from './VariableTerm.js';
+import { UniversalOperator } from './UniversalOperator.js';
 
 export default class UniversalOperation {
 
-  public readonly operator: string; //TODO https://github.com/phetsims/equality-explorer/issues/186 create a rich enum for operator
+  public readonly operator: UniversalOperator;
   public readonly operand: Term;
 
-  public constructor( operator: string, operand: Term ) {
+  //TODO https://github.com/phetsims/equality-explorer/issues/186 operand: ConstantTerm | VariableTerm
+  public constructor( operator: UniversalOperator, operand: Term ) {
 
-    assert && assert( _.includes( EqualityExplorerConstants.OPERATORS, operator ),
-      `invalid operator: ${operator}` );
     assert && assert( operand instanceof ConstantTerm || operand instanceof VariableTerm,
       `invalid operand: ${operand}` );
 

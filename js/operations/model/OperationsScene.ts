@@ -27,6 +27,7 @@ import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import Term from '../../common/model/Term.js';
+import { UniversalOperator, UniversalOperatorValues } from '../../common/model/UniversalOperator.js';
 
 // constants
 const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;
@@ -54,13 +55,12 @@ export default class OperationsScene extends EqualityExplorerScene {
   // emits is called when a universal operation has completed.
   protected readonly operationCompletedEmitter: Emitter<[ UniversalOperation ]>;
 
-  //TODO https://github.com/phetsims/equality-explorer/issues/186 create a type for operators
-  public readonly operators: string[];
-  public readonly operatorProperty: Property<string>;
+  public readonly operators: readonly UniversalOperator[];
+  public readonly operatorProperty: Property<UniversalOperator>;
 
   // operands that appear in the operand picker. These are the only Terms that are not created and managed by a TermCreator.
   public readonly operands: Term[];
-  protected readonly operandProperty: Property<Term>;
+  public readonly operandProperty: Property<Term>;
 
   public constructor( providedOptions?: OperationsSceneOptions ) {
 
@@ -116,7 +116,7 @@ export default class OperationsScene extends EqualityExplorerScene {
       } ]
     } );
 
-    this.operators = EqualityExplorerConstants.OPERATORS;
+    this.operators = UniversalOperatorValues;
 
     this.operatorProperty = new StringProperty( this.operators[ 0 ], {
       validValues: this.operators

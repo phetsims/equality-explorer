@@ -40,8 +40,8 @@ export default class UniversalOperationNode extends HBox {
 
   /**
    * Creates the view for a universal operator.
-   * @param {string} operator - see EqualityExplorerConstants.OPERATORS
-   * @returns {Node}
+   * @param {UniversalOperator} operator
+   * @returns {scenery.Node}
    * @public
    * @static
    */
@@ -54,7 +54,7 @@ export default class UniversalOperationNode extends HBox {
   /**
    * Creates the view for a universal operand.
    * @param {Term} operand
-   * @returns {Node}
+   * @returns {scenery.Node}
    * @public
    * @static
    */
