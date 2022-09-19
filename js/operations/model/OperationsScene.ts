@@ -20,14 +20,12 @@ import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene, { EqualityExplorerSceneOptions } from '../../common/model/EqualityExplorerScene.js';
 import Snapshot from '../../common/model/Snapshot.js';
 import TermCreator from '../../common/model/TermCreator.js';
-import UniversalOperation from '../../common/model/UniversalOperation.js';
+import UniversalOperation, { UniversalOperand, UniversalOperator, UniversalOperatorValues } from '../../common/model/UniversalOperation.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
-import { UniversalOperator, UniversalOperatorValues } from '../../common/model/UniversalOperator.js';
-import { UniversalOperand } from '../../common/model/UniversalOperand.js';
 
 // constants
 const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;

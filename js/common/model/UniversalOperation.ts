@@ -11,8 +11,15 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ConstantTerm from './ConstantTerm.js';
 import VariableTerm from './VariableTerm.js';
-import { UniversalOperator } from './UniversalOperator.js';
-import { UniversalOperand } from './UniversalOperand.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
+
+// universal operators, in the order that they appear in the operator picker
+export const UniversalOperatorValues = [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ] as const;
+export type UniversalOperator = ( typeof UniversalOperatorValues )[number];
+
+// universal operand can be either a constant or a variable term
+export type UniversalOperand = ConstantTerm | VariableTerm;
 
 export default class UniversalOperation {
 
@@ -56,6 +63,13 @@ export default class UniversalOperation {
     else {
       throw new Error( `unsupported operand: ${this.operand}` );
     }
+  }
+
+  /**
+   * Chooses a random operator.
+   */
+  public static randomOperator(): UniversalOperator {
+    return dotRandom.sample( [ ...UniversalOperatorValues ] );
   }
 }
 

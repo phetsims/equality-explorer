@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import dotRandom from '../../../../dot/js/dotRandom.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
@@ -27,7 +26,6 @@ import VariableTermNode from '../../common/view/VariableTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import ChallengeGenerator from '../model/ChallengeGenerator.js';
-import { UniversalOperatorValues } from '../../common/model/UniversalOperator.js';
 
 // constants
 const DIAMETER = 40;
@@ -219,20 +217,13 @@ function createFractionConstantTermNode(): Node {
  * Creates an operation node with a random operator and a random positive integer operand.
  */
 function createOperationNode(): Node {
-  const operator = randomOperator();
+  const operator = UniversalOperation.randomOperator();
   const constantValue = ChallengeGenerator.randomValueBy( INTEGER_VALUES, value => ( value > 0 ) );
   const operand = new ConstantTerm( { constantValue: Fraction.fromInteger( constantValue ) } );
   const operation = new UniversalOperation( operator, operand );
   return new UniversalOperationNode( operation, {
     maxHeight: DIAMETER
   } );
-}
-
-/**
- * Chooses a random operator.
- */
-function randomOperator(): string {
-  return dotRandom.sample( [ ...UniversalOperatorValues ] );
 }
 
 equalityExplorer.register( 'SolveItRewardNode', SolveItRewardNode );

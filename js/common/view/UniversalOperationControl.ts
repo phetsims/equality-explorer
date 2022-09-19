@@ -29,13 +29,11 @@ import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene from '../../operations/model/OperationsScene.js';
 import ConstantTerm from '../model/ConstantTerm.js';
 import Term from '../model/Term.js';
-import UniversalOperation from '../model/UniversalOperation.js';
+import UniversalOperation, { UniversalOperand, UniversalOperator } from '../model/UniversalOperation.js';
 import VariableTerm from '../model/VariableTerm.js';
 import ObjectPicker, { ObjectPickerItem } from './ObjectPicker.js';
 import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
-import { UniversalOperator } from '../model/UniversalOperator.js';
-import { UniversalOperand } from '../model/UniversalOperand.js';
 
 type SelfOptions = {
   timesZeroEnabled?: boolean; // whether to include 'times 0' as one of the operations
