@@ -8,7 +8,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Multilink from '../../../../axon/js/Multilink.js';
+import Multilink, { UnknownMultilink } from '../../../../axon/js/Multilink.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
@@ -136,10 +136,8 @@ export default class EquationNode extends Node {
       updateLayout();
     };
 
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
-    let relationalOperatorMultilink; // {Multilink|undefined} defined for dynamic equations
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
-    let termsMultilink; // {Multilink|undefined} defined for dynamic equations
+    let relationalOperatorMultilink: UnknownMultilink | undefined; // defined for dynamic equations
+    let termsMultilink: UnknownMultilink | undefined; // defined for dynamic equations
     if ( options.updateEnabled ) {
 
       // The equation needs to be dynamically updated.
@@ -157,10 +155,8 @@ export default class EquationNode extends Node {
       } );
 
       // dispose required
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
-      relationalOperatorMultilink = new Multilink( relationalOperatorDependencies, updateRelationalOperator );
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
-      termsMultilink = new Multilink( termDependencies, updateTerms );
+      relationalOperatorMultilink = Multilink.multilinkAny( relationalOperatorDependencies, updateRelationalOperator );
+      termsMultilink = Multilink.multilinkAny( termDependencies, updateTerms );
     }
     else {
 
@@ -170,9 +166,7 @@ export default class EquationNode extends Node {
     }
 
     this.disposeEquationNode = () => {
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
       relationalOperatorMultilink && relationalOperatorMultilink.dispose();
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
       termsMultilink && termsMultilink.dispose();
     };
 
