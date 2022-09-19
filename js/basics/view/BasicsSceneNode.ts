@@ -1,50 +1,68 @@
 // Copyright 2017-2021, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * View of a scene in the 'Basics' screen.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../../axon/js/Property.js';
+import TProperty from '../../../../axon/js/TProperty.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import BalanceScaleNode from '../../common/view/BalanceScaleNode.js';
 import EqualityExplorerLockNode from '../../common/view/EqualityExplorerLockNode.js';
-import EqualityExplorerSceneNode from '../../common/view/EqualityExplorerSceneNode.js';
+import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from '../../common/view/EqualityExplorerSceneNode.js';
 import EquationAccordionBox from '../../common/view/EquationAccordionBox.js';
 import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import TermsToolbox from '../../common/view/TermsToolbox.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import BasicsScene from '../model/BasicsScene.js';
+
+type SelfOptions = {
+  hasNegativeTermsInToolbox?: boolean; // if true, put negative terms in the toolbox, e.g. -x
+  termsToolboxContentSize?: Dimension2;
+  termsToolboxSpacing?: number; // spacing of terms in the toolboxes that appear below the scale
+  organizeButtonVisible?: boolean; // is the organize button visible on the scale?
+
+  // whether variable values are visible in snapshots, null if the feature is not supported
+  variableValuesVisibleProperty?: Property<boolean> | null;
+
+  // SnapshotControlOptions
+  // TODO https://github.com/phetsims/equality-explorer/issues/186 any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  snapshotControlOptions?: any;
+};
+
+export type BasicsSceneNodeOptions = SelfOptions & EqualityExplorerSceneNodeOptions;
 
 export default class BasicsSceneNode extends EqualityExplorerSceneNode {
 
-  /**
-   * @param {EqualityExplorerScene} scene
-   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
-   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
-   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
-   * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
-   */
-  constructor( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-               snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  // For layout
+  public readonly equationAccordionBox: Node;
+  public readonly snapshotsAccordionBox: Node;
 
-    options = merge( {
-      hasNegativeTermsInToolbox: true, // {boolean} if true, put negative terms in the toolbox, e.g. -x
+  public constructor( scene: BasicsScene,
+                      sceneProperty: Property<BasicsScene>,
+                      equationAccordionBoxExpandedProperty: TProperty<boolean>,
+                      snapshotsAccordionBoxExpandedProperty: TProperty<boolean>,
+                      layoutBounds: Bounds2,
+                      providedOptions?: BasicsSceneNodeOptions ) {
+
+    const options = optionize<BasicsSceneNodeOptions, StrictOmit<SelfOptions, 'snapshotControlOptions'>, EqualityExplorerSceneNodeOptions>()( {
+
+      // SelfOptions
+      hasNegativeTermsInToolbox: true,
       termsToolboxContentSize: new Dimension2( 250, 50 ),
-      termsToolboxSpacing: 50, // spacing of terms in the toolboxes that appear below the scale
-      organizeButtonVisible: true, // is the organize button visible on the scale?
-
-      // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
-      variableValuesVisibleProperty: null,
-
-      // SnapshotControl options
-      snapshotControlOptions: null
-    }, options );
+      termsToolboxSpacing: 50,
+      organizeButtonVisible: true,
+      variableValuesVisibleProperty: null
+    }, providedOptions );
 
     // locals vars to improve readability
     const scale = scene.scale;
@@ -123,16 +141,17 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
       children.push( new Rectangle( scene.rightDragBounds, dragBoundsOption ) );
     }
 
-    super( scene, sceneProperty, termsLayer, {
-      children: children
-    } );
+    options.children = children;
 
-    // @public (read-only) for layout only
+    super( scene, sceneProperty, termsLayer, options );
+
     this.equationAccordionBox = equationAccordionBox;
     this.snapshotsAccordionBox = snapshotsAccordionBox;
+  }
 
-    // @protected
-    this.termsLayer = termsLayer;
+  public override dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
   }
 }
 

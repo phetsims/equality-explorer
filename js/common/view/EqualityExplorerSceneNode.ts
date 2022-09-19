@@ -1,45 +1,52 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
- * Abstract base type for displaying scenes in Equality Explorer.
+ * Base class for displaying scenes in Equality Explorer.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, SceneryEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import SumToZeroNode from './SumToZeroNode.js';
+import TermCreator from '../model/TermCreator.js';
+import Term from '../model/Term.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+
+type SelfOptions = EmptySelfOptions;
+
+export type EqualityExplorerSceneNodeOptions = SelfOptions & PickOptional<NodeOptions, 'children'>;
 
 export default class EqualityExplorerSceneNode extends Node {
 
-  /**
-   * @param {EqualityExplorerScene} scene
-   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
-   * @param {Node} termsLayer - parent for all TermNodes
-   * @param {Object} [options]
-   * @abstract
-   */
-  constructor( scene, sceneProperty, termsLayer, options ) {
+  public readonly scene: EqualityExplorerScene;
+  protected readonly termsLayer: Node; // terms live in this layer
+
+  protected constructor( scene: EqualityExplorerScene,
+                         sceneProperty: Property<EqualityExplorerScene>,
+                         termsLayer: Node,
+                         providedOptions?: EqualityExplorerSceneNodeOptions ) {
+
+    const options = optionize<EqualityExplorerSceneNodeOptions, SelfOptions, NodeOptions>()( {
+      // empty optionize call because we're calling this.mutate below.
+    }, providedOptions );
 
     super();
 
-    // @public (read-only)
     this.scene = scene;
-
-    // @private
     this.termsLayer = termsLayer;
 
     /**
      * When a term is created in the model, create the corresponding view.
-     * @param {TermCreator} termCreator
-     * @param {Term} term
-     * @param {SceneryEvent|null} event - event is non-null when the term was created via user interaction
+     * Event is non-null when the term was created via a user interaction.
      */
-    const termCreatedListener = ( termCreator, term, event ) => {
+    const termCreatedListener = ( termCreator: TermCreator, term: Term, event: SceneryEvent | null ) => {
 
       // create a TermNode
       const termNode = termCreator.createTermNode( term );
@@ -55,7 +62,7 @@ export default class EqualityExplorerSceneNode extends Node {
     };
 
     // When the maxInteger limit is exceeded, dispose of all terms that are not on the scale, and display a dialog.
-    let dialog = null; // dialog will be reused
+    let dialog: OopsDialog;
     const maxIntegerExceededListener = () => {
       phet.log && phet.log( 'maxInteger exceeded' );
       scene.disposeTermsNotOnScale();
@@ -64,11 +71,17 @@ export default class EqualityExplorerSceneNode extends Node {
     };
 
     scene.allTermCreators.forEach( termCreator => {
-      termCreator.termCreatedEmitter.addListener( termCreatedListener ); // removeListener not needed
-      termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ); // removeListener not needed
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 remove when TermCreator as been converted to TS
+      termCreator.termCreatedEmitter.addListener( termCreatedListener );
+      termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener );
     } );
 
     this.mutate( options );
+  }
+
+  public override dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
   }
 
   /**
@@ -77,11 +90,9 @@ export default class EqualityExplorerSceneNode extends Node {
    * and that involve applying universal operations.  Because universal operations may result
    * in more than one term summing to zero, we need to perform sum-to-zero animations after
    * the operation has been applied to all terms, so that the scale is in its final position.
-   *
-   * @param {TermCreator[]} termCreators - term creators whose term summed to zero
-   * @public
+   * @param termCreators - term creators whose term summed to zero
    */
-  animateSumToZero( termCreators ) {
+  public animateSumToZero( termCreators: TermCreator[] ): void {
 
     for ( let i = 0; i < termCreators.length; i++ ) {
 
@@ -95,6 +106,7 @@ export default class EqualityExplorerSceneNode extends Node {
 
       // display the animation in that cell
       const sumToZeroNode = new SumToZeroNode( {
+        // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 not all TermCreator subclasses have variable property
         variable: termCreator.variable || null,
         fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE,
         center: cellCenter
