@@ -34,7 +34,7 @@ type SelfOptions = {
   variableValuesVisibleProperty?: Property<boolean> | null;
 
   // SnapshotControlOptions
-  // TODO https://github.com/phetsims/equality-explorer/issues/186 any
+  // TODO https://github.com/phetsims/equality-explorer/issues/186 replace any with SnapshotControlOptions
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   snapshotControlOptions?: any;
 };
