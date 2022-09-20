@@ -185,10 +185,7 @@ export default class OperationsScene extends EqualityExplorerScene {
    * Creates a snapshot of the scene.
    */
   public createSnapshot(): Snapshot {
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 Snapshot constructor has 1 param
-    return new Snapshot( this, {
-      variables: [ this.xVariable ]
-    } );
+    return new Snapshot( this );
   }
 
   /**
