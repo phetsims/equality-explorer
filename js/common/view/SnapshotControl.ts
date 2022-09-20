@@ -37,7 +37,7 @@ type SelfOptions = {
   variableValuesOpacity?: number; // [0,1], see https://github.com/phetsims/equality-explorer/issues/113
 };
 
-type SnapshotControlOptions = SelfOptions;
+export type SnapshotControlOptions = SelfOptions;
 
 export default class SnapshotControl extends Node {
 
