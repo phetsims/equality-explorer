@@ -23,6 +23,7 @@ import TermCreator from '../model/TermCreator.js';
 import VariableTermCreator from '../model/VariableTermCreator.js';
 import ConstantTermNode from './ConstantTermNode.js';
 import VariableTermNode from './VariableTermNode.js';
+import { RelationalOperator } from '../model/RelationalOperator.js';
 
 // constants
 const DEFAULT_FONT_SIZE = 30;
@@ -104,7 +105,7 @@ export default class EquationNode extends Node {
 
     // updates the relational operator based on left vs right weight
     const updateRelationalOperator = () => {
-      relationalOperatorNode.text = getRelationalOperatorString( leftTermCreators, rightTermCreators );
+      relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
       updateLayout();
     };
 
@@ -177,7 +178,7 @@ export default class EquationNode extends Node {
 /**
  * Gets the operator that describes the relationship between the left and right sides.
  */
-function getRelationalOperatorString( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[] ): string {
+function getRelationalOperator( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[] ): RelationalOperator {
 
   // evaluate the left side
   let leftWeight = Fraction.fromInteger( 0 );
@@ -192,7 +193,7 @@ function getRelationalOperatorString( leftTermCreators: TermCreator[], rightTerm
   }
 
   // determine the operator that describes the relationship between left and right sides
-  let relationalOperator = null;
+  let relationalOperator: RelationalOperator;
   if ( leftWeight.isLessThan( rightWeight ) ) {
     relationalOperator = MathSymbols.LESS_THAN;
   }
