@@ -45,12 +45,12 @@ export default class VariableValuesVisibleCheckbox extends Checkbox {
       [ EqualityExplorerStrings.questionMarkStringProperty ],
       questionMarkString => ` ${MathSymbols.EQUAL_TO} ${questionMarkString}` );
 
-    const rightNode = new Text( rightStringProperty, {
+    const rightText = new Text( rightStringProperty, {
       font: new PhetFont( FONT_SIZE )
     } );
 
     const contentNode = new HBox( {
-      children: [ variableNode, rightNode ], // x = ?
+      children: [ variableNode, rightText ], // x = ?
       maxWidth: 100
     } );
 
