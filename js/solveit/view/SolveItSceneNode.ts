@@ -140,9 +140,11 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     );
     const solveForXText = new RichText( solveForXStringProperty, {
       font: new PhetFont( { size: 24, weight: 'bold' } ),
-      right: challengePanel.left - 10,
-      centerY: challengePanel.centerY,
       maxWidth: challengePanel.left - layoutBounds.minX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
+    } );
+    solveForXText.boundsProperty.link( bounds => {
+      solveForXText.right = challengePanel.left - 10;
+      solveForXText.centerY = challengePanel.centerY;
     } );
 
     // Scale
