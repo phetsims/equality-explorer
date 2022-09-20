@@ -8,6 +8,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -131,11 +132,13 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     } );
 
     // 'Solve for x'
-    //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
-    const solveForXText = StringUtils.fillIn( EqualityExplorerStrings.solveFor, {
-      variable: MathSymbolFont.getRichTextMarkup( EqualityExplorerStrings.x )
-    } );
-    const solveForXNode = new RichText( solveForXText, {
+    const solveForXStringProperty = new DerivedProperty(
+      [ EqualityExplorerStrings.solveForStringProperty, EqualityExplorerStrings.xStringProperty ],
+      ( solveForString, xString ) => StringUtils.fillIn( solveForString, {
+        variable: MathSymbolFont.getRichTextMarkup( xString )
+      } )
+    );
+    const solveForXText = new RichText( solveForXStringProperty, {
       font: new PhetFont( { size: 24, weight: 'bold' } ),
       right: challengePanel.left - 10,
       centerY: challengePanel.centerY,
@@ -201,7 +204,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     const children = [
       statusBar,
       challengePanel,
-      solveForXNode,
+      solveForXText,
       equationPanel,
       scaleNode,
       snapshotsAccordionBox,
