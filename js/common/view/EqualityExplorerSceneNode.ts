@@ -12,9 +12,7 @@ import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import { Node, NodeOptions, SceneryEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
-import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
-import SumToZeroNode from './SumToZeroNode.js';
 import TermCreator from '../model/TermCreator.js';
 import Term from '../model/Term.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
@@ -82,38 +80,6 @@ export default class EqualityExplorerSceneNode extends Node {
   public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
-  }
-
-  /**
-   * Performs sum-to-zero animation for terms that have summed to zero.
-   * Intended to be used in screens where like terms are combined in one cell on the scale,
-   * and that involve applying universal operations.  Because universal operations may result
-   * in more than one term summing to zero, we need to perform sum-to-zero animations after
-   * the operation has been applied to all terms, so that the scale is in its final position.
-   * @param termCreators - term creators whose term summed to zero
-   */
-  public animateSumToZero( termCreators: TermCreator[] ): void {
-
-    for ( let i = 0; i < termCreators.length; i++ ) {
-
-      const termCreator = termCreators[ i ];
-
-      assert && assert( termCreator.combineLikeTermsEnabled,
-        'animateSumToZero should only be used when combineLikeTermsEnabled' );
-
-      // determine where the cell that contained the term is currently located
-      const cellCenter = termCreator.plate.getPositionOfCell( termCreator.likeTermsCell );
-
-      // display the animation in that cell
-      const sumToZeroNode = new SumToZeroNode( {
-        // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 not all TermCreator subclasses have variable property
-        variable: termCreator.variable || null,
-        fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE,
-        center: cellCenter
-      } );
-      this.termsLayer.addChild( sumToZeroNode );
-      sumToZeroNode.startAnimation();
-    }
   }
 }
 

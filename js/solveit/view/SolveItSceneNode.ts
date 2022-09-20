@@ -39,6 +39,7 @@ import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItScene from '../model/SolveItScene.js';
 import ChallengeDerivationText from './ChallengeDerivationText.js';
 import SolveItRewardNode from './SolveItRewardNode.js';
+import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 
 // constants
 const LEVEL_FONT = new PhetFont( 20 );
@@ -378,7 +379,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
     // removeListener not needed.
-    scene.sumToZeroEmitter.addListener( this.animateSumToZero.bind( this ) );
+    scene.sumToZeroEmitter.addListener( termCreators => SumToZeroNode.animateSumToZero( termCreators, this.termsLayer ) );
   }
 
   public override dispose(): void {

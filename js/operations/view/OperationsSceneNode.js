@@ -9,6 +9,7 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesSceneNode from '../../variables/view/VariablesSceneNode.js';
@@ -51,7 +52,7 @@ export default class OperationsSceneNode extends VariablesSceneNode {
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
     // removeListener not needed.
-    scene.sumToZeroEmitter.addListener( this.animateSumToZero.bind( this ) );
+    scene.sumToZeroEmitter.addListener( termCreators => SumToZeroNode.animateSumToZero( termCreators, this.termsLayer ) );
   }
 
   // @public
