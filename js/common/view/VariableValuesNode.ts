@@ -8,34 +8,42 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, HStrut, Text } from '../../../../scenery/js/imports.js';
+import { HBox, HBoxOptions, HStrut, Node, Text } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import Variable from '../model/Variable.js';
 import VariableNode from './VariableNode.js';
+
+type SelfOptions = {
+  fontSize?: number;
+  commaSeparated?: boolean;
+  spacingInsideTerms?: number;
+  spacingBetweenTerms?: number;
+};
+
+type VariableValuesNodeOptions = SelfOptions;
 
 export default class VariableValuesNode extends HBox {
 
-  /**
-   * @param {Variable[]} variables
-   * @param {Object} [options]
-   */
-  constructor( variables, options ) {
+  public constructor( variables: Variable[], providedOptions?: VariableValuesNodeOptions ) {
 
-    options = merge( {
+    const options = optionize<VariableValuesNodeOptions, SelfOptions, HBoxOptions>()( {
+
+      // SelfOptions
       fontSize: 28,
       commaSeparated: true,
       spacingInsideTerms: 3,
       spacingBetweenTerms: 15
-    }, options );
+    }, providedOptions );
 
     assert && assert( options.spacing === undefined, 'VariableValuesNode sets spacing' );
     options.spacing = 0;
 
     const font = new PhetFont( options.fontSize );
 
-    const children = []; // {Node[]}
+    const children: Node[] = [];
 
     // '(' with normal font
     const leftParenNode = new Text( '(', { font: font } );
@@ -82,8 +90,7 @@ export default class VariableValuesNode extends HBox {
     super( options );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
