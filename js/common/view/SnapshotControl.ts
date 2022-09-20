@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Control for taking, displaying and selecting a snapshot.
  * The Snapshots accordion box contains a vertical column of these.
@@ -8,12 +7,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import { FireListener, FlowBox, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { FireListener, FlowBox, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import cameraSolidShape from '../../../../sherpa/js/fontawesome-5/cameraSolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
+import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Snapshot from '../model/Snapshot.js';
 import EquationNode from './EquationNode.js';
 import VariableValuesNode from './VariableValuesNode.js';
@@ -23,31 +24,45 @@ const EQUATION_FONT_SIZE = 22;
 const FRACTION_FONT_SIZE = 14;
 const SELECTION_RECTANGLE_X_MARGIN = 10;
 const SELECTION_RECTANGLE_Y_MARGIN = 8;
-const VALID_ORIENTATION_VALUES = [ 'horizontal', 'vertical' ];
+
+type Orientation = 'horizontal' | 'vertical';
+
+type SelfOptions = {
+  // whether variable values are visible in snapshots, null if the feature is not supported
+  variableValuesVisibleProperty?: Property<boolean> | null;
+  controlWidth?: number;
+  controlHeight?: number;
+  orientation?: Orientation; // layout of the equation and variable values
+  commaSeparated?: boolean; // are variable values separated by commas?
+  variableValuesOpacity?: number; // [0,1], see https://github.com/phetsims/equality-explorer/issues/113
+};
+
+type SnapshotControlOptions = SelfOptions;
 
 export default class SnapshotControl extends Node {
 
   /**
-   * @param {EqualityExplorerScene} scene - the scene that we'll be taking a snapshot of
-   * @param {Property.<Snapshot|null>} snapshotProperty - snapshot associated with this control, null if no snapshot
-   * @param {Property.<Snapshot|null>} selectedSnapshotProperty - the selected snapshot, null if no selection
-   * @param {Object} [options]
+   * @param scene - the scene that we'll be taking a snapshot of
+   * @param snapshotProperty - snapshot associated with this control, null if no snapshot
+   * @param selectedSnapshotProperty - the selected snapshot, null if no selection
+   * @param [providedOptions]
    */
-  constructor( scene, snapshotProperty, selectedSnapshotProperty, options ) {
+  public constructor( scene: EqualityExplorerScene,
+                      snapshotProperty: Property<Snapshot | null>,
+                      selectedSnapshotProperty: Property<Snapshot | null>,
+                      providedOptions?: SnapshotControlOptions ) {
 
-    options = merge( {
+    const options = optionize<SnapshotControlOptions, SelfOptions, NodeOptions>()( {
 
-      // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
+      // SelfOptions
       variableValuesVisibleProperty: null,
       controlWidth: 100,
       controlHeight: 50,
-      orientation: 'horizontal', // layout of the equation and variable values, see VALID_ORIENTATION_VALUES
-      commaSeparated: true, // are variable values separated by commas?
-      variableValuesOpacity: 1 // [0,1], see https://github.com/phetsims/equality-explorer/issues/113
-    }, options );
+      orientation: 'horizontal',
+      commaSeparated: true,
+      variableValuesOpacity: 1
+    }, providedOptions );
 
-    assert && assert( _.includes( VALID_ORIENTATION_VALUES, options.orientation ),
-      `invalid orientation: ${options.orientation}` );
     assert && assert( options.variableValuesOpacity >= 0 && options.variableValuesOpacity <= 1,
       `invalid variableValuesOpacity: ${options.variableValuesOpacity}` );
 
@@ -64,8 +79,8 @@ export default class SnapshotControl extends Node {
     const NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for variable values, so bounds are valid
 
     // placeholders, so that snapshotNode has valid bounds
-    let equationNode = NO_EQUATION_NODE;
-    let variableValuesNode = NO_VARIABLE_VALUES_NODE;
+    let equationNode: Node = NO_EQUATION_NODE;
+    let variableValuesNode: Node = NO_VARIABLE_VALUES_NODE;
 
     // parent for the equation and optional display of variable values
     const snapshotNode = new FlowBox( {
@@ -106,7 +121,7 @@ export default class SnapshotControl extends Node {
 
     super( options );
 
-    // Selects the snapshot associated with this control. unlink is not necessary.
+    // Selects the snapshot associated with this control.
     this.addInputListener( new FireListener( {
       fire: () => {
         if ( snapshotProperty.value ) {
@@ -126,7 +141,7 @@ export default class SnapshotControl extends Node {
       snapshotNode.center = selectionRectangle.center;
     };
 
-    // Updates the view when the model changes. unlink not required.
+    // Updates the view when the model changes.
     snapshotProperty.link( snapshot => {
 
       const hasSnapShot = !!snapshot;
@@ -174,7 +189,7 @@ export default class SnapshotControl extends Node {
       updateSnapshotLayout();
     } );
 
-    // Shows that the associated snapshot has been selected. unlink not required.
+    // Shows that the associated snapshot has been selected.
     selectedSnapshotProperty.link( selectedSnapshot => {
       const isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
       selectionRectangle.stroke = isSelected ?
@@ -189,8 +204,7 @@ export default class SnapshotControl extends Node {
     }
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }

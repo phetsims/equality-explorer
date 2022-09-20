@@ -24,6 +24,7 @@ import VariableTermCreator from '../model/VariableTermCreator.js';
 import ConstantTermNode from './ConstantTermNode.js';
 import VariableTermNode from './VariableTermNode.js';
 import { RelationalOperator } from '../model/RelationalOperator.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
 // constants
 const DEFAULT_FONT_SIZE = 30;
@@ -48,7 +49,7 @@ type SelfOptions = {
   relationalOperatorSpacing?: number; // space around the relational operator
 };
 
-export type EquationNodeOptions = SelfOptions;
+export type EquationNodeOptions = SelfOptions & PickOptional<NodeOptions, 'pickable'>;
 
 export default class EquationNode extends Node {
 

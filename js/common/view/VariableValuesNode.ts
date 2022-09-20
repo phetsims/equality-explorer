@@ -9,6 +9,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, HBoxOptions, HStrut, Node, Text } from '../../../../scenery/js/imports.js';
@@ -23,7 +24,7 @@ type SelfOptions = {
   spacingBetweenTerms?: number;
 };
 
-type VariableValuesNodeOptions = SelfOptions;
+type VariableValuesNodeOptions = SelfOptions & PickOptional<HBoxOptions, 'opacity' | 'scale'>;
 
 export default class VariableValuesNode extends HBox {
 
