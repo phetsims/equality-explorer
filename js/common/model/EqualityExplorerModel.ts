@@ -12,15 +12,15 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from './EqualityExplorerScene.js';
 
-export default class EqualityExplorerModel<T extends EqualityExplorerScene> implements TModel {
+export default class EqualityExplorerModel implements TModel {
 
   // scenes, in the order that they appear from left-to-right as radio buttons
-  public readonly scenes: T[];
+  public readonly scenes: EqualityExplorerScene[];
 
   // the selected scene
-  public readonly sceneProperty: Property<T>;
+  public readonly sceneProperty: Property<EqualityExplorerScene>;
 
-  protected constructor( scenes: T[], tandem: Tandem ) {
+  protected constructor( scenes: EqualityExplorerScene[], tandem: Tandem ) {
 
     this.scenes = scenes;
     this.sceneProperty = new Property( scenes[ 0 ], {

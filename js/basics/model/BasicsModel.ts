@@ -10,12 +10,11 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import AnimalsScene from './AnimalsScene.js';
-import BasicsScene from './BasicsScene.js';
 import CoinsScene from './CoinsScene.js';
 import FruitsScene from './FruitsScene.js';
 import ShapesScene from './ShapesScene.js';
 
-export default class BasicsModel extends EqualityExplorerModel<BasicsScene> {
+export default class BasicsModel extends EqualityExplorerModel {
 
   public constructor( tandem: Tandem ) {
     super( [

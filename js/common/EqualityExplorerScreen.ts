@@ -17,7 +17,6 @@ type SelfOptions = EmptySelfOptions;
 
 export type EqualityExplorerScreenOptions = SelfOptions & ScreenOptions & PickRequired<ScreenOptions, 'tandem'>;
 
-// @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 EqualityExplorerModel require 1 param
 export default class EqualityExplorerScreen<M extends EqualityExplorerModel, V extends EqualityExplorerScreenView>
   extends Screen<M, V> {
 

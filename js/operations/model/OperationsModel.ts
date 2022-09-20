@@ -11,7 +11,7 @@ import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene from './OperationsScene.js';
 
-export default class OperationsModel extends EqualityExplorerModel<OperationsScene> {
+export default class OperationsModel extends EqualityExplorerModel {
 
   public constructor( tandem: Tandem ) {
     super( [ new OperationsScene() ], tandem );

@@ -11,7 +11,7 @@ import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import NumbersScene from './NumbersScene.js';
 
-export default class NumbersModel extends EqualityExplorerModel<NumbersScene> {
+export default class NumbersModel extends EqualityExplorerModel {
 
   public constructor( tandem: Tandem ) {
     super( [ new NumbersScene() ], tandem );

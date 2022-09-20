@@ -11,7 +11,7 @@ import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesScene from './VariablesScene.js';
 
-export default class VariablesModel extends EqualityExplorerModel<VariablesScene> {
+export default class VariablesModel extends EqualityExplorerModel {
 
   public constructor( tandem: Tandem ) {
     super( [ new VariablesScene() ], tandem );
