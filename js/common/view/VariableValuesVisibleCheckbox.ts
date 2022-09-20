@@ -6,6 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
@@ -39,8 +40,12 @@ export default class VariableValuesVisibleCheckbox extends Checkbox {
       fontSize: FONT_SIZE
     } );
 
-    // '= ?' in normal font (no i18n requirements here, since this is an equation)
-    const rightNode = new Text( ` ${MathSymbols.EQUAL_TO} ${EqualityExplorerStrings.questionMark}`, {
+    // ' = ?'
+    const rightStringProperty = new DerivedProperty(
+      [ EqualityExplorerStrings.questionMarkStringProperty ],
+      questionMarkString => ` ${MathSymbols.EQUAL_TO} ${questionMarkString}` );
+
+    const rightNode = new Text( rightStringProperty, {
       font: new PhetFont( FONT_SIZE )
     } );
 
