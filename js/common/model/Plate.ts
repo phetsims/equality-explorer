@@ -95,8 +95,7 @@ export default class Plate {
       weightDependencies.push( termCreators[ i ].weightOnPlateProperty );
     }
 
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
-    this.weightProperty = new DerivedProperty( weightDependencies,
+    this.weightProperty = DerivedProperty.deriveAny( weightDependencies,
       () => {
         let weight = Fraction.fromInteger( 0 );
         for ( let i = 0; i < termCreators.length; i++ ) {
