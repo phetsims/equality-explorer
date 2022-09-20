@@ -1,30 +1,35 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Displays the icon or symbol that represents a variable.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
-import { Image, Node, Text } from '../../../../scenery/js/imports.js';
+import { Image, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import ObjectVariable from '../../basics/model/ObjectVariable.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import Variable from '../model/Variable.js';
+
+type SelfOptions = {
+  iconScale?: number; // for variables that are displayed as an icon, e.g. apple, cat, coin
+  fontSize?: number; // for variables that are displayed as a text symbol, e.g. 'x'
+};
+
+type VariableNodeOptions = SelfOptions;
 
 export default class VariableNode extends Node {
 
-  /**
-   * @param {Variable} variable
-   * @param {Object} [options]
-   */
-  constructor( variable, options ) {
+  public constructor( variable: Variable, providedOptions?: VariableNodeOptions ) {
 
-    options = merge( {
-      iconScale: 1, // for variables that are displayed as an icon, e.g. apple, cat, coin
-      fontSize: 24 // for variables that are displayed as a text symbol, e.g. 'x'
-    }, options );
+    const options = optionize<VariableNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
+      iconScale: 1,
+      fontSize: 24
+    }, providedOptions );
 
     let symbolNode;
     if ( variable instanceof ObjectVariable ) {
@@ -48,8 +53,7 @@ export default class VariableNode extends Node {
     super( options );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
