@@ -1,8 +1,7 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
 /**
- * Displays an equation or inequality.
- * Designed to support multiple variables, but has only been tested extensively with 1 variable.
+ * Displays an equation or inequality, possibly involving multiple variables.
  * Origin is at the center of the relational operator, to facilitate horizontal alignment with the scale.
  *
  * @author Chris Malley (PixelZoom, Inc.)
