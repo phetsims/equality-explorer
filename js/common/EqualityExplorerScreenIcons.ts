@@ -98,6 +98,7 @@ const EqualityExplorerScreenIcons = {
   createVariablesScreenIcon: function(): ScreenIcon {
 
     // x and -x on left side of the equation
+    //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
     const leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), EqualityExplorerStrings.x );
     const leftNegativeXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ), EqualityExplorerStrings.x );
     const leftGroupNode = new VBox( {
@@ -110,6 +111,7 @@ const EqualityExplorerScreenIcons = {
     } );
 
     // 1 and x on right side of the equation
+    //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
     const rightPositiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
     const rightPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), EqualityExplorerStrings.x );
     const rightGroupNode = new VBox( {

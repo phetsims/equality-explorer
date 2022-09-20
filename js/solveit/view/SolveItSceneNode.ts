@@ -131,6 +131,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     } );
 
     // 'Solve for x'
+    //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
     const solveForXText = StringUtils.fillIn( EqualityExplorerStrings.solveFor, {
       variable: MathSymbolFont.getRichTextMarkup( EqualityExplorerStrings.x )
     } );

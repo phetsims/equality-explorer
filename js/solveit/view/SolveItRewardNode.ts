@@ -184,6 +184,7 @@ function createNodes5(): Node[] {
  * Create a variable term node with a specified integer coefficient.
  */
 function createVariableTermNode( coefficient: number ): Node {
+  //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
   return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), EqualityExplorerStrings.x, {
     diameter: DIAMETER,
     showOne: true // show coefficient for '1x'

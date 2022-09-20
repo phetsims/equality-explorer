@@ -42,6 +42,7 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
 
     const items: LevelSelectionButtonGroupItem[] = scenes.map( scene => {
       return {
+        //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
         icon: VariableTermNode.createInteractiveTermNode(
           Fraction.fromInteger( scene.challengeGenerator.level ), EqualityExplorerStrings.x, {
             diameter: 50,
