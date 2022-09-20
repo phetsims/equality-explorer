@@ -182,13 +182,6 @@ export default class OperationsScene extends EqualityExplorerScene {
   }
 
   /**
-   * Creates a snapshot of the scene.
-   */
-  public createSnapshot(): Snapshot {
-    return new Snapshot( this );
-  }
-
-  /**
    * Applies a universal operation.
    */
   public applyOperation( operation: UniversalOperation ): void {
