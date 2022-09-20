@@ -17,6 +17,7 @@ import ConstantTermNode from './ConstantTermNode.js';
 import VariableTermNode from './VariableTermNode.js';
 
 export default class UniversalOperationNode extends HBox {
+
   /**
    * @param {UniversalOperation} operation
    * @param {Object} [options]
@@ -29,13 +30,29 @@ export default class UniversalOperationNode extends HBox {
       spacing: 4
     }, options );
 
+    const operatorNode = UniversalOperationNode.createOperatorNode( operation.operator );
+
+    // If operandNode involves a variable, it is linked to a translated StringProperty and must be disposed.
+    const operandNode = UniversalOperationNode.createOperandNode( operation.operand );
+
     assert && assert( !options.children, 'UniversalOperationNode sets children' );
-    options.children = [
-      UniversalOperationNode.createOperatorNode( operation.operator ),
-      UniversalOperationNode.createOperandNode( operation.operand )
-    ];
+    options.children = [ operatorNode, operandNode ];
 
     super( options );
+
+    // @private
+    this.disposeUniversalOperationNode = () => {
+      operandNode.dispose();
+    };
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeUniversalOperationNode();
+    super.dispose();
   }
 
   /**
@@ -69,7 +86,6 @@ export default class UniversalOperationNode extends HBox {
       } );
     }
     else if ( operand instanceof VariableTerm ) {
-      //TODO https://github.com/phetsims/equality-explorer/issues/187 must be disposed because it links to a translated string Property
       operandNode = VariableTermNode.createEquationTermNode( operand.coefficient, operand.variable.symbolProperty, {
         symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
         integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
