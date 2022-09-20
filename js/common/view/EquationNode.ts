@@ -49,15 +49,6 @@ type SelfOptions = {
 
 export type EquationNodeOptions = SelfOptions;
 
-type ExpressionNodeOptions = {
-  symbolFont: Font;
-  operatorFont: Font;
-  integerFont: Font;
-  fractionFont: Font;
-  coefficientSpacing: number;
-  plusSpacing: number;
-};
-
 export default class EquationNode extends Node {
 
   private readonly disposeEquationNode: () => void;
@@ -129,8 +120,13 @@ export default class EquationNode extends Node {
 
     // updates the equation's terms
     const updateTerms = () => {
-      leftExpressionNode = createExpressionNode( leftTermCreators, expressionNodeOptions );
-      rightExpressionNode = createExpressionNode( rightTermCreators, expressionNodeOptions );
+
+      // Expressions may be linked to translated StringProperties, so they must be disposed.
+      leftExpressionNode && leftExpressionNode.dispose();
+      rightExpressionNode && rightExpressionNode.dispose();
+
+      leftExpressionNode = new ExpressionNode( leftTermCreators, expressionNodeOptions );
+      rightExpressionNode = new ExpressionNode( rightTermCreators, expressionNodeOptions );
       this.children = [ leftExpressionNode, relationalOperatorNode, rightExpressionNode ];
       updateLayout();
     };
@@ -210,86 +206,113 @@ function getRelationalOperatorString( leftTermCreators: TermCreator[], rightTerm
   return relationalOperator;
 }
 
+type ExpressionNodeOptions = {
+  symbolFont: Font;
+  operatorFont: Font;
+  integerFont: Font;
+  fractionFont: Font;
+  coefficientSpacing: number;
+  plusSpacing: number;
+};
+
 /**
- * Creates an expression, one side of the equation.
+ * An expression is one side of the equation.
  */
-function createExpressionNode( termCreators: TermCreator[], expressionNodeOptions: ExpressionNodeOptions ): Node {
+class ExpressionNode extends HBox {
 
-  const children = [];
-  for ( let i = 0; i < termCreators.length; i++ ) {
+  private readonly disposeExpressionNode: () => void;
 
-    const termCreator = termCreators[ i ];
+  public constructor( termCreators: TermCreator[], providedOptions: ExpressionNodeOptions ) {
 
-    const numberOfTermsOnPlate = termCreator.numberOfTermsOnPlateProperty.value;
-    if ( numberOfTermsOnPlate > 0 ) {
+    const children: Node[] = [];
+    const childrenToDispose: Node[] = [];
+    for ( let i = 0; i < termCreators.length; i++ ) {
 
-      if ( termCreator instanceof ObjectTermCreator ) {
+      const termCreator = termCreators[ i ];
 
-        // if there were previous terms, add an operator
-        if ( children.length > 0 ) {
-          children.push( valueToOperatorNode( numberOfTermsOnPlate, expressionNodeOptions.operatorFont ) );
-        }
+      const numberOfTermsOnPlate = termCreator.numberOfTermsOnPlateProperty.value;
+      if ( numberOfTermsOnPlate > 0 ) {
 
-        // Each ObjectTerm has an implicit coefficient of 1, so use the number of terms as the coefficient.
-        children.push( ObjectTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.createIcon(), {
-          font: expressionNodeOptions.integerFont,
-          spacing: expressionNodeOptions.coefficientSpacing
-        } ) );
-      }
-      else if ( termCreator instanceof VariableTermCreator ) {
+        if ( termCreator instanceof ObjectTermCreator ) {
 
-        let coefficient = termCreator.sumCoefficientsOnPlate();
-
-        if ( coefficient.getValue() !== 0 ) {
-
-          // if there were previous terms, replace the coefficient's sign with an operator
+          // if there were previous terms, add an operator
           if ( children.length > 0 ) {
-            children.push( valueToOperatorNode( coefficient.getValue(), expressionNodeOptions.operatorFont ) );
-            coefficient = coefficient.abs();
+            children.push( valueToOperatorNode( numberOfTermsOnPlate, providedOptions.operatorFont ) );
           }
 
-          //TODO https://github.com/phetsims/equality-explorer/issues/187 must be disposed because it links to a translated string Property
-          children.push( VariableTermNode.createEquationTermNode( coefficient, termCreator.variable.symbolProperty, {
-            integerFont: expressionNodeOptions.integerFont,
-            fractionFont: expressionNodeOptions.fractionFont,
-            symbolFont: expressionNodeOptions.symbolFont,
-            coefficientSpacing: expressionNodeOptions.coefficientSpacing
+          // Each ObjectTerm has an implicit coefficient of 1, so use the number of terms as the coefficient.
+          children.push( ObjectTermNode.createEquationTermNode( numberOfTermsOnPlate, termCreator.createIcon(), {
+            font: providedOptions.integerFont,
+            spacing: providedOptions.coefficientSpacing
           } ) );
         }
-      }
-      else if ( termCreator instanceof ConstantTermCreator ) {
+        else if ( termCreator instanceof VariableTermCreator ) {
 
-        let constantValue = termCreator.sumConstantsOnPlate();
+          let coefficient = termCreator.sumCoefficientsOnPlate();
 
-        if ( constantValue.getValue() !== 0 ) {
+          if ( coefficient.getValue() !== 0 ) {
 
-          // if there were previous terms, replace the constant's sign with an operator
-          if ( children.length > 0 ) {
-            children.push( valueToOperatorNode( constantValue.getValue(), expressionNodeOptions.operatorFont ) );
-            constantValue = constantValue.abs();
+            // if there were previous terms, replace the coefficient's sign with an operator
+            if ( children.length > 0 ) {
+              children.push( valueToOperatorNode( coefficient.getValue(), providedOptions.operatorFont ) );
+              coefficient = coefficient.abs();
+            }
+
+            // Must be disposed because it links to a translated StringProperty.
+            const equationTermNode = VariableTermNode.createEquationTermNode( coefficient, termCreator.variable.symbolProperty, {
+              integerFont: providedOptions.integerFont,
+              fractionFont: providedOptions.fractionFont,
+              symbolFont: providedOptions.symbolFont,
+              coefficientSpacing: providedOptions.coefficientSpacing
+            } );
+
+            children.push( equationTermNode );
+            childrenToDispose.push( equationTermNode );
           }
-
-          children.push( ConstantTermNode.createEquationTermNode( constantValue, {
-            integerFont: expressionNodeOptions.integerFont,
-            fractionFont: expressionNodeOptions.fractionFont
-          } ) );
         }
-      }
-      else {
-        throw new Error( `unsupported termCreator: ${termCreator}` );
+        else if ( termCreator instanceof ConstantTermCreator ) {
+
+          let constantValue = termCreator.sumConstantsOnPlate();
+
+          if ( constantValue.getValue() !== 0 ) {
+
+            // if there were previous terms, replace the constant's sign with an operator
+            if ( children.length > 0 ) {
+              children.push( valueToOperatorNode( constantValue.getValue(), providedOptions.operatorFont ) );
+              constantValue = constantValue.abs();
+            }
+
+            children.push( ConstantTermNode.createEquationTermNode( constantValue, {
+              integerFont: providedOptions.integerFont,
+              fractionFont: providedOptions.fractionFont
+            } ) );
+          }
+        }
+        else {
+          throw new Error( `unsupported termCreator: ${termCreator}` );
+        }
       }
     }
+
+    // if there were no terms, then this side of the equation evaluated to zero
+    if ( children.length === 0 ) {
+      children.push( new Text( '0', { font: providedOptions.integerFont } ) );
+    }
+
+    super( {
+      spacing: providedOptions.plusSpacing,
+      children: children
+    } );
+
+    this.disposeExpressionNode = () => {
+      childrenToDispose.forEach( node => node.dispose() );
+    };
   }
 
-  // if there were no terms, then this side of the equation evaluated to zero
-  if ( children.length === 0 ) {
-    children.push( new Text( '0', { font: expressionNodeOptions.integerFont } ) );
+  public override dispose(): void {
+    this.disposeExpressionNode();
+    super.dispose();
   }
-
-  return new HBox( {
-    spacing: expressionNodeOptions.plusSpacing,
-    children: children
-  } );
 }
 
 /**
