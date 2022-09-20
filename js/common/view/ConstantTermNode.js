@@ -77,7 +77,7 @@ export default class ConstantTermNode extends TermNode {
 
     // constant value
     const margin = 0.18 * options.diameter; // determined empirically
-    const constantNode = ConstantTermNode.createEquationTermNode( constantValue, {
+    const equationTermNode = ConstantTermNode.createEquationTermNode( constantValue, {
       fractionFont: options.fractionFont,
       integerFont: options.integerFont,
       maxWidth: circleNode.width - ( 2 * margin ),
@@ -86,7 +86,7 @@ export default class ConstantTermNode extends TermNode {
     } );
 
     return new Node( {
-      children: [ circleNode, constantNode ]
+      children: [ circleNode, equationTermNode ]
     } );
   }
 

@@ -56,7 +56,7 @@ export default class UniversalOperation {
       return StringUtils.fillIn( '{{operator}} {{coefficient}}{{symbol}} ({{symbol}}={{variableValue}})', {
         operator: this.operator,
         coefficient: this.operand.coefficient.getValue(),
-        symbol: this.operand.variable.symbol,
+        symbol: this.operand.variable.symbolProperty.value,
         variableValue: this.operand.variable.valueProperty.value
       } );
     }

@@ -36,7 +36,7 @@ export default class VariableNode extends Node {
     else {
 
       // use text for a symbolic variable, e.g 'x'
-      symbolNode = new Text( variable.symbol, {
+      symbolNode = new Text( variable.symbolProperty, {
         font: new MathSymbolFont( options.fontSize )
       } );
     }

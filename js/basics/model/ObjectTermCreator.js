@@ -19,7 +19,7 @@ export default class ObjectTermCreator extends TermCreator {
    */
   constructor( variable, options ) {
 
-    phet.log && phet.log( `ObjectTermCreator: ${variable.symbol}, weight=${variable.valueProperty.value}` );
+    phet.log && phet.log( `ObjectTermCreator: ${variable.symbolProperty.value}, weight=${variable.valueProperty.value}` );
 
     super( options );
 
@@ -28,6 +28,15 @@ export default class ObjectTermCreator extends TermCreator {
 
     // When the variable's value changes, recompute the weight of terms on the scale. unlink not needed.
     this.variable.valueProperty.link( value => this.updateWeightOnPlateProperty() );
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
   }
 
   //-------------------------------------------------------------------------------------------------

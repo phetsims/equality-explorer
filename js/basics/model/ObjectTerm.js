@@ -38,7 +38,7 @@ export default class ObjectTerm extends Term {
    * @public
    */
   toString() {
-    return `ObjectTerm: ${this.variable.symbol} ${this.variable.valueProperty.value}`;
+    return `ObjectTerm: ${this.variable.symbolProperty.value} ${this.variable.valueProperty.value}`;
   }
 
   //-------------------------------------------------------------------------------------------------

@@ -42,6 +42,15 @@ export default class VariableTermCreator extends TermCreator {
   }
 
   /**
+   * @public
+   * @override
+   */
+  dispose() {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
+
+  /**
    * Returns the sum of coefficients for all terms on the plate.
    * @returns {Fraction}
    * @public
@@ -73,7 +82,7 @@ export default class VariableTermCreator extends TermCreator {
     assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     const coefficient = EqualityExplorerConstants.DEFAULT_COEFFICIENT.timesInteger( options.sign );
-    return VariableTermNode.createInteractiveTermNode( coefficient, this.variable.symbol, {
+    return VariableTermNode.createInteractiveTermNode( coefficient, this.variable.symbolProperty, {
       positiveFill: this.positiveFill,
       negativeFill: this.negativeFill
     } );

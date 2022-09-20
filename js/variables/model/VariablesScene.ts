@@ -19,8 +19,7 @@ export default class VariablesScene extends EqualityExplorerScene {
 
   public constructor() {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
-    const xVariable = new Variable( EqualityExplorerStrings.x, {
+    const xVariable = new Variable( EqualityExplorerStrings.xStringProperty, {
       range: EqualityExplorerConstants.VARIABLE_RANGE
     } );
 

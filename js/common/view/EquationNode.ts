@@ -249,7 +249,8 @@ function createExpressionNode( termCreators: TermCreator[], expressionNodeOption
             coefficient = coefficient.abs();
           }
 
-          children.push( VariableTermNode.createEquationTermNode( coefficient, termCreator.variable.symbol, {
+          //TODO https://github.com/phetsims/equality-explorer/issues/187 EquationTermNode must be disposed because it links to a translated string Property
+          children.push( VariableTermNode.createEquationTermNode( coefficient, termCreator.variable.symbolProperty, {
             integerFont: expressionNodeOptions.integerFont,
             fractionFont: expressionNodeOptions.fractionFont,
             symbolFont: expressionNodeOptions.symbolFont,

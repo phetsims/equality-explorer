@@ -8,6 +8,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import StringProperty from '../../../../axon/js/StringProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Variable, { VariableOptions } from '../../common/model/Variable.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -26,7 +27,7 @@ export default class ObjectVariable extends Variable {
 
   public constructor( symbol: string, image: HTMLImageElement, shadow: HTMLImageElement, providedOptions?: ObjectVariableOptions ) {
 
-    super( symbol, providedOptions );
+    super( new StringProperty( symbol ), providedOptions );
 
     this.image = image;
     this.shadow = shadow;

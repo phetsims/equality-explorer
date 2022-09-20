@@ -98,9 +98,8 @@ const EqualityExplorerScreenIcons = {
   createVariablesScreenIcon: function(): ScreenIcon {
 
     // x and -x on left side of the equation
-    //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
-    const leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), EqualityExplorerStrings.x );
-    const leftNegativeXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ), EqualityExplorerStrings.x );
+    const leftPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), EqualityExplorerStrings.xStringProperty );
+    const leftNegativeXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ), EqualityExplorerStrings.xStringProperty );
     const leftGroupNode = new VBox( {
       children: [ leftPositiveXNode, leftNegativeXNode ]
     } );
@@ -111,9 +110,8 @@ const EqualityExplorerScreenIcons = {
     } );
 
     // 1 and x on right side of the equation
-    //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
     const rightPositiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
-    const rightPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), EqualityExplorerStrings.x );
+    const rightPositiveXNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ), EqualityExplorerStrings.xStringProperty );
     const rightGroupNode = new VBox( {
       children: [ rightPositiveOneNode, rightPositiveXNode ]
     } );
@@ -137,7 +135,8 @@ const EqualityExplorerScreenIcons = {
     const operatorOptions = { font: new PhetFont( 30 ) };
 
     // 3x on left side of equation
-    const variableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ), EqualityExplorerStrings.x );
+    const variableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ),
+      EqualityExplorerStrings.xStringProperty );
 
     // =
     const equalsNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );

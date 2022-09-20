@@ -74,8 +74,7 @@ export default class OperationsScene extends EqualityExplorerScene {
       iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
     }, providedOptions );
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
-    const xVariable = new Variable( EqualityExplorerStrings.x, {
+    const xVariable = new Variable( EqualityExplorerStrings.xStringProperty, {
       range: options.variableRange
     } );
 

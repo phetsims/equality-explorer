@@ -6,6 +6,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
@@ -44,7 +46,8 @@ export default class VariableTermNode extends TermNode {
 
     options = merge( {}, DEFAULT_OPTIONS, options );
 
-    const contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.variable.symbol,
+    // contentNode must be disposed!
+    const contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.variable.symbolProperty,
       merge( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
 
     const shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
@@ -53,23 +56,65 @@ export default class VariableTermNode extends TermNode {
     } );
 
     super( termCreator, term, contentNode, shadowNode, options );
+
+    // @private
+    this.disposeVariableTermNode = () => {
+      contentNode.dispose();
+    };
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeVariableTermNode();
+    super.dispose();
   }
 
   /**
    * Creates the representation of a term that the user interacts with,
    * in this case a coefficient and variable inside a square.
    * @param {Fraction} coefficient
-   * @param {string} symbol - the variable's symbol, e.g. 'x'
+   * @param {TReadOnlyProperty.<string>} symbolProperty - the variable's symbol, e.g. 'x'
    * @param {Object} [options] - see DEFAULT_OPTIONS
    * @returns {Node}
    * @public
    * @static
    */
-  static createInteractiveTermNode( coefficient, symbol, options ) {
+  static createInteractiveTermNode( coefficient, symbolProperty, options ) {
+    return new InteractiveTermNode( coefficient, symbolProperty, options );
+  }
+
+  /**
+   * Creates the representation of a term that is shown in equations.
+   * For constant terms, this same representation appears on interactive terms.
+   * @param {Fraction} coefficient
+   * @param {TReadOnlyProperty.<string>} symbolProperty - the variable's symbol, e.g. 'x'
+   * @param {Object} [options] - see ReducedFractionNode
+   * @returns {Node}
+   * @public
+   * @static
+   */
+  static createEquationTermNode( coefficient, symbolProperty, options ) {
+    return new EquationTermNode( coefficient, symbolProperty, options );
+  }
+}
+
+/**
+ * A coefficient and variable inside a square.
+ */
+class InteractiveTermNode extends Node {
+
+  /**
+   * @param {Fraction} coefficient
+   * @param {TReadOnlyProperty.<string>} symbolProperty - the variable's symbol, e.g. 'x'
+   * @param {Object} [options] - see DEFAULT_OPTIONS
+   */
+  constructor( coefficient, symbolProperty, options ) {
 
     assert && assert( coefficient instanceof Fraction, `invalid coefficient: ${coefficient}` );
     assert && assert( coefficient.isReduced(), `coefficient must be reduced: ${coefficient}` );
-    assert && assert( typeof symbol === 'string', `invalid symbol: ${symbol}` );
 
     options = merge( {
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
@@ -88,34 +133,52 @@ export default class VariableTermNode extends TermNode {
       lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
     } );
 
-    const valueNode = VariableTermNode.createEquationTermNode( coefficient, symbol, merge( {}, options, {
+    // equationTermNode must be disposed!
+    const equationTermNode = VariableTermNode.createEquationTermNode( coefficient, symbolProperty, merge( {}, options, {
       align: 'center',
       maxWidth: squareNode.width - ( 2 * options.margin ),
-      maxHeight: squareNode.height - ( 2 * options.margin ),
-      center: squareNode.center
+      maxHeight: squareNode.height - ( 2 * options.margin )
     } ) );
+    equationTermNode.boundsProperty.link( bounds => {
+      equationTermNode.center = squareNode.center;
+    } );
 
     assert && assert( !options.children, 'VariableTermNode sets children' );
-    options.children = [ squareNode, valueNode ];
+    options.children = [ squareNode, equationTermNode ];
 
-    return new Node( options );
+    super( options );
+
+    // @private
+    this.disposeInteractiveTermNode = () => {
+      equationTermNode.dispose();
+    };
   }
 
   /**
-   * Creates the representation of a term that is shown in equations.
-   * For constant terms, this same representation appears on interactive terms.
-   * @param {Fraction} coefficient
-   * @param {string} symbol - the variable's symbol, e.g. 'x'
-   * @param {Object} [options] - see ReducedFractionNode
-   * @returns {Node}
    * @public
-   * @static
+   * @override
    */
-  static createEquationTermNode( coefficient, symbol, options ) {
+  dispose() {
+    this.disposeInteractiveTermNode();
+    super.dispose();
+  }
+}
+
+/**
+ * The representation of a term that is shown in equations, a coefficient and variable.
+ */
+class EquationTermNode extends HBox {
+
+  /**
+   * @param {Fraction} coefficient
+   * @param {TReadOnlyProperty.<string>} symbolProperty - the variable's symbol, e.g. 'x'
+   * @param {Object} [options] - see ReducedFractionNode
+   */
+  constructor( coefficient, symbolProperty, options ) {
 
     assert && assert( coefficient instanceof Fraction, `invalid coefficient: ${coefficient}` );
     assert && assert( coefficient.isReduced(), `coefficient must be reduced: ${coefficient}` );
-    assert && assert( typeof symbol === 'string', `invalid symbol: ${symbol}` );
+    assert && assert( symbolProperty instanceof ReadOnlyProperty );
 
     options = merge( {
       align: 'center'
@@ -134,17 +197,32 @@ export default class VariableTermNode extends TermNode {
     }
 
     // variable's symbol, with option to show 1 and -1
-    const symbolText = ( !options.showOne && coefficient.getValue() === -1 ) ?
-                       ( MathSymbols.UNARY_MINUS + symbol ) : symbol;
-    const symbolNode = new Text( symbolText, {
+    const stringProperty = new DerivedProperty( [ symbolProperty ],
+      symbol => ( !options.showOne && coefficient.getValue() === -1 ) ? ( MathSymbols.UNARY_MINUS + symbol ) : symbol );
+    const symbolText = new Text( stringProperty, {
       font: options.symbolFont
     } );
-    options.children.push( symbolNode );
+    options.children.push( symbolText );
 
     assert && assert( options.spacing === undefined, 'VariableTermNode sets spacing' );
     options.spacing = coefficient.isInteger() ? options.integerXSpacing : options.fractionXSpacing;
 
-    return new HBox( _.omit( options, 'margin' ) );
+    super( _.omit( options, 'margin' ) );
+
+    // @private
+    this.disposeEquationTermNode = () => {
+      stringProperty.dispose();
+      symbolText.dispose();
+    };
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  dispose() {
+    this.disposeEquationTermNode();
+    super.dispose();
   }
 }
 

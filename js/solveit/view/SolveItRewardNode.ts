@@ -7,6 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import StringProperty from '../../../../axon/js/StringProperty.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
@@ -184,8 +185,13 @@ function createNodes5(): Node[] {
  * Create a variable term node with a specified integer coefficient.
  */
 function createVariableTermNode( coefficient: number ): Node {
-  //TODO https://github.com/phetsims/equality-explorer/issues/187 dynamic locale
-  return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), EqualityExplorerStrings.x, {
+
+  // NOTE: a new SolveItRewardNode is instantiated each time the game displays a reward. So use a static string
+  // here, and don't worry about the locale changing in the middle of displaying the reward. Otherwise, we'd need
+  // to dispose of the Node returned by this function.
+  const stringProperty = new StringProperty( EqualityExplorerStrings.xStringProperty.value );
+
+  return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), stringProperty, {
     diameter: DIAMETER,
     showOne: true // show coefficient for '1x'
   } );

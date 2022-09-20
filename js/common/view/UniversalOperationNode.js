@@ -69,7 +69,8 @@ export default class UniversalOperationNode extends HBox {
       } );
     }
     else if ( operand instanceof VariableTerm ) {
-      operandNode = VariableTermNode.createEquationTermNode( operand.coefficient, operand.variable.symbol, {
+      //TODO https://github.com/phetsims/equality-explorer/issues/187 operandNode must be disposed because it links to a translated string Property
+      operandNode = VariableTermNode.createEquationTermNode( operand.coefficient, operand.variable.symbolProperty, {
         symbolFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_SYMBOL_FONT,
         integerFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT,
         fractionFont: EqualityExplorerConstants.UNIVERSAL_OPERATION_FRACTION_FONT,

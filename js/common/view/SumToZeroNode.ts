@@ -31,6 +31,7 @@ type SumToZeroNodeOptions = SelfOptions & NodeTranslationOptions;
 export default class SumToZeroNode extends Node {
 
   private animation: Animation;
+  private readonly disposeSumToZeroNode: () => void;
 
   public constructor( providedOptions?: SumToZeroNodeOptions ) {
 
@@ -43,26 +44,27 @@ export default class SumToZeroNode extends Node {
       fontSize: EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
     }, providedOptions );
 
-    const zeroNode = new Text( '0', {
+    const zeroText = new Text( '0', {
       font: new PhetFont( options.fontSize )
     } );
 
-    let contentNode = null;
+    let contentNode: Node;
+    let symbolText: Node;
     if ( options.variable ) {
 
-      const symbolNode = new Text( options.variable.symbol, {
+      symbolText = new Text( options.variable.symbolProperty, {
         font: new MathSymbolFont( options.fontSize )
       } );
 
       contentNode = new HBox( {
         spacing: 0,
-        children: [ zeroNode, symbolNode ] // e.g. '0x'
+        children: [ zeroText, symbolText ] // e.g. '0x'
       } );
     }
     else {
 
       // no variable, just show '0'
-      contentNode = zeroNode;
+      contentNode = zeroText;
     }
     contentNode.maxWidth = 2 * options.haloRadius;
 
@@ -94,6 +96,15 @@ export default class SumToZeroNode extends Node {
 
     // removeListener not needed
     this.animation.finishEmitter.addListener( () => this.dispose() ); // removes this Node from the scenegraph
+
+    this.disposeSumToZeroNode = () => {
+      symbolText && symbolText.dispose();
+    };
+  }
+
+  public override dispose(): void {
+    this.disposeSumToZeroNode();
+    super.dispose();
   }
 
   /**

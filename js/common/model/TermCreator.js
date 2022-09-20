@@ -131,6 +131,11 @@ export default class TermCreator {
     } );
   }
 
+  // @public
+  dispose() {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+  }
+
   /**
    * Initializes the plate that this TermCreator is associated with. This association necessarily occurs
    * after instantiation, since TermCreators are instantiated before Plates, and the association is 2-way.
