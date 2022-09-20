@@ -186,9 +186,11 @@ function createNodes5(): Node[] {
  */
 function createVariableTermNode( coefficient: number ): Node {
 
-  // NOTE: a new SolveItRewardNode is instantiated each time the game displays a reward. So use a static string
-  // here, and don't worry about the locale changing in the middle of displaying the reward. Otherwise, we'd need
-  // to dispose of the Node returned by this function.
+  // NOTE: Use a static string here for 'x' because:
+  // (1) a new SolveItRewardNode is instantiated each time the game displays a reward, so this Node would need to
+  //     be disposed when SolveItRewardNode is disposed, and
+  // (2) the implementation of RewardNode converts the Nodes to HTMLImageElements, which are rendered with Canvas,
+  //     so updates to EqualityExplorerStrings.xStringProperty would have no affect.
   const stringProperty = new StringProperty( EqualityExplorerStrings.xStringProperty.value );
 
   return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), stringProperty, {
