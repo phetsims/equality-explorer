@@ -16,7 +16,7 @@ import TermDragListener from './TermDragListener.js';
 export default class CombineTermsDragListener extends TermDragListener {
 
   /**
-   * @param {Node} termNode - Node that the listener is attached to
+   * @param {scenery.Node} termNode - Node that the listener is attached to
    * @param {Term} term - the term being dragged
    * @param {TermCreator} termCreator - the creator of term
    * @param {Object} [options]

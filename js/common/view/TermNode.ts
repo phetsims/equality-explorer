@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Abstract base type for displaying a term.
  *
@@ -8,34 +7,44 @@
  */
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import merge from '../../../../phet-core/js/merge.js';
-import { Circle, Node } from '../../../../scenery/js/imports.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { Circle, Node, NodeOptions, PressListenerEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import Term from '../model/Term.js';
+import TermCreator from '../model/TermCreator.js';
 import CombineTermsDragListener from './CombineTermsDragListener.js';
 import HaloNode from './HaloNode.js';
 import SeparateTermsDragListener from './SeparateTermsDragListener.js';
+import TermDragListener from './TermDragListener.js';
 
 // constants
 const DEFAULT_SHADOW_OFFSET = new Dimension2( 4, 4 );
 
+type SelfOptions = {
+  shadowOffset?: Dimension2;
+};
+
+export type TermNodeOptions = SelfOptions;
+
 export default class TermNode extends Node {
 
-  /**
-   * @param {TermCreator} termCreator
-   * @param {Term} term
-   * @param {Node} contentNode
-   * @param {Node} shadowNode
-   * @param {Object} [options]
-   * @abstract
-   */
-  constructor( termCreator, term, contentNode, shadowNode, options ) {
+  public readonly term: Term;
+  public readonly contentNodeSize: Dimension2;
 
-    options = merge( {
+  private readonly termDragListener: TermDragListener;
+  private readonly disposeTermNode: () => void;
+
+  public constructor( termCreator: TermCreator, term: Term, contentNode: Node, shadowNode: Node, providedOptions?: TermNodeOptions ) {
+
+    const options = optionize<TermNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // SelfOptions
       shadowOffset: DEFAULT_SHADOW_OFFSET,
 
-      // Node options
+      // NodeOptions
       cursor: 'pointer'
-    }, options );
+    }, providedOptions );
 
     contentNode.centerX = 0;
     contentNode.centerY = 0;
@@ -59,26 +68,23 @@ export default class TermNode extends Node {
 
     super( options );
 
-    // @public (read-only)
     this.term = term;
-
-    // @public (read-only)
     this.contentNodeSize = new Dimension2( contentNode.width, contentNode.height );
 
     // Move to position
-    const positionObserver = position => {
+    const positionObserver = ( position: Vector2 ) => {
       this.center = position;
     };
     term.positionProperty.link( positionObserver ); // unlink required in dispose
 
     // Pickable (interactivity)
-    const pickableListener = pickable => {
+    const pickableListener = ( pickable: boolean ) => {
       this.pickable = pickable;
     };
     term.pickableProperty.link( pickableListener ); // unlink required in dispose
 
     // Whether the term is on a plate determines its rendering order
-    const onPlateListener = onPlate => {
+    const onPlateListener = ( onPlate: boolean ) => {
       if ( onPlate ) {
         this.moveToBack();
       }
@@ -89,13 +95,13 @@ export default class TermNode extends Node {
     term.onPlateProperty.link( onPlateListener ); // unlink required in dispose
 
     // Show/hide shadow
-    const shadowVisibleListener = shadowVisible => {
+    const shadowVisibleListener = ( shadowVisible: boolean ) => {
       shadowNode.visible = shadowVisible;
     };
     term.shadowVisibleProperty.link( shadowVisibleListener ); // unlink required in dispose
 
     // Show/hide halo
-    const haloVisibleListener = haloVisible => {
+    const haloVisibleListener = ( haloVisible: boolean ) => {
       haloNode.visible = haloVisible;
     };
     term.haloVisibleProperty.link( haloVisibleListener ); // unlink required in dispose
@@ -104,16 +110,16 @@ export default class TermNode extends Node {
       haloRadius: haloRadius
     };
 
-    // @private dispose required
     if ( termCreator.combineLikeTermsEnabled ) {
+      // dispose required
       this.termDragListener = new CombineTermsDragListener( this, term, termCreator, dragListenerOptions );
     }
     else {
+      // dispose required
       this.termDragListener = new SeparateTermsDragListener( this, term, termCreator, dragListenerOptions );
     }
     this.addInputListener( this.termDragListener ); // removeListener required in dispose
 
-    // @private
     this.disposeTermNode = () => {
 
       if ( term.positionProperty.hasListener( positionObserver ) ) {
@@ -141,11 +147,7 @@ export default class TermNode extends Node {
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeTermNode();
     super.dispose();
   }
@@ -155,10 +157,8 @@ export default class TermNode extends Node {
    * The user drags a new term out of a toolbox below the scale by clicking on a TermCreatorNode.
    * That action causes TermCreatorNode to instantiate a TermNode.  This function allows
    * TermCreatorNode to forward the startDrag event to the TermNode that it created.
-   * @param {SceneryEvent} event
-   * @public
    */
-  startDrag( event ) {
+  public startDrag( event: PressListenerEvent ): void {
     this.termDragListener.press( event );
   }
 }
