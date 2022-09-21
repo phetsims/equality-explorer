@@ -129,16 +129,17 @@ export default class VariableTermCreator extends TermCreator {
   /**
    * Instantiates the Node that corresponds to this term.
    * @param {Term} term
-   * @param {Object} [options] - passed to the VariableTermNode's constructor
    * @returns {TermNode}
    * @public
    * @override
    */
-  createTermNode( term, options ) {
-    return new VariableTermNode( this, term, merge( {
-      positiveFill: this.positiveFill,
-      negativeFill: this.negativeFill
-    }, options ) );
+  createTermNode( term ) {
+    return new VariableTermNode( this, term, {
+      interactiveTermNodeOptions: {
+        positiveFill: this.positiveFill,
+        negativeFill: this.negativeFill
+      }
+    } );
   }
 }
 

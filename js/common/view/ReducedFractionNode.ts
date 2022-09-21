@@ -8,6 +8,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -28,7 +29,7 @@ type SelfOptions = {
   ySpacing?: number; // vertical spacing above/below the fraction line
 };
 
-type ReducedFractionNodeOptions = SelfOptions & NodeTranslationOptions;
+export type ReducedFractionNodeOptions = SelfOptions & NodeTranslationOptions & PickOptional<NodeOptions, 'maxWidth' | 'maxHeight'>;
 
 export default class ReducedFractionNode extends Node {
 

@@ -665,12 +665,11 @@ export default class TermCreator {
   /**
    * Instantiates the Node that corresponds to a term.
    * @param {Term} term
-   * @param {Object} [options] - passed to the TermNode's constructor
    * @returns {TermNode}
    * @public
    * @abstract
    */
-  createTermNode( term, options ) {
+  createTermNode( term ) {
     throw new Error( 'createTermNode must be implemented by subtypes' );
   }
 }

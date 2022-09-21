@@ -80,13 +80,12 @@ export default class ObjectTermCreator extends TermCreator {
   /**
    * Instantiates the Node that corresponds to this term.
    * @param {Term} term
-   * @param {Object} [options] - passed to the ObjectTermNode's constructor
    * @returns {TermNode}
    * @public
    * @override
    */
-  createTermNode( term, options ) {
-    return new ObjectTermNode( this, term, options );
+  createTermNode( term ) {
+    return new ObjectTermNode( this, term );
   }
 }
 

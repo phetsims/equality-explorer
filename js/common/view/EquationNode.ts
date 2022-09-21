@@ -264,8 +264,7 @@ class ExpressionNode extends HBox {
             const equationTermNode = VariableTermNode.createEquationTermNode( coefficient, termCreator.variable.symbolProperty, {
               integerFont: providedOptions.integerFont,
               fractionFont: providedOptions.fractionFont,
-              symbolFont: providedOptions.symbolFont,
-              coefficientSpacing: providedOptions.coefficientSpacing
+              symbolFont: providedOptions.symbolFont
             } );
 
             children.push( equationTermNode );

@@ -46,7 +46,9 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
           Fraction.fromInteger( scene.challengeGenerator.level ), EqualityExplorerStrings.xStringProperty, {
             diameter: 50,
             margin: 15,
-            showOne: true
+            equationTermNodeOptions: {
+              showOne: true
+            }
           } ),
         scoreProperty: scene.scoreProperty,
         options: {

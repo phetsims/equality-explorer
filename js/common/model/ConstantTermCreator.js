@@ -108,13 +108,12 @@ export default class ConstantTermCreator extends TermCreator {
   /**
    * Instantiates the Node that corresponds to this term.
    * @param {Term} term
-   * @param {Object} [options]  - passed to the ConstantTermNode's constructor
    * @returns {TermNode}
    * @public
    * @override
    */
-  createTermNode( term, options ) {
-    return new ConstantTermNode( this, term, options );
+  createTermNode( term ) {
+    return new ConstantTermNode( this, term );
   }
 }
 

@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Displays a variable term.
  *
@@ -8,48 +7,69 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
-import merge from '../../../../phet-core/js/merge.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Font, HBox, HBoxOptions, Node, NodeOptions, Rectangle, TColor, Text } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ReducedFractionNode from './ReducedFractionNode.js';
-import TermNode from './TermNode.js';
+import TermNode, { TermNodeOptions } from './TermNode.js';
+import VariableTermCreator from '../model/VariableTermCreator.js';
+import VariableTerm from '../model/VariableTerm.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
-// constants
-const DEFAULT_OPTIONS = {
-  margin: null, // {number|null} margin, determined empirically if null
-  positiveFill: EqualityExplorerColors.POSITIVE_X_FILL, // fill of background square for positive coefficient
-  negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL, // fill of background square for negative coefficient
-  positiveLineDash: [], // solid border for positive coefficient
-  negativeLineDash: [ 4, 4 ], // dashed border for negative coefficient
-  integerXSpacing: 4, // space between integer coefficient and variable symbol
-  fractionXSpacing: 4, // space between fractional coefficient and variable symbol
-  integerFont: new PhetFont( 40 ), // font for integer coefficient
-  fractionFont: new PhetFont( 20 ), // font for fractional coefficient
-  symbolFont: new MathSymbolFont( 40 ), // font for variable symbol
-  showOne: false // show 1 or -1 coefficient
+type EquationTermNodeSelfOptions = {
+  integerXSpacing?: number; // space between integer coefficient and variable symbol
+  fractionXSpacing?: number; // space between fractional coefficient and variable symbol
+  integerFont?: Font; // font for integer coefficient
+  fractionFont?: Font; // font for fractional coefficient
+  symbolFont?: MathSymbolFont; // font for variable symbol
+  showOne?: boolean; // true will show 1 and -1 coefficients
 };
+
+type EquationTermNodeOptions = EquationTermNodeSelfOptions &
+  PickOptional<HBoxOptions, 'align' | 'maxWidth' | 'maxHeight'>;
+
+type InteractiveTermNodeSelfOptions = {
+  diameter?: number;
+  margin?: number | null; // margin, determined empirically if null
+  positiveFill?: TColor; // fill of background square for positive coefficient
+  negativeFill?: TColor; // fill of background square for negative coefficient
+  positiveLineDash?: number[]; // lineDash for positive coefficient
+  negativeLineDash?: number[]; // lineDash for negative coefficient
+  equationTermNodeOptions?: EquationTermNodeOptions; // propagated to EquationTermNode
+};
+
+type InteractiveTermNodeOptions = InteractiveTermNodeSelfOptions &
+  StrictOmit<NodeOptions, 'children' | 'maxWidth' | 'maxHeight'>;
+
+type SelfOptions = {
+  interactiveTermNodeOptions?: StrictOmit<InteractiveTermNodeOptions, 'diameter'>; // propagated to InteractiveTermNode
+};
+
+type VariableTermNodeOptions = SelfOptions & TermNodeOptions;
 
 export default class VariableTermNode extends TermNode {
 
-  /**
-   * @param {TermCreator} termCreator
-   * @param {VariableTerm} term
-   * @param {Object} [options]
-   */
-  constructor( termCreator, term, options ) {
+  private readonly disposeVariableTermNode: () => void;
 
-    options = merge( {}, DEFAULT_OPTIONS, options );
+  public constructor( termCreator: VariableTermCreator, term: VariableTerm, providedOptions?: VariableTermNodeOptions ) {
+
+    const options = optionize<VariableTermNodeOptions, StrictOmit<SelfOptions, 'interactiveTermNodeOptions'>, TermNodeOptions>()( {
+      // empty optionize call because we access options.interactiveTermNodeOptions below
+    }, providedOptions );
 
     // contentNode must be disposed!
     const contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.variable.symbolProperty,
-      merge( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
+      combineOptions<InteractiveTermNodeOptions>( {
+        diameter: term.diameter
+      }, options.interactiveTermNodeOptions ) );
 
     const shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
       fill: 'black',
@@ -58,110 +78,30 @@ export default class VariableTermNode extends TermNode {
 
     super( termCreator, term, contentNode, shadowNode, options );
 
-    // @private
     this.disposeVariableTermNode = () => {
       contentNode.dispose();
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeVariableTermNode();
     super.dispose();
   }
 
   /**
    * Creates the representation of a term that the user interacts with,
-   * in this case a coefficient and variable inside a square.
-   * @param {Fraction} coefficient
-   * @param {TReadOnlyProperty.<string>} symbolProperty - the variable's symbol, e.g. 'x'
-   * @param {Object} [options] - see DEFAULT_OPTIONS
-   * @returns {Node}
-   * @public
-   * @static
    */
-  static createInteractiveTermNode( coefficient, symbolProperty, options ) {
-    return new InteractiveTermNode( coefficient, symbolProperty, options );
+  public static createInteractiveTermNode( coefficient: Fraction, symbolProperty: TReadOnlyProperty<string>,
+                                           providedOptions?: InteractiveTermNodeOptions ): Node {
+    return new InteractiveTermNode( coefficient, symbolProperty, providedOptions );
   }
 
   /**
    * Creates the representation of a term that is shown in equations.
-   * For constant terms, this same representation appears on interactive terms.
-   * @param {Fraction} coefficient
-   * @param {TReadOnlyProperty.<string>} symbolProperty - the variable's symbol, e.g. 'x'
-   * @param {Object} [options] - see ReducedFractionNode
-   * @returns {Node}
-   * @public
-   * @static
    */
-  static createEquationTermNode( coefficient, symbolProperty, options ) {
-    return new EquationTermNode( coefficient, symbolProperty, options );
-  }
-}
-
-/**
- * A coefficient and variable inside a square.
- */
-class InteractiveTermNode extends Node {
-
-  /**
-   * @param {Fraction} coefficient
-   * @param {TReadOnlyProperty.<string>} symbolProperty - the variable's symbol, e.g. 'x'
-   * @param {Object} [options] - see DEFAULT_OPTIONS
-   */
-  constructor( coefficient, symbolProperty, options ) {
-
-    assert && assert( coefficient instanceof Fraction, `invalid coefficient: ${coefficient}` );
-    assert && assert( coefficient.isReduced(), `coefficient must be reduced: ${coefficient}` );
-
-    options = merge( {
-      diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-    }, DEFAULT_OPTIONS, options );
-
-    if ( options.margin === null ) {
-      options.margin = 0.12 * options.diameter; // determined empirically
-    }
-
-    const isPositive = ( coefficient.getValue() >= 0 );
-
-    // background square
-    const squareNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
-      stroke: 'black',
-      fill: isPositive ? options.positiveFill : options.negativeFill,
-      lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
-    } );
-
-    // equationTermNode must be disposed!
-    const equationTermNode = VariableTermNode.createEquationTermNode( coefficient, symbolProperty, merge( {}, options, {
-      align: 'center',
-      maxWidth: squareNode.width - ( 2 * options.margin ),
-      maxHeight: squareNode.height - ( 2 * options.margin )
-    } ) );
-    equationTermNode.boundsProperty.link( bounds => {
-      equationTermNode.center = squareNode.center;
-    } );
-
-    assert && assert( !options.children, 'VariableTermNode sets children' );
-    options.children = [ squareNode, equationTermNode ];
-
-    super( options );
-
-    // @private
-    this.disposeInteractiveTermNode = () => {
-      equationTermNode.dispose();
-    };
-  }
-
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
-    this.disposeInteractiveTermNode();
-    super.dispose();
+  public static createEquationTermNode( coefficient: Fraction, symbolProperty: TReadOnlyProperty<string>,
+                                        providedOptions?: EquationTermNodeOptions ): Node {
+    return new EquationTermNode( coefficient, symbolProperty, providedOptions );
   }
 }
 
@@ -170,22 +110,26 @@ class InteractiveTermNode extends Node {
  */
 class EquationTermNode extends HBox {
 
-  /**
-   * @param {Fraction} coefficient
-   * @param {TReadOnlyProperty.<string>} symbolProperty - the variable's symbol, e.g. 'x'
-   * @param {Object} [options] - see ReducedFractionNode
-   */
-  constructor( coefficient, symbolProperty, options ) {
+  private readonly disposeEquationTermNode: () => void;
 
-    assert && assert( coefficient instanceof Fraction, `invalid coefficient: ${coefficient}` );
+  public constructor( coefficient: Fraction, symbolProperty: TReadOnlyProperty<string>, providedOptions?: EquationTermNodeOptions ) {
+
     assert && assert( coefficient.isReduced(), `coefficient must be reduced: ${coefficient}` );
-    assert && assert( symbolProperty instanceof ReadOnlyProperty );
 
-    options = merge( {
+    const options = optionize<EquationTermNodeOptions, EquationTermNodeSelfOptions, HBoxOptions>()( {
+      
+      // EquationTermNodeSelfOptions
+      integerXSpacing: 4,
+      fractionXSpacing: 4,
+      integerFont: new PhetFont( 40 ),
+      fractionFont: new PhetFont( 20 ),
+      symbolFont: new MathSymbolFont( 40 ),
+      showOne: false, // do not show 1 and -1 coefficients
+      
+      // HBoxOptions
       align: 'center'
-    }, DEFAULT_OPTIONS, options );
+    }, providedOptions );
 
-    assert && assert( !options.children, 'sets its own children' );
     options.children = [];
 
     // coefficient, with option to show 1 and -1
@@ -205,24 +149,80 @@ class EquationTermNode extends HBox {
     } );
     options.children.push( symbolText );
 
-    assert && assert( options.spacing === undefined, 'VariableTermNode sets spacing' );
     options.spacing = coefficient.isInteger() ? options.integerXSpacing : options.fractionXSpacing;
 
-    super( _.omit( options, 'margin' ) );
+    super( options );
 
-    // @private
     this.disposeEquationTermNode = () => {
       stringProperty.dispose();
       symbolText.dispose();
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeEquationTermNode();
+    super.dispose();
+  }
+}
+
+/**
+ * The representation of a term that the user interacts with, in this case a coefficient and variable inside a square.
+ */
+class InteractiveTermNode extends Node {
+
+  private readonly disposeInteractiveTermNode: () => void;
+
+  public constructor( coefficient: Fraction, symbolProperty: TReadOnlyProperty<string>, providedOptions?: InteractiveTermNodeOptions ) {
+
+    assert && assert( coefficient.isReduced(), `coefficient must be reduced: ${coefficient}` );
+
+    const options = optionize<InteractiveTermNodeOptions, StrictOmit<InteractiveTermNodeSelfOptions, 'equationTermNodeOptions'>, NodeOptions>()( {
+      
+      // InteractiveTermNodeSelfOptions
+      diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
+      margin: null,
+      positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
+      negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL,
+      positiveLineDash: [], // solid border for positive coefficient
+      negativeLineDash: [ 4, 4 ] // dashed border for negative coefficient
+    }, providedOptions );
+
+    if ( options.margin === null ) {
+      options.margin = 0.12 * options.diameter; // determined empirically
+    }
+
+    const isPositive = ( coefficient.getValue() >= 0 );
+
+    // background square
+    const squareNode = new Rectangle( 0, 0, options.diameter, options.diameter, {
+      stroke: 'black',
+      fill: isPositive ? options.positiveFill : options.negativeFill,
+      lineDash: isPositive ? options.positiveLineDash : options.negativeLineDash
+    } );
+
+    // equationTermNode must be disposed, because it is linked to a translated string Property
+    const equationTermNode = VariableTermNode.createEquationTermNode( coefficient, symbolProperty,
+      combineOptions<EquationTermNodeOptions>( {
+        align: 'center',
+        maxWidth: squareNode.width - ( 2 * options.margin ),
+        maxHeight: squareNode.height - ( 2 * options.margin )
+      }, options.equationTermNodeOptions )
+    );
+    equationTermNode.boundsProperty.link( bounds => {
+      equationTermNode.center = squareNode.center;
+    } );
+
+    options.children = [ squareNode, equationTermNode ];
+
+    super( options );
+
+    this.disposeInteractiveTermNode = () => {
+      equationTermNode.dispose();
+    };
+  }
+
+  public override dispose(): void {
+    this.disposeInteractiveTermNode();
     super.dispose();
   }
 }

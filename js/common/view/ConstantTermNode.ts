@@ -1,46 +1,60 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Displays a constant term.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Circle, Node } from '../../../../scenery/js/imports.js';
+import { Circle, Node, NodeOptions, TColor } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
-import ReducedFractionNode from './ReducedFractionNode.js';
-import TermNode from './TermNode.js';
+import ConstantTerm from '../model/ConstantTerm.js';
+import ConstantTermCreator from '../model/ConstantTermCreator.js';
+import ReducedFractionNode, { ReducedFractionNodeOptions } from './ReducedFractionNode.js';
+import TermNode, { TermNodeOptions } from './TermNode.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
-// constants
-const DEFAULT_OPTIONS = {
-  positiveFill: EqualityExplorerColors.POSITIVE_CONSTANT_FILL, // fill of background circle for positive coefficient
-  negativeFill: EqualityExplorerColors.NEGATIVE_CONSTANT_FILL, // fill of background circle for negative coefficient
-  positiveLineDash: [], // solid border for positive coefficient
-  negativeLineDash: [ 3, 3 ], // dashed border for negative coefficient
-  margin: 8, // margin inside the background circle
-  integerFont: new PhetFont( 40 ), // font for integer constant value
-  fractionFont: new PhetFont( 20 ) // font for fractional constant value
+type EquationTermNodeSelfOptions = EmptySelfOptions;
+
+type EquationTermNodeOptions = EquationTermNodeSelfOptions &
+  PickOptional<ReducedFractionNodeOptions, 'integerFont' | 'fractionFont' | 'maxWidth' | 'maxHeight'>;
+
+type InteractiveTermNodeSelfOptions = {
+  diameter?: number;
+  margin?: number | null; // margin, determined empirically if null
+  positiveFill?: TColor; // fill of background circle for positive coefficient
+  negativeFill?: TColor; // fill of background circle for negative coefficient
+  positiveLineDash?: number[]; // lineDash for positive coefficient
+  negativeLineDash?: number[]; // lineDash for negative coefficient
+  equationTermNodeOptions?: EquationTermNodeOptions; // propagated to EquationTermNode
 };
+
+type InteractiveTermNodeOptions = InteractiveTermNodeSelfOptions;
+
+type SelfOptions = {
+  interactiveTermNodeOptions?: StrictOmit<InteractiveTermNodeOptions, 'diameter'>; // propagated to InteractiveTermNode
+};
+
+type ConstantTermNodeOptions = SelfOptions & TermNodeOptions;
 
 export default class ConstantTermNode extends TermNode {
 
-  /**
-   * @param {ConstantTermCreator} termCreator
-   * @param {ConstantTerm} term
-   * @param {Object} [options]
-   */
-  constructor( termCreator, term, options ) {
+  public constructor( termCreator: ConstantTermCreator, term: ConstantTerm, providedOptions?: ConstantTermNodeOptions ) {
 
-    options = merge( {}, DEFAULT_OPTIONS, options );
+    const options = optionize<ConstantTermNodeOptions, StrictOmit<SelfOptions, 'interactiveTermNodeOptions'>, TermNodeOptions>()( {
+      // empty optionize call because we access options.interactiveTermNodeOptions below
+    }, providedOptions );
 
     const contentNode = ConstantTermNode.createInteractiveTermNode( term.constantValue,
-      merge( { diameter: term.diameter }, _.pick( options, _.keys( DEFAULT_OPTIONS ) ) ) );
+      combineOptions<InteractiveTermNodeOptions>( {
+        diameter: term.diameter
+      }, options.interactiveTermNodeOptions ) );
 
     const shadowNode = new Circle( term.diameter / 2, {
       fill: 'black',
@@ -51,21 +65,55 @@ export default class ConstantTermNode extends TermNode {
   }
 
   /**
-   * Creates the representation of a term that the user interacts with, in this case a number inside a circle.
-   * @param {Fraction} constantValue - value shown on the icon
-   * @param {Object} [options] - see DEFAULT_OPTIONS
-   * @returns {Node}
-   * @public
-   * @static
+   * Creates the representation of a term that the user interacts with.
    */
-  static createInteractiveTermNode( constantValue, options ) {
+  public static createInteractiveTermNode( constantValue: Fraction, providedOptions?: InteractiveTermNodeOptions ): Node {
+    return new InteractiveTermNode( constantValue, providedOptions );
+  }
 
-    assert && assert( constantValue instanceof Fraction, `invalid constantValue: ${constantValue}` );
+  /**
+   * Creates the representation of a term that is shown in equations.
+   */
+  public static createEquationTermNode( constantValue: Fraction, providedOptions?: EquationTermNodeOptions ): Node {
+    return new EquationTermNode( constantValue, providedOptions );
+  }
+}
+
+/**
+ * The representation of a term that is shown in equations, a reduced fraction.
+ */
+class EquationTermNode extends ReducedFractionNode {
+  public constructor( constantValue: Fraction, providedOptions?: EquationTermNodeOptions ) {
     assert && assert( constantValue.isReduced(), `constantValue must be reduced: ${constantValue}` );
 
-    options = merge( {
-      diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-    }, DEFAULT_OPTIONS, options );
+    const options = optionize<EquationTermNodeOptions, EquationTermNodeSelfOptions, ReducedFractionNodeOptions>()( {
+
+      // ReducedFractionNodeOptions
+      integerFont: new PhetFont( 40 ),
+      fractionFont: new PhetFont( 20 )
+    }, providedOptions );
+
+    super( constantValue, options );
+  }
+}
+
+/**
+ * The representation of a term that the user interacts with, in this case a number inside a circle.
+ */
+class InteractiveTermNode extends Node {
+  public constructor( constantValue: Fraction, providedOptions?: InteractiveTermNodeOptions ) {
+    assert && assert( constantValue.isReduced(), `constantValue must be reduced: ${constantValue}` );
+
+    const options = optionize<InteractiveTermNodeOptions, StrictOmit<InteractiveTermNodeSelfOptions, 'equationTermNodeOptions'>, NodeOptions>()( {
+
+      // InteractiveTermNodeSelfOptions
+      diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
+      margin: 8,
+      positiveFill: EqualityExplorerColors.POSITIVE_CONSTANT_FILL,
+      negativeFill: EqualityExplorerColors.NEGATIVE_CONSTANT_FILL,
+      positiveLineDash: [],
+      negativeLineDash: [ 3, 3 ]
+    }, providedOptions );
 
     const isPositive = ( constantValue.getValue() >= 0 );
 
@@ -78,32 +126,19 @@ export default class ConstantTermNode extends TermNode {
 
     // constant value
     const margin = 0.18 * options.diameter; // determined empirically
-    const equationTermNode = ConstantTermNode.createEquationTermNode( constantValue, {
-      fractionFont: options.fractionFont,
-      integerFont: options.integerFont,
-      maxWidth: circleNode.width - ( 2 * margin ),
-      maxHeight: circleNode.height - ( 2 * margin ),
-      center: circleNode.center
+    const equationTermNode = ConstantTermNode.createEquationTermNode( constantValue,
+      combineOptions<EquationTermNodeOptions>( {
+        maxWidth: circleNode.width - ( 2 * margin ),
+        maxHeight: circleNode.height - ( 2 * margin )
+      }, options.equationTermNodeOptions )
+    );
+    equationTermNode.boundsProperty.link( bounds => {
+      equationTermNode.center = circleNode.center;
     } );
 
-    return new Node( {
-      children: [ circleNode, equationTermNode ]
-    } );
-  }
+    options.children = [ circleNode, equationTermNode ];
 
-  /**
-   * Creates the representation of a term that is shown in equations.
-   * For constant terms, this same representation appears on interactive terms.
-   * @param {Fraction} constantValue
-   * @param {Object} [options] - see ReducedFractionNode
-   * @returns {Node}
-   * @public
-   * @static
-   */
-  static createEquationTermNode( constantValue, options ) {
-    assert && assert( constantValue instanceof Fraction, `invalid constantValue: ${constantValue}` );
-    assert && assert( constantValue.isReduced(), `constantValue must be reduced: ${constantValue}` );
-    return new ReducedFractionNode( constantValue, options );
+    super( options );
   }
 }
 

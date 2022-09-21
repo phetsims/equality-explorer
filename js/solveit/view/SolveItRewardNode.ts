@@ -195,7 +195,9 @@ function createVariableTermNode( coefficient: number ): Node {
 
   return VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( coefficient ), stringProperty, {
     diameter: DIAMETER,
-    showOne: true // show coefficient for '1x'
+    equationTermNodeOptions: {
+      showOne: true // show coefficient for '1x'
+    }
   } );
 }
 
