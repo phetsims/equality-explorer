@@ -50,7 +50,7 @@ type SelfOptions = {
   pickableWhileAnimating?: boolean; // is termNode pickable while term is animating?
 };
 
-type TermDragListenerOptions = SelfOptions;
+export type TermDragListenerOptions = SelfOptions;
 
 export default abstract class TermDragListener extends DragListener {
 
@@ -292,7 +292,7 @@ export default abstract class TermDragListener extends DragListener {
   /**
    * Returns terms to the toolboxes where they were created.
    */
-  private animateToToolbox(): void {
+  protected animateToToolbox(): void {
     assert && assert( this.term.toolboxPosition, `toolboxPosition was not initialized for term: ${this.term}` );
 
     this.term.pickableProperty.value = this.pickableWhileAnimating;
