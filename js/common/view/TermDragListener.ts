@@ -247,7 +247,7 @@ export default abstract class TermDragListener extends DragListener {
                   EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
       } );
       const sumToZeroCell = this.plate.getCellForTerm( this.likeTerm )!;
-      assert && assert( sumToZeroCell );
+      assert && assert( sumToZeroCell !== null );
 
       // dispose of terms that sum to zero
       !this.term.isDisposed && this.term.dispose();
