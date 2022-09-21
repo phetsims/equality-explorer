@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * View of a scene in the 'Numbers' screen.  Identical to the 'Basics' screen.
  * Adds no new functionality. Provided for symmetry, so that every screen has a *SceneNode type.
