@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Displays an operation.
  * Used in the animation that occurs when the universal operation 'go' button is pressed.
@@ -8,28 +7,32 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import { HBox, Text } from '../../../../scenery/js/imports.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import { HBox, HBoxOptions, Node, NodeTranslationOptions, Text } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from '../model/ConstantTerm.js';
+import UniversalOperation, { UniversalOperand, UniversalOperator } from '../model/UniversalOperation.js';
 import VariableTerm from '../model/VariableTerm.js';
 import ConstantTermNode from './ConstantTermNode.js';
 import VariableTermNode from './VariableTermNode.js';
 
+type SelfOptions = EmptySelfOptions;
+
+type UniversalOperationNodeOptions = SelfOptions & NodeTranslationOptions & PickOptional<HBoxOptions, 'maxHeight'>;
+
 export default class UniversalOperationNode extends HBox {
 
-  /**
-   * @param {UniversalOperation} operation
-   * @param {Object} [options]
-   */
-  constructor( operation, options ) {
+  private readonly disposeUniversalOperationNode: () => void;
 
-    options = merge( {
+  public constructor( operation: UniversalOperation, providedOptions?: UniversalOperationNodeOptions ) {
 
-      // HBox options
+    const options = optionize<UniversalOperationNodeOptions, SelfOptions, HBoxOptions>()( {
+
+      // HBoxOptions
       spacing: 4
-    }, options );
+    }, providedOptions );
 
     const operatorNode = UniversalOperationNode.createOperatorNode( operation.operator );
 
@@ -41,29 +44,20 @@ export default class UniversalOperationNode extends HBox {
 
     super( options );
 
-    // @private
     this.disposeUniversalOperationNode = () => {
       operandNode.dispose();
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeUniversalOperationNode();
     super.dispose();
   }
 
   /**
    * Creates the view for a universal operator.
-   * @param {UniversalOperator} operator
-   * @returns {scenery.Node}
-   * @public
-   * @static
    */
-  static createOperatorNode( operator ) {
+  public static createOperatorNode( operator: UniversalOperator ): Node {
     return new Text( operator, {
       font: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT
     } );
@@ -71,12 +65,8 @@ export default class UniversalOperationNode extends HBox {
 
   /**
    * Creates the view for a universal operand.
-   * @param {Term} operand
-   * @returns {scenery.Node}
-   * @public
-   * @static
    */
-  static createOperandNode( operand ) {
+  public static createOperandNode( operand: UniversalOperand ): Node {
 
     let operandNode = null;
 
