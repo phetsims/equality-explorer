@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * View of a scene in the 'Variables' screen.
  * Same as the 'Basics' screen, but with a control for changing the variable value.
