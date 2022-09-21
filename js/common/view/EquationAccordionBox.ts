@@ -1,41 +1,52 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Accordion box that displays the equation or inequality.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import { Text } from '../../../../scenery/js/imports.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import TermCreator from '../model/TermCreator.js';
 import EquationPanel from './EquationPanel.js';
+
+type SelfOptions = {
+
+  // this accordion box is designed to be a fixed size, regardless of its content
+  fixedWidth?: number;
+  fixedHeight?: number;
+};
+
+type EquationAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
 
 export default class EquationAccordionBox extends AccordionBox {
 
   /**
-   * @param {TermCreator[]} leftTermCreators - left side of equation
-   * @param {TermCreator[]} rightTermCreators - right side of equation
-   * @param {Object} [options]
+   * @param leftTermCreators - left side of equation
+   * @param rightTermCreators - right side of equation
+   * @param [providedOptions]
    */
-  constructor( leftTermCreators, rightTermCreators, options ) {
+  public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[], providedOptions?: EquationAccordionBoxOptions ) {
 
-    options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
-
-      // this accordion box is designed to be a fixed size, regardless of its content
-      fixedWidth: 100,
-      fixedHeight: 75,
-
-      // AccordionBox options
+    const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
       showTitleWhenExpanded: false,
       contentXMargin: 8,
       contentYMargin: 4
+    } );
 
-    }, options );
+    const defaultOptions = optionize<EquationAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
+
+      // SelfOptions
+      fixedWidth: 100,
+      fixedHeight: 75
+    }, accordionBoxOptions );
+
+    const options = optionize<EquationAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( defaultOptions, providedOptions );
 
     assert && assert( options.maxWidth === undefined, 'EquationAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
@@ -58,8 +69,7 @@ export default class EquationAccordionBox extends AccordionBox {
     super( contentNode, options );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }

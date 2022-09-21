@@ -12,10 +12,26 @@ import Fraction from '../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../scenery-phet/js/MathSymbolFont.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import { AccordionBoxOptions } from '../../../sun/js/AccordionBox.js';
 import equalityExplorer from '../equalityExplorer.js';
 
-// constants
 const PANEL_CORNER_RADIUS = 3;
+
+// options shared by all accordion boxes
+const ACCORDION_BOX_OPTIONS: AccordionBoxOptions = {
+  resize: false,
+  fill: 'white',
+  titleAlignX: 'left',
+  titleXSpacing: 8,
+  buttonXMargin: 10,
+  buttonYMargin: 8,
+  cornerRadius: PANEL_CORNER_RADIUS,
+  expandCollapseButtonOptions: {
+    sideLength: 20,
+    touchAreaXDilation: 10,
+    touchAreaYDilation: 10
+  }
+};
 
 const EqualityExplorerConstants = {
 
@@ -58,21 +74,7 @@ const EqualityExplorerConstants = {
   // universal operators, in the order that they appear in the operator picker
   OPERATORS: [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ],
 
-  // options shared by all accordion boxes
-  ACCORDION_BOX_OPTIONS: {
-    resize: false,
-    fill: 'white',
-    titleAlignX: 'left',
-    titleXSpacing: 8,
-    buttonXMargin: 10,
-    buttonYMargin: 8,
-    cornerRadius: PANEL_CORNER_RADIUS,
-    expandCollapseButtonOptions: {
-      sideLength: 20,
-      touchAreaXDilation: 10,
-      touchAreaYDilation: 10
-    }
-  },
+  ACCORDION_BOX_OPTIONS: ACCORDION_BOX_OPTIONS,
 
   // initial state of accordion boxes for all screens
   EQUATION_ACCORDION_BOX_EXPANDED: true,

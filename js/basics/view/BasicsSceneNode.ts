@@ -7,7 +7,6 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import TProperty from '../../../../axon/js/TProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -49,8 +48,8 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
 
   public constructor( scene: BasicsScene,
                       sceneProperty: Property<BasicsScene>,
-                      equationAccordionBoxExpandedProperty: TProperty<boolean>,
-                      snapshotsAccordionBoxExpandedProperty: TProperty<boolean>,
+                      equationAccordionBoxExpandedProperty: Property<boolean>,
+                      snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
                       providedOptions?: BasicsSceneNodeOptions ) {
 
