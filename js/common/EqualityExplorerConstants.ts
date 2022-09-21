@@ -7,6 +7,7 @@
  */
 
 import Range from '../../../dot/js/Range.js';
+import { CreditsData } from '../../../joist/js/CreditsNode.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import Fraction from '../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../scenery-phet/js/MathSymbolFont.js';
@@ -33,18 +34,20 @@ const ACCORDION_BOX_OPTIONS: AccordionBoxOptions = {
   }
 };
 
+// Credits are applied to the entire family of sims:
+// equality-explorer, equality-explorer-basics and equality-explorer-two-variables
+const CREDITS: CreditsData = {
+  leadDesign: 'Amanda McGarry',
+  softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
+  team: 'Diana L\u00f3pez Tavares, Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
+  qualityAssurance: 'Steele Dalton, Ethan Johnson, Megan Lai, Andrea Lin, Emily Miller, Liam Mulhall, Jacob Romero, Nancy Salpepi, Kathryn Woessner',
+  graphicArts: 'Mariah Hermsmeyer, Cheryl McCutchan',
+  thanks: ''
+};
+
 const EqualityExplorerConstants = {
 
-  // credits, applied to the entire family of sims:
-  // equality-explorer, equality-explorer-basics and equality-explorer-two-variables
-  CREDITS: {
-    leadDesign: 'Amanda McGarry',
-    softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
-    team: 'Diana L\u00f3pez Tavares, Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
-    qualityAssurance: 'Steele Dalton, Ethan Johnson, Megan Lai, Andrea Lin, Emily Miller, Liam Mulhall, Jacob Romero, Nancy Salpepi, Kathryn Woessner',
-    graphicArts: 'Mariah Hermsmeyer, Cheryl McCutchan',
-    thanks: ''
-  },
+  CREDITS: CREDITS,
 
   // ScreenView
   SCREEN_VIEW_X_MARGIN: 20,
