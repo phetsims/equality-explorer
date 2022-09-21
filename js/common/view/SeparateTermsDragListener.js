@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Drag listener used when like terms occupy separate cells on a plate.
  * Like terms are combined only if they sum to zero.
