@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * View of a scene in the 'Numbers' screen.  Identical to the 'Basics' screen.
  * Adds no new functionality. Provided for symmetry, so that every screen has a *SceneNode type.
@@ -8,23 +7,27 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import BasicsSceneNode from '../../basics/view/BasicsSceneNode.js';
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import BasicsSceneNode, { BasicsSceneNodeOptions } from '../../basics/view/BasicsSceneNode.js';
+import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import equalityExplorer from '../../equalityExplorer.js';
+
+type SelfOptions = EmptySelfOptions;
+
+export type NumbersSceneNodeOptions = SelfOptions & BasicsSceneNodeOptions;
 
 export default class NumbersSceneNode extends BasicsSceneNode {
 
-  /**
-   * @param {EqualityExplorerScene} scene
-   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
-   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
-   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
-   * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
-   */
-  constructor( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-               snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  public constructor( scene: EqualityExplorerScene,
+                      sceneProperty: Property<EqualityExplorerScene>,
+                      equationAccordionBoxExpandedProperty: Property<boolean>,
+                      snapshotsAccordionBoxExpandedProperty: Property<boolean>,
+                      layoutBounds: Bounds2,
+                      providedOptions?: NumbersSceneNodeOptions ) {
     super( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
 

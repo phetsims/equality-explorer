@@ -135,7 +135,7 @@ export default class EqualityExplorerScreenView extends ScreenView {
    * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
    * @param {Bounds2} layoutBounds
    * @param {Object} [options]
-   * @returns {Node}
+   * @returns {scenery.Node}
    * @protected
    * @abstract
    */

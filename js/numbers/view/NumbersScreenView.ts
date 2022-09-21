@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * View for the 'Numbers' screen.
  *
@@ -9,34 +8,28 @@
 
 import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import NumbersSceneNode from './NumbersSceneNode.js';
+import NumbersSceneNode, { NumbersSceneNodeOptions } from './NumbersSceneNode.js';
+import NumbersModel from '../model/NumbersModel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 export default class NumbersScreenView extends EqualityExplorerScreenView {
 
-  /**
-   * @param {NumbersModel} model
-   * @param {Tandem} tandem
-   */
-  constructor( model, tandem ) {
+  public constructor( model: NumbersModel, tandem: Tandem ) {
     super( model, tandem );
   }
 
-  /**
-   * Creates the Node for this scene.
-   * @param {EqualityExplorerScene} scene
-   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
-   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
-   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
-   * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
-   * @returns {Node}
-   * @protected
-   * @override
-   */
-  createSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                   snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  protected override createSceneNode( scene: EqualityExplorerScene,
+                                      sceneProperty: Property<EqualityExplorerScene>,
+                                      equationAccordionBoxExpandedProperty: Property<boolean>,
+                                      snapshotsAccordionBoxExpandedProperty: Property<boolean>,
+                                      layoutBounds: Bounds2,
+                                      providedOptions?: NumbersSceneNodeOptions ): Node {
     return new NumbersSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
 
