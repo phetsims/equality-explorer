@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Displays an operation.
  * Used in the animation that occurs when the universal operation 'go' button is pressed.
