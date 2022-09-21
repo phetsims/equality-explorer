@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * View for the 'Solve It!' screen.
  *
@@ -8,8 +7,10 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import ScreenView from '../../../../joist/js/ScreenView.js';
-import merge from '../../../../phet-core/js/merge.js';
+import Property from '../../../../axon/js/Property.js';
+import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Easing from '../../../../twixt/js/Easing.js';
@@ -29,24 +30,31 @@ const TRANSITION_OPTIONS = {
   }
 };
 
+type SelfOptions = EmptySelfOptions;
+
+type SolveItScreenViewOptions = SelfOptions & PickRequired<ScreenViewOptions, 'tandem'>;
+
 export default class SolveItScreenView extends ScreenView {
 
-  /**
-   * @param {SolveItModel} model
-   * @param {Tandem} tandem
-   */
-  constructor( model, tandem ) {
-    assert && assert( model instanceof SolveItModel );
-    assert && assert( tandem instanceof Tandem );
+  // State of the Snapshots accordion box is global to the Screen. Expanding it in one game level expands it in
+  // all game levels. See https://github.com/phetsims/equality-explorer/issues/124
+  private readonly snapshotsAccordionBoxExpandedProperty: Property<boolean>;
 
-    const options = merge( {
+  // a scene for each level of the game
+  private readonly sceneNodes: SolveItSceneNode[];
+
+  // Handles the animated 'slide' transition between level-selection and challenges (scenesParent)
+  private readonly transitionNode: TransitionNode;
+
+  public constructor( model: SolveItModel, tandem: Tandem ) {
+
+    const options = optionize<SolveItScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
       tandem: tandem
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
     }, EqualityExplorerConstants.SCREEN_VIEW_OPTIONS );
 
     super( options );
 
-    // @private state of the Snapshots accordion box is global to the Screen,
-    // see https://github.com/phetsims/equality-explorer/issues/124
     this.snapshotsAccordionBoxExpandedProperty =
       new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
@@ -60,7 +68,6 @@ export default class SolveItScreenView extends ScreenView {
       }
     } );
 
-    // @private {SolveItSceneNode[]} a scene for each level of the game
     this.sceneNodes = [];
     for ( let i = 0; i < model.scenes.length; i++ ) {
       const sceneNode = new SolveItSceneNode( model.scenes[ i ], model.sceneProperty,
@@ -71,7 +78,6 @@ export default class SolveItScreenView extends ScreenView {
       children: this.sceneNodes
     } );
 
-    // Handles the animated 'slide' transition between level-selection and challenges (scenesParent)
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
       content: ( model.sceneProperty.value === null ) ? levelSelectionNode : scenesParent,
       cachedNodes: [ scenesParent ]
@@ -107,14 +113,12 @@ export default class SolveItScreenView extends ScreenView {
     } );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.snapshotsAccordionBoxExpandedProperty.reset();
     for ( let i = 0; i < this.sceneNodes.length; i++ ) {
       this.sceneNodes[ i ].reset();
@@ -122,10 +126,11 @@ export default class SolveItScreenView extends ScreenView {
   }
 
   /**
-   * @param {number} dt - elapsed time, in seconds
-   * @public
+   * @param dt - elapsed time, in seconds
    */
-  step( dt ) {
+  public override step( dt: number ): void {
+
+    super.step( dt );
 
     // animate the transition between level-selection and challenge UI
     this.transitionNode.step( dt );
