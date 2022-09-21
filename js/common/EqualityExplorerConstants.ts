@@ -11,7 +11,6 @@ import { CreditsData } from '../../../joist/js/CreditsNode.js';
 import ScreenView from '../../../joist/js/ScreenView.js';
 import Fraction from '../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../scenery-phet/js/MathSymbolFont.js';
-import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { AccordionBoxOptions } from '../../../sun/js/AccordionBox.js';
 import equalityExplorer from '../equalityExplorer.js';
@@ -71,9 +70,6 @@ const EqualityExplorerConstants = {
   // ranges
   VARIABLE_RANGE: new Range( -40, 40 ), // when x, y are user-controlled
   OPERAND_RANGE: new Range( -10, 10 ),
-
-  // universal operators, in the order that they appear in the operator picker
-  OPERATORS: [ MathSymbols.PLUS, MathSymbols.MINUS, MathSymbols.TIMES, MathSymbols.DIVIDE ],
 
   ACCORDION_BOX_OPTIONS: ACCORDION_BOX_OPTIONS,
 
