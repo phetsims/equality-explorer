@@ -8,9 +8,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import ScreenView from '../../../../joist/js/ScreenView.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Easing from '../../../../twixt/js/Easing.js';
@@ -30,10 +28,6 @@ const TRANSITION_OPTIONS = {
   }
 };
 
-type SelfOptions = EmptySelfOptions;
-
-type SolveItScreenViewOptions = SelfOptions & PickRequired<ScreenViewOptions, 'tandem'>;
-
 export default class SolveItScreenView extends ScreenView {
 
   // State of the Snapshots accordion box is global to the Screen. Expanding it in one game level expands it in
@@ -48,10 +42,11 @@ export default class SolveItScreenView extends ScreenView {
 
   public constructor( model: SolveItModel, tandem: Tandem ) {
 
-    const options = optionize<SolveItScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
+    const options = {
+      layoutBounds: EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS,
+      preventFit: EqualityExplorerConstants.SCREEN_VIEW_PREVENT_FIT,
       tandem: tandem
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
-    }, EqualityExplorerConstants.SCREEN_VIEW_OPTIONS );
+    };
 
     super( options );
 

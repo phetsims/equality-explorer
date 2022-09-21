@@ -28,12 +28,16 @@ export default class EqualityExplorerScreenView extends ScreenView {
     assert && assert( model instanceof EqualityExplorerModel );
     assert && assert( tandem instanceof Tandem );
 
-    options = merge( {}, EqualityExplorerConstants.SCREEN_VIEW_OPTIONS, {
+    options = merge( {}, {
 
       // {boolean}
       // true = positive and negative terms in the toolbox, e.g. x, -x, 1, -1
       // false = only positive terms in the toolbox, e.g. x, 1
       hasNegativeTermsInToolbox: true,
+
+      // ScreenViewOptions
+      layoutBounds: EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS,
+      preventFit: EqualityExplorerConstants.SCREEN_VIEW_PREVENT_FIT,
       tandem: tandem
     }, options );
 

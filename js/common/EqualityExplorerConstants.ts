@@ -52,13 +52,11 @@ const EqualityExplorerConstants = {
   // ScreenView
   SCREEN_VIEW_X_MARGIN: 20,
   SCREEN_VIEW_Y_MARGIN: 16,
-  SCREEN_VIEW_OPTIONS: {
-    layoutBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS,
+  SCREEN_VIEW_LAYOUT_BOUNDS: ScreenView.DEFAULT_LAYOUT_BOUNDS,
 
-    // Workaround for things shifting around that aren't supposed to move
-    // See https://github.com/phetsims/scenery/issues/1289 and https://github.com/phetsims/equality-explorer/issues/174
-    preventFit: true
-  },
+  // Workaround for things shifting around that aren't supposed to move
+  // See https://github.com/phetsims/scenery/issues/1289 and https://github.com/phetsims/equality-explorer/issues/174
+  SCREEN_VIEW_PREVENT_FIT: true,
 
   // Solve It! game
   NUMBER_OF_GAME_LEVELS: 5,
