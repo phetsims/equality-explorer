@@ -1,31 +1,32 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Displays an ObjectTerm.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Image, Node, Text } from '../../../../scenery/js/imports.js';
+import { Font, HBox, HBoxOptions, Image, ImageOptions, Node, Text } from '../../../../scenery/js/imports.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
-import TermNode from '../../common/view/TermNode.js';
+import TermNode, { TermNodeOptions } from '../../common/view/TermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import ObjectTerm from '../model/ObjectTerm.js';
+import ObjectTermCreator from '../model/ObjectTermCreator.js';
 
 // constants
 const DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
 const ICON_SCALE_MULTIPLIER = 0.7; // use this to adjust size of icon relative to coefficient
 
+type SelfOptions = EmptySelfOptions;
+
+type ObjectTermNodeOptions = SelfOptions & TermNodeOptions;
+
 export default class ObjectTermNode extends TermNode {
 
-  /**
-   * @param {ObjectTermCreator} termCreator
-   * @param {ObjectTerm} term
-   * @param {Object} [options]
-   */
-  constructor( termCreator, term, options ) {
+  public constructor( termCreator: ObjectTermCreator, term: ObjectTerm, providedOptions?: ObjectTermNodeOptions ) {
 
     const contentNode = ObjectTermNode.createInteractiveTermNode( term.variable.image, {
       maxHeight: term.diameter
@@ -36,42 +37,64 @@ export default class ObjectTermNode extends TermNode {
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
 
-    super( termCreator, term, contentNode, shadowNode, options );
+    super( termCreator, term, contentNode, shadowNode, providedOptions );
   }
 
   /**
-   * Creates the representation of a term that the user interacts with, in this case the object type's icon.
-   * No coefficient is shown because every ObjectTerm has an implicit coefficient of 1.
-   * @param {HTMLImageElement} image
-   * @param {Object} [options] - see ObjectTermNode
-   * @public
-   * @static
+   * Creates the representation of an ObjectTerm that the user interacts with.
    */
-  static createInteractiveTermNode( image, options ) {
+  public static createInteractiveTermNode( image: HTMLImageElement, providedOptions?: InteractiveObjectTermNodeOptions ): Node {
+    return new InteractiveObjectTermNode( image, providedOptions );
+  }
 
-    options = merge( {
+  /**
+   * Creates the representation of an ObjectTerm that is shown in equations.
+   */
+  public static createEquationTermNode( coefficient: number, icon: Node, providedOptions?: EquationObjectTermNodeOptions ): Node {
+    return new EquationObjectTermNode( coefficient, icon, providedOptions );
+  }
+}
+
+type InteractiveObjectTermNodeSelfOptions = EmptySelfOptions;
+type InteractiveObjectTermNodeOptions = InteractiveObjectTermNodeSelfOptions & ImageOptions;
+
+/**
+ * The representation of a term that the user interacts with, in this case the object type's icon.
+ * No coefficient is shown because every ObjectTerm has an implicit coefficient of 1.
+ */
+class InteractiveObjectTermNode extends Image {
+  public constructor( image: HTMLImageElement, providedOptions?: InteractiveObjectTermNodeOptions ) {
+
+    const options = optionize<InteractiveObjectTermNodeOptions, InteractiveObjectTermNodeSelfOptions, ImageOptions>()( {
+
+      // ImageOptions
       maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-    }, options );
+    }, providedOptions );
 
-    return new Image( image, options );
+    super( image, options );
   }
+}
 
-  /**
-   * Creates the representation of a term that is shown in equations.
-   * Since every ObjectTerm has an implicit coefficient of 1, the coefficient is an integer.
-   * @param {number} coefficient
-   * @param {Node} icon
-   * @param {Object} [options]
-   * @public
-   * @static
-   */
-  static createEquationTermNode( coefficient, icon, options ) {
+type EquationObjectTermNodeSelfOptions = {
+  font?: Font;
+};
+type EquationObjectTermNodeOptions = EquationObjectTermNodeSelfOptions & StrictOmit<HBoxOptions, 'children'>;
 
-    assert && assert( Number.isInteger( coefficient ), `coefficient must be an integer: ${coefficient}` );
+/**
+ * The representation of a term that is shown in equations.
+ * Since every ObjectTerm has an implicit coefficient of 1, the coefficient is an integer.
+ */
+class EquationObjectTermNode extends HBox {
+  public constructor( coefficient: number, icon: Node, providedOptions?: EquationObjectTermNodeOptions ) {
 
-    options = merge( {
-      font: DEFAULT_COEFFICIENT_FONT
-    }, options );
+    const options = optionize<EquationObjectTermNodeOptions, EquationObjectTermNodeSelfOptions, HBoxOptions>()( {
+
+      // EquationObjectTermNodeSelfOptions
+      font: DEFAULT_COEFFICIENT_FONT,
+
+      // HBoxOptions
+      spacing: 2
+    }, providedOptions );
 
     const coefficientNode = new Text( coefficient, { font: options.font } );
 
@@ -80,10 +103,9 @@ export default class ObjectTermNode extends TermNode {
       scale: ICON_SCALE_MULTIPLIER * coefficientNode.height / icon.height
     } );
 
-    return new HBox( {
-      spacing: 2,
-      children: [ coefficientNode, iconWrapper ]
-    } );
+    options.children = [ coefficientNode, iconWrapper ];
+
+    super( options );
   }
 }
 
