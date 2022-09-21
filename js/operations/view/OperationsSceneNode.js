@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * View of a scene in the 'Operations' screen.
  * Like the scene in the 'Variables' screen, but with an added control for applying a universal operation.
