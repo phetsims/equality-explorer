@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Drag listener for terms, abstract base type.
  *
@@ -33,73 +32,96 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import { DragListener, Node } from '../../../../scenery/js/imports.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { DragListener, DragListenerOptions, PressedDragListener, PressListenerEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
+import Plate from '../model/Plate.js';
 import Term from '../model/Term.js';
 import TermCreator from '../model/TermCreator.js';
 import SumToZeroNode from './SumToZeroNode.js';
+import TermNode from './TermNode.js';
 
-export default class TermDragListener extends DragListener {
+type SelfOptions = {
+  haloRadius?: number; // radius of the halo around terms that sum to zero
+  pickableWhileAnimating?: boolean; // is termNode pickable while term is animating?
+};
+
+type TermDragListenerOptions = SelfOptions;
+
+export default abstract class TermDragListener extends DragListener {
+
+  protected readonly termNode: TermNode;
+  protected readonly term: Term;
+  protected readonly termCreator: TermCreator;
+  protected readonly haloRadius: number;
+  protected readonly pickableWhileAnimating: boolean;
+
+  // like term that is overlapped while dragging. null if there is no such term.
+  protected likeTerm: Term | null;
+
+  // equivalent term on opposite plate, for lock feature. null if there is no such term.
+  protected equivalentTerm: Term | null;
+
+  // these fields are to improve readability
+  protected readonly plate: Plate;
+  protected readonly oppositePlate: Plate;
+  protected readonly equivalentTermCreator: TermCreator;
+
+  private readonly disposeTermDragListener: () => void;
 
   /**
-   * @param {Node} termNode - Node that the listener is attached to
-   * @param {Term} term - the term being dragged
-   * @param {TermCreator} termCreator - the creator of term
-   * @param {Object} [options]
-   * @abstract
+   * @param termNode - TermNode that the listener is attached to
+   * @param term - the term being dragged
+   * @param termCreator - the creator of term
+   * @param [providedOptions]
    */
-  constructor( termNode, term, termCreator, options ) {
+  protected constructor( termNode: TermNode, term: Term, termCreator: TermCreator, providedOptions?: TermDragListenerOptions ) {
 
-    assert && assert( termNode instanceof Node, `invalid termNode: ${termNode}` );
-    assert && assert( term instanceof Term, `invalid term: ${term}` );
-    assert && assert( termCreator instanceof TermCreator, `invalid termCreator: ${termCreator}` );
-
-    // Workaround for not being able to use this before calling super.
+    // Workaround for not being able to use 'this' before calling super in ES6.
     // See https://github.com/phetsims/tasks/issues/1026#issuecomment-594357784
-    let self = null; /* eslint-disable-line consistent-this */
+    // eslint-disable-next-line consistent-this
+    let self: TermDragListener | null = null;
 
-    options = merge( {
+    const options = optionize<TermDragListenerOptions, SelfOptions, DragListenerOptions<PressedDragListener>>()( {
 
-      haloRadius: 10, // radius of the halo around terms that sum to zero
-      pickableWhileAnimating: true, // is termNode pickable while term is animating?
+      // SelfOptions
+      haloRadius: 10,
+      pickableWhileAnimating: true,
 
-      // DragListener options
+      // DragListenerOptions
       allowTouchSnag: true,
-      start: event => self.start( event ),
-      drag: event => self.drag( event ),
-      end: () => self.end()
+      start: ( event: PressListenerEvent ) => self!.doStart( event ),
+      drag: ( event: PressListenerEvent ) => self!.doDrag( event ),
+      end: () => self!.doEnd()
 
-    }, options );
+    }, providedOptions );
 
     super( options );
 
     // Now that we've called super, set self to be an alias for this.
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     self = this;
 
-    // @protected constructor args
     this.termNode = termNode;
     this.term = term;
     this.termCreator = termCreator;
-
-    // @protected options
     this.haloRadius = options.haloRadius;
     this.pickableWhileAnimating = options.pickableWhileAnimating;
-
-    // @protected related terms
     this.likeTerm = null; // {Term|null} like term that is overlapped while dragging
     this.equivalentTerm = null; // {Term|null} equivalent term on opposite plate, for lock feature
 
-    // @protected to improve readability
+    // to improve readability
+    this.equivalentTermCreator = termCreator.equivalentTermCreator!;
+    assert && assert( this.equivalentTermCreator );
     this.plate = termCreator.plate;
-    this.equivalentTermCreator = termCreator.equivalentTermCreator;
-    this.oppositePlate = termCreator.equivalentTermCreator.plate;
+    this.oppositePlate = this.equivalentTermCreator.plate;
 
     // Equivalent term tracks the movement of the dragged term throughout the drag cycle and post-drag animation.
-    const positionListener = position => {
+    const positionListener = ( position: Vector2 ) => {
       if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
         this.equivalentTerm.moveTo( termCreator.getEquivalentTermPosition( term ) );
       }
@@ -111,7 +133,6 @@ export default class TermDragListener extends DragListener {
     this.plate.positionProperty.link( refreshHalosBound ); // unlink required in dispose
     this.plate.contentsChangedEmitter.addListener( refreshHalosBound ); // removeListener required in dispose
 
-    // @private called by dispose
     this.disposeTermDragListener = () => {
 
       if ( term.positionProperty.hasListener( positionListener ) ) {
@@ -128,21 +149,15 @@ export default class TermDragListener extends DragListener {
     };
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     this.disposeTermDragListener();
     super.dispose();
   }
 
   /**
    * Called at the start of a drag cycle, on pointer down.
-   * @param {SceneryEvent} event
-   * @private
    */
-  start( event ) {
+  private doStart( event: PressListenerEvent ): void {
 
     let success = true;
 
@@ -188,10 +203,9 @@ export default class TermDragListener extends DragListener {
 
   /**
    * Called while termNode is being dragged.
-   * @param {SceneryEvent} event
-   * @private
+   * NOTE: This is named doDrag so that it does not override super.drag.
    */
-  drag( event ) {
+  private doDrag( event: PressListenerEvent ): void {
 
     // move the term
     this.term.moveTo( this.eventToPosition( event ) );
@@ -202,9 +216,8 @@ export default class TermDragListener extends DragListener {
 
   /**
    * Called at the end of a drag cycle, on pointer up.
-   * @private
    */
-  end() {
+  private doEnd(): void {
 
     // set term Properties at end of drag
     this.term.draggingProperty.value = false;
@@ -221,21 +234,23 @@ export default class TermDragListener extends DragListener {
     }
     else if ( this.likeTerm && this.term.isInverseTerm( this.likeTerm ) ) {
 
+      const sumToZeroParent = this.termNode.getParent()!;
+      assert && assert( sumToZeroParent );
+
       // overlapping terms sum to zero
-      const sumToZeroParent = this.termNode.getParent();
       const sumToZeroNode = new SumToZeroNode( {
-        variable: this.term.variable || null,
+        variable: this.term.getVariable(),
         haloRadius: this.haloRadius,
         haloBaseColor: EqualityExplorerColors.HALO, // show the halo
         fontSize: this.termCreator.combineLikeTermsEnabled ?
                   EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE :
                   EqualityExplorerConstants.SUM_TO_ZERO_SMALL_FONT_SIZE
       } );
-      const sumToZeroCell = this.plate.getCellForTerm( this.likeTerm );
+      const sumToZeroCell = this.plate.getCellForTerm( this.likeTerm )!;
+      assert && assert( sumToZeroCell );
 
       // dispose of terms that sum to zero
       !this.term.isDisposed && this.term.dispose();
-      this.term = null;
       !this.likeTerm.isDisposed && this.likeTerm.dispose();
       this.likeTerm = null;
 
@@ -276,19 +291,20 @@ export default class TermDragListener extends DragListener {
 
   /**
    * Returns terms to the toolboxes where they were created.
-   * @private
    */
-  animateToToolbox() {
+  private animateToToolbox(): void {
     assert && assert( this.term.toolboxPosition, `toolboxPosition was not initialized for term: ${this.term}` );
 
     this.term.pickableProperty.value = this.pickableWhileAnimating;
 
-    this.term.animateTo( this.term.toolboxPosition, {
+    const toolboxPosition = this.term.toolboxPosition!;
+    assert && assert( toolboxPosition );
+
+    this.term.animateTo( toolboxPosition, {
       animationCompletedCallback: () => {
 
         // dispose of terms when they reach the toolbox
         !this.term.isDisposed && this.term.dispose();
-        this.term = null;
 
         if ( this.equivalentTerm ) {
           !this.equivalentTerm.isDisposed && this.equivalentTerm.dispose();
@@ -301,11 +317,8 @@ export default class TermDragListener extends DragListener {
   /**
    * Converts an event to a model position with some offset, constrained to the drag bounds.
    * This is used at the start of a drag cycle to position termNode relative to the pointer.
-   * @param {SceneryEvent} event
-   * @returns {Vector2}
-   * @private
    */
-  eventToPosition( event ) {
+  private eventToPosition( event: PressListenerEvent ): Vector2 {
 
     // move bottom-center of termNode to pointer position
     const dx = 0;
@@ -320,9 +333,8 @@ export default class TermDragListener extends DragListener {
    * Refreshes the visual feedback (yellow halo) that is provided when a dragged term overlaps
    * a like term that is on the scale. This has the side-effect of setting this.likeTerm.
    * See https://github.com/phetsims/equality-explorer/issues/17
-   * @private
    */
-  refreshHalos() {
+  private refreshHalos(): void {
 
     // Bail if this drag listener is not currently active, for example when 2 terms are locked together
     // and only one of them is being dragged. See https://github.com/phetsims/equality-explorer/issues/96
@@ -373,38 +385,22 @@ export default class TermDragListener extends DragListener {
     }
   }
 
-  //-------------------------------------------------------------------------------------------------
-  // Below here are @abstract methods, to be implemented by subtypes
-  //-------------------------------------------------------------------------------------------------
-
   /**
    * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side.
-   * @returns {boolean} true=success, false=failure
-   * @protected
-   * @abstract
+   * @returns true=success, false=failure
    */
-  startOpposite() {
-    throw new Error( 'startOpposite must be implemented by subtype' );
-  }
+  protected abstract startOpposite(): boolean;
 
   /**
    * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side.
-   * @returns {SumToZeroNode|null} non-null if the drag results in terms on the opposite plate summing to zero
-   * @protected
-   * @abstract
+   * @returns non-null if the drag results in terms on the opposite plate summing to zero
    */
-  endOpposite() {
-    throw new Error( 'endOpposite must be implemented by subtype' );
-  }
+  protected abstract endOpposite(): SumToZeroNode | null;
 
   /**
    * Animates term to plates.
-   * @protected
-   * @abstract
    */
-  animateToPlate() {
-    throw new Error( 'animateToPlate must be implemented by subtype' );
-  }
+  protected abstract animateToPlate(): void;
 }
 
 equalityExplorer.register( 'TermDragListener', TermDragListener );

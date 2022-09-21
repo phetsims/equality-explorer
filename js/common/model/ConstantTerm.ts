@@ -14,6 +14,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
+import Variable from './Variable.js';
 
 type SelfOptions = {
   constantValue?: Fraction;
@@ -38,6 +39,13 @@ export default class ConstantTerm extends Term {
     super( options.constantValue, options );
 
     this.constantValue = options.constantValue;
+  }
+
+  /**
+   * Constant terms do not have an associated variable.
+   */
+  public override getVariable(): Variable | null {
+    return null;
   }
 
   /**

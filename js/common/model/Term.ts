@@ -16,6 +16,7 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
 import EqualityExplorerMovable, { EqualityExplorerMovableOptions } from './EqualityExplorerMovable.js';
 import UniversalOperation from './UniversalOperation.js';
+import Variable from './Variable.js';
 
 type SelfOptions = {
   pickable?: boolean; // whether the term is pickable (interactive)
@@ -138,9 +139,11 @@ export default abstract class Term extends EqualityExplorerMovable {
     };
   }
 
-  //-------------------------------------------------------------------------------------------------
-  // Below here are @abstract methods, to be implemented by subtypes
-  //-------------------------------------------------------------------------------------------------
+  /**
+   * Gets the Variable associated with this term. Term subclasses that do not have an associated variable
+   * should return null. This method makes it more convenient to use the same drag listeners for all term types.
+   */
+  public abstract getVariable(): Variable | null;
 
   /**
    * Creates a copy of this term, with modifications through options.

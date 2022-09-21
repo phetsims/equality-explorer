@@ -33,6 +33,15 @@ export default class ObjectTerm extends Term {
   }
 
   /**
+   * @public
+   * @override
+   * @returns {Variable}
+   */
+  getVariable() {
+    return this.variable;
+  }
+
+  /**
    * For debugging only. Do not rely on the format of toString.
    * @returns {string}
    * @public

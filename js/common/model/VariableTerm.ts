@@ -48,6 +48,10 @@ export default class VariableTerm extends Term {
     this.variable = variable;
   }
 
+  public override getVariable(): Variable | null {
+    return this.variable;
+  }
+
   /**
    * For debugging only. Do not rely on the format of toString.
    */
