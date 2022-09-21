@@ -234,10 +234,10 @@ export default abstract class TermDragListener extends DragListener {
     }
     else if ( this.likeTerm && this.term.isInverseTerm( this.likeTerm ) ) {
 
+      // overlapping terms sum to zero
       const sumToZeroParent = this.termNode.getParent()!;
       assert && assert( sumToZeroParent );
 
-      // overlapping terms sum to zero
       const sumToZeroNode = new SumToZeroNode( {
         variable: this.term.getVariable(),
         haloRadius: this.haloRadius,

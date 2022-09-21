@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * View of a scene in the 'Variables' screen.
  * Same as the 'Basics' screen, but with a control for changing the variable value.
@@ -9,30 +8,39 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import merge from '../../../../phet-core/js/merge.js';
-import BasicsSceneNode from '../../basics/view/BasicsSceneNode.js';
+import BasicsSceneNode, { BasicsSceneNodeOptions } from '../../basics/view/BasicsSceneNode.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import VariablesAccordionBox from '../../common/view/VariablesAccordionBox.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+
+type SelfOptions = EmptySelfOptions;
+
+export type VariablesSceneNodeOptions = SelfOptions & BasicsSceneNodeOptions;
 
 export default class VariablesSceneNode extends BasicsSceneNode {
 
-  /**
-   * @param {VariablesScene} scene
-   * @param {Property.<Scene>} sceneProperty - the selected scene
-   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
-   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
-   * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
-   */
-  constructor( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-               snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  // whether the Variables accordion box is expanded or collapsed
+  private readonly variablesAccordionBoxExpandedProperty: Property<boolean>;
 
-    options = merge( {
+  // whether variable values are visible in snapshots
+  private readonly variableValuesVisibleProperty: Property<boolean>;
+
+  public constructor( scene: EqualityExplorerScene,
+                      sceneProperty: Property<EqualityExplorerScene>,
+                      equationAccordionBoxExpandedProperty: Property<boolean>,
+                      snapshotsAccordionBoxExpandedProperty: Property<boolean>,
+                      layoutBounds: Bounds2,
+                      providedOptions?: VariablesSceneNodeOptions ) {
+
+    const options = optionize<VariablesSceneNodeOptions, SelfOptions, BasicsSceneNodeOptions>()( {
 
       // BasicsSceneNode options
       termsToolboxSpacing: 30 // horizontal spacing between terms in the toolbox
-    }, options );
+    }, providedOptions );
 
     // whether variable values are visible in snapshots
     const variableValuesVisibleProperty = new BooleanProperty( true );
@@ -43,12 +51,14 @@ export default class VariablesSceneNode extends BasicsSceneNode {
     super( scene, sceneProperty, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
-    // @private whether the Variables accordion box is expanded or collapsed
     this.variablesAccordionBoxExpandedProperty =
       new BooleanProperty( EqualityExplorerConstants.VARIABLES_ACCORDION_BOX_EXPANDED );
 
+    const variables = scene.variables!;
+    assert && assert( variables );
+
     // Variables accordion box, above the Snapshots accordion box
-    const variablesAccordionBox = new VariablesAccordionBox( scene.variables, {
+    const variablesAccordionBox = new VariablesAccordionBox( variables, {
       expandedProperty: this.variablesAccordionBoxExpandedProperty,
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: this.snapshotsAccordionBox.right,
@@ -60,18 +70,15 @@ export default class VariablesSceneNode extends BasicsSceneNode {
     // shift the Snapshots accordion box down
     this.snapshotsAccordionBox.top = variablesAccordionBox.bottom + 10;
 
-    // @private
     this.variableValuesVisibleProperty = variableValuesVisibleProperty;
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.variablesAccordionBoxExpandedProperty.reset();
     this.variableValuesVisibleProperty.reset();
   }
