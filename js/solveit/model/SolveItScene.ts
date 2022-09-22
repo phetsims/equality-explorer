@@ -18,7 +18,6 @@ import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import ConstantTerm from '../../common/model/ConstantTerm.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
-import UniversalOperation from '../../common/model/UniversalOperation.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -86,8 +85,6 @@ export default class SolveItScene extends OperationsScene {
     // When a universal operation is completed, determine if the challenge is solved.
     // removeListener not needed.
     this.operationCompletedEmitter.addListener( operation => {
-
-      assert && assert( operation instanceof UniversalOperation, `invalid operation: ${operation}` );
 
       // All challenges in the game are equalities, and applying a universal operation should result in an equality.
       assert && assert( this.scale.angleProperty.value === 0,
