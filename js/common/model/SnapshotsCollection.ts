@@ -64,6 +64,15 @@ export default class SnapshotsCollection {
   }
 
   /**
+   * Restores the selected snapshot.
+   */
+  public restoreSelectedSnapshot(): void {
+    const snapshot = this.selectedSnapshotProperty.value!;
+    assert && assert( snapshot );
+    snapshot.restore();
+  }
+
+  /**
    * Deletes the selected snapshot.
    */
   public deleteSelectedSnapshot(): void {

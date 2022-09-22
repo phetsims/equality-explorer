@@ -36,8 +36,13 @@ export default class VariablesAccordionBox extends AccordionBox {
 
   public constructor( variables: Variable[], providedOptions?: VariablesAccordionBoxOptions ) {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 this is hideous
-    const defaultOptions = combineOptions<Required<SelfOptions> & AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
+    const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
+      showTitleWhenExpanded: false,
+      contentXMargin: 20,
+      contentYMargin: 4
+    } );
+
+    const defaultOptions = optionize<VariablesAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
 
       // SelfOptions
       titleStringProperty: ( variables.length > 1 ) ?
@@ -45,13 +50,8 @@ export default class VariablesAccordionBox extends AccordionBox {
                            EqualityExplorerStrings.variableStringProperty,
       fontSize: 24,
       fixedWidth: 100,
-      fixedHeight: 75,
-
-      // AccordionBoxOptions
-      showTitleWhenExpanded: false,
-      contentXMargin: 20,
-      contentYMargin: 4
-    } );
+      fixedHeight: 75
+    }, accordionBoxOptions );
 
     const options = optionize<VariablesAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( defaultOptions, providedOptions );
 

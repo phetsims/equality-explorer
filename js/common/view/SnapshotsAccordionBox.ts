@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Accordion box that allows the student to save and restore snapshots, specific configurations of a scene.
  *
@@ -9,48 +8,59 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import TrashButton from '../../../../scenery-phet/js/buttons/TrashButton.js';
-import { HBox, Path, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, HSeparator, Node, Path, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import HSeparatorDeprecated from '../../../../sun/js/HSeparatorDeprecated.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
-import SnapshotControl from './SnapshotControl.js';
+import SnapshotControl, { SnapshotControlOptions } from './SnapshotControl.js';
 import VariableValuesVisibleCheckbox from './VariableValuesVisibleCheckbox.js';
+import Snapshot from '../model/Snapshot.js';
+import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
-// constants
-const SEPARATOR_OPTIONS = {
-  stroke: 'rgb( 200, 200, 200 )'
+type SelfOptions = {
+
+  // this accordion box is designed to be a fixed width, regardless of its content
+  fixedWidth?: number;
+
+  // whether variable values are visible in snapshots, null if the feature is not supported
+  variableValuesVisibleProperty?: Property<boolean> | null;
+
+  // options passed to SnapshotControl
+  snapshotControlOptions?: SnapshotControlOptions;
 };
+
+type SnapshotsAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
 
 export default class SnapshotsAccordionBox extends AccordionBox {
 
   /**
-   * @param {EqualityExplorerScene} scene - the scene that we'll be taking snapshots of
-   * @param {Object} [options]
+   * @param scene - the scene that we'll be taking snapshots of
+   * @param [providedOptions]
    */
-  constructor( scene, options ) {
+  public constructor( scene: EqualityExplorerScene, providedOptions?: SnapshotsAccordionBoxOptions ) {
 
-    options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
-
-      // this accordion box is designed to be a fixed width, regardless of its content
-      fixedWidth: 100,
-
-      // {BooleanProperty|null} whether variable values are visible in snapshots, null if the feature is not supported
-      variableValuesVisibleProperty: null,
-
-      // {Object|null} options passed to SnapshotControl
-      snapshotControlOptions: null,
-
-      // supertype options
+    const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
       contentXMargin: 10,
       contentYMargin: 10,
       contentYSpacing: 3
+    } );
 
-    }, options );
+    const defaultOptions = optionize<SnapshotsAccordionBoxOptions, StrictOmit<SelfOptions, 'snapshotControlOptions'>, AccordionBoxOptions>()( {
+
+      // SelfOptions
+      fixedWidth: 100,
+      variableValuesVisibleProperty: null
+    }, accordionBoxOptions );
+
+    const options = optionize<SnapshotsAccordionBoxOptions, StrictOmit<SelfOptions, 'snapshotControlOptions'>, AccordionBoxOptions>()(
+      defaultOptions, providedOptions );
 
     // options for SnapshotControl
     options.snapshotControlOptions = merge( {
@@ -63,7 +73,6 @@ export default class SnapshotsAccordionBox extends AccordionBox {
     assert && assert( !( options.variableValuesVisibleProperty && !scene.variables ),
       'scene has no variables to show in snapshots' );
 
-    assert && assert( options.maxWidth === undefined, 'SnapshotsAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
 
     const contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
@@ -74,7 +83,6 @@ export default class SnapshotsAccordionBox extends AccordionBox {
     }, options.snapshotControlOptions );
 
     // title
-    assert && assert( !options.titleNode, 'SnapshotsAccordionBox sets titleNode' );
     options.titleNode = new Text( EqualityExplorerStrings.snapshotsStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
@@ -104,7 +112,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       yMargin: 4,
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
-      listener: () => scene.snapshotsCollection.selectedSnapshotProperty.value.restore()
+      listener: () => scene.snapshotsCollection.restoreSelectedSnapshot()
     } );
 
     // Button to delete (trash) the selected snapshot
@@ -125,11 +133,13 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       trashButton.enabled = enabled;
     } );
 
-    const buttonGroupChildren = [ restoreButton, trashButton ];
+    const buttonGroupChildren: Node[] = [ restoreButton, trashButton ];
 
     // Checkbox for making variable values visible.
     if ( options.variableValuesVisibleProperty ) {
-      buttonGroupChildren.push( new VariableValuesVisibleCheckbox( options.variableValuesVisibleProperty, scene.variables, {
+      const variables = scene.variables!;
+      assert && assert( variables );
+      buttonGroupChildren.push( new VariableValuesVisibleCheckbox( options.variableValuesVisibleProperty, variables, {
         touchAreaXDilation: 5,
         touchAreaYDilation: 5
       } ) );
@@ -147,7 +157,9 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       spacing: 10,
       children: [
         snapshotsVBox,
-        new HSeparatorDeprecated( contentWidth, SEPARATOR_OPTIONS ),
+        new HSeparator( {
+          stroke: 'rgb( 200, 200, 200 )'
+        } ),
         buttonGroup
       ]
     } );
@@ -156,7 +168,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
 
     // Click outside this accordion box to clear the selected snapshot.
     const clickToDeselectListener = {
-      down: event => {
+      down: ( event: PressListenerEvent ) => {
         if ( !this.parentToGlobalBounds( this.visibleBounds ).containsPoint( event.pointer.point ) ) {
           scene.snapshotsCollection.selectedSnapshotProperty.value = null;
         }
@@ -166,18 +178,18 @@ export default class SnapshotsAccordionBox extends AccordionBox {
     // Register input listener with the Display only when we have a selected snapshot.
     // This technique was borrowed from circuit-construction-kit-common.CircuitElementNode.
     // unlink not required.
-    scene.snapshotsCollection.selectedSnapshotProperty.link( ( selectedSnapshot, oldSelectedSnapshot ) => {
-      if ( oldSelectedSnapshot ) {
-        phet.joist.display.removeInputListener( clickToDeselectListener );
-      }
-      if ( selectedSnapshot ) {
-        phet.joist.display.addInputListener( clickToDeselectListener );
-      }
-    } );
+    scene.snapshotsCollection.selectedSnapshotProperty.link(
+      ( selectedSnapshot: Snapshot | null, oldSelectedSnapshot: Snapshot | null ) => {
+        if ( oldSelectedSnapshot ) {
+          phet.joist.display.removeInputListener( clickToDeselectListener );
+        }
+        if ( selectedSnapshot ) {
+          phet.joist.display.addInputListener( clickToDeselectListener );
+        }
+      } );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }

@@ -7,6 +7,7 @@
  */
 
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { Text } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -22,7 +23,7 @@ type SelfOptions = {
   fixedHeight?: number;
 };
 
-type EquationAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
+type EquationAccordionBoxOptions = SelfOptions & StrictOmit<AccordionBoxOptions, 'maxWidth' | 'maxHeight' | 'titleNode'>;
 
 export default class EquationAccordionBox extends AccordionBox {
 
@@ -48,9 +49,7 @@ export default class EquationAccordionBox extends AccordionBox {
 
     const options = optionize<EquationAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( defaultOptions, providedOptions );
 
-    assert && assert( options.maxWidth === undefined, 'EquationAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
-    assert && assert( options.maxHeight === undefined, 'EquationAccordionBox sets maxHeight' );
     options.maxHeight = options.fixedHeight;
 
     const contentNode = new EquationPanel( leftTermCreators, rightTermCreators, {
@@ -60,7 +59,6 @@ export default class EquationAccordionBox extends AccordionBox {
       yMargin: 0
     } );
 
-    assert && assert( !options.titleNode, 'EquationAccordionBox sets titleNode' );
     options.titleNode = options.titleNode || new Text( EqualityExplorerStrings.equationOrInequalityStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentNode.width
