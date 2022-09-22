@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Accordion box that allows the student to modify the value of one or more variables.
  *
@@ -8,51 +7,59 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import merge from '../../../../phet-core/js/merge.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import { HBox, Node, NodeTranslationOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import Variable from '../model/Variable.js';
 import VariableNode from './VariableNode.js';
+
+type SelfOptions = {
+  titleStringProperty?: TReadOnlyProperty<string>;
+  fontSize?: number;
+
+  // this accordion box is designed to have a fixed size, regardless of its content
+  fixedWidth?: number;
+  fixedHeight?: number;
+};
+
+type VariablesAccordionBoxOptions = SelfOptions & NodeTranslationOptions & PickOptional<AccordionBoxOptions, 'expandedProperty'>;
 
 export default class VariablesAccordionBox extends AccordionBox {
 
-  /**
-   * @param {Variable[]} variables - the variables that appear in this accordion box
-   * @param {Object} [options]
-   */
-  constructor( variables, options ) {
+  public constructor( variables: Variable[], providedOptions?: VariablesAccordionBoxOptions ) {
 
-    options = merge( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
+    const defaultOptions = combineOptions<Required<SelfOptions> & AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
-      // this accordion box is designed to be a fixed size, regardless of its content
+      // SelfOptions
       titleStringProperty: ( variables.length > 1 ) ?
                            EqualityExplorerStrings.variablesStringProperty :
                            EqualityExplorerStrings.variableStringProperty,
+      fontSize: 24,
       fixedWidth: 100,
       fixedHeight: 75,
-      fontSize: 24,
 
-      // AccordionBox options
+      // AccordionBoxOptions
       showTitleWhenExpanded: false,
       contentXMargin: 20,
       contentYMargin: 4
+    } );
 
-    }, options );
+    const options = optionize<VariablesAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( defaultOptions, providedOptions );
 
-    assert && assert( options.maxWidth === undefined, 'VariablesAccordionBox sets maxWidth' );
     options.maxWidth = options.fixedWidth;
-    assert && assert( options.maxHeight === undefined, 'VariablesAccordionBox sets maxHeight' );
     options.maxHeight = options.fixedHeight;
 
     const contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
     const contentHeight = options.fixedHeight - ( 2 * options.contentYMargin );
 
-    assert && assert( !options.titleNode, 'VariablesAccordionBox sets titleNode' );
     options.titleNode = new Text( options.titleStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
       maxWidth: 0.85 * contentWidth
@@ -61,7 +68,7 @@ export default class VariablesAccordionBox extends AccordionBox {
     const backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     // Create a picker for each variable
-    const children = [];
+    const children: Node[] = [];
     variables.forEach( variable => {
 
       const variableNode = new VariableNode( variable, {
@@ -73,9 +80,9 @@ export default class VariablesAccordionBox extends AccordionBox {
         font: new PhetFont( options.fontSize )
       } );
 
-      // NumberPicker.dispose not needed, VariablesAccordionBox exists for lifetime of the sim
-      assert && assert( variable.range, 'Variable must have range' );
-      const valuePicker = new NumberPicker( variable.valueProperty, new Property( variable.range ), {
+      const variableRange = variable.range!;
+      assert && assert( variableRange, 'Variable must have range' );
+      const valuePicker = new NumberPicker( variable.valueProperty, new Property( variableRange ), {
         color: 'black',
         font: new PhetFont( options.fontSize ),
         xMargin: 6,
@@ -104,8 +111,7 @@ export default class VariablesAccordionBox extends AccordionBox {
     super( contentNode, options );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
