@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * View for the 'Basics' screen.
  *
@@ -9,15 +8,17 @@
 
 import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import BasicsSceneNode from './BasicsSceneNode.js';
+import BasicsSceneNode, { BasicsSceneNodeOptions } from './BasicsSceneNode.js';
+import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Property from '../../../../axon/js/Property.js';
+import BasicsModel from '../model/BasicsModel.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class BasicsScreenView extends EqualityExplorerScreenView {
 
-  /**
-   * @param {BasicsModel} model
-   * @param {Tandem} tandem
-   */
-  constructor( model, tandem ) {
+  public constructor( model: BasicsModel, tandem: Tandem ) {
     super( model, tandem, {
       hasNegativeTermsInToolbox: false // only positive terms in the toolbox
     } );
@@ -25,20 +26,15 @@ export default class BasicsScreenView extends EqualityExplorerScreenView {
 
   /**
    * Creates the Node for this scene.
-   * @param {EqualityExplorerScene} scene
-   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected scene
-   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
-   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
-   * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
-   * @returns {Node}
-   * @protected
-   * @override
    */
-  createSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                   snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
+  public override createSceneNode( scene: EqualityExplorerScene,
+                                   sceneProperty: Property<EqualityExplorerScene>,
+                                   equationAccordionBoxExpandedProperty: Property<boolean>,
+                                   snapshotsAccordionBoxExpandedProperty: Property<boolean>,
+                                   layoutBounds: Bounds2,
+                                   providedOptions?: BasicsSceneNodeOptions ): Node {
     return new BasicsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
 
