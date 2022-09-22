@@ -1,43 +1,52 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Node that creates terms. These nodes appear in the toolboxes that appear below the scale's plates.
  * See https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md
- * for a detailed description of how the PhET 'creator pattern' is applied in this simulation.
+ * for a description of how the PhET 'creator pattern' is applied in this simulation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import { DragListener, Node } from '../../../../scenery/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { DragListener, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import Plate from '../model/Plate.js';
+import TermCreator from '../model/TermCreator.js';
+
+type SelfOptions = {
+  sign?: 1 | -1; // sign that will be applied to terms created by this Node
+};
+
+type TermCreatorNodeOptions = SelfOptions;
 
 export default class TermCreatorNode extends Node {
 
+  private readonly termCreator: TermCreator;
+  private readonly plate: Plate;
+  private readonly termsLayer: Node;
+
   /**
-   * @param {TermCreator} termCreator - model element associated with this Node
-   * @param {Plate} plate - associated plate on the scale
-   * @param {Node} termsLayer - parent for TermNodes that will be created
-   * @param {Object} [options]
+   * @param termCreator - model element associated with this Node
+   * @param plate - associated plate on the scale
+   * @param termsLayer - parent for TermNodes that will be created
+   * @param [providedOptions]
    */
-  constructor( termCreator, plate, termsLayer, options ) {
+  public constructor( termCreator: TermCreator, plate: Plate, termsLayer: Node, providedOptions?: TermCreatorNodeOptions ) {
 
-    options = merge( {
-      sign: 1,  // sign that will be applied to terms created by this Node, 1 or -1
+    const options = optionize<TermCreatorNodeOptions, SelfOptions, NodeOptions>()( {
 
-      // Node options
+      // SelfOptions
+      sign: 1,
+
+      // NodeOptions
       cursor: 'pointer'
-    }, options );
+    }, providedOptions );
 
-    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
-
-    assert && assert( !options.children, 'TermCreatorNode sets children' );
     options.children = [ termCreator.createIcon( { sign: options.sign } ) ];
 
     super( options );
 
-    // @private
     this.termCreator = termCreator;
     this.plate = plate;
     this.termsLayer = termsLayer;
