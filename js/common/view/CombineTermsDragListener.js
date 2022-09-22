@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Drag listener used when like terms are combined in one cell on a plate.
  * See terminology and requirements in TermDragListener supertype.
