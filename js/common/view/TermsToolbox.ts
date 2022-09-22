@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Toolbox that contains the terms that can be dragged out onto the scale.
  *
@@ -8,36 +7,48 @@
  */
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import merge from '../../../../phet-core/js/merge.js';
-import { HBox, Node, Rectangle } from '../../../../scenery/js/imports.js';
-import Panel from '../../../../sun/js/Panel.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { HBox, Node, NodeTranslationOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import Plate from '../model/Plate.js';
+import TermCreator from '../model/TermCreator.js';
 import TermCreatorNode from './TermCreatorNode.js';
 
 // constants
 const DEFAULT_CONTENT_SIZE = new Dimension2( 250, 50 );
 
+type SelfOptions = {
+  hasNegativeTermsInToolbox?: boolean; // if true, put negative terms in the toolbox, e.g. -x
+  contentSize?: Dimension2;
+  spacing?: number; // horizontal space between TermCreatorNodes
+};
+
+type TermsToolboxOptions = SelfOptions & NodeTranslationOptions;
+
 export default class TermsToolbox extends Panel {
 
   /**
-   * @param {TermCreator[]} termCreators - creators for terms, appear in this order left-to-right
-   * @param {Plate} plate - associated plate on the scale
-   * @param {Node} termsLayer - parent for TermNodes that will be created
-   * @param {Object} [options]
+   * @param termCreators - creators for terms, appear in this order left-to-right
+   * @param plate - associated plate on the scale
+   * @param termsLayer - parent for TermNodes that will be created
+   * @param [providedOptions]
    */
-  constructor( termCreators, plate, termsLayer, options ) {
+  public constructor( termCreators: TermCreator[], plate: Plate, termsLayer: Node, providedOptions?: TermsToolboxOptions ) {
 
-    options = merge( {
+    const options = optionize<TermsToolboxOptions, SelfOptions, PanelOptions>()( {
+
+      // SelfOptions
       hasNegativeTermsInToolbox: false, // {boolean} if true, put negative terms in the toolbox, e.g. -x
       contentSize: DEFAULT_CONTENT_SIZE,
       spacing: 45, // horizontal space between TermCreatorNodes
 
-      // Panel options
+      // PanelOptions
       lineWidth: 1,
       cornerRadius: 6,
       xMargin: 5,
       yMargin: 5
-    }, options );
+    }, providedOptions );
 
     const backgroundNode = new Rectangle( 0, 0, options.contentSize.width, options.contentSize.height );
 
@@ -78,8 +89,7 @@ export default class TermsToolbox extends Panel {
     super( content, options );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
