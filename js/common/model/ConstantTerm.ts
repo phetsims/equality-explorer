@@ -102,7 +102,7 @@ export default class ConstantTerm extends Term {
   }
 
   //-------------------------------------------------------------------------------------------------
-  // Below here is the implementation of the Term API
+  // Below here is the implementation of the abstract methods of the Term API
   //-------------------------------------------------------------------------------------------------
 
   /**
