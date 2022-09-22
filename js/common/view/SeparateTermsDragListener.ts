@@ -212,7 +212,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
 
               // Put equivalent term on the opposite plate
               const equivalentCell = this.oppositePlate.getBestEmptyCell( equivalentTerm.positionProperty.value )!;
-              assert && assert( equivalentCell );
+              assert && assert( equivalentCell !== null );
               this.equivalentTermCreator.putTermOnPlate( equivalentTerm, equivalentCell );
               equivalentTerm.pickableProperty.value = true;
             }
