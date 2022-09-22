@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Snapshot of a scene, saves state needed to restore the scene.
  *
