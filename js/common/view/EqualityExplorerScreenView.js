@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Abstract base type for ScreenViews in the Equality Explorer sim.
  *
