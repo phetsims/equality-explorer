@@ -1,6 +1,5 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Drag listener used when like terms are combined in one cell on a plate.
  * See terminology and requirements in TermDragListener supertype.
@@ -12,20 +11,27 @@ import merge from '../../../../phet-core/js/merge.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import SumToZeroNode from './SumToZeroNode.js';
-import TermDragListener from './TermDragListener.js';
+import TermDragListener, { TermDragListenerOptions } from './TermDragListener.js';
+import TermNode from './TermNode.js';
+import Term from '../model/Term.js';
+import TermCreator from '../model/TermCreator.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = EmptySelfOptions;
+
+type CombineTermsDragListenerOptions = SelfOptions & TermDragListenerOptions;
 
 export default class CombineTermsDragListener extends TermDragListener {
 
   /**
-   * @param {scenery.Node} termNode - Node that the listener is attached to
-   * @param {Term} term - the term being dragged
-   * @param {TermCreator} termCreator - the creator of term
-   * @param {Object} [options]
+   * @param termNode - Node that the listener is attached to
+   * @param term - the term being dragged
+   * @param termCreator - the creator of term
+   * @param [providedOptions]
    */
-  constructor( termNode, term, termCreator, options ) {
-    assert && assert( termCreator.combineLikeTermsEnabled,
-      'CombineTermsDragListener is used when like terms are combined' );
-    super( termNode, term, termCreator, options );
+  public constructor( termNode: TermNode, term: Term, termCreator: TermCreator, providedOptions?: CombineTermsDragListenerOptions ) {
+    assert && assert( termCreator.combineLikeTermsEnabled, 'CombineTermsDragListener is used when like terms are combined' );
+    super( termNode, term, termCreator, providedOptions );
   }
 
   //-------------------------------------------------------------------------------------------------
@@ -34,11 +40,9 @@ export default class CombineTermsDragListener extends TermDragListener {
 
   /**
    * Called at the start of a drag cycle, when lock is on, to handle related terms on the opposite side of the scale.
-   * @returns {boolean} true=success, false=failure
-   * @protected
-   * @override
+   * @returns true=success, false=failure
    */
-  startOpposite() {
+  protected override startOpposite(): boolean {
     assert && assert( this.termCreator.lockedProperty.value, 'startOpposite should only be called when lock is on' );
 
     const likeTermsCell = this.termCreator.likeTermsCell;
@@ -49,6 +53,7 @@ export default class CombineTermsDragListener extends TermDragListener {
     if ( oppositeLikeTerm ) {
 
       // subtract term from what's on the opposite plate
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 minus is for ConstantTerm and VariableTerm
       inverseTerm = oppositeLikeTerm.minus( this.term );
       this.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
       oppositeLikeTerm.dispose();
@@ -65,6 +70,7 @@ export default class CombineTermsDragListener extends TermDragListener {
 
       // there was nothing on the opposite plate, so create the inverse of the equivalent term
       inverseTerm = this.equivalentTermCreator.createTerm(
+        //TODO https://github.com/phetsims/equality-explorer/issues/186 use optionize
         merge( this.term.copyOptions(), {
           sign: -1
         } ) );
@@ -79,11 +85,9 @@ export default class CombineTermsDragListener extends TermDragListener {
 
   /**
    * Called at the end of a drag cycle, when lock is on, to handle related terms on the opposite side of the scale.
-   * @returns {SumToZeroNode|null} non-null if the drag results in terms on the opposite plate summing to zero
-   * @protected
-   * @override
+   * @returns non-null if the drag results in terms on the opposite plate summing to zero
    */
-  endOpposite() {
+  protected override endOpposite(): SumToZeroNode | null {
     assert && assert( this.termCreator.lockedProperty.value, 'endOpposite should only be called when lock is on' );
 
     // {SumToZeroNode|null} truthy when terms sum to zero
@@ -94,13 +98,16 @@ export default class CombineTermsDragListener extends TermDragListener {
     if ( oppositeLikeTerm ) {
 
       // opposite cell is occupied, combine equivalentTerm with term that's in the cell
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 plus is for ConstantTerm and VariableTerm
       let combinedTerm = oppositeLikeTerm.plus( this.equivalentTerm );
       this.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
 
       // dispose of the terms used to create combinedTerm
       !oppositeLikeTerm.isDisposed && oppositeLikeTerm.dispose();
       oppositeLikeTerm = null;
-      !this.equivalentTerm.isDisposed && this.equivalentTerm.dispose();
+      const equivalentTerm = this.equivalentTerm!;
+      assert && assert( equivalentTerm );
+      !equivalentTerm.isDisposed && equivalentTerm.dispose();
       this.equivalentTerm = null;
 
       if ( combinedTerm.significantValue.getValue() === 0 ) {
@@ -124,10 +131,12 @@ export default class CombineTermsDragListener extends TermDragListener {
     else {
 
       // opposite cell is empty, put a big copy of equivalentTerm in that cell
-      const equivalentTermCopy = this.equivalentTerm.copy( {
+      const equivalentTerm = this.equivalentTerm!;
+      assert && assert( equivalentTerm );
+      const equivalentTermCopy = equivalentTerm.copy( {
         diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
       } );
-      !this.equivalentTerm.isDisposed && this.equivalentTerm.dispose();
+      !equivalentTerm.isDisposed && equivalentTerm.dispose();
       this.equivalentTerm = null;
       this.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, cell );
     }
@@ -140,14 +149,11 @@ export default class CombineTermsDragListener extends TermDragListener {
    * All like terms occupy a specific cell on the plate.
    * If there's a term in that cell, then terms are combined to produce a new term that occupies the cell.
    * If the terms sum to zero, then the sum-to-zero animation is performed.
-   * @protected
-   * @override
    */
-  animateToPlate() {
+  protected override animateToPlate(): void {
 
     const likeTermsCell = this.termCreator.likeTermsCell;
     const cellPosition = this.plate.getPositionOfCell( likeTermsCell );
-    const sumToZeroParent = this.termNode.getParent();
 
     this.term.pickableProperty.value = this.pickableWhileAnimating;
 
@@ -175,11 +181,11 @@ export default class CombineTermsDragListener extends TermDragListener {
 
           // dispose of the original term
           !this.term.isDisposed && this.term.dispose();
-          this.term = null;
         }
         else {
 
           // If the cell is not empty. Combine the terms to create a new 'big' term.
+          // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 plus is for ConstantTerm and VariableTerm
           combinedTerm = termInCell.plus( this.term );
 
           if ( combinedTerm.maxIntegerExceeded() ) {
@@ -194,13 +200,12 @@ export default class CombineTermsDragListener extends TermDragListener {
 
             // Terms sum to zero. No halo, since the terms did not overlap when drag ended.
             sumToZeroNode = new SumToZeroNode( {
-              variable: this.term.variable || null,
+              variable: this.term.getVariable(),
               fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
             } );
 
             // dispose of terms that sum to zero
             !this.term.isDisposed && this.term.dispose();
-            this.term = null;
             !termInCell.isDisposed && termInCell.dispose();
             termInCell = null;
             combinedTerm.dispose();
@@ -236,6 +241,7 @@ export default class CombineTermsDragListener extends TermDragListener {
           else {
 
             // The cell is not empty. Combine equivalentTerm with term that's in the cell
+            // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 plus is for ConstantTerm and VariableTerm
             let oppositeCombinedTerm = oppositeLikeTerm.plus( this.equivalentTerm );
 
             if ( oppositeCombinedTerm.maxIntegerExceeded() ) {
@@ -292,8 +298,8 @@ export default class CombineTermsDragListener extends TermDragListener {
 
             // dispose of the terms used to create the combined term
             !this.term.isDisposed && this.term.dispose();
-            this.term = null;
-            !termInCell.isDisposed && termInCell.dispose();
+            assert && assert( termInCell );
+            !termInCell!.isDisposed && termInCell!.dispose();
             termInCell = null;
 
             // Put the combined term on the plate.
@@ -302,11 +308,15 @@ export default class CombineTermsDragListener extends TermDragListener {
 
           // Do sum-to-zero animations after both plates have moved.
           if ( sumToZeroNode ) {
+            const sumToZeroParent = this.termNode.getParent()!;
+            assert && assert( sumToZeroParent );
             sumToZeroParent.addChild( sumToZeroNode );
             sumToZeroNode.center = this.plate.getPositionOfCell( likeTermsCell );
             sumToZeroNode.startAnimation();
           }
           if ( oppositeSumToZeroNode ) {
+            const sumToZeroParent = this.termNode.getParent()!;
+            assert && assert( sumToZeroParent );
             sumToZeroParent.addChild( oppositeSumToZeroNode );
             oppositeSumToZeroNode.center = this.oppositePlate.getPositionOfCell( likeTermsCell );
             oppositeSumToZeroNode.startAnimation();
