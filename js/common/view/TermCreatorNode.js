@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Node that creates terms. These nodes appear in the toolboxes that appear below the scale's plates.
  * See https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md
