@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Manages a collection of Snapshots.
  *
@@ -8,28 +7,40 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import merge from '../../../../phet-core/js/merge.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Snapshot from './Snapshot.js';
 
+type SelfOptions = {
+  numberOfSnapshots?: number;
+};
+
+type SnapshotsCollectionOptions = SelfOptions;
+
 export default class SnapshotsCollection {
 
-  constructor( options ) {
+  // a Property for each possible snapshot, null means no snapshot
+  public readonly snapshotProperties: Property<Snapshot | null>[];
 
-    options = merge( {
+  // the selected snapshot, null means no selection
+  public readonly selectedSnapshotProperty: Property<Snapshot | null>;
+
+  public constructor( providedOptions?: SnapshotsCollectionOptions ) {
+
+    const options = optionize<SnapshotsCollectionOptions, SelfOptions>()( {
+
+      // SelfOptions
       numberOfSnapshots: 5
-    }, options );
+    }, providedOptions );
 
-    // @public {Property.<Snapshot|null>[]} a Property for each possible snapshot, null means no snapshot
+    assert && assert( Number.isInteger( options.numberOfSnapshots ) && options.numberOfSnapshots > 0 );
+
     this.snapshotProperties = [];
     for ( let i = 0; i < options.numberOfSnapshots; i++ ) {
-      this.snapshotProperties.push( new Property( null, {
-        isValidValue: snapshot => ( snapshot === null ) || ( snapshot instanceof Snapshot )
-      } ) );
+      this.snapshotProperties.push( new Property<Snapshot | null>( null ) );
     }
 
-    // @public {Property.<Snapshot|null>} the selected snapshot, null means no selection
-    this.selectedSnapshotProperty = new Property( null, {
+    this.selectedSnapshotProperty = new Property<Snapshot | null>( null, {
 
       // a valid snapshot is null or the value of one of the snapshotProperties' values
       isValidValue: snapshot => {
@@ -39,8 +50,7 @@ export default class SnapshotsCollection {
     } );
   }
 
-  // @public
-  reset() {
+  public reset(): void {
 
     // reset the selected snapshot
     this.selectedSnapshotProperty.reset();
@@ -55,9 +65,8 @@ export default class SnapshotsCollection {
 
   /**
    * Deletes the selected snapshot.
-   * @public
    */
-  deleteSelectedSnapshot() {
+  public deleteSelectedSnapshot(): void {
 
     // clear the selection
     const selectedSnapshot = this.selectedSnapshotProperty.value;
