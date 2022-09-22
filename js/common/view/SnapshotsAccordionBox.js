@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * Accordion box that allows the student to save and restore snapshots, specific configurations of a scene.
  *
