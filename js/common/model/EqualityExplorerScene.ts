@@ -165,8 +165,9 @@ export default abstract class EqualityExplorerScene {
    * Since this icon is used in multiple places in the scenery DAG, it must be wrapped.
    */
   public get icon(): Node {
-    assert && assert( this._icon );
-    return new Node( { children: [ this._icon! ] } );
+    const icon = this._icon!;
+    assert && assert( icon );
+    return new Node( { children: [ icon ] } );
   }
 
   public reset(): void {

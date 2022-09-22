@@ -82,7 +82,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
     assert && assert( this.termCreator.lockedProperty.value, 'startOpposite should only be called when lock is on' );
 
     const termCell = this.plate.getCellForTerm( this.term )!;
-    assert && assert( termCell );
+    assert && assert( termCell !== null );
     this.equivalentTerm = this.oppositePlate.getClosestEquivalentTerm( this.term, termCell );
 
     if ( this.equivalentTerm ) {
@@ -112,7 +112,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
       } ) );
       const inverseTermPosition = this.termCreator.getEquivalentTermPosition( this.term );
       const inverseCell = this.oppositePlate.getBestEmptyCell( inverseTermPosition )!;
-      assert && assert( inverseCell );
+      assert && assert( inverseCell !== null );
       this.equivalentTermCreator.putTermOnPlate( this.inverseTerm, inverseCell );
 
       // if the inverse term is dragged, break the association to equivalentTerm
@@ -138,7 +138,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
 
     // put equivalent term in an empty cell
     const emptyCell = this.oppositePlate.getBestEmptyCell( equivalentTerm.positionProperty.value )!;
-    assert && assert( emptyCell );
+    assert && assert( emptyCell !== null );
     this.equivalentTermCreator.putTermOnPlate( equivalentTerm, emptyCell );
 
     // always null for this subtype, since terms on the opposite side don't combine
@@ -162,7 +162,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
 
       // the target cell and its position
       const cell = this.plate.getBestEmptyCell( this.term.positionProperty.value )!;
-      assert && assert( cell );
+      assert && assert( cell !== null );
       const cellPosition = this.plate.getPositionOfCell( cell );
 
       this.term.pickableProperty.value = this.pickableWhileAnimating;
@@ -186,7 +186,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
 
           // Compute cell again, in case a term has been removed below the cell that we were animating to.
           const cell = this.plate.getBestEmptyCell( this.term.positionProperty.value )!;
-          assert && assert( cell );
+          assert && assert( cell !== null );
 
           // Put the term on the plate
           this.termCreator.putTermOnPlate( this.term, cell );
