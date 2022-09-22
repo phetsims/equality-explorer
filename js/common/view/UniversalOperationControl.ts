@@ -89,28 +89,27 @@ export default class UniversalOperationControl extends HBox {
     const operatorListener = ( operator: UniversalOperator ) => {
 
       const currentOperand = scene.operandProperty.value;
-      let adjustedOperand;
 
       if ( isDivideByZero( operator, currentOperand ) ||
            ( !options.timesZeroEnabled && isTimesZero( operator, currentOperand ) ) ) {
 
         // If the operator would result in division or multiplication by zero, change the operand to 1.
-        adjustedOperand = _.find( scene.operands,
-          operand => ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 ) );
+        const adjustedOperand = _.find( scene.operands,
+          operand => ( operand instanceof ConstantTerm ) && ( operand.constantValue.getValue() === 1 ) )!;
         assert && assert( adjustedOperand, 'expected to find constant 1' );
-        scene.operandProperty.value = adjustedOperand!;
+        scene.operandProperty.value = adjustedOperand;
       }
       else if ( isUnsupportedVariableTermOperation( operator, currentOperand ) ) {
 
         // If the operator is not supported for a variable term operand, change the operand to
         // a constant term that has the same value as the variable term's coefficient.
         // E.g. if the operand is '5x', change the operand to '5'.
-        // @ts-ignore https://github.com/phetsims/equality-explorer/issues/186 coefficient does not exist on currentOperand
+        // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 coefficient does not exist on currentOperand
         const currentCoefficient = currentOperand.coefficient;
-        adjustedOperand = _.find( scene.operands,
-          operand => ( operand instanceof ConstantTerm ) && operand.constantValue.equals( currentCoefficient ) );
+        const adjustedOperand = _.find( scene.operands,
+          operand => ( operand instanceof ConstantTerm ) && operand.constantValue.equals( currentCoefficient ) )!;
         assert && assert( adjustedOperand, `expected to find constant ${currentCoefficient}` );
-        scene.operandProperty.value = adjustedOperand!;
+        scene.operandProperty.value = adjustedOperand;
       }
     };
 
