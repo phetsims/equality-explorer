@@ -36,6 +36,7 @@ export default class VariablesAccordionBox extends AccordionBox {
 
   public constructor( variables: Variable[], providedOptions?: VariablesAccordionBoxOptions ) {
 
+    //TODO https://github.com/phetsims/equality-explorer/issues/186 this is hideous
     const defaultOptions = combineOptions<Required<SelfOptions> & AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
       // SelfOptions
