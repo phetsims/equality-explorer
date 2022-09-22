@@ -69,8 +69,9 @@ export default class OperationsSceneNode extends VariablesSceneNode {
   /**
    * @param dt - time step, in seconds
    */
-  public step( dt: number ): void {
+  public override step( dt: number ): void {
     this.universalOperationControl.step( dt );
+    super.step( dt );
   }
 
   public override reset(): void {

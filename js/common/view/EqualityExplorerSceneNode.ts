@@ -81,6 +81,15 @@ export default class EqualityExplorerSceneNode extends Node {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
+
+  public step( dt: number ): void {
+    // the default behavior is to do nothing
+  }
+
+  public reset(): void {
+    // the default behavior is to do nothing
+  }
 }
+
 
 equalityExplorer.register( 'EqualityExplorerSceneNode', EqualityExplorerSceneNode );

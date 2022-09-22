@@ -78,9 +78,10 @@ export default class VariablesSceneNode extends BasicsSceneNode {
     super.dispose();
   }
 
-  public reset(): void {
+  public override reset(): void {
     this.variablesAccordionBoxExpandedProperty.reset();
     this.variableValuesVisibleProperty.reset();
+    super.reset();
   }
 }
 

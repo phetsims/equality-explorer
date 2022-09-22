@@ -10,11 +10,11 @@ import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreen
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsSceneNode, { BasicsSceneNodeOptions } from './BasicsSceneNode.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
-import { Node } from '../../../../scenery/js/imports.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Property from '../../../../axon/js/Property.js';
 import BasicsModel from '../model/BasicsModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import EqualityExplorerSceneNode from '../../common/view/EqualityExplorerSceneNode.js';
 
 export default class BasicsScreenView extends EqualityExplorerScreenView {
 
@@ -32,7 +32,7 @@ export default class BasicsScreenView extends EqualityExplorerScreenView {
                                    equationAccordionBoxExpandedProperty: Property<boolean>,
                                    snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                    layoutBounds: Bounds2,
-                                   providedOptions?: BasicsSceneNodeOptions ): Node {
+                                   providedOptions?: BasicsSceneNodeOptions ): EqualityExplorerSceneNode {
     return new BasicsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }

@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * Abstract base type for ScreenViews in the Equality Explorer sim.
  *
@@ -8,49 +7,57 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import ScreenView from '../../../../joist/js/ScreenView.js';
-import merge from '../../../../phet-core/js/merge.js';
+import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerModel from '../model/EqualityExplorerModel.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
+import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from './EqualityExplorerSceneNode.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
-export default class EqualityExplorerScreenView extends ScreenView {
+type SelfOptions = {
 
-  /**
-   * @param {EqualityExplorerModel} model
-   * @param {Tandem} tandem
-   * @param {Object} [options]
-   * @abstract
-   */
-  constructor( model, tandem, options ) {
-    assert && assert( model instanceof EqualityExplorerModel );
-    assert && assert( tandem instanceof Tandem );
+  // true = positive and negative terms in the toolbox, e.g. x, -x, 1, -1
+  // false = only positive terms in the toolbox, e.g. x, 1
+  hasNegativeTermsInToolbox?: boolean;
+};
 
-    options = merge( {}, {
+export type EqualityExplorerScreenViewOptions = SelfOptions & StrictOmit<ScreenViewOptions, 'tandem'>;
 
-      // {boolean}
-      // true = positive and negative terms in the toolbox, e.g. x, -x, 1, -1
-      // false = only positive terms in the toolbox, e.g. x, 1
+export default abstract class EqualityExplorerScreenView extends ScreenView {
+
+  // Each ScreenView has its own state for accordion boxes,
+  // see https://github.com/phetsims/equality-explorer/issues/124
+  private readonly equationAccordionBoxExpandedProperty: Property<boolean>;
+  private readonly snapshotsAccordionBoxExpandedProperty: Property<boolean>;
+
+  // a Node for each scene
+  private readonly sceneNodes: EqualityExplorerSceneNode[];
+
+  protected constructor( model: EqualityExplorerModel, tandem: Tandem, providedOptions?: EqualityExplorerScreenViewOptions ) {
+
+    const options = optionize<EqualityExplorerScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
+
+      // SelfOptions
       hasNegativeTermsInToolbox: true,
 
       // ScreenViewOptions
       layoutBounds: EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS,
       preventFit: EqualityExplorerConstants.SCREEN_VIEW_PREVENT_FIT,
       tandem: tandem
-    }, options );
+    }, providedOptions );
 
     super( options );
 
-    // @private state of the Equation accordion box is global to the Screen,
-    // see https://github.com/phetsims/equality-explorer/issues/124
     this.equationAccordionBoxExpandedProperty =
       new BooleanProperty( EqualityExplorerConstants.EQUATION_ACCORDION_BOX_EXPANDED );
 
-    // @private state of the Snapshots accordion box is global to the Screen,
-    // see https://github.com/phetsims/equality-explorer/issues/124
     this.snapshotsAccordionBoxExpandedProperty =
       new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
 
@@ -65,13 +72,13 @@ export default class EqualityExplorerScreenView extends ScreenView {
     } );
     this.addChild( resetAllButton );
 
-    // @private {EqualityExplorerScene[]} create the view for each scene
     this.sceneNodes = [];
     model.scenes.forEach( scene => {
       const sceneNode = this.createSceneNode( scene, model.sceneProperty,
         this.equationAccordionBoxExpandedProperty,
         this.snapshotsAccordionBoxExpandedProperty,
         this.layoutBounds, {
+          // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 BasicsSceneNodeOptions.hasNegativeTermsInToolbox
           hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox
         } );
       this.sceneNodes.push( sceneNode );
@@ -82,6 +89,7 @@ export default class EqualityExplorerScreenView extends ScreenView {
     if ( model.scenes.length > 1 ) {
 
       // Get the bounds of the Snapshot accordion box, relative to this ScreenView
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 BasicsSceneNode.snapshotsAccordionBox
       const snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
 
       // Center the scene radio button group in the space below the Snapshots accordion box
@@ -100,33 +108,30 @@ export default class EqualityExplorerScreenView extends ScreenView {
     } );
   }
 
-  // @public
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.equationAccordionBoxExpandedProperty.reset();
     this.snapshotsAccordionBoxExpandedProperty.reset();
-    this.sceneNodes.forEach( sceneNode => {
-      sceneNode.reset && sceneNode.reset();
-    } );
+    this.sceneNodes.forEach( sceneNode => sceneNode.reset() );
   }
 
   /**
    * Animates the view.
-   * @param {number} dt - elapsed time, in seconds
-   * @public
+   * @param dt - elapsed time, in seconds
    */
-  step( dt ) {
+  public override step( dt: number ): void {
+
+    super.step( dt );
 
     // animate the view for the selected scene
     for ( let i = 0; i < this.sceneNodes.length; i++ ) {
       const sceneNode = this.sceneNodes[ i ];
       if ( sceneNode.visible ) {
-        sceneNode.step && sceneNode.step( dt );
+        sceneNode.step( dt );
         break;
       }
     }
@@ -134,20 +139,13 @@ export default class EqualityExplorerScreenView extends ScreenView {
 
   /**
    * Creates the Node for this scene.
-   * @param {EqualityExplorerScene} scene
-   * @param {Property.<EqualityExplorerScene>} sceneProperty - the selected Scene
-   * @param {BooleanProperty} equationAccordionBoxExpandedProperty
-   * @param {BooleanProperty} snapshotsAccordionBoxExpandedProperty
-   * @param {Bounds2} layoutBounds
-   * @param {Object} [options]
-   * @returns {scenery.Node}
-   * @protected
-   * @abstract
    */
-  createSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-                   snapshotsAccordionBoxExpandedProperty, layoutBounds, options ) {
-    throw new Error( 'createSceneNode must be implemented by subtype' );
-  }
+  protected abstract createSceneNode( scene: EqualityExplorerScene,
+                                      sceneProperty: Property<EqualityExplorerScene>,
+                                      equationAccordionBoxExpandedProperty: Property<boolean>,
+                                      snapshotsAccordionBoxExpandedProperty: Property<boolean>,
+                                      layoutBounds: Bounds2,
+                                      providedOptions?: EqualityExplorerSceneNodeOptions ): EqualityExplorerSceneNode;
 }
 
 equalityExplorer.register( 'EqualityExplorerScreenView', EqualityExplorerScreenView );

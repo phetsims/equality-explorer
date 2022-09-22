@@ -11,10 +11,10 @@ import equalityExplorer from '../../equalityExplorer.js';
 import NumbersSceneNode, { NumbersSceneNodeOptions } from './NumbersSceneNode.js';
 import NumbersModel from '../model/NumbersModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import { Node } from '../../../../scenery/js/imports.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import EqualityExplorerSceneNode from '../../common/view/EqualityExplorerSceneNode.js';
 
 export default class NumbersScreenView extends EqualityExplorerScreenView {
 
@@ -27,7 +27,7 @@ export default class NumbersScreenView extends EqualityExplorerScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
-                                      providedOptions?: NumbersSceneNodeOptions ): Node {
+                                      providedOptions?: NumbersSceneNodeOptions ): EqualityExplorerSceneNode {
     return new NumbersSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }

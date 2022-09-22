@@ -7,7 +7,6 @@
  */
 
 import Tandem from '../../../../tandem/js/Tandem.js';
-import { Node } from '../../../../scenery/js/imports.js';
 import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesModel from '../model/VariablesModel.js';
@@ -15,6 +14,7 @@ import VariablesSceneNode, { VariablesSceneNodeOptions } from './VariablesSceneN
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import EqualityExplorerSceneNode from '../../common/view/EqualityExplorerSceneNode.js';
 
 export default class VariablesScreenView extends EqualityExplorerScreenView {
 
@@ -30,7 +30,7 @@ export default class VariablesScreenView extends EqualityExplorerScreenView {
                                    equationAccordionBoxExpandedProperty: Property<boolean>,
                                    snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                    layoutBounds: Bounds2,
-                                   providedOptions?: VariablesSceneNodeOptions ): Node {
+                                   providedOptions?: VariablesSceneNodeOptions ): EqualityExplorerSceneNode {
     return new VariablesSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }

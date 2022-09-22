@@ -387,17 +387,19 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     super.dispose();
   }
 
-  public reset(): void {
+  public override reset(): void {
     this.universalOperationControl.reset();
+    super.reset();
   }
 
   /**
    * @param dt - elapsed time, in seconds
    */
-  public step( dt: number ): void {
+  public override step( dt: number ): void {
     this.universalOperationControl.step( dt );
     this.faceAnimation && this.faceAnimation.step( dt );
     this.rewardNode && this.rewardNode.step( dt );
+    super.step( dt );
   }
 }
 

@@ -8,13 +8,14 @@
 
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { NodeTranslationOptions } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions, RectangularRadioButtonItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SceneRadioButtonGroupOptions = SelfOptions;
+type SceneRadioButtonGroupOptions = SelfOptions & NodeTranslationOptions;
 
 export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<EqualityExplorerScene> {
 
