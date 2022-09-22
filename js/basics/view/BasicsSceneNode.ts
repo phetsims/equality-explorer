@@ -22,6 +22,7 @@ import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import TermsToolbox from '../../common/view/TermsToolbox.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from '../model/BasicsScene.js';
+import { SnapshotControlOptions } from '../../common/view/SnapshotControl.js';
 
 type SelfOptions = {
   hasNegativeTermsInToolbox?: boolean; // if true, put negative terms in the toolbox, e.g. -x
@@ -33,9 +34,7 @@ type SelfOptions = {
   variableValuesVisibleProperty?: Property<boolean> | null;
 
   // SnapshotControlOptions
-  // TODO https://github.com/phetsims/equality-explorer/issues/186 replace any with SnapshotControlOptions
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  snapshotControlOptions?: any;
+  snapshotControlOptions?: SnapshotControlOptions;
 };
 
 export type BasicsSceneNodeOptions = SelfOptions & EqualityExplorerSceneNodeOptions;
