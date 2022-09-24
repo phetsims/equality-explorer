@@ -47,8 +47,8 @@ export default class VariableValuesNode extends HBox {
     const children: Node[] = [];
 
     // '(' with normal font
-    const leftParenNode = new Text( '(', { font: font } );
-    children.push( leftParenNode );
+    const leftParenText = new Text( '(', { font: font } );
+    children.push( leftParenText );
 
     // E.g. {{symbol}} = {{value}}, for each variable
     for ( let i = 0; i < variables.length; i++ ) {
@@ -82,8 +82,8 @@ export default class VariableValuesNode extends HBox {
       }
     }
 
-    const rightParenNode = new Text( ')', { font: font } );
-    children.push( rightParenNode );
+    const rightParenText = new Text( ')', { font: font } );
+    children.push( rightParenText );
 
     assert && assert( !options.children, 'VariableValuesNode sets children' );
     options.children = children;

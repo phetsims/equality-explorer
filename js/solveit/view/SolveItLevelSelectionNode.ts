@@ -49,10 +49,10 @@ export default class SolveItLevelSelectionNode extends Node {
     };
 
     // 'Choose Your Level', centered above level-selection buttons
-    const chooseYourLevelNode = new Text( EqualityExplorerStrings.chooseYourLevelStringProperty, textOptions );
-    chooseYourLevelNode.boundsProperty.link( bounds => {
-      chooseYourLevelNode.centerX = levelSelectionButtonGroup.centerX;
-      chooseYourLevelNode.bottom = levelSelectionButtonGroup.top - 65;
+    const chooseYourLevelText = new Text( EqualityExplorerStrings.chooseYourLevelStringProperty, textOptions );
+    chooseYourLevelText.boundsProperty.link( bounds => {
+      chooseYourLevelText.centerX = levelSelectionButtonGroup.centerX;
+      chooseYourLevelText.bottom = levelSelectionButtonGroup.top - 65;
     } );
 
     // 'Solve for x', centered above 'Choose Your Level'
@@ -61,10 +61,10 @@ export default class SolveItLevelSelectionNode extends Node {
       ( solveForString, xString ) => StringUtils.fillIn( solveForString, {
         variable: MathSymbolFont.getRichTextMarkup( xString )
       } ) );
-    const solveForXNode = new RichText( solveToXStringProperty, textOptions );
-    solveForXNode.boundsProperty.link( bounds => {
-      solveForXNode.centerX = chooseYourLevelNode.centerX;
-      solveForXNode.bottom = chooseYourLevelNode.top - 30;
+    const solveForXText = new RichText( solveToXStringProperty, textOptions );
+    solveForXText.boundsProperty.link( bounds => {
+      solveForXText.centerX = chooseYourLevelText.centerX;
+      solveForXText.bottom = chooseYourLevelText.top - 30;
     } );
 
     // Info dialog is created eagerly and reused, so we don't have to deal with PhetioCapsule.
@@ -73,14 +73,14 @@ export default class SolveItLevelSelectionNode extends Node {
     // Info button, to right of 'Choose Your Level', opens the Info dialog.
     const infoButton = new InfoButton( {
       iconFill: 'rgb( 41, 106, 163 )',
-      maxHeight: 0.75 * chooseYourLevelNode.height,
+      maxHeight: 0.75 * chooseYourLevelText.height,
       listener: () => {
         infoDialog.show();
       }
     } );
-    chooseYourLevelNode.boundsProperty.link( bounds => {
-      infoButton.left = chooseYourLevelNode.right + 20;
-      infoButton.centerY = chooseYourLevelNode.centerY;
+    chooseYourLevelText.boundsProperty.link( bounds => {
+      infoButton.left = chooseYourLevelText.right + 20;
+      infoButton.centerY = chooseYourLevelText.centerY;
     } );
 
     // Reset All button, at lower right
@@ -94,8 +94,8 @@ export default class SolveItLevelSelectionNode extends Node {
     } );
 
     const children: Node[] = [
-      solveForXNode,
-      chooseYourLevelNode,
+      solveForXText,
+      chooseYourLevelText,
       infoButton,
       levelSelectionButtonGroup,
       resetAllButton
@@ -110,8 +110,8 @@ export default class SolveItLevelSelectionNode extends Node {
         baseColor: 'red',
         listener: () => {
           model.testChallengeGenerators();
-          const messageNode = new RichText( 'Test completed.<br>See results in browser console.' );
-          const dialog = new Dialog( messageNode, {
+          const messageText = new RichText( 'Test completed.<br>See results in browser console.' );
+          const dialog = new Dialog( messageText, {
             topMargin: 20,
             bottomMargin: 20,
             leftMargin: 20

@@ -67,12 +67,12 @@ function createHomeScreenIcon(): ScreenIcon {
  */
 function createNavigationBarIcon(): ScreenIcon {
 
-  const numberNode = new Text( `${MathSymbols.UNARY_PLUS}1`, { font: new PhetFont( 25 ) } );
+  const numberText = new Text( `${MathSymbols.UNARY_PLUS}1`, { font: new PhetFont( 25 ) } );
   const starNode = new StarNode();
 
   const iconNode = new HBox( {
     spacing: 3,
-    children: [ numberNode, starNode ]
+    children: [ numberText, starNode ]
   } );
 
   return new ScreenIcon( iconNode, {

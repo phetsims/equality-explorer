@@ -31,7 +31,7 @@ export default class VariableNode extends Node {
       fontSize: 24
     }, providedOptions );
 
-    let symbolNode;
+    let symbolNode: Node;
     if ( variable instanceof ObjectVariable ) {
 
       // use an image for a variable associated with a real-world object

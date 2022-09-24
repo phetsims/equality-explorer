@@ -23,19 +23,19 @@ export default class SolveItInfoDialog extends GameInfoDialog {
 
     const descriptionProperties = challengeGenerators.map( challengeGenerator => challengeGenerator.descriptionProperty );
 
-    const titleNode = new Text( EqualityExplorerStrings.levelsStringProperty, {
+    const titleText = new Text( EqualityExplorerStrings.levelsStringProperty, {
       font: new PhetFont( 32 )
     } );
 
     super( descriptionProperties, {
       gameLevels: EqualityExplorerQueryParameters.gameLevels,
-      title: titleNode,
+      title: titleText,
       ySpacing: 20,
       bottomMargin: 20
     } );
 
     this.disposeSolveItInfoDialog = () => {
-      titleNode.dispose(); // for when titleNode is PhET-iO instrumented
+      titleText.dispose(); // for when titleText is PhET-iO instrumented
     };
   }
 

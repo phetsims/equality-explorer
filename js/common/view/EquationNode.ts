@@ -85,7 +85,7 @@ export default class EquationNode extends Node {
     let rightExpressionNode: Node;
 
     // relational operator that separates the two expressions
-    const relationalOperatorNode = new Text( '?', {
+    const relationalOperatorText = new Text( '?', {
       font: new PhetFont( {
         size: options.relationalOperatorFontSize,
         weight: options.relationalOperatorFontWeight
@@ -95,18 +95,18 @@ export default class EquationNode extends Node {
     // updates the equation's layout, origin at the center of the relational operator
     const updateLayout = () => {
       if ( leftExpressionNode && rightExpressionNode ) {
-        relationalOperatorNode.centerX = 0;
-        relationalOperatorNode.centerY = 0;
-        leftExpressionNode.right = relationalOperatorNode.left - options.relationalOperatorSpacing;
-        leftExpressionNode.centerY = relationalOperatorNode.centerY;
-        rightExpressionNode.left = relationalOperatorNode.right + options.relationalOperatorSpacing;
-        rightExpressionNode.centerY = relationalOperatorNode.centerY;
+        relationalOperatorText.centerX = 0;
+        relationalOperatorText.centerY = 0;
+        leftExpressionNode.right = relationalOperatorText.left - options.relationalOperatorSpacing;
+        leftExpressionNode.centerY = relationalOperatorText.centerY;
+        rightExpressionNode.left = relationalOperatorText.right + options.relationalOperatorSpacing;
+        rightExpressionNode.centerY = relationalOperatorText.centerY;
       }
     };
 
     // updates the relational operator based on left vs right weight
     const updateRelationalOperator = () => {
-      relationalOperatorNode.text = getRelationalOperator( leftTermCreators, rightTermCreators );
+      relationalOperatorText.text = getRelationalOperator( leftTermCreators, rightTermCreators );
       updateLayout();
     };
 
@@ -129,7 +129,7 @@ export default class EquationNode extends Node {
 
       leftExpressionNode = new ExpressionNode( leftTermCreators, expressionNodeOptions );
       rightExpressionNode = new ExpressionNode( rightTermCreators, expressionNodeOptions );
-      this.children = [ leftExpressionNode, relationalOperatorNode, rightExpressionNode ];
+      this.children = [ leftExpressionNode, relationalOperatorText, rightExpressionNode ];
       updateLayout();
     };
 
@@ -239,7 +239,7 @@ class ExpressionNode extends HBox {
 
           // if there were previous terms, add an operator
           if ( children.length > 0 ) {
-            children.push( valueToOperatorNode( numberOfTermsOnPlate, providedOptions.operatorFont ) );
+            children.push( valueToOperatorText( numberOfTermsOnPlate, providedOptions.operatorFont ) );
           }
 
           // Each ObjectTerm has an implicit coefficient of 1, so use the number of terms as the coefficient.
@@ -256,7 +256,7 @@ class ExpressionNode extends HBox {
 
             // if there were previous terms, replace the coefficient's sign with an operator
             if ( children.length > 0 ) {
-              children.push( valueToOperatorNode( coefficient.getValue(), providedOptions.operatorFont ) );
+              children.push( valueToOperatorText( coefficient.getValue(), providedOptions.operatorFont ) );
               coefficient = coefficient.abs();
             }
 
@@ -279,7 +279,7 @@ class ExpressionNode extends HBox {
 
             // if there were previous terms, replace the constant's sign with an operator
             if ( children.length > 0 ) {
-              children.push( valueToOperatorNode( constantValue.getValue(), providedOptions.operatorFont ) );
+              children.push( valueToOperatorText( constantValue.getValue(), providedOptions.operatorFont ) );
               constantValue = constantValue.abs();
             }
 
@@ -319,7 +319,7 @@ class ExpressionNode extends HBox {
 /**
  * Given the value that determines a term's sign, create the corresponding operator node.
  */
-function valueToOperatorNode( value: number, operatorFont: Font ): Node {
+function valueToOperatorText( value: number, operatorFont: Font ): Node {
   const operator = ( value > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
   return new Text( operator, { font: operatorFont } );
 }

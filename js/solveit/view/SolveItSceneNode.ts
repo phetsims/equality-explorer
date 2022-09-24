@@ -78,7 +78,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     }, providedOptions );
 
     // Level description, displayed in the status bar
-    const levelDescriptionNode = new RichText( scene.challengeGenerator.descriptionProperty, {
+    const levelDescriptionText = new RichText( scene.challengeGenerator.descriptionProperty, {
       font: LEVEL_FONT,
       maxWidth: 650 // determined empirically
     } );
@@ -89,7 +89,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     };
 
     // Bar across the top of the screen
-    const statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionNode,
+    const statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionText,
       scene.scoreProperty, {
         floatToTop: true, // see https://github.com/phetsims/equality-explorer/issues/144
         spacing: 20,

@@ -96,14 +96,14 @@ class EquationTermNode extends HBox {
       spacing: 2
     }, providedOptions );
 
-    const coefficientNode = new Text( coefficient, { font: options.font } );
+    const coefficientText = new Text( coefficient, { font: options.font } );
 
     const iconWrapper = new Node( {
       children: [ icon ],
-      scale: ICON_SCALE_MULTIPLIER * coefficientNode.height / icon.height
+      scale: ICON_SCALE_MULTIPLIER * coefficientText.height / icon.height
     } );
 
-    options.children = [ coefficientNode, iconWrapper ];
+    options.children = [ coefficientText, iconWrapper ];
 
     super( options );
   }

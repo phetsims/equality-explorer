@@ -60,7 +60,7 @@ function createScreenIcon(): ScreenIcon {
   } );
 
   // <
-  const lessThanNode = new Text( MathSymbols.LESS_THAN, {
+  const lessThanText = new Text( MathSymbols.LESS_THAN, {
     font: new PhetFont( 50 )
   } );
 
@@ -73,7 +73,7 @@ function createScreenIcon(): ScreenIcon {
 
   const iconNode = new HBox( {
     spacing: 10,
-    children: [ leftGroupNode, lessThanNode, rightGroupNode ]
+    children: [ leftGroupNode, lessThanText, rightGroupNode ]
   } );
 
   return new ScreenIcon( iconNode, {

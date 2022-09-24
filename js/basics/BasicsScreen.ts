@@ -63,7 +63,7 @@ function createScreenIcon(): ScreenIcon {
   } );
 
   // >
-  const greaterThanNode = new Text( MathSymbols.GREATER_THAN, {
+  const greaterThanText = new Text( MathSymbols.GREATER_THAN, {
     font: new PhetFont( 140 )
   } );
 
@@ -72,7 +72,7 @@ function createScreenIcon(): ScreenIcon {
 
   const iconNode = new HBox( {
     spacing: 15,
-    children: [ appleGroupNode, greaterThanNode, orangeNode ]
+    children: [ appleGroupNode, greaterThanText, orangeNode ]
   } );
 
   return new ScreenIcon( iconNode, {

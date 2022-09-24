@@ -59,14 +59,14 @@ function createScreenIcon(): ScreenIcon {
     EqualityExplorerStrings.xStringProperty );
 
   // =
-  const equalsNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );
+  const equalsText = new Text( MathSymbols.EQUAL_TO, operatorOptions );
 
   // 6 on right side of equation
   const constantTermNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 6 ) );
 
   const iconNode = new HBox( {
     spacing: 5,
-    children: [ variableTermNode, equalsNode, constantTermNode ]
+    children: [ variableTermNode, equalsText, constantTermNode ]
   } );
 
   return new ScreenIcon( iconNode, {

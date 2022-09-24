@@ -51,30 +51,30 @@ export default class ReducedFractionNode extends Node {
     if ( fraction.isInteger() ) {
 
       // integer
-      const integerNode = new Text( fraction.getValue(), {
+      const integerText = new Text( fraction.getValue(), {
         font: options.integerFont
       } );
 
-      options.children = [ integerNode ];
+      options.children = [ integerText ];
     }
     else {
 
-      const numeratorNode = new Text( Math.abs( fraction.numerator ), {
+      const numeratorText = new Text( Math.abs( fraction.numerator ), {
         font: options.fractionFont
       } );
 
-      const denominatorNode = new Text( Math.abs( fraction.denominator ), {
+      const denominatorText = new Text( Math.abs( fraction.denominator ), {
         font: options.fractionFont
       } );
 
-      const lineLength = Math.max( numeratorNode.width, denominatorNode.width );
+      const lineLength = Math.max( numeratorText.width, denominatorText.width );
       const lineNode = new Line( 0, 0, lineLength, 0, {
         stroke: options.color,
         lineWidth: options.lineWidth
       } );
 
       const absoluteFractionNode = new VBox( {
-        children: [ numeratorNode, lineNode, denominatorNode ],
+        children: [ numeratorText, lineNode, denominatorText ],
         align: 'center',
         spacing: options.ySpacing
       } );
@@ -83,12 +83,12 @@ export default class ReducedFractionNode extends Node {
 
       // Add sign for negative values
       if ( fraction.getValue() < 0 ) {
-        const negativeSignNode = new Text( MathSymbols.MINUS, {
+        const negativeSignText = new Text( MathSymbols.MINUS, {
           font: options.fractionFont,
           right: lineNode.left - options.xSpacing,
           centerY: lineNode.centerY
         } );
-        options.children.push( negativeSignNode );
+        options.children.push( negativeSignText );
       }
     }
 
