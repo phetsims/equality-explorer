@@ -9,13 +9,19 @@
 import Property from '../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
-import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import OperationsModel from './model/OperationsModel.js';
 import OperationsScreenView from './view/OperationsScreenView.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
+import Fraction from '../../../phetcommon/js/model/Fraction.js';
+import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import { HBox, Text } from '../../../scenery/js/imports.js';
+import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
+import ConstantTermNode from '../common/view/ConstantTermNode.js';
+import VariableTermNode from '../common/view/VariableTermNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -30,7 +36,7 @@ export default class OperationsScreen extends EqualityExplorerScreen<OperationsM
       // EqualityExplorerScreenOptions
       name: EqualityExplorerStrings.screen.operationsStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND ),
-      homeScreenIcon: EqualityExplorerScreenIcons.createOperationsScreenIcon()
+      homeScreenIcon: createScreenIcon()
     }, providedOptions );
 
     super(
@@ -39,6 +45,34 @@ export default class OperationsScreen extends EqualityExplorerScreen<OperationsM
       options
     );
   }
+}
+
+/**
+ * Creates the icon for this screen: 3x = 6
+ */
+function createScreenIcon(): ScreenIcon {
+
+  const operatorOptions = { font: new PhetFont( 30 ) };
+
+  // 3x on left side of equation
+  const variableTermNode = VariableTermNode.createInteractiveTermNode( Fraction.fromInteger( 3 ),
+    EqualityExplorerStrings.xStringProperty );
+
+  // =
+  const equalsNode = new Text( MathSymbols.EQUAL_TO, operatorOptions );
+
+  // 6 on right side of equation
+  const constantTermNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 6 ) );
+
+  const iconNode = new HBox( {
+    spacing: 5,
+    children: [ variableTermNode, equalsNode, constantTermNode ]
+  } );
+
+  return new ScreenIcon( iconNode, {
+    maxIconWidthProportion: 0.75,
+    fill: EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND
+  } );
 }
 
 equalityExplorer.register( 'OperationsScreen', OperationsScreen );

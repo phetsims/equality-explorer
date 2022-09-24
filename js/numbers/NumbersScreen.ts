@@ -9,13 +9,17 @@
 import Property from '../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
-import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import NumbersModel from './model/NumbersModel.js';
 import NumbersScreenView from './view/NumbersScreenView.js';
+import HaloNode from '../common/view/HaloNode.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
+import Fraction from '../../../phetcommon/js/model/Fraction.js';
+import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
+import ConstantTermNode from '../common/view/ConstantTermNode.js';
+import { Node } from '../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -30,7 +34,7 @@ export default class NumbersScreen extends EqualityExplorerScreen<NumbersModel, 
       // EqualityExplorerScreenOptions
       name: EqualityExplorerStrings.screen.numbersStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND ),
-      homeScreenIcon: EqualityExplorerScreenIcons.createNumbersScreenIcon()
+      homeScreenIcon: createScreenIcon()
     }, providedOptions );
 
     super(
@@ -39,6 +43,39 @@ export default class NumbersScreen extends EqualityExplorerScreen<NumbersModel, 
       options
     );
   }
+}
+
+/**
+ * Creates the icon for this screen: 1 and -1 overlapping
+ */
+function createScreenIcon(): ScreenIcon {
+
+  // 1
+  const positiveOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) );
+
+  // -1
+  const negativeOneNode = ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( -1 ) );
+
+  // -1 overlaps 1
+  negativeOneNode.left = positiveOneNode.right - 10;
+  negativeOneNode.bottom = positiveOneNode.centerY + 10;
+
+  // halos
+  const haloRadius = 0.85 * positiveOneNode.width;
+  const positiveOneHaloNode = new HaloNode( haloRadius, {
+    center: positiveOneNode.center
+  } );
+  const negativeOneHaloNode = new HaloNode( haloRadius, {
+    center: negativeOneNode.center
+  } );
+
+  const iconNode = new Node( {
+    children: [ positiveOneHaloNode, negativeOneHaloNode, positiveOneNode, negativeOneNode ]
+  } );
+
+  return new ScreenIcon( iconNode, {
+    fill: EqualityExplorerColors.NUMBERS_SCREEN_BACKGROUND
+  } );
 }
 
 equalityExplorer.register( 'NumbersScreen', NumbersScreen );

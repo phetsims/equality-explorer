@@ -10,12 +10,17 @@ import Property from '../../../axon/js/Property.js';
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
-import EqualityExplorerScreenIcons from '../common/EqualityExplorerScreenIcons.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import SolveItModel from './model/SolveItModel.js';
 import SolveItScreenView from './view/SolveItScreenView.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
+import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import StarNode from '../../../scenery-phet/js/StarNode.js';
+import { HBox, Image, Text } from '../../../scenery/js/imports.js';
+import phetGirlJugglingStars_png from '../../../vegas/images/phetGirlJugglingStars_png.js';
+import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -30,8 +35,8 @@ export default class SolveItScreen extends Screen<SolveItModel, SolveItScreenVie
       // ScreenOptions
       name: EqualityExplorerStrings.screen.solveItStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
-      homeScreenIcon: EqualityExplorerScreenIcons.createSolveItHomeScreenIcon(),
-      navigationBarIcon: EqualityExplorerScreenIcons.createSolveItNavigationBarIcon()
+      homeScreenIcon: createHomeScreenIcon(),
+      navigationBarIcon: createNavigationBarIcon()
     }, providedOptions );
 
     super(
@@ -45,6 +50,35 @@ export default class SolveItScreen extends Screen<SolveItModel, SolveItScreenVie
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
+}
+
+/**
+ * Creates the home-screen icon for this screen: PhET girl juggling stars
+ */
+function createHomeScreenIcon(): ScreenIcon {
+  const iconNode = new Image( phetGirlJugglingStars_png );
+  return new ScreenIcon( iconNode, {
+    fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
+  } );
+}
+
+/**
+ * Creates the navigation bar icon for this screen: +1 star
+ */
+function createNavigationBarIcon(): ScreenIcon {
+
+  const numberNode = new Text( `${MathSymbols.UNARY_PLUS}1`, { font: new PhetFont( 25 ) } );
+  const starNode = new StarNode();
+
+  const iconNode = new HBox( {
+    spacing: 3,
+    children: [ numberNode, starNode ]
+  } );
+
+  return new ScreenIcon( iconNode, {
+    maxIconWidthProportion: 0.75,
+    fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
+  } );
 }
 
 equalityExplorer.register( 'SolveItScreen', SolveItScreen );
