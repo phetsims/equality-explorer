@@ -24,8 +24,8 @@ export default class VariableTermCreator extends TermCreator {
   constructor( variable, options ) {
 
     options = merge( {
-      positiveFill: EqualityExplorerColors.POSITIVE_X_FILL,
-      negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL
+      positiveFill: EqualityExplorerColors.POSITIVE_X_FILL, // fill for the background of positive terms
+      negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL  // fill for the background of negative terms
     }, options );
 
     super( options );
