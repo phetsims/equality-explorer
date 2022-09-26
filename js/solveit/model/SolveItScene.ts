@@ -201,13 +201,13 @@ export default class SolveItScene extends OperationsScene {
 
     if ( ( aTerm && !bTerm && !mTerm && nTerm ) ) {
       // ax + 0 = 0x + n
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 coefficient does not exist on type Term
-      xIsIsolated = ( aTerm.coefficient.getValue() === 1 ); // x = n
+      assert && assert( aTerm instanceof VariableTerm ); // eslint-disable-line no-simple-type-checking-assertions
+      xIsIsolated = ( ( aTerm as VariableTerm ).coefficient.getValue() === 1 ); // x = n
     }
     else if ( !aTerm && bTerm && mTerm && !nTerm ) {
       // 0x + b = mx + 0
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 coefficient does not exist on type Term
-      xIsIsolated = ( mTerm.coefficient.getValue() === 1 ); // b = x
+      assert && assert( mTerm instanceof VariableTerm ); // eslint-disable-line no-simple-type-checking-assertions
+      xIsIsolated = ( ( mTerm as VariableTerm ).coefficient.getValue() === 1 ); // b = x
     }
 
     return xIsIsolated;
