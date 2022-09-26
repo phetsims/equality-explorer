@@ -41,12 +41,16 @@ export default class TermCreator {
   constructor( options ) {
 
     options = merge( {
+      variable: null, // {Variable|null} null if the term is a constant
+
       dragBounds: Bounds2.EVERYTHING, // {Bounds2} dragging is constrained to these bounds
 
       // {number} like terms will occupy this cell in the plate's 2D grid
       // null means 'no cell', and like terms will not be combined
       likeTermsCell: null
     }, options );
+
+    this.variable = options.variable;
 
     // @private {Plate} the plate that this term creator is associated with.
     // Deferred initialization, see set plate() for notes.

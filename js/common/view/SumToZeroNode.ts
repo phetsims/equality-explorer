@@ -138,8 +138,7 @@ export default class SumToZeroNode extends Node {
 
       // display the animation in that cell
       const sumToZeroNode = new SumToZeroNode( {
-        // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 not all TermCreator subclasses have variable property
-        variable: termCreator.variable || null,
+        variable: termCreator.variable,
         fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE,
         center: cellCenter
       } );
