@@ -91,6 +91,7 @@ export default abstract class Term extends EqualityExplorerMovable {
   public override copyOptions(): TermOptions {
     return combineOptions<TermOptions>( {
       diameter: this.diameter
+      //TODO https://github.com/phetsims/equality-explorer/issues/186 why are other TermOptions not included here?
     }, super.copyOptions() );
   }
 
