@@ -154,6 +154,9 @@ export default class CombineTermsDragListener extends TermDragListener {
 
     const likeTermsCell = this.termCreator.likeTermsCell;
     const cellPosition = this.plate.getPositionOfCell( likeTermsCell );
+
+    // This must be done here. If this.term is disposed later in this method, this.termNode will also be disposed,
+    // and will not have a parent.
     const sumToZeroParent = this.termNode.getParent()!;
 
     this.term.pickableProperty.value = this.pickableWhileAnimating;
