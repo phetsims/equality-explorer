@@ -134,7 +134,7 @@ export default abstract class Term extends EqualityExplorerMovable {
    * Subtypes that have additional options should override this method and add to the options returned here.
    */
   public createSnapshot(): TermOptions {
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 why is this not the same as copyOptions?
+    //TODO https://github.com/phetsims/equality-explorer/issues/186 why is this not the same as copyOptions? why no EqualityExplorerMovableOptions?
     return {
       diameter: this.diameter
     };
