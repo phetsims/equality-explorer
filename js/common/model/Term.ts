@@ -133,7 +133,6 @@ export default abstract class Term extends EqualityExplorerMovable {
    * Subtypes that have additional options should override this method and add to the options returned here.
    */
   public createSnapshot(): TermOptions {
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
     return {
       diameter: this.diameter
     };
