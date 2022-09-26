@@ -248,7 +248,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     options.children = children;
 
     // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 sceneProperty has wrong type
-    super( scene, sceneProperty, termsLayer, options );
+    super( scene, sceneProperty, snapshotsAccordionBox, termsLayer, options );
 
     this.universalOperationControl = universalOperationControl;
 

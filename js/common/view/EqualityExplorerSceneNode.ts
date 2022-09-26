@@ -24,10 +24,12 @@ export type EqualityExplorerSceneNodeOptions = SelfOptions & PickOptional<NodeOp
 export default class EqualityExplorerSceneNode extends Node {
 
   public readonly scene: EqualityExplorerScene;
+  public readonly snapshotsAccordionBox: Node; // for layout
   protected readonly termsLayer: Node; // terms live in this layer
 
   protected constructor( scene: EqualityExplorerScene,
                          sceneProperty: Property<EqualityExplorerScene>,
+                         snapshotsAccordionBox: Node,
                          termsLayer: Node,
                          providedOptions?: EqualityExplorerSceneNodeOptions ) {
 
@@ -38,6 +40,7 @@ export default class EqualityExplorerSceneNode extends Node {
     super();
 
     this.scene = scene;
+    this.snapshotsAccordionBox = snapshotsAccordionBox;
     this.termsLayer = termsLayer;
 
     /**

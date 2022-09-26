@@ -89,7 +89,6 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
     if ( model.scenes.length > 1 ) {
 
       // Get the bounds of the Snapshot accordion box, relative to this ScreenView
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 BasicsSceneNode.snapshotsAccordionBox
       const snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
 
       // Center the scene radio button group in the space below the Snapshots accordion box

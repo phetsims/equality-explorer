@@ -43,7 +43,6 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
 
   // For layout
   public readonly equationAccordionBox: Node;
-  public readonly snapshotsAccordionBox: Node;
 
   public constructor( scene: BasicsScene,
                       sceneProperty: Property<BasicsScene>,
@@ -141,10 +140,9 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
 
     options.children = children;
 
-    super( scene, sceneProperty, termsLayer, options );
+    super( scene, sceneProperty, snapshotsAccordionBox, termsLayer, options );
 
     this.equationAccordionBox = equationAccordionBox;
-    this.snapshotsAccordionBox = snapshotsAccordionBox;
   }
 
   public override dispose(): void {
