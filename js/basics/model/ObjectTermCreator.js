@@ -21,10 +21,10 @@ export default class ObjectTermCreator extends TermCreator {
 
     phet.log && phet.log( `ObjectTermCreator: ${variable.symbolProperty.value}, weight=${variable.valueProperty.value}` );
 
-    super( options );
+    options = options || {};
+    options.variable = variable;
 
-    // @public (read-only)
-    this.variable = variable;
+    super( options );
 
     // When the variable's value changes, recompute the weight of terms on the scale. unlink not needed.
     this.variable.valueProperty.link( value => this.updateWeightOnPlateProperty() );

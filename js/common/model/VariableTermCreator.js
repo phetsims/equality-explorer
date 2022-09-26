@@ -24,14 +24,12 @@ export default class VariableTermCreator extends TermCreator {
   constructor( variable, options ) {
 
     options = merge( {
+      variable: variable,
       positiveFill: EqualityExplorerColors.POSITIVE_X_FILL, // fill for the background of positive terms
       negativeFill: EqualityExplorerColors.NEGATIVE_X_FILL  // fill for the background of negative terms
     }, options );
 
     super( options );
-
-    // @public (read-only)
-    this.variable = variable;
 
     // @private
     this.positiveFill = options.positiveFill;
