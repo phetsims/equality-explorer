@@ -158,6 +158,7 @@ export default class CombineTermsDragListener extends TermDragListener {
     // This must be done here. If this.term is disposed later in this method, this.termNode will also be disposed,
     // and will not have a parent.
     const sumToZeroParent = this.termNode.getParent()!;
+    assert && assert( sumToZeroParent, 'expected termNode to have a parent' );
 
     this.term.pickableProperty.value = this.pickableWhileAnimating;
 
