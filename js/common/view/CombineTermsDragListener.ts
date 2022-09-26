@@ -154,6 +154,7 @@ export default class CombineTermsDragListener extends TermDragListener {
 
     const likeTermsCell = this.termCreator.likeTermsCell;
     const cellPosition = this.plate.getPositionOfCell( likeTermsCell );
+    const sumToZeroParent = this.termNode.getParent()!;
 
     this.term.pickableProperty.value = this.pickableWhileAnimating;
 
@@ -308,15 +309,11 @@ export default class CombineTermsDragListener extends TermDragListener {
 
           // Do sum-to-zero animations after both plates have moved.
           if ( sumToZeroNode ) {
-            const sumToZeroParent = this.termNode.getParent()!;
-            assert && assert( sumToZeroParent );
             sumToZeroParent.addChild( sumToZeroNode );
             sumToZeroNode.center = this.plate.getPositionOfCell( likeTermsCell );
             sumToZeroNode.startAnimation();
           }
           if ( oppositeSumToZeroNode ) {
-            const sumToZeroParent = this.termNode.getParent()!;
-            assert && assert( sumToZeroParent );
             sumToZeroParent.addChild( oppositeSumToZeroNode );
             oppositeSumToZeroNode.center = this.oppositePlate.getPositionOfCell( likeTermsCell );
             oppositeSumToZeroNode.startAnimation();
