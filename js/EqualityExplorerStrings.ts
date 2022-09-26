@@ -5,38 +5,38 @@
  */
 /* eslint-disable */
 import getStringModule from '../../chipper/js/getStringModule.js';
-import TReadOnlyProperty from '../../axon/js/TReadOnlyProperty.js';
+import LinkableProperty from '../../axon/js/LinkableProperty.js';
 import equalityExplorer from './equalityExplorer.js';
 
 type StringsType = {
   'equality-explorer': {
-    'titleStringProperty': TReadOnlyProperty<string>;
+    'titleStringProperty': LinkableProperty<string>;
   };
   'screen': {
-    'basicsStringProperty': TReadOnlyProperty<string>;
-    'numbersStringProperty': TReadOnlyProperty<string>;
-    'variablesStringProperty': TReadOnlyProperty<string>;
-    'operationsStringProperty': TReadOnlyProperty<string>;
-    'solveItStringProperty': TReadOnlyProperty<string>;
+    'basicsStringProperty': LinkableProperty<string>;
+    'numbersStringProperty': LinkableProperty<string>;
+    'variablesStringProperty': LinkableProperty<string>;
+    'operationsStringProperty': LinkableProperty<string>;
+    'solveItStringProperty': LinkableProperty<string>;
   };
-  'snapshotsStringProperty': TReadOnlyProperty<string>;
-  'equationOrInequalityStringProperty': TReadOnlyProperty<string>;
-  'variableStringProperty': TReadOnlyProperty<string>;
-  'variablesStringProperty': TReadOnlyProperty<string>;
-  'xStringProperty': TReadOnlyProperty<string>;
-  'questionMarkStringProperty': TReadOnlyProperty<string>;
-  'chooseYourLevelStringProperty': TReadOnlyProperty<string>;
-  'solveForStringProperty': TReadOnlyProperty<string>;
-  'levelsStringProperty': TReadOnlyProperty<string>;
-  'level1DescriptionStringProperty': TReadOnlyProperty<string>;
-  'level2DescriptionStringProperty': TReadOnlyProperty<string>;
-  'level3DescriptionStringProperty': TReadOnlyProperty<string>;
-  'level4DescriptionStringProperty': TReadOnlyProperty<string>;
-  'level5DescriptionStringProperty': TReadOnlyProperty<string>;
-  'nextStringProperty': TReadOnlyProperty<string>;
-  'numberTooBigStringProperty': TReadOnlyProperty<string>;
-  'leftSideFullStringProperty': TReadOnlyProperty<string>;
-  'rightSideFullStringProperty': TReadOnlyProperty<string>;
+  'snapshotsStringProperty': LinkableProperty<string>;
+  'equationOrInequalityStringProperty': LinkableProperty<string>;
+  'variableStringProperty': LinkableProperty<string>;
+  'variablesStringProperty': LinkableProperty<string>;
+  'xStringProperty': LinkableProperty<string>;
+  'questionMarkStringProperty': LinkableProperty<string>;
+  'chooseYourLevelStringProperty': LinkableProperty<string>;
+  'solveForStringProperty': LinkableProperty<string>;
+  'levelsStringProperty': LinkableProperty<string>;
+  'level1DescriptionStringProperty': LinkableProperty<string>;
+  'level2DescriptionStringProperty': LinkableProperty<string>;
+  'level3DescriptionStringProperty': LinkableProperty<string>;
+  'level4DescriptionStringProperty': LinkableProperty<string>;
+  'level5DescriptionStringProperty': LinkableProperty<string>;
+  'nextStringProperty': LinkableProperty<string>;
+  'numberTooBigStringProperty': LinkableProperty<string>;
+  'leftSideFullStringProperty': LinkableProperty<string>;
+  'rightSideFullStringProperty': LinkableProperty<string>;
 };
 
 const EqualityExplorerStrings = getStringModule( 'EQUALITY_EXPLORER' ) as StringsType;
