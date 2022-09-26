@@ -14,7 +14,6 @@ import OperationsSceneNode, { OperationsSceneNodeOptions } from './OperationsSce
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import OperationsScene from '../model/OperationsScene.js';
-import EqualityExplorerSceneNode from '../../common/view/EqualityExplorerSceneNode.js';
 
 export default class OperationsScreenView extends EqualityExplorerScreenView {
 
@@ -29,7 +28,7 @@ export default class OperationsScreenView extends EqualityExplorerScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
-                                      options: OperationsSceneNodeOptions ): EqualityExplorerSceneNode {
+                                      options: OperationsSceneNodeOptions ): OperationsSceneNode {
     return new OperationsSceneNode( scene, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
   }

@@ -31,6 +31,7 @@ const DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.ma
 type SelfOptions = {
   debugName?: string | null; // internal name, not displayed to the user
   scalePosition?: Vector2; // determined empirically
+  hasNegativeTermsInToolbox?: boolean; // if true, put negative terms in the toolbox, e.g. -x
   lockable?: boolean; // is the lock feature supported for this scene?
   icon?: Node | null; // optional icon used to represent the scene in the scene control (radio buttons)
   maxWeight?: number; // maximum weight at which a plate 'bottoms out', and won't move when more weight is added to it,
@@ -46,6 +47,7 @@ export type EqualityExplorerSceneOptions = SelfOptions;
 export default abstract class EqualityExplorerScene {
 
   public readonly debugName: string | null;
+  public readonly hasNegativeTermsInToolbox: boolean;
   private readonly _icon: Node | null;
   public readonly variables: Variable[] | null;
 
@@ -82,6 +84,7 @@ export default abstract class EqualityExplorerScene {
       // SelfOptions
       debugName: null,
       scalePosition: DEFAULT_SCALE_POSITION,
+      hasNegativeTermsInToolbox: true,
       lockable: true,
       icon: null,
       maxWeight: 30,
@@ -95,6 +98,7 @@ export default abstract class EqualityExplorerScene {
     this.debugName = options.debugName;
     phet.log && phet.log( `scene: ${this.debugName}, maxWeight=${options.maxWeight}` );
 
+    this.hasNegativeTermsInToolbox = options.hasNegativeTermsInToolbox;
     this._icon = options.icon;
     this.variables = options.variables;
 

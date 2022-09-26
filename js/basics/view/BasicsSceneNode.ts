@@ -25,7 +25,6 @@ import BasicsScene from '../model/BasicsScene.js';
 import { SnapshotControlOptions } from '../../common/view/SnapshotControl.js';
 
 type SelfOptions = {
-  hasNegativeTermsInToolbox?: boolean; // if true, put negative terms in the toolbox, e.g. -x
   termsToolboxContentSize?: Dimension2;
   termsToolboxSpacing?: number; // spacing of terms in the toolboxes that appear below the scale
   organizeButtonVisible?: boolean; // is the organize button visible on the scale?
@@ -53,7 +52,6 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
     const options = optionize<BasicsSceneNodeOptions, StrictOmit<SelfOptions, 'snapshotControlOptions'>, EqualityExplorerSceneNodeOptions>()( {
 
       // SelfOptions
-      hasNegativeTermsInToolbox: true,
       termsToolboxContentSize: new Dimension2( 250, 50 ),
       termsToolboxSpacing: 50,
       organizeButtonVisible: true,
@@ -74,7 +72,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
     } );
 
     const leftTermsToolbox = new TermsToolbox( leftTermCreators, scale.leftPlate, termsLayer, {
-      hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
+      hasNegativeTermsInToolbox: scene.hasNegativeTermsInToolbox,
       contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
       centerX: scale.leftPlate.positionProperty.value.x,
@@ -82,7 +80,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
     } );
 
     const rightTermsToolbox = new TermsToolbox( rightTermCreators, scale.rightPlate, termsLayer, {
-      hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox,
+      hasNegativeTermsInToolbox: scene.hasNegativeTermsInToolbox,
       contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
       centerX: scale.rightPlate.positionProperty.value.x,

@@ -17,16 +17,11 @@ import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from './EqualityExplorerSceneNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
-type SelfOptions = {
-
-  // true = positive and negative terms in the toolbox, e.g. x, -x, 1, -1
-  // false = only positive terms in the toolbox, e.g. x, 1
-  hasNegativeTermsInToolbox?: boolean;
-};
+type SelfOptions = EmptySelfOptions;
 
 export type EqualityExplorerScreenViewOptions = SelfOptions & StrictOmit<ScreenViewOptions, 'tandem'>;
 
@@ -43,9 +38,6 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
   protected constructor( model: EqualityExplorerModel, tandem: Tandem, providedOptions?: EqualityExplorerScreenViewOptions ) {
 
     const options = optionize<EqualityExplorerScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
-
-      // SelfOptions
-      hasNegativeTermsInToolbox: true,
 
       // ScreenViewOptions
       layoutBounds: EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS,
@@ -77,10 +69,8 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
       const sceneNode = this.createSceneNode( scene,
         this.equationAccordionBoxExpandedProperty,
         this.snapshotsAccordionBoxExpandedProperty,
-        this.layoutBounds, {
-          // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 BasicsSceneNodeOptions.hasNegativeTermsInToolbox
-          hasNegativeTermsInToolbox: options.hasNegativeTermsInToolbox
-        } );
+        this.layoutBounds
+      );
       this.sceneNodes.push( sceneNode );
       this.addChild( sceneNode );
     } );

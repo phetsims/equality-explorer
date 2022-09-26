@@ -31,6 +31,7 @@ export default class BasicsScene extends EqualityExplorerScene {
       hasConstantTerms: false,
 
       // EqualityExplorerSceneOptions
+      hasNegativeTermsInToolbox: false,
       variables: variables,
       lockable: false
     }, providedOptions );
