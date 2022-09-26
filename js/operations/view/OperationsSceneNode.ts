@@ -12,7 +12,6 @@ import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesSceneNode, { VariablesSceneNodeOptions } from '../../variables/view/VariablesSceneNode.js';
-import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -28,7 +27,6 @@ export default class OperationsSceneNode extends VariablesSceneNode {
   private readonly universalOperationControl: UniversalOperationControl;
 
   public constructor( scene: OperationsScene,
-                      sceneProperty: Property<EqualityExplorerScene>,
                       equationAccordionBoxExpandedProperty: Property<boolean>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
@@ -40,8 +38,7 @@ export default class OperationsSceneNode extends VariablesSceneNode {
       organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
     }, providedOptions );
 
-    super( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+    super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
     // Layer when universal operation animation occurs
     const operationAnimationLayer = new Node();

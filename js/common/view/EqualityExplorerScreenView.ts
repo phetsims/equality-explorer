@@ -74,7 +74,7 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
 
     this.sceneNodes = [];
     model.scenes.forEach( scene => {
-      const sceneNode = this.createSceneNode( scene, model.sceneProperty,
+      const sceneNode = this.createSceneNode( scene,
         this.equationAccordionBoxExpandedProperty,
         this.snapshotsAccordionBoxExpandedProperty,
         this.layoutBounds, {
@@ -140,7 +140,6 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
    * Creates the Node for this scene.
    */
   protected abstract createSceneNode( scene: EqualityExplorerScene,
-                                      sceneProperty: Property<EqualityExplorerScene>,
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,

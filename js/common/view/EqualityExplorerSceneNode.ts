@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import { Node, NodeOptions, SceneryEvent } from '../../../../scenery/js/imports.js';
@@ -28,7 +27,6 @@ export default class EqualityExplorerSceneNode extends Node {
   protected readonly termsLayer: Node; // terms live in this layer
 
   protected constructor( scene: EqualityExplorerScene,
-                         sceneProperty: Property<EqualityExplorerScene>,
                          snapshotsAccordionBox: Node,
                          termsLayer: Node,
                          providedOptions?: EqualityExplorerSceneNodeOptions ) {

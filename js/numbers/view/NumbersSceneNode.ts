@@ -21,13 +21,11 @@ export type NumbersSceneNodeOptions = SelfOptions & BasicsSceneNodeOptions;
 export default class NumbersSceneNode extends BasicsSceneNode {
 
   public constructor( scene: EqualityExplorerScene,
-                      sceneProperty: Property<EqualityExplorerScene>,
                       equationAccordionBoxExpandedProperty: Property<boolean>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
                       providedOptions?: NumbersSceneNodeOptions ) {
-    super( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
+    super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
 

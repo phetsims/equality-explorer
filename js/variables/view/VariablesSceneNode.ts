@@ -30,7 +30,6 @@ export default class VariablesSceneNode extends BasicsSceneNode {
   private readonly variableValuesVisibleProperty: Property<boolean>;
 
   public constructor( scene: EqualityExplorerScene,
-                      sceneProperty: Property<EqualityExplorerScene>,
                       equationAccordionBoxExpandedProperty: Property<boolean>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
@@ -48,8 +47,7 @@ export default class VariablesSceneNode extends BasicsSceneNode {
     assert && assert( !options.variableValuesVisibleProperty, 'VariablesSceneNode sets variableValuesVisibleProperty' );
     options.variableValuesVisibleProperty = variableValuesVisibleProperty;
 
-    super( scene, sceneProperty, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
+    super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
     this.variablesAccordionBoxExpandedProperty =
       new BooleanProperty( EqualityExplorerConstants.VARIABLES_ACCORDION_BOX_EXPANDED );

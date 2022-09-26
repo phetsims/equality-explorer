@@ -25,13 +25,12 @@ export default class VariablesScreenView extends EqualityExplorerScreenView {
   /**
    * Creates the Node for this scene.
    */
-  public override createSceneNode( scene: EqualityExplorerScene,
-                                   sceneProperty: Property<EqualityExplorerScene>,
-                                   equationAccordionBoxExpandedProperty: Property<boolean>,
-                                   snapshotsAccordionBoxExpandedProperty: Property<boolean>,
-                                   layoutBounds: Bounds2,
-                                   providedOptions?: VariablesSceneNodeOptions ): EqualityExplorerSceneNode {
-    return new VariablesSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+  protected override createSceneNode( scene: EqualityExplorerScene,
+                                      equationAccordionBoxExpandedProperty: Property<boolean>,
+                                      snapshotsAccordionBoxExpandedProperty: Property<boolean>,
+                                      layoutBounds: Bounds2,
+                                      providedOptions?: VariablesSceneNodeOptions ): EqualityExplorerSceneNode {
+    return new VariablesSceneNode( scene, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }

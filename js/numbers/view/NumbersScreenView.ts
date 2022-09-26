@@ -23,12 +23,11 @@ export default class NumbersScreenView extends EqualityExplorerScreenView {
   }
 
   protected override createSceneNode( scene: EqualityExplorerScene,
-                                      sceneProperty: Property<EqualityExplorerScene>,
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
                                       providedOptions?: NumbersSceneNodeOptions ): EqualityExplorerSceneNode {
-    return new NumbersSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+    return new NumbersSceneNode( scene, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }

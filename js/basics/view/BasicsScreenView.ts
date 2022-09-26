@@ -27,13 +27,12 @@ export default class BasicsScreenView extends EqualityExplorerScreenView {
   /**
    * Creates the Node for this scene.
    */
-  public override createSceneNode( scene: EqualityExplorerScene,
-                                   sceneProperty: Property<EqualityExplorerScene>,
-                                   equationAccordionBoxExpandedProperty: Property<boolean>,
-                                   snapshotsAccordionBoxExpandedProperty: Property<boolean>,
-                                   layoutBounds: Bounds2,
-                                   providedOptions?: BasicsSceneNodeOptions ): EqualityExplorerSceneNode {
-    return new BasicsSceneNode( scene, sceneProperty, equationAccordionBoxExpandedProperty,
+  protected override createSceneNode( scene: EqualityExplorerScene,
+                                      equationAccordionBoxExpandedProperty: Property<boolean>,
+                                      snapshotsAccordionBoxExpandedProperty: Property<boolean>,
+                                      layoutBounds: Bounds2,
+                                      providedOptions?: BasicsSceneNodeOptions ): EqualityExplorerSceneNode {
+    return new BasicsSceneNode( scene, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
