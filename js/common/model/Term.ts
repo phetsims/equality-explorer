@@ -19,8 +19,8 @@ import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
 
 type SelfOptions = {
-  pickable?: boolean; // whether the term is pickable (interactive)
   diameter?: number;
+  pickable?: boolean; // whether the term is pickable (interactive)
   toolboxPosition?: Vector2 | null; // position of the associated TermCreatorNode in the toolbox
 };
 
@@ -67,8 +67,8 @@ export default abstract class Term extends EqualityExplorerMovable {
     const options = optionize<TermOptions, SelfOptions, EqualityExplorerMovableOptions>()( {
 
       // SelfOptions
-      pickable: true,
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
+      pickable: true,
       toolboxPosition: null
     }, providedOptions );
 
