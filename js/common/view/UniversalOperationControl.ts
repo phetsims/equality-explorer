@@ -104,8 +104,8 @@ export default class UniversalOperationControl extends HBox {
         // If the operator is not supported for a variable term operand, change the operand to
         // a constant term that has the same value as the variable term's coefficient.
         // E.g. if the operand is '5x', change the operand to '5'.
-        // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 coefficient does not exist on currentOperand
-        const currentCoefficient = currentOperand.coefficient;
+        assert && assert( currentOperand instanceof VariableTerm ); // eslint-disable-line no-simple-type-checking-assertions
+        const currentCoefficient = ( currentOperand as VariableTerm ).coefficient;
         const adjustedOperand = _.find( scene.operands,
           operand => ( operand instanceof ConstantTerm ) && operand.constantValue.equals( currentCoefficient ) )!;
         assert && assert( adjustedOperand, `expected to find constant ${currentCoefficient}` );
