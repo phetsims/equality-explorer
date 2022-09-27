@@ -6,30 +6,35 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import Term, { TermOptions } from '../../common/model/Term.js';
+import Term from '../../common/model/Term.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectVariable from './ObjectVariable.js';
 import Variable from '../../common/model/Variable.js';
 import UniversalOperation from '../../common/model/UniversalOperation.js';
+import VariableTerm, { VariableTermOptions } from '../../common/model/VariableTerm.js';
 
 // constants
 const COEFFICIENT = Fraction.fromInteger( 1 ); // all object terms have an implicit coefficient of 1
 
 type SelfOptions = EmptySelfOptions;
 
-type ObjectTermOptions = SelfOptions & TermOptions;
+type ObjectTermOptions = SelfOptions & VariableTermOptions;
 
-export default class ObjectTerm extends Term {
+export default class ObjectTerm extends VariableTerm {
 
-  public readonly variable: ObjectVariable;
+  public readonly objectVariable: ObjectVariable;
 
   public constructor( variable: ObjectVariable, providedOptions?: ObjectTermOptions ) {
 
-    super( COEFFICIENT, providedOptions );
+    const options = optionize<ObjectTermOptions, SelfOptions, VariableTermOptions>()( {
+      coefficient: COEFFICIENT
+    }, providedOptions );
 
-    this.variable = variable;
+    super( variable, options );
+
+    this.objectVariable = variable;
   }
 
   public override getVariable(): Variable | null {
@@ -40,7 +45,7 @@ export default class ObjectTerm extends Term {
    * For debugging only. Do not rely on the format of toString.
    */
   public override toString(): string {
-    return `ObjectTerm: ${this.variable.symbolProperty.value} ${this.variable.valueProperty.value}`;
+    return `ObjectTerm: ${this.coefficient} ${this.variable}`;
   }
 
   /**
@@ -61,15 +66,7 @@ export default class ObjectTerm extends Term {
    * Creates a copy of this term, with modifications through options.
    */
   public override copy( providedOptions?: ObjectTermOptions ): ObjectTerm {
-    return new ObjectTerm( this.variable,
-      combineOptions<ObjectTermOptions>( this.copyOptions(), providedOptions ) );
-  }
-
-  /**
-   * Gets the weight of this term.
-   */
-  public override get weight(): Fraction {
-    return Fraction.fromInteger( this.variable.valueProperty.value );
+    return new ObjectTerm( this.objectVariable, combineOptions<ObjectTermOptions>( this.copyOptions(), providedOptions ) );
   }
 
   /**
@@ -82,11 +79,13 @@ export default class ObjectTerm extends Term {
 
   /**
    * Applies an operation to this term, resulting in a new term.
-   * @returns null if the operation is not applicable to this term.
+   * Returns null if the operation is not applicable to this term.
    */
   public override applyOperation( operation: UniversalOperation, providedOptions?: ObjectTermOptions ): ObjectTerm | null {
-    return null; // operations are not applicable to these terms
+    return null; // operations are not applicable to ObjectTerms
   }
+
+  // plus, minus, times, divided: these methods are the same as VariableTerm, and are not used in this sim.
 }
 
 equalityExplorer.register( 'ObjectTerm', ObjectTerm );

@@ -64,43 +64,6 @@ export default class ConstantTerm extends Term {
     } );
   }
 
-  /**
-   * Adds a term to this term to create a new term.
-   */
-  public plus( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
-    return this.copy( combineOptions<ConstantTermOptions>( {
-      constantValue: this.constantValue.plus( term.constantValue ).reduce()
-    }, providedOptions ) );
-  }
-
-  /**
-   * Subtracts a term from this term to create a new term.
-   */
-  public minus( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
-    return this.copy( combineOptions<ConstantTermOptions>( {
-      constantValue: this.constantValue.minus( term.constantValue ).reduce()
-    }, providedOptions ) );
-  }
-
-  /**
-   * Multiplies this term by another term to create a new term.
-   */
-  public times( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
-    return this.copy( combineOptions<ConstantTermOptions>( {
-      constantValue: this.constantValue.times( term.constantValue ).reduce()
-    }, providedOptions ) );
-  }
-
-  /**
-   * Divides this term by another term to create a new term.
-   */
-  public divided( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
-    assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-    return this.copy( combineOptions<ConstantTermOptions>( {
-      constantValue: this.constantValue.divided( term.constantValue ).reduce()
-    }, providedOptions ) );
-  }
-
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the abstract methods of the Term API
   //-------------------------------------------------------------------------------------------------
@@ -162,6 +125,43 @@ export default class ConstantTerm extends Term {
     }
 
     return term;
+  }
+
+  /**
+   * Adds a term to this term to create a new term.
+   */
+  public override plus( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
+    return this.copy( combineOptions<ConstantTermOptions>( {
+      constantValue: this.constantValue.plus( term.constantValue ).reduce()
+    }, providedOptions ) );
+  }
+
+  /**
+   * Subtracts a term from this term to create a new term.
+   */
+  public override minus( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
+    return this.copy( combineOptions<ConstantTermOptions>( {
+      constantValue: this.constantValue.minus( term.constantValue ).reduce()
+    }, providedOptions ) );
+  }
+
+  /**
+   * Multiplies this term by another term to create a new term.
+   */
+  public override times( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
+    return this.copy( combineOptions<ConstantTermOptions>( {
+      constantValue: this.constantValue.times( term.constantValue ).reduce()
+    }, providedOptions ) );
+  }
+
+  /**
+   * Divides this term by another term to create a new term.
+   */
+  public override divided( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
+    assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
+    return this.copy( combineOptions<ConstantTermOptions>( {
+      constantValue: this.constantValue.divided( term.constantValue ).reduce()
+    }, providedOptions ) );
   }
 }
 

@@ -53,7 +53,6 @@ export default class CombineTermsDragListener extends TermDragListener {
     if ( oppositeLikeTerm ) {
 
       // subtract term from what's on the opposite plate
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 minus is for ConstantTerm and VariableTerm
       inverseTerm = oppositeLikeTerm.minus( this.term );
       this.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
       oppositeLikeTerm.dispose();
@@ -97,16 +96,16 @@ export default class CombineTermsDragListener extends TermDragListener {
     let oppositeLikeTerm = this.oppositePlate.getTermInCell( cell );
     if ( oppositeLikeTerm ) {
 
+      const equivalentTerm = this.equivalentTerm!;
+      assert && assert( equivalentTerm );
+
       // opposite cell is occupied, combine equivalentTerm with term that's in the cell
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 plus is for ConstantTerm and VariableTerm
-      let combinedTerm = oppositeLikeTerm.plus( this.equivalentTerm );
+      let combinedTerm: Term | null = oppositeLikeTerm.plus( equivalentTerm );
       this.equivalentTermCreator.removeTermFromPlate( oppositeLikeTerm );
 
       // dispose of the terms used to create combinedTerm
       !oppositeLikeTerm.isDisposed && oppositeLikeTerm.dispose();
       oppositeLikeTerm = null;
-      const equivalentTerm = this.equivalentTerm!;
-      assert && assert( equivalentTerm );
       !equivalentTerm.isDisposed && equivalentTerm.dispose();
       this.equivalentTerm = null;
 
@@ -114,7 +113,7 @@ export default class CombineTermsDragListener extends TermDragListener {
 
         // Combined term is zero. No halo, since the terms are on the opposite side.
         oppositeSumToZeroNode = new SumToZeroNode( {
-          variable: combinedTerm.variable || null,
+          variable: combinedTerm.getVariable(),
           fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
         } );
 
@@ -190,7 +189,6 @@ export default class CombineTermsDragListener extends TermDragListener {
         else {
 
           // If the cell is not empty. Combine the terms to create a new 'big' term.
-          // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 plus is for ConstantTerm and VariableTerm
           combinedTerm = termInCell.plus( this.term );
 
           if ( combinedTerm.maxIntegerExceeded() ) {
@@ -246,8 +244,7 @@ export default class CombineTermsDragListener extends TermDragListener {
           else {
 
             // The cell is not empty. Combine equivalentTerm with term that's in the cell
-            // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 plus is for ConstantTerm and VariableTerm
-            let oppositeCombinedTerm = oppositeLikeTerm.plus( this.equivalentTerm );
+            let oppositeCombinedTerm: Term | null = oppositeLikeTerm.plus( this.equivalentTerm );
 
             if ( oppositeCombinedTerm.maxIntegerExceeded() ) {
 
@@ -269,7 +266,7 @@ export default class CombineTermsDragListener extends TermDragListener {
 
                 // terms summed to zero on opposite plate. No halo, since these terms are on opposite side.
                 oppositeSumToZeroNode = new SumToZeroNode( {
-                  variable: oppositeCombinedTerm.variable || null,
+                  variable: oppositeCombinedTerm.getVariable(),
                   fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
                 } );
 

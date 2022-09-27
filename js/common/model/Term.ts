@@ -30,7 +30,7 @@ export default abstract class Term extends EqualityExplorerMovable {
 
   // The value that is significant for the purposes of determining sign and maxInteger limits.
   // The value that is significant is specific to the Term subtype.
-  private readonly significantValue: Fraction;
+  public readonly significantValue: Fraction;
 
   // Sign of the term's significant number, ala Math.sign.
   // Note that sign is not related to the term's weight. For example, for variable terms, the 'significant number'
@@ -167,6 +167,26 @@ export default abstract class Term extends EqualityExplorerMovable {
    * Returns null if the operation is not applicable to this term.
    */
   public abstract applyOperation( operation: UniversalOperation, providedOptions: TermOptions ): Term | null;
+
+  /**
+   * Adds a term to this term to create a new term.
+   */
+  public abstract plus( term: Term ): Term;
+
+  /**
+   * Subtracts a term from this term to create a new term.
+   */
+  public abstract minus( term: Term ): Term;
+
+  /**
+   * Multiplies this term by another term to create a new term.
+   */
+  public abstract times( term: Term ): Term;
+
+  /**
+   * Divides this term by another term to create a new term.
+   */
+  public abstract divided( term: Term ): Term;
 }
 
 equalityExplorer.register( 'Term', Term );

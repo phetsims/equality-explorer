@@ -21,7 +21,7 @@ type SelfOptions = {
   coefficient?: Fraction;
 };
 
-type VariableTermOptions = SelfOptions & TermOptions;
+export type VariableTermOptions = SelfOptions & TermOptions;
 
 export default class VariableTerm extends Term {
 
@@ -68,45 +68,6 @@ export default class VariableTerm extends Term {
     } );
   }
 
-  /**
-   * Adds a variable term to this term to create a new term.
-   */
-  public plus( term: VariableTerm, providedOptions?: VariableTermOptions ): VariableTerm {
-    assert && assert( this.isLikeTerm( term ), `not a like term: ${term}` );
-    return this.copy( combineOptions<VariableTermOptions>( {
-      coefficient: this.coefficient.plus( term.coefficient ).reduced()
-    }, providedOptions ) );
-  }
-
-  /**
-   * Subtracts a variable term from this term to create a new term.
-   */
-  public minus( term: VariableTerm, providedOptions?: VariableTermOptions ): VariableTerm {
-    assert && assert( this.isLikeTerm( term ), `not a like term: ${term}` );
-    return this.copy( combineOptions<VariableTermOptions>( {
-      coefficient: this.coefficient.minus( term.coefficient ).reduced()
-    }, providedOptions ) );
-  }
-
-  /**
-   * Multiplies this term by a constant term to create a new term.
-   */
-  public times( term: ConstantTerm, providedOptions?: VariableTermOptions ): VariableTerm {
-    return this.copy( combineOptions<VariableTermOptions>( {
-      coefficient: this.coefficient.times( term.constantValue ).reduced()
-    }, providedOptions ) );
-  }
-
-  /**
-   * Divides this term by a constant term to create a new term.
-   */
-  public divided( term: ConstantTerm, providedOptions?: VariableTermOptions ): VariableTerm {
-    assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-    return this.copy( combineOptions<VariableTermOptions>( {
-      coefficient: this.coefficient.divided( term.constantValue ).reduced()
-    }, providedOptions ) );
-  }
-
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the abstract methods of the Term API
   //-------------------------------------------------------------------------------------------------
@@ -145,6 +106,7 @@ export default class VariableTerm extends Term {
 
   /**
    * Applies an operation to this term, resulting in a new term.
+   * Returns null if the operation is not applicable to this term.
    */
   public applyOperation( operation: UniversalOperation, providedOptions?: VariableTermOptions ): VariableTerm | null {
 
@@ -172,6 +134,45 @@ export default class VariableTerm extends Term {
     }
 
     return term;
+  }
+
+  /**
+   * Adds a variable term to this term to create a new term.
+   */
+  public override plus( term: VariableTerm, providedOptions?: VariableTermOptions ): VariableTerm {
+    assert && assert( this.isLikeTerm( term ), `not a like term: ${term}` );
+    return this.copy( combineOptions<VariableTermOptions>( {
+      coefficient: this.coefficient.plus( term.coefficient ).reduced()
+    }, providedOptions ) );
+  }
+
+  /**
+   * Subtracts a variable term from this term to create a new term.
+   */
+  public override minus( term: VariableTerm, providedOptions?: VariableTermOptions ): VariableTerm {
+    assert && assert( this.isLikeTerm( term ), `not a like term: ${term}` );
+    return this.copy( combineOptions<VariableTermOptions>( {
+      coefficient: this.coefficient.minus( term.coefficient ).reduced()
+    }, providedOptions ) );
+  }
+
+  /**
+   * Multiplies this term by a constant term to create a new term.
+   */
+  public override times( term: ConstantTerm, providedOptions?: VariableTermOptions ): VariableTerm {
+    return this.copy( combineOptions<VariableTermOptions>( {
+      coefficient: this.coefficient.times( term.constantValue ).reduced()
+    }, providedOptions ) );
+  }
+
+  /**
+   * Divides this term by a constant term to create a new term.
+   */
+  public override divided( term: ConstantTerm, providedOptions?: VariableTermOptions ): VariableTerm {
+    assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
+    return this.copy( combineOptions<VariableTermOptions>( {
+      coefficient: this.coefficient.divided( term.constantValue ).reduced()
+    }, providedOptions ) );
   }
 }
 

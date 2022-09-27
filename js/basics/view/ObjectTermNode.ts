@@ -28,11 +28,11 @@ export default class ObjectTermNode extends TermNode {
 
   public constructor( termCreator: ObjectTermCreator, term: ObjectTerm, providedOptions?: ObjectTermNodeOptions ) {
 
-    const contentNode = ObjectTermNode.createInteractiveTermNode( term.variable.image, {
+    const contentNode = ObjectTermNode.createInteractiveTermNode( term.objectVariable.image, {
       maxHeight: term.diameter
     } );
 
-    const shadowNode = new Image( term.variable.shadow, {
+    const shadowNode = new Image( term.objectVariable.shadow, {
       maxHeight: term.diameter,
       opacity: EqualityExplorerConstants.SHADOW_OPACITY
     } );
