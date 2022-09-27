@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * VariableTermCreator creates and manages variable terms (e.g. 'x').
  *

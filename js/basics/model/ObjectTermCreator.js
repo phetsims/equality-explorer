@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+// @ts-nocheck
 /**
  * ObjectTermCreator creates and manages terms that are associated with real-world objects.
  *
