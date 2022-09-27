@@ -8,7 +8,7 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
-import { Node, NodeOptions, SceneryEvent } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, PressListenerEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
@@ -45,7 +45,7 @@ export default class EqualityExplorerSceneNode extends Node {
      * When a term is created in the model, create the corresponding view.
      * Event is non-null when the term was created via a user interaction.
      */
-    const termCreatedListener = ( termCreator: TermCreator, term: Term, event: SceneryEvent | null ) => {
+    const termCreatedListener = ( termCreator: TermCreator, term: Term, event: PressListenerEvent | null ) => {
 
       // create a TermNode
       const termNode = termCreator.createTermNode( term );

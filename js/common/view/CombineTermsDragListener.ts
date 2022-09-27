@@ -45,7 +45,8 @@ export default class CombineTermsDragListener extends TermDragListener {
   protected override startOpposite(): boolean {
     assert && assert( this.termCreator.lockedProperty.value, 'startOpposite should only be called when lock is on' );
 
-    const likeTermsCell = this.termCreator.likeTermsCell;
+    const likeTermsCell = this.termCreator.likeTermsCell!;
+    assert && assert( likeTermsCell !== null );
     let oppositeLikeTerm = this.oppositePlate.getTermInCell( likeTermsCell );
 
     let inverseTerm;
@@ -73,7 +74,7 @@ export default class CombineTermsDragListener extends TermDragListener {
         merge( this.term.copyOptions(), {
           sign: -1
         } ) );
-      this.equivalentTermCreator.putTermOnPlate( inverseTerm, this.termCreator.likeTermsCell );
+      this.equivalentTermCreator.putTermOnPlate( inverseTerm, likeTermsCell );
     }
 
     // create the equivalent term last, so it's in front
@@ -92,7 +93,8 @@ export default class CombineTermsDragListener extends TermDragListener {
     // {SumToZeroNode|null} truthy when terms sum to zero
     let oppositeSumToZeroNode = null;
 
-    const cell = this.termCreator.likeTermsCell;
+    const cell = this.termCreator.likeTermsCell!;
+    assert && assert( cell !== null );
     let oppositeLikeTerm = this.oppositePlate.getTermInCell( cell );
     if ( oppositeLikeTerm ) {
 
@@ -151,7 +153,8 @@ export default class CombineTermsDragListener extends TermDragListener {
    */
   protected override animateToPlate(): void {
 
-    const likeTermsCell = this.termCreator.likeTermsCell;
+    const likeTermsCell = this.termCreator.likeTermsCell!;
+    assert && assert( likeTermsCell !== null );
     const cellPosition = this.plate.getPositionOfCell( likeTermsCell );
 
     // This must be done here. If this.term is disposed later in this method, this.termNode will also be disposed,

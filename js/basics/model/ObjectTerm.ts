@@ -20,7 +20,7 @@ const COEFFICIENT = Fraction.fromInteger( 1 ); // all object terms have an impli
 
 type SelfOptions = EmptySelfOptions;
 
-type ObjectTermOptions = SelfOptions & VariableTermOptions;
+export type ObjectTermOptions = SelfOptions & VariableTermOptions;
 
 export default class ObjectTerm extends VariableTerm {
 

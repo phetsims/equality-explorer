@@ -20,7 +20,7 @@ type SelfOptions = {
   constantValue?: Fraction;
 };
 
-type ConstantTermOptions = SelfOptions & TermOptions;
+export type ConstantTermOptions = SelfOptions & TermOptions;
 
 export default class ConstantTerm extends Term {
 

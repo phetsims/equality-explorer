@@ -1,41 +1,45 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-// @ts-nocheck
 /**
  * ObjectTermCreator creates and manages terms that are associated with real-world objects.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import TermCreator from '../../common/model/TermCreator.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import TermCreator, { TermCreatorOptions } from '../../common/model/TermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermNode from '../view/ObjectTermNode.js';
-import ObjectTerm from './ObjectTerm.js';
+import ObjectTerm, { ObjectTermOptions } from './ObjectTerm.js';
+import ObjectVariable from './ObjectVariable.js';
+import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
+
+type SelfOptions = EmptySelfOptions;
+
+type ObjectTermCreatorOptions = SelfOptions & StrictOmit<TermCreatorOptions, 'variable'>;
 
 export default class ObjectTermCreator extends TermCreator {
 
-  /**
-   * @param {ObjectVariable} variable
-   * @param {Object} [options]
-   */
-  constructor( variable, options ) {
+  private readonly objectVariable: ObjectVariable;
+
+  public constructor( variable: ObjectVariable, providedOptions?: ObjectTermCreatorOptions ) {
 
     phet.log && phet.log( `ObjectTermCreator: ${variable.symbolProperty.value}, weight=${variable.valueProperty.value}` );
 
-    options = options || {};
-    options.variable = variable;
+    const options = optionize<ObjectTermCreatorOptions, SelfOptions, TermCreatorOptions>()( {
+      variable: variable
+    }, providedOptions );
 
     super( options );
 
-    // When the variable's value changes, recompute the weight of terms on the scale. unlink not needed.
-    this.variable.valueProperty.link( value => this.updateWeightOnPlateProperty() );
+    this.objectVariable = variable;
+
+    // When the variable's value changes, recompute the weight of terms on the scale.
+    this.objectVariable.valueProperty.link( () => this.updateWeightOnPlateProperty() );
   }
 
-  /**
-   * @public
-   * @override
-   */
-  dispose() {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
@@ -46,46 +50,31 @@ export default class ObjectTermCreator extends TermCreator {
 
   /**
    * Creates the icon used to represent this term in the TermsToolbox and equations.
-   * @param {Object} [options]
-   * @returns {scenery.Node}
-   * @public
-   * @override
    */
-  createIcon( options ) {
-    return ObjectTermNode.createInteractiveTermNode( this.variable.image, options );
+  public override createIcon( providedOptions?: NodeOptions ): Node {
+    return ObjectTermNode.createInteractiveTermNode( this.objectVariable.image, providedOptions );
   }
 
   /**
-   * Instantiates a ObjectTerm.
-   * @param {Object} [options]
-   * @returns {Term}
-   * @protected
-   * @override
+   * Instantiates an ObjectTerm.
    */
-  createTermProtected( options ) {
-    return new ObjectTerm( this.variable, options );
+  protected override createTermProtected( providedOptions?: ObjectTermOptions ): ObjectTerm {
+    return new ObjectTerm( this.objectVariable, providedOptions );
   }
 
   /**
    * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
    * The term is not managed by the TermCreator.
-   * @param {Object} [options] - Term constructor options
-   * @returns {Term}
-   * @public
-   * @abstract
    */
-  createZeroTerm( options ) {
-    throw new Error( 'createZeroTerm is not supported for ObjectTermCreator' );
+  public override createZeroTerm( providedOptions?: ObjectTermOptions ): ObjectTerm {
+    assert && assert( false, 'createZeroTerm is unused and untested for ObjectTermCreator' );
+    return this.createTermProtected( providedOptions );
   }
 
   /**
    * Instantiates the Node that corresponds to this term.
-   * @param {Term} term
-   * @returns {TermNode}
-   * @public
-   * @override
    */
-  createTermNode( term ) {
+  public override createTermNode( term: ObjectTerm ): ObjectTermNode {
     return new ObjectTermNode( this, term );
   }
 }

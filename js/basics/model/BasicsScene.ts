@@ -46,7 +46,7 @@ export default class BasicsScene extends EqualityExplorerScene {
 
 function createTermCreators( variables: ObjectVariable[], hasConstantTerms: boolean ): TermCreator[] {
 
-  const termCreators = [];
+  const termCreators: TermCreator[] = [];
 
   // creators for object terms
   for ( let i = 0; i < variables.length; i++ ) {

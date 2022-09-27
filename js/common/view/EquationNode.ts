@@ -260,8 +260,11 @@ class ExpressionNode extends HBox {
               coefficient = coefficient.abs();
             }
 
+            const variable = termCreator.variable!;
+            assert && assert( variable );
+
             // Must be disposed because it links to a translated StringProperty.
-            const equationTermNode = VariableTermNode.createEquationTermNode( coefficient, termCreator.variable.symbolProperty, {
+            const equationTermNode = VariableTermNode.createEquationTermNode( coefficient, variable.symbolProperty, {
               integerFont: providedOptions.integerFont,
               fractionFont: providedOptions.fractionFont,
               symbolFont: providedOptions.symbolFont

@@ -133,8 +133,11 @@ export default class SumToZeroNode extends Node {
       assert && assert( termCreator.combineLikeTermsEnabled,
         'animateSumToZero should only be used when combineLikeTermsEnabled' );
 
+      const likeTermsCell = termCreator.likeTermsCell!;
+      assert && assert( likeTermsCell !== null );
+
       // determine where the cell that contained the term is currently located
-      const cellCenter = termCreator.plate.getPositionOfCell( termCreator.likeTermsCell );
+      const cellCenter = termCreator.plate.getPositionOfCell( likeTermsCell );
 
       // display the animation in that cell
       const sumToZeroNode = new SumToZeroNode( {
