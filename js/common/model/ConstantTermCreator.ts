@@ -36,8 +36,9 @@ export default class ConstantTermCreator extends TermCreator {
   public sumConstantsOnPlate(): Fraction {
     let sum = Fraction.fromInteger( 0 );
     for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 sumConstantsOnPlate constantValue
-      sum = sum.plus( this.termsOnPlate.get( i ).constantValue ).reduced();
+      const term = this.termsOnPlate.get( i );
+      assert && assert( term instanceof ConstantTerm ); // eslint-disable-line no-simple-type-checking-assertions
+      sum = sum.plus( ( term as ConstantTerm ).constantValue ).reduced();
     }
     return sum;
   }

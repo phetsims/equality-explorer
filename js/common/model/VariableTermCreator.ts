@@ -62,8 +62,9 @@ export default class VariableTermCreator extends TermCreator {
   public sumCoefficientsOnPlate(): Fraction {
     let sum = Fraction.fromInteger( 0 );
     for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 sumCoefficientsOnPlate coefficient
-      sum = sum.plus( this.termsOnPlate.get( i ).coefficient ).reduced();
+      const term = this.termsOnPlate.get( i );
+      assert && assert( term instanceof VariableTerm ); // eslint-disable-line no-simple-type-checking-assertions
+      sum = sum.plus( ( term as VariableTerm ).coefficient ).reduced();
     }
     return sum;
   }
