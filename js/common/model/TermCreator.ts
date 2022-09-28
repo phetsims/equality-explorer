@@ -70,11 +70,6 @@ export type CreateTermOptions = {
   event?: PressListenerEvent | null; // non-null if the term is created as the result of a user interaction
 } & TermOptions;
 
-// options to createIcon
-export type CreateIconOptions = {
-  sign?: TermCreatorSign; // sign of the coefficient shown on the icon, if it has one
-};
-
 export default abstract class TermCreator {
 
   public readonly variable: Variable | null;
@@ -613,7 +608,7 @@ export default abstract class TermCreator {
       } );
     }
 
-    // {Term|null} Apply the operation to the term. Returns null if the operation was not applicable to the term.
+    // Apply the operation to the term. Returns null if the operation was not applicable to the term.
     const newTerm = term.applyOperation( operation );
 
     if ( newTerm ) {
