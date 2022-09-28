@@ -149,10 +149,8 @@ export default abstract class TermCreator {
 
     this.termCreatedEmitter = new Emitter( {
       parameters: [
-        // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 valueType
-        { valueType: TermCreator },
-        // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 valueType
-        { valueType: Term },
+        { isValidValue: value => value instanceof TermCreator }, // cannot use valueType, because TermCreator is abstract
+        { isValidValue: value => value instanceof Term }, // cannot use valueType, because Term is abstract
         { valueType: [ SceneryEvent, null ] }
       ]
     } );

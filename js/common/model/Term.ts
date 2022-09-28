@@ -92,8 +92,9 @@ export default abstract class Term extends EqualityExplorerMovable {
     this._isDisposed = false;
 
     this.disposedEmitter = new Emitter( {
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 valueType
-      parameters: [ { valueType: Term } ]
+      parameters: [
+        { isValidValue: value => value instanceof Term } // cannot use valueType, because Term is abstract
+      ]
     } );
   }
 
