@@ -70,7 +70,7 @@ export default class CombineTermsDragListener extends TermDragListener {
 
       // there was nothing on the opposite plate, so create the inverse of the equivalent term
       inverseTerm = this.equivalentTermCreator.createTerm(
-        //TODO https://github.com/phetsims/equality-explorer/issues/186 merge, sign
+        //TODO https://github.com/phetsims/equality-explorer/issues/186 createTerm merge, sign
         merge( this.term.copyOptions(), {
           sign: -1
         } ) );

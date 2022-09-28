@@ -299,7 +299,7 @@ export default abstract class TermCreator {
    */
   public createTerm( providedOptions?: TermOptions ): Term {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge, sign, event
+    //TODO https://github.com/phetsims/equality-explorer/issues/186 createTerm merge, sign, event
     // eslint-disable-next-line bad-typescript-text
     const options = merge( {
       sign: 1,
@@ -311,7 +311,7 @@ export default abstract class TermCreator {
     const term = this.createTermProtected( options );
 
     // manage the term
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 event
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 createTerm event
     this.manageTerm( term, options.event );
 
     return term;
