@@ -93,7 +93,7 @@ export default abstract class Term extends EqualityExplorerMovable {
 
     this.disposedEmitter = new Emitter( {
       parameters: [
-        { isValidValue: value => value instanceof Term } // cannot use valueType, because Term is abstract
+        { valueType: Term }
       ]
     } );
   }
