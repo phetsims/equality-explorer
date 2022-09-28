@@ -33,7 +33,7 @@ export default abstract class Term extends EqualityExplorerMovable {
   // The value that is significant is specific to the Term subtype.
   public readonly significantValue: Fraction;
 
-  // Sign of the term's significant number, ala Math.sign.
+  // Sign of the term's significant number, ala Math.sign (which TypeScript types as number).
   // Note that sign is not related to the term's weight. For example, for variable terms, the 'significant number'
   // is the coefficient. Consider term '-5x', where x=-2. While the weight is 10 (-5 * -2), the sign is based on
   // the coefficient -5, and is therefore -1.
