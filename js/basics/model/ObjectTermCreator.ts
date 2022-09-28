@@ -8,12 +8,12 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import TermCreator, { TermCreatorOptions } from '../../common/model/TermCreator.js';
+import TermCreator, { TermCreatorOptions, TermCreatorSign } from '../../common/model/TermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermNode from '../view/ObjectTermNode.js';
 import ObjectTerm, { ObjectTermOptions } from './ObjectTerm.js';
 import ObjectVariable from './ObjectVariable.js';
-import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -51,8 +51,9 @@ export default class ObjectTermCreator extends TermCreator {
   /**
    * Creates the icon used to represent this term in the TermsToolbox and equations.
    */
-  public override createIcon( providedOptions?: NodeOptions ): Node {
-    return ObjectTermNode.createInteractiveTermNode( this.objectVariable.image, providedOptions );
+  public override createIcon( sign?: TermCreatorSign ): Node {
+    assert && assert( sign === 1, 'negative ObjectTerms are not supported' );
+    return ObjectTermNode.createInteractiveTermNode( this.objectVariable.image );
   }
 
   /**

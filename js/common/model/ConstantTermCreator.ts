@@ -7,14 +7,14 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTermNode from '../view/ConstantTermNode.js';
 import ConstantTerm, { ConstantTermOptions } from './ConstantTerm.js';
-import TermCreator, { TermCreatorOptions } from './TermCreator.js';
+import TermCreator, { TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -49,17 +49,10 @@ export default class ConstantTermCreator extends TermCreator {
 
   /**
    * Creates the icon used to represent this term in the TermsToolbox and equations.
+   * @param sign of the constant shown on the icon
    */
-  public override createIcon( providedOptions?: NodeOptions ): Node {
-
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 createIcon merge, sign
-    // eslint-disable-next-line bad-typescript-text
-    const options = merge( {
-      sign: 1  // sign of the constant shown on the icon, 1 or -1
-    }, providedOptions );
-    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
-
-    const constantValue = EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE.timesInteger( options.sign );
+  public override createIcon( sign: TermCreatorSign = 1 ): Node {
+    const constantValue = EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE.timesInteger( sign );
     return ConstantTermNode.createInteractiveTermNode( constantValue );
   }
 

@@ -10,12 +10,12 @@ import merge from '../../../../phet-core/js/merge.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import { Node, NodeOptions, TColor } from '../../../../scenery/js/imports.js';
+import { Node, TColor } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import VariableTermNode from '../view/VariableTermNode.js';
-import TermCreator, { TermCreatorOptions } from './TermCreator.js';
+import TermCreator, { TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import Variable from './Variable.js';
 import VariableTerm, { VariableTermOptions } from './VariableTerm.js';
 
@@ -76,16 +76,9 @@ export default class VariableTermCreator extends TermCreator {
   /**
    * Creates the icon used to represent this term in the TermsToolbox and equations.
    */
-  public override createIcon( providedOptions?: NodeOptions ): Node {
+  public override createIcon( sign: TermCreatorSign = 1 ): Node {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 createIcon merge, sign
-    // eslint-disable-next-line bad-typescript-text
-    const options = merge( {
-      sign: 1  // sign of the coefficient shown on the icon, 1 or -1
-    }, providedOptions );
-    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
-
-    const coefficient = EqualityExplorerConstants.DEFAULT_COEFFICIENT.timesInteger( options.sign );
+    const coefficient = EqualityExplorerConstants.DEFAULT_COEFFICIENT.timesInteger( sign );
     const variable = this.variable!;
     assert && assert( variable );
 

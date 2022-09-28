@@ -28,7 +28,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import { Node, NodeOptions, PressListenerEvent, SceneryEvent } from '../../../../scenery/js/imports.js';
+import { Node, PressListenerEvent, SceneryEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Plate from './Plate.js';
@@ -59,6 +59,12 @@ type TermSnapshot = {
 };
 
 export type TermCreatorSnapshot = TermSnapshot[];
+
+export type TermCreatorSign = 1 | -1;
+
+export type CreateIconOptions = {
+  sign?: TermCreatorSign; // sign of the coefficient shown on the icon, if it has one
+};
 
 export default abstract class TermCreator {
 
@@ -630,7 +636,7 @@ export default abstract class TermCreator {
   /**
    * Creates the icon used to represent this term in the TermsToolbox and equations.
    */
-  public abstract createIcon( options?: NodeOptions ): Node;
+  public abstract createIcon( sign?: TermCreatorSign ): Node;
 
   /**
    * Instantiates a term.

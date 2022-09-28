@@ -12,10 +12,10 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import { DragListener, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Plate from '../model/Plate.js';
-import TermCreator from '../model/TermCreator.js';
+import TermCreator, { TermCreatorSign } from '../model/TermCreator.js';
 
 type SelfOptions = {
-  sign?: 1 | -1; // sign that will be applied to terms created by this Node
+  sign?: TermCreatorSign; // sign that will be applied to terms created by this Node
 };
 
 type TermCreatorNodeOptions = SelfOptions;
@@ -43,8 +43,7 @@ export default class TermCreatorNode extends Node {
       cursor: 'pointer'
     }, providedOptions );
 
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 createIcon sign
-    options.children = [ termCreator.createIcon( { sign: options.sign } ) ];
+    options.children = [ termCreator.createIcon( options.sign ) ];
 
     super( options );
 
