@@ -26,7 +26,7 @@ import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import { Node, PressListenerEvent, SceneryEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -36,7 +36,6 @@ import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
 import TermNode from '../view/TermNode.js';
-import merge from '../../../../phet-core/js/merge.js';
 
 type SelfOptions = {
 
@@ -53,15 +52,25 @@ type SelfOptions = {
 
 export type TermCreatorOptions = SelfOptions;
 
+// A snapshot of one term
 type TermSnapshot = {
   cell: number; // cell that the Term occupies
   termOptions: TermOptions; // options to Term's constructor, specific to subtype
 };
 
+// A TermCreator snapshot consists of an array of snapshots for all of its Terms
 export type TermCreatorSnapshot = TermSnapshot[];
 
+// sign that will be applied to terms that are created
 export type TermCreatorSign = 1 | -1;
 
+// options to createTerm, createTermProtected, and createZeroTerm
+export type CreateTermOptions = {
+  sign?: TermCreatorSign;
+  event?: PressListenerEvent | null; // non-null if the term is created as the result of a user interaction
+} & TermOptions;
+
+// options to createIcon
 export type CreateIconOptions = {
   sign?: TermCreatorSign; // sign of the coefficient shown on the icon, if it has one
 };
@@ -303,21 +312,17 @@ export default abstract class TermCreator {
   /**
    * Creates a term.
    */
-  public createTerm( providedOptions?: TermOptions ): Term {
+  public createTerm( providedOptions?: CreateTermOptions ): Term {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 createTerm merge, sign, event
-    // eslint-disable-next-line bad-typescript-text
-    const options = merge( {
+    const options = combineOptions<CreateTermOptions>( {
       sign: 1,
-      event: null // {PressListenerEvent|null} event is non-null if the term is created as the result of a user interaction
+      event: null
     }, providedOptions );
-    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     // create term
     const term = this.createTermProtected( options );
 
     // manage the term
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 createTerm event
     this.manageTerm( term, options.event );
 
     return term;
@@ -641,13 +646,13 @@ export default abstract class TermCreator {
   /**
    * Instantiates a term.
    */
-  protected abstract createTermProtected( providedOptions?: TermOptions ): Term;
+  protected abstract createTermProtected( providedOptions?: CreateTermOptions ): Term;
 
   /**
    * Creates a term whose significant value is zero. The term is not managed by the TermCreator.
    * This is used when applying an operation to an empty plate.
    */
-  public abstract createZeroTerm( providedOptions?: TermOptions ): Term;
+  public abstract createZeroTerm( providedOptions?: CreateTermOptions ): Term;
 
   /**
    * Instantiates the Node that corresponds to a term.

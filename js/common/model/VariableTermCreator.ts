@@ -6,8 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import { Node, TColor } from '../../../../scenery/js/imports.js';
@@ -15,9 +14,9 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import VariableTermNode from '../view/VariableTermNode.js';
-import TermCreator, { TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
+import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import Variable from './Variable.js';
-import VariableTerm, { VariableTermOptions } from './VariableTerm.js';
+import VariableTerm from './VariableTerm.js';
 
 type SelfOptions = {
   positiveFill?: TColor; // fill for the background of positive terms
@@ -91,19 +90,18 @@ export default class VariableTermCreator extends TermCreator {
   /**
    * Instantiates a VariableTerm.
    */
-  protected createTermProtected( providedOptions?: VariableTermOptions ): VariableTerm {
+  protected createTermProtected( providedOptions?: CreateTermOptions ): VariableTerm {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 createTermProtected merge, sign
-    // eslint-disable-next-line bad-typescript-text
-    const options = merge( {
+    const options = combineOptions<CreateTermOptions>( {
       sign: 1
     }, providedOptions );
-    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     // If the coefficient wasn't specified, use the default.
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.coefficient
     options.coefficient = options.coefficient || EqualityExplorerConstants.DEFAULT_COEFFICIENT;
 
     // Adjust the sign
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.coefficient
     options.coefficient = options.coefficient.timesInteger( options.sign );
 
     const variable = this.variable!;
@@ -116,9 +114,11 @@ export default class VariableTermCreator extends TermCreator {
    * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
    * The term is not managed by the TermCreator.
    */
-  public override createZeroTerm( providedOptions?: VariableTermOptions ): VariableTerm {
+  public override createZeroTerm( providedOptions?: CreateTermOptions ): VariableTerm {
     const options = providedOptions || {};
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.coefficient
     assert && assert( !options.coefficient, 'VariableTermCreator sets coefficient' );
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.coefficient
     options.coefficient = Fraction.fromInteger( 0 );
     return this.createTermProtected( options );
   }

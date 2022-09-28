@@ -8,10 +8,10 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import TermCreator, { TermCreatorOptions, TermCreatorSign } from '../../common/model/TermCreator.js';
+import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from '../../common/model/TermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermNode from '../view/ObjectTermNode.js';
-import ObjectTerm, { ObjectTermOptions } from './ObjectTerm.js';
+import ObjectTerm from './ObjectTerm.js';
 import ObjectVariable from './ObjectVariable.js';
 import { Node } from '../../../../scenery/js/imports.js';
 
@@ -51,7 +51,7 @@ export default class ObjectTermCreator extends TermCreator {
   /**
    * Creates the icon used to represent this term in the TermsToolbox and equations.
    */
-  public override createIcon( sign?: TermCreatorSign ): Node {
+  public override createIcon( sign: TermCreatorSign = 1 ): Node {
     assert && assert( sign === 1, 'negative ObjectTerms are not supported' );
     return ObjectTermNode.createInteractiveTermNode( this.objectVariable.image );
   }
@@ -59,7 +59,7 @@ export default class ObjectTermCreator extends TermCreator {
   /**
    * Instantiates an ObjectTerm.
    */
-  protected override createTermProtected( providedOptions?: ObjectTermOptions ): ObjectTerm {
+  protected override createTermProtected( providedOptions?: CreateTermOptions ): ObjectTerm {
     return new ObjectTerm( this.objectVariable, providedOptions );
   }
 
@@ -67,7 +67,7 @@ export default class ObjectTermCreator extends TermCreator {
    * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
    * The term is not managed by the TermCreator.
    */
-  public override createZeroTerm( providedOptions?: ObjectTermOptions ): ObjectTerm {
+  public override createZeroTerm( providedOptions?: CreateTermOptions ): ObjectTerm {
     assert && assert( false, 'createZeroTerm is unused and untested for ObjectTermCreator' );
     return this.createTermProtected( providedOptions );
   }

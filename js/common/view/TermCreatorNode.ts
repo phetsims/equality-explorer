@@ -56,7 +56,6 @@ export default class TermCreatorNode extends Node {
       // down
       event => {
         termCreator.createTerm( {
-          // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 createTerm event
           event: event,
           sign: options.sign
         } );

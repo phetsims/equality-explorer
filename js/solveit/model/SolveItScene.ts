@@ -165,7 +165,7 @@ export default class SolveItScene extends OperationsScene {
   private createVariableTermOnPlate( termCreator: VariableTermCreator, coefficient: Fraction ): void {
     if ( coefficient.getValue() !== 0 ) {
       const term = termCreator.createTerm( {
-        // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 createTerm coefficient
+        // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.coefficient
         coefficient: coefficient,
         diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
       } );

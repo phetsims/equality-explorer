@@ -6,15 +6,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import { Node } from '../../../../scenery/js/imports.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTermNode from '../view/ConstantTermNode.js';
-import ConstantTerm, { ConstantTermOptions } from './ConstantTerm.js';
-import TermCreator, { TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
+import ConstantTerm from './ConstantTerm.js';
+import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -59,19 +58,18 @@ export default class ConstantTermCreator extends TermCreator {
   /**
    * Instantiates a ConstantTerm.
    */
-  protected override createTermProtected( providedOptions?: ConstantTermOptions ): ConstantTerm {
+  protected override createTermProtected( providedOptions?: CreateTermOptions ): ConstantTerm {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 createTermProtected merge, sign
-    // eslint-disable-next-line bad-typescript-text
-    const options = merge( {
+    const options = combineOptions<CreateTermOptions>( {
       sign: 1
     }, providedOptions );
-    assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     // If the constant value wasn't specified, use the default.
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.constantValue
     options.constantValue = options.constantValue || EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE;
 
     // Adjust the sign
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.constantValue
     options.constantValue = options.constantValue.timesInteger( options.sign );
 
     return new ConstantTerm( options );
@@ -81,9 +79,11 @@ export default class ConstantTermCreator extends TermCreator {
    * Creates a term whose significant value is zero. The term is not managed by the TermCreator.
    * This is used when applying an operation to an empty plate.
    */
-  public override createZeroTerm( providedOptions?: ConstantTermOptions ): ConstantTerm {
+  public override createZeroTerm( providedOptions?: CreateTermOptions ): ConstantTerm {
     const options = providedOptions || {};
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.constantValue
     assert && assert( !options.constantValue, 'ConstantTermCreator sets constantValue' );
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.constantValue
     options.constantValue = Fraction.fromInteger( 0 );
     return this.createTermProtected( options );
   }

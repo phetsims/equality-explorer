@@ -7,15 +7,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import SumToZeroNode from './SumToZeroNode.js';
 import TermDragListener, { TermDragListenerOptions } from './TermDragListener.js';
 import TermNode from './TermNode.js';
 import Term from '../model/Term.js';
-import TermCreator from '../model/TermCreator.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import TermCreator, { CreateTermOptions } from '../model/TermCreator.js';
+import { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -70,8 +69,7 @@ export default class CombineTermsDragListener extends TermDragListener {
 
       // there was nothing on the opposite plate, so create the inverse of the equivalent term
       inverseTerm = this.equivalentTermCreator.createTerm(
-        //TODO https://github.com/phetsims/equality-explorer/issues/186 createTerm merge, sign
-        merge( this.term.copyOptions(), {
+        combineOptions<CreateTermOptions>( this.term.copyOptions(), {
           sign: -1
         } ) );
       this.equivalentTermCreator.putTermOnPlate( inverseTerm, likeTermsCell );

@@ -8,13 +8,12 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import Term from '../model/Term.js';
-import TermCreator from '../model/TermCreator.js';
+import TermCreator, { CreateTermOptions } from '../model/TermCreator.js';
 import TermDragListener, { TermDragListenerOptions } from './TermDragListener.js';
 import TermNode from './TermNode.js';
 import SumToZeroNode from './SumToZeroNode.js';
@@ -107,7 +106,8 @@ export default class SeparateTermsDragListener extends TermDragListener {
     else {
 
       // no equivalent term on opposite plate, create an inverse term
-      this.inverseTerm = this.equivalentTermCreator.createTerm( merge( this.term.copyOptions(), {
+      this.inverseTerm = this.equivalentTermCreator.createTerm(
+        combineOptions<CreateTermOptions>( this.term.copyOptions(), {
         sign: -1
       } ) );
       const inverseTermPosition = this.termCreator.getEquivalentTermPosition( this.term );
