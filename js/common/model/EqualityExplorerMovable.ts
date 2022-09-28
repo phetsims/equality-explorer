@@ -11,7 +11,6 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
@@ -58,12 +57,6 @@ export default class EqualityExplorerMovable {
   // called when animation to destination completes, set using animateTo
   private animationCompletedCallback: AnimationCallback;
 
-  // has dispose completed?
-  private _isDisposed: boolean;
-
-  // emits when dispose has completed
-  public readonly disposedEmitter: Emitter<[ EqualityExplorerMovable ]>;
-
   public constructor( providedOptions?: EqualityExplorerMovableOptions ) {
 
     const options = optionize<EqualityExplorerMovableOptions, SelfOptions>()( {
@@ -82,14 +75,12 @@ export default class EqualityExplorerMovable {
     this.destination = options.position.copy();
     this.animationStepCallback = null;
     this.animationCompletedCallback = null;
-    this._isDisposed = false;
-
-    this.disposedEmitter = new Emitter( {
-      parameters: [ { valueType: EqualityExplorerMovable } ]
-    } );
   }
 
-  public get isDisposed(): boolean { return this._isDisposed; }
+  public dispose(): void {
+    this.positionProperty.dispose();
+    this.draggingProperty.dispose();
+  }
 
   /**
    * Creates the options that would be needed to instantiate a copy of this object.
@@ -101,18 +92,6 @@ export default class EqualityExplorerMovable {
       dragBounds: this.dragBounds,
       animationSpeed: this.animationSpeed
     };
-  }
-
-  public dispose(): void {
-    assert && assert( !this.isDisposed, `dispose called twice for ${this}` );
-
-    this.positionProperty.dispose();
-    this.draggingProperty.dispose();
-
-    // Do this last, sequence is important!
-    this._isDisposed = true;
-    this.disposedEmitter.emit( this );
-    this.disposedEmitter.dispose();
   }
 
   public reset(): void {
@@ -157,9 +136,6 @@ export default class EqualityExplorerMovable {
    * @param dt - time since the previous step, in seconds
    */
   public step( dt: number ): void {
-
-    assert && assert( !this.isDisposed, 'attempt to step disposed movable' );
-
     if ( this.isAnimating() ) {
 
       // optional callback

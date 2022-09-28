@@ -7,6 +7,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
@@ -56,6 +57,12 @@ export default abstract class Term extends EqualityExplorerMovable {
   // whether the term's halo is visible
   public readonly haloVisibleProperty: Property<boolean>;
 
+  // has this Term been disposed?
+  private _isDisposed: boolean;
+
+  // emits when dispose has completed
+  public readonly disposedEmitter: Emitter<[ Term ]>;
+
   /**
    * @param significantValue - significant for the purposes of determining sign and maxInteger limits
    * @param [providedOptions]
@@ -82,7 +89,30 @@ export default abstract class Term extends EqualityExplorerMovable {
     this.onPlateProperty = new BooleanProperty( false );
     this.shadowVisibleProperty = new BooleanProperty( false );
     this.haloVisibleProperty = new BooleanProperty( false );
+    this._isDisposed = false;
+
+    this.disposedEmitter = new Emitter( {
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 valueType
+      parameters: [ { valueType: Term } ]
+    } );
   }
+
+  public override dispose(): void {
+    assert && assert( !this.isDisposed, `dispose called twice for ${this}` );
+
+    this.pickableProperty.dispose();
+    this.onPlateProperty.dispose();
+    this.shadowVisibleProperty.dispose();
+    this.haloVisibleProperty.dispose();
+    super.dispose();
+
+    // Do this last, after fully disposed. Order is important!
+    this._isDisposed = true;
+    this.disposedEmitter.emit( this );
+    this.disposedEmitter.dispose();
+  }
+
+  public get isDisposed(): boolean { return this._isDisposed; }
 
   /**
    * Creates the options that would be needed to instantiate a copy of this object.
@@ -93,14 +123,6 @@ export default abstract class Term extends EqualityExplorerMovable {
       diameter: this.diameter
       //TODO https://github.com/phetsims/equality-explorer/issues/186 why are other TermOptions not included here?
     }, super.copyOptions() );
-  }
-
-  public override dispose(): void {
-    this.pickableProperty.dispose();
-    this.onPlateProperty.dispose();
-    this.shadowVisibleProperty.dispose();
-    this.haloVisibleProperty.dispose();
-    super.dispose();
   }
 
   /**

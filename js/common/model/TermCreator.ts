@@ -344,7 +344,6 @@ export default abstract class TermCreator {
 
     // Clean up when the term is disposed.
     // removeListener required when the term is disposed, see termWasDisposed.
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 termDisposedListener
     term.disposedEmitter.addListener( this.termDisposedListener );
 
     // Notify listeners that a term is being managed by this term creator.
@@ -366,9 +365,7 @@ export default abstract class TermCreator {
       this.allTerms.remove( term );
     }
 
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 termDisposedListener
     if ( term.disposedEmitter.hasListener( this.termDisposedListener ) ) {
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 termDisposedListener
       term.disposedEmitter.removeListener( this.termDisposedListener );
     }
   }
