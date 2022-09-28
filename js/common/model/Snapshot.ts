@@ -9,7 +9,7 @@
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from './EqualityExplorerScene.js';
 import Plate from './Plate.js';
-import TermCreator from './TermCreator.js';
+import TermCreator, { TermCreatorSnapshot } from './TermCreator.js';
 
 export default class Snapshot {
 
@@ -63,9 +63,7 @@ class PlateSnapshot {
 
   // Data structure that describes the terms for each termCreator.
   // Format is specific to Term subclasses. See createSnapshot for each Term subclasses.
-  //TODO https://github.com/phetsims/equality-explorer/issues/186 any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private readonly snapshotDataStructures: any[];
+  private readonly snapshotDataStructures: TermCreatorSnapshot[];
 
   public constructor( plate: Plate ) {
 
