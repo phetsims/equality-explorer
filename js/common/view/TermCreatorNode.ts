@@ -43,7 +43,7 @@ export default class TermCreatorNode extends Node {
       cursor: 'pointer'
     }, providedOptions );
 
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
+    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 sign
     options.children = [ termCreator.createIcon( { sign: options.sign } ) ];
 
     super( options );
@@ -57,7 +57,7 @@ export default class TermCreatorNode extends Node {
       // down
       event => {
         termCreator.createTerm( {
-          // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
+          // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 event
           event: event,
           sign: options.sign
         } );

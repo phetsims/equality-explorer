@@ -63,7 +63,7 @@ export default class VariableTermCreator extends TermCreator {
   public sumCoefficientsOnPlate(): Fraction {
     let sum = Fraction.fromInteger( 0 );
     for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186
+      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 coefficient
       sum = sum.plus( this.termsOnPlate.get( i ).coefficient ).reduced();
     }
     return sum;
@@ -78,7 +78,7 @@ export default class VariableTermCreator extends TermCreator {
    */
   public override createIcon( providedOptions?: NodeOptions ): Node {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186
+    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge
     // eslint-disable-next-line bad-typescript-text
     const options = merge( {
       sign: 1  // sign of the coefficient shown on the icon, 1 or -1
@@ -100,7 +100,7 @@ export default class VariableTermCreator extends TermCreator {
    */
   protected createTermProtected( providedOptions?: VariableTermOptions ): VariableTerm {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186
+    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge
     // eslint-disable-next-line bad-typescript-text
     const options = merge( {
       sign: 1
