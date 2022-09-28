@@ -28,7 +28,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import { Node, NodeOptions, SceneryEvent } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, PressListenerEvent, SceneryEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Plate from './Plate.js';
@@ -95,7 +95,7 @@ export default abstract class TermCreator {
 
   // Emit is called when a term is created.
   // The event arg is non-null if the term was created as the result of a user interaction.
-  public readonly termCreatedEmitter: Emitter<[ TermCreator, Term, SceneryEvent | null ]>;
+  public readonly termCreatedEmitter: Emitter<[ TermCreator, Term, PressListenerEvent | null ]>;
 
   // Emit is called when adding a term to the plate would cause EqualityExplorerQueryParameters.maxInteger
   // to be exceeded.  See See https://github.com/phetsims/equality-explorer/issues/48
@@ -303,7 +303,7 @@ export default abstract class TermCreator {
     const options = combineOptions<TermOptions>( {
       // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 sign
       sign: 1,
-      event: null // {SceneryEvent|null} event is non-null if the term is created as the result of a user interaction
+      event: null // {PressListenerEvent|null} event is non-null if the term is created as the result of a user interaction
     }, providedOptions );
     // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 sign
     assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
@@ -323,7 +323,7 @@ export default abstract class TermCreator {
    * @param term
    * @param event - non-null if term was created as the result of a user interaction
    */
-  private manageTerm( term: Term, event: SceneryEvent | null = null ): void {
+  private manageTerm( term: Term, event: PressListenerEvent | null = null ): void {
     assert && assert( !term.isDisposed, `term is disposed: ${term}` );
     assert && assert( !this.isManagedTerm( term ), `term is already managed: ${term}` );
 

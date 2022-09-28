@@ -70,7 +70,6 @@ export default class EqualityExplorerSceneNode extends Node {
     };
 
     scene.allTermCreators.forEach( termCreator => {
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 termCreatedListener
       termCreator.termCreatedEmitter.addListener( termCreatedListener );
       termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener );
     } );
