@@ -78,7 +78,7 @@ export default class VariableTermCreator extends TermCreator {
    */
   public override createIcon( providedOptions?: NodeOptions ): Node {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge
+    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge, sign
     // eslint-disable-next-line bad-typescript-text
     const options = merge( {
       sign: 1  // sign of the coefficient shown on the icon, 1 or -1
@@ -100,7 +100,7 @@ export default class VariableTermCreator extends TermCreator {
    */
   protected createTermProtected( providedOptions?: VariableTermOptions ): VariableTerm {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge
+    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge, sign
     // eslint-disable-next-line bad-typescript-text
     const options = merge( {
       sign: 1

@@ -52,7 +52,7 @@ export default class ConstantTermCreator extends TermCreator {
    */
   public override createIcon( providedOptions?: NodeOptions ): Node {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge
+    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge, sign
     // eslint-disable-next-line bad-typescript-text
     const options = merge( {
       sign: 1  // sign of the constant shown on the icon, 1 or -1
@@ -68,7 +68,7 @@ export default class ConstantTermCreator extends TermCreator {
    */
   protected override createTermProtected( providedOptions?: ConstantTermOptions ): ConstantTerm {
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge
+    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge, sign
     // eslint-disable-next-line bad-typescript-text
     const options = merge( {
       sign: 1

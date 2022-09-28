@@ -26,7 +26,7 @@ import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import { Node, NodeOptions, PressListenerEvent, SceneryEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -36,6 +36,7 @@ import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
 import TermNode from '../view/TermNode.js';
+import merge from '../../../../phet-core/js/merge.js';
 
 type SelfOptions = {
 
@@ -300,12 +301,12 @@ export default abstract class TermCreator {
    */
   public createTerm( providedOptions?: TermOptions ): Term {
 
-    const options = combineOptions<TermOptions>( {
-      // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 sign
+    //TODO https://github.com/phetsims/equality-explorer/issues/186 merge, sign, event
+    // eslint-disable-next-line bad-typescript-text
+    const options = merge( {
       sign: 1,
       event: null // {PressListenerEvent|null} event is non-null if the term is created as the result of a user interaction
     }, providedOptions );
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 sign
     assert && assert( options.sign === 1 || options.sign === -1, `invalid sign: ${options.sign}` );
 
     // create term
