@@ -55,7 +55,7 @@ export type TermCreatorOptions = SelfOptions;
 // A snapshot of one term
 type TermSnapshot = {
   cell: number; // cell that the Term occupies
-  termOptions: TermOptions; // options to Term's constructor, specific to subtype
+  termOptions: TermOptions; // options to Term's constructor, specific to subclass
 };
 
 // A TermCreator snapshot consists of an array of snapshots for all of its Terms
@@ -150,7 +150,7 @@ export default abstract class TermCreator {
       length => length
     );
 
-    // We can't use a DerivedProperty here because subtypes may have additional Properties
+    // We can't use a DerivedProperty here because subclasses may have additional Properties
     // that require updating weightOnPlateProperty.
     this.weightOnPlateProperty = new Property( Fraction.fromInteger( 0 ), {
       valueType: Fraction,
@@ -553,7 +553,7 @@ export default abstract class TermCreator {
 
   /**
    * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
-   * The format of the termOptions field is specific to the Term subtype, and consists of options
+   * The format of the termOptions field is specific to the Term subclass, and consists of options
    * to a Term type's constructor.  This data structure is opaque outside of TermCreator.
    */
   public createSnapshot(): TermCreatorSnapshot {
@@ -630,7 +630,7 @@ export default abstract class TermCreator {
   }
 
   //-------------------------------------------------------------------------------------------------
-  // Below here are @abstract methods, to be implemented by subtypes
+  // Below here are @abstract methods, to be implemented by subclasses
   //-------------------------------------------------------------------------------------------------
 
   /**

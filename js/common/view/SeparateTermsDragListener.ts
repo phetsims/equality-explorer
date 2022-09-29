@@ -141,7 +141,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
     assert && assert( emptyCell !== null );
     this.equivalentTermCreator.putTermOnPlate( equivalentTerm, emptyCell );
 
-    // always null for this subtype, since terms on the opposite side don't combine
+    // always null for this subclass, since terms on the opposite side don't combine
     return null;
   }
 

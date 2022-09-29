@@ -30,7 +30,7 @@ export type TermOptions = SelfOptions & EqualityExplorerMovableOptions;
 export default abstract class Term extends EqualityExplorerMovable {
 
   // The value that is significant for the purposes of determining sign and maxInteger limits.
-  // The value that is significant is specific to the Term subtype.
+  // The value that is significant is specific to the Term subclass.
   public readonly significantValue: Fraction;
 
   // Sign of the term's significant number, ala Math.sign (which TypeScript types as number).
@@ -117,7 +117,7 @@ export default abstract class Term extends EqualityExplorerMovable {
 
   /**
    * Creates the options that would be needed to instantiate a copy of this object.
-   * This is used by subtypes that implement copy.
+   * This is used by subclasses that implement copy.
    */
   public override copyOptions(): TermOptions {
     return combineOptions<TermOptions>( {

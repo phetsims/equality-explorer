@@ -24,7 +24,7 @@ export default class Challenge {
    * @param n - constant on the right side of the equation
    * @param debugDerivation - derivation details provided by ChallengeGenerator, contains RichText markup.
    *    With the 'showAnswers' query parameter, this information is displayed in the sim.
-   *    This information is provided by ChallengeGenerator subtypes, contains RichText markup,
+   *    This information is provided by ChallengeGenerator subclasses, contains RichText markup,
    *    and corresponds to the challenge specification in the design document, see
    *    https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo
    */
