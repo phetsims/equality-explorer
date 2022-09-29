@@ -16,7 +16,7 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import VariableTermNode from '../view/VariableTermNode.js';
 import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import Variable from './Variable.js';
-import VariableTerm from './VariableTerm.js';
+import VariableTerm, { VariableTermOptions } from './VariableTerm.js';
 
 type SelfOptions = {
   positiveFill?: TColor; // fill for the background of positive terms
@@ -24,6 +24,9 @@ type SelfOptions = {
 };
 
 type VariableTermCreatorOptions = SelfOptions & StrictOmit<TermCreatorOptions, 'variable'>;
+
+// options to createTermProtected and createZeroTerm
+type CreateVariableTermOptions = CreateTermOptions & VariableTermOptions;
 
 export default class VariableTermCreator extends TermCreator {
 
@@ -91,19 +94,17 @@ export default class VariableTermCreator extends TermCreator {
   /**
    * Instantiates a VariableTerm.
    */
-  protected createTermProtected( providedOptions?: CreateTermOptions ): VariableTerm {
+  protected createTermProtected( providedOptions?: CreateVariableTermOptions ): VariableTerm {
 
-    const options = combineOptions<CreateTermOptions>( {
-      sign: 1
+    const options = combineOptions<CreateVariableTermOptions>( {
+      sign: 1,
+      coefficient: EqualityExplorerConstants.DEFAULT_COEFFICIENT
     }, providedOptions );
 
-    // If the coefficient wasn't specified, use the default.
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.coefficient
-    options.coefficient = options.coefficient || EqualityExplorerConstants.DEFAULT_COEFFICIENT;
-
     // Adjust the sign
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.coefficient
-    options.coefficient = options.coefficient.timesInteger( options.sign );
+    assert && assert( options.sign !== undefined );
+    assert && assert( options.coefficient !== undefined );
+    options.coefficient = options.coefficient!.timesInteger( options.sign! );
 
     const variable = this.variable!;
     assert && assert( variable );
@@ -115,11 +116,9 @@ export default class VariableTermCreator extends TermCreator {
    * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
    * The term is not managed by the TermCreator, so we call createTermProtected instead of createTerm.
    */
-  public override createZeroTerm( providedOptions?: CreateTermOptions ): VariableTerm {
+  public override createZeroTerm( providedOptions?: CreateVariableTermOptions ): VariableTerm {
     const options = providedOptions || {};
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.coefficient
     assert && assert( !options.coefficient, 'VariableTermCreator sets coefficient' );
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.coefficient
     options.coefficient = Fraction.fromInteger( 0 );
     return this.createTermProtected( options );
   }

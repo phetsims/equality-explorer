@@ -12,12 +12,15 @@ import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTermNode from '../view/ConstantTermNode.js';
-import ConstantTerm from './ConstantTerm.js';
+import ConstantTerm, { ConstantTermOptions } from './ConstantTerm.js';
 import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type ConstantTermCreatorOptions = SelfOptions & TermCreatorOptions;
+
+// options to createTermProtected and createZeroTerm
+type CreateConstantTermOptions = CreateTermOptions & ConstantTermOptions;
 
 export default class ConstantTermCreator extends TermCreator {
 
@@ -59,19 +62,17 @@ export default class ConstantTermCreator extends TermCreator {
   /**
    * Instantiates a ConstantTerm.
    */
-  protected override createTermProtected( providedOptions?: CreateTermOptions ): ConstantTerm {
+  protected override createTermProtected( providedOptions?: CreateConstantTermOptions ): ConstantTerm {
 
-    const options = combineOptions<CreateTermOptions>( {
-      sign: 1
+    const options = combineOptions<CreateConstantTermOptions>( {
+      sign: 1,
+      constantValue: EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE
     }, providedOptions );
 
-    // If the constant value wasn't specified, use the default.
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.constantValue
-    options.constantValue = options.constantValue || EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE;
-
     // Adjust the sign
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.constantValue
-    options.constantValue = options.constantValue.timesInteger( options.sign );
+    assert && assert( options.sign !== undefined );
+    assert && assert( options.constantValue !== undefined );
+    options.constantValue = options.constantValue!.timesInteger( options.sign! );
 
     return new ConstantTerm( options );
   }
@@ -80,11 +81,9 @@ export default class ConstantTermCreator extends TermCreator {
    * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
    * The term is not managed by the TermCreator, so we call createTermProtected instead of createTerm.
    */
-  public override createZeroTerm( providedOptions?: CreateTermOptions ): ConstantTerm {
+  public override createZeroTerm( providedOptions?: CreateConstantTermOptions ): ConstantTerm {
     const options = providedOptions || {};
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.constantValue
     assert && assert( !options.constantValue, 'ConstantTermCreator sets constantValue' );
-    // @ts-ignore TODO https://github.com/phetsims/equality-explorer/issues/186 CreateTermOptions.constantValue
     options.constantValue = Fraction.fromInteger( 0 );
     return this.createTermProtected( options );
   }
