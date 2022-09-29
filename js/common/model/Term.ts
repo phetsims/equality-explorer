@@ -99,7 +99,7 @@ export default abstract class Term extends EqualityExplorerMovable {
   }
 
   public override dispose(): void {
-    assert && assert( !this.isDisposed, `dispose called twice for ${this}` );
+    assert && assert( !this.isDisposed, `dispose called twice for ${this.toString()}` );
 
     this.pickableProperty.dispose();
     this.onPlateProperty.dispose();

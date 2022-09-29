@@ -293,7 +293,7 @@ export default abstract class TermDragListener extends DragListener {
    * Returns terms to the toolboxes where they were created.
    */
   protected animateToToolbox(): void {
-    assert && assert( this.term.toolboxPosition, `toolboxPosition was not initialized for term: ${this.term}` );
+    assert && assert( this.term.toolboxPosition, `toolboxPosition was not initialized for term: ${this.term.toString()}` );
 
     this.term.pickableProperty.value = this.pickableWhileAnimating;
 
