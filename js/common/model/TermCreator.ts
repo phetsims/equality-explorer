@@ -305,8 +305,12 @@ export default abstract class TermCreator {
   }
 
   /**
-   * Creates a term. Subclasses will typically override this method to expand the type definition of providedOptions,
-   * including properties that are specific to the subclass. The subclass implementation will then call super.createTerm.
+   * Creates a term. Subclasses must override this method to expand the type definition of providedOptions, including
+   * properties that are specific to the subclass. The subclass implementation will then call super.createTerm.
+   *
+   * NOTE: Using TypeScript generics to parameterize the type of providedOptions would have been preferred if this sim
+   * had originally been written in TypeScript. But that was not possible with the current JavaScript implementation.
+   * Generics introduced other problems that were not straightforward to resolve.
    */
   public createTerm( providedOptions?: CreateTermOptions ): Term {
 
