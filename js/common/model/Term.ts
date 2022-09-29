@@ -121,8 +121,9 @@ export default abstract class Term extends EqualityExplorerMovable {
    */
   public override copyOptions(): TermOptions {
     return combineOptions<TermOptions>( {
+
+      // Note that this is the subset of SelfOptions that works for the needs of the sim.
       diameter: this.diameter
-      //TODO https://github.com/phetsims/equality-explorer/issues/186 why are other TermOptions not included here?
     }, super.copyOptions() );
   }
 
@@ -157,7 +158,10 @@ export default abstract class Term extends EqualityExplorerMovable {
    * Subtypes that have additional options should override this method and add to the options returned here.
    */
   public createSnapshot(): TermOptions {
-    //TODO https://github.com/phetsims/equality-explorer/issues/186 why is this not the same as copyOptions? why no EqualityExplorerMovableOptions?
+
+    // Note that this is the subset of SelfOptions that works for the needs of the sim.
+    // And it does not include properties from superclass EqualityExplorerMovable, because those
+    // properties are not relevant for a snapshot.
     return {
       diameter: this.diameter
     };
