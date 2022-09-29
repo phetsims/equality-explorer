@@ -8,12 +8,13 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from '../../common/model/TermCreator.js';
+import TermCreator, { TermCreatorOptions, TermCreatorSign } from '../../common/model/TermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermNode from '../view/ObjectTermNode.js';
 import ObjectTerm from './ObjectTerm.js';
 import ObjectVariable from './ObjectVariable.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import Term from '../../common/model/Term.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -48,6 +49,14 @@ export default class ObjectTermCreator extends TermCreator {
     return `ObjectTermCreator variable={${this.objectVariable}}`;
   }
 
+  /**
+   * Overridden so that we can expand the type definition of providedOptions, so that it includes properties
+   * that are specific to this class. Note that super.createTerm calls createTermProtected.
+   */
+  public override createTerm( providedOptions?: ObjectTermCreatorOptions ): Term {
+    return super.createTerm( providedOptions );
+  }
+
   //-------------------------------------------------------------------------------------------------
   // Below here is the implementation of the TermCreator API
   //-------------------------------------------------------------------------------------------------
@@ -63,7 +72,7 @@ export default class ObjectTermCreator extends TermCreator {
   /**
    * Instantiates an ObjectTerm.
    */
-  protected override createTermProtected( providedOptions?: CreateTermOptions ): ObjectTerm {
+  protected override createTermProtected( providedOptions?: ObjectTermCreatorOptions ): ObjectTerm {
     return new ObjectTerm( this.objectVariable, providedOptions );
   }
 
@@ -71,7 +80,7 @@ export default class ObjectTermCreator extends TermCreator {
    * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
    * The term is not managed by the TermCreator, so we call createTermProtected instead of createTerm.
    */
-  public override createZeroTerm( providedOptions?: CreateTermOptions ): ObjectTerm {
+  public override createZeroTerm( providedOptions?: ObjectTermCreatorOptions ): ObjectTerm {
     assert && assert( false, 'createZeroTerm is unused and untested for ObjectTermCreator' );
     return this.createTermProtected( providedOptions );
   }

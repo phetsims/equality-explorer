@@ -14,6 +14,7 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTermNode from '../view/ConstantTermNode.js';
 import ConstantTerm, { ConstantTermOptions } from './ConstantTerm.js';
 import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
+import Term from './Term.js';
 
 type SelfOptions = {
   constantValue?: Fraction; // the default constant value used to create terms
@@ -61,6 +62,14 @@ export default class ConstantTermCreator extends TermCreator {
       sum = sum.plus( ( term as ConstantTerm ).constantValue ).reduced();
     }
     return sum;
+  }
+
+  /**
+   * Overridden so that we can expand the type definition of providedOptions, so that it includes properties
+   * that are specific to this class. Note that super.createTerm calls createTermProtected.
+   */
+  public override createTerm( providedOptions?: CreateConstantTermOptions ): Term {
+    return super.createTerm( providedOptions );
   }
 
   //-------------------------------------------------------------------------------------------------

@@ -17,6 +17,7 @@ import VariableTermNode from '../view/VariableTermNode.js';
 import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import Variable from './Variable.js';
 import VariableTerm, { VariableTermOptions } from './VariableTerm.js';
+import Term from './Term.js';
 
 type SelfOptions = {
   positiveFill?: TColor; // fill for the background of positive terms
@@ -76,6 +77,14 @@ export default class VariableTermCreator extends TermCreator {
       sum = sum.plus( ( term as VariableTerm ).coefficient ).reduced();
     }
     return sum;
+  }
+
+  /**
+   * Overridden so that we can expand the type definition of providedOptions, so that it includes properties
+   * that are specific to this class. Note that super.createTerm calls createTermProtected.
+   */
+  public override createTerm( providedOptions?: CreateVariableTermOptions ): Term {
+    return super.createTerm( providedOptions );
   }
 
   //-------------------------------------------------------------------------------------------------

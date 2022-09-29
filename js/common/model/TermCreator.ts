@@ -305,7 +305,8 @@ export default abstract class TermCreator {
   }
 
   /**
-   * Creates a term.
+   * Creates a term. Subclasses will typically override this method to expand the type definition of providedOptions,
+   * including properties that are specific to the subclass. The subclass implementation will then call super.createTerm.
    */
   public createTerm( providedOptions?: CreateTermOptions ): Term {
 
