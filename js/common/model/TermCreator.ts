@@ -644,8 +644,9 @@ export default abstract class TermCreator {
   protected abstract createTermProtected( providedOptions?: CreateTermOptions ): Term;
 
   /**
-   * Creates a term whose significant value is zero. The term is not managed by the TermCreator.
-   * This is used when applying an operation to an empty plate.
+   * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
+   * The term is not managed by the TermCreator, so the implementation in subclasses should typically call
+   * createTermProtected instead of createTerm.
    */
   public abstract createZeroTerm( providedOptions?: CreateTermOptions ): Term;
 

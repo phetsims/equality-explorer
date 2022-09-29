@@ -113,7 +113,7 @@ export default class VariableTermCreator extends TermCreator {
 
   /**
    * Creates a term whose significant value is zero. This is used when applying an operation to an empty plate.
-   * The term is not managed by the TermCreator.
+   * The term is not managed by the TermCreator, so we call createTermProtected instead of createTerm.
    */
   public override createZeroTerm( providedOptions?: CreateTermOptions ): VariableTerm {
     const options = providedOptions || {};
