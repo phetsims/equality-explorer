@@ -59,6 +59,12 @@ export default class VariableTermCreator extends TermCreator {
     super.dispose();
   }
 
+  public override toString(): string {
+    const variable = this.variable!;
+    assert && assert( variable );
+    return `VariableTermCreator variable:${variable.toString()}`;
+  }
+
   /**
    * Returns the sum of coefficients for all terms on the plate.
    */

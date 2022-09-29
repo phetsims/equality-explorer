@@ -7,7 +7,7 @@
  */
 
 import { Node } from '../../../../scenery/js/imports.js';
-import { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
@@ -15,7 +15,9 @@ import ConstantTermNode from '../view/ConstantTermNode.js';
 import ConstantTerm, { ConstantTermOptions } from './ConstantTerm.js';
 import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  constantValue?: Fraction; // the default constant value used to create terms
+};
 
 type ConstantTermCreatorOptions = SelfOptions & TermCreatorOptions;
 
@@ -24,13 +26,28 @@ type CreateConstantTermOptions = CreateTermOptions & ConstantTermOptions;
 
 export default class ConstantTermCreator extends TermCreator {
 
+  private readonly constantValue: Fraction;
+
   public constructor( providedOptions?: ConstantTermCreatorOptions ) {
-    super( providedOptions );
+
+    const options = optionize<ConstantTermCreatorOptions, SelfOptions, TermCreatorOptions>()( {
+
+      // SelfOptions
+      constantValue: EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE
+    }, providedOptions );
+
+    super( options );
+
+    this.constantValue = options.constantValue;
   }
 
   public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
+  }
+
+  public override toString(): string {
+    return `ConstantTermCreator constantValue=${this.constantValue}`;
   }
 
   /**
@@ -55,7 +72,7 @@ export default class ConstantTermCreator extends TermCreator {
    * @param sign of the constant shown on the icon
    */
   public override createIcon( sign: TermCreatorSign = 1 ): Node {
-    const constantValue = EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE.timesInteger( sign );
+    const constantValue = this.constantValue.timesInteger( sign );
     return ConstantTermNode.createInteractiveTermNode( constantValue );
   }
 
@@ -66,7 +83,7 @@ export default class ConstantTermCreator extends TermCreator {
 
     const options = combineOptions<CreateConstantTermOptions>( {
       sign: 1,
-      constantValue: EqualityExplorerConstants.DEFAULT_CONSTANT_VALUE
+      constantValue: this.constantValue
     }, providedOptions );
 
     // Adjust the sign

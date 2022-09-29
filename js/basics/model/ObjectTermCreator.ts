@@ -25,7 +25,7 @@ export default class ObjectTermCreator extends TermCreator {
 
   public constructor( variable: ObjectVariable, providedOptions?: ObjectTermCreatorOptions ) {
 
-    phet.log && phet.log( `ObjectTermCreator: ${variable.symbolProperty.value}, weight=${variable.valueProperty.value}` );
+    phet.log && phet.log( `ObjectTermCreator: variable=${variable.toString()}` );
 
     const options = optionize<ObjectTermCreatorOptions, SelfOptions, TermCreatorOptions>()( {
       variable: variable
@@ -42,6 +42,10 @@ export default class ObjectTermCreator extends TermCreator {
   public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
+  }
+
+  public override toString(): string {
+    return `ObjectTermCreator variable:${this.objectVariable.toString()}`;
   }
 
   //-------------------------------------------------------------------------------------------------
