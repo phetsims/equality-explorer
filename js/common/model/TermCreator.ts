@@ -654,6 +654,12 @@ export default abstract class TermCreator {
    * Instantiates the Node that corresponds to a term.
    */
   public abstract createTermNode( term: Term ): TermNode;
+
+  /**
+   * Subclasses must implement this method to provide 'useful information', to appease
+   * TS ESLint rule @typescript-eslint/no-base-to-string. See https://github.com/phetsims/chipper/issues/1338
+   */
+  public abstract toString(): string;
 }
 
 equalityExplorer.register( 'TermCreator', TermCreator );
