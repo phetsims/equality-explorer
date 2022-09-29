@@ -256,7 +256,7 @@ export default class Grid {
    */
   public removeTerm( term: Term ): number {
     const cell = this.getCellForTerm( term )!;
-    assert && assert( cell !== null, `term not found: ${term.toString()}` );
+    assert && assert( cell !== null, `term not found: ${term}` );
     this.clearCell( cell );
     this.compactColumn( this.cellToColumn( cell ) );
     return cell;

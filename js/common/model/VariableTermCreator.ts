@@ -62,7 +62,7 @@ export default class VariableTermCreator extends TermCreator {
   public override toString(): string {
     const variable = this.variable!;
     assert && assert( variable );
-    return `VariableTermCreator variable:${variable.toString()}`;
+    return `VariableTermCreator variable={${variable}}`;
   }
 
   /**

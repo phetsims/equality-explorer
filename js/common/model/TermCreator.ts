@@ -272,7 +272,7 @@ export default abstract class TermCreator {
    * x coordinate is offset by the distance between their associated toolbox positions.
    */
   public getEquivalentTermPosition( term: Term ): Vector2 {
-    assert && assert( this.isManagedTerm( term ), `term is not managed by this TermCreator: ${term.toString()}` );
+    assert && assert( this.isManagedTerm( term ), `term is not managed by this TermCreator: ${term}` );
 
     let xOffset;
     if ( term.significantValue.getValue() >= 0 ) {
@@ -329,8 +329,8 @@ export default abstract class TermCreator {
    * @param event - non-null if term was created as the result of a user interaction
    */
   private manageTerm( term: Term, event: PressListenerEvent | null = null ): void {
-    assert && assert( !term.isDisposed, `term is disposed: ${term.toString()}` );
-    assert && assert( !this.isManagedTerm( term ), `term is already managed: ${term.toString()}` );
+    assert && assert( !term.isDisposed, `term is disposed: ${term}` );
+    assert && assert( !this.isManagedTerm( term ), `term is already managed: ${term}` );
 
     this.allTerms.add( term );
 
@@ -387,7 +387,7 @@ export default abstract class TermCreator {
    * @param [cell] - cell in the plate's 2D grid, defaults to this.likeTermsCell when combining like terms
    */
   public putTermOnPlate( term: Term, cell?: number ): void {
-    assert && assert( !this.termsOnPlate.includes( term ), `term already on plate: ${term.toString()}` );
+    assert && assert( !this.termsOnPlate.includes( term ), `term already on plate: ${term}` );
 
     if ( cell === undefined && this.combineLikeTermsEnabled ) {
       const likeTermsCell = this.likeTermsCell!;
@@ -414,8 +414,8 @@ export default abstract class TermCreator {
    * @returns the cell that the term was removed from
    */
   public removeTermFromPlate( term: Term ): number {
-    assert && assert( this.allTerms.includes( term ), `term not found: ${term.toString()}` );
-    assert && assert( this.termsOnPlate.includes( term ), `term not on plate: ${term.toString()}` );
+    assert && assert( this.allTerms.includes( term ), `term not found: ${term}` );
+    assert && assert( this.termsOnPlate.includes( term ), `term not on plate: ${term}` );
 
     // ORDER IS VERY IMPORTANT HERE!
     const cell = this.plate.removeTerm( term );
@@ -504,7 +504,7 @@ export default abstract class TermCreator {
       }
       else {
         // workaround for https://github.com/phetsims/equality-explorer/issues/88
-        phet.log && phet.log( `Oops! term was already disposed, cleaning up: ${term.toString()}`, { color: 'red' } );
+        phet.log && phet.log( `Oops! term was already disposed, cleaning up: ${term}`, { color: 'red' } );
         this.unmanageTerm( term );
       }
     }

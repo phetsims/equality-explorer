@@ -25,8 +25,6 @@ export default class ObjectTermCreator extends TermCreator {
 
   public constructor( variable: ObjectVariable, providedOptions?: ObjectTermCreatorOptions ) {
 
-    phet.log && phet.log( `ObjectTermCreator: variable=${variable.toString()}` );
-
     const options = optionize<ObjectTermCreatorOptions, SelfOptions, TermCreatorOptions>()( {
       variable: variable
     }, providedOptions );
@@ -37,6 +35,8 @@ export default class ObjectTermCreator extends TermCreator {
 
     // When the variable's value changes, recompute the weight of terms on the scale.
     this.objectVariable.valueProperty.link( () => this.updateWeightOnPlateProperty() );
+
+    phet.log && phet.log( this );
   }
 
   public override dispose(): void {
@@ -45,7 +45,7 @@ export default class ObjectTermCreator extends TermCreator {
   }
 
   public override toString(): string {
-    return `ObjectTermCreator variable:${this.objectVariable.toString()}`;
+    return `ObjectTermCreator variable={${this.objectVariable}}`;
   }
 
   //-------------------------------------------------------------------------------------------------

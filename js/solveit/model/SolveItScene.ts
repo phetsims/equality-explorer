@@ -133,7 +133,7 @@ export default class SolveItScene extends OperationsScene {
     if ( EqualityExplorerQueryParameters.challenge ) {
       challenge = new DebugChallenge();
     }
-    phet.log && phet.log( `nextChallenge: challenge=${challenge.toString()}` );
+    phet.log && phet.log( `nextChallenge: challenge=${challenge}` );
     phet.log && phet.log( `nextChallenge: derivation=${challenge.debugDerivation.replace( /<br>/g, ', ' )}` );
 
     // set the value of x

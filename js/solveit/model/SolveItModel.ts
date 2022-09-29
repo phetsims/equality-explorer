@@ -79,7 +79,7 @@ export default class SolveItModel implements TModel {
 
       for ( let j = 0; j < testsPerLevel; j++ ) {
         const challenge = challengeGenerator.nextChallenge();
-        console.log( `${j}: ${challenge.toString()}` );
+        console.log( `${j}: ${challenge}` );
       }
     }
 

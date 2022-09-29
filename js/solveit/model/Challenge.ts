@@ -37,7 +37,7 @@ export default class Challenge {
 
     assert && assert( Number.isInteger( x ), `invalid x: ${x}` );
     assert && assert( a.timesInteger( x ).plus( b ).reduce().equals( m.timesInteger( x ).plus( n ).reduce() ),
-      `challenge must be an equality: ${this.toString()}` );
+      `challenge must be an equality: ${this}` );
   }
 
   // For debugging. Do not rely on this format!

@@ -58,7 +58,7 @@ export default class Variable {
    * For debugging only. Do not rely on the format of toString.
    */
   public toString(): string {
-    return `Variable: ${this.symbolProperty.value}=${this.valueProperty.value}`;
+    return `Variable: symbol=${this.symbolProperty.value} value=${this.valueProperty.value}`;
   }
 }
 
