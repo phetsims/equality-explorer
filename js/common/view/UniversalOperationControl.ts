@@ -63,7 +63,7 @@ export default class UniversalOperationControl extends HBox {
       const operator = scene.operators[ i ];
       operatorItems.push( {
         value: operator,
-        node: UniversalOperationNode.createOperatorNode( operator )
+        createNode: tandem => UniversalOperationNode.createOperatorNode( operator )
       } );
     }
 
