@@ -59,10 +59,6 @@ export default class SolveItModel implements TModel {
     this.sceneProperty.reset();
   }
 
-  public step( dt: number ): void {
-    // required by TModel
-  }
-
   /**
    * Tests challenge generators by generating a large number of challenges.
    * Each challenge is printed to the browser console.
