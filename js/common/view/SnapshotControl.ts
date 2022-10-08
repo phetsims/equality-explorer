@@ -9,6 +9,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { FireListener, FlowBox, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import cameraSolidShape from '../../../../sherpa/js/fontawesome-5/cameraSolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
@@ -37,7 +38,7 @@ type SelfOptions = {
   variableValuesOpacity?: number; // [0,1], see https://github.com/phetsims/equality-explorer/issues/113
 };
 
-export type SnapshotControlOptions = SelfOptions;
+export type SnapshotControlOptions = SelfOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class SnapshotControl extends Node {
 
@@ -50,7 +51,7 @@ export default class SnapshotControl extends Node {
   public constructor( scene: EqualityExplorerScene,
                       snapshotProperty: Property<Snapshot | null>,
                       selectedSnapshotProperty: Property<Snapshot | null>,
-                      providedOptions?: SnapshotControlOptions ) {
+                      providedOptions: SnapshotControlOptions ) {
 
     const options = optionize<SnapshotControlOptions, SelfOptions, NodeOptions>()( {
 
@@ -113,7 +114,10 @@ export default class SnapshotControl extends Node {
         const snapshot = new Snapshot( scene );
         snapshotProperty.value = snapshot; // associate the snapshot with this control
         selectedSnapshotProperty.value = snapshot; // select the created snapshot
-      }
+      },
+      tandem: options.tandem.createTandem( 'snapshotButton' ),
+      phetioEnabledPropertyInstrumented: false,
+      visiblePropertyOptions: { phetioReadOnly: true } // so that PhET-iO client can see whether its visible
     } );
 
     assert && assert( !options.children, 'SnapshotControl sets children' );

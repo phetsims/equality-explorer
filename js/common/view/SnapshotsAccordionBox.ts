@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import TrashButton from '../../../../scenery-phet/js/buttons/TrashButton.js';
 import { HBox, HSeparator, Node, Path, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
@@ -35,7 +34,7 @@ type SelfOptions = {
   variableValuesVisibleProperty?: Property<boolean> | null;
 
   // options passed to SnapshotControl
-  snapshotControlOptions?: SnapshotControlOptions;
+  snapshotControlOptions?: StrictOmit<SnapshotControlOptions, 'tandem'>;
 };
 
 type SnapshotsAccordionBoxOptions = SelfOptions & AccordionBoxOptions & PickRequired<AccordionBoxOptions, 'tandem'>;
@@ -46,7 +45,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
    * @param scene - the scene that we'll be taking snapshots of
    * @param [providedOptions]
    */
-  public constructor( scene: EqualityExplorerScene, providedOptions?: SnapshotsAccordionBoxOptions ) {
+  public constructor( scene: EqualityExplorerScene, providedOptions: SnapshotsAccordionBoxOptions ) {
 
     const accordionBoxOptions = combineOptions<SnapshotsAccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
       contentXMargin: 10,
@@ -54,23 +53,21 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       contentYSpacing: 3
     } );
 
-    const defaultOptions = optionize<SnapshotsAccordionBoxOptions, StrictOmit<SelfOptions, 'snapshotControlOptions'>, AccordionBoxOptions>()( {
+    const defaultOptions = optionize<SnapshotsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
 
       // SelfOptions
       fixedWidth: 100,
-      variableValuesVisibleProperty: null
+      variableValuesVisibleProperty: null,
+      snapshotControlOptions: {
+        controlHeight: 50,
+        orientation: 'horizontal',
+        commaSeparated: true,
+        variableValuesOpacity: 1
+      }
     }, accordionBoxOptions );
 
-    const options = optionize<SnapshotsAccordionBoxOptions, StrictOmit<SelfOptions, 'snapshotControlOptions'>, AccordionBoxOptions>()(
+    const options = optionize<SnapshotsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()(
       defaultOptions, providedOptions );
-
-    // options for SnapshotControl
-    options.snapshotControlOptions = merge( {
-      controlHeight: 50,
-      orientation: 'horizontal',
-      commaSeparated: true,
-      variableValuesOpacity: 1
-    }, options.snapshotControlOptions );
 
     assert && assert( !( options.variableValuesVisibleProperty && !scene.variables ),
       'scene has no variables to show in snapshots' );
@@ -78,11 +75,6 @@ export default class SnapshotsAccordionBox extends AccordionBox {
     options.maxWidth = options.fixedWidth;
 
     const contentWidth = options.fixedWidth - ( 2 * options.contentXMargin );
-
-    options.snapshotControlOptions = merge( {
-      variableValuesVisibleProperty: options.variableValuesVisibleProperty,
-      controlWidth: contentWidth
-    }, options.snapshotControlOptions );
 
     // title
     options.titleNode = new Text( EqualityExplorerStrings.snapshotsStringProperty, {
@@ -95,7 +87,11 @@ export default class SnapshotsAccordionBox extends AccordionBox {
     const snapshotsVBoxChildren = [];
     for ( let i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
       snapshotsVBoxChildren.push( new SnapshotControl( scene, scene.snapshotsCollection.snapshotProperties[ i ],
-        scene.snapshotsCollection.selectedSnapshotProperty, options.snapshotControlOptions ) );
+        scene.snapshotsCollection.selectedSnapshotProperty, combineOptions<SnapshotControlOptions>( {
+          variableValuesVisibleProperty: options.variableValuesVisibleProperty,
+          controlWidth: contentWidth,
+          tandem: options.tandem.createTandem( `snapshotControl${i}` )
+        }, options.snapshotControlOptions ) ) );
     }
 
     const snapshotsVBox = new VBox( {

@@ -33,7 +33,7 @@ type SelfOptions = {
   variableValuesVisibleProperty?: Property<boolean> | null;
 
   // SnapshotControlOptions
-  snapshotControlOptions?: SnapshotControlOptions;
+  snapshotControlOptions?: StrictOmit<SnapshotControlOptions, 'tandem'>;
 };
 
 export type BasicsSceneNodeOptions = SelfOptions & EqualityExplorerSceneNodeOptions;

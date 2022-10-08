@@ -220,7 +220,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       },
       tandem: options.tandem.createTandem( 'nextButton' ),
       phetioDocumentation: 'This button appears when the current challenge has been solved. Pressing it advances to a new challenge.',
-      visiblePropertyOptions: { phetioReadOnly: true }
+      visiblePropertyOptions: { phetioReadOnly: true } // so that PhET-iO client can see whether its visible
     } );
 
     // Smiley face, displayed when the challenge has been solved
@@ -228,7 +228,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       centerX: balanceScaleNode.centerX,
       top: universalOperationControl.bottom + 25,
       tandem: options.tandem.createTandem( 'faceNode' ),
-      visiblePropertyOptions: { phetioReadOnly: true }
+      visiblePropertyOptions: { phetioReadOnly: true } // so that PhET-iO client can see whether its visible
     } );
 
     // terms live in this layer
