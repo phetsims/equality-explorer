@@ -63,7 +63,8 @@ export default class SolveItScreenView extends ScreenView {
       resetCallback: () => {
         model.reset();
         this.reset();
-      }
+      },
+      tandem: options.tandem.createTandem( 'levelSelectionNode' )
     } );
 
     // Nodes for scenes (levels), organized under a parent tandem

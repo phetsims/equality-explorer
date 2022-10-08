@@ -9,6 +9,7 @@
 
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Text } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import GameInfoDialog from '../../../../vegas/js/GameInfoDialog.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -19,7 +20,7 @@ export default class SolveItInfoDialog extends GameInfoDialog {
 
   private readonly disposeSolveItInfoDialog: () => void;
 
-  public constructor( challengeGenerators: ChallengeGenerator[] ) {
+  public constructor( challengeGenerators: ChallengeGenerator[], tandem: Tandem ) {
 
     const descriptionProperties = challengeGenerators.map( challengeGenerator => challengeGenerator.descriptionProperty );
 
@@ -31,7 +32,8 @@ export default class SolveItInfoDialog extends GameInfoDialog {
       gameLevels: EqualityExplorerQueryParameters.gameLevels,
       title: titleText,
       ySpacing: 20,
-      bottomMargin: 20
+      bottomMargin: 20,
+      tandem: tandem
     } );
 
     this.disposeSolveItInfoDialog = () => {
