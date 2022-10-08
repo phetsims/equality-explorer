@@ -15,7 +15,7 @@ export default class NumbersScene extends EqualityExplorerScene {
 
   public constructor() {
     super( [ new ConstantTermCreator() ], [ new ConstantTermCreator() ], {
-      debugName: 'numbers'
+      tandemNamePrefix: 'numbers'
     } );
   }
 }

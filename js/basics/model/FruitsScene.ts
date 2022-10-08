@@ -32,7 +32,7 @@ export default class FruitsScene extends BasicsScene {
 
     super( variables, {
 
-      debugName: 'fruits',
+      tandemNamePrefix: 'fruits',
 
       // icon used to represent this scene in the scene control (radio buttons)
       icon: new Image( apple_png, {

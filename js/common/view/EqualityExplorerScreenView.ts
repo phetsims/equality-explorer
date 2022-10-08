@@ -47,11 +47,13 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
 
     super( options );
 
-    this.equationAccordionBoxExpandedProperty =
-      new BooleanProperty( EqualityExplorerConstants.EQUATION_ACCORDION_BOX_EXPANDED );
+    this.equationAccordionBoxExpandedProperty = new BooleanProperty( true, {
+      tandem: options.tandem.createTandem( 'equationAccordionBoxExpandedProperty' )
+    } );
 
-    this.snapshotsAccordionBoxExpandedProperty =
-      new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
+    this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'snapshotsAccordionBoxExpandedProperty' )
+    } );
 
     const resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -60,17 +62,21 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
         this.reset();
       },
       right: this.layoutBounds.maxX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
+      bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN,
+      tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
     this.addChild( resetAllButton );
 
+    // Nodes for scenes, organized under a parent tandem
+    const sceneNodesTandem = options.tandem.createTandem( 'sceneNodes' );
     this.sceneNodes = [];
     model.scenes.forEach( scene => {
       const sceneNode = this.createSceneNode( scene,
         this.equationAccordionBoxExpandedProperty,
         this.snapshotsAccordionBoxExpandedProperty,
-        this.layoutBounds
-      );
+        this.layoutBounds, {
+          tandem: sceneNodesTandem.createTandem( `${scene.tandemNamePrefix}SceneNode` )
+        } );
       this.sceneNodes.push( sceneNode );
       this.addChild( sceneNode );
     } );
@@ -84,12 +90,14 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
       // Center the scene radio button group in the space below the Snapshots accordion box
       const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.scenes, model.sceneProperty, {
         centerX: snapshotsAccordionBox.centerX,
-        centerY: snapshotsAccordionBox.bottom + ( resetAllButton.top - snapshotsAccordionBox.bottom ) / 2
+        centerY: snapshotsAccordionBox.bottom + ( resetAllButton.top - snapshotsAccordionBox.bottom ) / 2,
+        tandem: options.tandem.createTandem( 'sceneRadioButtonGroup' )
       } );
       this.addChild( sceneRadioButtonGroup );
     }
 
     // Make the selected scene visible. unlink not needed.
+    //TODO replace this with visibleProperty for each scene Node
     model.sceneProperty.link( scene => {
       for ( let i = 0; i < this.sceneNodes.length; i++ ) {
         this.sceneNodes[ i ].visible = ( this.sceneNodes[ i ].scene === scene );

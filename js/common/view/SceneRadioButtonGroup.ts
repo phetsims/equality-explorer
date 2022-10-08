@@ -8,6 +8,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { NodeTranslationOptions } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions, RectangularRadioButtonItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -15,7 +16,8 @@ import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SceneRadioButtonGroupOptions = SelfOptions & NodeTranslationOptions;
+type SceneRadioButtonGroupOptions = SelfOptions & NodeTranslationOptions &
+  PickRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
 
 export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<EqualityExplorerScene> {
 

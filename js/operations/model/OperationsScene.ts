@@ -68,7 +68,7 @@ export default class OperationsScene extends EqualityExplorerScene {
       variableRange: EqualityExplorerConstants.VARIABLE_RANGE,
 
       // EqualityExplorerSceneOptions
-      debugName: 'operations',
+      tandemNamePrefix: 'operations',
       gridRows: 1,
       gridColumns: 2,
       iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale

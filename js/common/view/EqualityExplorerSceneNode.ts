@@ -15,10 +15,12 @@ import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import TermCreator from '../model/TermCreator.js';
 import Term from '../model/Term.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = EmptySelfOptions;
 
-export type EqualityExplorerSceneNodeOptions = SelfOptions & PickOptional<NodeOptions, 'children'>;
+export type EqualityExplorerSceneNodeOptions = SelfOptions & PickOptional<NodeOptions, 'children'> &
+  PickRequired<NodeOptions, 'tandem'>;
 
 export default class EqualityExplorerSceneNode extends Node {
 

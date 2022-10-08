@@ -50,8 +50,9 @@ export default class SolveItScreenView extends ScreenView {
 
     super( options );
 
-    this.snapshotsAccordionBoxExpandedProperty =
-      new BooleanProperty( EqualityExplorerConstants.SNAPSHOTS_ACCORDION_BOX_EXPANDED );
+    this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'snapshotsAccordionBoxExpandedProperty' )
+    } );
 
     const gameAudioPlayer = new GameAudioPlayer();
 
@@ -63,12 +64,16 @@ export default class SolveItScreenView extends ScreenView {
       }
     } );
 
+    // Nodes for scenes (levels), organized under a parent tandem
+    const levelNodesTandem = options.tandem.createTandem( 'levelNodes' );
     this.sceneNodes = [];
-    for ( let i = 0; i < model.scenes.length; i++ ) {
-      const sceneNode = new SolveItSceneNode( model.scenes[ i ], model.sceneProperty,
-        this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer );
+    model.scenes.forEach( scene => {
+      const sceneNode = new SolveItSceneNode( scene, model.sceneProperty,
+        this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, {
+          tandem: levelNodesTandem.createTandem( `${scene.tandemNamePrefix}Node` )
+        } );
       this.sceneNodes.push( sceneNode );
-    }
+    } );
     const scenesParent = new Node( {
       children: this.sceneNodes
     } );
@@ -80,6 +85,7 @@ export default class SolveItScreenView extends ScreenView {
     this.addChild( this.transitionNode );
 
     // Make the selected scene (level) visible. unlink not needed.
+    //TODO replace part of this with visibleProperty for each SolveItSceneNode
     model.sceneProperty.link( scene => {
 
       // Skip null (no scene selected), so that scene is shown during 'slide' transition

@@ -24,7 +24,7 @@ export default class VariablesScene extends EqualityExplorerScene {
     } );
 
     super( createTermCreators( xVariable ), createTermCreators( xVariable ), {
-      debugName: 'variables',
+      tandemNamePrefix: 'variables',
       variables: [ xVariable ]
     } );
   }

@@ -9,7 +9,6 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import BasicsSceneNode, { BasicsSceneNodeOptions } from '../../basics/view/BasicsSceneNode.js';
-import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import VariablesAccordionBox from '../../common/view/VariablesAccordionBox.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
@@ -49,8 +48,7 @@ export default class VariablesSceneNode extends BasicsSceneNode {
 
     super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
-    this.variablesAccordionBoxExpandedProperty =
-      new BooleanProperty( EqualityExplorerConstants.VARIABLES_ACCORDION_BOX_EXPANDED );
+    this.variablesAccordionBoxExpandedProperty = new BooleanProperty( true );
 
     const variables = scene.variables!;
     assert && assert( variables );

@@ -29,7 +29,7 @@ const DRAG_BOUNDS_MIN_Y = 100;
 const DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.maxY - DRAG_BOUNDS_Y_MARGIN;
 
 type SelfOptions = {
-  debugName?: string | null; // internal name, not displayed to the user
+  tandemNamePrefix: string; // prefix for tandem names related to this scene
   scalePosition?: Vector2; // determined empirically
   hasNegativeTermsInToolbox?: boolean; // if true, put negative terms in the toolbox, e.g. -x
   lockable?: boolean; // is the lock feature supported for this scene?
@@ -46,7 +46,7 @@ export type EqualityExplorerSceneOptions = SelfOptions;
 
 export default abstract class EqualityExplorerScene {
 
-  public readonly debugName: string | null;
+  public readonly tandemNamePrefix: string;
   public readonly hasNegativeTermsInToolbox: boolean;
   private readonly _icon: Node | null;
   public readonly variables: Variable[] | null;
@@ -82,7 +82,6 @@ export default abstract class EqualityExplorerScene {
     const options = optionize<EqualityExplorerSceneOptions, SelfOptions>()( {
 
       // SelfOptions
-      debugName: null,
       scalePosition: DEFAULT_SCALE_POSITION,
       hasNegativeTermsInToolbox: true,
       lockable: true,
@@ -95,8 +94,8 @@ export default abstract class EqualityExplorerScene {
       variables: null
     }, providedOptions );
 
-    this.debugName = options.debugName;
-    phet.log && phet.log( `scene: ${this.debugName}, maxWeight=${options.maxWeight}` );
+    this.tandemNamePrefix = options.tandemNamePrefix;
+    phet.log && phet.log( `scene: ${this.tandemNamePrefix}, maxWeight=${options.maxWeight}` );
 
     this.hasNegativeTermsInToolbox = options.hasNegativeTermsInToolbox;
     this._icon = options.icon;

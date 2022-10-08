@@ -73,11 +73,6 @@ const EqualityExplorerConstants = {
 
   ACCORDION_BOX_OPTIONS: ACCORDION_BOX_OPTIONS,
 
-  // initial state of accordion boxes for all screens
-  EQUATION_ACCORDION_BOX_EXPANDED: true,
-  VARIABLES_ACCORDION_BOX_EXPANDED: true,
-  SNAPSHOTS_ACCORDION_BOX_EXPANDED: false,
-
   // Fonts
   ACCORDION_BOX_TITLE_FONT: new PhetFont( 18 ),
   UNIVERSAL_OPERATION_SYMBOL_FONT: new MathSymbolFont( 24 ), // for anything that's not a number

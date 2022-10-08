@@ -40,6 +40,7 @@ import SolveItScene from '../model/SolveItScene.js';
 import ChallengeDerivationText from './ChallengeDerivationText.js';
 import SolveItRewardNode from './SolveItRewardNode.js';
 import SumToZeroNode from '../../common/view/SumToZeroNode.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 // constants
 const LEVEL_FONT = new PhetFont( 20 );
@@ -52,7 +53,7 @@ const EQUATION_PANEL_OPTIONS = {
 
 type SelfOptions = EmptySelfOptions;
 
-type SolveItSceneNodeOptions = SelfOptions;
+type SolveItSceneNodeOptions = SelfOptions & PickRequired<EqualityExplorerSceneNodeOptions, 'tandem'>;
 
 export default class SolveItSceneNode extends EqualityExplorerSceneNode {
 
