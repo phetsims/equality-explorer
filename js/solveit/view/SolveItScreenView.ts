@@ -7,6 +7,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import { Node } from '../../../../scenery/js/imports.js';
@@ -51,7 +52,8 @@ export default class SolveItScreenView extends ScreenView {
     super( options );
 
     this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'snapshotsAccordionBoxExpandedProperty' )
+      tandem: options.tandem.createTandem( 'snapshotsAccordionBoxExpandedProperty' ),
+      phetioDocumentation: 'applies to the "Snapshots" accordion box for all game levels'
     } );
 
     const gameAudioPlayer = new GameAudioPlayer();
@@ -66,46 +68,30 @@ export default class SolveItScreenView extends ScreenView {
 
     // Nodes for scenes (levels), organized under a parent tandem
     const levelNodesTandem = options.tandem.createTandem( 'levelNodes' );
-    this.sceneNodes = [];
-    model.scenes.forEach( scene => {
-      const sceneNode = new SolveItSceneNode( scene, model.sceneProperty,
-        this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, {
-          tandem: levelNodesTandem.createTandem( `${scene.tandemNamePrefix}Node` )
-        } );
-      this.sceneNodes.push( sceneNode );
-    } );
+    this.sceneNodes = model.scenes.map( scene => new SolveItSceneNode( scene, model.sceneProperty,
+      this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, {
+        visibleProperty: new DerivedProperty( [ model.sceneProperty ], selectedScene => ( scene === selectedScene ) ),
+        tandem: levelNodesTandem.createTandem( `${scene.tandemNamePrefix}Node` )
+      } ) );
     const scenesParent = new Node( {
       children: this.sceneNodes
     } );
 
+    // Transition (slide left/right) between level-selection UI and the selected game level.
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
-      content: ( model.sceneProperty.value === null ) ? levelSelectionNode : scenesParent,
-      cachedNodes: [ scenesParent ]
+      cachedNodes: [ levelSelectionNode, scenesParent ]
     } );
     this.addChild( this.transitionNode );
 
-    // Make the selected scene (level) visible. unlink not needed.
-    //TODO replace part of this with visibleProperty for each SolveItSceneNode
     model.sceneProperty.link( scene => {
 
-      // Skip null (no scene selected), so that scene is shown during 'slide' transition
-      if ( scene !== null ) {
-
-        // if the scene doesn't have an associated challenge, create one
-        if ( !scene.challengeProperty.value ) {
-          scene.nextChallenge();
-        }
-
-        // make the selected scene visible
-        for ( let i = 0; i < this.sceneNodes.length; i++ ) {
-          this.sceneNodes[ i ].visible = ( this.sceneNodes[ i ].scene === scene );
-        }
+      // If the selected scene doesn't have an associated challenge, create one.
+      if ( scene !== null && !scene.challengeProperty.value ) {
+        scene.nextChallenge();
       }
-    } );
 
-    // Transition between the level-selection UI and the selected scene.
-    model.sceneProperty.lazyLink( scene => {
-      if ( scene ) {
+      // Start the transition between the level-selection UI and the selected game level.
+      if ( scene !== null ) {
         this.transitionNode.slideLeftTo( scenesParent, TRANSITION_OPTIONS );
       }
       else {

@@ -53,7 +53,8 @@ const EQUATION_PANEL_OPTIONS = {
 
 type SelfOptions = EmptySelfOptions;
 
-type SolveItSceneNodeOptions = SelfOptions & PickRequired<EqualityExplorerSceneNodeOptions, 'tandem'>;
+type SolveItSceneNodeOptions = SelfOptions &
+  PickRequired<EqualityExplorerSceneNodeOptions, 'tandem' | 'visibleProperty'>;
 
 export default class SolveItSceneNode extends EqualityExplorerSceneNode {
 

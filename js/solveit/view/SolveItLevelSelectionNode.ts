@@ -8,12 +8,13 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Node, RichText, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, RichText, Text } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
@@ -35,7 +36,11 @@ export default class SolveItLevelSelectionNode extends Node {
 
   public constructor( model: SolveItModel, layoutBounds: Bounds2, providedOptions: SolveItLevelSelectionNodeOptions ) {
 
-    const options = providedOptions;
+    const options = optionize<SolveItLevelSelectionNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // NodeOptions
+      phetioVisiblePropertyInstrumented: false
+    }, providedOptions );
 
     // Level-selection buttons
     const levelSelectionButtonGroup = new SolveItLevelSelectionButtonGroup( model.sceneProperty, model.scenes, {

@@ -50,11 +50,13 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
     super( options );
 
     this.equationAccordionBoxExpandedProperty = new BooleanProperty( true, {
-      tandem: options.tandem.createTandem( 'equationAccordionBoxExpandedProperty' )
+      tandem: options.tandem.createTandem( 'equationAccordionBoxExpandedProperty' ),
+      phetioDocumentation: 'applies to the "Equation or Inequality" accordion box for all scenes'
     } );
 
     this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'snapshotsAccordionBoxExpandedProperty' )
+      tandem: options.tandem.createTandem( 'snapshotsAccordionBoxExpandedProperty' ),
+      phetioDocumentation: 'applies to the "Snapshots" accordion box for all scenes'
     } );
 
     const resetAllButton = new ResetAllButton( {
