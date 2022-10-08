@@ -104,7 +104,8 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
                               EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15 ),
       expandedProperty: snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
-      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
+      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN,
+      tandem: options.tandem.createTandem( 'snapshotsAccordionBox' )
     } );
 
     const children = [

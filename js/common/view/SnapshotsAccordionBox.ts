@@ -23,6 +23,8 @@ import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
 
@@ -36,7 +38,7 @@ type SelfOptions = {
   snapshotControlOptions?: SnapshotControlOptions;
 };
 
-type SnapshotsAccordionBoxOptions = SelfOptions & AccordionBoxOptions;
+type SnapshotsAccordionBoxOptions = SelfOptions & AccordionBoxOptions & PickRequired<AccordionBoxOptions, 'tandem'>;
 
 export default class SnapshotsAccordionBox extends AccordionBox {
 
@@ -46,7 +48,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
    */
   public constructor( scene: EqualityExplorerScene, providedOptions?: SnapshotsAccordionBoxOptions ) {
 
-    const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
+    const accordionBoxOptions = combineOptions<SnapshotsAccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
       contentXMargin: 10,
       contentYMargin: 10,
       contentYSpacing: 3
@@ -85,7 +87,8 @@ export default class SnapshotsAccordionBox extends AccordionBox {
     // title
     options.titleNode = new Text( EqualityExplorerStrings.snapshotsStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
-      maxWidth: 0.85 * contentWidth
+      maxWidth: 0.85 * contentWidth,
+      tandem: options.tandem.createTandem( 'titleText' )
     } );
 
     // Create a row for each snapshot
@@ -100,6 +103,11 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       children: snapshotsVBoxChildren
     } );
 
+    // true when a snapshot is selected
+    const hasSelectedSnapshotProperty = new DerivedProperty(
+      [ scene.snapshotsCollection.selectedSnapshotProperty ],
+      selectedSnapshot => ( selectedSnapshot !== null ) );
+
     // Button to restore the selected snapshot
     const restoreIcon = new Path( replySolidShape, {
       scale: 0.04,
@@ -112,7 +120,9 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       yMargin: 4,
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
-      listener: () => scene.snapshotsCollection.restoreSelectedSnapshot()
+      listener: () => scene.snapshotsCollection.restoreSelectedSnapshot(),
+      enabledProperty: hasSelectedSnapshotProperty,
+      tandem: options.tandem.createTandem( 'restoreButton' )
     } );
 
     // Button to delete (trash) the selected snapshot
@@ -123,14 +133,9 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       yMargin: 5,
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
-      listener: () => scene.snapshotsCollection.deleteSelectedSnapshot()
-    } );
-
-    // Disables restore and trash buttons when there is no selection. unlink not required.
-    scene.snapshotsCollection.selectedSnapshotProperty.link( snapshot => {
-      const enabled = ( snapshot !== null );
-      restoreButton.enabled = enabled;
-      trashButton.enabled = enabled;
+      listener: () => scene.snapshotsCollection.deleteSelectedSnapshot(),
+      enabledProperty: hasSelectedSnapshotProperty,
+      tandem: options.tandem.createTandem( 'trashButton' )
     } );
 
     const buttonGroupChildren: Node[] = [ restoreButton, trashButton ];
@@ -158,7 +163,8 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       children: [
         snapshotsVBox,
         new HSeparator( {
-          stroke: 'rgb( 200, 200, 200 )'
+          stroke: 'rgb( 200, 200, 200 )',
+          tandem: options.tandem.createTandem( 'separator' )
         } ),
         buttonGroup
       ]
