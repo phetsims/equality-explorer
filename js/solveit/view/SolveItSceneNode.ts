@@ -79,10 +79,13 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       // empty optionize because we're setting options.children below
     }, providedOptions );
 
+    const statusBarTandem = options.tandem.createTandem( 'statusBar' );
+
     // Level description, displayed in the status bar
     const levelDescriptionText = new RichText( scene.challengeGenerator.descriptionProperty, {
       font: LEVEL_FONT,
-      maxWidth: 650 // determined empirically
+      maxWidth: 650, // determined empirically
+      tandem: statusBarTandem.createTandem( 'levelDescriptionText' )
     } );
 
     const backButtonListener = () => {
@@ -96,7 +99,9 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
         floatToTop: true, // see https://github.com/phetsims/equality-explorer/issues/144
         spacing: 20,
         barFill: 'rgb( 252, 150, 152 )',
-        backButtonListener: backButtonListener
+        backButtonListener: backButtonListener,
+        tandem: statusBarTandem,
+        phetioVisiblePropertyInstrumented: false
       } );
 
     // Challenge equation
