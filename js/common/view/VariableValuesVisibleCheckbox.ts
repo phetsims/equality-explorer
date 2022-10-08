@@ -9,6 +9,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, Text } from '../../../../scenery/js/imports.js';
@@ -23,7 +24,7 @@ const FONT_SIZE = 24;
 
 type SelfOptions = EmptySelfOptions;
 
-type VariableValuesVisibleCheckboxOptions = SelfOptions & CheckboxOptions;
+type VariableValuesVisibleCheckboxOptions = SelfOptions & CheckboxOptions & PickRequired<CheckboxOptions, 'tandem'>;
 
 export default class VariableValuesVisibleCheckbox extends Checkbox {
 

@@ -84,19 +84,22 @@ export default class SnapshotsAccordionBox extends AccordionBox {
     } );
 
     // Create a row for each snapshot
-    const snapshotsVBoxChildren = [];
+    const snapshotControls = [];
     for ( let i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
-      snapshotsVBoxChildren.push( new SnapshotControl( scene, scene.snapshotsCollection.snapshotProperties[ i ],
+
+      const snapshotControl = new SnapshotControl( scene, scene.snapshotsCollection.snapshotProperties[ i ],
         scene.snapshotsCollection.selectedSnapshotProperty, combineOptions<SnapshotControlOptions>( {
           variableValuesVisibleProperty: options.variableValuesVisibleProperty,
           controlWidth: contentWidth,
           tandem: options.tandem.createTandem( `snapshotControl${i}` )
-        }, options.snapshotControlOptions ) ) );
+        }, options.snapshotControlOptions ) );
+
+      snapshotControls.push( snapshotControl );
     }
 
-    const snapshotsVBox = new VBox( {
+    const snapshotControlsVBox = new VBox( {
       spacing: 15,
-      children: snapshotsVBoxChildren
+      children: snapshotControls
     } );
 
     // true when a snapshot is selected
@@ -134,39 +137,38 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       tandem: options.tandem.createTandem( 'trashButton' )
     } );
 
-    const buttonGroupChildren: Node[] = [ restoreButton, trashButton ];
+    const hBoxChildren: Node[] = [ restoreButton, trashButton ];
 
     // Checkbox for making variable values visible.
     if ( options.variableValuesVisibleProperty ) {
       const variables = scene.variables!;
       assert && assert( variables );
-      buttonGroupChildren.push( new VariableValuesVisibleCheckbox( options.variableValuesVisibleProperty, variables, {
+      hBoxChildren.push( new VariableValuesVisibleCheckbox( options.variableValuesVisibleProperty, variables, {
         touchAreaXDilation: 5,
-        touchAreaYDilation: 5
+        touchAreaYDilation: 5,
+        tandem: options.tandem.createTandem( 'variableValuesVisibleCheckbox' )
       } ) );
     }
 
-    const buttonGroup = new HBox( {
+    const hBox = new HBox( {
       spacing: 40,
-      children: buttonGroupChildren,
+      children: hBoxChildren,
       maxWidth: contentWidth
     } );
 
-    snapshotsVBoxChildren.push( buttonGroup );
-
-    const contentVBox = new VBox( {
+    const content = new VBox( {
       spacing: 10,
       children: [
-        snapshotsVBox,
+        snapshotControlsVBox,
         new HSeparator( {
           stroke: 'rgb( 200, 200, 200 )',
           tandem: options.tandem.createTandem( 'separator' )
         } ),
-        buttonGroup
+        hBox
       ]
     } );
 
-    super( contentVBox, options );
+    super( content, options );
 
     // Click outside this accordion box to clear the selected snapshot.
     const clickToDeselectListener = {
