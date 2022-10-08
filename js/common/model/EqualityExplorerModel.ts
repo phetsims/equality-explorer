@@ -24,8 +24,9 @@ export default class EqualityExplorerModel implements TModel {
 
     this.scenes = scenes;
     this.sceneProperty = new Property( scenes[ 0 ], {
-      validValues: scenes,
-      tandem: tandem.createTandem( 'sceneProperty' )
+      validValues: scenes
+      //TODO tandem: tandem.createTandem( 'sceneProperty' ),
+      //TODO phetioValueType: EqualityExplorerSceneIO
     } );
 
     // When the scene changes, dispose of any terms that are being dragged or animating.
