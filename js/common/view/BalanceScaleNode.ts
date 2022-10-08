@@ -11,6 +11,7 @@
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import { Circle, HBox, Line, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -44,7 +45,7 @@ type SelfOptions = {
   disposeTermsNotOnScale?: ( () => void ) | null; // call this to dispose of terms that are NOT on the scale
 };
 
-type BalanceScaleNodeOptions = SelfOptions;
+type BalanceScaleNodeOptions = SelfOptions & PickOptional<NodeOptions, 'tandem'>;
 
 export default class BalanceScaleNode extends Node {
 
@@ -55,7 +56,8 @@ export default class BalanceScaleNode extends Node {
       // SelfOptions
       clearScaleButtonVisible: true,
       organizeButtonVisible: true,
-      disposeTermsNotOnScale: null
+      disposeTermsNotOnScale: null,
+      phetioVisiblePropertyInstrumented: false
     }, providedOptions );
 
     options.x = scale.position.x;

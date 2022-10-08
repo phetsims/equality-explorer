@@ -41,6 +41,7 @@ import ChallengeDerivationText from './ChallengeDerivationText.js';
 import SolveItRewardNode from './SolveItRewardNode.js';
 import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import StringIO from '../../../../tandem/js/types/StringIO.js';
 
 // constants
 const LEVEL_FONT = new PhetFont( 20 );
@@ -114,6 +115,8 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       },
       centerX: scene.scale.position.x,
       top: statusBar.bottom + 15
+      //TODO tandem: challengePanel is currently dynamic, make it static (search for challengePanelOptions)
+      //TODO phetioDocumentation: 'This panel displays the equation for the current game challenge.'
     } );
     let challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
 
@@ -126,7 +129,9 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
           relationalOperatorFontWeight: 'normal'
         },
         centerX: challengePanel.centerX,
-        top: challengePanel.bottom + 10
+        top: challengePanel.bottom + 10,
+        tandem: options.tandem.createTandem( 'equationPanel' ),
+        phetioDocumentation: 'This panel displays the equation that matches what is currently on the balance scale.'
       } ) );
 
     // Layer when universal operation animation occurs
@@ -136,19 +141,24 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     const universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
       timesZeroEnabled: false, // disable multiplication by zero, see phetsims/equality-explorer#72
       centerX: scene.scale.position.x, // centered on the scale
-      top: equationPanel.bottom + 15
+      top: equationPanel.bottom + 15,
+      tandem: options.tandem.createTandem( 'universalOperationControl' )
     } );
 
     // 'Solve for x'
+    const solveForXTextTandem = options.tandem.createTandem( 'solveForXText' );
     const solveForXStringProperty = new DerivedProperty(
       [ EqualityExplorerStrings.solveForStringProperty, EqualityExplorerStrings.xStringProperty ],
       ( solveForString, xString ) => StringUtils.fillIn( solveForString, {
         variable: MathSymbolFont.getRichTextMarkup( xString )
-      } )
-    );
+      } ), {
+        tandem: solveForXTextTandem.createTandem( RichText.STRING_PROPERTY_TANDEM_NAME ),
+        phetioValueType: StringIO
+      } );
     const solveForXText = new RichText( solveForXStringProperty, {
       font: new PhetFont( { size: 24, weight: 'bold' } ),
-      maxWidth: challengePanel.left - layoutBounds.minX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
+      maxWidth: challengePanel.left - layoutBounds.minX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
+      tandem: solveForXTextTandem
     } );
     solveForXText.boundsProperty.link( bounds => {
       solveForXText.right = challengePanel.left - 10;
@@ -156,18 +166,20 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     } );
 
     // Scale
-    const scaleNode = new BalanceScaleNode( scene.scale, {
+    const balanceScaleNode = new BalanceScaleNode( scene.scale, {
       clearScaleButtonVisible: false,
       organizeButtonVisible: false,
       disposeTermsNotOnScale: scene.disposeTermsNotOnScale.bind( scene )
+      // No PhET-iO instrumentation
     } );
 
     // Snapshots
     const snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
-      fixedWidth: ( layoutBounds.right - scaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
+      fixedWidth: ( layoutBounds.right - balanceScaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
-      top: statusBar.bottom + 20
+      top: statusBar.bottom + 20,
+      tandem: options.tandem.createTandem( 'snapshotsAccordionBox' )
     } );
 
     // Refresh button, generates a new challenge, effectively skipping the current challenge
@@ -180,7 +192,8 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       listener: () => {
         phet.log && phet.log( 'Refresh button pressed' );
         scene.nextChallenge();
-      }
+      },
+      tandem: options.tandem.createTandem( 'refreshButton' )
     } );
 
     // Next button, takes us to the next challenge
@@ -197,13 +210,16 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       listener: () => {
         phet.log && phet.log( 'Next button pressed' );
         scene.nextChallenge();
-      }
+      },
+      tandem: options.tandem.createTandem( 'nextButton' )
     } );
 
     // Smiley face, displayed when the challenge has been solved
     const faceNode = new FaceNode( 225, {
-      centerX: scaleNode.centerX,
-      top: universalOperationControl.bottom + 25
+      centerX: balanceScaleNode.centerX,
+      top: universalOperationControl.bottom + 25,
+      tandem: options.tandem.createTandem( 'faceNode' ),
+      phetioVisiblePropertyInstrumented: false
     } );
 
     // terms live in this layer
@@ -216,7 +232,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       challengePanel,
       solveForXText,
       equationPanel,
-      scaleNode,
+      balanceScaleNode,
       snapshotsAccordionBox,
       refreshButton,
       nextButton,
@@ -242,8 +258,8 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
           fill: 'white'
         } ),
         baseColor: 'red',
-        centerX: scaleNode.centerX,
-        bottom: scaleNode.bottom - 5,
+        centerX: balanceScaleNode.centerX,
+        bottom: balanceScaleNode.bottom - 5,
         listener: () => {
           scene.showAnswer();
         }

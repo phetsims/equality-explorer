@@ -19,6 +19,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import { HBox, HBoxOptions, Node, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
@@ -39,7 +40,7 @@ type SelfOptions = {
   timesZeroEnabled?: boolean; // whether to include 'times 0' as one of the operations
 };
 
-type UniversalOperationControlOptions = SelfOptions & NodeTranslationOptions;
+type UniversalOperationControlOptions = SelfOptions & NodeTranslationOptions & PickRequired<HBoxOptions, 'tandem'>;
 
 export default class UniversalOperationControl extends HBox {
 

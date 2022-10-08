@@ -45,7 +45,8 @@ export default class OperationsSceneNode extends VariablesSceneNode {
 
     this.universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
       centerX: scene.scale.position.x, // centered on the scale
-      top: this.equationAccordionBox.bottom + 10
+      top: this.equationAccordionBox.bottom + 10,
+      tandem: options.tandem.createTandem( 'universalOperationControl' )
     } );
     this.addChild( this.universalOperationControl );
     this.universalOperationControl.moveToBack();
