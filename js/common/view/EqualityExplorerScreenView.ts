@@ -20,6 +20,8 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from './EqualityExplorerSceneNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -67,27 +69,34 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
     } );
     this.addChild( resetAllButton );
 
-    // Nodes for scenes, organized under a parent tandem
-    const sceneNodesTandem = options.tandem.createTandem( 'sceneNodes' );
+    // Nodes for scenes
     this.sceneNodes = [];
-    model.scenes.forEach( scene => {
-      const sceneNode = this.createSceneNode( scene,
-        this.equationAccordionBoxExpandedProperty,
-        this.snapshotsAccordionBoxExpandedProperty,
-        this.layoutBounds, {
-          tandem: sceneNodesTandem.createTandem( `${scene.tandemNamePrefix}SceneNode` )
-        } );
-      this.sceneNodes.push( sceneNode );
-      this.addChild( sceneNode );
-    } );
 
-    // If the model has more than 1 scene, create a control for scene selection.
+    // If there is more than 1 scene...
     if ( model.scenes.length > 1 ) {
 
-      // Get the bounds of the Snapshot accordion box, relative to this ScreenView
-      const snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
+      // Create a Node for each scene, organized under a parent tandem.
+      const sceneNodesTandem = options.tandem.createTandem( 'sceneNodes' );
+      model.scenes.forEach( scene => {
+        const sceneNodeTandem = sceneNodesTandem.createTandem( `${scene.tandemNamePrefix}SceneNode` );
+        const sceneNode = this.createSceneNode( scene,
+          this.equationAccordionBoxExpandedProperty,
+          this.snapshotsAccordionBoxExpandedProperty,
+          this.layoutBounds, {
+            visibleProperty: new DerivedProperty(
+              [ model.sceneProperty ],
+              selectedScene => scene === selectedScene, {
+                tandem: sceneNodeTandem.createTandem( 'visibleProperty' ),
+                phetioValueType: BooleanIO
+              } ),
+            tandem: sceneNodeTandem
+          } );
+        this.sceneNodes.push( sceneNode );
+        this.addChild( sceneNode );
+      } );
 
-      // Center the scene radio button group in the space below the Snapshots accordion box
+      // Create radio buttons for selecting a scene, centered in the space below the Snapshots accordion box.
+      const snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
       const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.scenes, model.sceneProperty, {
         centerX: snapshotsAccordionBox.centerX,
         centerY: snapshotsAccordionBox.bottom + ( resetAllButton.top - snapshotsAccordionBox.bottom ) / 2,
@@ -95,14 +104,20 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
       } );
       this.addChild( sceneRadioButtonGroup );
     }
+    else {
 
-    // Make the selected scene visible. unlink not needed.
-    //TODO replace this with visibleProperty for each scene Node
-    model.sceneProperty.link( scene => {
-      for ( let i = 0; i < this.sceneNodes.length; i++ ) {
-        this.sceneNodes[ i ].visible = ( this.sceneNodes[ i ].scene === scene );
-      }
-    } );
+      // If there is only 1 scene, there is no parent tandem, and no radio buttons.
+      const scene = model.scenes[ 0 ];
+      const sceneNode = this.createSceneNode( scene,
+        this.equationAccordionBoxExpandedProperty,
+        this.snapshotsAccordionBoxExpandedProperty,
+        this.layoutBounds, {
+          tandem: options.tandem.createTandem( `${scene.tandemNamePrefix}SceneNode` ),
+          phetioVisiblePropertyInstrumented: false
+        } );
+      this.sceneNodes.push( sceneNode );
+      this.addChild( sceneNode );
+    }
   }
 
   public override dispose(): void {

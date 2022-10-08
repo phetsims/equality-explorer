@@ -19,7 +19,8 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = EmptySelfOptions;
 
-export type EqualityExplorerSceneNodeOptions = SelfOptions & PickOptional<NodeOptions, 'children'> &
+export type EqualityExplorerSceneNodeOptions = SelfOptions &
+  PickOptional<NodeOptions, 'children' | 'visibleProperty' | 'phetioVisiblePropertyInstrumented'> &
   PickRequired<NodeOptions, 'tandem'>;
 
 export default class EqualityExplorerSceneNode extends Node {
