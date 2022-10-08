@@ -115,23 +115,29 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       },
       centerX: scene.scale.position.x,
       top: statusBar.bottom + 15
-      //TODO tandem: challengePanel is currently dynamic, make it static (search for challengePanelOptions)
-      //TODO phetioDocumentation: 'This panel displays the equation for the current game challenge.'
     } );
-    let challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
 
-    // Equation that reflects what is currently on the scale
-    const equationPanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators,
+    // A new EquationPanel instance is created for each challenge. Since it's not necessary to instrument any
+    // of EquationPanel's subcomponents in this screen, wrap it in a static Node that will be its proxy in the
+    // Studio tree.
+    const challengeEquationNode = new Node( {
+      children: [ new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions ) ],
+      tandem: options.tandem.createTandem( 'challengeEquationNode' ),
+      phetioDocumentation: 'Displays the equation for the current game challenge.'
+    } );
+
+    // Equation that reflects what is currently on the balance scale
+    const balanceScaleEquationNode = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators,
       combineOptions<EquationPanelOptions>( {}, EQUATION_PANEL_OPTIONS, {
         fill: 'white',
         stroke: 'black',
         equationNodeOptions: {
           relationalOperatorFontWeight: 'normal'
         },
-        centerX: challengePanel.centerX,
-        top: challengePanel.bottom + 10,
-        tandem: options.tandem.createTandem( 'equationPanel' ),
-        phetioDocumentation: 'This panel displays the equation that matches what is currently on the balance scale.'
+        centerX: challengeEquationNode.centerX,
+        top: challengeEquationNode.bottom + 10,
+        tandem: options.tandem.createTandem( 'balanceScaleEquationNode' ),
+        phetioDocumentation: 'Displays the equation that matches what is currently on the balance scale.'
       } ) );
 
     // Layer when universal operation animation occurs
@@ -141,7 +147,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
     const universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
       timesZeroEnabled: false, // disable multiplication by zero, see phetsims/equality-explorer#72
       centerX: scene.scale.position.x, // centered on the scale
-      top: equationPanel.bottom + 15,
+      top: balanceScaleEquationNode.bottom + 15,
       tandem: options.tandem.createTandem( 'universalOperationControl' )
     } );
 
@@ -157,12 +163,12 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       } );
     const solveForXText = new RichText( solveForXStringProperty, {
       font: new PhetFont( { size: 24, weight: 'bold' } ),
-      maxWidth: challengePanel.left - layoutBounds.minX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
+      maxWidth: challengeEquationNode.left - layoutBounds.minX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
       tandem: solveForXTextTandem
     } );
     solveForXText.boundsProperty.link( bounds => {
-      solveForXText.right = challengePanel.left - 10;
-      solveForXText.centerY = challengePanel.centerY;
+      solveForXText.right = challengeEquationNode.left - 10;
+      solveForXText.centerY = challengeEquationNode.centerY;
     } );
 
     // Scale
@@ -187,13 +193,14 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       iconHeight: 23,
       xMargin: 14,
       yMargin: 7,
-      left: challengePanel.right + 10,
-      centerY: challengePanel.centerY,
+      left: challengeEquationNode.right + 10,
+      centerY: challengeEquationNode.centerY,
       listener: () => {
         phet.log && phet.log( 'Refresh button pressed' );
         scene.nextChallenge();
       },
-      tandem: options.tandem.createTandem( 'refreshButton' )
+      tandem: options.tandem.createTandem( 'refreshButton' ),
+      phetioDocumentation: 'This button generates a new challenge.'
     } );
 
     // Next button, takes us to the next challenge
@@ -211,7 +218,9 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
         phet.log && phet.log( 'Next button pressed' );
         scene.nextChallenge();
       },
-      tandem: options.tandem.createTandem( 'nextButton' )
+      tandem: options.tandem.createTandem( 'nextButton' ),
+      phetioDocumentation: 'This button appears when the current challenge has been solved. Pressing it advances to a new challenge.',
+      visiblePropertyOptions: { phetioReadOnly: true }
     } );
 
     // Smiley face, displayed when the challenge has been solved
@@ -219,7 +228,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       centerX: balanceScaleNode.centerX,
       top: universalOperationControl.bottom + 25,
       tandem: options.tandem.createTandem( 'faceNode' ),
-      phetioVisiblePropertyInstrumented: false
+      visiblePropertyOptions: { phetioReadOnly: true }
     } );
 
     // terms live in this layer
@@ -229,9 +238,9 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
 
     const children = [
       statusBar,
-      challengePanel,
+      challengeEquationNode,
       solveForXText,
-      equationPanel,
+      balanceScaleEquationNode,
       balanceScaleNode,
       snapshotsAccordionBox,
       refreshButton,
@@ -317,8 +326,8 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
             assert && assert( dialogLayoutBounds );
             dialog.centerX = dialogLayoutBounds.centerX;
 
-            // top of dialog below equationPanel, so the solution is not obscured
-            dialog.top = equationPanel.bottom + 10;
+            // top of dialog below balanceScaleEquationNode, so the solution is not obscured
+            dialog.top = balanceScaleEquationNode.bottom + 10;
           },
 
           // 'Keep Going' hides the dialog
@@ -387,10 +396,9 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       this.universalOperationControl.reset();
 
       // display the challenge equation
-      this.removeChild( challengePanel );
-      challengePanel = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions );
-      this.addChild( challengePanel );
-      challengePanel.moveToBack();
+      challengeEquationNode.children = [
+        new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions )
+      ];
 
       // visibility of other UI elements
       refreshButton.visible = true;
