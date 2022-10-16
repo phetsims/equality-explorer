@@ -8,11 +8,12 @@
 
 import Property from '../../../../axon/js/Property.js';
 import TModel from '../../../../joist/js/TModel.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from './EqualityExplorerScene.js';
 
-export default class EqualityExplorerModel implements TModel {
+export default class EqualityExplorerModel extends PhetioObject implements TModel {
 
   // scenes, in the order that they appear from left-to-right as radio buttons
   public readonly scenes: EqualityExplorerScene[];
@@ -21,6 +22,11 @@ export default class EqualityExplorerModel implements TModel {
   public readonly sceneProperty: Property<EqualityExplorerScene>;
 
   protected constructor( scenes: EqualityExplorerScene[], tandem: Tandem ) {
+
+    super( {
+      tandem: tandem,
+      phetioState: false
+    } );
 
     this.scenes = scenes;
     this.sceneProperty = new Property( scenes[ 0 ], {
@@ -34,8 +40,9 @@ export default class EqualityExplorerModel implements TModel {
     this.sceneProperty.lazyLink( scene => scene.disposeTermsNotOnScale() );
   }
 
-  public dispose(): void {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
   }
 
   /**

@@ -17,8 +17,9 @@ import SolveItScene from './SolveItScene.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import TModel from '../../../../joist/js/TModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 
-export default class SolveItModel implements TModel {
+export default class SolveItModel extends PhetioObject implements TModel {
 
   public readonly challengeGenerators: ChallengeGenerator[];
 
@@ -29,6 +30,11 @@ export default class SolveItModel implements TModel {
   public readonly sceneProperty: Property<SolveItScene | null>;
 
   public constructor( tandem: Tandem ) {
+
+    super( {
+      tandem: tandem,
+      phetioState: false
+    } );
 
     this.challengeGenerators = [
       new ChallengeGenerator1(),
@@ -49,8 +55,9 @@ export default class SolveItModel implements TModel {
     } );
   }
 
-  public dispose(): void {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
   }
 
   public reset(): void {
