@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+//TODO for single-scene models, should we hide model.numberScene and model.sceneProperty?
 /**
  * Model for the 'Numbers' screen.
  *
@@ -14,7 +15,8 @@ import NumbersScene from './NumbersScene.js';
 export default class NumbersModel extends EqualityExplorerModel {
 
   public constructor( tandem: Tandem ) {
-    super( [ new NumbersScene() ], tandem );
+    //TODO tandem name should somehow use NumbersSceneOptions.tandemNamePrefix
+    super( [ new NumbersScene( tandem.createTandem( 'numbersScene' ) ) ], tandem );
   }
 }
 

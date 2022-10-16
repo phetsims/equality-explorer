@@ -64,10 +64,12 @@ export default class SolveItScreenView extends ScreenView {
         model.reset();
         this.reset();
       },
+      //TODO should we used 'scene' or 'level' terminology in this screen?
       tandem: options.tandem.createTandem( 'levelSelectionNode' )
     } );
 
     // Nodes for scenes (levels), organized under a parent tandem
+    //TODO should we used 'scene' or 'level' terminology in this screen?
     const levelNodesTandem = options.tandem.createTandem( 'levelNodes' );
     this.sceneNodes = model.scenes.map( scene => new SolveItSceneNode( scene, model.sceneProperty,
       this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, {

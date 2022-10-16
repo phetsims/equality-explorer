@@ -20,6 +20,10 @@ import SnapshotsCollection from './SnapshotsCollection.js';
 import TermCreator from './TermCreator.js';
 import Variable from './Variable.js';
 import Property from '../../../../axon/js/Property.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 // constants
 const DEFAULT_SCALE_POSITION = new Vector2( 355, 427 );
@@ -42,9 +46,9 @@ type SelfOptions = {
   variables?: Variable[] | null; // variables associated with the scene
 };
 
-export type EqualityExplorerSceneOptions = SelfOptions;
+export type EqualityExplorerSceneOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default abstract class EqualityExplorerScene {
+export default abstract class EqualityExplorerScene extends PhetioObject {
 
   public readonly tandemNamePrefix: string;
   public readonly hasNegativeTermsInToolbox: boolean;
@@ -77,9 +81,9 @@ export default abstract class EqualityExplorerScene {
    * @abstract
    */
   protected constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[],
-                         providedOptions?: EqualityExplorerSceneOptions ) {
+                         providedOptions: EqualityExplorerSceneOptions ) {
 
-    const options = optionize<EqualityExplorerSceneOptions, SelfOptions>()( {
+    const options = optionize<EqualityExplorerSceneOptions, SelfOptions, PhetioObjectOptions>()( {
 
       // SelfOptions
       scalePosition: DEFAULT_SCALE_POSITION,
@@ -91,8 +95,13 @@ export default abstract class EqualityExplorerScene {
       gridColumns: EqualityExplorerQueryParameters.columns,
       numberOfSnapshots: 5,
       iconSize: null,
-      variables: null
+      variables: null,
+
+      // PhetioObjectOptions
+      phetioType: EqualityExplorerScene.EqualityExplorerSceneIO
     }, providedOptions );
+
+    super( options );
 
     this.tandemNamePrefix = options.tandemNamePrefix;
     phet.log && phet.log( `scene: ${this.tandemNamePrefix}, maxWeight=${options.maxWeight}` );
@@ -159,8 +168,9 @@ export default abstract class EqualityExplorerScene {
     }
   }
 
-  public dispose(): void {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
   }
 
   /**
@@ -207,11 +217,21 @@ export default abstract class EqualityExplorerScene {
    * Updates time-dependent parts of the scene.
    * @param dt - time since the previous step, in seconds
    */
-  public step( dt: number ) : void {
+  public step( dt: number ): void {
 
     // step all terms
     this.allTermCreators.forEach( termCreator => termCreator.step( dt ) );
   }
+
+  /**
+   * EqualityExplorerSceneIO handles PhET-iO serialization of EqualityExplorerScene.
+   * It implements 'Reference type serialization', as described in the Serialization section of
+   * https://github.com/phetsims/phet-io/blob/master/doc/phet-io-instrumentation-technical-guide.md#serialization
+   */
+  public static readonly EqualityExplorerSceneIO = new IOType( 'EqualityExplorerSceneIO', {
+    valueType: EqualityExplorerScene,
+    supertype: ReferenceIO( IOType.ObjectIO )
+  } );
 }
 
 /**

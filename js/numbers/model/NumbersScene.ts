@@ -7,15 +7,17 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Tandem from '../../../../tandem/js/Tandem.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 export default class NumbersScene extends EqualityExplorerScene {
 
-  public constructor() {
+  public constructor( tandem: Tandem ) {
     super( [ new ConstantTermCreator() ], [ new ConstantTermCreator() ], {
-      tandemNamePrefix: 'numbers'
+      tandemNamePrefix: 'numbers',
+      tandem: tandem
     } );
   }
 }

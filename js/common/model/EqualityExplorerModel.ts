@@ -29,10 +29,11 @@ export default class EqualityExplorerModel extends PhetioObject implements TMode
     } );
 
     this.scenes = scenes;
+
     this.sceneProperty = new Property( scenes[ 0 ], {
-      validValues: scenes
-      //TODO tandem: tandem.createTandem( 'sceneProperty' ),
-      //TODO phetioValueType: EqualityExplorerSceneIO
+      validValues: scenes,
+      tandem: tandem.createTandem( 'sceneProperty' ),
+      phetioValueType: EqualityExplorerScene.EqualityExplorerSceneIO
     } );
 
     // When the scene changes, dispose of any terms that are being dragged or animating.

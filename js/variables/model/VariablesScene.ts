@@ -6,6 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
@@ -17,15 +18,16 @@ import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
 export default class VariablesScene extends EqualityExplorerScene {
 
-  public constructor() {
+  public constructor( tandem: Tandem ) {
 
     const xVariable = new Variable( EqualityExplorerStrings.xStringProperty, {
       range: EqualityExplorerConstants.VARIABLE_RANGE
     } );
 
     super( createTermCreators( xVariable ), createTermCreators( xVariable ), {
+      variables: [ xVariable ],
       tandemNamePrefix: 'variables',
-      variables: [ xVariable ]
+      tandem: tandem
     } );
   }
 }

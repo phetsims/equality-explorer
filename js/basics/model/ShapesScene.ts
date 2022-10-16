@@ -15,10 +15,11 @@ import ConstantTermNode from '../../common/view/ConstantTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 import ObjectVariable from './ObjectVariable.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class ShapesScene extends BasicsScene {
 
-  public constructor() {
+  public constructor( tandem: Tandem ) {
 
     const variables = [
 
@@ -35,7 +36,9 @@ export default class ShapesScene extends BasicsScene {
       icon: ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) ),
 
       // this scene allows you to create constant terms
-      hasConstantTerms: true
+      hasConstantTerms: true,
+
+      tandem: tandem
     } );
   }
 }

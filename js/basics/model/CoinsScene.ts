@@ -17,10 +17,11 @@ import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 import ObjectVariable from './ObjectVariable.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class CoinsScene extends BasicsScene {
 
-  public constructor() {
+  public constructor( tandem: Tandem ) {
 
     const variables = [
 
@@ -37,7 +38,9 @@ export default class CoinsScene extends BasicsScene {
       // icon used to represent this scene in the scene control (radio buttons)
       icon: new Image( coin3_png, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER
-      } )
+      } ),
+
+      tandem: tandem
     } );
   }
 }

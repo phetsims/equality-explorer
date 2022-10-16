@@ -48,7 +48,12 @@ export default class SolveItModel extends PhetioObject implements TModel {
     assert && assert( _.every( this.challengeGenerators, ( value, index, array ) => ( index === 0 || array[ index - 1 ].level <= value.level ) ),
       'Challenge generators must be ordered by ascending level number.' );
 
-    this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItScene( challengeGenerator ) );
+    //TODO should we used 'scenes' or 'levels' terminology in this screen?
+    const levelsTandem = tandem.createTandem( 'levels' );
+    this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItScene( challengeGenerator, {
+      //TODO tandem name should somehow use SolveItSceneOptions.tandemNamePrefix
+      tandem: levelsTandem.createTandem( `level${challengeGenerator.level}` )
+    } ) );
 
     this.sceneProperty = new Property<SolveItScene | null>( null, {
       validValues: [ ...this.scenes, null ]

@@ -26,6 +26,8 @@ import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
 // constants
 const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;
@@ -37,7 +39,9 @@ type SelfOptions = {
   variableRange?: Range | null; // range of the variables
 };
 
-export type OperationsSceneOptions = SelfOptions & EqualityExplorerSceneOptions;
+export type OperationsSceneOptions = SelfOptions &
+  PickOptional<EqualityExplorerSceneOptions, 'tandemNamePrefix' | 'scalePosition'> &
+  PickRequired<EqualityExplorerSceneOptions, 'tandem'>;
 
 export default class OperationsScene extends EqualityExplorerScene {
 
@@ -60,7 +64,7 @@ export default class OperationsScene extends EqualityExplorerScene {
   public readonly operands: UniversalOperand[];
   public readonly operandProperty: Property<UniversalOperand>;
 
-  public constructor( providedOptions?: OperationsSceneOptions ) {
+  public constructor( providedOptions: OperationsSceneOptions ) {
 
     const options = optionize<OperationsSceneOptions, SelfOptions, EqualityExplorerSceneOptions>()( {
 

@@ -13,6 +13,7 @@ import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
@@ -31,7 +32,7 @@ const POINTS_PER_CHALLENGE = 1;
 
 type SelfOptions = EmptySelfOptions;
 
-type SolveItSceneOptions = SelfOptions;
+type SolveItSceneOptions = SelfOptions & PickRequired<OperationsSceneOptions, 'tandem'>;
 
 export default class SolveItScene extends OperationsScene {
 
@@ -47,7 +48,7 @@ export default class SolveItScene extends OperationsScene {
   // will x be on the left-side (true) or right-side (false) of the equation in the solution?
   private xOnLeft: boolean;
 
-  public constructor( challengeGenerator: ChallengeGenerator, providedOptions?: SolveItSceneOptions ) {
+  public constructor( challengeGenerator: ChallengeGenerator, providedOptions: SolveItSceneOptions ) {
 
     const options = optionize<SolveItSceneOptions, SelfOptions, OperationsSceneOptions>()( {
 

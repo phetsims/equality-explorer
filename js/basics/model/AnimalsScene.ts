@@ -17,10 +17,11 @@ import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 import ObjectVariable from './ObjectVariable.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class AnimalsScene extends BasicsScene {
 
-  public constructor() {
+  public constructor( tandem: Tandem ) {
 
     const variables = [
 
@@ -40,7 +41,9 @@ export default class AnimalsScene extends BasicsScene {
       } ),
 
       // weight at which the scale bottoms out
-      maxWeight: 50
+      maxWeight: 50,
+
+      tandem: tandem
     } );
   }
 }
