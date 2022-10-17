@@ -24,7 +24,10 @@ export default class VariablesScene extends EqualityExplorerScene {
       range: EqualityExplorerConstants.VARIABLE_RANGE
     } );
 
-    super( createTermCreators( xVariable ), createTermCreators( xVariable ), {
+    const leftTermCreators = createTermCreators( xVariable, tandem.createTandem( 'leftTermCreators' ) );
+    const rightTermCreators = createTermCreators( xVariable, tandem.createTandem( 'rightTermCreators' ) );
+
+    super( leftTermCreators, rightTermCreators, {
       variables: [ xVariable ],
       tandem: tandem
     } );
@@ -34,15 +37,19 @@ export default class VariablesScene extends EqualityExplorerScene {
 /**
  * Creates the term creators for this scene.
  */
-function createTermCreators( xVariable: Variable ): TermCreator[] {
+function createTermCreators( xVariable: Variable, parentTandem: Tandem ): TermCreator[] {
 
   return [
 
     // x and -x
-    new VariableTermCreator( xVariable ),
+    new VariableTermCreator( xVariable, {
+      tandem: parentTandem.createTandem( 'variableTermCreator' )
+    } ),
 
     // 1 and -1
-    new ConstantTermCreator()
+    new ConstantTermCreator( {
+      tandem: parentTandem.createTandem( 'constantTermCreator' )
+    } )
   ];
 }
 

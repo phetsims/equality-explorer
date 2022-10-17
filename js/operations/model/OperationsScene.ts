@@ -12,14 +12,14 @@ import Property from '../../../../axon/js/Property.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ConstantTerm from '../../common/model/ConstantTerm.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene, { EqualityExplorerSceneOptions } from '../../common/model/EqualityExplorerScene.js';
 import Snapshot from '../../common/model/Snapshot.js';
-import TermCreator from '../../common/model/TermCreator.js';
+import TermCreator, { TermCreatorOptions } from '../../common/model/TermCreator.js';
 import UniversalOperation, { UniversalOperand, UniversalOperator, UniversalOperatorValues } from '../../common/model/UniversalOperation.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
@@ -92,10 +92,23 @@ export default class OperationsScene extends EqualityExplorerScene {
       likeTermsCell: 1 // cell on the plate that all like terms will occupy
     };
 
-    const leftVariableTermCreator = new VariableTermCreator( xVariable, variableTermCreatorOptions );
-    const leftConstantTermCreator = new ConstantTermCreator( constantTermCreatorOptions );
-    const rightVariableTermCreator = new VariableTermCreator( xVariable, variableTermCreatorOptions );
-    const rightConstantTermCreator = new ConstantTermCreator( constantTermCreatorOptions );
+    const leftVariableTermCreator = new VariableTermCreator( xVariable,
+      combineOptions<TermCreatorOptions>( {
+        tandem: options.tandem.createTandem( 'leftVariableTermCreator' )
+      }, variableTermCreatorOptions ) );
+    const leftConstantTermCreator = new ConstantTermCreator(
+      combineOptions<TermCreatorOptions>( {
+        tandem: options.tandem.createTandem( 'leftConstantTermCreator' )
+      }, constantTermCreatorOptions ) );
+    const rightVariableTermCreator = new VariableTermCreator( xVariable,
+      combineOptions<TermCreatorOptions>( {
+        tandem: options.tandem.createTandem( 'rightVariableTermCreator' )
+      }, variableTermCreatorOptions ) );
+    const rightConstantTermCreator = new ConstantTermCreator(
+      combineOptions<TermCreatorOptions>( {
+        tandem: options.tandem.createTandem( 'rightConstantTermCreator' )
+      }, constantTermCreatorOptions )
+    );
 
     super(
       [ leftVariableTermCreator, leftConstantTermCreator ],

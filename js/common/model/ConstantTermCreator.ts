@@ -29,7 +29,7 @@ export default class ConstantTermCreator extends TermCreator {
 
   private readonly constantValue: Fraction;
 
-  public constructor( providedOptions?: ConstantTermCreatorOptions ) {
+  public constructor( providedOptions: ConstantTermCreatorOptions ) {
 
     const options = optionize<ConstantTermCreatorOptions, SelfOptions, TermCreatorOptions>()( {
 

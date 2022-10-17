@@ -34,7 +34,7 @@ export default class VariableTermCreator extends TermCreator {
   private readonly positiveFill: TColor;
   private readonly negativeFill: TColor;
 
-  public constructor( variable: Variable, providedOptions?: VariableTermCreatorOptions ) {
+  public constructor( variable: Variable, providedOptions: VariableTermCreatorOptions ) {
 
     const options = optionize<VariableTermCreatorOptions, SelfOptions, TermCreatorOptions>()( {
 

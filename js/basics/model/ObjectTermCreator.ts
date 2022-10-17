@@ -24,7 +24,7 @@ export default class ObjectTermCreator extends TermCreator {
 
   private readonly objectVariable: ObjectVariable;
 
-  public constructor( variable: ObjectVariable, providedOptions?: ObjectTermCreatorOptions ) {
+  public constructor( variable: ObjectVariable, providedOptions: ObjectTermCreatorOptions ) {
 
     const options = optionize<ObjectTermCreatorOptions, SelfOptions, TermCreatorOptions>()( {
       variable: variable

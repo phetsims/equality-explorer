@@ -15,7 +15,20 @@ import equalityExplorer from '../../equalityExplorer.js';
 export default class NumbersScene extends EqualityExplorerScene {
 
   public constructor( tandem: Tandem ) {
-    super( [ new ConstantTermCreator() ], [ new ConstantTermCreator() ], {
+
+    const leftTermCreators = [
+      new ConstantTermCreator( {
+        tandem: tandem.createTandem( 'leftTermCreators' ).createTandem( 'constantTermCreator' )
+      } )
+    ];
+
+    const rightTermCreators = [
+      new ConstantTermCreator( {
+        tandem: tandem.createTandem( 'rightTermCreators' ).createTandem( 'constantTermCreator' )
+      } )
+    ];
+
+    super( leftTermCreators, rightTermCreators, {
       tandem: tandem
     } );
   }

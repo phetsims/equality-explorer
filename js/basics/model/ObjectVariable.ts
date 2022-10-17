@@ -32,6 +32,10 @@ export default class ObjectVariable extends Variable {
     this.image = image;
     this.shadow = shadow;
   }
+
+  public get symbol(): string {
+    return this.symbolProperty.value;
+  }
 }
 
 equalityExplorer.register( 'ObjectVariable', ObjectVariable );

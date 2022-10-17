@@ -8,6 +8,7 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene, { EqualityExplorerSceneOptions } from '../../common/model/EqualityExplorerScene.js';
 import TermCreator from '../../common/model/TermCreator.js';
@@ -36,26 +37,30 @@ export default class BasicsScene extends EqualityExplorerScene {
       lockable: false
     }, providedOptions );
 
-    super(
-      createTermCreators( variables, options.hasConstantTerms ),
-      createTermCreators( variables, options.hasConstantTerms ),
-      options
-    );
+    const leftTermCreators = createTermCreators( variables, options.hasConstantTerms, options.tandem.createTandem( 'leftTermCreators' ) );
+    const rightTermCreators = createTermCreators( variables, options.hasConstantTerms, options.tandem.createTandem( 'rightTermCreators' ) );
+
+    super( leftTermCreators, rightTermCreators, options );
   }
 }
 
-function createTermCreators( variables: ObjectVariable[], hasConstantTerms: boolean ): TermCreator[] {
+function createTermCreators( variables: ObjectVariable[], hasConstantTerms: boolean, parentTandem: Tandem ): TermCreator[] {
 
   const termCreators: TermCreator[] = [];
 
   // creators for object terms
   for ( let i = 0; i < variables.length; i++ ) {
-    termCreators.push( new ObjectTermCreator( variables[ i ] ) );
+    const variable = variables[ i ];
+    termCreators.push( new ObjectTermCreator( variable, {
+      tandem: parentTandem.createTandem( `${variable.symbol}TermCreator` )
+    } ) );
   }
 
   // creator for constant terms
   if ( hasConstantTerms ) {
-    termCreators.push( new ConstantTermCreator() );
+    termCreators.push( new ConstantTermCreator( {
+      tandem: parentTandem.createTandem( 'constantTermCreator' )
+    } ) );
   }
 
   return termCreators;
