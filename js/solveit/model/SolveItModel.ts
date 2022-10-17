@@ -13,7 +13,7 @@ import ChallengeGenerator2 from './ChallengeGenerator2.js';
 import ChallengeGenerator3 from './ChallengeGenerator3.js';
 import ChallengeGenerator4 from './ChallengeGenerator4.js';
 import ChallengeGenerator5 from './ChallengeGenerator5.js';
-import SolveItScene from './SolveItScene.js';
+import SolveItLevel from './SolveItLevel.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import TModel from '../../../../joist/js/TModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -26,10 +26,10 @@ export default class SolveItModel extends PhetioObject implements TModel {
   public readonly challengeGenerators: ChallengeGenerator[];
 
   // a scene for each challenge generator
-  public readonly scenes: SolveItScene[];
+  public readonly scenes: SolveItLevel[];
 
   // the selected scene, null if no scene is currently selected
-  public readonly sceneProperty: Property<SolveItScene | null>;
+  public readonly sceneProperty: Property<SolveItLevel | null>;
 
   public constructor( tandem: Tandem ) {
 
@@ -52,12 +52,12 @@ export default class SolveItModel extends PhetioObject implements TModel {
 
     //TODO should we used 'scenes' or 'levels' terminology in this screen?
     const levelsTandem = tandem.createTandem( 'levels' );
-    this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItScene( challengeGenerator, {
+    this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItLevel( challengeGenerator, {
       tandem: levelsTandem.createTandem( `level${challengeGenerator.level}` )
     } ) );
 
     //TODO rename levelProperty
-    this.sceneProperty = new Property<SolveItScene | null>( null, {
+    this.sceneProperty = new Property<SolveItLevel | null>( null, {
       validValues: [ ...this.scenes, null ],
       tandem: tandem.createTandem( 'sceneProperty' ),
       phetioValueType: NullableIO( EqualityExplorerScene.EqualityExplorerSceneIO ),

@@ -17,7 +17,7 @@ import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryP
 import VariableTermNode from '../../common/view/VariableTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
-import SolveItScene from '../model/SolveItScene.js';
+import SolveItLevel from '../model/SolveItLevel.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -25,7 +25,7 @@ type SolveItLevelSelectionButtonGroupOptions = SelfOptions & NodeTranslationOpti
 
 export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButtonGroup {
 
-  public constructor( sceneProperty: Property<SolveItScene | null>, scenes: SolveItScene[],
+  public constructor( sceneProperty: Property<SolveItLevel | null>, scenes: SolveItLevel[],
                       providedOptions?: SolveItLevelSelectionButtonGroupOptions ) {
 
     const options = optionize<SolveItLevelSelectionButtonGroupOptions, SelfOptions, LevelSelectionButtonGroupOptions>()( {

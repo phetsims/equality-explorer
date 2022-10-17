@@ -37,7 +37,7 @@ import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
-import SolveItScene from '../model/SolveItScene.js';
+import SolveItLevel from '../model/SolveItLevel.js';
 import ChallengeDerivationText from './ChallengeDerivationText.js';
 import SolveItRewardNode from './SolveItRewardNode.js';
 import SumToZeroNode from '../../common/view/SumToZeroNode.js';
@@ -69,8 +69,8 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
   // control for applying a universal operation to the terms that are on the scale
   private readonly universalOperationControl: UniversalOperationControl;
 
-  public constructor( scene: SolveItScene,
-                      sceneProperty: Property<SolveItScene | null>,
+  public constructor( scene: SolveItLevel,
+                      sceneProperty: Property<SolveItLevel | null>,
                       layoutBounds: Bounds2,
                       visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,

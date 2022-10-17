@@ -35,7 +35,7 @@ type SelfOptions = EmptySelfOptions;
 
 type SolveItSceneOptions = SelfOptions & PickRequired<OperationsSceneOptions, 'tandem'>;
 
-export default class SolveItScene extends OperationsScene {
+export default class SolveItLevel extends OperationsScene {
 
   public readonly challengeGenerator: ChallengeGenerator;
   public readonly scoreProperty: NumberProperty;
@@ -254,4 +254,4 @@ export default class SolveItScene extends OperationsScene {
   }
 }
 
-equalityExplorer.register( 'SolveItScene', SolveItScene );
+equalityExplorer.register( 'SolveItLevel', SolveItLevel );

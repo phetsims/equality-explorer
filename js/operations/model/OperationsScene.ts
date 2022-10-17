@@ -47,7 +47,7 @@ export default class OperationsScene extends EqualityExplorerScene {
 
   protected readonly xVariable: Variable;
 
-  //TODO move these fields to SolveItScene?
+  //TODO move these fields to SolveItLevel?
   protected readonly leftVariableTermCreator: VariableTermCreator;
   protected readonly leftConstantTermCreator: ConstantTermCreator;
   protected readonly rightVariableTermCreator: VariableTermCreator;
