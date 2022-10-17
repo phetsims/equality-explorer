@@ -31,7 +31,7 @@ export default class EqualityExplorerModel extends PhetioObject implements TMode
     this.scenes = scenes;
 
     // Instrument sceneProperty only if there is more than 1 scene, and sceneProperty therefore can be changed.
-    const scenePropertyTandem = ( scenes.length === 1 ) ? Tandem.OPT_OUT : tandem.createTandem( 'sceneProperty' );
+    const scenePropertyTandem = ( scenes.length > 1 ) ? tandem.createTandem( 'sceneProperty' ) : Tandem.OPT_OUT;
 
     this.sceneProperty = new Property( scenes[ 0 ], {
       validValues: scenes,
@@ -41,7 +41,9 @@ export default class EqualityExplorerModel extends PhetioObject implements TMode
 
     // When the scene changes, dispose of any terms that are being dragged or animating.
     // See https://github.com/phetsims/equality-explorer/issues/73
-    this.sceneProperty.lazyLink( scene => scene.disposeTermsNotOnScale() );
+    if ( scenes.length > 1 ) {
+      this.sceneProperty.lazyLink( scene => scene.disposeTermsNotOnScale() );
+    }
   }
 
   public override dispose(): void {
