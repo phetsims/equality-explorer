@@ -67,8 +67,8 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
   // control for applying a universal operation to the terms that are on the scale
   private readonly universalOperationControl: UniversalOperationControl;
 
-  public constructor( scene: SolveItLevel,
-                      sceneProperty: Property<SolveItLevel | null>,
+  public constructor( level: SolveItLevel,
+                      levelProperty: Property<SolveItLevel | null>,
                       layoutBounds: Bounds2,
                       visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
@@ -82,7 +82,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     const statusBarTandem = options.tandem.createTandem( 'statusBar' );
 
     // Level description, displayed in the status bar
-    const levelDescriptionText = new RichText( scene.challengeGenerator.descriptionProperty, {
+    const levelDescriptionText = new RichText( level.challengeGenerator.descriptionProperty, {
       font: LEVEL_FONT,
       maxWidth: 650, // determined empirically
       tandem: statusBarTandem.createTandem( 'levelDescriptionText' )
@@ -90,12 +90,12 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
 
     const backButtonListener = () => {
       universalOperationControl.stopAnimations(); // stop any operations that are in progress
-      sceneProperty.value = null; // back to the SettingsNode, where no scene is selected
+      levelProperty.value = null; // back to the SettingsNode, where no level is selected
     };
 
     // Bar across the top of the screen
     const statusBar = new InfiniteStatusBar( layoutBounds, visibleBoundsProperty, levelDescriptionText,
-      scene.scoreProperty, {
+      level.scoreProperty, {
         floatToTop: true, // see https://github.com/phetsims/equality-explorer/issues/144
         spacing: 20,
         barFill: 'rgb( 252, 150, 152 )',
@@ -112,7 +112,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
         relationalOperatorFontWeight: 'normal',
         updateEnabled: false // static equation, to display the challenge
       },
-      centerX: scene.scale.position.x,
+      centerX: level.scale.position.x,
       top: statusBar.bottom + 15
     } );
 
@@ -120,13 +120,13 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     // of EquationPanel's subcomponents in this screen, wrap it in a static Node that will be its proxy in the
     // Studio tree.
     const challengeEquationNode = new Node( {
-      children: [ new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions ) ],
+      children: [ new EquationPanel( level.leftTermCreators, level.rightTermCreators, challengePanelOptions ) ],
       tandem: options.tandem.createTandem( 'challengeEquationNode' ),
       phetioDocumentation: 'Displays the equation for the current game challenge.'
     } );
 
     // Equation that reflects what is currently on the balance scale
-    const balanceScaleEquationNode = new EquationPanel( scene.leftTermCreators, scene.rightTermCreators,
+    const balanceScaleEquationNode = new EquationPanel( level.leftTermCreators, level.rightTermCreators,
       combineOptions<EquationPanelOptions>( {}, EQUATION_PANEL_OPTIONS, {
         fill: 'white',
         stroke: 'black',
@@ -143,9 +143,9 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     const operationAnimationLayer = new Node();
 
     // Universal Operation control
-    const universalOperationControl = new UniversalOperationControl( scene, operationAnimationLayer, {
+    const universalOperationControl = new UniversalOperationControl( level, operationAnimationLayer, {
       timesZeroEnabled: false, // disable multiplication by zero, see phetsims/equality-explorer#72
-      centerX: scene.scale.position.x, // centered on the scale
+      centerX: level.scale.position.x, // centered on the scale
       top: balanceScaleEquationNode.bottom + 15,
       tandem: options.tandem.createTandem( 'universalOperationControl' )
     } );
@@ -171,15 +171,15 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     } );
 
     // Scale
-    const balanceScaleNode = new BalanceScaleNode( scene.scale, {
+    const balanceScaleNode = new BalanceScaleNode( level.scale, {
       clearScaleButtonVisible: false,
       organizeButtonVisible: false,
-      disposeTermsNotOnScale: scene.disposeTermsNotOnScale.bind( scene )
+      disposeTermsNotOnScale: level.disposeTermsNotOnScale.bind( level )
       // No PhET-iO instrumentation
     } );
 
     // Snapshots
-    const snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
+    const snapshotsAccordionBox = new SnapshotsAccordionBox( level, {
       fixedWidth: ( layoutBounds.right - balanceScaleNode.right ) - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15,
       expandedProperty: snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
@@ -196,7 +196,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       centerY: challengeEquationNode.centerY,
       listener: () => {
         phet.log && phet.log( 'Refresh button pressed' );
-        scene.nextChallenge();
+        level.nextChallenge();
       },
       tandem: options.tandem.createTandem( 'refreshButton' ),
       phetioDocumentation: 'This button generates a new challenge.'
@@ -211,11 +211,11 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 12,
       yMargin: 8,
-      centerX: scene.scale.position.x,
+      centerX: level.scale.position.x,
       top: universalOperationControl.bottom + 30, // determined empirically
       listener: () => {
         phet.log && phet.log( 'Next button pressed' );
-        scene.nextChallenge();
+        level.nextChallenge();
       },
       tandem: options.tandem.createTandem( 'nextButton' ),
       phetioDocumentation: 'This button appears when the current challenge has been solved. Pressing it advances to a new challenge.',
@@ -254,7 +254,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     if ( phet.chipper.queryParameters.showAnswers ) {
 
       // shows how the current challenge was derived
-      children.push( new ChallengeDerivationText( scene.challengeProperty, {
+      children.push( new ChallengeDerivationText( level.challengeProperty, {
         left: snapshotsAccordionBox.left,
         top: snapshotsAccordionBox.bottom + 5
       } ) );
@@ -268,9 +268,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
         baseColor: 'red',
         centerX: balanceScaleNode.centerX,
         bottom: balanceScaleNode.bottom - 5,
-        listener: () => {
-          scene.showAnswer();
-        }
+        listener: () => level.showAnswer()
       } );
       children.push( showAnswerButton );
     }
@@ -278,7 +276,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     assert && assert( !options.children, 'SolveItLevelNode sets children' );
     options.children = children;
 
-    super( scene, snapshotsAccordionBox, termsLayer, options );
+    super( level, snapshotsAccordionBox, termsLayer, options );
 
     this.universalOperationControl = universalOperationControl;
 
@@ -296,7 +294,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     this.faceAnimation = null;
 
     // unlink not needed.
-    scene.scoreProperty.lazyLink( ( score, oldScore ) => {
+    level.scoreProperty.lazyLink( ( score, oldScore ) => {
 
       // do nothing when the score is reset
       if ( score < oldScore ) {
@@ -314,7 +312,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
         nextButton.visible = true;
 
         // show the reward dialog
-        rewardDialog = rewardDialog || new RewardDialog( scene.scoreProperty.value, {
+        rewardDialog = rewardDialog || new RewardDialog( level.scoreProperty.value, {
 
           // Display the dialog in a position that does not obscure the challenge solution.
           // See https://github.com/phetsims/equality-explorer/issues/104
@@ -341,7 +339,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
           // When the dialog is shown, show the reward
           showCallback: () => {
             assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
-            this.rewardNode = new SolveItRewardNode( scene.challengeGenerator.level );
+            this.rewardNode = new SolveItRewardNode( level.challengeGenerator.level );
             this.addChild( this.rewardNode );
           },
 
@@ -389,14 +387,14 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     } );
 
     // When the challenge changes... unlink not needed.
-    scene.challengeProperty.link( challenge => {
+    level.challengeProperty.link( challenge => {
 
       // cancel operation animations
       this.universalOperationControl.reset();
 
       // display the challenge equation
       challengeEquationNode.children = [
-        new EquationPanel( scene.leftTermCreators, scene.rightTermCreators, challengePanelOptions )
+        new EquationPanel( level.leftTermCreators, level.rightTermCreators, challengePanelOptions )
       ];
 
       // visibility of other UI elements
@@ -408,7 +406,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
     // removeListener not needed.
-    scene.sumToZeroEmitter.addListener( termCreators => SumToZeroNode.animateSumToZero( termCreators, this.termsLayer ) );
+    level.sumToZeroEmitter.addListener( termCreators => SumToZeroNode.animateSumToZero( termCreators, this.termsLayer ) );
   }
 
   public override dispose(): void {
