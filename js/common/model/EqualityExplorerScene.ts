@@ -130,7 +130,8 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
       gridRows: options.gridRows,
       gridColumns: options.gridColumns,
       iconSize: options.iconSize,
-      maxWeight: options.maxWeight
+      maxWeight: options.maxWeight,
+      tandem: options.tandem.createTandem( 'balanceScale' )
     } );
 
     this.leftDragBounds = new Bounds2( DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
@@ -147,7 +148,7 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
 
     this.snapshotsCollection = new SnapshotsCollection( {
       numberOfSnapshots: options.numberOfSnapshots
-      //TODO phet-io instrumentation
+      //TODO phet-io instrumentation of snapshotsCollection
     } );
 
     this.lockedProperty = null;

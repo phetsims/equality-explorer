@@ -16,6 +16,9 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Plate from './Plate.js';
 import TermCreator from './TermCreator.js';
@@ -38,7 +41,7 @@ type SelfOptions = {
   iconSize?: Dimension2 | null; // size of icons, computed if null
 };
 
-type BalanceScaleOptions = SelfOptions;
+type BalanceScaleOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 export type BalanceScaleSide = 'left' | 'right';
 
@@ -141,7 +144,10 @@ export default class BalanceScale {
         assert && assert( Math.abs( angle ) <= options.maxAngle, `angle out of range: ${angle}` );
         return angle;
       }, {
-        isValidValue: value => ( typeof value === 'number' )
+        isValidValue: value => ( typeof value === 'number' ),
+        tandem: options.tandem.createTandem( 'angleProperty' ),
+        phetioValueType: NumberIO,
+        phetioDocumentation: 'angle of the scale in radians, zero is balanced'
       } );
 
     // Move the plates when the angle changes. unlink not required.
