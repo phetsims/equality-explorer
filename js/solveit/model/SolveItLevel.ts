@@ -1,10 +1,8 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-//TODO rename SolveItLevel
 /**
- * A scene in the 'Solve It!' screen.  A scene is created for each level in the game.
- * This is an extension of the Operations scene (variable and constant terms on both sides of the equation),
- * with the addition of game challenges.
+ * SolveItLevel is a level in the 'Solve It!' game screen. A level is a specialization of a scene from the 'Operations'
+ * screen. (variable and constant terms on both sides of the equation), with the addition of game challenges.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
