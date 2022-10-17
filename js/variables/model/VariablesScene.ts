@@ -26,7 +26,6 @@ export default class VariablesScene extends EqualityExplorerScene {
 
     super( createTermCreators( xVariable ), createTermCreators( xVariable ), {
       variables: [ xVariable ],
-      tandemNamePrefix: 'variables',
       tandem: tandem
     } );
   }

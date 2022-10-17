@@ -23,7 +23,6 @@ export default class BasicsModel extends EqualityExplorerModel {
     super( [
 
       // in the order that they appear (left to right) in the scene control (radio buttons)
-      //TODO these tandem names should somehow use BasicsSceneOptions.tandemNamePrefix
       new ShapesScene( scenesTandem.createTandem( 'shapesScene' ) ),
       new FruitsScene( scenesTandem.createTandem( 'fruitScene' ) ),
       new CoinsScene( scenesTandem.createTandem( 'coinsScene' ) ),

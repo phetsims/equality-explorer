@@ -33,8 +33,6 @@ export default class FruitsScene extends BasicsScene {
 
     super( variables, {
 
-      tandemNamePrefix: 'fruits',
-
       // icon used to represent this scene in the scene control (radio buttons)
       icon: new Image( apple_png, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER

@@ -40,7 +40,7 @@ type SelfOptions = {
 };
 
 export type OperationsSceneOptions = SelfOptions &
-  PickOptional<EqualityExplorerSceneOptions, 'tandemNamePrefix' | 'scalePosition'> &
+  PickOptional<EqualityExplorerSceneOptions, 'scalePosition'> &
   PickRequired<EqualityExplorerSceneOptions, 'tandem'>;
 
 export default class OperationsScene extends EqualityExplorerScene {
@@ -72,7 +72,6 @@ export default class OperationsScene extends EqualityExplorerScene {
       variableRange: EqualityExplorerConstants.VARIABLE_RANGE,
 
       // EqualityExplorerSceneOptions
-      tandemNamePrefix: 'operations',
       gridRows: 1,
       gridColumns: 2,
       iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale

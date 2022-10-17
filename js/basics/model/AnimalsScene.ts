@@ -33,8 +33,6 @@ export default class AnimalsScene extends BasicsScene {
 
     super( variables, {
 
-      tandemNamePrefix: 'animals',
-
       // icon used to represent this scene in the scene control (radio buttons)
       icon: new Image( turtle_png, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER

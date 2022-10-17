@@ -33,8 +33,6 @@ export default class CoinsScene extends BasicsScene {
 
     super( variables, {
 
-      tandemNamePrefix: 'coins',
-
       // icon used to represent this scene in the scene control (radio buttons)
       icon: new Image( coin3_png, {
         maxHeight: EqualityExplorerConstants.SMALL_TERM_DIAMETER

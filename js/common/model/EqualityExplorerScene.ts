@@ -33,7 +33,6 @@ const DRAG_BOUNDS_MIN_Y = 100;
 const DRAG_BOUNDS_MAX_Y = EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS.maxY - DRAG_BOUNDS_Y_MARGIN;
 
 type SelfOptions = {
-  tandemNamePrefix: string; // prefix for tandem names related to this scene
   scalePosition?: Vector2; // determined empirically
   hasNegativeTermsInToolbox?: boolean; // if true, put negative terms in the toolbox, e.g. -x
   lockable?: boolean; // is the lock feature supported for this scene?
@@ -50,7 +49,6 @@ export type EqualityExplorerSceneOptions = SelfOptions & PickRequired<PhetioObje
 
 export default abstract class EqualityExplorerScene extends PhetioObject {
 
-  public readonly tandemNamePrefix: string;
   public readonly hasNegativeTermsInToolbox: boolean;
   private readonly _icon: Node | null;
   public readonly variables: Variable[] | null;
@@ -103,8 +101,7 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
 
     super( options );
 
-    this.tandemNamePrefix = options.tandemNamePrefix;
-    phet.log && phet.log( `scene: ${this.tandemNamePrefix}, maxWeight=${options.maxWeight}` );
+    phet.log && phet.log( `scene: ${this.tandem.name}, maxWeight=${options.maxWeight}` );
 
     this.hasNegativeTermsInToolbox = options.hasNegativeTermsInToolbox;
     this._icon = options.icon;

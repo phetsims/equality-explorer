@@ -77,7 +77,7 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
     // Create a Node for each scene.
     this.sceneNodes = [];
     model.scenes.forEach( scene => {
-      const sceneNodeTandem = sceneNodesTandem.createTandem( `${scene.tandemNamePrefix}SceneNode` );
+      const sceneNodeTandem = sceneNodesTandem.createTandem( `${scene.tandem.name}Node` );
       const sceneNode = this.createSceneNode( scene,
         this.equationAccordionBoxExpandedProperty,
         this.snapshotsAccordionBoxExpandedProperty,

@@ -30,8 +30,6 @@ export default class ShapesScene extends BasicsScene {
 
     super( variables, {
 
-      tandemNamePrefix: 'shapes',
-
       // icon used to represent this scene in the scene control (radio buttons)
       icon: ConstantTermNode.createInteractiveTermNode( Fraction.fromInteger( 1 ) ),
 

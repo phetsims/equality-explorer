@@ -15,7 +15,6 @@ import NumbersScene from './NumbersScene.js';
 export default class NumbersModel extends EqualityExplorerModel {
 
   public constructor( tandem: Tandem ) {
-    //TODO tandem name should somehow use NumbersSceneOptions.tandemNamePrefix
     super( [ new NumbersScene( tandem.createTandem( 'numbersScene' ) ) ], tandem );
   }
 }

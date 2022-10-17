@@ -51,7 +51,6 @@ export default class SolveItModel extends PhetioObject implements TModel {
     //TODO should we used 'scenes' or 'levels' terminology in this screen?
     const levelsTandem = tandem.createTandem( 'levels' );
     this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItScene( challengeGenerator, {
-      //TODO tandem name should somehow use SolveItSceneOptions.tandemNamePrefix
       tandem: levelsTandem.createTandem( `level${challengeGenerator.level}` )
     } ) );
 

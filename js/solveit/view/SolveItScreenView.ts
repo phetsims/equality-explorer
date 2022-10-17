@@ -74,7 +74,7 @@ export default class SolveItScreenView extends ScreenView {
     this.sceneNodes = model.scenes.map( scene => new SolveItSceneNode( scene, model.sceneProperty,
       this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, {
         visibleProperty: new DerivedProperty( [ model.sceneProperty ], selectedScene => ( scene === selectedScene ) ),
-        tandem: levelNodesTandem.createTandem( `${scene.tandemNamePrefix}Node` )
+        tandem: levelNodesTandem.createTandem( `${scene.tandem.name}Node` )
       } ) );
     const scenesParent = new Node( {
       children: this.sceneNodes

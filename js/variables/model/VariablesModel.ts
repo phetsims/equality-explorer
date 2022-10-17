@@ -14,7 +14,6 @@ import VariablesScene from './VariablesScene.js';
 export default class VariablesModel extends EqualityExplorerModel {
 
   public constructor( tandem: Tandem ) {
-    //TODO tandem name should somehow use tandemNamePrefix
     super( [ new VariablesScene( tandem.createTandem( 'variablesScene' ) ) ], tandem );
   }
 }
