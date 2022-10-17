@@ -148,7 +148,8 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
 
     this.snapshotsCollection = new SnapshotsCollection( {
       numberOfSnapshots: options.numberOfSnapshots
-      //TODO phet-io instrumentation of snapshotsCollection
+      //TODO tandem: options.tandem.createTandem( 'snapshotsCollection' )
+      //TODO phetioValueType: SnapshotsCollection.SnapshotsCollectionIO
     } );
 
     this.lockedProperty = null;

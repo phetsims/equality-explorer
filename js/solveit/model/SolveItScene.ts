@@ -79,7 +79,8 @@ export default class SolveItScene extends OperationsScene {
 
     this.challengeProperty = new Property<Challenge | null>( null, {
       isValidValue: value => ( value instanceof Challenge ) || ( value === null )
-      //TODO phet-io instrumentation of challengeProperty
+      //TODO tandem: options.tandem.createTandem( 'challengeProperty' )
+      //TODO phetioValueType: NullableIO( Challenge.ChallengeIO )
     } );
 
     this.challengeHasBeenSolved = false;
