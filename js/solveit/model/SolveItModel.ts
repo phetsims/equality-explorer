@@ -25,11 +25,11 @@ export default class SolveItModel extends PhetioObject implements TModel {
 
   public readonly challengeGenerators: ChallengeGenerator[];
 
-  // a scene for each challenge generator
-  public readonly scenes: SolveItLevel[];
+  // a level for each challenge generator
+  public readonly levels: SolveItLevel[];
 
-  // the selected scene, null if no scene is currently selected
-  public readonly sceneProperty: Property<SolveItLevel | null>;
+  // the selected level, null if no scene is currently selected
+  public readonly levelProperty: Property<SolveItLevel | null>;
 
   public constructor( tandem: Tandem ) {
 
@@ -51,14 +51,13 @@ export default class SolveItModel extends PhetioObject implements TModel {
       'Challenge generators must be ordered by ascending level number.' );
 
     const levelsTandem = tandem.createTandem( 'levels' );
-    this.scenes = _.map( this.challengeGenerators, challengeGenerator => new SolveItLevel( challengeGenerator, {
+    this.levels = _.map( this.challengeGenerators, challengeGenerator => new SolveItLevel( challengeGenerator, {
       tandem: levelsTandem.createTandem( `level${challengeGenerator.level}` )
     } ) );
 
-    //TODO rename levelProperty
-    this.sceneProperty = new Property<SolveItLevel | null>( null, {
-      validValues: [ ...this.scenes, null ],
-      tandem: tandem.createTandem( 'sceneProperty' ),
+    this.levelProperty = new Property<SolveItLevel | null>( null, {
+      validValues: [ ...this.levels, null ],
+      tandem: tandem.createTandem( 'levelProperty' ),
       phetioValueType: NullableIO( EqualityExplorerScene.EqualityExplorerSceneIO ),
       phetioDocumentation: 'null corresponds to the level-selection user interface'
     } );
@@ -71,8 +70,8 @@ export default class SolveItModel extends PhetioObject implements TModel {
 
   public reset(): void {
     this.challengeGenerators.forEach( challengeGenerator => challengeGenerator.reset() );
-    this.scenes.forEach( scene => scene.reset() );
-    this.sceneProperty.reset();
+    this.levels.forEach( level => level.reset() );
+    this.levelProperty.reset();
   }
 
   /**

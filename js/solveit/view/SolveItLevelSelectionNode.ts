@@ -45,7 +45,7 @@ export default class SolveItLevelSelectionNode extends Node {
     }, providedOptions );
 
     // Level-selection buttons
-    const levelSelectionButtonGroup = new SolveItLevelSelectionButtonGroup( model.sceneProperty, model.scenes, {
+    const levelSelectionButtonGroup = new SolveItLevelSelectionButtonGroup( model.levelProperty, model.levels, {
       centerX: layoutBounds.centerX,
       top: layoutBounds.centerY - 25 // top of buttons slightly above center
     } );

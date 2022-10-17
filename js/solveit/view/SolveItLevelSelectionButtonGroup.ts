@@ -25,7 +25,7 @@ type SolveItLevelSelectionButtonGroupOptions = SelfOptions & NodeTranslationOpti
 
 export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButtonGroup {
 
-  public constructor( sceneProperty: Property<SolveItLevel | null>, scenes: SolveItLevel[],
+  public constructor( levelProperty: Property<SolveItLevel | null>, levels: SolveItLevel[],
                       providedOptions?: SolveItLevelSelectionButtonGroupOptions ) {
 
     const options = optionize<SolveItLevelSelectionButtonGroupOptions, SelfOptions, LevelSelectionButtonGroupOptions>()( {
@@ -40,23 +40,23 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
       gameLevels: EqualityExplorerQueryParameters.gameLevels
     }, providedOptions );
 
-    const items: LevelSelectionButtonGroupItem[] = scenes.map( scene => {
+    const items: LevelSelectionButtonGroupItem[] = levels.map( level => {
       return {
         icon: VariableTermNode.createInteractiveTermNode(
-          Fraction.fromInteger( scene.challengeGenerator.level ), EqualityExplorerStrings.xStringProperty, {
+          Fraction.fromInteger( level.challengeGenerator.level ), EqualityExplorerStrings.xStringProperty, {
             diameter: 50,
             margin: 15,
             equationTermNodeOptions: {
               showOne: true
             }
           } ),
-        scoreProperty: scene.scoreProperty,
+        scoreProperty: level.scoreProperty,
         options: {
           createScoreDisplay: ( scoreProperty: TProperty<number> ) => new ScoreDisplayNumberAndStar( scoreProperty ),
           listener: () => {
-            sceneProperty.value = scene;
+            levelProperty.value = level;
           },
-          soundPlayerIndex: scene.challengeGenerator.level - 1
+          soundPlayerIndex: level.challengeGenerator.level - 1
         }
       };
     } );

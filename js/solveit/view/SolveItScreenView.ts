@@ -35,10 +35,10 @@ export default class SolveItScreenView extends ScreenView {
   // all game levels. See https://github.com/phetsims/equality-explorer/issues/124
   private readonly snapshotsAccordionBoxExpandedProperty: Property<boolean>;
 
-  // a scene for each level of the game
-  private readonly sceneNodes: SolveItLevelNode[];
+  // a Node for each level of the game
+  private readonly levelNodes: SolveItLevelNode[];
 
-  // Handles the animated 'slide' transition between level-selection and challenges (scenesParent)
+  // Handles the animated 'slide' transition between level-selection and game levels
   private readonly transitionNode: TransitionNode;
 
   public constructor( model: SolveItModel, tandem: Tandem ) {
@@ -67,15 +67,15 @@ export default class SolveItScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'levelSelectionNode' )
     } );
 
-    // Nodes for scenes (levels), organized under a parent tandem
+    // Nodes for levels, organized under a parent tandem
     const levelNodesTandem = options.tandem.createTandem( 'levelNodes' );
-    this.sceneNodes = model.scenes.map( scene => new SolveItLevelNode( scene, model.sceneProperty,
+    this.levelNodes = model.levels.map( level => new SolveItLevelNode( level, model.levelProperty,
       this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, {
-        visibleProperty: new DerivedProperty( [ model.sceneProperty ], selectedScene => ( scene === selectedScene ) ),
-        tandem: levelNodesTandem.createTandem( `${scene.tandem.name}Node` )
+        visibleProperty: new DerivedProperty( [ model.levelProperty ], selectedLevel => ( level === selectedLevel ) ),
+        tandem: levelNodesTandem.createTandem( `${level.tandem.name}Node` )
       } ) );
     const levelsParent = new Node( {
-      children: this.sceneNodes
+      children: this.levelNodes
     } );
 
     // Transition (slide left/right) between level-selection UI and the selected game level.
@@ -85,15 +85,15 @@ export default class SolveItScreenView extends ScreenView {
     this.addChild( this.transitionNode );
 
     //TODO handle the case where phet-io switches directly between 2 levels
-    model.sceneProperty.link( scene => {
+    model.levelProperty.link( level => {
 
-      // If the selected scene doesn't have an associated challenge, create one.
-      if ( scene !== null && !scene.challengeProperty.value ) {
-        scene.nextChallenge();
+      // If the selected level doesn't have an associated challenge, create one.
+      if ( level !== null && !level.challengeProperty.value ) {
+        level.nextChallenge();
       }
 
       // Start the transition between the level-selection UI and the selected game level.
-      if ( scene !== null ) {
+      if ( level !== null ) {
         this.transitionNode.slideLeftTo( levelsParent, TRANSITION_OPTIONS );
       }
       else {
@@ -109,8 +109,8 @@ export default class SolveItScreenView extends ScreenView {
 
   public reset(): void {
     this.snapshotsAccordionBoxExpandedProperty.reset();
-    for ( let i = 0; i < this.sceneNodes.length; i++ ) {
-      this.sceneNodes[ i ].reset();
+    for ( let i = 0; i < this.levelNodes.length; i++ ) {
+      this.levelNodes[ i ].reset();
     }
   }
 
@@ -125,10 +125,10 @@ export default class SolveItScreenView extends ScreenView {
     this.transitionNode.step( dt );
 
     // animate the view for the selected scene
-    for ( let i = 0; i < this.sceneNodes.length; i++ ) {
-      const sceneNode = this.sceneNodes[ i ];
-      if ( sceneNode.visible ) {
-        sceneNode.step && sceneNode.step( dt );
+    for ( let i = 0; i < this.levelNodes.length; i++ ) {
+      const levelNode = this.levelNodes[ i ];
+      if ( levelNode.visible ) {
+        levelNode.step && levelNode.step( dt );
         break;
       }
     }
