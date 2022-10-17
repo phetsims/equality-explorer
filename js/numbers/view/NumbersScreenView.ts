@@ -25,7 +25,7 @@ export default class NumbersScreenView extends EqualityExplorerScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
-                                      providedOptions?: NumbersSceneNodeOptions ): NumbersSceneNode {
+                                      providedOptions: NumbersSceneNodeOptions ): NumbersSceneNode {
     return new NumbersSceneNode( scene, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }

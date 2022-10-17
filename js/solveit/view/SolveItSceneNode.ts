@@ -74,7 +74,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
                       visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       gameAudioPlayer: GameAudioPlayer,
-                      providedOptions?: SolveItSceneNodeOptions ) {
+                      providedOptions: SolveItSceneNodeOptions ) {
 
     const options = optionize<SolveItSceneNodeOptions, SelfOptions, EqualityExplorerSceneNodeOptions>()( {
       // empty optionize because we're setting options.children below

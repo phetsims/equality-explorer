@@ -47,7 +47,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
                       equationAccordionBoxExpandedProperty: Property<boolean>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
-                      providedOptions?: BasicsSceneNodeOptions ) {
+                      providedOptions: BasicsSceneNodeOptions ) {
 
     const options = optionize<BasicsSceneNodeOptions, StrictOmit<SelfOptions, 'snapshotControlOptions'>, EqualityExplorerSceneNodeOptions>()( {
 

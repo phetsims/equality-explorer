@@ -32,7 +32,7 @@ export default class EqualityExplorerSceneNode extends Node {
   protected constructor( scene: EqualityExplorerScene,
                          snapshotsAccordionBox: Node,
                          termsLayer: Node,
-                         providedOptions?: EqualityExplorerSceneNodeOptions ) {
+                         providedOptions: EqualityExplorerSceneNodeOptions ) {
 
     const options = optionize<EqualityExplorerSceneNodeOptions, SelfOptions, NodeOptions>()( {
       // empty optionize call because we're calling this.mutate below.

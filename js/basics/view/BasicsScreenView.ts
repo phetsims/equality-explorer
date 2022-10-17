@@ -28,7 +28,7 @@ export default class BasicsScreenView extends EqualityExplorerScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
-                                      providedOptions?: BasicsSceneNodeOptions ): BasicsSceneNode {
+                                      providedOptions: BasicsSceneNodeOptions ): BasicsSceneNode {
     return new BasicsSceneNode( scene, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }

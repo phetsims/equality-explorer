@@ -30,7 +30,7 @@ export default class OperationsSceneNode extends VariablesSceneNode {
                       equationAccordionBoxExpandedProperty: Property<boolean>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
-                      providedOptions?: OperationsSceneNodeOptions ) {
+                      providedOptions: OperationsSceneNodeOptions ) {
 
     const options = optionize<OperationsSceneNodeOptions, SelfOptions, VariablesSceneNodeOptions>()( {
 

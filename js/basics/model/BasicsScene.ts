@@ -23,7 +23,7 @@ type BasicsSceneOptions = SelfOptions & StrictOmit<EqualityExplorerSceneOptions,
 
 export default class BasicsScene extends EqualityExplorerScene {
 
-  public constructor( variables: ObjectVariable[], providedOptions?: BasicsSceneOptions ) {
+  public constructor( variables: ObjectVariable[], providedOptions: BasicsSceneOptions ) {
 
     const options = optionize<BasicsSceneOptions, SelfOptions, EqualityExplorerSceneOptions>()( {
 

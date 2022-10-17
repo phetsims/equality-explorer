@@ -143,7 +143,7 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
-                                      providedOptions?: EqualityExplorerSceneNodeOptions ): EqualityExplorerSceneNode;
+                                      providedOptions: EqualityExplorerSceneNodeOptions ): EqualityExplorerSceneNode;
 }
 
 equalityExplorer.register( 'EqualityExplorerScreenView', EqualityExplorerScreenView );

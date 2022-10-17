@@ -24,7 +24,7 @@ export default class NumbersSceneNode extends BasicsSceneNode {
                       equationAccordionBoxExpandedProperty: Property<boolean>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
-                      providedOptions?: NumbersSceneNodeOptions ) {
+                      providedOptions: NumbersSceneNodeOptions ) {
     super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }

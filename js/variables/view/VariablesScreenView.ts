@@ -28,7 +28,7 @@ export default class VariablesScreenView extends EqualityExplorerScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
-                                      providedOptions?: VariablesSceneNodeOptions ): VariablesSceneNode {
+                                      providedOptions: VariablesSceneNodeOptions ): VariablesSceneNode {
     return new VariablesSceneNode( scene, equationAccordionBoxExpandedProperty,
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
