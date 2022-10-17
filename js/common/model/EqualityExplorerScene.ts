@@ -147,6 +147,7 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
 
     this.snapshotsCollection = new SnapshotsCollection( {
       numberOfSnapshots: options.numberOfSnapshots
+      //TODO phet-io instrumentation
     } );
 
     this.lockedProperty = null;
@@ -154,7 +155,9 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
     // if the 'lock' feature is supported...
     if ( options.lockable ) {
 
-      this.lockedProperty = new BooleanProperty( EqualityExplorerQueryParameters.locked );
+      this.lockedProperty = new BooleanProperty( EqualityExplorerQueryParameters.locked, {
+        tandem: options.tandem.createTandem( 'lockedProperty' )
+      } );
 
       // Update the lockedProperty of all term creators. unlink not needed.
       this.lockedProperty.link( locked => {

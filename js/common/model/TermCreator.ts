@@ -36,6 +36,8 @@ import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
 import TermNode from '../view/TermNode.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 
 type SelfOptions = {
 
@@ -50,7 +52,7 @@ type SelfOptions = {
   likeTermsCell?: number | null;
 };
 
-export type TermCreatorOptions = SelfOptions;
+export type TermCreatorOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 // A snapshot of one term
 type TermSnapshot = {
@@ -70,7 +72,7 @@ export type CreateTermOptions = {
   event?: PressListenerEvent | null; // non-null if the term is created as the result of a user interaction
 } & TermOptions;
 
-export default abstract class TermCreator {
+export default abstract class TermCreator extends PhetioObject {
 
   public readonly variable: Variable | null;
 
@@ -109,7 +111,7 @@ export default abstract class TermCreator {
   public readonly termCreatedEmitter: Emitter<[ TermCreator, Term, PressListenerEvent | null ]>;
 
   // Emit is called when adding a term to the plate would cause EqualityExplorerQueryParameters.maxInteger
-  // to be exceeded.  See See https://github.com/phetsims/equality-explorer/issues/48
+  // to be exceeded. See https://github.com/phetsims/equality-explorer/issues/48
   public readonly maxIntegerExceededEmitter: Emitter;
 
   // Optional equivalent term creator on the opposite side of the scale. This is needed
@@ -125,15 +127,20 @@ export default abstract class TermCreator {
   // called when a term is disposed
   private readonly termDisposedListener: ( term: Term ) => void;
 
-  protected constructor( providedOptions?: TermCreatorOptions ) {
+  protected constructor( providedOptions: TermCreatorOptions ) {
 
-    const options = optionize<TermCreatorOptions, SelfOptions>()( {
+    const options = optionize<TermCreatorOptions, SelfOptions, PhetioObjectOptions>()( {
 
       // SelfOptions
       variable: null,
       dragBounds: Bounds2.EVERYTHING,
-      likeTermsCell: null
+      likeTermsCell: null,
+
+      // PhetioObjectOptions
+      phetioState: false
     }, providedOptions );
+
+    super( options );
 
     this.variable = options.variable;
     this._plate = null;
@@ -154,9 +161,13 @@ export default abstract class TermCreator {
     // that require updating weightOnPlateProperty.
     this.weightOnPlateProperty = new Property( Fraction.fromInteger( 0 ), {
       valueType: Fraction,
-      useDeepEquality: true // set value only if truly different, prevents costly unnecessary notifications
+      useDeepEquality: true, // set value only if truly different, prevents costly unnecessary notifications
+      tandem: options.tandem.createTandem( 'weightOnPlateProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'weight of the terms on the plate that were created by this term creator'
     } );
 
+    //TODO should this Emitter be instrumented?
     this.termCreatedEmitter = new Emitter( {
       parameters: [
         { valueType: TermCreator },
@@ -165,11 +176,16 @@ export default abstract class TermCreator {
       ]
     } );
 
+    //TODO should this Emitter be instrumented?
     this.maxIntegerExceededEmitter = new Emitter();
 
     this._equivalentTermCreator = null;
 
-    this.lockedProperty = new BooleanProperty( false );
+    //TODO make all TermCreator instances share a single lockedProperty, and make lockedProperty optional
+    this.lockedProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'lockedProperty' ),
+      phetioReadOnly: true
+    } );
 
     this.termDisposedListener = ( term: Term ) => this.unmanageTerm( term );
 
@@ -187,8 +203,9 @@ export default abstract class TermCreator {
     } );
   }
 
-  public dispose(): void {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
   }
 
   /**
@@ -664,7 +681,7 @@ export default abstract class TermCreator {
    * Subclasses must implement this method to provide 'useful information', to appease
    * TS ESLint rule @typescript-eslint/no-base-to-string. See https://github.com/phetsims/chipper/issues/1338
    */
-  public abstract toString(): string;
+  public abstract override toString(): string;
 }
 
 equalityExplorer.register( 'TermCreator', TermCreator );
