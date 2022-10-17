@@ -40,12 +40,14 @@ type SelfOptions = {
 };
 
 export type OperationsSceneOptions = SelfOptions &
-  PickOptional<EqualityExplorerSceneOptions, 'scalePosition'> &
+  PickOptional<EqualityExplorerSceneOptions, 'scalePosition' | 'lockable'> &
   PickRequired<EqualityExplorerSceneOptions, 'tandem'>;
 
 export default class OperationsScene extends EqualityExplorerScene {
 
   protected readonly xVariable: Variable;
+
+  //TODO move these fields to SolveItScene?
   protected readonly leftVariableTermCreator: VariableTermCreator;
   protected readonly leftConstantTermCreator: ConstantTermCreator;
   protected readonly rightVariableTermCreator: VariableTermCreator;
@@ -92,35 +94,47 @@ export default class OperationsScene extends EqualityExplorerScene {
       likeTermsCell: 1 // cell on the plate that all like terms will occupy
     };
 
-    const leftVariableTermCreator = new VariableTermCreator( xVariable,
-      combineOptions<TermCreatorOptions>( {
-        tandem: options.tandem.createTandem( 'leftVariableTermCreator' )
-      }, variableTermCreatorOptions ) );
-    const leftConstantTermCreator = new ConstantTermCreator(
-      combineOptions<TermCreatorOptions>( {
-        tandem: options.tandem.createTandem( 'leftConstantTermCreator' )
-      }, constantTermCreatorOptions ) );
-    const rightVariableTermCreator = new VariableTermCreator( xVariable,
-      combineOptions<TermCreatorOptions>( {
-        tandem: options.tandem.createTandem( 'rightVariableTermCreator' )
-      }, variableTermCreatorOptions ) );
-    const rightConstantTermCreator = new ConstantTermCreator(
-      combineOptions<TermCreatorOptions>( {
-        tandem: options.tandem.createTandem( 'rightConstantTermCreator' )
-      }, constantTermCreatorOptions )
-    );
+    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null ) => [
+      new VariableTermCreator( xVariable,
+        combineOptions<TermCreatorOptions>( {
+          lockedProperty: lockedProperty,
+          tandem: options.tandem.createTandem( 'leftVariableTermCreator' )
+        }, variableTermCreatorOptions ) ),
+      new ConstantTermCreator(
+        combineOptions<TermCreatorOptions>( {
+          lockedProperty: lockedProperty,
+          tandem: options.tandem.createTandem( 'leftConstantTermCreator' )
+        }, constantTermCreatorOptions ) )
+    ];
 
-    super(
-      [ leftVariableTermCreator, leftConstantTermCreator ],
-      [ rightVariableTermCreator, rightConstantTermCreator ],
-      options
-    );
+    const createRightTermCreators = ( lockedProperty: Property<boolean> | null ) => [
+      new VariableTermCreator( xVariable,
+        combineOptions<TermCreatorOptions>( {
+          lockedProperty: lockedProperty,
+          tandem: options.tandem.createTandem( 'rightVariableTermCreator' )
+        }, variableTermCreatorOptions ) ),
+      new ConstantTermCreator(
+        combineOptions<TermCreatorOptions>( {
+          lockedProperty: lockedProperty,
+          tandem: options.tandem.createTandem( 'rightConstantTermCreator' )
+        }, constantTermCreatorOptions ) )
+    ];
+
+    super( createLeftTermCreators, createRightTermCreators, options );
 
     this.xVariable = xVariable;
-    this.leftVariableTermCreator = leftVariableTermCreator;
-    this.leftConstantTermCreator = leftConstantTermCreator;
-    this.rightVariableTermCreator = rightVariableTermCreator;
-    this.rightConstantTermCreator = rightConstantTermCreator;
+
+    this.leftVariableTermCreator = this.leftTermCreators[ 0 ] as VariableTermCreator;
+    assert && assert( this.leftVariableTermCreator instanceof VariableTermCreator );
+
+    this.leftConstantTermCreator = this.leftTermCreators[ 1 ] as ConstantTermCreator;
+    assert && assert( this.leftConstantTermCreator instanceof ConstantTermCreator );
+
+    this.rightVariableTermCreator = this.rightTermCreators[ 0 ] as VariableTermCreator;
+    assert && assert( this.rightVariableTermCreator instanceof VariableTermCreator );
+
+    this.rightConstantTermCreator = this.rightTermCreators[ 1 ] as ConstantTermCreator;
+    assert && assert( this.rightConstantTermCreator instanceof ConstantTermCreator );
 
     this.sumToZeroEmitter = new Emitter( {
       parameters: [ {

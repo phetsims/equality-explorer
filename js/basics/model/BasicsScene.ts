@@ -6,6 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../../axon/js/Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -37,14 +38,20 @@ export default class BasicsScene extends EqualityExplorerScene {
       lockable: false
     }, providedOptions );
 
-    const leftTermCreators = createTermCreators( variables, options.hasConstantTerms, options.tandem.createTandem( 'leftTermCreators' ) );
-    const rightTermCreators = createTermCreators( variables, options.hasConstantTerms, options.tandem.createTandem( 'rightTermCreators' ) );
+    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null ) =>
+      createTermCreators( variables, lockedProperty, options.hasConstantTerms, options.tandem.createTandem( 'leftTermCreators' ) );
 
-    super( leftTermCreators, rightTermCreators, options );
+    const createRightTermCreators = ( lockedProperty: Property<boolean> | null ) =>
+      createTermCreators( variables, lockedProperty, options.hasConstantTerms, options.tandem.createTandem( 'rightTermCreators' ) );
+
+    super( createLeftTermCreators, createRightTermCreators, options );
   }
 }
 
-function createTermCreators( variables: ObjectVariable[], hasConstantTerms: boolean, parentTandem: Tandem ): TermCreator[] {
+function createTermCreators( variables: ObjectVariable[],
+                             lockedProperty: Property<boolean> | null,
+                             hasConstantTerms: boolean,
+                             parentTandem: Tandem ): TermCreator[] {
 
   const termCreators: TermCreator[] = [];
 
@@ -52,6 +59,7 @@ function createTermCreators( variables: ObjectVariable[], hasConstantTerms: bool
   for ( let i = 0; i < variables.length; i++ ) {
     const variable = variables[ i ];
     termCreators.push( new ObjectTermCreator( variable, {
+      lockedProperty: lockedProperty,
       tandem: parentTandem.createTandem( `${variable.symbol}TermCreator` )
     } ) );
   }
@@ -59,6 +67,7 @@ function createTermCreators( variables: ObjectVariable[], hasConstantTerms: bool
   // creator for constant terms
   if ( hasConstantTerms ) {
     termCreators.push( new ConstantTermCreator( {
+      lockedProperty: lockedProperty,
       tandem: parentTandem.createTandem( 'constantTermCreator' )
     } ) );
   }

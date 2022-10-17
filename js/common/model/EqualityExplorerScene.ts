@@ -70,15 +70,16 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
   public readonly snapshotsCollection: SnapshotsCollection;
 
   // locks equivalent terms, null if this feature is not supported
-  public readonly lockedProperty: Property<boolean> | null;
+  public readonly lockedProperty?: Property<boolean> | null;
 
   /**
-   * @param leftTermCreators - in order that they appear in left toolbox and left side of equations
-   * @param rightTermCreators - in order that they appear in right toolbox and right side of equations
+   * @param createLeftTermCreators - in order that they appear in left toolbox and left side of equations
+   * @param createRightTermCreators - in order that they appear in right toolbox and right side of equations
    * @param [providedOptions]
    * @abstract
    */
-  protected constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[],
+  protected constructor( createLeftTermCreators: ( lockedProperty: Property<boolean> | null ) => TermCreator[],
+                         createRightTermCreators: ( lockedProperty: Property<boolean> | null ) => TermCreator[],
                          providedOptions: EqualityExplorerSceneOptions ) {
 
     const options = optionize<EqualityExplorerSceneOptions, SelfOptions, PhetioObjectOptions>()( {
@@ -103,26 +104,33 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
 
     phet.log && phet.log( `scene: ${this.tandem.name}, maxWeight=${options.maxWeight}` );
 
+    this.lockedProperty = null;
+    if ( options.lockable ) {
+      this.lockedProperty = new BooleanProperty( EqualityExplorerQueryParameters.locked, {
+        tandem: options.tandem.createTandem( 'lockedProperty' )
+      } );
+    }
+
     this.hasNegativeTermsInToolbox = options.hasNegativeTermsInToolbox;
     this._icon = options.icon;
     this.variables = options.variables;
 
-    // Check for potential bad combinations of term creators
-    assert && validateTermCreators( leftTermCreators );
-    assert && validateTermCreators( rightTermCreators );
+    this.leftTermCreators = createLeftTermCreators( this.lockedProperty );
+    assert && validateTermCreators( this.leftTermCreators );
 
-    this.leftTermCreators = leftTermCreators;
-    this.rightTermCreators = rightTermCreators;
-    this.allTermCreators = leftTermCreators.concat( rightTermCreators );
+    this.rightTermCreators = createRightTermCreators( this.lockedProperty );
+    assert && validateTermCreators( this.rightTermCreators );
+
+    this.allTermCreators = this.leftTermCreators.concat( this.rightTermCreators );
 
     // Associate each term creator with a 'like term' creator on the opposite side of the scale.
-    assert && assert( leftTermCreators.length === rightTermCreators.length,
+    assert && assert( this.leftTermCreators.length === this.rightTermCreators.length,
       'the same number of term creators are required on both sides of the scale' );
-    for ( let i = 0; i < leftTermCreators.length; i++ ) {
-      assert && assert( leftTermCreators[ i ].isLikeTermCreator( rightTermCreators[ i ] ),
+    for ( let i = 0; i < this.leftTermCreators.length; i++ ) {
+      assert && assert( this.leftTermCreators[ i ].isLikeTermCreator( this.rightTermCreators[ i ] ),
         'like term creators must have the same indices on both sides of the scale' );
-      leftTermCreators[ i ].equivalentTermCreator = rightTermCreators[ i ];
-      rightTermCreators[ i ].equivalentTermCreator = leftTermCreators[ i ];
+      this.leftTermCreators[ i ].equivalentTermCreator = this.rightTermCreators[ i ];
+      this.rightTermCreators[ i ].equivalentTermCreator = this.leftTermCreators[ i ];
     }
 
     this.scale = new BalanceScale( this.leftTermCreators, this.rightTermCreators, {
@@ -136,13 +144,13 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
 
     this.leftDragBounds = new Bounds2( DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
       this.scale.position.x - DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MAX_Y );
-    leftTermCreators.forEach( termCreator => {
+    this.leftTermCreators.forEach( termCreator => {
       termCreator.dragBounds = this.leftDragBounds;
     } );
 
     this.rightDragBounds = new Bounds2( this.scale.position.x + DRAG_BOUNDS_X_MARGIN, DRAG_BOUNDS_MIN_Y,
       this.scale.position.x + DRAG_BOUNDS_X_MARGIN + this.leftDragBounds.width, DRAG_BOUNDS_MAX_Y );
-    rightTermCreators.forEach( termCreator => {
+    this.rightTermCreators.forEach( termCreator => {
       termCreator.dragBounds = this.rightDragBounds;
     } );
 
@@ -151,23 +159,6 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
       //TODO tandem: options.tandem.createTandem( 'snapshotsCollection' )
       //TODO phetioValueType: SnapshotsCollection.SnapshotsCollectionIO
     } );
-
-    this.lockedProperty = null;
-
-    // if the 'lock' feature is supported...
-    if ( options.lockable ) {
-
-      this.lockedProperty = new BooleanProperty( EqualityExplorerQueryParameters.locked, {
-        tandem: options.tandem.createTandem( 'lockedProperty' )
-      } );
-
-      // Update the lockedProperty of all term creators. unlink not needed.
-      this.lockedProperty.link( locked => {
-        for ( let i = 0; i < this.allTermCreators.length; i++ ) {
-          this.allTermCreators[ i ].lockedProperty.value = locked;
-        }
-      } );
-    }
   }
 
   public override dispose(): void {

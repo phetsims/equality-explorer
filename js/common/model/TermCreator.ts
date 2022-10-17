@@ -50,6 +50,9 @@ type SelfOptions = {
   // Like terms will occupy this cell in the plate's 2D grid.
   // null means 'no cell', and like terms will not be combined.
   likeTermsCell?: number | null;
+
+  // locks equivalent terms, null if this feature is not supported
+  lockedProperty?: Property<boolean> | null;
 };
 
 export type TermCreatorOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
@@ -135,6 +138,7 @@ export default abstract class TermCreator extends PhetioObject {
       variable: null,
       dragBounds: Bounds2.EVERYTHING,
       likeTermsCell: null,
+      lockedProperty: null,
 
       // PhetioObjectOptions
       phetioState: false
@@ -181,10 +185,9 @@ export default abstract class TermCreator extends PhetioObject {
 
     this._equivalentTermCreator = null;
 
-    //TODO make all TermCreator instances share a single lockedProperty, and make lockedProperty optional
-    this.lockedProperty = new BooleanProperty( false, {
-      tandem: options.tandem.createTandem( 'lockedProperty' ),
-      phetioReadOnly: true
+    // If options.lockedProperty was not provided, then create a Property that permanently turns this feature off.
+    this.lockedProperty = options.lockedProperty || new BooleanProperty( false, {
+      validValues: [ false ]
     } );
 
     this.termDisposedListener = ( term: Term ) => this.unmanageTerm( term );
@@ -192,7 +195,7 @@ export default abstract class TermCreator extends PhetioObject {
     // Update weight when number of terms on plate changes. unlink not required.
     this.numberOfTermsOnPlateProperty.link( () => this.updateWeightOnPlateProperty() );
 
-    // When locked changes... unlink not required.
+    // When locked changes...
     this.lockedProperty.lazyLink( locked => {
 
       // If lock feature is turned on, verify that an equivalentTermCreator has been provided.

@@ -7,6 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
@@ -16,19 +17,21 @@ export default class NumbersScene extends EqualityExplorerScene {
 
   public constructor( tandem: Tandem ) {
 
-    const leftTermCreators = [
+    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null ) => [
       new ConstantTermCreator( {
+        lockedProperty: lockedProperty,
         tandem: tandem.createTandem( 'leftTermCreators' ).createTandem( 'constantTermCreator' )
       } )
     ];
 
-    const rightTermCreators = [
+    const createRightTermCreators = ( lockedProperty?: Property<boolean> | null ) => [
       new ConstantTermCreator( {
+        lockedProperty: lockedProperty,
         tandem: tandem.createTandem( 'rightTermCreators' ).createTandem( 'constantTermCreator' )
       } )
     ];
 
-    super( leftTermCreators, rightTermCreators, {
+    super( createLeftTermCreators, createRightTermCreators, {
       tandem: tandem
     } );
   }
