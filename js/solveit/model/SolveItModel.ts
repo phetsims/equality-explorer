@@ -28,7 +28,7 @@ export default class SolveItModel extends PhetioObject implements TModel {
   // a level for each challenge generator
   public readonly levels: SolveItLevel[];
 
-  // the selected level, null if no scene is currently selected
+  // the selected level, null if no level is currently selected
   public readonly levelProperty: Property<SolveItLevel | null>;
 
   public constructor( tandem: Tandem ) {

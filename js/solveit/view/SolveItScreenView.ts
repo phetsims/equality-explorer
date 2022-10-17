@@ -124,7 +124,7 @@ export default class SolveItScreenView extends ScreenView {
     // animate the transition between level-selection and challenge UI
     this.transitionNode.step( dt );
 
-    // animate the view for the selected scene
+    // animate the view for the selected level
     for ( let i = 0; i < this.levelNodes.length; i++ ) {
       const levelNode = this.levelNodes[ i ];
       if ( levelNode.visible ) {

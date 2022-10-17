@@ -54,7 +54,7 @@ export default class SolveItLevel extends OperationsScene {
       // OperationsSceneOptions
       lockable: false, // lock feature is relevant for the game
       scalePosition: new Vector2( 355, 500 ), // determined empirically
-      variableRange: null // because variables are not user-controlled in this scene
+      variableRange: null // because variables are not user-controlled in a game level
     }, providedOptions );
 
     super( options );
