@@ -47,6 +47,11 @@ export default class SolveItLevel extends OperationsScene {
   // will x be on the left-side (true) or right-side (false) of the equation in the solution?
   private xOnLeft: boolean;
 
+  private readonly leftVariableTermCreator: VariableTermCreator;
+  private readonly leftConstantTermCreator: ConstantTermCreator;
+  private readonly rightVariableTermCreator: VariableTermCreator;
+  private readonly rightConstantTermCreator: ConstantTermCreator;
+
   public constructor( challengeGenerator: ChallengeGenerator, providedOptions: SolveItLevelOptions ) {
 
     const options = optionize<SolveItLevelOptions, SelfOptions, OperationsSceneOptions>()( {
@@ -64,7 +69,8 @@ export default class SolveItLevel extends OperationsScene {
     this.scoreProperty = new NumberProperty( 0, {
       numberType: 'Integer',
       isValidValue: value => ( value >= 0 ),
-      tandem: options.tandem.createTandem( 'scoreProperty' )
+      tandem: options.tandem.createTandem( 'scoreProperty' ),
+      phetioReadOnly: true
     } );
 
     // Initialize positions of term creators. This is necessary because this screen has no TermToolboxes.
@@ -85,8 +91,15 @@ export default class SolveItLevel extends OperationsScene {
     this.challengeHasBeenSolved = false;
     this.xOnLeft = true;
 
+    // Casting here is not great, but allows us to reuse OperationsScene.
+    assert && assert( this.leftTermCreators.length === 2 && this.leftTermCreators[ 0 ] instanceof VariableTermCreator && this.leftTermCreators[ 1 ] instanceof ConstantTermCreator );
+    assert && assert( this.rightTermCreators.length === 2 && this.rightTermCreators[ 0 ] instanceof VariableTermCreator && this.rightTermCreators[ 1 ] instanceof ConstantTermCreator );
+    this.leftVariableTermCreator = this.leftTermCreators[ 0 ] as VariableTermCreator;
+    this.leftConstantTermCreator = this.leftTermCreators[ 1 ] as ConstantTermCreator;
+    this.rightVariableTermCreator = this.rightTermCreators[ 0 ] as VariableTermCreator;
+    this.rightConstantTermCreator = this.rightTermCreators[ 1 ] as ConstantTermCreator;
+
     // When a universal operation is completed, determine if the challenge is solved.
-    // removeListener not needed.
     this.operationCompletedEmitter.addListener( operation => {
 
       // All challenges in the game are equalities, and applying a universal operation should result in an equality.

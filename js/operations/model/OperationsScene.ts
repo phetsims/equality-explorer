@@ -47,12 +47,6 @@ export default class OperationsScene extends EqualityExplorerScene {
 
   protected readonly xVariable: Variable;
 
-  //TODO move these fields to SolveItLevel?
-  protected readonly leftVariableTermCreator: VariableTermCreator;
-  protected readonly leftConstantTermCreator: ConstantTermCreator;
-  protected readonly rightVariableTermCreator: VariableTermCreator;
-  protected readonly rightConstantTermCreator: ConstantTermCreator;
-
   // emits when one or more terms become zero as the result of a universal operation
   public readonly sumToZeroEmitter: Emitter<[ TermCreator[] ]>;
 
@@ -123,18 +117,6 @@ export default class OperationsScene extends EqualityExplorerScene {
     super( createLeftTermCreators, createRightTermCreators, options );
 
     this.xVariable = xVariable;
-
-    this.leftVariableTermCreator = this.leftTermCreators[ 0 ] as VariableTermCreator;
-    assert && assert( this.leftVariableTermCreator instanceof VariableTermCreator );
-
-    this.leftConstantTermCreator = this.leftTermCreators[ 1 ] as ConstantTermCreator;
-    assert && assert( this.leftConstantTermCreator instanceof ConstantTermCreator );
-
-    this.rightVariableTermCreator = this.rightTermCreators[ 0 ] as VariableTermCreator;
-    assert && assert( this.rightVariableTermCreator instanceof VariableTermCreator );
-
-    this.rightConstantTermCreator = this.rightTermCreators[ 1 ] as ConstantTermCreator;
-    assert && assert( this.rightConstantTermCreator instanceof ConstantTermCreator );
 
     this.sumToZeroEmitter = new Emitter( {
       parameters: [ {
