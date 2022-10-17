@@ -58,7 +58,7 @@ type SelfOptions = EmptySelfOptions;
 type SolveItSceneNodeOptions = SelfOptions &
   PickRequired<EqualityExplorerSceneNodeOptions, 'tandem' | 'visibleProperty'>;
 
-export default class SolveItSceneNode extends EqualityExplorerSceneNode {
+export default class SolveItLevelNode extends EqualityExplorerSceneNode {
 
   // animation that fades out the smiley face
   private faceAnimation: Animation | null;
@@ -277,7 +277,7 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
       children.push( showAnswerButton );
     }
 
-    assert && assert( !options.children, 'SolveItSceneNode sets children' );
+    assert && assert( !options.children, 'SolveItLevelNode sets children' );
     options.children = children;
 
     super( scene, snapshotsAccordionBox, termsLayer, options );
@@ -434,4 +434,4 @@ export default class SolveItSceneNode extends EqualityExplorerSceneNode {
   }
 }
 
-equalityExplorer.register( 'SolveItSceneNode', SolveItSceneNode );
+equalityExplorer.register( 'SolveItLevelNode', SolveItLevelNode );

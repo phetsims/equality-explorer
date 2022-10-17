@@ -19,7 +19,7 @@ import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js
 import equalityExplorer from '../../equalityExplorer.js';
 import SolveItModel from '../model/SolveItModel.js';
 import SolveItLevelSelectionNode from './SolveItLevelSelectionNode.js';
-import SolveItSceneNode from './SolveItSceneNode.js';
+import SolveItLevelNode from './SolveItLevelNode.js';
 
 // constants
 const TRANSITION_OPTIONS = {
@@ -36,7 +36,7 @@ export default class SolveItScreenView extends ScreenView {
   private readonly snapshotsAccordionBoxExpandedProperty: Property<boolean>;
 
   // a scene for each level of the game
-  private readonly sceneNodes: SolveItSceneNode[];
+  private readonly sceneNodes: SolveItLevelNode[];
 
   // Handles the animated 'slide' transition between level-selection and challenges (scenesParent)
   private readonly transitionNode: TransitionNode;
@@ -70,7 +70,7 @@ export default class SolveItScreenView extends ScreenView {
     // Nodes for scenes (levels), organized under a parent tandem
     //TODO should we used 'scene' or 'level' terminology in this screen?
     const levelNodesTandem = options.tandem.createTandem( 'levelNodes' );
-    this.sceneNodes = model.scenes.map( scene => new SolveItSceneNode( scene, model.sceneProperty,
+    this.sceneNodes = model.scenes.map( scene => new SolveItLevelNode( scene, model.sceneProperty,
       this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, {
         visibleProperty: new DerivedProperty( [ model.sceneProperty ], selectedScene => ( scene === selectedScene ) ),
         tandem: levelNodesTandem.createTandem( `${scene.tandem.name}Node` )
