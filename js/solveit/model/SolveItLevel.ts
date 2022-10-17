@@ -31,7 +31,7 @@ const POINTS_PER_CHALLENGE = 1;
 
 type SelfOptions = EmptySelfOptions;
 
-type SolveItSceneOptions = SelfOptions & PickRequired<OperationsSceneOptions, 'tandem'>;
+type SolveItLevelOptions = SelfOptions & PickRequired<OperationsSceneOptions, 'tandem'>;
 
 export default class SolveItLevel extends OperationsScene {
 
@@ -47,9 +47,9 @@ export default class SolveItLevel extends OperationsScene {
   // will x be on the left-side (true) or right-side (false) of the equation in the solution?
   private xOnLeft: boolean;
 
-  public constructor( challengeGenerator: ChallengeGenerator, providedOptions: SolveItSceneOptions ) {
+  public constructor( challengeGenerator: ChallengeGenerator, providedOptions: SolveItLevelOptions ) {
 
-    const options = optionize<SolveItSceneOptions, SelfOptions, OperationsSceneOptions>()( {
+    const options = optionize<SolveItLevelOptions, SelfOptions, OperationsSceneOptions>()( {
 
       // OperationsSceneOptions
       lockable: false, // lock feature is relevant for the game
