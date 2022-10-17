@@ -163,11 +163,12 @@ export default abstract class TermCreator extends PhetioObject {
 
     // We can't use a DerivedProperty here because subclasses may have additional Properties
     // that require updating weightOnPlateProperty.
+    //TODO revisit making this a DerivedProperty, subclasses are not updating weightOnPlateProperty
     this.weightOnPlateProperty = new Property( Fraction.fromInteger( 0 ), {
       valueType: Fraction,
       useDeepEquality: true, // set value only if truly different, prevents costly unnecessary notifications
       tandem: options.tandem.createTandem( 'weightOnPlateProperty' ),
-      //TODO: phetioValueType: FractionIO,
+      phetioValueType: Fraction.FractionIO,
       phetioReadOnly: true,
       phetioDocumentation: 'weight of the terms on the plate that were created by this term creator'
     } );
