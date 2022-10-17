@@ -85,6 +85,7 @@ export default class SolveItScreenView extends ScreenView {
     } );
     this.addChild( this.transitionNode );
 
+    //TODO handle the case where phet-io switches directly between 2 levels
     model.sceneProperty.link( scene => {
 
       // If the selected scene doesn't have an associated challenge, create one.

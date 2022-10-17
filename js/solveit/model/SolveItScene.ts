@@ -1,5 +1,6 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
+//TODO rename SolveItLevel
 /**
  * A scene in the 'Solve It!' screen.  A scene is created for each level in the game.
  * This is an extension of the Operations scene (variable and constant terms on both sides of the equation),
@@ -63,7 +64,8 @@ export default class SolveItScene extends OperationsScene {
 
     this.scoreProperty = new NumberProperty( 0, {
       numberType: 'Integer',
-      isValidValue: value => ( value >= 0 )
+      isValidValue: value => ( value >= 0 ),
+      tandem: options.tandem.createTandem( 'scoreProperty' )
     } );
 
     // Initialize positions of term creators. This is necessary because this screen has no TermToolboxes.
@@ -77,6 +79,7 @@ export default class SolveItScene extends OperationsScene {
 
     this.challengeProperty = new Property<Challenge | null>( null, {
       isValidValue: value => ( value instanceof Challenge ) || ( value === null )
+      //TODO phet-io instrumentation
     } );
 
     this.challengeHasBeenSolved = false;

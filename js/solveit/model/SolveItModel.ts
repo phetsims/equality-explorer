@@ -18,6 +18,8 @@ import ChallengeGenerator from './ChallengeGenerator.js';
 import TModel from '../../../../joist/js/TModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 
 export default class SolveItModel extends PhetioObject implements TModel {
 
@@ -54,8 +56,12 @@ export default class SolveItModel extends PhetioObject implements TModel {
       tandem: levelsTandem.createTandem( `level${challengeGenerator.level}` )
     } ) );
 
+    //TODO rename levelProperty
     this.sceneProperty = new Property<SolveItScene | null>( null, {
-      validValues: [ ...this.scenes, null ]
+      validValues: [ ...this.scenes, null ],
+      tandem: tandem.createTandem( 'sceneProperty' ),
+      phetioValueType: NullableIO( EqualityExplorerScene.EqualityExplorerSceneIO ),
+      phetioDocumentation: 'null corresponds to the level-selection user interface'
     } );
   }
 
