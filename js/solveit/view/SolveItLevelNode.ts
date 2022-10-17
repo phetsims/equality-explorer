@@ -1,10 +1,8 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
-//TODO rename SolveItLevelNode
 /**
- * Display a scene in the 'Solve It!' screen.  Each scene corresponds to a game level.
- * This shares several UI components with the Operations screen, but there are too many differences
- * to extend OperationsSceneNode.
+ * SolveItLevelNode displays a level of the 'Solve It!' game screen. This shares several UI components with the
+ * Operations screen, but there are too many differences to extend OperationsSceneNode.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -55,7 +53,7 @@ const EQUATION_PANEL_OPTIONS = {
 
 type SelfOptions = EmptySelfOptions;
 
-type SolveItSceneNodeOptions = SelfOptions &
+type SolveItLevelNodeOptions = SelfOptions &
   PickRequired<EqualityExplorerSceneNodeOptions, 'tandem' | 'visibleProperty'>;
 
 export default class SolveItLevelNode extends EqualityExplorerSceneNode {
@@ -75,9 +73,9 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
                       visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       gameAudioPlayer: GameAudioPlayer,
-                      providedOptions: SolveItSceneNodeOptions ) {
+                      providedOptions: SolveItLevelNodeOptions ) {
 
-    const options = optionize<SolveItSceneNodeOptions, SelfOptions, EqualityExplorerSceneNodeOptions>()( {
+    const options = optionize<SolveItLevelNodeOptions, SelfOptions, EqualityExplorerSceneNodeOptions>()( {
       // empty optionize because we're setting options.children below
     }, providedOptions );
 

@@ -68,20 +68,19 @@ export default class SolveItScreenView extends ScreenView {
     } );
 
     // Nodes for scenes (levels), organized under a parent tandem
-    //TODO should we used 'scene' or 'level' terminology in this screen?
     const levelNodesTandem = options.tandem.createTandem( 'levelNodes' );
     this.sceneNodes = model.scenes.map( scene => new SolveItLevelNode( scene, model.sceneProperty,
       this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, {
         visibleProperty: new DerivedProperty( [ model.sceneProperty ], selectedScene => ( scene === selectedScene ) ),
         tandem: levelNodesTandem.createTandem( `${scene.tandem.name}Node` )
       } ) );
-    const scenesParent = new Node( {
+    const levelsParent = new Node( {
       children: this.sceneNodes
     } );
 
     // Transition (slide left/right) between level-selection UI and the selected game level.
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
-      cachedNodes: [ levelSelectionNode, scenesParent ]
+      cachedNodes: [ levelSelectionNode, levelsParent ]
     } );
     this.addChild( this.transitionNode );
 
@@ -95,7 +94,7 @@ export default class SolveItScreenView extends ScreenView {
 
       // Start the transition between the level-selection UI and the selected game level.
       if ( scene !== null ) {
-        this.transitionNode.slideLeftTo( scenesParent, TRANSITION_OPTIONS );
+        this.transitionNode.slideLeftTo( levelsParent, TRANSITION_OPTIONS );
       }
       else {
         this.transitionNode.slideRightTo( levelSelectionNode, TRANSITION_OPTIONS );
