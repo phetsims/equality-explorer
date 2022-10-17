@@ -30,9 +30,12 @@ export default class EqualityExplorerModel extends PhetioObject implements TMode
 
     this.scenes = scenes;
 
+    // Instrument sceneProperty only if there is more than 1 scene, and sceneProperty therefore can be changed.
+    const scenePropertyTandem = ( scenes.length === 1 ) ? Tandem.OPT_OUT : tandem.createTandem( 'sceneProperty' );
+
     this.sceneProperty = new Property( scenes[ 0 ], {
       validValues: scenes,
-      tandem: tandem.createTandem( 'sceneProperty' ),
+      tandem: scenePropertyTandem,
       phetioValueType: EqualityExplorerScene.EqualityExplorerSceneIO
     } );
 
