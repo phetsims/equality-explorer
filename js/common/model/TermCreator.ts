@@ -167,6 +167,7 @@ export default abstract class TermCreator extends PhetioObject {
       valueType: Fraction,
       useDeepEquality: true, // set value only if truly different, prevents costly unnecessary notifications
       tandem: options.tandem.createTandem( 'weightOnPlateProperty' ),
+      //TODO: phetioValueType: FractionIO,
       phetioReadOnly: true,
       phetioDocumentation: 'weight of the terms on the plate that were created by this term creator'
     } );
