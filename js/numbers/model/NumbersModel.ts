@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-//TODO for single-scene models, should we hide model.numberScene and model.sceneProperty?
 /**
  * Model for the 'Numbers' screen.
  *

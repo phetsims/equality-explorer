@@ -64,7 +64,6 @@ export default class SolveItScreenView extends ScreenView {
         model.reset();
         this.reset();
       },
-      //TODO should we used 'scene' or 'level' terminology in this screen?
       tandem: options.tandem.createTandem( 'levelSelectionNode' )
     } );
 
