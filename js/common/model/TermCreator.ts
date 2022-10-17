@@ -163,7 +163,7 @@ export default abstract class TermCreator extends PhetioObject {
 
     // We can't use a DerivedProperty here because subclasses may have additional Properties
     // that require updating weightOnPlateProperty.
-    //TODO revisit making this a DerivedProperty, subclasses are not updating weightOnPlateProperty
+    //TODO could subclasses pass in their dependencies, so that this can be DerivedProperty? See updateWeightOnPlateProperty overrides.
     this.weightOnPlateProperty = new Property( Fraction.fromInteger( 0 ), {
       valueType: Fraction,
       useDeepEquality: true, // set value only if truly different, prevents costly unnecessary notifications
