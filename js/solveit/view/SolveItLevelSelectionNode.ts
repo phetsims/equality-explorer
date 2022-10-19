@@ -87,7 +87,8 @@ export default class SolveItLevelSelectionNode extends Node {
     } );
 
     // Info dialog is created eagerly and reused, so we don't have to deal with PhetioCapsule.
-    const infoDialog = new SolveItInfoDialog( model.challengeGenerators, options.tandem.createTandem( 'infoDialog' ) );
+    const infoDialog = new SolveItInfoDialog( model.levels.map( level => level.descriptionProperty ),
+      options.tandem.createTandem( 'infoDialog' ) );
 
     // Info button, to right of 'Choose Your Level', opens the Info dialog.
     const infoButton = new InfoButton( {

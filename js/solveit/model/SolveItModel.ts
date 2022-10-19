@@ -20,10 +20,12 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
+import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 
 export default class SolveItModel extends PhetioObject implements TModel {
 
-  public readonly challengeGenerators: ChallengeGenerator[];
+  private readonly challengeGenerators: ChallengeGenerator[];
 
   // a level for each challenge generator
   public readonly levels: SolveItLevel[];
@@ -45,15 +47,28 @@ export default class SolveItModel extends PhetioObject implements TModel {
       new ChallengeGenerator4(),
       new ChallengeGenerator5()
     ];
-    assert && assert( this.challengeGenerators.length === _.uniq( _.map( this.challengeGenerators, challengeGenerator => challengeGenerator.level ) ).length,
-      'Challenge generators must have unique level numbers.' );
-    assert && assert( _.every( this.challengeGenerators, ( value, index, array ) => ( index === 0 || array[ index - 1 ].level <= value.level ) ),
-      'Challenge generators must be ordered by ascending level number.' );
+
+    const descriptionProperties = [
+      EqualityExplorerStrings.level1DescriptionStringProperty,
+      EqualityExplorerStrings.level2DescriptionStringProperty,
+      EqualityExplorerStrings.level3DescriptionStringProperty,
+      EqualityExplorerStrings.level4DescriptionStringProperty,
+      EqualityExplorerStrings.level5DescriptionStringProperty
+    ];
+
+    assert && assert( this.challengeGenerators.length === EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS );
+    assert && assert( descriptionProperties.length === EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS );
+    assert && assert( descriptionProperties.length === this.challengeGenerators.length );
 
     const levelsTandem = tandem.createTandem( 'levels' );
-    this.levels = _.map( this.challengeGenerators, challengeGenerator => new SolveItLevel( challengeGenerator, {
-      tandem: levelsTandem.createTandem( `level${challengeGenerator.level}` )
-    } ) );
+    this.levels = [];
+    for ( let i = 0; i < this.challengeGenerators.length; i++ ) {
+      const levelNumber = i + 1;
+      this.levels.push( new SolveItLevel( descriptionProperties[ i ], this.challengeGenerators[ i ], {
+        levelNumber: levelNumber,
+        tandem: levelsTandem.createTandem( `level${levelNumber}` )
+      } ) );
+    }
 
     this.levelProperty = new Property<SolveItLevel | null>( null, {
       validValues: [ ...this.levels, null ],

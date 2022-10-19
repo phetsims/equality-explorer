@@ -9,7 +9,6 @@
 
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
 import Challenge from './Challenge.js';
@@ -23,12 +22,11 @@ export default class ChallengeGenerator2 extends ChallengeGenerator {
   private readonly challengeTypeMethods: ( () => Challenge )[];
 
   public constructor() {
-    super( 2, EqualityExplorerStrings.level2DescriptionStringProperty );
+    super();
 
     this.challengeGenerator1 = new ChallengeGenerator1( {
       aValues: ChallengeGenerator.rangeToArray( -10, -1 ),
-      dValues: ChallengeGenerator.rangeToArray( -10, -1 ),
-      debugLevel: 2
+      dValues: ChallengeGenerator.rangeToArray( -10, -1 )
     } );
 
     this.challengeTypeMethods = [

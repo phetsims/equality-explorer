@@ -7,11 +7,12 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
@@ -29,11 +30,19 @@ import DebugChallenge from './DebugChallenge.js';
 // constants
 const POINTS_PER_CHALLENGE = 1;
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  levelNumber: number;
+};
 
 type SolveItLevelOptions = SelfOptions & PickRequired<OperationsSceneOptions, 'tandem'>;
 
 export default class SolveItLevel extends OperationsScene {
+
+  // integer, starting from 1
+  public readonly levelNumber: number;
+
+  // description that appears in the UI for the level
+  public readonly descriptionProperty: LinkableProperty<string>;
 
   public readonly challengeGenerator: ChallengeGenerator;
   public readonly scoreProperty: NumberProperty;
@@ -52,7 +61,9 @@ export default class SolveItLevel extends OperationsScene {
   private readonly rightVariableTermCreator: VariableTermCreator;
   private readonly rightConstantTermCreator: ConstantTermCreator;
 
-  public constructor( challengeGenerator: ChallengeGenerator, providedOptions: SolveItLevelOptions ) {
+  public constructor( descriptionProperty: LinkableProperty<string>,
+                      challengeGenerator: ChallengeGenerator,
+                      providedOptions: SolveItLevelOptions ) {
 
     const options = optionize<SolveItLevelOptions, SelfOptions, OperationsSceneOptions>()( {
 
@@ -62,8 +73,12 @@ export default class SolveItLevel extends OperationsScene {
       variableRange: null // because variables are not user-controlled in a game level
     }, providedOptions );
 
+    assert && assert( Number.isInteger( options.levelNumber ) && options.levelNumber > 0 );
+
     super( options );
 
+    this.levelNumber = options.levelNumber;
+    this.descriptionProperty = descriptionProperty;
     this.challengeGenerator = challengeGenerator;
 
     this.scoreProperty = new NumberProperty( 0, {
@@ -117,7 +132,7 @@ export default class SolveItLevel extends OperationsScene {
       }
     } );
 
-    this.addLinkedElement( this.challengeGenerator.descriptionProperty, {
+    this.addLinkedElement( descriptionProperty, {
       tandem: options.tandem.createTandem( 'descriptionProperty' )
     } );
   }

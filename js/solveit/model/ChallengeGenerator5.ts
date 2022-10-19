@@ -10,12 +10,11 @@
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 
 // strings (debug)
-const PATTERN = 'level {{level}}, ax + b = mx + n<br>' +
+const PATTERN = 'ax + b = mx + n<br>' +
                 'x = {{x}}<br>' +
                 'a = {{a}}<br>' +
                 'b = {{b}}<br>' +
@@ -31,7 +30,7 @@ const M_VALUES = ChallengeGenerator.rangeToArray( -10, 10 );
 export default class ChallengeGenerator5 extends ChallengeGenerator {
 
   public constructor() {
-    super( 5, EqualityExplorerStrings.level5DescriptionStringProperty );
+    super();
   }
 
   /**
@@ -63,7 +62,7 @@ export default class ChallengeGenerator5 extends ChallengeGenerator {
     assert && assert( Math.abs( a - m ) <= 10, `|a-m| is too large: ${Math.abs( a - m )}` );
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-    const debugDerivation = StringUtils.fillIn( PATTERN, { level: this.level, x: x, a: a, b: b, m: m, n: n } );
+    const debugDerivation = StringUtils.fillIn( PATTERN, { x: x, a: a, b: b, m: m, n: n } );
 
     // ax + b = mx + n
     return new Challenge( x,

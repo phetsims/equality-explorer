@@ -82,7 +82,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     const statusBarTandem = options.tandem.createTandem( 'statusBar' );
 
     // Level description, displayed in the status bar
-    const levelDescriptionText = new RichText( level.challengeGenerator.descriptionProperty, {
+    const levelDescriptionText = new RichText( level.descriptionProperty, {
       font: LEVEL_FONT,
       maxWidth: 650, // determined empirically
       tandem: statusBarTandem.createTandem( 'levelDescriptionText' )
@@ -339,7 +339,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
           // When the dialog is shown, show the reward
           showCallback: () => {
             assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
-            this.rewardNode = new SolveItRewardNode( level.challengeGenerator.level );
+            this.rewardNode = new SolveItRewardNode( level.levelNumber );
             this.addChild( this.rewardNode );
           },
 

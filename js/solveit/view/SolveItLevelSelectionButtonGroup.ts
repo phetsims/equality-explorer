@@ -43,7 +43,7 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
     const items: LevelSelectionButtonGroupItem[] = levels.map( level => {
       return {
         icon: VariableTermNode.createInteractiveTermNode(
-          Fraction.fromInteger( level.challengeGenerator.level ), EqualityExplorerStrings.xStringProperty, {
+          Fraction.fromInteger( level.levelNumber ), EqualityExplorerStrings.xStringProperty, {
             diameter: 50,
             margin: 15,
             equationTermNodeOptions: {
@@ -56,7 +56,7 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
           listener: () => {
             levelProperty.value = level;
           },
-          soundPlayerIndex: level.challengeGenerator.level - 1
+          soundPlayerIndex: level.levelNumber - 1 // levelNumber uses 1-based numbering
         }
       };
     } );

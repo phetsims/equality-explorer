@@ -12,20 +12,19 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 
 // strings (debug)
-const PATTERN1 = 'level {{level}}, type 1, ax = c<br>' +
+const PATTERN1 = 'type 1, ax = c<br>' +
                  'x = {{x}}<br>' +
                  'a = {{a}}<br>' +
                  'c = a * x = {{c}}';
-const PATTERN2 = 'level {{level}}, type 2, x + b = c<br>' +
+const PATTERN2 = 'type 2, x + b = c<br>' +
                  'x = {{x}}<br>' +
                  'b = {{b}}<br>' +
                  'c = x + b = {{c}}';
-const PATTERN3 = 'level {{level}}, type 3, x/d = c<br>' +
+const PATTERN3 = 'type 3, x/d = c<br>' +
                  'c = {{c}}<br>' +
                  'd = {{d}}<br>' +
                  'x = c * d = {{x}} ';
@@ -38,10 +37,6 @@ type SelfOptions = {
   // These sets of values are different for Level 2, so are provided as options.
   aValues?: number[];
   dValues?: number[];
-
-  // The level number to appear in debugging output.
-  // Level 2 delegates to Level 1, so that debugging output identifies the challenge as Level 2.
-  debugLevel?: 1 | 2;
 };
 
 type ChallengeGenerator1Options = SelfOptions;
@@ -53,7 +48,6 @@ export default class ChallengeGenerator1 extends ChallengeGenerator {
   private readonly bValues: number[];
   private readonly cValues: number[];
   private readonly dValues: number[];
-  private readonly debugLevel: number;
 
   // methods for generating the 3 types of challenges
   private readonly challengeTypeMethods: ( () => Challenge )[];
@@ -64,18 +58,16 @@ export default class ChallengeGenerator1 extends ChallengeGenerator {
 
       // SelfOptions
       aValues: ChallengeGenerator.rangeToArray( 2, 10 ),
-      dValues: ChallengeGenerator.rangeToArray( 2, 10 ),
-      debugLevel: 1
+      dValues: ChallengeGenerator.rangeToArray( 2, 10 )
     }, providedOptions );
 
-    super( 1, EqualityExplorerStrings.level1DescriptionStringProperty );
+    super();
 
     this.xValues = ChallengeGenerator.rangeToArray( -40, 40 );
     this.aValues = options.aValues;
     this.bValues = ChallengeGenerator.rangeToArray( -10, 10 );
     this.cValues = ChallengeGenerator.rangeToArray( -10, 10 );
     this.dValues = options.dValues;
-    this.debugLevel = options.debugLevel;
 
     this.challengeTypeMethods = [
       () => this.nextType1(),
@@ -122,7 +114,7 @@ export default class ChallengeGenerator1 extends ChallengeGenerator {
     assert && assert( c !== 0, 'c is 0' );
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-    const debugDerivation = StringUtils.fillIn( PATTERN1, { level: this.debugLevel, x: x, a: a, c: c } );
+    const debugDerivation = StringUtils.fillIn( PATTERN1, { x: x, a: a, c: c } );
 
     // ax + 0 = 0x + c
     return new Challenge( x,
@@ -150,7 +142,7 @@ export default class ChallengeGenerator1 extends ChallengeGenerator {
     assert && assert( b !== 0, 'b is 0' );
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-    const debugDerivation = StringUtils.fillIn( PATTERN2, { level: this.debugLevel, x: x, b: b, c: c } );
+    const debugDerivation = StringUtils.fillIn( PATTERN2, { x: x, b: b, c: c } );
 
     // 1x + b = 0x + c
     return new Challenge( x,
@@ -189,7 +181,7 @@ export default class ChallengeGenerator1 extends ChallengeGenerator {
     this.xPrevious = x;
 
     // derivation that corresponds to design doc, displayed with 'showAnswers' query parameter
-    const debugDerivation = StringUtils.fillIn( PATTERN3, { level: this.debugLevel, x: x, c: c, d: d } );
+    const debugDerivation = StringUtils.fillIn( PATTERN3, { x: x, c: c, d: d } );
 
     // (1/d)x + 0 = 0x + c
     return new Challenge( x,
