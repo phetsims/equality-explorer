@@ -116,6 +116,10 @@ export default class SolveItLevel extends OperationsScene {
         this.scoreProperty.value = this.scoreProperty.value + POINTS_PER_CHALLENGE;
       }
     } );
+
+    this.addLinkedElement( this.challengeGenerator.descriptionProperty, {
+      tandem: options.tandem.createTandem( 'descriptionProperty' )
+    } );
   }
 
   public override dispose(): void {

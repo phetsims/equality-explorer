@@ -7,7 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -19,7 +19,7 @@ export default abstract class ChallengeGenerator {
   public readonly level: number;
 
   // description that appear in the UI for the level
-  public readonly descriptionProperty: TReadOnlyProperty<string>;
+  public readonly descriptionProperty: LinkableProperty<string>;
 
   // number of challenges generated
   public numberOfChallenges: number;
@@ -31,7 +31,7 @@ export default abstract class ChallengeGenerator {
   // challenges.
   protected xPrevious: number;
 
-  protected constructor( level: number, descriptionProperty: TReadOnlyProperty<string> ) {
+  protected constructor( level: number, descriptionProperty: LinkableProperty<string> ) {
     assert && assert( Number.isInteger( level ) && level > 0 );
     assert && assert( level > 0 && level <= EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS );
 
