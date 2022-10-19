@@ -14,7 +14,12 @@ import VariablesScene from './VariablesScene.js';
 export default class VariablesModel extends EqualityExplorerModel {
 
   public constructor( tandem: Tandem ) {
-    super( [ new VariablesScene( tandem.createTandem( 'variablesScene' ) ) ], tandem );
+
+    const scenes = [
+      new VariablesScene( tandem.createTandem( 'variablesScene' ) )
+    ];
+
+    super( scenes, tandem );
   }
 }
 

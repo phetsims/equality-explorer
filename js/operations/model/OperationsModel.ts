@@ -14,9 +14,13 @@ import OperationsScene from './OperationsScene.js';
 export default class OperationsModel extends EqualityExplorerModel {
 
   public constructor( tandem: Tandem ) {
-    const scenes = [ new OperationsScene( {
-      tandem: tandem.createTandem( 'operationScene' )
-    } ) ];
+
+    const scenes = [
+      new OperationsScene( {
+        tandem: tandem.createTandem( 'operationScene' )
+      } )
+    ];
+
     super( scenes, tandem );
   }
 }
