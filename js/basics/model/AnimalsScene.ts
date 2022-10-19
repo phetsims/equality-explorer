@@ -25,7 +25,6 @@ export default class AnimalsScene extends BasicsScene {
 
     const variablesTandem = tandem.createTandem( 'variables' );
 
-    // In the order that they appear in the toolbox
     const variables = [
 
       // dog

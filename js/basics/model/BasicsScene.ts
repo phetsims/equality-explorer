@@ -25,6 +25,10 @@ type BasicsSceneOptions = SelfOptions & StrictOmit<EqualityExplorerSceneOptions,
 
 export default class BasicsScene extends EqualityExplorerScene {
 
+  /**
+   * @param variables - in the order that they appear in the toolbox and equations
+   * @param providedOptions
+   */
   public constructor( variables: ObjectVariable[], providedOptions: BasicsSceneOptions ) {
 
     const options = optionize<BasicsSceneOptions, SelfOptions, EqualityExplorerSceneOptions>()( {
