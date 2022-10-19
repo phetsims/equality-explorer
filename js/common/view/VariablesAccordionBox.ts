@@ -34,6 +34,10 @@ type VariablesAccordionBoxOptions = SelfOptions & NodeTranslationOptions & PickO
 
 export default class VariablesAccordionBox extends AccordionBox {
 
+  /**
+   * @param variables - in the order that they appear in the accordion box, from left to right
+   * @param providedOptions
+   */
   public constructor( variables: Variable[], providedOptions?: VariablesAccordionBoxOptions ) {
 
     const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {

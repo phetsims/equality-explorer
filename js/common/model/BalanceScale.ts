@@ -15,12 +15,12 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import Plate from './Plate.js';
+import Plate, { PlateOptions } from './Plate.js';
 import TermCreator from './TermCreator.js';
 
 type SelfOptions = {
@@ -122,8 +122,12 @@ export default class BalanceScale {
       cellSize: cellSize
     };
 
-    this.leftPlate = new Plate( leftTermCreators, 'left', plateOptions );
-    this.rightPlate = new Plate( rightTermCreators, 'right', plateOptions );
+    this.leftPlate = new Plate( leftTermCreators, 'left', combineOptions<PlateOptions>( {
+      tandem: options.tandem.createTandem( 'leftPlate' )
+    }, plateOptions ) );
+    this.rightPlate = new Plate( rightTermCreators, 'right', combineOptions<PlateOptions>( {
+      tandem: options.tandem.createTandem( 'rightPlate' )
+    }, plateOptions ) );
 
     this.angleProperty = new DerivedProperty(
       [ this.leftPlate.weightProperty, this.rightPlate.weightProperty ],
@@ -150,7 +154,7 @@ export default class BalanceScale {
         phetioDocumentation: 'angle of the scale in radians, zero is balanced'
       } );
 
-    // Move the plates when the angle changes. unlink not required.
+    // Move the plates when the angle changes.
     this.angleProperty.link( angle => {
 
       // hoist reusable vars

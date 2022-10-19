@@ -23,6 +23,8 @@ import Grid from './Grid.js';
 import Term from './Term.js';
 import TermCreator from './TermCreator.js';
 import { BalanceScaleSide } from './BalanceScale.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 // constants
 const DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );
@@ -35,11 +37,10 @@ type SelfOptions = {
   cellSize?: Dimension2; // dimensions of each cell in the grid
 };
 
-type PlateOptions = SelfOptions;
+export type PlateOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class Plate {
+export default class Plate extends PhetioObject {
 
-  public readonly positionProperty: Property<Vector2>;
   public readonly termCreators: TermCreator[];
   public readonly debugSide: BalanceScaleSide;
   public readonly supportHeight: number;
@@ -47,6 +48,8 @@ export default class Plate {
   public readonly gridRows: number;
   public readonly gridColumns: number;
   public readonly cellSize: Dimension2;
+
+  public readonly positionProperty: Property<Vector2>; // position of the plate in the model coordinate frame
   public readonly numberOfTermsProperty: Property<number>; // number of terms on the plate
   public readonly weightProperty: TReadOnlyProperty<Fraction>; // total weight of the terms that are on the plate
   public readonly contentsChangedEmitter: Emitter; // emit is called when the contents of the grid changes (terms added, removed, organized)
@@ -58,17 +61,23 @@ export default class Plate {
    * @param debugSide - which side of the scale, for debugging
    * @param [providedOptions]
    */
-  public constructor( termCreators: TermCreator[], debugSide: BalanceScaleSide, providedOptions?: PlateOptions ) {
+  public constructor( termCreators: TermCreator[], debugSide: BalanceScaleSide, providedOptions: PlateOptions ) {
 
-    const options = optionize<PlateOptions, SelfOptions>()( {
-      supportHeight: 10, // height of the vertical support that connects the plate to the scale
-      diameter: 20, // diameter of the plate
-      gridRows: 1, // rows in the 2D grid
-      gridColumns: 1, // columns in the 2D grid
-      cellSize: DEFAULT_CELL_SIZE // {Dimension2} dimensions of each cell in the grid
+    const options = optionize<PlateOptions, SelfOptions, PhetioObjectOptions>()( {
+
+      // SelfOptions
+      supportHeight: 10,
+      diameter: 20,
+      gridRows: 1,
+      gridColumns: 1,
+      cellSize: DEFAULT_CELL_SIZE,
+
+      // PhetioObjectOptions
+      phetioState: false
     }, providedOptions );
 
-    this.positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
+    super( options );
+
     this.termCreators = termCreators;
     this.debugSide = debugSide;
     this.supportHeight = options.supportHeight;
@@ -77,6 +86,12 @@ export default class Plate {
     this.gridColumns = options.gridColumns;
     this.cellSize = options.cellSize;
 
+    // Does not need to be reset.
+    this.positionProperty = new Vector2Property( new Vector2( 0, 0 ), {
+      tandem: options.tandem.createTandem( 'positionProperty' ),
+      phetioReadOnly: true // BalanceScale is responsible for setting positionProperty
+    } );
+
     this.grid = new Grid( this.positionProperty, debugSide, {
       rows: options.gridRows,
       columns: options.gridColumns,
@@ -84,9 +99,13 @@ export default class Plate {
       cellHeight: options.cellSize.height
     } );
 
+    // Does not need to be reset.
     this.numberOfTermsProperty = new NumberProperty( 0, {
       numberType: 'Integer',
-      isValidValue: value => ( value >= 0 )
+      isValidValue: value => ( value >= 0 ),
+      tandem: options.tandem.createTandem( 'numberOfTermsProperty' ),
+      phetioDocumentation: 'the number of terms that are on the plate',
+      phetioReadOnly: true // numberOfTermsProperty must be set by addTerm and removeTerm
     } );
 
     // weightProperty is derived from the weights of each termCreator
@@ -102,6 +121,10 @@ export default class Plate {
           weight = weight.plus( termCreators[ i ].weightOnPlateProperty.value ).reduced();
         }
         return weight;
+      }, {
+        tandem: options.tandem.createTandem( 'weightProperty' ),
+        phetioValueType: Fraction.FractionIO,
+        phetioDocumentation: 'the combine weight of the terms that are on the plate'
       } );
 
     this.contentsChangedEmitter = new Emitter();
@@ -112,8 +135,9 @@ export default class Plate {
     } );
   }
 
-  public dispose(): void {
+  public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
   }
 
   /**

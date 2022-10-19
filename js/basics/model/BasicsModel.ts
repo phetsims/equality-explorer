@@ -20,14 +20,15 @@ export default class BasicsModel extends EqualityExplorerModel {
 
     const scenesTandem = tandem.createTandem( 'scenes' );
 
-    super( [
-
-      // in the order that they appear (left to right) in the scene control (radio buttons)
+    // in the order that they appear (left to right) in the scene control (radio buttons)
+    const scenes = [
       new ShapesScene( scenesTandem.createTandem( 'shapesScene' ) ),
       new FruitsScene( scenesTandem.createTandem( 'fruitScene' ) ),
       new CoinsScene( scenesTandem.createTandem( 'coinsScene' ) ),
       new AnimalsScene( scenesTandem.createTandem( 'animalsScene' ) )
-    ], tandem );
+    ];
+
+    super( scenes, tandem );
   }
 }
 

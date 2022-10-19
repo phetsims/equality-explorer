@@ -14,7 +14,12 @@ import NumbersScene from './NumbersScene.js';
 export default class NumbersModel extends EqualityExplorerModel {
 
   public constructor( tandem: Tandem ) {
-    super( [ new NumbersScene( tandem.createTandem( 'numbersScene' ) ) ], tandem );
+
+    const scenes = [
+      new NumbersScene( tandem.createTandem( 'numbersScene' ) )
+    ];
+
+    super( scenes, tandem );
   }
 }
 

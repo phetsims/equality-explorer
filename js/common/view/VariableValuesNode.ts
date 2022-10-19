@@ -28,6 +28,10 @@ type VariableValuesNodeOptions = SelfOptions & PickOptional<HBoxOptions, 'opacit
 
 export default class VariableValuesNode extends HBox {
 
+  /**
+   * @param variables - in the order that they appear, from left to right
+   * @param providedOptions
+   */
   public constructor( variables: Variable[], providedOptions?: VariableValuesNodeOptions ) {
 
     const options = optionize<VariableValuesNodeOptions, SelfOptions, HBoxOptions>()( {

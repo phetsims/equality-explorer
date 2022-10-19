@@ -24,6 +24,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 // constants
 const DEFAULT_SCALE_POSITION = new Vector2( 355, 427 );
@@ -46,6 +47,8 @@ type SelfOptions = {
 };
 
 export type EqualityExplorerSceneOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+
+type CreateTermCreatorsFunction = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) => TermCreator[];
 
 export default abstract class EqualityExplorerScene extends PhetioObject {
 
@@ -78,8 +81,8 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
    * @param [providedOptions]
    * @abstract
    */
-  protected constructor( createLeftTermCreators: ( lockedProperty: Property<boolean> | null ) => TermCreator[],
-                         createRightTermCreators: ( lockedProperty: Property<boolean> | null ) => TermCreator[],
+  protected constructor( createLeftTermCreators: CreateTermCreatorsFunction,
+                         createRightTermCreators: CreateTermCreatorsFunction,
                          providedOptions: EqualityExplorerSceneOptions ) {
 
     const options = optionize<EqualityExplorerSceneOptions, SelfOptions, PhetioObjectOptions>()( {
@@ -115,10 +118,12 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
     this._icon = options.icon;
     this.variables = options.variables;
 
-    this.leftTermCreators = createLeftTermCreators( this.lockedProperty );
+    const termCreatorsTandem = options.tandem.createTandem( 'termCreators' );
+
+    this.leftTermCreators = createLeftTermCreators( this.lockedProperty, termCreatorsTandem.createTandem( 'leftTermCreators' ) );
     assert && validateTermCreators( this.leftTermCreators );
 
-    this.rightTermCreators = createRightTermCreators( this.lockedProperty );
+    this.rightTermCreators = createRightTermCreators( this.lockedProperty, termCreatorsTandem.createTandem( 'rightTermCreators' ) );
     assert && validateTermCreators( this.rightTermCreators );
 
     this.allTermCreators = this.leftTermCreators.concat( this.rightTermCreators );
@@ -155,9 +160,8 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
     } );
 
     this.snapshotsCollection = new SnapshotsCollection( {
-      numberOfSnapshots: options.numberOfSnapshots
-      //TODO tandem: options.tandem.createTandem( 'snapshotsCollection' )
-      //TODO phetioValueType: SnapshotsCollection.SnapshotsCollectionIO
+      numberOfSnapshots: options.numberOfSnapshots,
+      tandem: options.tandem.createTandem( 'snapshotsCollection' )
     } );
   }
 

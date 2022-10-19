@@ -25,6 +25,10 @@ type BasicsSceneOptions = SelfOptions & StrictOmit<EqualityExplorerSceneOptions,
 
 export default class BasicsScene extends EqualityExplorerScene {
 
+  /**
+   * @param variables - in the order that they appear in the toolbox and equations
+   * @param providedOptions
+   */
   public constructor( variables: ObjectVariable[], providedOptions: BasicsSceneOptions ) {
 
     const options = optionize<BasicsSceneOptions, SelfOptions, EqualityExplorerSceneOptions>()( {
@@ -38,11 +42,11 @@ export default class BasicsScene extends EqualityExplorerScene {
       lockable: false
     }, providedOptions );
 
-    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null ) =>
-      createTermCreators( variables, lockedProperty, options.hasConstantTerms, options.tandem.createTandem( 'leftTermCreators' ) );
+    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) =>
+      createTermCreators( variables, lockedProperty, options.hasConstantTerms, tandem );
 
-    const createRightTermCreators = ( lockedProperty: Property<boolean> | null ) =>
-      createTermCreators( variables, lockedProperty, options.hasConstantTerms, options.tandem.createTandem( 'rightTermCreators' ) );
+    const createRightTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) =>
+      createTermCreators( variables, lockedProperty, options.hasConstantTerms, tandem );
 
     super( createLeftTermCreators, createRightTermCreators, options );
   }

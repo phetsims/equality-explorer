@@ -21,11 +21,27 @@ export default class ShapesScene extends BasicsScene {
 
   public constructor( tandem: Tandem ) {
 
+    const variablesTandem = tandem.createTandem( 'variables' );
+
     const variables = [
 
-      // name, image, shadow
-      new ObjectVariable( 'sphere', sphere_png, sphereShadow_png, { value: 2 } ),
-      new ObjectVariable( 'square', square_png, squareShadow_png, { value: 3 } )
+      // sphere
+      new ObjectVariable( {
+        symbol: 'sphere',
+        image: sphere_png,
+        shadow: sphereShadow_png,
+        value: 2,
+        tandem: variablesTandem.createTandem( 'sphereVariable' )
+      } ),
+
+      // square
+      new ObjectVariable( {
+        symbol: 'square',
+        image: square_png,
+        shadow: squareShadow_png,
+        value: 3,
+        tandem: variablesTandem.createTandem( 'squareVariable' )
+      } )
     ];
 
     super( variables, {

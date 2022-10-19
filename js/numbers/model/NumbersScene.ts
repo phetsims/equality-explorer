@@ -17,17 +17,17 @@ export default class NumbersScene extends EqualityExplorerScene {
 
   public constructor( tandem: Tandem ) {
 
-    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null ) => [
+    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) => [
       new ConstantTermCreator( {
         lockedProperty: lockedProperty,
-        tandem: tandem.createTandem( 'leftTermCreators' ).createTandem( 'constantTermCreator' )
+        tandem: tandem.createTandem( 'constantTermCreator' )
       } )
     ];
 
-    const createRightTermCreators = ( lockedProperty?: Property<boolean> | null ) => [
+    const createRightTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) => [
       new ConstantTermCreator( {
         lockedProperty: lockedProperty,
-        tandem: tandem.createTandem( 'rightTermCreators' ).createTandem( 'constantTermCreator' )
+        tandem: tandem.createTandem( 'constantTermCreator' )
       } )
     ];
 
