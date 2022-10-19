@@ -38,11 +38,11 @@ export default class BasicsScene extends EqualityExplorerScene {
       lockable: false
     }, providedOptions );
 
-    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null ) =>
-      createTermCreators( variables, lockedProperty, options.hasConstantTerms, options.tandem.createTandem( 'leftTermCreators' ) );
+    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) =>
+      createTermCreators( variables, lockedProperty, options.hasConstantTerms, tandem );
 
-    const createRightTermCreators = ( lockedProperty: Property<boolean> | null ) =>
-      createTermCreators( variables, lockedProperty, options.hasConstantTerms, options.tandem.createTandem( 'rightTermCreators' ) );
+    const createRightTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) =>
+      createTermCreators( variables, lockedProperty, options.hasConstantTerms, tandem );
 
     super( createLeftTermCreators, createRightTermCreators, options );
   }

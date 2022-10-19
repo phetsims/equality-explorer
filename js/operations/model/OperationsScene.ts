@@ -12,14 +12,14 @@ import Property from '../../../../axon/js/Property.js';
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ConstantTerm from '../../common/model/ConstantTerm.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene, { EqualityExplorerSceneOptions } from '../../common/model/EqualityExplorerScene.js';
 import Snapshot from '../../common/model/Snapshot.js';
-import TermCreator, { TermCreatorOptions } from '../../common/model/TermCreator.js';
+import TermCreator from '../../common/model/TermCreator.js';
 import UniversalOperation, { UniversalOperand, UniversalOperator, UniversalOperatorValues } from '../../common/model/UniversalOperation.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
@@ -28,6 +28,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 // constants
 const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;
@@ -79,43 +80,13 @@ export default class OperationsScene extends EqualityExplorerScene {
       range: options.variableRange,
       tandem: variablesTandem.createTandem( 'xVariable' )
     } );
-
-    assert && assert( !options.variables, 'OperationsScene sets variables' );
     options.variables = [ xVariable ];
 
-    // Variable and constant terms will be combined in specific cells in the plate's grid.
-    const variableTermCreatorOptions = {
-      likeTermsCell: 0 // cell on the plate that all like terms will occupy
-    };
-    const constantTermCreatorOptions = {
-      likeTermsCell: 1 // cell on the plate that all like terms will occupy
-    };
+    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) =>
+      createTermCreators( xVariable, lockedProperty, tandem );
 
-    const createLeftTermCreators = ( lockedProperty: Property<boolean> | null ) => [
-      new VariableTermCreator( xVariable,
-        combineOptions<TermCreatorOptions>( {
-          lockedProperty: lockedProperty,
-          tandem: options.tandem.createTandem( 'leftVariableTermCreator' )
-        }, variableTermCreatorOptions ) ),
-      new ConstantTermCreator(
-        combineOptions<TermCreatorOptions>( {
-          lockedProperty: lockedProperty,
-          tandem: options.tandem.createTandem( 'leftConstantTermCreator' )
-        }, constantTermCreatorOptions ) )
-    ];
-
-    const createRightTermCreators = ( lockedProperty: Property<boolean> | null ) => [
-      new VariableTermCreator( xVariable,
-        combineOptions<TermCreatorOptions>( {
-          lockedProperty: lockedProperty,
-          tandem: options.tandem.createTandem( 'rightVariableTermCreator' )
-        }, variableTermCreatorOptions ) ),
-      new ConstantTermCreator(
-        combineOptions<TermCreatorOptions>( {
-          lockedProperty: lockedProperty,
-          tandem: options.tandem.createTandem( 'rightConstantTermCreator' )
-        }, constantTermCreatorOptions ) )
-    ];
+    const createRightTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) =>
+      createTermCreators( xVariable, lockedProperty, tandem );
 
     super( createLeftTermCreators, createRightTermCreators, options );
 
@@ -252,6 +223,33 @@ export default class OperationsScene extends EqualityExplorerScene {
     } );
     return termCreator || null;
   }
+}
+
+/**
+ * Creates the term creators for this scene.
+ */
+function createTermCreators( xVariable: Variable, lockedProperty: Property<boolean> | null, parentTandem: Tandem ): TermCreator[] {
+
+  // Variable and constant terms will be combined in specific cells in the plate's grid.
+  // This is the cell in the grid that all like terms will occupy.
+  let likeTermsCell = 0;
+
+  return [
+
+    // x & -x
+    new VariableTermCreator( xVariable, {
+        likeTermsCell: likeTermsCell++,
+        lockedProperty: lockedProperty,
+        tandem: parentTandem.createTandem( 'xTermCreator' )
+      } ),
+
+    // 1 & -1
+    new ConstantTermCreator( {
+      likeTermsCell: likeTermsCell++,
+      lockedProperty: lockedProperty,
+      tandem: parentTandem.createTandem( 'constantTermCreator' )
+    } )
+  ];
 }
 
 equalityExplorer.register( 'OperationsScene', OperationsScene );
