@@ -193,7 +193,7 @@ export default class UniversalOperationControl extends HBox {
         assert && assert( operandIndex !== -1, `operand not found: ${operand}` );
 
         if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) ) {
-          assert && assert( operand instanceof ConstantTerm, `unexpected operand type: ${operand}` );
+          assert && assert( operand instanceof ConstantTerm, `unexpected operand type: ${operand}` ); // eslint-disable-line no-simple-type-checking-assertions
 
           // increment arrow is enabled if there are any constant term operands above the current selection
           let incrementEnabled = false;
