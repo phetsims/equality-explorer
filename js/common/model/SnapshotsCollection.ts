@@ -35,7 +35,8 @@ export default class SnapshotsCollection extends PhetioObject {
       numberOfSnapshots: 5,
 
       // PhetioObjectOptions
-      phetioState: false
+      phetioState: false,
+      phetioDocumentation: 'the collection of snapshots that appear in the Snapshots accordion box'
     }, providedOptions );
 
     assert && assert( Number.isInteger( options.numberOfSnapshots ) && options.numberOfSnapshots > 0 );
@@ -47,7 +48,7 @@ export default class SnapshotsCollection extends PhetioObject {
       this.snapshotProperties.push( new Property<Snapshot | null>( null, {
         //TODO tandem: options.tandem.createTandem( `snapshot${i}Property` ),
         //TODO phetioValueType: NullableIO( SnapshotIO ),
-        //TODO phetioDocumentation: `The snapshot that occupies row ${i} in the Snapshots panel. null means no snapshot.`
+        //TODO phetioDocumentation: `The snapshot that occupies row ${i} in the Snapshots accordion box. null means no snapshot.`
       } ) );
     }
 
@@ -60,7 +61,7 @@ export default class SnapshotsCollection extends PhetioObject {
       }
       //TODO tandem: options.tandem.createTandem( 'selectedSnapshotProperty' ),
       //TODO phetioValueType: NullableIO( SnapshotIO ),
-      //TODO phetioDocumentation: 'The snapshot that is selected in the Snapshots panel. null means no snapshot is selected.'
+      //TODO phetioDocumentation: 'The snapshot that is selected in the Snapshots accordion box. null means no snapshot is selected.'
     } );
   }
 
