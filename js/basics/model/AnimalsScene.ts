@@ -23,12 +23,37 @@ export default class AnimalsScene extends BasicsScene {
 
   public constructor( tandem: Tandem ) {
 
+    const variablesTandem = tandem.createTandem( 'variables' );
+
+    // In the order that they appear in the toolbox
     const variables = [
 
-      // name, image, shadow
-      new ObjectVariable( 'dog', dog_png, dogShadow_png, { value: 11 } ),
-      new ObjectVariable( 'cat', cat_png, catShadow_png, { value: 4 } ),
-      new ObjectVariable( 'turtle', turtle_png, turtleShadow_png, { value: 6 } )
+      // dog
+      new ObjectVariable( {
+        symbol: 'dog',
+        image: dog_png,
+        shadow: dogShadow_png,
+        value: 11,
+        tandem: variablesTandem.createTandem( 'dogVariable' )
+      } ),
+
+      // cat
+      new ObjectVariable( {
+        symbol: 'cat',
+        image: cat_png,
+        shadow: catShadow_png,
+        value: 4,
+        tandem: variablesTandem.createTandem( 'catVariable' )
+      } ),
+
+      // turtle
+      new ObjectVariable( {
+        symbol: 'turtle',
+        image: turtle_png,
+        shadow: turtleShadow_png,
+        value: 6,
+        tandem: variablesTandem.createTandem( 'turtleVariable' )
+      } )
     ];
 
     super( variables, {

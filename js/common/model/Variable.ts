@@ -11,15 +11,18 @@ import Range from '../../../../dot/js/Range.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 
 type SelfOptions = {
   value?: number; // initial value
   range?: Range | null; // range of the value, null means unbounded
 };
 
-export type VariableOptions = SelfOptions;
+export type VariableOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class Variable {
+export default class Variable extends PhetioObject {
 
   public readonly symbolProperty: TReadOnlyProperty<string>;
   public readonly range: Range | null;
@@ -29,24 +32,34 @@ export default class Variable {
    * @param symbolProperty - the variable's symbol, e.g. 'x'
    * @param [providedOptions]
    */
-  public constructor( symbolProperty: TReadOnlyProperty<string>, providedOptions?: VariableOptions ) {
+  public constructor( symbolProperty: LinkableProperty<string>, providedOptions: VariableOptions ) {
 
-    const options = optionize<VariableOptions, SelfOptions>()( {
+    const options = optionize<VariableOptions, SelfOptions, PhetioObjectOptions>()( {
 
       // SelfOptions
       value: 1,
-      range: null
+      range: null,
+
+      // PhetioObjectOptions
+      phetioState: false
     }, providedOptions );
 
     assert && assert( !options.range || options.range.contains( options.value ),
       `value ${options.value} is not in range ${options.range}` );
+
+    super( options );
 
     this.symbolProperty = symbolProperty;
     this.range = options.range;
 
     this.valueProperty = new NumberProperty( options.value, {
       numberType: 'Integer',
-      range: this.range
+      range: this.range,
+      tandem: options.tandem.createTandem( 'valueProperty' )
+    } );
+
+    this.addLinkedElement( symbolProperty, {
+      tandem: options.tandem.createTandem( 'symbolProperty' )
     } );
   }
 
@@ -57,7 +70,7 @@ export default class Variable {
   /**
    * For debugging only. Do not rely on the format of toString.
    */
-  public toString(): string {
+  public override toString(): string {
     return `Variable: symbol=${this.symbolProperty.value} value=${this.valueProperty.value}`;
   }
 }

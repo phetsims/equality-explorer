@@ -21,8 +21,11 @@ export default class VariablesScene extends EqualityExplorerScene {
 
   public constructor( tandem: Tandem ) {
 
+    const variablesTandem = tandem.createTandem( 'variables' );
+
     const xVariable = new Variable( EqualityExplorerStrings.xStringProperty, {
-      range: EqualityExplorerConstants.VARIABLE_RANGE
+      range: EqualityExplorerConstants.VARIABLE_RANGE,
+      tandem: variablesTandem.createTandem( 'xVariable' )
     } );
 
     const createLeftTermCreators = ( lockedProperty: Property<boolean> | null ) =>

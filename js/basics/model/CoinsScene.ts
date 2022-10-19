@@ -23,12 +23,36 @@ export default class CoinsScene extends BasicsScene {
 
   public constructor( tandem: Tandem ) {
 
+    const variablesTandem = tandem.createTandem( 'variables' );
+
     const variables = [
 
-      // name, image, shadow
-      new ObjectVariable( 'coin1', coin1_png, coin1Shadow_png, { value: 3 } ),
-      new ObjectVariable( 'coin2', coin2_png, coin2Shadow_png, { value: 2 } ),
-      new ObjectVariable( 'coin3', coin3_png, coin3Shadow_png, { value: 5 } )
+      // coin1
+      new ObjectVariable( {
+        symbol: 'coin1',
+        image: coin1_png,
+        shadow: coin1Shadow_png,
+        value: 3,
+        tandem: variablesTandem.createTandem( 'coin1Variable' )
+      } ),
+
+      // coin2
+      new ObjectVariable( {
+        symbol: 'coin2',
+        image: coin2_png,
+        shadow: coin2Shadow_png,
+        value: 2,
+        tandem: variablesTandem.createTandem( 'coin2Variable' )
+      } ),
+
+      // coin3
+      new ObjectVariable( {
+        symbol: 'coin3',
+        image: coin3_png,
+        shadow: coin3Shadow_png,
+        value: 5,
+        tandem: variablesTandem.createTandem( 'coin3Variable' )
+      } )
     ];
 
     super( variables, {

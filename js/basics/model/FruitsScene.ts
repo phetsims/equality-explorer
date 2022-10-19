@@ -23,12 +23,36 @@ export default class FruitsScene extends BasicsScene {
 
   public constructor( tandem: Tandem ) {
 
+    const variablesTandem = tandem.createTandem( 'variables' );
+
     const variables = [
 
-      // name, image, shadow
-      new ObjectVariable( 'apple', apple_png, appleShadow_png, { value: 4 } ),
-      new ObjectVariable( 'lemon', lemon_png, lemonShadow_png, { value: 5 } ),
-      new ObjectVariable( 'orange', orange_png, orangeShadow_png, { value: 2 } )
+      // apple
+      new ObjectVariable( {
+        symbol: 'apple',
+        image: apple_png,
+        shadow: appleShadow_png,
+        value: 4,
+        tandem: variablesTandem.createTandem( 'appleVariable' )
+      } ),
+
+      // lemon
+      new ObjectVariable( {
+        symbol: 'lemon',
+        image: lemon_png,
+        shadow: lemonShadow_png,
+        value: 5,
+        tandem: variablesTandem.createTandem( 'lemonVariable' )
+      } ),
+
+      // orange
+      new ObjectVariable( {
+        symbol: 'orange',
+        image: orange_png,
+        shadow: orangeShadow_png,
+        value: 2,
+        tandem: variablesTandem.createTandem( 'orangeVariable' )
+      } )
     ];
 
     super( variables, {

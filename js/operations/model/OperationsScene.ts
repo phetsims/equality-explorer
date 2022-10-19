@@ -73,8 +73,11 @@ export default class OperationsScene extends EqualityExplorerScene {
       iconSize: ICON_SIZE // {Dimension2} size of terms icons on the scale
     }, providedOptions );
 
+    const variablesTandem = options.tandem.createTandem( 'variables' );
+
     const xVariable = new Variable( EqualityExplorerStrings.xStringProperty, {
-      range: options.variableRange
+      range: options.variableRange,
+      tandem: variablesTandem.createTandem( 'xVariable' )
     } );
 
     assert && assert( !options.variables, 'OperationsScene sets variables' );
