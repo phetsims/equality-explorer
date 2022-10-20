@@ -3,6 +3,12 @@
 /**
  * User-interface component for picking one of several values. The values are arbitrary Objects.
  *
+ * NOTE: A long time ago, in a galaxy far, far away, ObjectPicker was mostly copied from NumberPicker. While not
+ * totally in-sync, their implementations remained similar for quite a while (not exactly light years, but hey, this
+ * is software). But alas dear reader, by the time that you discover this prose, ObjectPicker and NumberPicker will
+ * have undoubtedly diverged so much that it will be a real headache to unify them. To that, I have 2 words to offer:
+ * 'priorities' and 'sorry'.
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
