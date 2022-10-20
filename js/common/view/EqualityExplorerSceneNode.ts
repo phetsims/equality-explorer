@@ -6,7 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import { Node, NodeOptions, PressListenerEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -34,11 +34,7 @@ export default class EqualityExplorerSceneNode extends Node {
                          termsLayer: Node,
                          providedOptions: EqualityExplorerSceneNodeOptions ) {
 
-    const options = optionize<EqualityExplorerSceneNodeOptions, SelfOptions, NodeOptions>()( {
-      // empty optionize call because we're calling this.mutate below.
-    }, providedOptions );
-
-    super();
+    super( providedOptions );
 
     this.scene = scene;
     this.snapshotsAccordionBox = snapshotsAccordionBox;
@@ -51,6 +47,7 @@ export default class EqualityExplorerSceneNode extends Node {
     const termCreatedListener = ( termCreator: TermCreator, term: Term, event: PressListenerEvent | null ) => {
 
       // create a TermNode
+      //TODO create TermNode from a PhetioGroup
       const termNode = termCreator.createTermNode( term );
       termsLayer.addChild( termNode );
 
@@ -64,6 +61,7 @@ export default class EqualityExplorerSceneNode extends Node {
     };
 
     // When the maxInteger limit is exceeded, dispose of all terms that are not on the scale, and display a dialog.
+    //TODO create OopsDialog using PhetioCapsule
     let dialog: OopsDialog;
     const maxIntegerExceededListener = () => {
       phet.log && phet.log( 'maxInteger exceeded' );
@@ -76,8 +74,6 @@ export default class EqualityExplorerSceneNode extends Node {
       termCreator.termCreatedEmitter.addListener( termCreatedListener );
       termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener );
     } );
-
-    this.mutate( options );
   }
 
   public override dispose(): void {
