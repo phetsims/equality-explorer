@@ -107,7 +107,7 @@ export default abstract class TermCreator extends PhetioObject {
   public readonly numberOfTermsOnPlateProperty: TReadOnlyProperty<number>;
 
   // Weight of the terms that are on the plate
-  public readonly weightOnPlateProperty: Property<Fraction>;
+  public readonly weightOnPlateProperty: TReadOnlyProperty<Fraction>;
 
   // Emit is called when a term is created.
   // The event arg is non-null if the term was created as the result of a user interaction.
@@ -161,17 +161,25 @@ export default abstract class TermCreator extends PhetioObject {
       length => length
     );
 
-    // We can't use a DerivedProperty here because subclasses may have additional Properties
-    // that require updating weightOnPlateProperty.
-    //TODO could subclasses pass in their dependencies, so that this can be DerivedProperty? See calls to updateWeightOnPlateProperty.
-    this.weightOnPlateProperty = new Property( Fraction.fromInteger( 0 ), {
-      valueType: Fraction,
-      useDeepEquality: true, // set value only if truly different, prevents costly unnecessary notifications
-      tandem: options.tandem.createTandem( 'weightOnPlateProperty' ),
-      phetioValueType: Fraction.FractionIO,
-      phetioReadOnly: true,
-      phetioDocumentation: 'weight of the terms on the plate that were created by this term creator'
-    } );
+    const weightOnPlateDependencies = [ this.numberOfTermsOnPlateProperty ];
+    if ( options.variable ) {
+      weightOnPlateDependencies.push( options.variable.valueProperty );
+    }
+
+    this.weightOnPlateProperty = DerivedProperty.deriveAny( weightOnPlateDependencies,
+      () => {
+        let weight = Fraction.fromInteger( 0 );
+        for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
+          weight = weight.plus( this.termsOnPlate.get( i ).weight ).reduced();
+        }
+        return weight;
+      }, {
+        valueType: Fraction,
+        useDeepEquality: true, // set value only if truly different, prevents costly unnecessary notifications
+        tandem: options.tandem.createTandem( 'weightOnPlateProperty' ),
+        phetioValueType: Fraction.FractionIO,
+        phetioDocumentation: 'weight of the terms on the plate that were created by this term creator'
+      } );
 
     //TODO should this Emitter be instrumented?
     this.termCreatedEmitter = new Emitter( {
@@ -193,9 +201,6 @@ export default abstract class TermCreator extends PhetioObject {
     } );
 
     this.termDisposedListener = ( term: Term ) => this.unmanageTerm( term );
-
-    // Update weight when number of terms on plate changes. unlink not required.
-    this.numberOfTermsOnPlateProperty.link( () => this.updateWeightOnPlateProperty() );
 
     // When locked changes...
     this.lockedProperty.lazyLink( locked => {
@@ -546,17 +551,6 @@ export default abstract class TermCreator extends PhetioObject {
     for ( let i = 0; i < this.allTerms.length; i++ ) {
       this.allTerms.get( i ).haloVisibleProperty.value = false;
     }
-  }
-
-  /**
-   * Updates weightOnPlateProperty, the total weight of all terms on the plate.
-   */
-  protected updateWeightOnPlateProperty(): void {
-    let weight = Fraction.fromInteger( 0 );
-    for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
-      weight = weight.plus( this.termsOnPlate.get( i ).weight ).reduced();
-    }
-    this.weightOnPlateProperty.value = weight;
   }
 
   /**

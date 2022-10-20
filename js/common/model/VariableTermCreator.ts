@@ -50,9 +50,6 @@ export default class VariableTermCreator extends TermCreator {
 
     this.positiveFill = options.positiveFill;
     this.negativeFill = options.negativeFill;
-
-    // When the variable's value changes, recompute the weight of terms on the scale.
-    variable.valueProperty.link( variableValue => this.updateWeightOnPlateProperty() );
   }
 
   public override dispose(): void {

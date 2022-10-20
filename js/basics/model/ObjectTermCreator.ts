@@ -34,9 +34,6 @@ export default class ObjectTermCreator extends TermCreator {
 
     this.objectVariable = variable;
 
-    // When the variable's value changes, recompute the weight of terms on the scale.
-    this.objectVariable.valueProperty.link( () => this.updateWeightOnPlateProperty() );
-
     phet.log && phet.log( this );
   }
 
