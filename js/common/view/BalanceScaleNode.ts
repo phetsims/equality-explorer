@@ -14,6 +14,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import { Circle, HBox, Line, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import BalanceScale from '../model/BalanceScale.js';
@@ -57,7 +58,10 @@ export default class BalanceScaleNode extends Node {
       clearScaleButtonVisible: true,
       organizeButtonVisible: true,
       disposeTermsNotOnScale: null,
-      phetioVisiblePropertyInstrumented: false
+      phetioVisiblePropertyInstrumented: false,
+      
+      // NodeOptions
+      tandem: Tandem.OPT_OUT
     }, providedOptions );
 
     options.x = scale.position.x;
@@ -134,12 +138,16 @@ export default class BalanceScaleNode extends Node {
     // pressing this button clears all terms from the scale
     const clearScaleButton = new ClearScaleButton( {
       listener: () => scale.clear(),
-      visible: options.clearScaleButtonVisible
+      //TODO instantiate clearScaleButton only if options.clearScaleButtonVisible
+      visible: options.clearScaleButtonVisible,
+      tandem: options.tandem.createTandem( 'clearScaleButton' )
     } );
 
     // pressing this button organizes terms on the scale, grouping like terms together
     const organizeButton = new OrganizeButton( () => scale.organize(), {
-      visible: options.organizeButtonVisible
+      //TODO instantiate organizeButton only if options.organizeButtonVisible
+      visible: options.organizeButtonVisible,
+      tandem: options.tandem.createTandem( 'organizeButton' )
     } );
 
     // Pressing either button disposes of any terms that are not already on the scale.

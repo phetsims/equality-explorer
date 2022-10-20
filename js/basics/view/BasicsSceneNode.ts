@@ -66,9 +66,10 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
     // terms live in this layer
     const termsLayer = new Node();
 
-    const scaleNode = new BalanceScaleNode( scale, {
+    const balanceScaleNode = new BalanceScaleNode( scale, {
       organizeButtonVisible: options.organizeButtonVisible,
-      disposeTermsNotOnScale: scene.disposeTermsNotOnScale.bind( scene )
+      disposeTermsNotOnScale: scene.disposeTermsNotOnScale.bind( scene ),
+      tandem: options.tandem.createTandem( 'balanceScaleNode' )
     } );
 
     const leftTermsToolbox = new TermsToolbox( leftTermCreators, scale.leftPlate, termsLayer, {
@@ -100,7 +101,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
     const snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
       snapshotControlOptions: options.snapshotControlOptions,
       variableValuesVisibleProperty: options.variableValuesVisibleProperty,
-      fixedWidth: Math.floor( ( layoutBounds.right - scaleNode.right ) -
+      fixedWidth: Math.floor( ( layoutBounds.right - balanceScaleNode.right ) -
                               EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN - 15 ),
       expandedProperty: snapshotsAccordionBoxExpandedProperty,
       right: layoutBounds.right - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
@@ -109,7 +110,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
     } );
 
     const children = [
-      scaleNode,
+      balanceScaleNode,
       leftTermsToolbox,
       rightTermsToolbox,
       equationAccordionBox,

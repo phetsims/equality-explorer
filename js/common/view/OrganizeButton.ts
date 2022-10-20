@@ -8,6 +8,7 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import { Path } from '../../../../scenery/js/imports.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
@@ -15,7 +16,9 @@ import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type OrganizeButtonOptions = SelfOptions & PickOptional<RectangularPushButtonOptions, 'visible'>;
+type OrganizeButtonOptions = SelfOptions &
+  PickOptional<RectangularPushButtonOptions, 'visible'> &
+  PickRequired<RectangularPushButtonOptions, 'tandem'>;
 
 export default class OrganizeButton extends RectangularPushButton {
 
@@ -28,8 +31,8 @@ export default class OrganizeButton extends RectangularPushButton {
       xMargin: 8,
       yMargin: 4,
       touchAreaXDilation: 5,
-      touchAreaYDilation: 5
-
+      touchAreaYDilation: 5,
+      phetioEnabledPropertyInstrumented: false
     }, providedOptions );
 
     // SVG path description is the "d=" field from organize-icon.svg

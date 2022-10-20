@@ -16,7 +16,7 @@ type SelfOptions = EmptySelfOptions;
 
 type ClearScaleButtonOptions = SelfOptions &
   PickOptional<EraserButtonOptions, 'visible'> &
-  PickRequired<EraserButtonOptions, 'listener'>;
+  PickRequired<EraserButtonOptions, 'listener' | 'tandem'>;
 
 export default class ClearScaleButton extends EraserButton {
 
@@ -27,7 +27,8 @@ export default class ClearScaleButton extends EraserButton {
       // EraserButtonOptions
       touchAreaXDilation: 5,
       touchAreaYDilation: 5,
-      iconWidth: 22
+      iconWidth: 22,
+      phetioEnabledPropertyInstrumented: false
     }, providedOptions );
 
     super( options );
