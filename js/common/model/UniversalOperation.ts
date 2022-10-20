@@ -1,7 +1,7 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
 /**
- * Data structure that describes a 'universal operation', a term specific to this sim,
+ * Data structure that describes a 'universal operation' (terminology specific to this sim),
  * an operation that will be applied to both sides of the equation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
