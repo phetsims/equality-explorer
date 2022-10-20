@@ -181,7 +181,6 @@ export default abstract class TermCreator extends PhetioObject {
         phetioDocumentation: 'weight of the terms on the plate that were created by this term creator'
       } );
 
-    //TODO should this Emitter be instrumented?
     this.termCreatedEmitter = new Emitter( {
       parameters: [
         { valueType: TermCreator },
@@ -190,7 +189,6 @@ export default abstract class TermCreator extends PhetioObject {
       ]
     } );
 
-    //TODO should this Emitter be instrumented?
     this.maxIntegerExceededEmitter = new Emitter();
 
     this._equivalentTermCreator = null;
