@@ -22,7 +22,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
-import { HBox, HBoxOptions, Node, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
+import { HBox, HBoxOptions, Node, Path } from '../../../../scenery/js/imports.js';
 import levelDownAltSolidShape from '../../../../sherpa/js/fontawesome-5/levelDownAltSolidShape.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
@@ -40,7 +40,7 @@ type SelfOptions = {
   timesZeroEnabled?: boolean; // whether to include 'times 0' as one of the operations
 };
 
-type UniversalOperationControlOptions = SelfOptions & NodeTranslationOptions & PickRequired<HBoxOptions, 'tandem'>;
+type UniversalOperationControlOptions = SelfOptions & PickRequired<HBoxOptions, 'tandem'>;
 
 export default class UniversalOperationControl extends HBox {
 
@@ -81,7 +81,8 @@ export default class UniversalOperationControl extends HBox {
         buttonAppearanceStrategyOptions: {
           selectedLineWidth: 2
         }
-      }
+      },
+      tandem: options.tandem.createTandem( 'operatorRadioButtonGroup' )
     } );
 
     /*
@@ -163,7 +164,8 @@ export default class UniversalOperationControl extends HBox {
           assert && assert( nextOperandIndex >= 0, `nextOperandIndex out of range: ${nextOperandIndex}` );
         }
         return nextOperandIndex;
-      }
+      },
+      tandem: options.tandem.createTandem( 'operandPicker' )
     } );
 
     // 'go' button, applies the operation
@@ -176,7 +178,8 @@ export default class UniversalOperationControl extends HBox {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 10,
       yMargin: 10,
-      touchAreaDilation: 5
+      touchAreaDilation: 5,
+      tandem: options.tandem.createTandem( 'goButton' )
     } );
 
     assert && assert( !options.children, 'UniversalOperationControl sets children' );

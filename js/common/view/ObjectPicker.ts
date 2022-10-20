@@ -16,6 +16,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { Color, FireListener, FireListenerOptions, LinearGradient, Node, NodeOptions, Path, PathOptions, Rectangle, TColor } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
@@ -75,7 +76,7 @@ type SelfOptions = {
   decrementEnabledProperty?: TReadOnlyProperty<boolean> | null;
 };
 
-type ObjectPickerOptions = SelfOptions;
+type ObjectPickerOptions = SelfOptions & PickRequired<NodeOptions, 'tandem'>;
 
 class ObjectPicker<T> extends Node {
 

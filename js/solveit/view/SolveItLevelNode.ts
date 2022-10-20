@@ -145,9 +145,11 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     // Universal Operation control
     const universalOperationControl = new UniversalOperationControl( level, operationAnimationLayer, {
       timesZeroEnabled: false, // disable multiplication by zero, see phetsims/equality-explorer#72
-      centerX: level.scale.position.x, // centered on the scale
-      top: balanceScaleEquationNode.bottom + 15,
       tandem: options.tandem.createTandem( 'universalOperationControl' )
+    } );
+    universalOperationControl.boundsProperty.link( bounds => {
+      universalOperationControl.centerX = level.scale.position.x; // centered on the scale
+      universalOperationControl.top = balanceScaleEquationNode.bottom + 15;
     } );
 
     // 'Solve for x'
