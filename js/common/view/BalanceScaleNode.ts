@@ -138,16 +138,14 @@ export default class BalanceScaleNode extends Node {
     // pressing this button clears all terms from the scale
     const clearScaleButton = new ClearScaleButton( {
       listener: () => scale.clear(),
-      //TODO instantiate clearScaleButton only if options.clearScaleButtonVisible
       visible: options.clearScaleButtonVisible,
-      tandem: options.tandem.createTandem( 'clearScaleButton' )
+      tandem: options.clearScaleButtonVisible ? options.tandem.createTandem( 'clearScaleButton' ) : Tandem.OPT_OUT
     } );
 
     // pressing this button organizes terms on the scale, grouping like terms together
     const organizeButton = new OrganizeButton( () => scale.organize(), {
-      //TODO instantiate organizeButton only if options.organizeButtonVisible
       visible: options.organizeButtonVisible,
-      tandem: options.tandem.createTandem( 'organizeButton' )
+      tandem: options.organizeButtonVisible ? options.tandem.createTandem( 'organizeButton' ) : Tandem.OPT_OUT
     } );
 
     // Pressing either button disposes of any terms that are not already on the scale.
