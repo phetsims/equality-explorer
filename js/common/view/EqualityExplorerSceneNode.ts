@@ -16,6 +16,7 @@ import TermCreator from '../model/TermCreator.js';
 import Term from '../model/Term.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import PhetioCapsule from '../../../../tandem/js/PhetioCapsule.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -60,14 +61,21 @@ export default class EqualityExplorerSceneNode extends Node {
       }
     };
 
+    // To manage dynamic instrumented OopsDialog
+    const oopsDialogCapsule = new PhetioCapsule( tandem => new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty, {
+      //TODO focusOnHideNode:
+      tandem: tandem
+    } ), [], {
+      tandem: providedOptions.tandem.createTandem( 'oopsDialogCapsule' ),
+      phetioType: PhetioCapsule.PhetioCapsuleIO( OopsDialog.OopsDialogIO )
+    } );
+
     // When the maxInteger limit is exceeded, dispose of all terms that are not on the scale, and display a dialog.
-    //TODO create OopsDialog using PhetioCapsule
-    let dialog: OopsDialog;
+    // To test this, see EqualityExplorerQueryParameters.maxInteger.
     const maxIntegerExceededListener = () => {
       phet.log && phet.log( 'maxInteger exceeded' );
       scene.disposeTermsNotOnScale();
-      dialog = dialog || new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty );
-      dialog.show();
+      oopsDialogCapsule.getElement().show();
     };
 
     scene.allTermCreators.forEach( termCreator => {
