@@ -160,10 +160,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       spacing: 10,
       children: [
         snapshotControlsVBox,
-        new HSeparator( {
-          stroke: 'rgb( 200, 200, 200 )',
-          tandem: options.tandem.createTandem( 'separator' )
-        } ),
+        new HSeparator( { stroke: 'rgb( 200, 200, 200 )' } ),
         hBox
       ]
     } );
