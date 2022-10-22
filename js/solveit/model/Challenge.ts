@@ -39,6 +39,7 @@ export default class Challenge {
    *    This information is provided by ChallengeGenerator subclasses, contains RichText markup,
    *    and corresponds to the challenge specification in the design document, see
    *    https://docs.google.com/document/d/1vG5U9HhcqVGMvmGGXry28PLqlNWj25lStDP2vSWgUOo
+   *    DO NOT RELY ON THE FORMAT OF THIS FIELD!
    */
   public constructor( public readonly x: number,
                       public readonly a: Fraction,
@@ -73,6 +74,7 @@ export default class Challenge {
       b: Fraction.FractionIO.toStateObject( this.b ),
       m: Fraction.FractionIO.toStateObject( this.m ),
       n: Fraction.FractionIO.toStateObject( this.n ),
+      //TODO this is for debugging, but will show up in Studio, complete with HTML5 markup. Is it OK? Document in client guide?
       debugDerivation: StringIO.toStateObject( this.debugDerivation )
     };
   }
