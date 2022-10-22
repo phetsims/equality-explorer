@@ -93,7 +93,7 @@ export default class VariableTermNode extends TermNode {
    */
   public static createInteractiveTermNode( coefficient: Fraction, symbolProperty: TReadOnlyProperty<string>,
                                            providedOptions?: InteractiveTermNodeOptions ): Node {
-    return new InteractiveTermNode( coefficient, symbolProperty, providedOptions );
+    return new InteractiveTermNode( coefficient, symbolProperty, providedOptions ); //TODO dynamic
   }
 
   /**
@@ -101,7 +101,7 @@ export default class VariableTermNode extends TermNode {
    */
   public static createEquationTermNode( coefficient: Fraction, symbolProperty: TReadOnlyProperty<string>,
                                         providedOptions?: EquationTermNodeOptions ): Node {
-    return new EquationTermNode( coefficient, symbolProperty, providedOptions );
+    return new EquationTermNode( coefficient, symbolProperty, providedOptions ); //TODO dynamic
   }
 }
 

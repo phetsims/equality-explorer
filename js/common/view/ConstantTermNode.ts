@@ -75,7 +75,7 @@ export default class ConstantTermNode extends TermNode {
    * Creates the representation of a term that is shown in equations.
    */
   public static createEquationTermNode( constantValue: Fraction, providedOptions?: EquationTermNodeOptions ): Node {
-    return new EquationTermNode( constantValue, providedOptions );
+    return new EquationTermNode( constantValue, providedOptions ); //TODO dynamic
   }
 }
 

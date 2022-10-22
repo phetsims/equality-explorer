@@ -44,14 +44,14 @@ export default class ObjectTermNode extends TermNode {
    * Creates the representation of an ObjectTerm that the user interacts with.
    */
   public static createInteractiveTermNode( image: HTMLImageElement, providedOptions?: InteractiveTermNodeOptions ): Node {
-    return new InteractiveTermNode( image, providedOptions );
+    return new InteractiveTermNode( image, providedOptions ); //TODO dynamic
   }
 
   /**
    * Creates the representation of an ObjectTerm that is shown in equations.
    */
   public static createEquationTermNode( coefficient: number, icon: Node, providedOptions?: EquationTermNodeOptions ): Node {
-    return new EquationTermNode( coefficient, icon, providedOptions );
+    return new EquationTermNode( coefficient, icon, providedOptions ); //TODO dynamic
   }
 }
 
