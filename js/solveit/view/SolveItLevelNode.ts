@@ -252,6 +252,8 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       faceNode // face in front of everything
     ];
 
+    // Show Answer button, for debugging.
+    // Note that this is conditional, so is not (and should be) instrumented for PhET-iO.
     let showAnswerButton: Node;
     if ( phet.chipper.queryParameters.showAnswers ) {
 
@@ -263,7 +265,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
 
       // button that takes you directly to the answer. debug only, i18n not needed.
       showAnswerButton = new RectangularPushButton( {
-        content: new Text( 'show answer', {
+        content: new Text( 'Show Answer', {
           font: new PhetFont( 16 ),
           fill: 'white'
         } ),

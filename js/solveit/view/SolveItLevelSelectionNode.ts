@@ -125,15 +125,16 @@ export default class SolveItLevelSelectionNode extends Node {
 
     // Press this button to test challenge generators. See output in console.
     // This test is only useful if assertions are enabled.
-    // Also disable if fuzz is enabled, since this takes a long time and is not relevant to fuzz testing.
+    // Disable if fuzz is enabled, since this takes a long time and is not relevant to fuzz testing.
+    // Note that this is conditional, so is not (and should be) instrumented for PhET-iO..
     if ( assert && phet.chipper.queryParameters.showAnswers && !phet.chipper.isFuzzEnabled() ) {
       const testButton = new RectangularPushButton( {
-        content: new Text( 'test challenge generators', { fill: 'white', font: new PhetFont( 20 ) } ),
+        content: new Text( 'Test challenge generators', { fill: 'white', font: new PhetFont( 20 ) } ),
         baseColor: 'red',
         listener: () => {
           model.testChallengeGenerators();
           const messageText = new RichText( 'Test completed.<br>See results in browser console.' );
-          const dialog = new Dialog( messageText, { //TODO dynamic
+          const dialog = new Dialog( messageText, {
             topMargin: 20,
             bottomMargin: 20,
             leftMargin: 20

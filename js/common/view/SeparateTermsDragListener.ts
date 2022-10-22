@@ -96,7 +96,9 @@ export default class SeparateTermsDragListener extends TermDragListener {
       const messageStringProperty = thisIsLeft ?
                       EqualityExplorerStrings.rightSideFullStringProperty :
                       EqualityExplorerStrings.leftSideFullStringProperty;
-      const oopsDialog = new OopsDialog( messageStringProperty ); //TODO dynamic
+      const oopsDialog = new OopsDialog( messageStringProperty, { //TODO dynamic
+        //TODO focusOnHideNode:
+      } );
       oopsDialog.show();
 
       // interrupt this drag sequence, since we can't take term off the plate
