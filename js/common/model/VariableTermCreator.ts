@@ -89,7 +89,7 @@ export default class VariableTermCreator extends TermCreator {
   //-------------------------------------------------------------------------------------------------
 
   /**
-   * Creates the icon used to represent this term in the TermsToolbox and equations.
+   * Creates the icon used to represent this term in the TermsToolboxNode and equations.
    */
   public override createIcon( sign: TermCreatorSign = 1 ): Node {
 

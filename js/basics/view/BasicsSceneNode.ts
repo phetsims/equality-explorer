@@ -19,7 +19,7 @@ import EqualityExplorerLockNode from '../../common/view/EqualityExplorerLockNode
 import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from '../../common/view/EqualityExplorerSceneNode.js';
 import EquationAccordionBox from '../../common/view/EquationAccordionBox.js';
 import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
-import TermsToolbox from '../../common/view/TermsToolbox.js';
+import TermsToolboxNode from '../../common/view/TermsToolboxNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from '../model/BasicsScene.js';
 import { SnapshotControlOptions } from '../../common/view/SnapshotControl.js';
@@ -74,7 +74,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
 
     const termToolboxNodesTandem = options.tandem.createTandem( 'termToolboxNodes' );
 
-    const leftTermsToolboxNode = new TermsToolbox( leftTermCreators, scale.leftPlate, termsLayer, {
+    const leftTermsToolboxNode = new TermsToolboxNode( leftTermCreators, scale.leftPlate, termsLayer, {
       hasNegativeTermsInToolbox: scene.hasNegativeTermsInToolbox,
       contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
@@ -84,7 +84,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
       tandem: termToolboxNodesTandem.createTandem( 'leftTermsToolboxNode' )
     } );
 
-    const rightTermsToolboxNode = new TermsToolbox( rightTermCreators, scale.rightPlate, termsLayer, {
+    const rightTermsToolboxNode = new TermsToolboxNode( rightTermCreators, scale.rightPlate, termsLayer, {
       hasNegativeTermsInToolbox: scene.hasNegativeTermsInToolbox,
       contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,

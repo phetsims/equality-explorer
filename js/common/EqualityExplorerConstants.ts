@@ -63,7 +63,7 @@ const EqualityExplorerConstants = {
   // terms
   DEFAULT_CONSTANT_VALUE: Fraction.fromInteger( 1 ), // constant terms are created with this value by default
   DEFAULT_COEFFICIENT: Fraction.fromInteger( 1 ), // variable terms are created with this coefficient by default
-  SMALL_TERM_DIAMETER: 32, // diameter of small terms, like those in the TermsToolbox
+  SMALL_TERM_DIAMETER: 32, // diameter of small terms, like those in the TermsToolboxNode
   BIG_TERM_DIAMETER: 100, // diameter of big terms, like those on the scale in the Operations screen
   SHADOW_OPACITY: 0.4, // opacity of the shadow that appears on terms, 0-1 (transparent-opaque)
 

@@ -77,7 +77,7 @@ export default class ConstantTermCreator extends TermCreator {
   //-------------------------------------------------------------------------------------------------
 
   /**
-   * Creates the icon used to represent this term in the TermsToolbox and equations.
+   * Creates the icon used to represent this term in the TermsToolboxNode and equations.
    * @param sign of the constant shown on the icon
    */
   public override createIcon( sign: TermCreatorSign = 1 ): Node {

@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-//TODO rename TermsToolboxNode
 /**
  * Toolbox that contains the terms that can be dragged out onto the scale.
  *
@@ -28,7 +27,7 @@ type SelfOptions = {
 
 type TermsToolboxOptions = SelfOptions & NodeTranslationOptions & PickRequired<PanelOptions, 'tandem'>;
 
-export default class TermsToolbox extends Panel {
+export default class TermsToolboxNode extends Panel {
 
   /**
    * @param termCreators - creators for terms, appear in this order left-to-right
@@ -108,4 +107,4 @@ export default class TermsToolbox extends Panel {
   }
 }
 
-equalityExplorer.register( 'TermsToolbox', TermsToolbox );
+equalityExplorer.register( 'TermsToolboxNode', TermsToolboxNode );

@@ -653,7 +653,7 @@ export default abstract class TermCreator extends PhetioObject {
   //-------------------------------------------------------------------------------------------------
 
   /**
-   * Creates the icon used to represent this term in the TermsToolbox and equations.
+   * Creates the icon used to represent this term in the TermsToolboxNode and equations.
    */
   public abstract createIcon( sign?: TermCreatorSign ): Node;
 

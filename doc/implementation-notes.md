@@ -99,7 +99,7 @@ public override dispose(): void {
 
 A creator is responsible for handling the user interaction that results in the creation of both the model and view for a type of model element.  In this sim, the creator is also responsible for managing the model element throughout its lifecycle.
 
-Creators live in the toolboxes below the scale, see `TermsToolbox`. The objects displayed in the toolboxes are `TermCreatorNode`s, each with an associated `TermCreator`.  Clicking on one of the objects in the toolbox creates a term, via the following steps:
+Creators live in the toolboxes below the scale, see `TermsToolboxNode`. The objects displayed in the toolboxes are `TermCreatorNode`s, each with an associated `TermCreator`.  Clicking on one of the objects in the toolbox creates a term, via the following steps:
 
 1. The `TermCreatorNode` receives a Scenery input `{SceneryEvent} event`. The `TermCreatorNode` propagates the `event` to its associated `TermCreator`, and instructs it to create a `Term`.  See `addInputListener` in `TermCreatorNode`.
 2. The `TermCreator` creates the `Term`, adds it to its list of managed `Term`s, and adds a listener to the `Term`'s `{Emitter} disposedEmitter` (fired when the `Term` is eventually disposed).  See `createTerm` in `TermCreator`.
