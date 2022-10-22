@@ -61,6 +61,8 @@ export default class TermsToolbox extends Panel {
       const termCreator = termCreators[ i ];
       const termCreatorTandemName = termCreator.tandem.name;
 
+      //TODO confirm that TermCreatorNodes should be instrumented, and that these tandem names are appropriate
+
       // creator for positive terms
       termCreatorNodes.push( new TermCreatorNode( termCreator, plate, termsLayer, {
         tandem: options.hasNegativeTermsInToolbox ?

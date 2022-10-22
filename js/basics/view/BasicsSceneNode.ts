@@ -80,6 +80,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
       spacing: options.termsToolboxSpacing,
       centerX: scale.leftPlate.positionProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN,
+      //TODO confirm that leftTermsToolboxNode should be instrumented
       tandem: termToolboxNodesTandem.createTandem( 'leftTermsToolboxNode' )
     } );
 
@@ -89,6 +90,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
       spacing: options.termsToolboxSpacing,
       centerX: scale.rightPlate.positionProperty.value.x,
       bottom: leftTermsToolboxNode.bottom,
+      //TODO confirm that rightTermsToolboxNode should be instrumented
       tandem: termToolboxNodesTandem.createTandem( 'rightTermsToolboxNode' )
     } );
 
