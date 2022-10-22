@@ -99,7 +99,8 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
       // Slightly off center, so that the equation's relational operator is horizontally centered
       // above the scale's arrow. The offset was determined empirically.
       centerX: scale.position.x - 15,
-      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN
+      top: layoutBounds.top + EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN,
+      tandem: options.tandem.createTandem( 'equationAccordionBox' )
     } );
 
     const snapshotsAccordionBox = new SnapshotsAccordionBox( scene, {
