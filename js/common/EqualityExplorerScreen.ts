@@ -24,7 +24,7 @@ export default class EqualityExplorerScreen<M extends EqualityExplorerModel, V e
 
     super( createModel, createView, providedOptions );
 
-    // When this Screen is deactivated, deactivate the model.  unlink not needed.
+    // When this Screen is deactivated, deactivate the model.
     this.activeProperty.lazyLink( screenActive => {
       if ( !screenActive ) {
         this.model.deactivate();

@@ -61,7 +61,6 @@ export default class OperationsSceneNode extends VariablesSceneNode {
     this.addChild( operationAnimationLayer );
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
-    // removeListener not needed.
     scene.sumToZeroEmitter.addListener( termCreators => SumToZeroNode.animateSumToZero( termCreators, this.termsLayer ) );
   }
 

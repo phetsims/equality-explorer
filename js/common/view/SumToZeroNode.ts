@@ -81,7 +81,6 @@ export default class SumToZeroNode extends Node {
     // Property to be animated
     const opacityProperty = new NumberProperty( this.opacity );
 
-    // unlink not needed
     opacityProperty.link( opacity => {
       this.opacity = opacity;
     } );
@@ -95,8 +94,8 @@ export default class SumToZeroNode extends Node {
       } ]
     } );
 
-    // removeListener not needed
-    this.animation.finishEmitter.addListener( () => this.dispose() ); // removes this Node from the scenegraph
+    // removes this Node from the scenegraph
+    this.animation.finishEmitter.addListener( () => this.dispose() );
 
     this.disposeSumToZeroNode = () => {
       symbolText && symbolText.dispose();

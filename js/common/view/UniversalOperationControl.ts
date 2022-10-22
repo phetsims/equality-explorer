@@ -115,7 +115,7 @@ export default class UniversalOperationControl extends HBox {
       }
     };
 
-    scene.operatorProperty.lazyLink( operatorListener ); // unlink not needed
+    scene.operatorProperty.lazyLink( operatorListener );
 
     // items for the operand picker
     const operandItems: ObjectPickerItem<UniversalOperand>[] = [];
@@ -197,7 +197,6 @@ export default class UniversalOperationControl extends HBox {
     super( options );
 
     // Adjust the enabled state of the operand picker's increment/decrement arrows.
-    // dispose not needed
     Multilink.multilink( [ scene.operatorProperty, scene.operandProperty ],
       ( operator, operand ) => {
 
@@ -305,7 +304,7 @@ export default class UniversalOperationControl extends HBox {
     // If the maxInteger limit is exceeded, stop all universal operations that are in progress
     const maxIntegerExceededListener = () => this.stopAnimations();
     scene.allTermCreators.forEach( termCreator =>
-      termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ) ); // removeListener not needed
+      termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ) );
   }
 
   public override dispose(): void {

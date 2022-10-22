@@ -299,7 +299,6 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
 
     this.faceAnimation = null;
 
-    // unlink not needed.
     level.scoreProperty.lazyLink( ( score, oldScore ) => {
 
       // do nothing when the score is reset
@@ -381,7 +380,6 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
           } ]
         } );
 
-        // removeListener not needed
         this.faceAnimation.finishEmitter.addListener( () => {
           faceNode.visible = false;
           nextButton.visible = true;
@@ -392,7 +390,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       }
     } );
 
-    // When the challenge changes... unlink not needed.
+    // When the challenge changes...
     level.challengeProperty.link( challenge => {
 
       // cancel operation animations
@@ -411,7 +409,6 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     } );
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
-    // removeListener not needed.
     level.sumToZeroEmitter.addListener( termCreators => SumToZeroNode.animateSumToZero( termCreators, this.termsLayer ) );
   }
 

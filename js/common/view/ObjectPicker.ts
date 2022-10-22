@@ -301,7 +301,6 @@ class ObjectPicker<T> extends Node {
       fireOnHoldInterval: options.timerInterval
     };
 
-    // increment - removeInputListener unnecessary
     const incrementInputListener = new ObjectPickerInputListener( incrementButtonStateProperty,
       combineOptions<ObjectPickerInputListenerOptions>( {
         fire: () => {
@@ -316,7 +315,6 @@ class ObjectPicker<T> extends Node {
       }, inputListenerOptions ) );
     incrementParent.addInputListener( incrementInputListener );
 
-    // decrement - removeInputListener unnecessary
     const decrementInputListener = new ObjectPickerInputListener( decrementButtonStateProperty,
       combineOptions<ObjectPickerInputListenerOptions>( {
         fire: () => {
@@ -363,14 +361,14 @@ class ObjectPicker<T> extends Node {
       valueProperty.value = items[ index ].value;
     } );
 
-    // update colors for increment components, unmultilink unnecessary
+    // update colors for increment components
     Multilink.multilink(
       [ incrementButtonStateProperty, incrementEnabledProperty ],
       ( buttonState, enabled ) => {
         updateColors( buttonState, enabled, incrementBackgroundNode, incrementArrow, backgroundColors, arrowColors );
       } );
 
-    // update colors for decrement components, unmultilink unnecessary
+    // update colors for decrement components
     Multilink.multilink(
       [ decrementButtonStateProperty, decrementEnabledProperty ],
       ( buttonState, enabled ) => {

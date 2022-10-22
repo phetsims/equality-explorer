@@ -48,13 +48,13 @@ export default class TranslateThenFade {
 
     this.onStop = options.onStop;
 
-    // Property for animating position. unlink not needed.
+    // Property for animating position.
     const positionProperty = new Property( node.translation );
     positionProperty.link( position => {
       node.translation = position;
     } );
 
-    // Property for animating opacity. unlink not needed.
+    // Property for animating opacity.
     const opacityProperty = new NumberProperty( node.opacity );
     opacityProperty.link( opacity => {
       node.opacity = opacity;
@@ -80,10 +80,10 @@ export default class TranslateThenFade {
       } ]
     } );
 
-    // When translation finishes, start fade animation. removeListener not needed.
+    // When translation finishes, start fade animation.
     this.translateAnimation.finishEmitter.addListener( () => this.fadeAnimation.start() );
 
-    // When fade finishes, perform callback. removeListener not needed.
+    // When fade finishes, perform callback.
     this.fadeAnimation.finishEmitter.addListener( () => options.onComplete() );
   }
 

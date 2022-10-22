@@ -118,7 +118,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
       this.equivalentTermCreator.putTermOnPlate( this.inverseTerm, inverseCell );
 
       // if the inverse term is dragged, break the association to equivalentTerm
-      this.inverseTerm.draggingProperty.lazyLink( this.inverseTermDraggingListener ); // unlink needed in dispose
+      this.inverseTerm.draggingProperty.lazyLink( this.inverseTermDraggingListener );
 
       // create the equivalent term on the opposite side
       // Do this after creating inverseTerm so that it appear in front of inverseTerm.
