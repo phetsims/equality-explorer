@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+//TODO do we need an iO-only Property whose value indicates what the displayed snapshot looks like?
 /**
  * Control for taking, displaying and selecting a snapshot.
  * The Snapshots accordion box contains a vertical column of these.
