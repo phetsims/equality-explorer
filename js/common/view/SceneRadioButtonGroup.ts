@@ -10,7 +10,7 @@ import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { NodeTranslationOptions } from '../../../../scenery/js/imports.js';
-import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions, RectangularRadioButtonItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions, RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 
@@ -37,7 +37,7 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<E
     }, providedOptions );
 
     // describe a radio button for each scene
-    const contentArray: RectangularRadioButtonItem<EqualityExplorerScene>[] = [];
+    const contentArray: RectangularRadioButtonGroupItem<EqualityExplorerScene>[] = [];
     scenes.forEach( scene => {
       assert && assert( scene.icon, 'scene must have an icon' );
       contentArray.push( {

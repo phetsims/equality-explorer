@@ -24,7 +24,7 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import { HBox, HBoxOptions, Node, Path } from '../../../../scenery/js/imports.js';
 import levelDownAltSolidShape from '../../../../sherpa/js/fontawesome-5/levelDownAltSolidShape.js';
-import RectangularRadioButtonGroup, { RectangularRadioButtonItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene from '../../operations/model/OperationsScene.js';
@@ -59,7 +59,7 @@ export default class UniversalOperationControl extends HBox {
     }, providedOptions );
 
     // items for the radio buttons that are used to choose the operator
-    const operatorItems: RectangularRadioButtonItem<UniversalOperator>[] = [];
+    const operatorItems: RectangularRadioButtonGroupItem<UniversalOperator>[] = [];
     for ( let i = 0; i < scene.operators.length; i++ ) {
       const operator = scene.operators[ i ];
       operatorItems.push( {
