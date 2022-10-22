@@ -153,7 +153,7 @@ export default class BalanceScale {
         isValidValue: value => ( typeof value === 'number' ),
         tandem: options.tandem.createTandem( 'angleProperty' ),
         phetioValueType: NumberIO,
-        phetioDocumentation: 'angle of the scale in radians, zero is balanced'
+        phetioDocumentation: 'Angle of the scale in radians, zero is balanced'
       } );
 
     // Move the plates when the angle changes.
@@ -191,7 +191,7 @@ export default class BalanceScale {
         isValidValue: value => Number.isInteger( value ),
         tandem: options.tandem.createTandem( 'numberOfTermsProperty' ),
         phetioValueType: NumberIO,
-        phetioDocumentation: 'the number of terms on the scale'
+        phetioDocumentation: 'Number of terms on the scale'
       } );
   }
 

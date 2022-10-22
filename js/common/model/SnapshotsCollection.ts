@@ -36,7 +36,7 @@ export default class SnapshotsCollection extends PhetioObject {
 
       // PhetioObjectOptions
       phetioState: false,
-      phetioDocumentation: 'the collection of snapshots that appear in the Snapshots accordion box'
+      phetioDocumentation: 'Collection of snapshots that appear in the Snapshots accordion box'
     }, providedOptions );
 
     assert && assert( Number.isInteger( options.numberOfSnapshots ) && options.numberOfSnapshots > 0 );

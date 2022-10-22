@@ -203,7 +203,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
         level.nextChallenge();
       },
       tandem: options.tandem.createTandem( 'refreshButton' ),
-      phetioDocumentation: 'This button generates a new challenge.'
+      phetioDocumentation: 'Pressing this button generates a new challenge.'
     } );
 
     // Next button, takes us to the next challenge

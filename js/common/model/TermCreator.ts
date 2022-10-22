@@ -161,7 +161,7 @@ export default abstract class TermCreator extends PhetioObject {
       [ this.termsOnPlate.lengthProperty ], length => length, {
         tandem: options.tandem.createTandem( 'numberOfTermsOnPlateProperty' ),
         phetioValueType: NumberIO,
-        phetioDocumentation: 'number of terms on the plate that were created by this term creator'
+        phetioDocumentation: 'Number of terms on the plate that were created by this term creator'
       } );
 
     const weightOnPlateDependencies = [ this.numberOfTermsOnPlateProperty ];
@@ -181,7 +181,7 @@ export default abstract class TermCreator extends PhetioObject {
         useDeepEquality: true, // set value only if truly different, prevents costly unnecessary notifications
         tandem: options.tandem.createTandem( 'weightOnPlateProperty' ),
         phetioValueType: Fraction.FractionIO,
-        phetioDocumentation: 'weight of the terms on the plate that were created by this term creator'
+        phetioDocumentation: 'Weight of the terms on the plate that were created by this term creator'
       } );
 
     this.termCreatedEmitter = new Emitter( {

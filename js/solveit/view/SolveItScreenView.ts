@@ -55,7 +55,7 @@ export default class SolveItScreenView extends ScreenView {
 
     this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'snapshotsAccordionBoxExpandedProperty' ),
-      phetioDocumentation: 'applies to the "Snapshots" accordion box for all game levels'
+      phetioDocumentation: 'Applies to the "Snapshots" accordion box for all game levels'
     } );
 
     const gameAudioPlayer = new GameAudioPlayer();
@@ -74,7 +74,7 @@ export default class SolveItScreenView extends ScreenView {
     const numberTooBigDialog = new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty, {
       focusOnHideNode: null,
       tandem: options.tandem.createTandem( 'numberTooBigDialog' ),
-      phetioDocumentation: 'displayed when adding a term would result in a number that is too big for the sim'
+      phetioDocumentation: 'Displayed when adding a term would result in a number that is too big for the sim'
     } );
 
     // Nodes for levels, organized under a parent tandem

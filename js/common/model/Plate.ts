@@ -104,7 +104,7 @@ export default class Plate extends PhetioObject {
       numberType: 'Integer',
       isValidValue: value => ( value >= 0 ),
       tandem: options.tandem.createTandem( 'numberOfTermsProperty' ),
-      phetioDocumentation: 'the number of terms on the plate',
+      phetioDocumentation: 'Number of terms on the plate',
       phetioReadOnly: true // numberOfTermsProperty must be set by addTerm and removeTerm
     } );
 
@@ -124,7 +124,7 @@ export default class Plate extends PhetioObject {
       }, {
         tandem: options.tandem.createTandem( 'weightProperty' ),
         phetioValueType: Fraction.FractionIO,
-        phetioDocumentation: 'the combined weight of the terms on the plate'
+        phetioDocumentation: 'Combined weight of the terms on the plate'
       } );
 
     this.contentsChangedEmitter = new Emitter();

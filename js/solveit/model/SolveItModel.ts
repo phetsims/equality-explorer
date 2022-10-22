@@ -74,7 +74,7 @@ export default class SolveItModel extends PhetioObject implements TModel {
       validValues: [ ...this.levels, null ],
       tandem: tandem.createTandem( 'levelProperty' ),
       phetioValueType: NullableIO( EqualityExplorerScene.EqualityExplorerSceneIO ),
-      phetioDocumentation: 'null corresponds to the level-selection user interface'
+      phetioDocumentation: 'The selected game level. null corresponds to the level-selection user interface'
     } );
   }
 

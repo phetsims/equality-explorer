@@ -53,12 +53,12 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
 
     this.equationAccordionBoxExpandedProperty = new BooleanProperty( true, {
       tandem: options.tandem.createTandem( 'equationAccordionBoxExpandedProperty' ),
-      phetioDocumentation: 'applies to the "Equation or Inequality" accordion box for all scenes'
+      phetioDocumentation: 'Applies to the "Equation or Inequality" accordion box for all scenes'
     } );
 
     this.snapshotsAccordionBoxExpandedProperty = new BooleanProperty( false, {
       tandem: options.tandem.createTandem( 'snapshotsAccordionBoxExpandedProperty' ),
-      phetioDocumentation: 'applies to the "Snapshots" accordion box for all scenes'
+      phetioDocumentation: 'Applies to the "Snapshots" accordion box for all scenes'
     } );
 
     const resetAllButton = new ResetAllButton( {
@@ -78,7 +78,7 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
     const numberTooBigDialog = new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty, {
       focusOnHideNode: null,
       tandem: options.tandem.createTandem( 'numberTooBigDialog' ),
-      phetioDocumentation: 'displayed when adding a term would result in a number that is too big for the sim'
+      phetioDocumentation: 'Displayed when adding a term would result in a number that is too big for the sim'
     } );
 
     // If there is more than 1 scene, organize them under a 'sceneNodes' tandem.
