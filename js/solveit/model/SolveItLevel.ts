@@ -15,6 +15,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import ConstantTerm from '../../common/model/ConstantTerm.js';
@@ -98,9 +99,10 @@ export default class SolveItLevel extends OperationsScene {
     } );
 
     this.challengeProperty = new Property<Challenge | null>( null, {
-      isValidValue: value => ( value instanceof Challenge ) || ( value === null )
-      //TODO tandem: options.tandem.createTandem( 'challengeProperty' )
-      //TODO phetioValueType: NullableIO( Challenge.ChallengeIO )
+      isValidValue: value => ( value instanceof Challenge ) || ( value === null ),
+      tandem: options.tandem.createTandem( 'challengeProperty' ),
+      phetioValueType: NullableIO( Challenge.ChallengeIO ),
+      phetioReadOnly: true
     } );
 
     this.challengeHasBeenSolved = false;
