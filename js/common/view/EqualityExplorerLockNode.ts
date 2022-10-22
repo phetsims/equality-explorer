@@ -45,6 +45,10 @@ export default class EqualityExplorerLockNode extends LockNode {
     } ) );
 
     this.touchArea = this.localBounds.dilatedXY( 5, 10 );
+
+    this.addLinkedElement( lockedProperty, {
+      tandem: options.tandem.createTandem( lockedProperty.tandem.name )
+    } );
   }
 }
 

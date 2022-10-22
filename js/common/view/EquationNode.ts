@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+//TODO do we need an iO-only Property whose value indicates what the displayed equation looks like?
 /**
  * Displays an equation or inequality, possibly involving multiple variables.
  * Origin is at the center of the relational operator, to facilitate horizontal alignment with the scale.
