@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
@@ -76,7 +75,7 @@ export default class VariableTerm extends Term {
    * Creates a copy of this term, with modifications through options.
    */
   public override copy( providedOptions?: VariableTermOptions ): VariableTerm {
-    return new VariableTerm( this.variable, merge( this.copyOptions(), providedOptions ) ); //TODO dynamic
+    return new VariableTerm( this.variable, combineOptions<VariableTermOptions>( this.copyOptions(), providedOptions ) ); //TODO dynamic
   }
 
   /**
