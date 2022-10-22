@@ -1,5 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
+//TODO rename TermsToolboxNode
 /**
  * Toolbox that contains the terms that can be dragged out onto the scale.
  *
@@ -8,6 +9,7 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { HBox, Node, NodeTranslationOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -24,7 +26,7 @@ type SelfOptions = {
   spacing?: number; // horizontal space between TermCreatorNodes
 };
 
-type TermsToolboxOptions = SelfOptions & NodeTranslationOptions;
+type TermsToolboxOptions = SelfOptions & NodeTranslationOptions & PickRequired<PanelOptions, 'tandem'>;
 
 export default class TermsToolbox extends Panel {
 
@@ -47,7 +49,8 @@ export default class TermsToolbox extends Panel {
       lineWidth: 1,
       cornerRadius: 6,
       xMargin: 5,
-      yMargin: 5
+      yMargin: 5,
+      phetioVisiblePropertyInstrumented: false // because both toolboxes must remain visible for lock feature
     }, providedOptions );
 
     const backgroundNode = new Rectangle( 0, 0, options.contentSize.width, options.contentSize.height );
@@ -55,13 +58,21 @@ export default class TermsToolbox extends Panel {
     const termCreatorNodes = [];
     for ( let i = 0; i < termCreators.length; i++ ) {
 
+      const termCreator = termCreators[ i ];
+      const termCreatorTandemName = termCreator.tandem.name;
+
       // creator for positive terms
-      termCreatorNodes.push( new TermCreatorNode( termCreators[ i ], plate, termsLayer ) );
+      termCreatorNodes.push( new TermCreatorNode( termCreator, plate, termsLayer, {
+        tandem: options.hasNegativeTermsInToolbox ?
+                options.tandem.createTandem( `${termCreatorTandemName}PositiveNode` ) :
+                options.tandem.createTandem( `${termCreatorTandemName}Node` )
+      } ) );
 
       // optional creator for negative terms
       if ( options.hasNegativeTermsInToolbox ) {
-        termCreatorNodes.push( new TermCreatorNode( termCreators[ i ], plate, termsLayer, {
-          sign: -1
+        termCreatorNodes.push( new TermCreatorNode( termCreator, plate, termsLayer, {
+          sign: -1,
+          tandem: options.tandem.createTandem( `${termCreatorTandemName}NegativeNode` )
         } ) );
       }
     }

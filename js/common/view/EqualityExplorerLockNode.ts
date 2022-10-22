@@ -10,13 +10,14 @@
 
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import LockNode, { LockNodeOptions } from '../../../../scenery-phet/js/LockNode.js';
 import { FireListener, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type EqualityExplorerLockNodeOptions = SelfOptions & NodeTranslationOptions;
+type EqualityExplorerLockNodeOptions = SelfOptions & NodeTranslationOptions & PickRequired<LockNodeOptions, 'tandem'>;
 
 export default class EqualityExplorerLockNode extends LockNode {
 

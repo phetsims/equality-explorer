@@ -70,6 +70,7 @@ export default class ObjectTermCreator extends TermCreator {
    * Instantiates an ObjectTerm.
    */
   protected override createTermProtected( providedOptions?: ObjectTermCreatorOptions ): ObjectTerm {
+    //TODO instantiate ObjectTerm using PhetioGroup
     return new ObjectTerm( this.objectVariable, providedOptions );
   }
 
@@ -86,6 +87,7 @@ export default class ObjectTermCreator extends TermCreator {
    * Instantiates the Node that corresponds to this term.
    */
   public override createTermNode( term: ObjectTerm ): ObjectTermNode {
+    //TODO instantiate ObjectTermNode using PhetioGroup
     return new ObjectTermNode( this, term );
   }
 }

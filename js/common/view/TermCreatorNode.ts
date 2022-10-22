@@ -9,6 +9,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { DragListener, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Plate from '../model/Plate.js';
@@ -18,7 +19,7 @@ type SelfOptions = {
   sign?: TermCreatorSign; // sign that will be applied to terms created by this Node
 };
 
-type TermCreatorNodeOptions = SelfOptions;
+type TermCreatorNodeOptions = SelfOptions & PickRequired<NodeOptions, 'tandem'>;
 
 export default class TermCreatorNode extends Node {
 
@@ -32,7 +33,7 @@ export default class TermCreatorNode extends Node {
    * @param termsLayer - parent for TermNodes that will be created
    * @param [providedOptions]
    */
-  public constructor( termCreator: TermCreator, plate: Plate, termsLayer: Node, providedOptions?: TermCreatorNodeOptions ) {
+  public constructor( termCreator: TermCreator, plate: Plate, termsLayer: Node, providedOptions: TermCreatorNodeOptions ) {
 
     const options = optionize<TermCreatorNodeOptions, SelfOptions, NodeOptions>()( {
 
@@ -40,7 +41,8 @@ export default class TermCreatorNode extends Node {
       sign: 1,
 
       // NodeOptions
-      cursor: 'pointer'
+      cursor: 'pointer',
+      phetioVisiblePropertyInstrumented: false // because left and right toolboxes must contain the same term creators for lock feature
     }, providedOptions );
 
     options.children = [ termCreator.createIcon( options.sign ) ];
@@ -79,6 +81,10 @@ export default class TermCreatorNode extends Node {
       phet.joist.sim.frameStartedEmitter.removeListener( frameStartedCallback );
     };
     phet.joist.sim.frameStartedEmitter.addListener( frameStartedCallback ); // removeListener after first call
+
+    this.addLinkedElement( termCreator, {
+      tandem: options.tandem.createTandem( termCreator.tandem.name )
+    } );
   }
 }
 
