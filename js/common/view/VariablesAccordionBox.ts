@@ -9,7 +9,6 @@
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
-import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, Node, NodeTranslationOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
@@ -30,7 +29,8 @@ type SelfOptions = {
   fixedHeight?: number;
 };
 
-type VariablesAccordionBoxOptions = SelfOptions & NodeTranslationOptions & PickOptional<AccordionBoxOptions, 'expandedProperty'>;
+//TODO narrow VariablesAccordionBoxOptions
+type VariablesAccordionBoxOptions = SelfOptions & NodeTranslationOptions & AccordionBoxOptions;
 
 export default class VariablesAccordionBox extends AccordionBox {
 
@@ -39,6 +39,8 @@ export default class VariablesAccordionBox extends AccordionBox {
    * @param providedOptions
    */
   public constructor( variables: Variable[], providedOptions?: VariablesAccordionBoxOptions ) {
+
+    assert && assert( variables.length > 0 );
 
     const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
       showTitleWhenExpanded: false,
@@ -67,12 +69,14 @@ export default class VariablesAccordionBox extends AccordionBox {
 
     options.titleNode = new Text( options.titleStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
-      maxWidth: 0.85 * contentWidth
+      maxWidth: 0.85 * contentWidth,
+      tandem: options.tandem.createTandem( 'titleText' )
     } );
 
     const backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     // Create a picker for each variable
+    //TODO verify that there's no reason to instrument variable label and picker
     const children: Node[] = [];
     variables.forEach( variable => {
 

@@ -57,7 +57,7 @@ export default class EquationAccordionBox extends AccordionBox {
       contentHeight: options.fixedHeight - ( 2 * options.contentYMargin ),
       xMargin: 0,
       yMargin: 0
-      //TODO confirm that contentNode should not be instrumented
+      //TODO confirm that nothing in contentNode should be instrumented
     } );
 
     options.titleNode = options.titleNode || new Text( EqualityExplorerStrings.equationOrInequalityStringProperty, {

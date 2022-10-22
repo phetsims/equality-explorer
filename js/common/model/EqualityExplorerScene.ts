@@ -103,6 +103,8 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
       phetioType: EqualityExplorerScene.EqualityExplorerSceneIO
     }, providedOptions );
 
+    assert && assert( options.variables === null || options.variables.length > 0 );
+
     super( options );
 
     phet.log && phet.log( `scene: ${this.tandem.name}, maxWeight=${options.maxWeight}` );

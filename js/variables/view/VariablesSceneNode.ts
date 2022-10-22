@@ -15,18 +15,19 @@ import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
 
-export type VariablesSceneNodeOptions = SelfOptions & BasicsSceneNodeOptions;
+export type VariablesSceneNodeOptions = SelfOptions & StrictOmit<BasicsSceneNodeOptions, 'variableValuesVisibleProperty'>;
 
 export default class VariablesSceneNode extends BasicsSceneNode {
 
-  // whether the Variables accordion box is expanded or collapsed
-  private readonly variablesAccordionBoxExpandedProperty: Property<boolean>;
-
   // whether variable values are visible in snapshots
   private readonly variableValuesVisibleProperty: Property<boolean>;
+
+  // whether the Variables accordion box is expanded or collapsed
+  private readonly variablesAccordionBoxExpandedProperty: Property<boolean>;
 
   public constructor( scene: EqualityExplorerScene,
                       equationAccordionBoxExpandedProperty: Property<boolean>,
@@ -40,33 +41,40 @@ export default class VariablesSceneNode extends BasicsSceneNode {
       termsToolboxSpacing: 30 // horizontal spacing between terms in the toolbox
     }, providedOptions );
 
-    // whether variable values are visible in snapshots
     const variableValuesVisibleProperty = new BooleanProperty( true );
-
-    assert && assert( !options.variableValuesVisibleProperty, 'VariablesSceneNode sets variableValuesVisibleProperty' );
     options.variableValuesVisibleProperty = variableValuesVisibleProperty;
 
     super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
+    this.variableValuesVisibleProperty = variableValuesVisibleProperty;
     this.variablesAccordionBoxExpandedProperty = new BooleanProperty( true );
 
     const variables = scene.variables!;
-    assert && assert( variables );
+    assert && assert( variables && variables.length > 0 );
 
     // Variables accordion box, above the Snapshots accordion box
     const variablesAccordionBox = new VariablesAccordionBox( variables, {
       expandedProperty: this.variablesAccordionBoxExpandedProperty,
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: this.snapshotsAccordionBox.right,
-      top: this.snapshotsAccordionBox.top
+      top: this.snapshotsAccordionBox.top,
+      tandem: ( variables.length === 1 ) ?
+              options.tandem.createTandem( 'variableAccordionBox' ) : // singular
+              options.tandem.createTandem( 'variablesAccordionBox' ) // plural
     } );
     this.addChild( variablesAccordionBox );
     variablesAccordionBox.moveToBack();
 
-    // shift the Snapshots accordion box down
-    this.snapshotsAccordionBox.top = variablesAccordionBox.bottom + 10;
-
-    this.variableValuesVisibleProperty = variableValuesVisibleProperty;
+    const snapshotsAccordionBoxTop = this.snapshotsAccordionBox.top; // save the original position
+    variablesAccordionBox.visibleProperty.link( visible => {
+      if ( visible ) {
+        // shift the Snapshots accordion box down
+        this.snapshotsAccordionBox.top = variablesAccordionBox.bottom + 10;
+      }
+      else {
+        this.snapshotsAccordionBox.top = snapshotsAccordionBoxTop;
+      }
+    } );
   }
 
   public override dispose(): void {
