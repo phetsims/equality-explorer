@@ -1,7 +1,7 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
 /**
- * Abstract base type for displaying a term.
+ * TermNode is the base class for displaying a term.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -35,7 +35,7 @@ export default class TermNode extends Node {
   private readonly termDragListener: TermDragListener;
   private readonly disposeTermNode: () => void;
 
-  public constructor( termCreator: TermCreator, term: Term, contentNode: Node, shadowNode: Node, providedOptions?: TermNodeOptions ) {
+  protected constructor( termCreator: TermCreator, term: Term, contentNode: Node, shadowNode: Node, providedOptions?: TermNodeOptions ) {
 
     const options = optionize<TermNodeOptions, SelfOptions, NodeOptions>()( {
 
