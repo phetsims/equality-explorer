@@ -14,6 +14,7 @@ import VariablesSceneNode, { VariablesSceneNodeOptions } from './VariablesSceneN
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 
 export default class VariablesScreenView extends EqualityExplorerScreenView {
 
@@ -28,9 +29,10 @@ export default class VariablesScreenView extends EqualityExplorerScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
+                                      numberTooBigDialog: OopsDialog,
                                       providedOptions: VariablesSceneNodeOptions ): VariablesSceneNode {
     return new VariablesSceneNode( scene, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, numberTooBigDialog, providedOptions );
   }
 }
 

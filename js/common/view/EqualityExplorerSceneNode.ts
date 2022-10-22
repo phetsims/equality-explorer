@@ -10,13 +10,11 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import { Node, NodeOptions, PressListenerEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import TermCreator from '../model/TermCreator.js';
 import Term from '../model/Term.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import PhetioCapsule from '../../../../tandem/js/PhetioCapsule.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -33,6 +31,7 @@ export default class EqualityExplorerSceneNode extends Node {
   protected constructor( scene: EqualityExplorerScene,
                          snapshotsAccordionBox: Node,
                          termsLayer: Node,
+                         numberTooBigDialog: OopsDialog,
                          providedOptions: EqualityExplorerSceneNodeOptions ) {
 
     super( providedOptions );
@@ -60,22 +59,12 @@ export default class EqualityExplorerSceneNode extends Node {
       }
     };
 
-    // To manage dynamic instrumented OopsDialog
-    //TODO replace oopsDialogCapsule with one static OopsDialog that is used by all scenes
-    const oopsDialogCapsule = new PhetioCapsule( tandem => new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty, {
-      focusOnHideNode: null, // because the term we were trying to add to the plate no longer exists
-      tandem: tandem
-    } ), [], {
-      tandem: providedOptions.tandem.createTandem( 'oopsDialogCapsule' ),
-      phetioType: PhetioCapsule.PhetioCapsuleIO( OopsDialog.OopsDialogIO )
-    } );
-
     // When the maxInteger limit is exceeded, dispose of all terms that are not on the scale, and display a dialog.
     // To test this, see EqualityExplorerQueryParameters.maxInteger.
     const maxIntegerExceededListener = () => {
       phet.log && phet.log( 'maxInteger exceeded' );
       scene.disposeTermsNotOnScale();
-      oopsDialogCapsule.getElement().show();
+      numberTooBigDialog.show();
     };
 
     scene.allTermCreators.forEach( termCreator => {

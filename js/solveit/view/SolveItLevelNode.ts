@@ -41,6 +41,7 @@ import SolveItRewardNode from './SolveItRewardNode.js';
 import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
+import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 
 // constants
 const LEVEL_FONT = new PhetFont( 20 );
@@ -73,6 +74,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
                       visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       gameAudioPlayer: GameAudioPlayer,
+                      numberTooBigDialog: OopsDialog,
                       providedOptions: SolveItLevelNodeOptions ) {
 
     const options = optionize<SolveItLevelNodeOptions, SelfOptions, EqualityExplorerSceneNodeOptions>()( {
@@ -280,7 +282,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     assert && assert( !options.children, 'SolveItLevelNode sets children' );
     options.children = children;
 
-    super( level, snapshotsAccordionBox, termsLayer, options );
+    super( level, snapshotsAccordionBox, termsLayer, numberTooBigDialog, options );
 
     this.universalOperationControl = universalOperationControl;
 

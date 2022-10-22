@@ -10,6 +10,7 @@
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import BasicsSceneNode, { BasicsSceneNodeOptions } from '../../basics/view/BasicsSceneNode.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -24,8 +25,9 @@ export default class NumbersSceneNode extends BasicsSceneNode {
                       equationAccordionBoxExpandedProperty: Property<boolean>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
+                      numberTooBigDialog: OopsDialog,
                       providedOptions: NumbersSceneNodeOptions ) {
-    super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
+    super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, numberTooBigDialog, providedOptions );
   }
 }
 
