@@ -63,7 +63,6 @@ export default class EqualityExplorerSceneNode extends Node {
     // To manage dynamic instrumented OopsDialog
     //TODO replace oopsDialogCapsule with one static OopsDialog that is used by all scenes
     const oopsDialogCapsule = new PhetioCapsule( tandem => new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty, {
-      //TODO focusOnHideNode:
       tandem: tandem
     } ), [], {
       tandem: providedOptions.tandem.createTandem( 'oopsDialogCapsule' ),

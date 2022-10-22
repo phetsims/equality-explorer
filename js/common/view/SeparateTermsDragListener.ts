@@ -94,11 +94,9 @@ export default class SeparateTermsDragListener extends TermDragListener {
       // opposite plate is full, cannot create inverse term, show 'Oops' message
       const thisIsLeft = ( this.termCreator.positivePosition.x < this.equivalentTermCreator.positivePosition.x );
       const messageStringProperty = thisIsLeft ?
-                      EqualityExplorerStrings.rightSideFullStringProperty :
-                      EqualityExplorerStrings.leftSideFullStringProperty;
-      const oopsDialog = new OopsDialog( messageStringProperty, { //TODO dynamic
-        //TODO focusOnHideNode:
-      } );
+                                    EqualityExplorerStrings.rightSideFullStringProperty :
+                                    EqualityExplorerStrings.leftSideFullStringProperty;
+      const oopsDialog = new OopsDialog( messageStringProperty ); //TODO dynamic
       oopsDialog.show();
 
       // interrupt this drag sequence, since we can't take term off the plate
@@ -110,8 +108,8 @@ export default class SeparateTermsDragListener extends TermDragListener {
       // no equivalent term on opposite plate, create an inverse term
       this.inverseTerm = this.equivalentTermCreator.createTerm(
         combineOptions<CreateTermOptions>( this.term.copyOptions(), {
-        sign: -1
-      } ) );
+          sign: -1
+        } ) );
       const inverseTermPosition = this.termCreator.getEquivalentTermPosition( this.term );
       const inverseCell = this.oppositePlate.getBestEmptyCell( inverseTermPosition )!;
       assert && assert( inverseCell !== null );
