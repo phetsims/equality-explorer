@@ -76,7 +76,7 @@ export default class VariableTerm extends Term {
    * Creates a copy of this term, with modifications through options.
    */
   public override copy( providedOptions?: VariableTermOptions ): VariableTerm {
-    return new VariableTerm( this.variable, merge( this.copyOptions(), providedOptions ) );
+    return new VariableTerm( this.variable, merge( this.copyOptions(), providedOptions ) ); //TODO dynamic
   }
 
   /**

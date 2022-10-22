@@ -100,7 +100,7 @@ export default class ConstantTermCreator extends TermCreator {
     assert && assert( options.constantValue !== undefined );
     options.constantValue = options.constantValue!.timesInteger( options.sign! );
 
-    return new ConstantTerm( options );
+    return new ConstantTerm( options ); //TODO dynamic
   }
 
   /**
@@ -118,7 +118,7 @@ export default class ConstantTermCreator extends TermCreator {
    * Instantiates the Node that corresponds to this term.
    */
   public override createTermNode( term: ConstantTerm ): ConstantTermNode {
-    return new ConstantTermNode( this, term );
+    return new ConstantTermNode( this, term ); //TODO dynamic
   }
 }
 

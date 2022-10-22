@@ -133,7 +133,7 @@ export default class SolveItLevelSelectionNode extends Node {
         listener: () => {
           model.testChallengeGenerators();
           const messageText = new RichText( 'Test completed.<br>See results in browser console.' );
-          const dialog = new Dialog( messageText, {
+          const dialog = new Dialog( messageText, { //TODO dynamic
             topMargin: 20,
             bottomMargin: 20,
             leftMargin: 20

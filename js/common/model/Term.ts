@@ -85,16 +85,14 @@ export default abstract class Term extends EqualityExplorerMovable {
     this.sign = Math.sign( significantValue.getValue() );
     this.diameter = options.diameter;
     this.toolboxPosition = options.toolboxPosition;
-    this.pickableProperty = new BooleanProperty( options.pickable );
-    this.onPlateProperty = new BooleanProperty( false );
-    this.shadowVisibleProperty = new BooleanProperty( false );
-    this.haloVisibleProperty = new BooleanProperty( false );
+    this.pickableProperty = new BooleanProperty( options.pickable ); //TODO instrument
+    this.onPlateProperty = new BooleanProperty( false ); //TODO instrument
+    this.shadowVisibleProperty = new BooleanProperty( false ); //TODO instrument
+    this.haloVisibleProperty = new BooleanProperty( false ); //TODO instrument
     this._isDisposed = false;
 
     this.disposedEmitter = new Emitter( {
-      parameters: [
-        { valueType: Term }
-      ]
+      parameters: [ { valueType: Term } ]
     } );
   }
 

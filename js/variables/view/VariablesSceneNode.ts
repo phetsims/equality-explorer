@@ -41,16 +41,22 @@ export default class VariablesSceneNode extends BasicsSceneNode {
       termsToolboxSpacing: 30 // horizontal spacing between terms in the toolbox
     }, providedOptions );
 
-    const variableValuesVisibleProperty = new BooleanProperty( true );
+    const variableValuesVisibleProperty = new BooleanProperty( true, {
+      tandem: options.tandem.createTandem( 'variableValuesVisibleProperty' )
+    } );
     options.variableValuesVisibleProperty = variableValuesVisibleProperty;
 
     super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
-    this.variableValuesVisibleProperty = variableValuesVisibleProperty;
-    this.variablesAccordionBoxExpandedProperty = new BooleanProperty( true );
-
     const variables = scene.variables!;
     assert && assert( variables && variables.length > 0 );
+
+    this.variableValuesVisibleProperty = variableValuesVisibleProperty;
+    this.variablesAccordionBoxExpandedProperty = new BooleanProperty( true, {
+      tandem: ( variables.length === 1 ) ?
+              options.tandem.createTandem( 'variableAccordionBoxExpandedProperty' ) : // singular
+              options.tandem.createTandem( 'variablesAccordionBoxExpandedProperty' ) // plural
+    } );
 
     // Variables accordion box, above the Snapshots accordion box
     const variablesAccordionBox = new VariablesAccordionBox( variables, {

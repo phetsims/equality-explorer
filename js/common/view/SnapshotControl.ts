@@ -159,7 +159,7 @@ export default class SnapshotControl extends Node {
       if ( hasSnapShot ) {
 
         // create the equation for the snapshot
-        equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, {
+        equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, { //TODO dynamic
           updateEnabled: false, // equation is static
           symbolFontSize: EQUATION_FONT_SIZE,
           operatorFontSize: EQUATION_FONT_SIZE,
@@ -180,6 +180,7 @@ export default class SnapshotControl extends Node {
             // de-emphasize variable values by scaling them down,
             // see https://github.com/phetsims/equality-explorer/issues/110
             scale: 0.75
+            //TODO does VariableValuesNode need to be instrumented?
           } );
         }
       }

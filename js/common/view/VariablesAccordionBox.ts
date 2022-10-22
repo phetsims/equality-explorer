@@ -95,7 +95,9 @@ export default class VariablesAccordionBox extends AccordionBox {
         color: 'black',
         font: new PhetFont( options.fontSize ),
         xMargin: 6,
-        touchAreaYDilation: 15
+        touchAreaYDilation: 15,
+        tandem: options.tandem.createTandem( `${variable.tandem.name}Picker` ),
+        phetioVisiblePropertyInstrumented: false
       } );
 
       children.push( new HBox( {

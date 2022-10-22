@@ -122,11 +122,13 @@ export default class BalanceScale {
       cellSize: cellSize
     };
 
+    const platesTandem = options.tandem.createTandem( 'plates' );
+
     this.leftPlate = new Plate( leftTermCreators, 'left', combineOptions<PlateOptions>( {
-      tandem: options.tandem.createTandem( 'leftPlate' )
+      tandem: platesTandem.createTandem( 'leftPlate' )
     }, plateOptions ) );
     this.rightPlate = new Plate( rightTermCreators, 'right', combineOptions<PlateOptions>( {
-      tandem: options.tandem.createTandem( 'rightPlate' )
+      tandem: platesTandem.createTandem( 'rightPlate' )
     }, plateOptions ) );
 
     this.angleProperty = new DerivedProperty(
@@ -186,7 +188,10 @@ export default class BalanceScale {
     this.numberOfTermsProperty = new DerivedProperty(
       [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
       ( leftNumberOfTerms, rightNumberOfTerms ) => ( leftNumberOfTerms + rightNumberOfTerms ), {
-        isValidValue: value => Number.isInteger( value )
+        isValidValue: value => Number.isInteger( value ),
+        tandem: options.tandem.createTandem( 'numberOfTermsProperty' ),
+        phetioValueType: NumberIO,
+        phetioDocumentation: 'the number of terms on the scale'
       } );
   }
 

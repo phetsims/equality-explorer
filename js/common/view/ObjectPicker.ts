@@ -13,11 +13,11 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import StringEnumerationProperty from '../../../../axon/js/StringEnumerationProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -78,8 +78,8 @@ type SelfOptions = {
   // whether increment and decrement are enabled.
   // If the client provides these, then the client is fully responsible for the state of these Properties.
   // If null, a default implementation is used.
-  incrementEnabledProperty?: TReadOnlyProperty<boolean> | null;
-  decrementEnabledProperty?: TReadOnlyProperty<boolean> | null;
+  incrementEnabledProperty?: LinkableProperty<boolean> | null;
+  decrementEnabledProperty?: LinkableProperty<boolean> | null;
 };
 
 type ObjectPickerOptions = SelfOptions & PickRequired<NodeOptions, 'tandem'>;

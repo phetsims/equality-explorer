@@ -86,7 +86,7 @@ export default class SumToZeroNode extends Node {
       this.opacity = opacity;
     } );
 
-    this.animation = new Animation( {
+    this.animation = new Animation( { //TODO stateful?
       duration: 0.75,
       targets: [ {
         property: opacityProperty,

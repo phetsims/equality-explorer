@@ -127,9 +127,18 @@ export default class UniversalOperationControl extends HBox {
       } );
     }
 
+    const operandPickerTandem = options.tandem.createTandem( 'operandPicker' );
+
     // Take control of enabling up/down arrows for operand picker
-    const incrementEnabledProperty = new BooleanProperty( true );
-    const decrementEnabledProperty = new BooleanProperty( true );
+    //TODO make incrementEnabledProperty and decrementEnabledProperty DerivedProperty, replace Multilink below
+    const incrementEnabledProperty = new BooleanProperty( true, {
+      tandem: operandPickerTandem.createTandem( 'incrementEnabledProperty' ),
+      phetioReadOnly: true
+    } );
+    const decrementEnabledProperty = new BooleanProperty( true, {
+      tandem: operandPickerTandem.createTandem( 'decrementEnabledProperty' ),
+      phetioReadOnly: true
+    } );
 
     // picker for choosing operand
     const operandPicker = new ObjectPicker( scene.operandProperty, operandItems, {
@@ -165,7 +174,7 @@ export default class UniversalOperationControl extends HBox {
         }
         return nextOperandIndex;
       },
-      tandem: options.tandem.createTandem( 'operandPicker' )
+      tandem: operandPickerTandem
     } );
 
     // 'go' button, applies the operation
@@ -236,25 +245,25 @@ export default class UniversalOperationControl extends HBox {
       // See https://github.com/phetsims/equality-explorer/issues/48
       goButton.enabled = false;
 
-      const operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value );
+      const operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value ); //TODO dynamic
       phet.log && phet.log( `Go ${operation.toLogString()}` );
 
       // operation on left side
-      const leftOperationNode = new UniversalOperationNode( operation, {
+      const leftOperationNode = new UniversalOperationNode( operation, { //TODO dynamic
         centerX: scene.scale.leftPlate.positionProperty.value.x,
         centerY: this.centerY
       } );
       animationLayer.addChild( leftOperationNode );
 
       // operation on right side
-      const rightOperationNode = new UniversalOperationNode( operation, {
+      const rightOperationNode = new UniversalOperationNode( operation, { //TODO dynamic
         centerX: scene.scale.rightPlate.positionProperty.value.x,
         centerY: this.centerY
       } );
       animationLayer.addChild( rightOperationNode );
 
       // Apply the operation when both animations have completed.
-      const numberOfAnimationsCompletedProperty = new NumberProperty( 0 );
+      const numberOfAnimationsCompletedProperty = new NumberProperty( 0 ); //TODO instrument?
       numberOfAnimationsCompletedProperty.lazyLink( numberOfAnimationsCompleted => {
         if ( numberOfAnimationsCompleted === 2 ) {
           scene.applyOperation( operation );
@@ -262,7 +271,7 @@ export default class UniversalOperationControl extends HBox {
       } );
 
       // animation on left side of the scale
-      const leftAnimation = new TranslateThenFade( leftOperationNode, {
+      const leftAnimation = new TranslateThenFade( leftOperationNode, { //TODO stateful?
         destination: new Vector2( leftOperationNode.x, scene.scale.leftPlate.getGridTop() - leftOperationNode.height ),
         onComplete: () => {
           numberOfAnimationsCompletedProperty.value++;
@@ -275,7 +284,7 @@ export default class UniversalOperationControl extends HBox {
       this.animations.push( leftAnimation );
 
       // animation on right side of the scale
-      const rightAnimation = new TranslateThenFade( rightOperationNode, {
+      const rightAnimation = new TranslateThenFade( rightOperationNode, { //TODO stateful?
         destination: new Vector2( rightOperationNode.x, scene.scale.rightPlate.getGridTop() - rightOperationNode.height ),
         onComplete: () => {
           numberOfAnimationsCompletedProperty.value++;

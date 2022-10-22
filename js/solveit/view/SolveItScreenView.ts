@@ -79,7 +79,7 @@ export default class SolveItScreenView extends ScreenView {
     } );
 
     // Transition (slide left/right) between level-selection UI and the selected game level.
-    this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
+    this.transitionNode = new TransitionNode( this.visibleBoundsProperty, { //TODO stateful?
       cachedNodes: [ levelSelectionNode, levelsParent ]
     } );
     this.addChild( this.transitionNode );

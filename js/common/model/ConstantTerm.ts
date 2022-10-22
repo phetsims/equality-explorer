@@ -72,7 +72,7 @@ export default class ConstantTerm extends Term {
    * Creates a copy of this term, with modifications through options.
    */
   public override copy( providedOptions?: ConstantTermOptions ): ConstantTerm {
-    return new ConstantTerm( combineOptions<ConstantTermOptions>( this.copyOptions(), providedOptions ) );
+    return new ConstantTerm( combineOptions<ConstantTermOptions>( this.copyOptions(), providedOptions ) ); //TODO dynamic
   }
 
   /**

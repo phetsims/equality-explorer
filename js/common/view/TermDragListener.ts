@@ -238,7 +238,7 @@ export default abstract class TermDragListener extends DragListener {
       const sumToZeroParent = this.termNode.getParent()!;
       assert && assert( sumToZeroParent );
 
-      const sumToZeroNode = new SumToZeroNode( {
+      const sumToZeroNode = new SumToZeroNode( { //TODO dynamic
         variable: this.term.getVariable(),
         haloRadius: this.haloRadius,
         haloBaseColor: EqualityExplorerColors.HALO, // show the halo

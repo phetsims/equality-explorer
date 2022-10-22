@@ -67,11 +67,11 @@ export default class EqualityExplorerMovable {
       animationSpeed: 400
     }, providedOptions );
 
-    this._positionProperty = new Vector2Property( options.position );
+    this._positionProperty = new Vector2Property( options.position ); //TODO instrument
     this.positionProperty = this._positionProperty;
     this.dragBounds = options.dragBounds;
     this.animationSpeed = options.animationSpeed;
-    this.draggingProperty = new BooleanProperty( false );
+    this.draggingProperty = new BooleanProperty( false ); //TODO instrument
     this.destination = options.position.copy();
     this.animationStepCallback = null;
     this.animationCompletedCallback = null;

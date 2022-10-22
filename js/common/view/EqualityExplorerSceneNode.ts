@@ -48,8 +48,7 @@ export default class EqualityExplorerSceneNode extends Node {
     const termCreatedListener = ( termCreator: TermCreator, term: Term, event: PressListenerEvent | null ) => {
 
       // create a TermNode
-      //TODO create TermNode from a PhetioGroup
-      const termNode = termCreator.createTermNode( term );
+      const termNode = termCreator.createTermNode( term ); //TODO dynamic
       termsLayer.addChild( termNode );
 
       // Clean up when the term is disposed. Term.dispose handles removal of this listener.

@@ -21,8 +21,8 @@ export default class Snapshot {
   public constructor( scene: EqualityExplorerScene ) {
 
     this.scene = scene;
-    this.leftPlateSnapshot = new PlateSnapshot( scene.scale.leftPlate );
-    this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate );
+    this.leftPlateSnapshot = new PlateSnapshot( scene.scale.leftPlate ); //TODO dynamic
+    this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate ); //TODO dynamic
 
     // If the scene has variables, save their values.
     if ( scene.variables ) {

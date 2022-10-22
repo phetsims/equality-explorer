@@ -23,7 +23,8 @@ export default class SolveItInfoDialog extends GameInfoDialog {
   public constructor( descriptionProperties: TReadOnlyProperty<string>[], tandem: Tandem ) {
 
     const titleText = new Text( EqualityExplorerStrings.levelsStringProperty, {
-      font: new PhetFont( 32 )
+      font: new PhetFont( 32 ),
+      tandem: tandem.createTandem( 'titleText' )
     } );
 
     super( descriptionProperties, {

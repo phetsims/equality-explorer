@@ -96,8 +96,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
       const messageStringProperty = thisIsLeft ?
                       EqualityExplorerStrings.rightSideFullStringProperty :
                       EqualityExplorerStrings.leftSideFullStringProperty;
-      //TODO PhetioCapsule for OopsDialog, inside a dynamic SeparateTermsDragListener!
-      const oopsDialog = new OopsDialog( messageStringProperty );
+      const oopsDialog = new OopsDialog( messageStringProperty ); //TODO dynamic
       oopsDialog.show();
 
       // interrupt this drag sequence, since we can't take term off the plate

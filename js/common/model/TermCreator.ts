@@ -38,6 +38,7 @@ import Variable from './Variable.js';
 import TermNode from '../view/TermNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = {
 
@@ -157,9 +158,11 @@ export default abstract class TermCreator extends PhetioObject {
     this.termsOnPlate = createObservableArray();
 
     this.numberOfTermsOnPlateProperty = new DerivedProperty(
-      [ this.termsOnPlate.lengthProperty ],
-      length => length
-    );
+      [ this.termsOnPlate.lengthProperty ], length => length, {
+        tandem: options.tandem.createTandem( 'numberOfTermsOnPlateProperty' ),
+        phetioValueType: NumberIO,
+        phetioDocumentation: 'number of terms on the plate that were created by this term creator'
+      } );
 
     const weightOnPlateDependencies = [ this.numberOfTermsOnPlateProperty ];
     if ( options.variable ) {
@@ -196,6 +199,7 @@ export default abstract class TermCreator extends PhetioObject {
     // If options.lockedProperty was not provided, then create a Property that permanently turns this feature off.
     this.lockedProperty = options.lockedProperty || new BooleanProperty( false, {
       validValues: [ false ]
+      // Do not instrument, this feature is off.
     } );
 
     this.termDisposedListener = ( term: Term ) => this.unmanageTerm( term );

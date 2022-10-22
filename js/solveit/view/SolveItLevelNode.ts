@@ -288,7 +288,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     this.rewardNode = null;
 
     // Property that controls opacity of smiley face
-    const faceOpacityProperty = new NumberProperty( faceNode.opacity );
+    const faceOpacityProperty = new NumberProperty( faceNode.opacity ); //TODO instrument?
     faceOpacityProperty.link( faceOpacity => {
       faceNode.opacity = faceOpacity;
     } );
@@ -314,7 +314,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
         nextButton.visible = true;
 
         // show the reward dialog
-        rewardDialog = rewardDialog || new RewardDialog( level.scoreProperty.value, {
+        rewardDialog = rewardDialog || new RewardDialog( level.scoreProperty.value, { //TODO dynamic
 
           // Display the dialog in a position that does not obscure the challenge solution.
           // See https://github.com/phetsims/equality-explorer/issues/104
@@ -341,7 +341,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
           // When the dialog is shown, show the reward
           showCallback: () => {
             assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
-            this.rewardNode = new SolveItRewardNode( level.levelNumber );
+            this.rewardNode = new SolveItRewardNode( level.levelNumber ); //TODO dynamic
             this.addChild( this.rewardNode );
           },
 
@@ -366,7 +366,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
         faceOpacityProperty.value = 0.8;
         faceNode.visible = true;
 
-        this.faceAnimation = new Animation( {
+        this.faceAnimation = new Animation( { //TODO stateful?
           stepEmitter: null, // via step function
           delay: 1,
           duration: 0.8,
@@ -396,7 +396,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
 
       // display the challenge equation
       challengeEquationNode.children = [
-        new EquationPanel( level.leftTermCreators, level.rightTermCreators, challengePanelOptions )
+        new EquationPanel( level.leftTermCreators, level.rightTermCreators, challengePanelOptions ) //TODO dynamic
       ];
 
       // visibility of other UI elements

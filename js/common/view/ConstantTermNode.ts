@@ -68,7 +68,7 @@ export default class ConstantTermNode extends TermNode {
    * Creates the representation of a term that the user interacts with.
    */
   public static createInteractiveTermNode( constantValue: Fraction, providedOptions?: InteractiveTermNodeOptions ): Node {
-    return new InteractiveTermNode( constantValue, providedOptions );
+    return new InteractiveTermNode( constantValue, providedOptions ); //TODO dynamic
   }
 
   /**

@@ -259,13 +259,13 @@ export default class SolveItLevel extends OperationsScene {
     this.allTermCreators.forEach( termCreator => termCreator.disposeAllTerms() );
 
     // x
-    const variableTerm = new VariableTerm( this.xVariable, {
+    const variableTerm = new VariableTerm( this.xVariable, { //TODO dynamic
       coefficient: Fraction.fromInteger( 1 ),
       diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
     } );
 
     // N
-    const constantTerm = new ConstantTerm( {
+    const constantTerm = new ConstantTerm( { //TODO dynamic
       constantValue: Fraction.fromInteger( this.xVariable.valueProperty.value ),
       diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
     } );
