@@ -344,7 +344,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
           // When the dialog is shown, show the reward
           showCallback: () => {
             assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
-            this.rewardNode = new SolveItRewardNode( level.levelNumber ); //TODO dynamic
+            this.rewardNode = new SolveItRewardNode( level.levelNumber ); //TODO dynamic, stateful?
             this.addChild( this.rewardNode );
           },
 
