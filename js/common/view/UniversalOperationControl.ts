@@ -35,6 +35,7 @@ import VariableTerm from '../model/VariableTerm.js';
 import ObjectPicker, { ObjectPickerItem } from './ObjectPicker.js';
 import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
+import Range from '../../../../dot/js/Range.js';
 
 type SelfOptions = {
   timesZeroEnabled?: boolean; // whether to include 'times 0' as one of the operations
@@ -262,8 +263,10 @@ export default class UniversalOperationControl extends HBox {
       animationLayer.addChild( rightOperationNode );
 
       // Apply the operation when both animations have completed.
-      //TODO numberOfAnimationsCompletedProperty should have range
-      const numberOfAnimationsCompletedProperty = new NumberProperty( 0 ); //TODO instrument?
+      const numberOfAnimationsCompletedProperty = new NumberProperty( 0, { //TODO instrument?
+        numberType: 'Integer',
+        range: new Range( 0, 2 )
+      } );
       numberOfAnimationsCompletedProperty.lazyLink( numberOfAnimationsCompleted => {
         if ( numberOfAnimationsCompleted === 2 ) {
           scene.applyOperation( operation );
