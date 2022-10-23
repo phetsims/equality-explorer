@@ -292,6 +292,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     this.rewardNode = null;
 
     // Property that controls opacity of smiley face
+    //TODO faceOpacityProperty should have range [0,1]
     const faceOpacityProperty = new NumberProperty( faceNode.opacity ); //TODO instrument?
     faceOpacityProperty.link( faceOpacity => {
       faceNode.opacity = faceOpacity;

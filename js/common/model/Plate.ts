@@ -100,6 +100,7 @@ export default class Plate extends PhetioObject {
     } );
 
     // Does not need to be reset.
+    //TODO numberOfTermsProperty should have range [0,options.gridRows * options.gridColumns]
     this.numberOfTermsProperty = new NumberProperty( 0, {
       numberType: 'Integer',
       isValidValue: value => ( value >= 0 ),

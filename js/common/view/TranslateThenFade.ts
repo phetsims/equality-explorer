@@ -55,6 +55,7 @@ export default class TranslateThenFade {
     } );
 
     // Property for animating opacity.
+    //TODO opacityProperty should have range [0,1]
     const opacityProperty = new NumberProperty( node.opacity );
     opacityProperty.link( opacity => {
       node.opacity = opacity;

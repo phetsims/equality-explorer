@@ -262,6 +262,7 @@ export default class UniversalOperationControl extends HBox {
       animationLayer.addChild( rightOperationNode );
 
       // Apply the operation when both animations have completed.
+      //TODO numberOfAnimationsCompletedProperty should have range
       const numberOfAnimationsCompletedProperty = new NumberProperty( 0 ); //TODO instrument?
       numberOfAnimationsCompletedProperty.lazyLink( numberOfAnimationsCompleted => {
         if ( numberOfAnimationsCompleted === 2 ) {

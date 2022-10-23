@@ -79,6 +79,7 @@ export default class SumToZeroNode extends Node {
     super( options );
 
     // Property to be animated
+    //TODO opacityProperty should have range [0,1]
     const opacityProperty = new NumberProperty( this.opacity );
 
     opacityProperty.link( opacity => {
