@@ -84,7 +84,7 @@ export default class SolveItLevel extends OperationsScene {
 
     this.scoreProperty = new NumberProperty( 0, {
       numberType: 'Integer',
-      isValidValue: value => ( value >= 0 ),
+      isValidValue: value => ( value >= 0 ), // the game is open-ended, so there is no maximum score
       tandem: options.tandem.createTandem( 'scoreProperty' ),
       phetioReadOnly: true
     } );
