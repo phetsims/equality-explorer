@@ -9,6 +9,7 @@
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Range from '../../../../dot/js/Range.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import Animation from '../../../../twixt/js/Animation.js';
@@ -55,8 +56,9 @@ export default class TranslateThenFade {
     } );
 
     // Property for animating opacity.
-    //TODO opacityProperty should have range [0,1]
-    const opacityProperty = new NumberProperty( node.opacity );
+    const opacityProperty = new NumberProperty( node.opacity, {
+      range: new Range( 0, 1 )
+    } );
     opacityProperty.link( opacity => {
       node.opacity = opacity;
     } );

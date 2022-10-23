@@ -19,6 +19,7 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Variable from '../model/Variable.js';
 import HaloNode from './HaloNode.js';
 import TermCreator from '../model/TermCreator.js';
+import Range from '../../../../dot/js/Range.js';
 
 type SelfOptions = {
   variable?: Variable | null; // determines whether we render '0' or '0x' (for example)
@@ -79,8 +80,9 @@ export default class SumToZeroNode extends Node {
     super( options );
 
     // Property to be animated
-    //TODO opacityProperty should have range [0,1]
-    const opacityProperty = new NumberProperty( this.opacity );
+    const opacityProperty = new NumberProperty( this.opacity, {
+      range: new Range( 0, 1 )
+    } );
 
     opacityProperty.link( opacity => {
       this.opacity = opacity;
