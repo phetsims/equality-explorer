@@ -42,6 +42,7 @@ import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
+import Range from '../../../../dot/js/Range.js';
 
 // constants
 const LEVEL_FONT = new PhetFont( 20 );
@@ -292,8 +293,9 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     this.rewardNode = null;
 
     // Property that controls opacity of smiley face
-    //TODO faceOpacityProperty should have range [0,1]
-    const faceOpacityProperty = new NumberProperty( faceNode.opacity ); //TODO instrument?
+    const faceOpacityProperty = new NumberProperty( faceNode.opacity, { //TODO instrument?
+      range: new Range( 0, 1 )
+    } );
     faceOpacityProperty.link( faceOpacity => {
       faceNode.opacity = faceOpacity;
     } );
