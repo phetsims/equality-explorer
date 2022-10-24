@@ -75,7 +75,6 @@ export default class VariablesAccordionBox extends AccordionBox {
     const backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     // Create a picker for each variable
-    //TODO verify that there's no reason to instrument variable label and picker
     const children: Node[] = [];
     variables.forEach( variable => {
 

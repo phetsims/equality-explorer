@@ -12,6 +12,7 @@ import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
@@ -73,7 +74,10 @@ export default abstract class Term extends EqualityExplorerMovable {
       // SelfOptions
       diameter: EqualityExplorerConstants.SMALL_TERM_DIAMETER,
       pickable: true,
-      toolboxPosition: null
+      toolboxPosition: null,
+
+      // EqualityExplorerMovableOptions
+      tandem: Tandem.OPTIONAL //TODO delete when tandem is required by TermOptions
     }, providedOptions );
 
     super( options );
@@ -82,10 +86,22 @@ export default abstract class Term extends EqualityExplorerMovable {
     this.sign = Math.sign( significantValue.getValue() );
     this.diameter = options.diameter;
     this.toolboxPosition = options.toolboxPosition;
-    this.pickableProperty = new BooleanProperty( options.pickable ); //TODO instrument
-    this.onPlateProperty = new BooleanProperty( false ); //TODO instrument
-    this.shadowVisibleProperty = new BooleanProperty( false ); //TODO instrument
-    this.haloVisibleProperty = new BooleanProperty( false ); //TODO instrument
+    
+    this.pickableProperty = new BooleanProperty( options.pickable, {
+      tandem: options.tandem.createTandem( 'pickableProperty' )
+    } );
+    
+    this.onPlateProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'onPlateProperty' )
+    } );
+    
+    this.shadowVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'shadowVisibleProperty' )
+    } );
+    
+    this.haloVisibleProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'haloVisibleProperty' )
+    } );
 
     this.disposedEmitter = new Emitter( {
       parameters: [ { valueType: Term } ]

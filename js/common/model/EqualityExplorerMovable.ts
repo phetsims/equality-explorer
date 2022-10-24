@@ -17,6 +17,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -27,7 +28,8 @@ type SelfOptions = {
   animationSpeed?: number; // distance/second when animating
 };
 
-export type EqualityExplorerMovableOptions = SelfOptions;
+//TODO PickRequired<PhetioObjectOptions, 'tandem'>
+export type EqualityExplorerMovableOptions = SelfOptions & PickOptional<PhetioObjectOptions, 'tandem'>;
 
 type AnimationCallback = ( () => void ) | null;
 
@@ -69,7 +71,7 @@ export default class EqualityExplorerMovable extends PhetioObject {
       animationSpeed: 400,
 
       // PhetioObjectOptions
-      tandem: Tandem.OPTIONAL, //TODO tandem should be required
+      tandem: Tandem.OPTIONAL, //TODO delete when tandem is required by TermOptions
       phetioState: false
     }, providedOptions );
 
