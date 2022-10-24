@@ -67,9 +67,9 @@ export default class VariableTermNode extends TermNode {
 
     // contentNode must be disposed!
     const contentNode = VariableTermNode.createInteractiveTermNode( term.coefficient, term.variable.symbolProperty,
-      combineOptions<InteractiveTermNodeOptions>( {
+      combineOptions<InteractiveTermNodeOptions>( {}, options.interactiveTermNodeOptions, {
         diameter: term.diameter
-      }, options.interactiveTermNodeOptions ) );
+      } ) );
 
     const shadowNode = new Rectangle( 0, 0, term.diameter, term.diameter, {
       fill: 'black',
@@ -202,11 +202,11 @@ class InteractiveTermNode extends Node {
 
     // equationTermNode must be disposed, because it is linked to a translated string Property
     const equationTermNode = VariableTermNode.createEquationTermNode( coefficient, symbolProperty,
-      combineOptions<EquationTermNodeOptions>( {
+      combineOptions<EquationTermNodeOptions>( {}, options.equationTermNodeOptions, {
         align: 'center',
         maxWidth: squareNode.width - ( 2 * options.margin ),
         maxHeight: squareNode.height - ( 2 * options.margin )
-      }, options.equationTermNodeOptions )
+      } )
     );
     equationTermNode.boundsProperty.link( bounds => {
       equationTermNode.center = squareNode.center;

@@ -52,9 +52,9 @@ export default class ConstantTermNode extends TermNode {
     }, providedOptions );
 
     const contentNode = ConstantTermNode.createInteractiveTermNode( term.constantValue,
-      combineOptions<InteractiveTermNodeOptions>( {
+      combineOptions<InteractiveTermNodeOptions>( {}, options.interactiveTermNodeOptions, {
         diameter: term.diameter
-      }, options.interactiveTermNodeOptions ) );
+      } ) );
 
     const shadowNode = new Circle( term.diameter / 2, {
       fill: 'black',
@@ -127,10 +127,10 @@ class InteractiveTermNode extends Node {
     // constant value
     const margin = 0.18 * options.diameter; // determined empirically
     const equationTermNode = ConstantTermNode.createEquationTermNode( constantValue,
-      combineOptions<EquationTermNodeOptions>( {
+      combineOptions<EquationTermNodeOptions>( {}, options.equationTermNodeOptions, {
         maxWidth: circleNode.width - ( 2 * margin ),
         maxHeight: circleNode.height - ( 2 * margin )
-      }, options.equationTermNodeOptions )
+      } )
     );
     equationTermNode.boundsProperty.link( bounds => {
       equationTermNode.center = circleNode.center;

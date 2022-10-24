@@ -110,11 +110,11 @@ export default abstract class Term extends EqualityExplorerMovable {
    * This is used by subclasses that implement copy.
    */
   public override copyOptions(): TermOptions {
-    return combineOptions<TermOptions>( {
+    return combineOptions<TermOptions>( {}, super.copyOptions(), {
 
       // Note that this is the subset of SelfOptions that works for the needs of the sim.
       diameter: this.diameter
-    }, super.copyOptions() );
+    } );
   }
 
   /**

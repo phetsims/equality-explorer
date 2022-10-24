@@ -302,7 +302,7 @@ class ObjectPicker<T> extends Node {
     };
 
     const incrementInputListener = new ObjectPickerInputListener( incrementButtonStateProperty,
-      combineOptions<ObjectPickerInputListenerOptions>( {
+      combineOptions<ObjectPickerInputListenerOptions>( {}, inputListenerOptions, {
         fire: () => {
           if ( incrementInputListener.enabled ) {
             let index = options.incrementFunction( indexProperty.value );
@@ -312,11 +312,11 @@ class ObjectPicker<T> extends Node {
             indexProperty.value = index;
           }
         }
-      }, inputListenerOptions ) );
+      } ) );
     incrementParent.addInputListener( incrementInputListener );
 
     const decrementInputListener = new ObjectPickerInputListener( decrementButtonStateProperty,
-      combineOptions<ObjectPickerInputListenerOptions>( {
+      combineOptions<ObjectPickerInputListenerOptions>( {}, inputListenerOptions, {
         fire: () => {
           if ( decrementInputListener.enabled ) {
             let index = options.decrementFunction( indexProperty.value );
@@ -326,7 +326,7 @@ class ObjectPicker<T> extends Node {
             indexProperty.value = index;
           }
         }
-      }, inputListenerOptions ) );
+      } ) );
     decrementParent.addInputListener( decrementInputListener );
 
     // enable/disable, unlink required

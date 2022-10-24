@@ -109,7 +109,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
 
       // no equivalent term on opposite plate, create an inverse term
       this.inverseTerm = this.equivalentTermCreator.createTerm(
-        combineOptions<CreateTermOptions>( this.term.copyOptions(), {
+        combineOptions<CreateTermOptions>( {}, this.term.copyOptions(), {
           sign: -1
         } ) );
       const inverseTermPosition = this.termCreator.getEquivalentTermPosition( this.term );

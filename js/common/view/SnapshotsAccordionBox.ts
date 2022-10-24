@@ -86,11 +86,12 @@ export default class SnapshotsAccordionBox extends AccordionBox {
     for ( let i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
 
       const snapshotControl = new SnapshotControl( scene, scene.snapshotsCollection.snapshotProperties[ i ],
-        scene.snapshotsCollection.selectedSnapshotProperty, combineOptions<SnapshotControlOptions>( {
+        scene.snapshotsCollection.selectedSnapshotProperty, combineOptions<SnapshotControlOptions>(
+          {}, options.snapshotControlOptions, {
           variableValuesVisibleProperty: options.variableValuesVisibleProperty,
           controlWidth: contentWidth,
           tandem: options.tandem.createTandem( `snapshotControl${i}` )
-        }, options.snapshotControlOptions ) );
+        } ) );
 
       snapshotControls.push( snapshotControl );
     }

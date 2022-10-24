@@ -60,9 +60,9 @@ export default class SolveItLevelSelectionNode extends Node {
 
     // 'Choose Your Level', centered above level-selection buttons
     const chooseYourLevelText = new Text( EqualityExplorerStrings.chooseYourLevelStringProperty,
-      combineOptions<TextOptions>( {
+      combineOptions<TextOptions>( {}, textOptions, {
         tandem: titleTandem.createTandem( 'chooseYourLevelText' )
-      }, textOptions ) );
+      } ) );
     chooseYourLevelText.boundsProperty.link( bounds => {
       chooseYourLevelText.centerX = levelSelectionButtonGroup.centerX;
       chooseYourLevelText.bottom = levelSelectionButtonGroup.top - 65;
@@ -78,9 +78,10 @@ export default class SolveItLevelSelectionNode extends Node {
         tandem: solveForXTextTandem.createTandem( RichText.STRING_PROPERTY_TANDEM_NAME ),
         phetioValueType: StringIO
       } );
-    const solveForXText = new RichText( solveForXStringProperty, combineOptions<TextOptions>( {
-      tandem: solveForXTextTandem
-    }, textOptions ) );
+    const solveForXText = new RichText( solveForXStringProperty, combineOptions<TextOptions>(
+      {}, textOptions, {
+        tandem: solveForXTextTandem
+      } ) );
     solveForXText.boundsProperty.link( bounds => {
       solveForXText.centerX = chooseYourLevelText.centerX;
       solveForXText.bottom = chooseYourLevelText.top - 30;

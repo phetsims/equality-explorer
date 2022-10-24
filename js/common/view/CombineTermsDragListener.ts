@@ -69,7 +69,7 @@ export default class CombineTermsDragListener extends TermDragListener {
 
       // there was nothing on the opposite plate, so create the inverse of the equivalent term
       inverseTerm = this.equivalentTermCreator.createTerm(
-        combineOptions<CreateTermOptions>( this.term.copyOptions(), {
+        combineOptions<CreateTermOptions>( {}, this.term.copyOptions(), {
           sign: -1
         } ) );
       this.equivalentTermCreator.putTermOnPlate( inverseTerm, likeTermsCell );
