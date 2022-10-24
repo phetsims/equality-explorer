@@ -7,7 +7,7 @@
  */
 
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { NodeTranslationOptions, Text } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -23,9 +23,8 @@ type SelfOptions = {
   fixedHeight?: number;
 };
 
-//TODO narrow AccordionBoxOptions to PickRequired<AccordionBoxOptions, 'expandedProperty' | 'tandem'>
 type EquationAccordionBoxOptions = SelfOptions & NodeTranslationOptions &
-  StrictOmit<AccordionBoxOptions, 'maxWidth' | 'maxHeight' | 'titleNode'>;
+  PickRequired<AccordionBoxOptions, 'expandedProperty' | 'tandem'>;
 
 export default class EquationAccordionBox extends AccordionBox {
 
@@ -42,7 +41,7 @@ export default class EquationAccordionBox extends AccordionBox {
       contentYMargin: 4
     } );
 
-    const defaultOptions = optionize<EquationAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
+    const defaultOptions = combineOptions<Required<EquationAccordionBoxOptions>>( {
 
       // SelfOptions
       fixedWidth: 100,

@@ -23,6 +23,7 @@ import Property from '../../../../axon/js/Property.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
 
@@ -36,9 +37,8 @@ type SelfOptions = {
   snapshotControlOptions?: StrictOmit<SnapshotControlOptions, 'tandem'>;
 };
 
-//TODO narrow AccordionBoxOptions to PickRequired<AccordionBoxOptions, 'expandedProperty' | 'tandem'>
 type SnapshotsAccordionBoxOptions = SelfOptions & NodeTranslationOptions &
-  StrictOmit<AccordionBoxOptions, 'maxWidth' | 'titleNode'>;
+  PickRequired<AccordionBoxOptions, 'expandedProperty' | 'tandem'>;
 
 export default class SnapshotsAccordionBox extends AccordionBox {
 
@@ -54,7 +54,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       contentYSpacing: 3
     } );
 
-    const defaultOptions = optionize<SnapshotsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
+    const defaultOptions = combineOptions<Required<SnapshotsAccordionBoxOptions>>( {
 
       // SelfOptions
       fixedWidth: 100,

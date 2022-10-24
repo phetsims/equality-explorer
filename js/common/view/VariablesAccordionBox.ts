@@ -9,7 +9,7 @@
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, Node, NodeTranslationOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
@@ -30,9 +30,8 @@ type SelfOptions = {
   fixedHeight?: number;
 };
 
-//TODO narrow AccordionBoxOptions to PickRequired<AccordionBoxOptions, 'expandedProperty' | 'tandem'>
 type VariablesAccordionBoxOptions = SelfOptions & NodeTranslationOptions &
-  StrictOmit<AccordionBoxOptions, 'maxWidth' | 'maxHeight' | 'titleNode'>;
+  PickRequired<AccordionBoxOptions, 'expandedProperty' | 'tandem'>;
 
 export default class VariablesAccordionBox extends AccordionBox {
 
@@ -50,7 +49,7 @@ export default class VariablesAccordionBox extends AccordionBox {
       contentYMargin: 4
     } );
 
-    const defaultOptions = optionize<VariablesAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
+    const defaultOptions = combineOptions<Required<VariablesAccordionBoxOptions>>( {
 
       // SelfOptions
       titleStringProperty: ( variables.length > 1 ) ?
