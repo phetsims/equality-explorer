@@ -10,7 +10,7 @@ import Fraction, { FractionStateObject } from '../../../../phetcommon/js/model/F
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO, { NumberStateObject } from '../../../../tandem/js/types/NumberIO.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
+import StringIO, { StringStateObject } from '../../../../tandem/js/types/StringIO.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 export type ChallengeStateObject = {
@@ -19,7 +19,7 @@ export type ChallengeStateObject = {
   b: FractionStateObject;
   m: FractionStateObject;
   n: FractionStateObject;
-  debugDerivation: string;
+  debugDerivation: StringStateObject;
 };
 
 export default class Challenge {
