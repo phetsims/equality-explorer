@@ -8,7 +8,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import { optionize4 } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -43,24 +43,22 @@ export default class VariablesAccordionBox extends AccordionBox {
 
     assert && assert( variables.length > 0 );
 
-    const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
-      showTitleWhenExpanded: false,
-      contentXMargin: 20,
-      contentYMargin: 4
-    } );
+    const options = optionize4<VariablesAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {},
+      EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
-    const defaultOptions = combineOptions<Required<VariablesAccordionBoxOptions>>( {
+        // SelfOptions
+        titleStringProperty: ( variables.length > 1 ) ?
+                             EqualityExplorerStrings.variablesStringProperty :
+                             EqualityExplorerStrings.variableStringProperty,
+        fontSize: 24,
+        fixedWidth: 100,
+        fixedHeight: 75,
 
-      // SelfOptions
-      titleStringProperty: ( variables.length > 1 ) ?
-                           EqualityExplorerStrings.variablesStringProperty :
-                           EqualityExplorerStrings.variableStringProperty,
-      fontSize: 24,
-      fixedWidth: 100,
-      fixedHeight: 75
-    }, accordionBoxOptions );
-
-    const options = optionize<VariablesAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( defaultOptions, providedOptions );
+        // AccordionBoxOptions
+        showTitleWhenExpanded: false,
+        contentXMargin: 20,
+        contentYMargin: 4
+      }, providedOptions );
 
     options.maxWidth = options.fixedWidth;
     options.maxHeight = options.fixedHeight;

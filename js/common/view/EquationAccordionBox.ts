@@ -6,7 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import { optionize4 } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { NodeTranslationOptions, Text } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
@@ -35,20 +35,18 @@ export default class EquationAccordionBox extends AccordionBox {
    */
   public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[], providedOptions: EquationAccordionBoxOptions ) {
 
-    const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
-      showTitleWhenExpanded: false,
-      contentXMargin: 8,
-      contentYMargin: 4
-    } );
+    const options = optionize4<EquationAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {},
+      EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
-    const defaultOptions = combineOptions<Required<EquationAccordionBoxOptions>>( {
+        // SelfOptions
+        fixedWidth: 100,
+        fixedHeight: 75,
 
-      // SelfOptions
-      fixedWidth: 100,
-      fixedHeight: 75
-    }, accordionBoxOptions );
-
-    const options = optionize<EquationAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( defaultOptions, providedOptions );
+        // AccordionBoxOptions
+        showTitleWhenExpanded: false,
+        contentXMargin: 8,
+        contentYMargin: 4
+      }, providedOptions );
 
     options.maxWidth = options.fixedWidth;
     options.maxHeight = options.fixedHeight;

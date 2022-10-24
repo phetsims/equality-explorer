@@ -20,7 +20,7 @@ import VariableValuesVisibleCheckbox from './VariableValuesVisibleCheckbox.js';
 import Snapshot from '../model/Snapshot.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Property from '../../../../axon/js/Property.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import { combineOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -48,27 +48,24 @@ export default class SnapshotsAccordionBox extends AccordionBox {
    */
   public constructor( scene: EqualityExplorerScene, providedOptions: SnapshotsAccordionBoxOptions ) {
 
-    const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
-      contentXMargin: 10,
-      contentYMargin: 10,
-      contentYSpacing: 3
-    } );
+    const options = optionize4<SnapshotsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {},
+      EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
 
-    const defaultOptions = combineOptions<Required<SnapshotsAccordionBoxOptions>>( {
+        // SelfOptions
+        fixedWidth: 100,
+        variableValuesVisibleProperty: null,
+        snapshotControlOptions: {
+          controlHeight: 50,
+          orientation: 'horizontal',
+          commaSeparated: true,
+          variableValuesOpacity: 1
+        },
 
-      // SelfOptions
-      fixedWidth: 100,
-      variableValuesVisibleProperty: null,
-      snapshotControlOptions: {
-        controlHeight: 50,
-        orientation: 'horizontal',
-        commaSeparated: true,
-        variableValuesOpacity: 1
-      }
-    }, accordionBoxOptions );
-
-    const options = optionize<SnapshotsAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()(
-      defaultOptions, providedOptions );
+        // AccordionBoxOptions
+        contentXMargin: 10,
+        contentYMargin: 10,
+        contentYSpacing: 3
+      }, providedOptions );
 
     assert && assert( !( options.variableValuesVisibleProperty && !scene.variables ),
       'scene has no variables to show in snapshots' );
