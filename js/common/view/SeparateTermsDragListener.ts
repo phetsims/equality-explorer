@@ -96,7 +96,7 @@ export default class SeparateTermsDragListener extends TermDragListener {
       const messageStringProperty = thisIsLeft ?
                                     EqualityExplorerStrings.rightSideFullStringProperty :
                                     EqualityExplorerStrings.leftSideFullStringProperty;
-      const oopsDialog = new OopsDialog( messageStringProperty, { //TODO dynamic
+      const oopsDialog = new OopsDialog( messageStringProperty, { //TODO https://github.com/phetsims/equality-explorer/issues/196 use a single instance of OopsDialog
         focusOnHideNode: null // because we're going to interrupt this drag sequence below
       } );
       oopsDialog.show();
