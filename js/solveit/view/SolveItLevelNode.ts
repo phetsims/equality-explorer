@@ -287,11 +287,6 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
 
     this.universalOperationControl = universalOperationControl;
 
-    // Dialog that is displayed when we reach GAME_REWARD_SCORE correct answers.
-    // Created on demand and reused, so we don't have to deal with buggy Dialog.dispose.
-    let rewardDialog: RewardDialog | null = null;
-    this.rewardNode = null;
-
     // Property that controls opacity of smiley face
     const faceOpacityProperty = new NumberProperty( faceNode.opacity, { //TODO instrument?
       range: new Range( 0, 1 )
@@ -301,6 +296,50 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     } );
 
     this.faceAnimation = null;
+
+    this.rewardNode = null;
+
+    // Reused each time the
+    const rewardDialog: RewardDialog = new RewardDialog( level.scoreProperty, {
+
+      // Display the dialog in a position that does not obscure the challenge solution.
+      // See https://github.com/phetsims/equality-explorer/issues/104
+      layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
+
+        // center horizontally on the screen
+        const dialogLayoutBounds = dialog.layoutBounds!;
+        assert && assert( dialogLayoutBounds );
+        dialog.centerX = dialogLayoutBounds.centerX;
+
+        // top of dialog below balanceScaleEquationNode, so the solution is not obscured
+        dialog.top = balanceScaleEquationNode.bottom + 10;
+      },
+
+      // 'Keep Going' hides the dialog
+      keepGoingButtonListener: () => rewardDialog.hide(),
+
+      // 'New Level' has the same effect as the back button in the status bar
+      newLevelButtonListener: () => {
+        rewardDialog.hide();
+        backButtonListener();
+      },
+
+      // When the dialog is shown, show the reward
+      showCallback: () => {
+        assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
+        this.rewardNode = new SolveItRewardNode( level.levelNumber ); //TODO dynamic, stateful?
+        this.addChild( this.rewardNode );
+      },
+
+      // When the dialog is hidden, dispose of the reward
+      hideCallback: () => {
+        const rewardNode = this.rewardNode!;
+        assert && assert( rewardNode, 'rewardNode is supposed to exist' );
+        this.removeChild( rewardNode );
+        rewardNode.dispose();
+        this.rewardNode = null;
+      }
+    } );
 
     level.scoreProperty.lazyLink( ( score, oldScore ) => {
 
@@ -320,47 +359,6 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
         nextButton.visible = true;
 
         // show the reward dialog
-        rewardDialog = rewardDialog || new RewardDialog( level.scoreProperty.value, { //TODO dynamic
-
-          // Display the dialog in a position that does not obscure the challenge solution.
-          // See https://github.com/phetsims/equality-explorer/issues/104
-          layoutStrategy: ( dialog, simBounds, screenBounds, scale ) => {
-
-            // center horizontally on the screen
-            const dialogLayoutBounds = dialog.layoutBounds!;
-            assert && assert( dialogLayoutBounds );
-            dialog.centerX = dialogLayoutBounds.centerX;
-
-            // top of dialog below balanceScaleEquationNode, so the solution is not obscured
-            dialog.top = balanceScaleEquationNode.bottom + 10;
-          },
-
-          // 'Keep Going' hides the dialog
-          keepGoingButtonListener: () => rewardDialog!.hide(),
-
-          // 'New Level' has the same effect as the back button in the status bar
-          newLevelButtonListener: () => {
-            rewardDialog!.hide();
-            backButtonListener();
-          },
-
-          // When the dialog is shown, show the reward
-          showCallback: () => {
-            assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
-            this.rewardNode = new SolveItRewardNode( level.levelNumber ); //TODO dynamic, stateful?
-            this.addChild( this.rewardNode );
-          },
-
-          // When the dialog is hidden, dispose of the reward
-          hideCallback: () => {
-            const rewardNode = this.rewardNode!;
-            assert && assert( rewardNode, 'rewardNode is supposed to exist' );
-            this.removeChild( rewardNode );
-            rewardNode.dispose();
-            this.rewardNode = null;
-          }
-        } );
-
         rewardDialog.show();
       }
       else {
