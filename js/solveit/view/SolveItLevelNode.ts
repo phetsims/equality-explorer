@@ -235,6 +235,14 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       visiblePropertyOptions: { phetioReadOnly: true } // so that PhET-iO client can see whether its visible
     } );
 
+    // Animated opacity of smiley face.
+    const faceOpacityProperty = new NumberProperty( faceNode.opacity, { //TODO instrument?
+      range: new Range( 0, 1 )
+    } );
+    faceOpacityProperty.link( faceOpacity => {
+      faceNode.opacity = faceOpacity;
+    } );
+
     // terms live in this layer
     const termsLayer = new Node( {
       pickable: false // terms are not interactive, all interaction is with the universal operation control
@@ -286,17 +294,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     super( level, snapshotsAccordionBox, termsLayer, numberTooBigDialog, options );
 
     this.universalOperationControl = universalOperationControl;
-
-    // Property that controls opacity of smiley face
-    const faceOpacityProperty = new NumberProperty( faceNode.opacity, { //TODO instrument?
-      range: new Range( 0, 1 )
-    } );
-    faceOpacityProperty.link( faceOpacity => {
-      faceNode.opacity = faceOpacity;
-    } );
-
     this.faceAnimation = null;
-
     this.rewardNode = null;
 
     // Reused each time the
