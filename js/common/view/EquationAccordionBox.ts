@@ -23,6 +23,7 @@ type SelfOptions = {
   fixedHeight?: number;
 };
 
+//TODO narrow EquationAccordionBoxOptions
 type EquationAccordionBoxOptions = SelfOptions & StrictOmit<AccordionBoxOptions, 'maxWidth' | 'maxHeight' | 'titleNode'>;
 
 export default class EquationAccordionBox extends AccordionBox {

@@ -37,6 +37,7 @@ type SelfOptions = {
   snapshotControlOptions?: StrictOmit<SnapshotControlOptions, 'tandem'>;
 };
 
+//TODO narrow SnapshotsAccordionBoxOptions
 type SnapshotsAccordionBoxOptions = SelfOptions & AccordionBoxOptions & PickRequired<AccordionBoxOptions, 'tandem'>;
 
 export default class SnapshotsAccordionBox extends AccordionBox {
