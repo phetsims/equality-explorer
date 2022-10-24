@@ -17,6 +17,8 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = {
@@ -34,7 +36,7 @@ type AnimateToOptions = {
   animationCompletedCallback?: AnimationCallback; // called when animation has completed
 };
 
-export default class EqualityExplorerMovable {
+export default class EqualityExplorerMovable extends PhetioObject {
 
   private readonly _positionProperty: Property<Vector2>;
 
@@ -42,11 +44,11 @@ export default class EqualityExplorerMovable {
   // Callers should use moveTo or animateTo instead of setting positionProperty.
   public readonly positionProperty: TReadOnlyProperty<Vector2>;
 
-  public dragBounds: Bounds2;
-  private readonly animationSpeed: number;
-
   // drag handlers must manage this flag during a drag sequence
   public readonly draggingProperty: Property<boolean>;
+
+  public dragBounds: Bounds2;
+  private readonly animationSpeed: number;
 
   // destination to animate to, set using animateTo
   private destination: Vector2;
@@ -59,27 +61,42 @@ export default class EqualityExplorerMovable {
 
   public constructor( providedOptions?: EqualityExplorerMovableOptions ) {
 
-    const options = optionize<EqualityExplorerMovableOptions, SelfOptions>()( {
+    const options = optionize<EqualityExplorerMovableOptions, SelfOptions, PhetioObjectOptions>()( {
 
       // SelfOptions
       position: Vector2.ZERO,
       dragBounds: Bounds2.EVERYTHING,
-      animationSpeed: 400
+      animationSpeed: 400,
+
+      // PhetioObjectOptions
+      tandem: Tandem.OPTIONAL, //TODO tandem should be required
+      phetioState: false
     }, providedOptions );
 
-    this._positionProperty = new Vector2Property( options.position ); //TODO instrument
+    super( options );
+
+    this._positionProperty = new Vector2Property( options.position, {
+      tandem: options.tandem.createTandem( 'positionProperty' ),
+      phetioReadOnly: false
+    } );
     this.positionProperty = this._positionProperty;
+
+    this.draggingProperty = new BooleanProperty( false, {
+      tandem: options.tandem.createTandem( 'draggingProperty' ),
+      phetioReadOnly: false
+    } );
+
     this.dragBounds = options.dragBounds;
     this.animationSpeed = options.animationSpeed;
-    this.draggingProperty = new BooleanProperty( false ); //TODO instrument
     this.destination = options.position.copy();
     this.animationStepCallback = null;
     this.animationCompletedCallback = null;
   }
 
-  public dispose(): void {
+  public override dispose(): void {
     this.positionProperty.dispose();
     this.draggingProperty.dispose();
+    super.dispose();
   }
 
   /**

@@ -57,9 +57,6 @@ export default abstract class Term extends EqualityExplorerMovable {
   // whether the term's halo is visible
   public readonly haloVisibleProperty: Property<boolean>;
 
-  // has this Term been disposed?
-  private _isDisposed: boolean;
-
   // emits when dispose has completed
   public readonly disposedEmitter: Emitter<[ Term ]>;
 
@@ -89,7 +86,6 @@ export default abstract class Term extends EqualityExplorerMovable {
     this.onPlateProperty = new BooleanProperty( false ); //TODO instrument
     this.shadowVisibleProperty = new BooleanProperty( false ); //TODO instrument
     this.haloVisibleProperty = new BooleanProperty( false ); //TODO instrument
-    this._isDisposed = false;
 
     this.disposedEmitter = new Emitter( {
       parameters: [ { valueType: Term } ]
@@ -97,7 +93,6 @@ export default abstract class Term extends EqualityExplorerMovable {
   }
 
   public override dispose(): void {
-    assert && assert( !this.isDisposed, `dispose called twice for ${this}` );
 
     this.pickableProperty.dispose();
     this.onPlateProperty.dispose();
@@ -106,12 +101,9 @@ export default abstract class Term extends EqualityExplorerMovable {
     super.dispose();
 
     // Do this last, after fully disposed. Order is important!
-    this._isDisposed = true;
     this.disposedEmitter.emit( this );
     this.disposedEmitter.dispose();
   }
-
-  public get isDisposed(): boolean { return this._isDisposed; }
 
   /**
    * Creates the options that would be needed to instantiate a copy of this object.
