@@ -8,7 +8,7 @@
 
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { NodeTranslationOptions, Text } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
@@ -23,8 +23,8 @@ type SelfOptions = {
   fixedHeight?: number;
 };
 
-//TODO narrow EquationAccordionBoxOptions
-type EquationAccordionBoxOptions = SelfOptions & StrictOmit<AccordionBoxOptions, 'maxWidth' | 'maxHeight' | 'titleNode'>;
+//TODO narrow AccordionBoxOptions to PickRequired<AccordionBoxOptions, 'expandedProperty' | 'tandem'>
+type EquationAccordionBoxOptions = SelfOptions & NodeTranslationOptions & StrictOmit<AccordionBoxOptions, 'maxWidth' | 'maxHeight' | 'titleNode'>;
 
 export default class EquationAccordionBox extends AccordionBox {
 
@@ -33,7 +33,7 @@ export default class EquationAccordionBox extends AccordionBox {
    * @param rightTermCreators - right side of equation
    * @param [providedOptions]
    */
-  public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[], providedOptions?: EquationAccordionBoxOptions ) {
+  public constructor( leftTermCreators: TermCreator[], rightTermCreators: TermCreator[], providedOptions: EquationAccordionBoxOptions ) {
 
     const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
       showTitleWhenExpanded: false,

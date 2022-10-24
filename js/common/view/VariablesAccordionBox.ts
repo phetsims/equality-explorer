@@ -29,7 +29,7 @@ type SelfOptions = {
   fixedHeight?: number;
 };
 
-//TODO narrow VariablesAccordionBoxOptions
+//TODO narrow AccordionBoxOptions to PickRequired<AccordionBoxOptions, 'expandedProperty' | 'tandem'>
 type VariablesAccordionBoxOptions = SelfOptions & NodeTranslationOptions & AccordionBoxOptions;
 
 export default class VariablesAccordionBox extends AccordionBox {
@@ -38,7 +38,7 @@ export default class VariablesAccordionBox extends AccordionBox {
    * @param variables - in the order that they appear in the accordion box, from left to right
    * @param providedOptions
    */
-  public constructor( variables: Variable[], providedOptions?: VariablesAccordionBoxOptions ) {
+  public constructor( variables: Variable[], providedOptions: VariablesAccordionBoxOptions ) {
 
     assert && assert( variables.length > 0 );
 
