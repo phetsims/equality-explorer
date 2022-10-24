@@ -97,24 +97,28 @@ export default class VariablesAccordionBox extends AccordionBox {
         color: 'black',
         font: new PhetFont( options.fontSize ),
         xMargin: 6,
-        touchAreaYDilation: 15,
-        tandem: options.tandem.createTandem( `${variable.tandem.name}Picker` ),
-        phetioVisiblePropertyInstrumented: false
+        touchAreaYDilation: 15
       } );
 
-      children.push( new HBox( {
+      const labeledPickerNode = new HBox( {
         children: [ variableNode, equalsText, valuePicker ],
         spacing: 5,
         maxWidth: contentWidth,
-        maxHeight: contentHeight
-      } ) );
+        maxHeight: contentHeight,
+        tandem: options.tandem.createTandem( `${variable.tandem.name}LabeledPickerNode` ),
+        phetioEnabledPropertyInstrumented: true
+      } );
+
+      children.push( labeledPickerNode );
     } );
 
     const hBox = new HBox( {
       children: children,
       spacing: 25,
-      maxWidth: contentWidth,
-      center: backgroundNode.center
+      maxWidth: contentWidth
+    } );
+    hBox.boundsProperty.link( bounds => {
+      hBox.center = backgroundNode.center;
     } );
 
     const contentNode = new Node( {
