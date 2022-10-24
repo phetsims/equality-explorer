@@ -60,7 +60,7 @@ export default class TermsToolboxNode extends Panel {
       const termCreator = termCreators[ i ];
       const termCreatorTandemName = termCreator.tandem.name;
 
-      //TODO confirm that TermCreatorNodes should be instrumented, and that these tandem names are appropriate
+      //TODO https://github.com/phetsims/equality-explorer/issues/191 confirm that TermCreatorNodes should be instrumented, and that these tandem names are appropriate
 
       // creator for positive terms
       termCreatorNodes.push( new TermCreatorNode( termCreator, plate, termsLayer, {

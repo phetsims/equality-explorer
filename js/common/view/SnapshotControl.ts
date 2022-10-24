@@ -1,6 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-//TODO do we need an iO-only Property whose value indicates what the displayed snapshot looks like?
+//TODO https://github.com/phetsims/equality-explorer/issues/191 do we need an iO-only Property whose value indicates what the displayed snapshot looks like?
 /**
  * Control for taking, displaying and selecting a snapshot.
  * The Snapshots accordion box contains a vertical column of these.
@@ -181,7 +181,7 @@ export default class SnapshotControl extends Node {
             // de-emphasize variable values by scaling them down,
             // see https://github.com/phetsims/equality-explorer/issues/110
             scale: 0.75
-            //TODO does VariableValuesNode need to be instrumented?
+            //TODO https://github.com/phetsims/equality-explorer/issues/191 does VariableValuesNode need to be instrumented?
           } );
         }
       }

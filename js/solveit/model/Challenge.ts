@@ -74,7 +74,7 @@ export default class Challenge {
       b: Fraction.FractionIO.toStateObject( this.b ),
       m: Fraction.FractionIO.toStateObject( this.m ),
       n: Fraction.FractionIO.toStateObject( this.n ),
-      //TODO debugDerivation is for debugging, but will show up in Studio, complete with HTML5 markup. Is it OK? Document in client guide?
+      //TODO https://github.com/phetsims/equality-explorer/issues/191 debugDerivation is for debugging, but will show up in Studio, complete with HTML5 markup. Is it OK? Document in client guide?
       debugDerivation: StringIO.toStateObject( this.debugDerivation )
     };
   }
