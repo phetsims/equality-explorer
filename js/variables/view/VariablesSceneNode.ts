@@ -56,6 +56,7 @@ export default class VariablesSceneNode extends BasicsSceneNode {
 
     this.variableValuesVisibleProperty = variableValuesVisibleProperty;
     this.variablesAccordionBoxExpandedProperty = new BooleanProperty( true, {
+      //TODO do we need to have singular/plural tandem names for variablesAccordionBoxExpandedProperty?
       tandem: ( variables.length === 1 ) ?
               options.tandem.createTandem( 'variableAccordionBoxExpandedProperty' ) : // singular
               options.tandem.createTandem( 'variablesAccordionBoxExpandedProperty' ) // plural
@@ -67,6 +68,7 @@ export default class VariablesSceneNode extends BasicsSceneNode {
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: this.snapshotsAccordionBox.right,
       top: this.snapshotsAccordionBox.top,
+      //TODO do we need to have singular/plural tandem names for variablesAccordionBox?
       tandem: ( variables.length === 1 ) ?
               options.tandem.createTandem( 'variableAccordionBox' ) : // singular
               options.tandem.createTandem( 'variablesAccordionBox' ) // plural
