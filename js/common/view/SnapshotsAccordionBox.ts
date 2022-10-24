@@ -7,7 +7,7 @@
  */
 
 import TrashButton from '../../../../scenery-phet/js/buttons/TrashButton.js';
-import { HBox, HSeparator, Node, Path, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, HSeparator, Node, NodeTranslationOptions, Path, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
@@ -22,7 +22,6 @@ import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
@@ -38,7 +37,8 @@ type SelfOptions = {
 };
 
 //TODO narrow AccordionBoxOptions to PickRequired<AccordionBoxOptions, 'expandedProperty' | 'tandem'>
-type SnapshotsAccordionBoxOptions = SelfOptions & AccordionBoxOptions & PickRequired<AccordionBoxOptions, 'tandem'>;
+type SnapshotsAccordionBoxOptions = SelfOptions & NodeTranslationOptions &
+  StrictOmit<AccordionBoxOptions, 'maxWidth' | 'titleNode'>;
 
 export default class SnapshotsAccordionBox extends AccordionBox {
 
@@ -48,7 +48,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
    */
   public constructor( scene: EqualityExplorerScene, providedOptions: SnapshotsAccordionBoxOptions ) {
 
-    const accordionBoxOptions = combineOptions<SnapshotsAccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
+    const accordionBoxOptions = combineOptions<AccordionBoxOptions>( {}, EqualityExplorerConstants.ACCORDION_BOX_OPTIONS, {
       contentXMargin: 10,
       contentYMargin: 10,
       contentYSpacing: 3

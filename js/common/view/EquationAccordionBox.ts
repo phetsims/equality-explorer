@@ -24,7 +24,8 @@ type SelfOptions = {
 };
 
 //TODO narrow AccordionBoxOptions to PickRequired<AccordionBoxOptions, 'expandedProperty' | 'tandem'>
-type EquationAccordionBoxOptions = SelfOptions & NodeTranslationOptions & StrictOmit<AccordionBoxOptions, 'maxWidth' | 'maxHeight' | 'titleNode'>;
+type EquationAccordionBoxOptions = SelfOptions & NodeTranslationOptions &
+  StrictOmit<AccordionBoxOptions, 'maxWidth' | 'maxHeight' | 'titleNode'>;
 
 export default class EquationAccordionBox extends AccordionBox {
 
