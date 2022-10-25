@@ -206,6 +206,12 @@ When the state of the lock feature changes, any `Terms` that are not on the scal
 
 For an overview of various scenarios involving the lock feature, see [lock-scenarios.md](https://github.com/phetsims/equality-explorer/blob/master/doc/lock-scenarios.md).
 
+## PhET-iO
+
+**Dialogs**: The sim has 3 OopsDialogs, used to display messages when something goes wrong.
+They are implemented as static instances, and reused when needed.
+`EqualityExplorerSceneNode` is responsible for instantiating those instances eagerly. No PhetioCapsule is involved.
+
 ## Related simulations
 
 **Equality Explorer: Basics**: The _Basics_ screen in this sim is identical to the _Basics_ screen in _Equality Explorer_.  The _Lab_ screen adds the ability to change the values (weights) of real-world objects, something that was not doable in _Equality Explorer_.
