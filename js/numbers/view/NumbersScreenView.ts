@@ -14,7 +14,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 
 export default class NumbersScreenView extends EqualityExplorerScreenView {
 
@@ -26,10 +25,9 @@ export default class NumbersScreenView extends EqualityExplorerScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
-                                      numberTooBigDialog: OopsDialog,
                                       providedOptions: NumbersSceneNodeOptions ): NumbersSceneNode {
     return new NumbersSceneNode( scene, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, numberTooBigDialog, providedOptions );
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
 

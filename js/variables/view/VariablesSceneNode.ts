@@ -16,7 +16,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -34,7 +33,6 @@ export default class VariablesSceneNode extends BasicsSceneNode {
                       equationAccordionBoxExpandedProperty: Property<boolean>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
-                      numberTooBigDialog: OopsDialog,
                       providedOptions: VariablesSceneNodeOptions ) {
 
     const options = optionize<VariablesSceneNodeOptions, SelfOptions, BasicsSceneNodeOptions>()( {
@@ -48,8 +46,7 @@ export default class VariablesSceneNode extends BasicsSceneNode {
     } );
     options.variableValuesVisibleProperty = variableValuesVisibleProperty;
 
-    super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds,
-      numberTooBigDialog, options );
+    super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
     const variables = scene.variables!;
     assert && assert( variables && variables.length > 0 );

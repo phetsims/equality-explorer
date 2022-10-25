@@ -14,7 +14,6 @@ import OperationsSceneNode, { OperationsSceneNodeOptions } from './OperationsSce
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import OperationsScene from '../model/OperationsScene.js';
-import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 
 export default class OperationsScreenView extends EqualityExplorerScreenView {
 
@@ -29,10 +28,9 @@ export default class OperationsScreenView extends EqualityExplorerScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
-                                      numberTooBigDialog: OopsDialog,
                                       providedOptions: OperationsSceneNodeOptions ): OperationsSceneNode {
     return new OperationsSceneNode( scene, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, numberTooBigDialog, providedOptions );
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
 

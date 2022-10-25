@@ -14,7 +14,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Property from '../../../../axon/js/Property.js';
 import BasicsModel from '../model/BasicsModel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 
 export default class BasicsScreenView extends EqualityExplorerScreenView {
 
@@ -29,10 +28,9 @@ export default class BasicsScreenView extends EqualityExplorerScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
-                                      numberTooBigDialog: OopsDialog,
                                       providedOptions: BasicsSceneNodeOptions ): BasicsSceneNode {
     return new BasicsSceneNode( scene, equationAccordionBoxExpandedProperty,
-      snapshotsAccordionBoxExpandedProperty, layoutBounds, numberTooBigDialog, providedOptions );
+      snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
 

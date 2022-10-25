@@ -23,7 +23,6 @@ import TermsToolboxNode from '../../common/view/TermsToolboxNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from '../model/BasicsScene.js';
 import { SnapshotControlOptions } from '../../common/view/SnapshotControl.js';
-import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 
 type SelfOptions = {
   termsToolboxContentSize?: Dimension2;
@@ -48,7 +47,6 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
                       equationAccordionBoxExpandedProperty: Property<boolean>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
-                      numberTooBigDialog: OopsDialog,
                       providedOptions: BasicsSceneNodeOptions ) {
 
     const options = optionize<BasicsSceneNodeOptions, StrictOmit<SelfOptions, 'snapshotControlOptions'>, EqualityExplorerSceneNodeOptions>()( {
@@ -149,7 +147,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
 
     options.children = children;
 
-    super( scene, snapshotsAccordionBox, termsLayer, numberTooBigDialog, options );
+    super( scene, snapshotsAccordionBox, termsLayer, options );
 
     this.equationAccordionBox = equationAccordionBox;
   }

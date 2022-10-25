@@ -16,7 +16,6 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import OperationsScene from '../model/OperationsScene.js';
-import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -31,7 +30,6 @@ export default class OperationsSceneNode extends VariablesSceneNode {
                       equationAccordionBoxExpandedProperty: Property<boolean>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                       layoutBounds: Bounds2,
-                      numberTooBigDialog: OopsDialog,
                       providedOptions: OperationsSceneNodeOptions ) {
 
     const options = optionize<OperationsSceneNodeOptions, SelfOptions, VariablesSceneNodeOptions>()( {
@@ -40,8 +38,7 @@ export default class OperationsSceneNode extends VariablesSceneNode {
       organizeButtonVisible: false // like terms are combines, so the organize button is not relevant in this screen
     }, providedOptions );
 
-    super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds,
-      numberTooBigDialog, options );
+    super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, options );
 
     // Layer when universal operation animation occurs
     const operationAnimationLayer = new Node();

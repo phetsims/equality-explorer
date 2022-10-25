@@ -20,8 +20,6 @@ import equalityExplorer from '../../equalityExplorer.js';
 import SolveItModel from '../model/SolveItModel.js';
 import SolveItLevelSelectionNode from './SolveItLevelSelectionNode.js';
 import SolveItLevelNode from './SolveItLevelNode.js';
-import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
-import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 
 // constants
 const TRANSITION_OPTIONS = {
@@ -69,19 +67,10 @@ export default class SolveItScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'levelSelectionNode' )
     } );
 
-    // When the maxInteger limit is exceeded, this dialog is displayed.
-    // To test this, see EqualityExplorerQueryParameters.maxInteger.
-    const numberTooBigDialog = new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty, {
-      focusOnHideNode: null,
-      tandem: options.tandem.createTandem( 'numberTooBigDialog' ),
-      phetioDocumentation: 'Displayed when adding a term would result in a number that is too big for the sim'
-    } );
-
     // Nodes for levels, organized under a parent tandem
     const levelNodesTandem = options.tandem.createTandem( 'levelNodes' );
     this.levelNodes = model.levels.map( level => new SolveItLevelNode( level, model.levelProperty,
-      this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer,
-      numberTooBigDialog, {
+      this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, {
         visibleProperty: new DerivedProperty( [ model.levelProperty ], selectedLevel => ( level === selectedLevel ) ),
         tandem: levelNodesTandem.createTandem( `${level.tandem.name}Node` )
       } ) );

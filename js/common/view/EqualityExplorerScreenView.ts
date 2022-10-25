@@ -22,8 +22,6 @@ import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from './E
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
-import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
-import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -73,14 +71,6 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
     } );
     this.addChild( resetAllButton );
 
-    // When the maxInteger limit is exceeded, this dialog is displayed.
-    // To test this, see EqualityExplorerQueryParameters.maxInteger.
-    const numberTooBigDialog = new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty, {
-      focusOnHideNode: null,
-      tandem: options.tandem.createTandem( 'numberTooBigDialog' ),
-      phetioDocumentation: 'Displayed when adding a term would result in a number that is too big for the sim'
-    } );
-
     // If there is more than 1 scene, organize them under a 'sceneNodes' tandem.
     const sceneNodesTandem = ( model.scenes.length === 1 ) ? options.tandem : options.tandem.createTandem( 'sceneNodes' );
 
@@ -91,8 +81,7 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
       const sceneNode = this.createSceneNode( scene,
         this.equationAccordionBoxExpandedProperty,
         this.snapshotsAccordionBoxExpandedProperty,
-        this.layoutBounds,
-        numberTooBigDialog, {
+        this.layoutBounds, {
           visibleProperty: new DerivedProperty(
             [ model.sceneProperty ],
             selectedScene => scene === selectedScene, {
@@ -154,7 +143,6 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
                                       equationAccordionBoxExpandedProperty: Property<boolean>,
                                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
                                       layoutBounds: Bounds2,
-                                      numberTooBigDialog: OopsDialog,
                                       providedOptions: EqualityExplorerSceneNodeOptions ): EqualityExplorerSceneNode;
 }
 
