@@ -9,15 +9,14 @@
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { NodeTranslationOptions } from '../../../../scenery/js/imports.js';
-import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions, RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import RectangularRadioButton from '../../../../sun/js/buttons/RectangularRadioButton.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SceneRadioButtonGroupOptions = SelfOptions & NodeTranslationOptions &
-  PickRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
+type SceneRadioButtonGroupOptions = SelfOptions & PickRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
 
 export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<EqualityExplorerScene> {
 
@@ -42,7 +41,8 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<E
       assert && assert( scene.icon, 'scene must have an icon' );
       contentArray.push( {
         value: scene,
-        createNode: tandem => scene.icon
+        createNode: tandem => scene.icon,
+        tandemName: `${scene.tandem.name}${RectangularRadioButton.TANDEM_NAME_SUFFIX}`
       } );
     } );
 

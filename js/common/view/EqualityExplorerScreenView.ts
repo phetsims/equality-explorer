@@ -94,16 +94,20 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
       this.addChild( sceneNode );
     } );
 
-    // If there is more than 1 scene, create radio buttons for selecting a scene, centered in the space below the
-    // Snapshots accordion box.
+    // If there is more than 1 scene, create radio buttons for selecting a scene.
     if ( model.scenes.length > 1 ) {
-      const snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
+
       const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.scenes, model.sceneProperty, {
-        centerX: snapshotsAccordionBox.centerX,
-        centerY: snapshotsAccordionBox.bottom + ( resetAllButton.top - snapshotsAccordionBox.bottom ) / 2,
         tandem: options.tandem.createTandem( 'sceneRadioButtonGroup' )
       } );
       this.addChild( sceneRadioButtonGroup );
+
+      // Centered under Snapshots accordion box
+      const snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
+      sceneRadioButtonGroup.boundsProperty.link( bounds => {
+        sceneRadioButtonGroup.centerX = snapshotsAccordionBox.centerX;
+        sceneRadioButtonGroup.centerY = snapshotsAccordionBox.bottom + ( resetAllButton.top - snapshotsAccordionBox.bottom ) / 2;
+      } );
     }
   }
 
