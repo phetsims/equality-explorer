@@ -116,7 +116,7 @@ The first 15 scenarios involve screens where like terms are placed in separate c
 3. Drag a term off one of the plates. 
 4. Verify that an equivalent term comes off the opposite plate and follows the dragged term.
 5. Position the dragged term so that it overlaps a like term that will sum to zero.
-6. Release the dragged term. Tdragged term and the term that it overlaps sum to zero. 
+6. Release the dragged term. The dragged term and the term that it overlaps sum to zero. 
 7. Verify that the equivalent term moves immediately to an empty cell on the opposite plate.
 
 ### Scenario 11
