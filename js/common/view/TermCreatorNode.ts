@@ -54,7 +54,7 @@ export default class TermCreatorNode extends Node {
     this.termsLayer = termsLayer;
 
     // On down event, create a term and start a drag cycle by forwarding the event
-    this.addInputListener( DragListener.createForwardingListener(
+    this.addInputListener( DragListener.createForwardingListener( //TODO  instrument?
       // down
       event => {
         termCreator.createTerm( {

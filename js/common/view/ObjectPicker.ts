@@ -93,7 +93,7 @@ class ObjectPicker<T> extends Node {
    * @param items - the set of items that you can select from
    * @param [providedOptions]
    */
-  public constructor( valueProperty: Property<T>, items: ObjectPickerItem<T>[], providedOptions?: ObjectPickerOptions ) {
+  public constructor( valueProperty: Property<T>, items: ObjectPickerItem<T>[], providedOptions: ObjectPickerOptions ) {
 
     const options = optionize<ObjectPickerOptions, SelfOptions, NodeOptions>()( {
 
@@ -311,7 +311,8 @@ class ObjectPicker<T> extends Node {
             }
             indexProperty.value = index;
           }
-        }
+        },
+        tandem: options.tandem.createTandem( 'incrementInputListener' )
       } ) );
     incrementParent.addInputListener( incrementInputListener );
 
@@ -325,7 +326,8 @@ class ObjectPicker<T> extends Node {
             }
             indexProperty.value = index;
           }
-        }
+        },
+        tandem: options.tandem.createTandem( 'decrementInputListener' )
       } ) );
     decrementParent.addInputListener( decrementInputListener );
 

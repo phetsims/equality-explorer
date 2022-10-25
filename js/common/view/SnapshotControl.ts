@@ -132,7 +132,8 @@ export default class SnapshotControl extends Node {
         if ( snapshotProperty.value ) {
           selectedSnapshotProperty.value = snapshotProperty.value;
         }
-      }
+      },
+      tandem: options.tandem.createTandem( 'fireListener' )
     } ) );
 
     // updates the layout of the snapshot, and centers it in the control

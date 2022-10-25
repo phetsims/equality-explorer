@@ -172,7 +172,8 @@ export default class SnapshotsAccordionBox extends AccordionBox {
         if ( !this.parentToGlobalBounds( this.visibleBounds ).containsPoint( event.pointer.point ) ) {
           scene.snapshotsCollection.selectedSnapshotProperty.value = null;
         }
-      }
+      },
+      tandem: options.tandem.createTandem( 'clickToDeselectListener' )
     };
 
     // Register input listener with the Display only when we have a selected snapshot.
