@@ -104,7 +104,7 @@ export default class EqualityExplorerSceneNode extends Node {
       EqualityExplorerSceneNode._numberTooBigDialog = new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty, {
         focusOnHideNode: null,
         tandem: Tandem.GLOBAL_VIEW.createTandem( 'numberTooBigDialog' ),
-        phetioDocumentation: 'Displayed when adding a term would result in a number that is too big for the sim'
+        phetioDocumentation: 'Displayed when an interaction or operation would result in a number that is too big for the sim'
       } );
     }
     return EqualityExplorerSceneNode._numberTooBigDialog;
