@@ -30,12 +30,14 @@ import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene from '../../operations/model/OperationsScene.js';
 import ConstantTerm from '../model/ConstantTerm.js';
 import Term from '../model/Term.js';
-import UniversalOperation, { UniversalOperand, UniversalOperator } from '../model/UniversalOperation.js';
+import UniversalOperation, { UniversalOperand } from '../model/UniversalOperation.js';
 import VariableTerm from '../model/VariableTerm.js';
 import ObjectPicker, { ObjectPickerItem } from './ObjectPicker.js';
 import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
 import Range from '../../../../dot/js/Range.js';
+import UniversalOperator from '../model/UniversalOperator.js';
+import RectangularRadioButton from '../../../../sun/js/buttons/RectangularRadioButton.js';
 
 type SelfOptions = {
   timesZeroEnabled?: boolean; // whether to include 'times 0' as one of the operations
@@ -65,7 +67,8 @@ export default class UniversalOperationControl extends HBox {
       const operator = scene.operators[ i ];
       operatorItems.push( {
         value: operator,
-        createNode: tandem => UniversalOperationNode.createOperatorNode( operator )
+        createNode: tandem => UniversalOperationNode.createOperatorNode( operator ),
+        tandemName: `${operator.tandemName}${RectangularRadioButton.TANDEM_NAME_SUFFIX}`
       } );
     }
 
@@ -203,7 +206,7 @@ export default class UniversalOperationControl extends HBox {
         const operandIndex = scene.operands.indexOf( operand );
         assert && assert( operandIndex !== -1, `operand not found: ${operand}` );
 
-        if ( ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) ) {
+        if ( ( operator === UniversalOperator.TIMES || operator === UniversalOperator.DIVIDE ) ) {
           assert && assert( operand instanceof ConstantTerm, `unexpected operand type: ${operand}` ); // eslint-disable-line no-simple-type-checking-assertions
 
           // increment arrow is enabled if there are any constant term operands above the current selection
@@ -345,7 +348,7 @@ export default class UniversalOperationControl extends HBox {
  * Does this operation result in division by zero?
  */
 function isDivideByZero( operator: UniversalOperator, operand: Term ): boolean {
-  return ( operator === MathSymbols.DIVIDE ) &&
+  return ( operator.symbol === MathSymbols.DIVIDE ) &&
          ( operand instanceof ConstantTerm && operand.constantValue.getValue() === 0 );
 }
 
@@ -353,7 +356,7 @@ function isDivideByZero( operator: UniversalOperator, operand: Term ): boolean {
  * Does this operation result in multiplication by zero?
  */
 function isTimesZero( operator: UniversalOperator, operand: Term ): boolean {
-  return ( operator === MathSymbols.TIMES ) &&
+  return ( operator.symbol === MathSymbols.TIMES ) &&
          ( operand instanceof ConstantTerm && operand.constantValue.getValue() === 0 );
 }
 
@@ -362,7 +365,7 @@ function isTimesZero( operator: UniversalOperator, operand: Term ): boolean {
  * Times and divide are unsupported for variable term operands.
  */
 function isUnsupportedVariableTermOperation( operator: UniversalOperator, operand: Term ): boolean {
-  return ( operator === MathSymbols.TIMES || operator === MathSymbols.DIVIDE ) &&
+  return ( operator.symbol === MathSymbols.TIMES || operator.symbol === MathSymbols.DIVIDE ) &&
          ( operand instanceof VariableTerm );
 }
 

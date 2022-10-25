@@ -21,6 +21,7 @@ import sphere_png from '../../../images/sphere_png.js';
 import square_png from '../../../images/square_png.js';
 import ConstantTerm from '../../common/model/ConstantTerm.js';
 import UniversalOperation from '../../common/model/UniversalOperation.js';
+import UniversalOperator from '../../common/model/UniversalOperator.js';
 import ConstantTermNode from '../../common/view/ConstantTermNode.js';
 import UniversalOperationNode from '../../common/view/UniversalOperationNode.js';
 import VariableTermNode from '../../common/view/VariableTermNode.js';
@@ -228,7 +229,7 @@ function createFractionConstantTermNode(): Node {
  * Creates an operation node with a random operator and a random positive integer operand.
  */
 function createOperationNode(): Node {
-  const operator = UniversalOperation.randomOperator();
+  const operator = UniversalOperator.getRandom();
   const constantValue = ChallengeGenerator.randomValueBy( INTEGER_VALUES, value => ( value > 0 ) );
   const operand = new ConstantTerm( { constantValue: Fraction.fromInteger( constantValue ) } );
   const operation = new UniversalOperation( operator, operand );

@@ -8,13 +8,13 @@
 
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from './ConstantTerm.js';
 import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
+import UniversalOperator from './UniversalOperator.js';
 
 type SelfOptions = {
   coefficient?: Fraction;
@@ -114,20 +114,20 @@ export default class VariableTerm extends Term {
     if ( operation.operand instanceof VariableTerm ) {
 
       // plus or minus a constant
-      if ( operation.operator === MathSymbols.PLUS ) {
+      if ( operation.operator === UniversalOperator.PLUS ) {
         term = this.plus( operation.operand, providedOptions );
       }
-      else if ( operation.operator === MathSymbols.MINUS ) {
+      else if ( operation.operator === UniversalOperator.MINUS ) {
         term = this.minus( operation.operand, providedOptions );
       }
     }
     else if ( operation.operand instanceof ConstantTerm ) {
 
       // times or divide by a variable
-      if ( operation.operator === MathSymbols.TIMES ) {
+      if ( operation.operator === UniversalOperator.TIMES ) {
         term = this.times( operation.operand, providedOptions );
       }
-      else if ( operation.operator === MathSymbols.DIVIDE ) {
+      else if ( operation.operator === UniversalOperator.DIVIDE ) {
         term = this.divided( operation.operand, providedOptions );
       }
     }

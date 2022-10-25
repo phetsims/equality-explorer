@@ -13,7 +13,8 @@ import { HBox, HBoxOptions, Node, NodeTranslationOptions, Text } from '../../../
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from '../model/ConstantTerm.js';
-import UniversalOperation, { UniversalOperand, UniversalOperator } from '../model/UniversalOperation.js';
+import UniversalOperation, { UniversalOperand } from '../model/UniversalOperation.js';
+import UniversalOperator from '../model/UniversalOperator.js';
 import VariableTerm from '../model/VariableTerm.js';
 import ConstantTermNode from './ConstantTermNode.js';
 import VariableTermNode from './VariableTermNode.js';
@@ -58,7 +59,7 @@ export default class UniversalOperationNode extends HBox {
    * Creates the view for a universal operator.
    */
   public static createOperatorNode( operator: UniversalOperator ): Node {
-    return new Text( operator, {
+    return new Text( operator.symbol, {
       font: EqualityExplorerConstants.UNIVERSAL_OPERATION_INTEGER_FONT
     } );
   }

@@ -41,7 +41,8 @@ export default class EqualityExplorerLockNode extends LockNode {
       fire: () => {
         lockedProperty.value = !lockedProperty.value;
         phet.log && phet.log( `Lock pressed, value=${lockedProperty.value}` );
-      }
+      },
+      tandem: options.tandem.createTandem( 'fireListener' )
     } ) );
 
     this.touchArea = this.localBounds.dilatedXY( 5, 10 );

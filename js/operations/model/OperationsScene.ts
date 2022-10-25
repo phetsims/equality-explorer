@@ -9,7 +9,6 @@
 
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
-import StringProperty from '../../../../axon/js/StringProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -20,7 +19,7 @@ import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene, { EqualityExplorerSceneOptions } from '../../common/model/EqualityExplorerScene.js';
 import Snapshot from '../../common/model/Snapshot.js';
 import TermCreator from '../../common/model/TermCreator.js';
-import UniversalOperation, { UniversalOperand, UniversalOperator, UniversalOperatorValues } from '../../common/model/UniversalOperation.js';
+import UniversalOperation, { UniversalOperand } from '../../common/model/UniversalOperation.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
@@ -29,6 +28,8 @@ import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import UniversalOperator from '../../common/model/UniversalOperator.js';
+import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 
 // constants
 const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;
@@ -100,9 +101,9 @@ export default class OperationsScene extends EqualityExplorerScene {
       } ]
     } );
 
-    this.operators = UniversalOperatorValues;
+    this.operators = UniversalOperator.enumeration.values;
 
-    this.operatorProperty = new StringProperty( this.operators[ 0 ], {
+    this.operatorProperty = new EnumerationProperty( this.operators[ 0 ], {
       validValues: this.operators
     } );
 

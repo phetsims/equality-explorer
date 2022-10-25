@@ -9,12 +9,12 @@
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
+import UniversalOperator from './UniversalOperator.js';
 
 type SelfOptions = {
   constantValue?: Fraction;
@@ -110,16 +110,16 @@ export default class ConstantTerm extends Term {
     // constant operands only
     if ( operation.operand instanceof ConstantTerm ) {
 
-      if ( operation.operator === MathSymbols.PLUS ) {
+      if ( operation.operator === UniversalOperator.PLUS ) {
         term = this.plus( operation.operand, providedOptions );
       }
-      else if ( operation.operator === MathSymbols.MINUS ) {
+      else if ( operation.operator === UniversalOperator.MINUS ) {
         term = this.minus( operation.operand, providedOptions );
       }
-      else if ( operation.operator === MathSymbols.TIMES ) {
+      else if ( operation.operator === UniversalOperator.TIMES ) {
         term = this.times( operation.operand, providedOptions );
       }
-      else if ( operation.operator === MathSymbols.DIVIDE ) {
+      else if ( operation.operator === UniversalOperator.DIVIDE ) {
         term = this.divided( operation.operand, providedOptions );
       }
     }
