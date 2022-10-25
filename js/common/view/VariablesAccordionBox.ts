@@ -8,11 +8,11 @@
 
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { optionize4 } from '../../../../phet-core/js/optionize.js';
+import optionize, { optionize4 } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, Node, NodeTranslationOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { HBox, HBoxOptions, Node, NodeTranslationOptions, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -74,43 +74,12 @@ export default class VariablesAccordionBox extends AccordionBox {
 
     const backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
-    // Create a picker for each variable
-    const children: Node[] = [];
-    variables.forEach( variable => {
-
-      const variableNode = new VariableNode( variable, {
-        iconScale: 0.55,
-        fontSize: options.fontSize
-      } );
-
-      const equalsText = new Text( MathSymbols.EQUAL_TO, {
-        font: new PhetFont( options.fontSize )
-      } );
-
-      const labeledPickerNodeTandem = options.tandem.createTandem( `${variable.tandem.name}LabeledPickerNode` );
-
-      const variableRange = variable.range!;
-      assert && assert( variableRange, 'Variable must have range' );
-      const valuePicker = new NumberPicker( variable.valueProperty, new Property( variableRange ), {
-        color: 'black',
-        font: new PhetFont( options.fontSize ),
-        xMargin: 6,
-        touchAreaYDilation: 15,
-        tandem: labeledPickerNodeTandem.createTandem( 'numberPicker' ),
-        phetioVisiblePropertyInstrumented: false
-      } );
-
-      const labeledPickerNode = new HBox( {
-        children: [ variableNode, equalsText, valuePicker ],
-        spacing: 5,
-        maxWidth: contentWidth,
-        maxHeight: contentHeight,
-        tandem: labeledPickerNodeTandem,
-        phetioEnabledPropertyInstrumented: true
-      } );
-
-      children.push( labeledPickerNode );
-    } );
+    // Create a labeled picker for each variable
+    const children = variables.map( variable => new LabeledPickerNode( variable, {
+      maxWidth: contentWidth,
+      maxHeight: contentHeight,
+      tandem: options.tandem.createTandem( `${variable.tandem.name}LabeledPickerNode` )
+    } ) );
 
     const hBox = new HBox( {
       children: children,
@@ -131,6 +100,56 @@ export default class VariablesAccordionBox extends AccordionBox {
   public override dispose(): void {
     assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
+  }
+}
+
+/**
+ * LabeledPickerNode is a NumberPicker with a label to the left of it.
+ */
+
+type LabeledPickerNodeSelfOptions = {
+  fontSize?: number;
+};
+
+type LabeledPickerNodeOptions = LabeledPickerNodeSelfOptions & PickRequired<HBoxOptions, 'tandem' | 'maxWidth' | 'maxHeight'>;
+
+class LabeledPickerNode extends HBox {
+
+  public constructor( variable: Variable, providedOptions: LabeledPickerNodeOptions ) {
+
+    const options = optionize<LabeledPickerNodeOptions, LabeledPickerNodeSelfOptions, HBoxOptions>()( {
+
+      // LabeledPickerNodeSelfOptions
+      fontSize: 24,
+
+      // HBoxOptions
+      spacing: 5
+    }, providedOptions );
+
+    const variableNode = new VariableNode( variable, {
+      iconScale: 0.55,
+      fontSize: options.fontSize
+    } );
+
+    const equalsText = new Text( MathSymbols.EQUAL_TO, {
+      font: new PhetFont( options.fontSize )
+    } );
+
+    const variableRange = variable.range!;
+    assert && assert( variableRange, 'Variable must have range' );
+
+    const numberPicker = new NumberPicker( variable.valueProperty, new Property( variableRange ), {
+      color: 'black',
+      font: new PhetFont( options.fontSize ),
+      xMargin: 6,
+      touchAreaYDilation: 15,
+      tandem: options.tandem.createTandem( 'numberPicker' ),
+      phetioVisiblePropertyInstrumented: false
+    } );
+
+    options.children = [ variableNode, equalsText, numberPicker ];
+
+    super( options );
   }
 }
 
