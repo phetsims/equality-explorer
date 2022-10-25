@@ -131,7 +131,6 @@ export default class UniversalOperationControl extends HBox {
     const operandPickerTandem = options.tandem.createTandem( 'operandPicker' );
 
     // Take control of enabling up/down arrows for operand picker
-    //TODO make incrementEnabledProperty and decrementEnabledProperty DerivedProperty, replace Multilink below
     const incrementEnabledProperty = new BooleanProperty( true, {
       tandem: operandPickerTandem.createTandem( 'incrementEnabledProperty' ),
       phetioReadOnly: true
