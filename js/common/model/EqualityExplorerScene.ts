@@ -72,7 +72,9 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
   // collection of snapshots, for saving/restoring the state of a scene
   public readonly snapshotsCollection: SnapshotsCollection;
 
-  // locks equivalent terms, null if this feature is not supported
+  // Locks equivalent terms, null if this feature is not supported.
+  // See https://github.com/phetsims/equality-explorer/blob/master/doc/lock-scenarios.md for scenarios that
+  // describe how this feature works with drag listeners.
   public readonly lockedProperty?: Property<boolean> | null;
 
   /**

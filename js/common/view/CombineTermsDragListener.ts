@@ -1,8 +1,10 @@
 // Copyright 2018-2022, University of Colorado Boulder
 
 /**
- * Drag listener used when like terms are combined in one cell on a plate.
+ * CombineTermsDragListener is used when like terms are combined in one cell on a plate.
  * See terminology and requirements in TermDragListener supertype.
+ * See https://github.com/phetsims/equality-explorer/blob/master/doc/lock-scenarios.md for scenarios that
+ * describe how this feature works.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
