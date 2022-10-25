@@ -87,13 +87,17 @@ export default class VariablesAccordionBox extends AccordionBox {
         font: new PhetFont( options.fontSize )
       } );
 
+      const labeledPickerNodeTandem = options.tandem.createTandem( `${variable.tandem.name}LabeledPickerNode` );
+
       const variableRange = variable.range!;
       assert && assert( variableRange, 'Variable must have range' );
       const valuePicker = new NumberPicker( variable.valueProperty, new Property( variableRange ), {
         color: 'black',
         font: new PhetFont( options.fontSize ),
         xMargin: 6,
-        touchAreaYDilation: 15
+        touchAreaYDilation: 15,
+        tandem: labeledPickerNodeTandem.createTandem( 'numberPicker' ),
+        phetioVisiblePropertyInstrumented: false
       } );
 
       const labeledPickerNode = new HBox( {
@@ -101,7 +105,7 @@ export default class VariablesAccordionBox extends AccordionBox {
         spacing: 5,
         maxWidth: contentWidth,
         maxHeight: contentHeight,
-        tandem: options.tandem.createTandem( `${variable.tandem.name}LabeledPickerNode` ),
+        tandem: labeledPickerNodeTandem,
         phetioEnabledPropertyInstrumented: true
       } );
 
