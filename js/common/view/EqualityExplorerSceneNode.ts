@@ -18,6 +18,8 @@ import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
+const dialogsTandem = Tandem.GLOBAL_VIEW.createTandem( 'dialogs' );
+
 type SelfOptions = EmptySelfOptions;
 
 export type EqualityExplorerSceneNodeOptions = SelfOptions &
@@ -31,13 +33,31 @@ export default class EqualityExplorerSceneNode extends Node {
   protected readonly termsLayer: Node; // terms live in this layer
 
   // This dialog displays a message when an operation or interaction would result in EqualityExplorer.maxInteger
-  // being exceeded. The dialog must be instantiated on demand because phet.joist.sim must exist before any dialog
+  // being exceeded. Instantiation of this dialog must be deferred because phet.joist.sim must exist before any dialog
   // can be created. We are re-using a single instance of this dialog because it is modal, and to avoid using PhetioCapsule.
+  // See https://github.com/phetsims/equality-explorer/issues/196.
   // To test this dialog:
-  // 1. run the sim with ?maxInteger=1
-  // 2. go to the Operations screen
-  // 3. press the yellow 'go' (arrow) button twice
-  private static _numberTooBigDialog: OopsDialog;
+  // 1. Run the sim with ?maxInteger=1
+  // 2. Go to the Operations screen
+  // 3. Press the yellow 'go' (arrow) button twice
+  // 4. The dialog is displayed.
+  private static numberTooBigDialog: OopsDialog;
+
+  // These dialogs display a message when an inverse term cannot be created because the opposite plate is full.
+  // The dialog must be instantiated on demand because phet.joist.sim must exist before any dialog can be created.
+  // We are re-using a single instance of this dialog because it is modal, and to avoid using PhetioCapsule.
+  // See https://github.com/phetsims/equality-explorer/issues/196
+  // To test these dialogs:
+  // 1. Run the sim with ?rows=1&columns=1&showGrid
+  // 1. Go to the Numbers or Variables screen
+  // 2. Put a '1' on a plate.
+  // 3. Put a '-1' on the opposite plate.
+  // 4. Turn the lock on.
+  // 5. Attempt to drag the '1' off the plate.
+  // 6. The drag is cancelled, and a dialog is displayed indicating "Left side of the balance is full" or
+  //    "Right side of the balance is full", depending on which plate is full.
+  public static leftSideFullDialog: OopsDialog;
+  public static rightSideFullDialog: OopsDialog;
 
   protected constructor( scene: EqualityExplorerScene,
                          snapshotsAccordionBox: Node,
@@ -49,6 +69,30 @@ export default class EqualityExplorerSceneNode extends Node {
     this.scene = scene;
     this.snapshotsAccordionBox = snapshotsAccordionBox;
     this.termsLayer = termsLayer;
+
+    if ( !EqualityExplorerSceneNode.numberTooBigDialog ) {
+      EqualityExplorerSceneNode.numberTooBigDialog = new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty, {
+        focusOnHideNode: null,
+        tandem: dialogsTandem.createTandem( 'numberTooBigDialog' ),
+        phetioDocumentation: 'Displayed when an interaction or operation would result in a number that is too big for the sim'
+      } );
+    }
+
+    if ( !EqualityExplorerSceneNode.leftSideFullDialog ) {
+      EqualityExplorerSceneNode.leftSideFullDialog = new OopsDialog( EqualityExplorerStrings.leftSideFullStringProperty, {
+        focusOnHideNode: null,
+        tandem: dialogsTandem.createTandem( 'leftSideFullDialog' ),
+        phetioDocumentation: 'Displayed when an inverse term cannot be created because the left side of the balance scale is full'
+      } );
+    }
+
+    if ( !EqualityExplorerSceneNode.rightSideFullDialog ) {
+      EqualityExplorerSceneNode.rightSideFullDialog = new OopsDialog( EqualityExplorerStrings.rightSideFullStringProperty, {
+        focusOnHideNode: null,
+        tandem: dialogsTandem.createTandem( 'rightSideFullDialog' ),
+        phetioDocumentation: 'Displayed when an inverse term cannot be created because the right side of the balance scale is full'
+      } );
+    }
 
     /**
      * When a term is created in the model, create the corresponding view.
@@ -70,11 +114,11 @@ export default class EqualityExplorerSceneNode extends Node {
     };
 
     // When the maxInteger limit is exceeded, dispose of all terms that are not on the scale, and display a dialog.
-    // To test this, see EqualityExplorerQueryParameters.maxInteger.
+    // To test this, see doc for EqualityExplorerSceneNode.numberTooBigDialog.
     const maxIntegerExceededListener = () => {
       phet.log && phet.log( 'maxInteger exceeded' );
       scene.disposeTermsNotOnScale();
-      EqualityExplorerSceneNode.getNumberTooBigDialog().show();
+      EqualityExplorerSceneNode.numberTooBigDialog.show();
     };
 
     scene.allTermCreators.forEach( termCreator => {
@@ -94,20 +138,6 @@ export default class EqualityExplorerSceneNode extends Node {
 
   public reset(): void {
     // the default behavior is to do nothing
-  }
-
-  /**
-   * Gets the Oops dialog for the 'Number too big' message. If the dialog does not exist, it is created.
-   */
-  private static getNumberTooBigDialog(): OopsDialog {
-    if ( !EqualityExplorerSceneNode._numberTooBigDialog ) {
-      EqualityExplorerSceneNode._numberTooBigDialog = new OopsDialog( EqualityExplorerStrings.numberTooBigStringProperty, {
-        focusOnHideNode: null,
-        tandem: Tandem.GLOBAL_VIEW.createTandem( 'numberTooBigDialog' ),
-        phetioDocumentation: 'Displayed when an interaction or operation would result in a number that is too big for the sim'
-      } );
-    }
-    return EqualityExplorerSceneNode._numberTooBigDialog;
   }
 }
 

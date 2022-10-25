@@ -9,14 +9,13 @@
  */
 
 import { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import Term from '../model/Term.js';
 import TermCreator, { CreateTermOptions } from '../model/TermCreator.js';
 import TermDragListener, { TermDragListenerOptions } from './TermDragListener.js';
 import TermNode from './TermNode.js';
 import SumToZeroNode from './SumToZeroNode.js';
+import EqualityExplorerSceneNode from './EqualityExplorerSceneNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -91,15 +90,15 @@ export default class SeparateTermsDragListener extends TermDragListener {
     }
     else if ( this.oppositePlate.isFull() ) {
 
-      // opposite plate is full, cannot create inverse term, show 'Oops' message
-      const thisIsLeft = ( this.termCreator.positivePosition.x < this.equivalentTermCreator.positivePosition.x );
-      const messageStringProperty = thisIsLeft ?
-                                    EqualityExplorerStrings.rightSideFullStringProperty :
-                                    EqualityExplorerStrings.leftSideFullStringProperty;
-      const oopsDialog = new OopsDialog( messageStringProperty, { //TODO https://github.com/phetsims/equality-explorer/issues/196 use a single instance of OopsDialog
-        focusOnHideNode: null // because we're going to interrupt this drag sequence below
-      } );
-      oopsDialog.show();
+      // Opposite plate is full, cannot create inverse term, show 'Oops' message.
+      // To test this, see doc for EqualityExplorerSceneNode.leftSideFullDialog and rightSideFullDialog.
+      const thisIsLeftSide = ( this.termCreator.positivePosition.x < this.equivalentTermCreator.positivePosition.x );
+      if ( thisIsLeftSide ) {
+        EqualityExplorerSceneNode.rightSideFullDialog.show();
+      }
+      else {
+        EqualityExplorerSceneNode.leftSideFullDialog.show();
+      }
 
       // interrupt this drag sequence, since we can't take term off the plate
       this.interrupt();
