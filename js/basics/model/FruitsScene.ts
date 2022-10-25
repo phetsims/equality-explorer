@@ -33,7 +33,7 @@ export default class FruitsScene extends BasicsScene {
         image: apple_png,
         shadow: appleShadow_png,
         value: 4,
-        tandem: variablesTandem.createTandem( 'appleVariable' )
+        tandem: variablesTandem.createTandem( 'apple' )
       } ),
 
       // lemon
@@ -42,7 +42,7 @@ export default class FruitsScene extends BasicsScene {
         image: lemon_png,
         shadow: lemonShadow_png,
         value: 5,
-        tandem: variablesTandem.createTandem( 'lemonVariable' )
+        tandem: variablesTandem.createTandem( 'lemon' )
       } ),
 
       // orange
@@ -51,7 +51,7 @@ export default class FruitsScene extends BasicsScene {
         image: orange_png,
         shadow: orangeShadow_png,
         value: 2,
-        tandem: variablesTandem.createTandem( 'orangeVariable' )
+        tandem: variablesTandem.createTandem( 'orange' )
       } )
     ];
 

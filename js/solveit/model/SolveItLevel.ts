@@ -175,7 +175,7 @@ export default class SolveItLevel extends OperationsScene {
     phet.log && phet.log( `nextChallenge: derivation=${challenge.debugDerivation.replace( /<br>/g, ', ' )}` );
 
     // set the value of x
-    this.xVariable.valueProperty.value = challenge.x;
+    this.x.valueProperty.value = challenge.x;
 
     // randomize whether the scale shows 'ax + b = mx + n' or 'mx + n = ax + b'
     this.xOnLeft = dotRandom.nextBoolean();
@@ -260,14 +260,14 @@ export default class SolveItLevel extends OperationsScene {
     this.allTermCreators.forEach( termCreator => termCreator.disposeAllTerms() );
 
     // x
-    const variableTerm = new VariableTerm( this.xVariable, { //TODO dynamic
+    const variableTerm = new VariableTerm( this.x, { //TODO dynamic
       coefficient: Fraction.fromInteger( 1 ),
       diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
     } );
 
     // N
     const constantTerm = new ConstantTerm( { //TODO dynamic
-      constantValue: Fraction.fromInteger( this.xVariable.valueProperty.value ),
+      constantValue: Fraction.fromInteger( this.x.valueProperty.value ),
       diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
     } );
 

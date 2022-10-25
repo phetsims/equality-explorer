@@ -33,7 +33,7 @@ export default class AnimalsScene extends BasicsScene {
         image: dog_png,
         shadow: dogShadow_png,
         value: 11,
-        tandem: variablesTandem.createTandem( 'dogVariable' )
+        tandem: variablesTandem.createTandem( 'dog' )
       } ),
 
       // cat
@@ -42,7 +42,7 @@ export default class AnimalsScene extends BasicsScene {
         image: cat_png,
         shadow: catShadow_png,
         value: 4,
-        tandem: variablesTandem.createTandem( 'catVariable' )
+        tandem: variablesTandem.createTandem( 'cat' )
       } ),
 
       // turtle
@@ -51,7 +51,7 @@ export default class AnimalsScene extends BasicsScene {
         image: turtle_png,
         shadow: turtleShadow_png,
         value: 6,
-        tandem: variablesTandem.createTandem( 'turtleVariable' )
+        tandem: variablesTandem.createTandem( 'turtle' )
       } )
     ];
 

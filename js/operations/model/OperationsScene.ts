@@ -46,7 +46,7 @@ export type OperationsSceneOptions = SelfOptions &
 
 export default class OperationsScene extends EqualityExplorerScene {
 
-  protected readonly xVariable: Variable;
+  protected readonly x: Variable;
 
   // emits when one or more terms become zero as the result of a universal operation
   public readonly sumToZeroEmitter: Emitter<[ TermCreator[] ]>;
@@ -76,21 +76,21 @@ export default class OperationsScene extends EqualityExplorerScene {
 
     const variablesTandem = options.tandem.createTandem( 'variables' );
 
-    const xVariable = new Variable( EqualityExplorerStrings.xStringProperty, {
+    const x = new Variable( EqualityExplorerStrings.xStringProperty, {
       range: options.variableRange,
-      tandem: variablesTandem.createTandem( 'xVariable' )
+      tandem: variablesTandem.createTandem( 'x' )
     } );
-    options.variables = [ xVariable ];
+    options.variables = [ x ];
 
     const createLeftTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) =>
-      createTermCreators( xVariable, lockedProperty, tandem );
+      createTermCreators( x, lockedProperty, tandem );
 
     const createRightTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) =>
-      createTermCreators( xVariable, lockedProperty, tandem );
+      createTermCreators( x, lockedProperty, tandem );
 
     super( createLeftTermCreators, createRightTermCreators, options );
 
-    this.xVariable = xVariable;
+    this.x = x;
 
     this.sumToZeroEmitter = new Emitter( {
       parameters: [ {
@@ -120,7 +120,7 @@ export default class OperationsScene extends EqualityExplorerScene {
       }
       else {
 
-        const variableTermOperand = new VariableTerm( this.xVariable, {
+        const variableTermOperand = new VariableTerm( this.x, {
           coefficient: Fraction.fromInteger( i )
         } );
 
@@ -161,7 +161,7 @@ export default class OperationsScene extends EqualityExplorerScene {
   }
 
   public override reset(): void {
-    this.xVariable.reset();
+    this.x.reset();
     this.operatorProperty.reset();
     this.operandProperty.reset();
     super.reset();
@@ -228,7 +228,7 @@ export default class OperationsScene extends EqualityExplorerScene {
 /**
  * Creates the term creators for this scene.
  */
-function createTermCreators( xVariable: Variable, lockedProperty: Property<boolean> | null, parentTandem: Tandem ): TermCreator[] {
+function createTermCreators( x: Variable, lockedProperty: Property<boolean> | null, parentTandem: Tandem ): TermCreator[] {
 
   // Variable and constant terms will be combined in specific cells in the plate's grid.
   // This is the cell in the grid that all like terms will occupy.
@@ -237,7 +237,7 @@ function createTermCreators( xVariable: Variable, lockedProperty: Property<boole
   return [
 
     // x & -x
-    new VariableTermCreator( xVariable, {
+    new VariableTermCreator( x, {
         likeTermsCell: likeTermsCell++,
         lockedProperty: lockedProperty,
         tandem: parentTandem.createTandem( 'xTermCreator' )

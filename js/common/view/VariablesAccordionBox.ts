@@ -75,10 +75,10 @@ export default class VariablesAccordionBox extends AccordionBox {
     const backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );
 
     // Create a labeled picker for each variable
-    const children = variables.map( variable => new LabeledPickerNode( variable, {
+    const children = variables.map( variable => new LabeledPicker( variable, {
       maxWidth: contentWidth,
       maxHeight: contentHeight,
-      tandem: options.tandem.createTandem( `${variable.tandem.name}LabeledPickerNode` )
+      tandem: options.tandem.createTandem( `${variable.tandem.name}LabeledPicker` )
     } ) );
 
     const hBox = new HBox( {
@@ -104,22 +104,22 @@ export default class VariablesAccordionBox extends AccordionBox {
 }
 
 /**
- * LabeledPickerNode is a NumberPicker with a label to the left of it.
+ * LabeledPicker is a NumberPicker with a label to the left of it.
  */
 
-type LabeledPickerNodeSelfOptions = {
+type LabeledPickerSelfOptions = {
   fontSize?: number;
 };
 
-type LabeledPickerNodeOptions = LabeledPickerNodeSelfOptions & PickRequired<HBoxOptions, 'tandem' | 'maxWidth' | 'maxHeight'>;
+type LabeledPickerOptions = LabeledPickerSelfOptions & PickRequired<HBoxOptions, 'tandem' | 'maxWidth' | 'maxHeight'>;
 
-class LabeledPickerNode extends HBox {
+class LabeledPicker extends HBox {
 
-  public constructor( variable: Variable, providedOptions: LabeledPickerNodeOptions ) {
+  public constructor( variable: Variable, providedOptions: LabeledPickerOptions ) {
 
-    const options = optionize<LabeledPickerNodeOptions, LabeledPickerNodeSelfOptions, HBoxOptions>()( {
+    const options = optionize<LabeledPickerOptions, LabeledPickerSelfOptions, HBoxOptions>()( {
 
-      // LabeledPickerNodeSelfOptions
+      // LabeledPickerSelfOptions
       fontSize: 24,
 
       // HBoxOptions

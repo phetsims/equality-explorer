@@ -23,19 +23,19 @@ export default class VariablesScene extends EqualityExplorerScene {
 
     const variablesTandem = tandem.createTandem( 'variables' );
 
-    const xVariable = new Variable( EqualityExplorerStrings.xStringProperty, {
+    const x = new Variable( EqualityExplorerStrings.xStringProperty, {
       range: EqualityExplorerConstants.VARIABLE_RANGE,
-      tandem: variablesTandem.createTandem( 'xVariable' )
+      tandem: variablesTandem.createTandem( 'x' )
     } );
 
     const createLeftTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) =>
-      createTermCreators( xVariable, lockedProperty, tandem );
+      createTermCreators( x, lockedProperty, tandem );
 
     const createRightTermCreators = ( lockedProperty: Property<boolean> | null, tandem: Tandem ) =>
-      createTermCreators( xVariable, lockedProperty, tandem );
+      createTermCreators( x, lockedProperty, tandem );
 
     super( createLeftTermCreators, createRightTermCreators, {
-      variables: [ xVariable ],
+      variables: [ x ],
       tandem: tandem
     } );
   }
@@ -44,12 +44,12 @@ export default class VariablesScene extends EqualityExplorerScene {
 /**
  * Creates the term creators for this scene.
  */
-function createTermCreators( xVariable: Variable, lockedProperty: Property<boolean> | null, parentTandem: Tandem ): TermCreator[] {
+function createTermCreators( x: Variable, lockedProperty: Property<boolean> | null, parentTandem: Tandem ): TermCreator[] {
 
   return [
 
     // x and -x
-    new VariableTermCreator( xVariable, {
+    new VariableTermCreator( x, {
       lockedProperty: lockedProperty,
       tandem: parentTandem.createTandem( 'xTermCreator' )
     } ),

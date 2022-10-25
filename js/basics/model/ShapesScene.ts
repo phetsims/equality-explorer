@@ -31,7 +31,7 @@ export default class ShapesScene extends BasicsScene {
         image: sphere_png,
         shadow: sphereShadow_png,
         value: 2,
-        tandem: variablesTandem.createTandem( 'sphereVariable' )
+        tandem: variablesTandem.createTandem( 'sphere' )
       } ),
 
       // square
@@ -40,7 +40,7 @@ export default class ShapesScene extends BasicsScene {
         image: square_png,
         shadow: squareShadow_png,
         value: 3,
-        tandem: variablesTandem.createTandem( 'squareVariable' )
+        tandem: variablesTandem.createTandem( 'square' )
       } )
     ];
 
