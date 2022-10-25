@@ -95,7 +95,10 @@ public override dispose(): void {
 }
 ```
 
-**Creator Pattern**: Discussion about this pattern can be found in [scenery-phet#214](https://github.com/phetsims/scenery-phet/issues/214). What you won't find there is a summary of the pattern or a canonical example.  So I'll attempt to summarize what it is, and how it's applied in this simulation.
+**Creator Pattern**: A very general description of this pattern can be found at
+https://github.com/phetsims/phet-info/blob/master/doc/phet-software-design-patterns.md#creator-with-drag-forwarding.
+But in practice, this pattern is implemented in many differing ways.
+So I'll attempt to summarize how this pattern is applied in this simulation.
 
 A creator is responsible for handling the user interaction that results in the creation of both the model and view for a type of model element.  In this sim, the creator is also responsible for managing the model element throughout its lifecycle.
 
