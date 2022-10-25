@@ -80,24 +80,33 @@ export default class SolveItScreenView extends ScreenView {
 
     // Transition (slide left/right) between level-selection UI and the selected game level.
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, { //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
-      cachedNodes: [ levelSelectionNode, levelsParent ]
+      cachedNodes: [ levelSelectionNode, levelsParent ],
+      content: levelSelectionNode
     } );
     this.addChild( this.transitionNode );
 
-    //TODO handle the case where phet-io switches directly between 2 levels
-    model.levelProperty.link( level => {
+    model.levelProperty.link( ( level, previousLevel ) => {
 
       // If the selected level doesn't have an associated challenge, create one.
       if ( level !== null && !level.challengeProperty.value ) {
         level.nextChallenge();
       }
 
-      // Start the transition between the level-selection UI and the selected game level.
-      if ( level !== null ) {
+      if ( previousLevel === null && level !== null ) {
+
+        // Start the transition from the level-selection UI (null) to the selected game level.
         this.transitionNode.slideLeftTo( levelsParent, TRANSITION_OPTIONS );
       }
-      else {
+      else if ( previousLevel !== null && level === null ) {
+
+        // Start the transition from the selected game level to the level-selection UI (null).
         this.transitionNode.slideRightTo( levelSelectionNode, TRANSITION_OPTIONS );
+      }
+      else {
+
+        // No transition. This can only happen via PhET-iO, by changing levelProperty.
+        levelSelectionNode.visible = ( level === null );
+        levelsParent.visible = ( level !== null );
       }
     } );
   }
