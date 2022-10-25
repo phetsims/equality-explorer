@@ -98,6 +98,7 @@ export default class SolveItLevel extends OperationsScene {
       termCreator.negativePosition = Vector2.ZERO;
     } );
 
+    // The initial value is null because we don't want to restore the same Challenge when the sim is reset.
     this.challengeProperty = new Property<Challenge | null>( null, {
       isValidValue: value => ( value instanceof Challenge ) || ( value === null ),
       tandem: options.tandem.createTandem( 'challengeProperty' ),
