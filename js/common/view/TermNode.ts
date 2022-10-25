@@ -142,7 +142,9 @@ export default class TermNode extends Node {
         term.haloVisibleProperty.unlink( haloVisibleListener );
       }
 
-      this.removeInputListener( this.termDragListener );
+      if ( this.hasInputListener( this.termDragListener ) ) {
+        this.removeInputListener( this.termDragListener );
+      }
       this.termDragListener.dispose();
     };
   }
