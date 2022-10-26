@@ -10,11 +10,11 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Font, HBox, HBoxOptions, Image, ImageOptions, Node, Text } from '../../../../scenery/js/imports.js';
-import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
-import TermNode, { TermNodeOptions } from '../../common/view/TermNode.js';
+import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import TermNode, { TermNodeOptions } from './TermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import ObjectTerm from '../model/ObjectTerm.js';
-import ObjectTermCreator from '../model/ObjectTermCreator.js';
+import ObjectTerm from '../../basics/model/ObjectTerm.js';
+import ObjectTermCreator from '../../basics/model/ObjectTermCreator.js';
 
 // constants
 const DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );
