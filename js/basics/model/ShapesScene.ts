@@ -14,7 +14,7 @@ import squareShadow_png from '../../../images/squareShadow_png.js';
 import ConstantTermNode from '../../common/view/ConstantTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
-import ObjectVariable from './ObjectVariable.js';
+import ObjectVariable from '../../common/model/ObjectVariable.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class ShapesScene extends BasicsScene {

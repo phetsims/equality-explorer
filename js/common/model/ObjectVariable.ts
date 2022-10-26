@@ -9,7 +9,7 @@
  */
 
 import StringProperty from '../../../../axon/js/StringProperty.js';
-import Variable, { VariableOptions } from '../../common/model/Variable.js';
+import Variable, { VariableOptions } from './Variable.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = {

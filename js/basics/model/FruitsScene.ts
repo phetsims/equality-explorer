@@ -16,7 +16,7 @@ import orangeShadow_png from '../../../images/orangeShadow_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
-import ObjectVariable from './ObjectVariable.js';
+import ObjectVariable from '../../common/model/ObjectVariable.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class FruitsScene extends BasicsScene {

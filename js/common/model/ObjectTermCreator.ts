@@ -12,7 +12,7 @@ import TermCreator, { TermCreatorOptions, TermCreatorSign } from './TermCreator.
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermNode from '../view/ObjectTermNode.js';
 import ObjectTerm from './ObjectTerm.js';
-import ObjectVariable from '../../basics/model/ObjectVariable.js';
+import ObjectVariable from './ObjectVariable.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import Term from './Term.js';
 

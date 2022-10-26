@@ -16,7 +16,7 @@ import coin3Shadow_png from '../../../images/coin3Shadow_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
-import ObjectVariable from './ObjectVariable.js';
+import ObjectVariable from '../../common/model/ObjectVariable.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class CoinsScene extends BasicsScene {
