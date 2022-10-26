@@ -14,7 +14,7 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import TermNode, { TermNodeOptions } from './TermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTerm from '../../basics/model/ObjectTerm.js';
-import ObjectTermCreator from '../../basics/model/ObjectTermCreator.js';
+import ObjectTermCreator from '../model/ObjectTermCreator.js';
 
 // constants
 const DEFAULT_COEFFICIENT_FONT = new PhetFont( 28 );

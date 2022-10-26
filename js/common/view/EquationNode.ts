@@ -16,7 +16,7 @@ import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Font, FontWeight, HBox, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
-import ObjectTermCreator from '../../basics/model/ObjectTermCreator.js';
+import ObjectTermCreator from '../model/ObjectTermCreator.js';
 import ObjectTermNode from './ObjectTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ConstantTermCreator from '../model/ConstantTermCreator.js';

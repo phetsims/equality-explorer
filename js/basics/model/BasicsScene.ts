@@ -14,7 +14,7 @@ import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene, { EqualityExplorerSceneOptions } from '../../common/model/EqualityExplorerScene.js';
 import TermCreator from '../../common/model/TermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import ObjectTermCreator from './ObjectTermCreator.js';
+import ObjectTermCreator from '../../common/model/ObjectTermCreator.js';
 import ObjectVariable from './ObjectVariable.js';
 
 type SelfOptions = {
