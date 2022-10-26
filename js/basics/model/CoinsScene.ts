@@ -25,12 +25,10 @@ export default class CoinsScene extends BasicsScene {
 
     const variablesTandem = tandem.createTandem( 'variables' );
 
-    //TODO https://github.com/phetsims/equality-explorer/issues/191 better tandem names for coins?
     const variables = [
 
       // coin1
       new ObjectVariable( {
-        symbol: 'coin1',
         image: coin1_png,
         shadow: coin1Shadow_png,
         value: 3,
@@ -39,7 +37,6 @@ export default class CoinsScene extends BasicsScene {
 
       // coin2
       new ObjectVariable( {
-        symbol: 'coin2',
         image: coin2_png,
         shadow: coin2Shadow_png,
         value: 2,
@@ -48,7 +45,6 @@ export default class CoinsScene extends BasicsScene {
 
       // coin3
       new ObjectVariable( {
-        symbol: 'coin3',
         image: coin3_png,
         shadow: coin3Shadow_png,
         value: 5,

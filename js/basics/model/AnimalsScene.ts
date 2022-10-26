@@ -29,7 +29,6 @@ export default class AnimalsScene extends BasicsScene {
 
       // dog
       new ObjectVariable( {
-        symbol: 'dog',
         image: dog_png,
         shadow: dogShadow_png,
         value: 11,
@@ -38,7 +37,6 @@ export default class AnimalsScene extends BasicsScene {
 
       // cat
       new ObjectVariable( {
-        symbol: 'cat',
         image: cat_png,
         shadow: catShadow_png,
         value: 4,
@@ -47,7 +45,6 @@ export default class AnimalsScene extends BasicsScene {
 
       // turtle
       new ObjectVariable( {
-        symbol: 'turtle',
         image: turtle_png,
         shadow: turtleShadow_png,
         value: 6,

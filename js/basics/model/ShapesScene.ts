@@ -27,7 +27,6 @@ export default class ShapesScene extends BasicsScene {
 
       // sphere
       new ObjectVariable( {
-        symbol: 'sphere',
         image: sphere_png,
         shadow: sphereShadow_png,
         value: 2,
@@ -36,7 +35,6 @@ export default class ShapesScene extends BasicsScene {
 
       // square
       new ObjectVariable( {
-        symbol: 'square',
         image: square_png,
         shadow: squareShadow_png,
         value: 3,

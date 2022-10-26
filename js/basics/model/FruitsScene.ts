@@ -29,7 +29,6 @@ export default class FruitsScene extends BasicsScene {
 
       // apple
       new ObjectVariable( {
-        symbol: 'apple',
         image: apple_png,
         shadow: appleShadow_png,
         value: 4,
@@ -38,7 +37,6 @@ export default class FruitsScene extends BasicsScene {
 
       // lemon
       new ObjectVariable( {
-        symbol: 'lemon',
         image: lemon_png,
         shadow: lemonShadow_png,
         value: 5,
@@ -47,7 +45,6 @@ export default class FruitsScene extends BasicsScene {
 
       // orange
       new ObjectVariable( {
-        symbol: 'orange',
         image: orange_png,
         shadow: orangeShadow_png,
         value: 2,

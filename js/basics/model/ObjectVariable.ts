@@ -13,7 +13,6 @@ import Variable, { VariableOptions } from '../../common/model/Variable.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = {
-  symbol: string;
   image: HTMLImageElement; // image that represents the object
   shadow: HTMLImageElement; // shadow shown while dragging the object
 };
@@ -27,7 +26,9 @@ export default class ObjectVariable extends Variable {
 
   public constructor( providedOptions: ObjectVariableOptions ) {
 
-    super( new StringProperty( providedOptions.symbol ), providedOptions );
+    // ObjectVariable does not have a visible symbol in the UI, and is instead represented as an image.
+    // So use its tandem.name for the symbol.
+    super( new StringProperty( providedOptions.tandem.name ), providedOptions );
 
     this.image = providedOptions.image;
     this.shadow = providedOptions.shadow;
