@@ -8,12 +8,12 @@
 
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import Term from '../../common/model/Term.js';
+import Term from './Term.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import ObjectVariable from './ObjectVariable.js';
-import Variable from '../../common/model/Variable.js';
-import UniversalOperation from '../../common/model/UniversalOperation.js';
-import VariableTerm, { VariableTermOptions } from '../../common/model/VariableTerm.js';
+import ObjectVariable from '../../basics/model/ObjectVariable.js';
+import Variable from './Variable.js';
+import UniversalOperation from './UniversalOperation.js';
+import VariableTerm, { VariableTermOptions } from './VariableTerm.js';
 
 // constants
 const COEFFICIENT = Fraction.fromInteger( 1 ); // all object terms have an implicit coefficient of 1

@@ -11,7 +11,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TermCreator, { TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermNode from '../view/ObjectTermNode.js';
-import ObjectTerm from '../../basics/model/ObjectTerm.js';
+import ObjectTerm from './ObjectTerm.js';
 import ObjectVariable from '../../basics/model/ObjectVariable.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import Term from './Term.js';
