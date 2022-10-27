@@ -44,8 +44,8 @@ export default class Snapshot {
     this.leftPlateSnapshot.restore();
     this.rightPlateSnapshot.restore();
 
-    // If we saved variable values, restore them.  Since we saved them in the order that they appear in scene.variables,
-    // they must be restored in the same order.
+    // If we saved variable values, restore them.
+    // Since we saved them in the order that they appear in scene.variables, they must be restored in the same order.
     if ( this.variableValues && this.scene.variables ) {
       assert && assert( this.variableValues.length === this.scene.variables.length, 'oops, missing variables' );
       for ( let i = 0; i < this.variableValues.length; i++ ) {
@@ -61,14 +61,13 @@ export default class Snapshot {
 class PlateSnapshot {
 
   private readonly termCreators: TermCreator[];
-
   private readonly termCreatorSnapshots: TermCreatorSnapshot[];
 
   public constructor( plate: Plate ) {
 
     this.termCreators = plate.termCreators;
 
-    // Save a TermCreatorSnapshot for each TermCreator, in the same order as termCreators.
+    // Save the Terms for this play, in the same order as termCreators.
     this.termCreatorSnapshots = [];
     for ( let i = 0; i < this.termCreators.length; i++ ) {
       this.termCreatorSnapshots[ i ] = this.termCreators[ i ].createSnapshot();
@@ -76,7 +75,7 @@ class PlateSnapshot {
   }
 
   /**
-   * Restores the snapshot for this plate, in the same order that they were saved.
+   * Restores the Terms for this plate, in the same order that they were saved.
    */
   public restore(): void {
     for ( let i = 0; i < this.termCreators.length; i++ ) {
