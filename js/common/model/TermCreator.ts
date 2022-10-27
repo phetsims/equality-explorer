@@ -58,14 +58,15 @@ type SelfOptions = {
 
 export type TermCreatorOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-//TODO why don't we just make a copy of Term?
 // A snapshot of one term
+//TODO replace TermSnapshot with a copy of Term
 type TermSnapshot = {
   cell: number; // cell that the Term occupies
   termOptions: TermOptions; // options to Term's constructor, specific to subclass
 };
 
 // A TermCreator snapshot consists of an array of snapshots for all of its Terms
+//TODO capture state of Variables in TermCreatorSnapshot
 export type TermCreatorSnapshot = TermSnapshot[];
 
 // sign that will be applied to terms that are created
