@@ -1,5 +1,6 @@
 // Copyright 2022, University of Colorado Boulder
 
+//TODO big problem: SnapshotNode (view) does not use Snapshot (model)
 /**
  * SnapshotNode is the view of a snapshot, with optional values for the variables that appear in that snapshot.
  *
