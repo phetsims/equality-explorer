@@ -1,5 +1,11 @@
 // Copyright 2022, University of Colorado Boulder
 
+/**
+ * SnapshotNode is the view of a snapshot, with optional values for the variables that appear in that snapshot.
+ *
+ * @author Chris Malley (PixelZoom, Inc.)
+ */
+
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { FlowBox, FlowBoxOptions, Node } from '../../../../scenery/js/imports.js';
