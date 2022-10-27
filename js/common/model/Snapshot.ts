@@ -16,7 +16,7 @@ export default class Snapshot {
   private readonly scene: EqualityExplorerScene;
   private readonly leftPlateSnapshot: PlateSnapshot;
   private readonly rightPlateSnapshot: PlateSnapshot;
-  private readonly variableValues: number[] | null;
+  private readonly variableValues: number[] | null; // in the order that they appear in scene.variables
 
   public constructor( scene: EqualityExplorerScene ) {
 
@@ -44,7 +44,8 @@ export default class Snapshot {
     this.leftPlateSnapshot.restore();
     this.rightPlateSnapshot.restore();
 
-    // If we saved variable values, restore them.
+    // If we saved variable values, restore them.  Since we saved them in the order that they appear in scene.variables,
+    // they must be restored in the same order.
     if ( this.variableValues && this.scene.variables ) {
       assert && assert( this.variableValues.length === this.scene.variables.length, 'oops, missing variables' );
       for ( let i = 0; i < this.variableValues.length; i++ ) {
