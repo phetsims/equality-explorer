@@ -19,6 +19,7 @@ import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Snapshot from '../model/Snapshot.js';
 import SnapshotNode from './SnapshotNode.js';
 import CameraButton from '../../../../scenery-phet/js/buttons/CameraButton.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type Orientation = 'horizontal' | 'vertical';
 
@@ -61,16 +62,34 @@ export default class SnapshotControl extends Node {
     assert && assert( options.variableValuesOpacity >= 0 && options.variableValuesOpacity <= 1,
       `invalid variableValuesOpacity: ${options.variableValuesOpacity}` );
 
+    // Shows the equation and optional variable values for the snapshot
+    const snapshotNode = new SnapshotNode( snapshotProperty, scene, {
+      commaSeparated: options.commaSeparated,
+      variableValuesOpacity: options.variableValuesOpacity,
+      variableValuesVisibleProperty: options.variableValuesVisibleProperty,
+      orientation: options.orientation,
+      maxWidth: options.controlWidth - 20,
+      maxHeight: options.controlHeight - 16,
+      tandem: options.tandem.createTandem( 'snapshotNode' )
+    } );
+
     // rectangle that appears around the snapshot when it's selected
     const selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
+      visibleProperty: snapshotNode.visibleProperty,
       cornerRadius: 3,
       lineWidth: 3,
       stroke: 'transparent',
       cursor: 'pointer'
     } );
 
+    // Center the snapshot in the selection rectangle.
+    snapshotNode.boundsProperty.link( bounds => {
+      snapshotNode.center = selectionRectangle.center;
+    } );
+
     // snapshot (camera) button
     const snapshotButton = new CameraButton( {
+      visibleProperty: DerivedProperty.not( snapshotNode.visibleProperty ),
       baseColor: 'white',
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
@@ -88,7 +107,7 @@ export default class SnapshotControl extends Node {
       visiblePropertyOptions: { phetioReadOnly: true } // so that PhET-iO client can see whether its visible
     } );
 
-    options.children = [ selectionRectangle, snapshotButton ];
+    options.children = [ selectionRectangle, snapshotNode, snapshotButton ];
 
     super( options );
 
@@ -101,41 +120,6 @@ export default class SnapshotControl extends Node {
       },
       tandem: options.tandem.createTandem( 'fireListener' )
     } ) );
-
-    let snapshotNode: SnapshotNode | null; //TODO dynamic
-
-    // Updates the view when the model changes.
-    snapshotProperty.link( snapshot => {
-
-      // Dispose of the previous snapshotNode.
-      if ( snapshotNode ) {
-        snapshotNode.dispose();
-        snapshotNode = null;
-      }
-
-      const hasSnapShot = !!snapshot;
-
-      // visibility of button and rectangle that is around the snapshot
-      snapshotButton.visible = !hasSnapShot;
-      selectionRectangle.visible = hasSnapShot;
-
-      if ( hasSnapShot ) {
-
-        snapshotNode = new SnapshotNode( scene, {
-          commaSeparated: options.commaSeparated,
-          variableValuesOpacity: options.variableValuesOpacity,
-          variableValuesVisibleProperty: options.variableValuesVisibleProperty,
-          orientation: options.orientation,
-          maxWidth: selectionRectangle.width - 20,
-          maxHeight: selectionRectangle.height - 16
-        } );
-        this.addChild( snapshotNode );
-
-        snapshotNode.boundsProperty.link( bounds => {
-          snapshotNode!.center = selectionRectangle.center;
-        } );
-      }
-    } );
 
     // Shows that the associated snapshot has been selected.
     selectedSnapshotProperty.link( selectedSnapshot => {

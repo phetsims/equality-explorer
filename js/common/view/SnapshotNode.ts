@@ -15,8 +15,10 @@ import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import VariableValuesNode from './VariableValuesNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import Snapshot from '../model/Snapshot.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Property from '../../../../axon/js/Property.js';
 
 const EQUATION_FONT_SIZE = 22;
 const FRACTION_FONT_SIZE = 14;
@@ -35,13 +37,13 @@ type SelfOptions = {
 
 type SnapshotNodeOptions = SelfOptions &
   PickOptional<FlowBoxOptions, 'maxWidth' | 'maxHeight'> &
-  PickRequired<FlowBoxOptions, 'orientation'>;
+  PickRequired<FlowBoxOptions, 'orientation' | 'tandem'>;
 
 export default class SnapshotNode extends FlowBox {
 
-  private readonly disposeSnapshotNode: () => void;
-
-  public constructor( scene: EqualityExplorerScene, providedOptions: SnapshotNodeOptions ) {
+  public constructor( snapshotProperty: Property<Snapshot | null>,
+                      scene: EqualityExplorerScene,
+                      providedOptions: SnapshotNodeOptions ) {
 
     const options = optionize<SnapshotNodeOptions, SelfOptions, FlowBoxOptions>()( {
 
@@ -52,7 +54,7 @@ export default class SnapshotNode extends FlowBox {
 
       // FlowBoxOptions
       pickable: false,
-      tandem: Tandem.OPTIONAL //TODO make tandem required in SnapshotNodeOptions
+      visibleProperty: new DerivedProperty( [ snapshotProperty ], snapshot => ( snapshot !== null ) )
     }, providedOptions );
 
     assert && assert( options.variableValuesOpacity > 0 && options.variableValuesOpacity <= 1 );
@@ -61,8 +63,11 @@ export default class SnapshotNode extends FlowBox {
 
     const children: Node[] = [];
 
+    // It's unfortunate that EquationNode is not created from snapshotProperty. But creating it from what's
+    // currently on the balance scale allows us to reuse the same code that displays the equation for the
+    // balance scale. And the end result is correct.
     const equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, {
-      updateEnabled: false, // equation is static
+      updateEnabled: false, // equation is static, call equationNode.update when snapshotProperty changes!
       symbolFontSize: EQUATION_FONT_SIZE,
       operatorFontSize: EQUATION_FONT_SIZE,
       integerFontSize: EQUATION_FONT_SIZE,
@@ -91,14 +96,21 @@ export default class SnapshotNode extends FlowBox {
 
     super( options );
 
-    this.disposeSnapshotNode = () => {
-      children.forEach( child => child.dispose() );
-    };
+    // Because equationNode was created as a static equation (with updateEnabled: false), when snapshotProperty changes
+    // we must call equationNode.update.
+    snapshotProperty.link( snapshot => {
+      if ( snapshot !== null ) {
+        equationNode.update();
+      }
+    } );
+
+    this.addLinkedElement( snapshotProperty, {
+      tandem: options.tandem.createTandem( `${snapshotProperty.tandem.name}` )
+    } );
   }
 
-  //TODO should SnapshotNode be allocated statically, then make dispose fail?
   public override dispose(): void {
-    this.disposeSnapshotNode();
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
   }
 }

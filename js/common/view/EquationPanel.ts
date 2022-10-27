@@ -9,6 +9,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
@@ -27,7 +28,7 @@ type SelfOptions = {
   equationNodeOptions?: EquationNodeOptions;
 };
 
-export type EquationPanelOptions = SelfOptions & PanelOptions;
+export type EquationPanelOptions = SelfOptions & PanelOptions & PickRequired<PanelOptions, 'tandem'>;
 
 export default class EquationPanel extends Panel {
 

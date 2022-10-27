@@ -8,8 +8,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Multilink, { UnknownMultilink } from '../../../../axon/js/Multilink.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
@@ -55,7 +54,14 @@ export type EquationNodeOptions = SelfOptions & PickOptional<NodeOptions, 'picka
 
 export default class EquationNode extends Node {
 
-  private readonly disposeEquationNode: () => void;
+  private readonly leftTermCreators: TermCreator[];
+  private readonly rightTermCreators: TermCreator[];
+  private readonly relationalOperatorText: Text;
+  private readonly relationalOperatorSpacing: number;
+  private readonly expressionNodeOptions: ExpressionNodeOptions;
+
+  private leftExpressionNode: Node | null;  // left side of the equation
+  private rightExpressionNode: Node | null; // right side of the equation
 
   /**
    * @param leftTermCreators - left side of equation, terms appear in this order
@@ -84,40 +90,27 @@ export default class EquationNode extends Node {
       phetioVisiblePropertyInstrumented: false
     }, providedOptions );
 
-    super();
+    super( options );
+
+    this.leftTermCreators = leftTermCreators;
+    this.rightTermCreators = rightTermCreators;
+
+    this.relationalOperatorSpacing = options.relationalOperatorSpacing;
 
     // expressions for the left and right sides of the equation
-    let leftExpressionNode: Node;
-    let rightExpressionNode: Node;
+    this.leftExpressionNode = null;
+    this.rightExpressionNode = null;
 
     // relational operator that separates the two expressions
-    const relationalOperatorText = new Text( '?', {
+    this.relationalOperatorText = new Text( '?', {
       font: new PhetFont( {
         size: options.relationalOperatorFontSize,
         weight: options.relationalOperatorFontWeight
       } )
     } );
 
-    // updates the equation's layout, origin at the center of the relational operator
-    const updateLayout = () => {
-      if ( leftExpressionNode && rightExpressionNode ) {
-        relationalOperatorText.centerX = 0;
-        relationalOperatorText.centerY = 0;
-        leftExpressionNode.right = relationalOperatorText.left - options.relationalOperatorSpacing;
-        leftExpressionNode.centerY = relationalOperatorText.centerY;
-        rightExpressionNode.left = relationalOperatorText.right + options.relationalOperatorSpacing;
-        rightExpressionNode.centerY = relationalOperatorText.centerY;
-      }
-    };
-
-    // updates the relational operator based on left vs right weight
-    const updateRelationalOperator = () => {
-      relationalOperatorText.text = getRelationalOperator( leftTermCreators, rightTermCreators );
-      updateLayout();
-    };
-
     // information for one side of the equation, passed to createExpressionNode
-    const expressionNodeOptions: ExpressionNodeOptions = {
+    this.expressionNodeOptions = {
       symbolFont: new MathSymbolFont( options.symbolFontSize ),
       operatorFont: new PhetFont( options.operatorFontSize ),
       integerFont: new PhetFont( options.integerFontSize ),
@@ -126,59 +119,79 @@ export default class EquationNode extends Node {
       plusSpacing: options.plusSpacing
     };
 
-    // updates the equation's terms
-    const updateTerms = () => {
-
-      // Expressions may be linked to translated StringProperties, so they must be disposed.
-      leftExpressionNode && leftExpressionNode.dispose();
-      rightExpressionNode && rightExpressionNode.dispose();
-
-      leftExpressionNode = new ExpressionNode( leftTermCreators, expressionNodeOptions );
-      rightExpressionNode = new ExpressionNode( rightTermCreators, expressionNodeOptions );
-      this.children = [ leftExpressionNode, relationalOperatorText, rightExpressionNode ];
-      updateLayout();
-    };
-
-    let relationalOperatorMultilink: UnknownMultilink | undefined; // defined for dynamic equations
-    let termsMultilink: UnknownMultilink | undefined; // defined for dynamic equations
     if ( options.updateEnabled ) {
 
       // The equation needs to be dynamically updated.
+      const allTermCreators = leftTermCreators.concat( rightTermCreators );
 
-      // {Property[]} dependencies that require the relational operator to be updated
-      const relationalOperatorDependencies: TReadOnlyProperty<Fraction>[] = [];
+      // Update the relational operator when weight on either plate changes.
+      Multilink.multilinkAny(
+        allTermCreators.map( termCreator => termCreator.weightOnPlateProperty ),
+        () => this.updateRelationalOperator()
+      );
 
-      // {Property[]} dependencies that require the terms to be updated
-      const termDependencies: TReadOnlyProperty<number>[] = [];
-
-      // Gather dependencies for all term creators...
-      leftTermCreators.concat( rightTermCreators ).forEach( termCreator => {
-        relationalOperatorDependencies.push( termCreator.weightOnPlateProperty );
-        termDependencies.push( termCreator.numberOfTermsOnPlateProperty );
-      } );
-
-      // dispose required
-      relationalOperatorMultilink = Multilink.multilinkAny( relationalOperatorDependencies, updateRelationalOperator );
-      termsMultilink = Multilink.multilinkAny( termDependencies, updateTerms );
+      // Update the expressions number of terms on either plate changes.
+      Multilink.multilinkAny(
+        allTermCreators.map( termCreator => termCreator.numberOfTermsOnPlateProperty ),
+        () => this.updateExpressions()
+      );
     }
     else {
-
-      // static equation
-      updateRelationalOperator();
-      updateTerms();
+      this.update();
     }
-
-    this.disposeEquationNode = () => {
-      relationalOperatorMultilink && relationalOperatorMultilink.dispose();
-      termsMultilink && termsMultilink.dispose();
-    };
-
-    this.mutate( options );
   }
 
   public override dispose(): void {
-    this.disposeEquationNode();
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
     super.dispose();
+  }
+
+  /**
+   * Use this to update a static equation that was created with updateEnabled: false.
+   * This is used by SnapshotNode, to refresh itself when snapshotProperty changes.
+   */
+  public update(): void {
+    this.updateRelationalOperator();
+    this.updateExpressions();
+  }
+
+  /**
+   * Updates the equation's left and right expressions, on either side of the relational operator.
+   */
+  private updateExpressions(): void {
+
+    // Existing expressions may be linked to translated StringProperties, so they must be disposed.
+    this.leftExpressionNode && this.leftExpressionNode.dispose();
+    this.rightExpressionNode && this.rightExpressionNode.dispose();
+
+    // Create new expressions.
+    this.leftExpressionNode = new ExpressionNode( this.leftTermCreators, this.expressionNodeOptions );
+    this.rightExpressionNode = new ExpressionNode( this.rightTermCreators, this.expressionNodeOptions );
+    this.children = [ this.leftExpressionNode, this.relationalOperatorText, this.rightExpressionNode ];
+    this.updateLayout();
+  }
+
+  /**
+   * Updates the relational operator, based on left vs right weight.
+   */
+  private updateRelationalOperator(): void {
+    this.relationalOperatorText.text = getRelationalOperator( this.leftTermCreators, this.rightTermCreators );
+    this.updateLayout();
+  }
+
+  /**
+   * Updates the equation's layout. Origin must be at the center of the relational operator, so that we
+   * can align the equation properly above the balance scale.
+   */
+  private updateLayout(): void {
+    if ( this.leftExpressionNode && this.rightExpressionNode ) {
+      this.relationalOperatorText.centerX = 0;
+      this.relationalOperatorText.centerY = 0;
+      this.leftExpressionNode.right = this.relationalOperatorText.left - this.relationalOperatorSpacing;
+      this.leftExpressionNode.centerY = this.relationalOperatorText.centerY;
+      this.rightExpressionNode.left = this.relationalOperatorText.right + this.relationalOperatorSpacing;
+      this.rightExpressionNode.centerY = this.relationalOperatorText.centerY;
+    }
   }
 }
 

@@ -55,8 +55,9 @@ export default class EquationAccordionBox extends AccordionBox {
       contentWidth: options.fixedWidth - ( 2 * options.contentXMargin ),
       contentHeight: options.fixedHeight - ( 2 * options.contentYMargin ),
       xMargin: 0,
-      yMargin: 0
-      //TODO https://github.com/phetsims/equality-explorer/issues/191 confirm that nothing in contentNode should be instrumented
+      yMargin: 0,
+      tandem: options.tandem.createTandem( 'contentNode' ),
+      phetioVisiblePropertyInstrumented: false
     } );
 
     options.titleNode = options.titleNode || new Text( EqualityExplorerStrings.equationOrInequalityStringProperty, {

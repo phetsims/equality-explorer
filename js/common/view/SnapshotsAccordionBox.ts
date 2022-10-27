@@ -90,7 +90,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
           {}, options.snapshotControlOptions, {
           variableValuesVisibleProperty: options.variableValuesVisibleProperty,
           controlWidth: contentWidth,
-          tandem: options.tandem.createTandem( `snapshotControl${i}` )
+          tandem: options.tandem.createTandem( 'snapshotControls' ).createTandem( `snapshotControl${i}` )
         } ) );
 
       snapshotControls.push( snapshotControl );
