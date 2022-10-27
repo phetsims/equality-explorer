@@ -12,14 +12,13 @@ import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { FireListener, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
-import cameraSolidShape from '../../../../sherpa/js/fontawesome-5/cameraSolidShape.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import { FireListener, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Snapshot from '../model/Snapshot.js';
 import SnapshotNode from './SnapshotNode.js';
+import CameraButton from '../../../../scenery-phet/js/buttons/CameraButton.js';
 
 type Orientation = 'horizontal' | 'vertical';
 
@@ -71,20 +70,13 @@ export default class SnapshotControl extends Node {
     } );
 
     // snapshot (camera) button
-    const snapshotIcon = new Path( cameraSolidShape, {
-      scale: 0.037,
-      fill: 'black'
-    } );
-    const snapshotButton = new RectangularPushButton( {
-      content: snapshotIcon,
+    const snapshotButton = new CameraButton( {
       baseColor: 'white',
-      xMargin: 8,
-      yMargin: 4,
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
-      center: selectionRectangle.center,
       maxWidth: options.controlWidth,
       maxHeight: options.controlHeight,
+      center: selectionRectangle.center,
       listener: () => {
         assert && assert( !snapshotProperty.value, 'snapshot is already occupied' );
         const snapshot = new Snapshot( scene );
@@ -96,7 +88,6 @@ export default class SnapshotControl extends Node {
       visiblePropertyOptions: { phetioReadOnly: true } // so that PhET-iO client can see whether its visible
     } );
 
-    assert && assert( !options.children, 'SnapshotControl sets children' );
     options.children = [ selectionRectangle, snapshotButton ];
 
     super( options );
