@@ -3,7 +3,7 @@
 /**
  * Displays the values of variables in parenthesis.
  * E.g. '(x = 2)' or '(x = 1, y = 3)' or (sphere = 2, square = 1, triangle = 4).
- * Used in Snapshots.
+ * This is used for snapshots, so the displayed value does not update when the variable's value changes.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
