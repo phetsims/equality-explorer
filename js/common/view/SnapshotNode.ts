@@ -1,5 +1,6 @@
 // Copyright 2022, University of Colorado Boulder
 
+//TODO https://github.com/phetsims/equality-explorer/issues/191 do we need an iO-only Property whose value indicates what the displayed snapshot looks like?
 /**
  * SnapshotNode is the view of a snapshot, with optional values for the variables that appear in that snapshot.
  *
