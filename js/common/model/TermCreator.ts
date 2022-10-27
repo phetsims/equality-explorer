@@ -66,7 +66,6 @@ type TermSnapshot = {
 };
 
 // A TermCreator snapshot consists of an array of snapshots for all of its Terms
-//TODO capture state of Variables in TermCreatorSnapshot
 export type TermCreatorSnapshot = TermSnapshot[];
 
 // sign that will be applied to terms that are created
