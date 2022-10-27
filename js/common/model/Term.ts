@@ -28,6 +28,12 @@ type SelfOptions = {
 
 export type TermOptions = SelfOptions & EqualityExplorerMovableOptions;
 
+// A snapshot of a Term is a copy of that Term, and where it appeared on the plate
+export type TermSnapshot = {
+  term: Term; // copy of the Term, which will be used to restore
+  cell: number; // cell that the Term occupies
+};
+
 export default abstract class Term extends EqualityExplorerMovable {
 
   // The value that is significant for the purposes of determining sign and maxInteger limits.

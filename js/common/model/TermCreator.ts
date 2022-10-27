@@ -32,7 +32,7 @@ import { Node, PressListenerEvent, SceneryEvent } from '../../../../scenery/js/i
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Plate from './Plate.js';
-import Term, { TermOptions } from './Term.js';
+import Term, { TermOptions, TermSnapshot } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
 import TermNode from '../view/TermNode.js';
@@ -58,15 +58,6 @@ type SelfOptions = {
 
 export type TermCreatorOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-// A snapshot of one term and where it appears on the plate
-type TermSnapshot = {
-  cell: number; // cell that the Term occupies
-  term: Term; // copy of the Term, which will be used to restore
-};
-
-// A TermCreator snapshot consists of an array of snapshots for all of its Terms
-export type TermCreatorSnapshot = TermSnapshot[];
-
 // sign that will be applied to terms that are created
 export type TermCreatorSign = 1 | -1;
 
@@ -75,6 +66,9 @@ export type CreateTermOptions = {
   sign?: TermCreatorSign;
   event?: PressListenerEvent | null; // non-null if the term is created as the result of a user interaction
 } & TermOptions;
+
+// A TermCreator's snapshot is the set of snapshots for all of its Terms that are on the plate.
+export type TermCreatorSnapshot = TermSnapshot[];
 
 export default abstract class TermCreator extends PhetioObject {
 
@@ -575,27 +569,24 @@ export default abstract class TermCreator extends PhetioObject {
   }
 
   /**
-   * Creates a snapshot of the Terms on the plate for this TermCreator.
+   * Creates a snapshot of the Terms that are on the plate and associated with this TermCreator.
    */
   public createSnapshot(): TermCreatorSnapshot {
-    const termCreatorSnapshot: TermCreatorSnapshot = [];
-    const termsOnPlate = this.getTermsOnPlate();
-    for ( let i = 0; i < termsOnPlate.length; i++ ) {
-      const term = termsOnPlate[ i ];
-      const cell = this.plate.getCellForTerm( term )!;
-      assert && assert( cell !== null );
-      termCreatorSnapshot.push( {
-        cell: cell,
-        term: term.copy()
-      } );
-    }
-    return termCreatorSnapshot;
+    const termSnapshots = this.getTermsOnPlate().map( term => {
+      return {
+        term: term.copy(),
+        cell: this.plate.getCellForTerm( term )!
+      };
+    } );
+    assert && assert( _.every( termSnapshots, termSnapshot => termSnapshot.cell !== null ) );
+    return termSnapshots;
   }
 
   /**
    * Restores a snapshot of Terms on the plate for this TermCreator.
    */
   public restoreSnapshot( termCreatorSnapshot: TermCreatorSnapshot ): void {
+    this.disposeAllTerms();
     termCreatorSnapshot.forEach( termSnapshot => this.putTermOnPlate( termSnapshot.term, termSnapshot.cell ) );
   }
 
