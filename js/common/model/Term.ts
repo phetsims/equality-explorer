@@ -159,21 +159,6 @@ export default abstract class Term extends EqualityExplorerMovable {
   }
 
   /**
-   * Creates a snapshot of this term.
-   * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
-   * Subtypes that have additional options should override this method and add to the options returned here.
-   */
-  public createSnapshot(): TermOptions {
-
-    // Note that this is the subset of SelfOptions that works for the needs of the sim.
-    // And it does not include properties from superclass EqualityExplorerMovable, because those
-    // properties are not relevant for a snapshot.
-    return {
-      diameter: this.diameter
-    };
-  }
-
-  /**
    * Gets the Variable associated with this term. Term subclasses that do not have an associated variable
    * should return null. This method makes it more convenient to use the same drag listeners for all term types.
    */
@@ -182,7 +167,7 @@ export default abstract class Term extends EqualityExplorerMovable {
   /**
    * Creates a copy of this term, with modifications through options.
    */
-  public abstract copy( providedOptions: TermOptions ): Term;
+  public abstract copy( providedOptions?: TermOptions ): Term;
 
   /**
    * Gets the weight of this term.

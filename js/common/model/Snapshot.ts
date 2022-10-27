@@ -24,7 +24,7 @@ export default class Snapshot {
     this.leftPlateSnapshot = new PlateSnapshot( scene.scale.leftPlate ); //TODO dynamic
     this.rightPlateSnapshot = new PlateSnapshot( scene.scale.rightPlate ); //TODO dynamic
 
-    // If the scene has variables, save their values.
+    // If the scene has variables, save their values, in the order that they appear in scene.variables.
     if ( scene.variables ) {
       this.variableValues = _.map( scene.variables, variable => variable.valueProperty.value );
     }
@@ -62,29 +62,25 @@ class PlateSnapshot {
 
   private readonly termCreators: TermCreator[];
 
-  // Data structure that describes the terms for each termCreator.
-  // Format is specific to Term subclasses. See createSnapshot for each Term subclasses.
-  private readonly snapshotDataStructures: TermCreatorSnapshot[];
+  private readonly termCreatorSnapshots: TermCreatorSnapshot[];
 
   public constructor( plate: Plate ) {
 
     this.termCreators = plate.termCreators;
 
-    // Create a snapshot data structure for each termCreator on the plate.
-    this.snapshotDataStructures = [];
+    // Save a TermCreatorSnapshot for each TermCreator, in the same order as termCreators.
+    this.termCreatorSnapshots = [];
     for ( let i = 0; i < this.termCreators.length; i++ ) {
-      this.snapshotDataStructures[ i ] = this.termCreators[ i ].createSnapshot();
+      this.termCreatorSnapshots[ i ] = this.termCreators[ i ].createSnapshot();
     }
   }
 
   /**
-   * Restores the snapshot for this plate.
+   * Restores the snapshot for this plate, in the same order that they were saved.
    */
   public restore(): void {
-    assert && assert( this.termCreators.length === this.snapshotDataStructures.length,
-      'arrays should have same length' );
     for ( let i = 0; i < this.termCreators.length; i++ ) {
-      this.termCreators[ i ].restoreSnapshot( this.snapshotDataStructures[ i ] );
+      this.termCreators[ i ].restoreSnapshot( this.termCreatorSnapshots[ i ] );
     }
   }
 }

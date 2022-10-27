@@ -58,11 +58,10 @@ type SelfOptions = {
 
 export type TermCreatorOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-// A snapshot of one term
-//TODO replace TermSnapshot with a copy of Term
+// A snapshot of one term and where it appears on the plate
 type TermSnapshot = {
   cell: number; // cell that the Term occupies
-  termOptions: TermOptions; // options to Term's constructor, specific to subclass
+  term: Term; // copy of the Term, which will be used to restore
 };
 
 // A TermCreator snapshot consists of an array of snapshots for all of its Terms
@@ -576,33 +575,28 @@ export default abstract class TermCreator extends PhetioObject {
   }
 
   /**
-   * Creates a lightweight data structure that describes the terms on the plate for this TermCreator.
-   * The format of the termOptions field is specific to the Term subclass, and consists of options
-   * to a Term type's constructor.  This data structure is opaque outside of TermCreator.
+   * Creates a snapshot of the Terms on the plate for this TermCreator.
    */
   public createSnapshot(): TermCreatorSnapshot {
-    const snapshot: TermCreatorSnapshot = [];
+    const termCreatorSnapshot: TermCreatorSnapshot = [];
     const termsOnPlate = this.getTermsOnPlate();
     for ( let i = 0; i < termsOnPlate.length; i++ ) {
       const term = termsOnPlate[ i ];
       const cell = this.plate.getCellForTerm( term )!;
       assert && assert( cell !== null );
-      snapshot.push( {
+      termCreatorSnapshot.push( {
         cell: cell,
-        termOptions: term.createSnapshot()
+        term: term.copy()
       } );
     }
-    return snapshot;
+    return termCreatorSnapshot;
   }
 
   /**
-   * Restores a snapshot of terms on the plate for this TermCreator.
+   * Restores a snapshot of Terms on the plate for this TermCreator.
    */
-  public restoreSnapshot( snapshot: TermCreatorSnapshot ): void {
-    for ( let i = 0; i < snapshot.length; i++ ) {
-      const term = this.createTerm( snapshot[ i ].termOptions );
-      this.putTermOnPlate( term, snapshot[ i ].cell );
-    }
+  public restoreSnapshot( termCreatorSnapshot: TermCreatorSnapshot ): void {
+    termCreatorSnapshot.forEach( termSnapshot => this.putTermOnPlate( termSnapshot.term, termSnapshot.cell ) );
   }
 
   /**

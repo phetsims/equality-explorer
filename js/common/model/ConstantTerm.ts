@@ -90,16 +90,6 @@ export default class ConstantTerm extends Term {
   }
 
   /**
-   * Creates a snapshot of this term.
-   * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
-   */
-  public override createSnapshot(): ConstantTermOptions {
-    return combineOptions<ConstantTermOptions>( {}, super.createSnapshot(), {
-      constantValue: this.constantValue
-    } );
-  }
-
-  /**
    * Applies an operation to this term, resulting in a new term.
    * Returns null if the operation is not applicable to this term.
    */
