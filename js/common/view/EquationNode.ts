@@ -33,7 +33,7 @@ const DEFAULT_FONT_SIZE = 30;
 
 type SelfOptions = {
 
-  // Update the view when the model changes? Set this to false to create a static equation.
+  // Update the view when the model changes? Setting to false creates a static equation.
   updateEnabled?: boolean;
 
   // fonts sizes, optimized for EquationAccordionBox
