@@ -21,9 +21,16 @@ import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
 
 type SelfOptions = {
+
+  // Terms are assumed to have a 1:1 aspect ratio, so that the stack nicely on the plates.
+  // Diameter is used to size the associated TermNode.
   diameter?: number;
-  pickable?: boolean; // whether the term is pickable (interactive)
-  toolboxPosition?: Vector2 | null; // position of the associated TermCreatorNode in the toolbox
+  
+  // Whether the term is pickable (interactive).
+  pickable?: boolean;
+
+  // Position of the associated TermCreatorNode in the toolbox, so that we can animate back to the toolbox
+  toolboxPosition?: Vector2 | null;
 };
 
 export type TermOptions = SelfOptions & EqualityExplorerMovableOptions;
