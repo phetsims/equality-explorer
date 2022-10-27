@@ -58,6 +58,7 @@ type SelfOptions = {
 
 export type TermCreatorOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
+//TODO why don't we just make a copy of Term?
 // A snapshot of one term
 type TermSnapshot = {
   cell: number; // cell that the Term occupies
