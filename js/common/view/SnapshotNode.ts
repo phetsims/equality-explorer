@@ -76,7 +76,7 @@ export default class SnapshotNode extends FlowBox {
 
     // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
     let variableValuesNode: Node;
-    if ( scene.variables ) {
+    if ( scene.variables && options.variableValuesVisibleProperty ) {
       variableValuesNode = new VariableValuesNode( scene.variables, {
         commaSeparated: options.commaSeparated,
         fontSize: EQUATION_FONT_SIZE,
