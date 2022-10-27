@@ -26,6 +26,7 @@ import ConstantTermNode from './ConstantTermNode.js';
 import VariableTermNode from './VariableTermNode.js';
 import { RelationalOperator } from '../model/RelationalOperator.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 // constants
 const DEFAULT_FONT_SIZE = 30;
@@ -50,7 +51,7 @@ type SelfOptions = {
   relationalOperatorSpacing?: number; // space around the relational operator
 };
 
-export type EquationNodeOptions = SelfOptions & PickOptional<NodeOptions, 'pickable'>;
+export type EquationNodeOptions = SelfOptions & PickOptional<NodeOptions, 'pickable' | 'tandem'>;
 
 export default class EquationNode extends Node {
 
@@ -76,7 +77,11 @@ export default class EquationNode extends Node {
       relationalOperatorFontWeight: 'bold',
       coefficientSpacing: 3,
       plusSpacing: 8,
-      relationalOperatorSpacing: 20
+      relationalOperatorSpacing: 20,
+
+      // NodeOptions
+      tandem: Tandem.OPTIONAL,
+      phetioVisiblePropertyInstrumented: false
     }, providedOptions );
 
     super();

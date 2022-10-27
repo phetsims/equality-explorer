@@ -22,6 +22,8 @@ type VariableNodeOptions = SelfOptions;
 
 export default class VariableNode extends Node {
 
+  private readonly disposeVariableNode: () => void;
+
   public constructor( variable: Variable, providedOptions?: VariableNodeOptions ) {
 
     const options = optionize<VariableNodeOptions, SelfOptions, NodeOptions>()( {
@@ -47,14 +49,17 @@ export default class VariableNode extends Node {
       } );
     }
 
-    assert && assert( !options.children, 'VariableNode sets children' );
     options.children = [ symbolNode ];
 
     super( options );
+
+    this.disposeVariableNode = () => {
+      symbolNode.dispose();
+    };
   }
 
   public override dispose(): void {
-    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    this.disposeVariableNode();
     super.dispose();
   }
 }

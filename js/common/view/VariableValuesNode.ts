@@ -10,6 +10,7 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { HBox, HBoxOptions, HStrut, Node, Text } from '../../../../scenery/js/imports.js';
@@ -24,9 +25,13 @@ type SelfOptions = {
   spacingBetweenTerms?: number;
 };
 
-type VariableValuesNodeOptions = SelfOptions & PickOptional<HBoxOptions, 'opacity' | 'scale'>;
+type VariableValuesNodeOptions = SelfOptions &
+  PickOptional<HBoxOptions, 'opacity' | 'scale' | 'visibleProperty'> &
+  PickRequired<HBoxOptions, 'tandem'>;
 
 export default class VariableValuesNode extends HBox {
+
+  private readonly disposeVariableValuesNode: () => void;
 
   /**
    * @param variables - in the order that they appear, from left to right
@@ -40,7 +45,13 @@ export default class VariableValuesNode extends HBox {
       fontSize: 28,
       commaSeparated: true,
       spacingInsideTerms: 3,
-      spacingBetweenTerms: 15
+      spacingBetweenTerms: 15,
+
+      // HBoxOptions
+      // De-emphasize variable values by scaling them down.
+      // See https://github.com/phetsims/equality-explorer/issues/110
+      scale: 0.75
+
     }, providedOptions );
 
     assert && assert( options.spacing === undefined, 'VariableValuesNode sets spacing' );
@@ -49,6 +60,7 @@ export default class VariableValuesNode extends HBox {
     const font = new PhetFont( options.fontSize );
 
     const children: Node[] = [];
+    const disposeNodes: Node[] = []; // Nodes that will need to be disposed
 
     // '(' with normal font
     const leftParenText = new Text( '(', { font: font } );
@@ -59,15 +71,18 @@ export default class VariableValuesNode extends HBox {
 
       const variable = variables[ i ];
 
+      const variableNode = new VariableNode( variable, {
+        iconScale: 0.35,
+        fontSize: options.fontSize
+      } );
+      disposeNodes.push( variableNode ); // because variableNode may be linked to a StringProperty
+
       children.push( new HBox( {
         spacing: options.spacingInsideTerms,
         children: [
 
           // variable
-          new VariableNode( variable, {
-            iconScale: 0.35,
-            fontSize: options.fontSize
-          } ),
+          variableNode,
 
           // =
           new Text( MathSymbols.EQUAL_TO, { font: font } ),
@@ -89,14 +104,17 @@ export default class VariableValuesNode extends HBox {
     const rightParenText = new Text( ')', { font: font } );
     children.push( rightParenText );
 
-    assert && assert( !options.children, 'VariableValuesNode sets children' );
     options.children = children;
 
     super( options );
+
+    this.disposeVariableValuesNode = () => {
+      disposeNodes.forEach( node => node.dispose() );
+    };
   }
 
   public override dispose(): void {
-    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    this.disposeVariableValuesNode();
     super.dispose();
   }
 }
