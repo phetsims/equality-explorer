@@ -395,7 +395,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
 
       // display the challenge equation
       challengeEquationNode.children = [
-        new EquationPanel( level.leftTermCreators, level.rightTermCreators, challengePanelOptions ) //TODO dynamic
+        new EquationPanel( level.leftTermCreators, level.rightTermCreators, challengePanelOptions ) //TODO dynamic, convert to static?
       ];
 
       // visibility of other UI elements
