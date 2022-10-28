@@ -114,7 +114,7 @@ export default class CombineTermsDragListener extends TermDragListener {
       if ( combinedTerm.significantValue.getValue() === 0 ) {
 
         // Combined term is zero. No halo, since the terms are on the opposite side.
-        oppositeSumToZeroNode = new SumToZeroNode( { //TODO dynamic
+        oppositeSumToZeroNode = new SumToZeroNode( { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
           variable: combinedTerm.getVariable(),
           fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
         } );
@@ -205,7 +205,7 @@ export default class CombineTermsDragListener extends TermDragListener {
           else if ( combinedTerm.sign === 0 ) {
 
             // Terms sum to zero. No halo, since the terms did not overlap when drag ended.
-            sumToZeroNode = new SumToZeroNode( { //TODO dynamic
+            sumToZeroNode = new SumToZeroNode( { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
               variable: this.term.getVariable(),
               fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
             } );
@@ -268,7 +268,7 @@ export default class CombineTermsDragListener extends TermDragListener {
               if ( oppositeCombinedTerm.significantValue.getValue() === 0 ) {
 
                 // terms summed to zero on opposite plate. No halo, since these terms are on opposite side.
-                oppositeSumToZeroNode = new SumToZeroNode( { //TODO dynamic
+                oppositeSumToZeroNode = new SumToZeroNode( { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
                   variable: oppositeCombinedTerm.getVariable(),
                   fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
                 } );

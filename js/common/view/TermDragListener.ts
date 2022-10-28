@@ -238,7 +238,7 @@ export default abstract class TermDragListener extends DragListener {
       const sumToZeroParent = this.termNode.getParent()!;
       assert && assert( sumToZeroParent );
 
-      const sumToZeroNode = new SumToZeroNode( { //TODO dynamic
+      const sumToZeroNode = new SumToZeroNode( { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
         variable: this.term.getVariable(),
         haloRadius: this.haloRadius,
         haloBaseColor: EqualityExplorerColors.HALO, // show the halo
