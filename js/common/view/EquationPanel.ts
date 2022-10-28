@@ -32,6 +32,8 @@ export type EquationPanelOptions = SelfOptions & PanelOptions & PickRequired<Pan
 
 export default class EquationPanel extends Panel {
 
+  private readonly equationNode: EquationNode;
+
   /**
    * @param leftTermCreators - left side of equation
    * @param rightTermCreators - right side of equation
@@ -90,6 +92,16 @@ export default class EquationPanel extends Panel {
     } );
 
     super( contentNode, options );
+
+    this.equationNode = equationNode;
+  }
+
+  /**
+   * Update the equation that is displayed in this panel.
+   * To be used when this Node was created with equationNodeOptions.updateEnabled: false.
+   */
+  public updateEquation(): void {
+    this.equationNode.update();
   }
 }
 

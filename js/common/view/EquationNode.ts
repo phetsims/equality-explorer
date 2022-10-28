@@ -148,7 +148,6 @@ export default class EquationNode extends Node {
 
   /**
    * Use this to update a static equation that was created with updateEnabled: false.
-   * This is used by SnapshotNode, to refresh itself when snapshotProperty changes.
    */
   public update(): void {
     this.updateRelationalOperator();

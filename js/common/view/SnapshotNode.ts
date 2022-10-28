@@ -95,8 +95,8 @@ export default class SnapshotNode extends FlowBox {
 
     super( options );
 
-    // Because equationNode was created as a static equation (with updateEnabled: false), when snapshotProperty changes
-    // we must call equationNode.update.
+    // Because we created equationNode with updateEnabled: false, the equation does not automatically
+    // synchronize with what's on the balance scale, and we need to explicitly request an update.
     snapshotProperty.link( snapshot => {
       if ( snapshot !== null ) {
         equationNode.update();
