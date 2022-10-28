@@ -90,7 +90,7 @@ export default abstract class Term extends EqualityExplorerMovable {
       toolboxPosition: null,
 
       // EqualityExplorerMovableOptions
-      tandem: Tandem.OPTIONAL //TODO https://github.com/phetsims/equality-explorer/issues/200 delete when tandem is required by TermOptions
+      tandem: Tandem.OPTIONAL //TODO https://github.com/phetsims/equality-explorer/issues/200 delete when tandem is required by EqualityExplorerMovableOptions
     }, providedOptions );
 
     super( options );

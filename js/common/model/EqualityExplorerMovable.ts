@@ -28,7 +28,7 @@ type SelfOptions = {
   animationSpeed?: number; // distance/second when animating
 };
 
-//TODO PickRequired<PhetioObjectOptions, 'tandem'>
+//TODO https://github.com/phetsims/equality-explorer/issues/200 add required tandem to EqualityExplorerMovableOptions
 export type EqualityExplorerMovableOptions = SelfOptions & PickOptional<PhetioObjectOptions, 'tandem'>;
 
 type AnimationCallback = ( () => void ) | null;
@@ -71,7 +71,7 @@ export default class EqualityExplorerMovable extends PhetioObject {
       animationSpeed: 400,
 
       // PhetioObjectOptions
-      tandem: Tandem.OPTIONAL, //TODO delete when tandem is required by TermOptions
+      tandem: Tandem.OPTIONAL, //TODO https://github.com/phetsims/equality-explorer/issues/200 delete when tandem is required by EqualityExplorerMovableOptions
       phetioState: false
     }, providedOptions );
 
