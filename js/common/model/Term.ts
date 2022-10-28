@@ -143,6 +143,7 @@ export default abstract class Term extends EqualityExplorerMovable {
 
       // Note that this is the subset of SelfOptions that works for the needs of the sim.
       diameter: this.diameter
+      //TODO should pickable and toolboxPosition be added to copyOptions? why not?
     } );
   }
 
