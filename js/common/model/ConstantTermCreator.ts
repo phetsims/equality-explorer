@@ -100,7 +100,7 @@ export default class ConstantTermCreator extends TermCreator {
     assert && assert( options.constantValue !== undefined );
     options.constantValue = options.constantValue!.timesInteger( options.sign! );
 
-    return new ConstantTerm( options ); //TODO dynamic
+    return new ConstantTerm( options ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
   }
 
   /**
@@ -118,7 +118,7 @@ export default class ConstantTermCreator extends TermCreator {
    * Instantiates the Node that corresponds to this term.
    */
   public override createTermNode( term: ConstantTerm ): ConstantTermNode {
-    return new ConstantTermNode( this, term ); //TODO dynamic
+    return new ConstantTermNode( this, term ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
   }
 }
 

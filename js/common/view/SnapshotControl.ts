@@ -1,6 +1,5 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-//TODO https://github.com/phetsims/equality-explorer/issues/191 do we need an iO-only Property whose value indicates what the displayed snapshot looks like?
 /**
  * Control for taking, displaying and selecting a snapshot.
  * The Snapshots accordion box contains a vertical column of these.
@@ -9,29 +8,23 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { FireListener, FlowBox, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
-import cameraSolidShape from '../../../../sherpa/js/fontawesome-5/cameraSolidShape.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import { FireListener, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Snapshot from '../model/Snapshot.js';
-import EquationNode from './EquationNode.js';
-import VariableValuesNode from './VariableValuesNode.js';
-
-// constants
-const EQUATION_FONT_SIZE = 22;
-const FRACTION_FONT_SIZE = 14;
-const SELECTION_RECTANGLE_X_MARGIN = 10;
-const SELECTION_RECTANGLE_Y_MARGIN = 8;
+import SnapshotNode from './SnapshotNode.js';
+import CameraButton from '../../../../scenery-phet/js/buttons/CameraButton.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type Orientation = 'horizontal' | 'vertical';
 
 type SelfOptions = {
   // whether variable values are visible in snapshots, null if the feature is not supported
-  variableValuesVisibleProperty?: Property<boolean> | null;
+  variableValuesVisibleProperty?: TReadOnlyProperty<boolean> | null;
   controlWidth?: number;
   controlHeight?: number;
   orientation?: Orientation; // layout of the equation and variable values
@@ -68,48 +61,40 @@ export default class SnapshotControl extends Node {
     assert && assert( options.variableValuesOpacity >= 0 && options.variableValuesOpacity <= 1,
       `invalid variableValuesOpacity: ${options.variableValuesOpacity}` );
 
-    // rectangle that appears around the snapshot when it's selected
-    const selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
-      cornerRadius: 3,
-      lineWidth: 3,
-      stroke: 'transparent'
+    // Shows the equation and optional variable values for the snapshot
+    const snapshotNode = new SnapshotNode( snapshotProperty, scene, {
+      commaSeparated: options.commaSeparated,
+      variableValuesOpacity: options.variableValuesOpacity,
+      variableValuesVisibleProperty: options.variableValuesVisibleProperty,
+      orientation: options.orientation,
+      maxWidth: options.controlWidth - 20,
+      maxHeight: options.controlHeight - 16,
+      tandem: options.tandem.createTandem( 'snapshotNode' )
     } );
 
-    // Placeholders for equation and variable values. These cannot be shared by instances of SnapshotControl,
-    // because FlowBox does not support scenery's DAG feature.
-    const NO_EQUATION_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for equation, so bounds are valid
-    const NO_VARIABLE_VALUES_NODE = new Rectangle( 0, 0, 1, 1 ); // placeholder for variable values, so bounds are valid
+    // rectangle that appears around the snapshot when it's selected
+    const selectionRectangle = new Rectangle( 0, 0, options.controlWidth, options.controlHeight, {
+      visibleProperty: snapshotNode.visibleProperty,
+      cornerRadius: 3,
+      lineWidth: 3,
+      stroke: 'transparent',
+      cursor: 'pointer'
+    } );
 
-    // placeholders, so that snapshotNode has valid bounds
-    let equationNode: Node = NO_EQUATION_NODE;
-    let variableValuesNode: Node = NO_VARIABLE_VALUES_NODE;
-
-    // parent for the equation and optional display of variable values
-    const snapshotNode = new FlowBox( {
-      orientation: options.orientation,
-      children: [ equationNode ],
-      spacing: ( options.orientation === 'horizontal' ) ? 20 : 8,
-      center: selectionRectangle.center,
-      maxWidth: options.controlWidth - 2 * SELECTION_RECTANGLE_X_MARGIN,
-      maxHeight: options.controlHeight - 2 * SELECTION_RECTANGLE_Y_MARGIN,
-      pickable: false
+    // Center the snapshot in the selection rectangle.
+    snapshotNode.boundsProperty.link( bounds => {
+      snapshotNode.center = selectionRectangle.center;
     } );
 
     // snapshot (camera) button
-    const snapshotIcon = new Path( cameraSolidShape, {
-      scale: 0.037,
-      fill: 'black'
-    } );
-    const snapshotButton = new RectangularPushButton( {
-      content: snapshotIcon,
+    const snapshotButton = new CameraButton( {
+      visibleProperty: DerivedProperty.not( snapshotNode.visibleProperty ),
       baseColor: 'white',
-      xMargin: 8,
-      yMargin: 4,
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
-      center: selectionRectangle.center,
       maxWidth: options.controlWidth,
       maxHeight: options.controlHeight,
+      center: selectionRectangle.center,
       listener: () => {
         assert && assert( !snapshotProperty.value, 'snapshot is already occupied' );
         const snapshot = new Snapshot( scene );
@@ -121,13 +106,12 @@ export default class SnapshotControl extends Node {
       visiblePropertyOptions: { phetioReadOnly: true } // so that PhET-iO client can see whether its visible
     } );
 
-    assert && assert( !options.children, 'SnapshotControl sets children' );
     options.children = [ selectionRectangle, snapshotNode, snapshotButton ];
 
     super( options );
 
     // Selects the snapshot associated with this control.
-    this.addInputListener( new FireListener( {
+    selectionRectangle.addInputListener( new FireListener( {
       fire: () => {
         if ( snapshotProperty.value ) {
           selectedSnapshotProperty.value = snapshotProperty.value;
@@ -136,66 +120,6 @@ export default class SnapshotControl extends Node {
       tandem: options.tandem.createTandem( 'fireListener' )
     } ) );
 
-    // updates the layout of the snapshot, and centers it in the control
-    const updateSnapshotLayout = () => {
-      if ( options.variableValuesVisibleProperty && options.variableValuesVisibleProperty.value ) {
-        snapshotNode.children = [ equationNode, variableValuesNode ];
-      }
-      else {
-        snapshotNode.children = [ equationNode ];
-      }
-      snapshotNode.center = selectionRectangle.center;
-    };
-
-    // Updates the view when the model changes.
-    snapshotProperty.link( snapshot => {
-
-      const hasSnapShot = !!snapshot;
-
-      // either the button or the snapshot is visible
-      snapshotButton.visible = !hasSnapShot;
-      snapshotNode.visible = hasSnapShot;
-      selectionRectangle.visible = hasSnapShot;
-      selectionRectangle.cursor = hasSnapShot ? 'pointer' : null;
-
-      if ( hasSnapShot ) {
-
-        // create the equation for the snapshot
-        equationNode = new EquationNode( scene.leftTermCreators, scene.rightTermCreators, { //TODO dynamic
-          updateEnabled: false, // equation is static
-          symbolFontSize: EQUATION_FONT_SIZE,
-          operatorFontSize: EQUATION_FONT_SIZE,
-          integerFontSize: EQUATION_FONT_SIZE,
-          fractionFontSize: FRACTION_FONT_SIZE,
-          relationalOperatorFontSize: EQUATION_FONT_SIZE,
-          relationalOperatorSpacing: 15,
-          pickable: false
-        } );
-
-        // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
-        if ( scene.variables ) {
-          variableValuesNode = new VariableValuesNode( scene.variables, {
-            opacity: options.variableValuesOpacity,
-            fontSize: EQUATION_FONT_SIZE,
-            commaSeparated: options.commaSeparated,
-
-            // de-emphasize variable values by scaling them down,
-            // see https://github.com/phetsims/equality-explorer/issues/110
-            scale: 0.75
-            //TODO https://github.com/phetsims/equality-explorer/issues/191 does VariableValuesNode need to be instrumented?
-          } );
-        }
-      }
-      else {
-
-        // no associated snapshot
-        equationNode = NO_EQUATION_NODE;
-        variableValuesNode = NO_VARIABLE_VALUES_NODE;
-      }
-
-      updateSnapshotLayout();
-    } );
-
     // Shows that the associated snapshot has been selected.
     selectedSnapshotProperty.link( selectedSnapshot => {
       const isSelected = ( selectedSnapshot && selectedSnapshot === snapshotProperty.value );
@@ -203,12 +127,6 @@ export default class SnapshotControl extends Node {
                                   EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE :
                                   EqualityExplorerColors.SNAPSHOT_DESELECTED_STROKE;
     } );
-
-    if ( options.variableValuesVisibleProperty ) {
-
-      // Shows/hides variable values. unlink not required.
-      options.variableValuesVisibleProperty.link( visible => updateSnapshotLayout() );
-    }
   }
 
   public override dispose(): void {

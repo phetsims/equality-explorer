@@ -46,9 +46,10 @@ export default class SnapshotsCollection extends PhetioObject {
     this.snapshotProperties = [];
     for ( let i = 0; i < options.numberOfSnapshots; i++ ) {
       this.snapshotProperties.push( new Property<Snapshot | null>( null, {
-        //TODO tandem: options.tandem.createTandem( `snapshot${i}Property` ),
-        //TODO phetioValueType: NullableIO( SnapshotIO ),
-        //TODO phetioDocumentation: `The snapshot that occupies row ${i} in the Snapshots accordion box. null means no snapshot.`
+        //TODO https://github.com/phetsims/equality-explorer/issues/200 add these options after creating SnapshotIO
+        //tandem: options.tandem.createTandem( `snapshot${i}Property` ),
+        //phetioValueType: NullableIO( SnapshotIO ),
+        //phetioDocumentation: `The snapshot that occupies row ${i} in the Snapshots accordion box. null means no snapshot.`
       } ) );
     }
 
@@ -59,9 +60,10 @@ export default class SnapshotsCollection extends PhetioObject {
         return ( snapshot === null ) ||
                _.some( this.snapshotProperties, snapshotProperty => ( snapshotProperty.value === snapshot ) );
       }
-      //TODO tandem: options.tandem.createTandem( 'selectedSnapshotProperty' ),
-      //TODO phetioValueType: NullableIO( SnapshotIO ),
-      //TODO phetioDocumentation: 'The snapshot that is selected in the Snapshots accordion box. null means no snapshot is selected.'
+      //TODO https://github.com/phetsims/equality-explorer/issues/200 add these options after creating SnapshotIO
+      //tandem: options.tandem.createTandem( 'selectedSnapshotProperty' ),
+      //phetioValueType: NullableIO( SnapshotIO ),
+      //phetioDocumentation: 'The snapshot that is selected in the Snapshots accordion box. null means no snapshot is selected.'
     } );
   }
 

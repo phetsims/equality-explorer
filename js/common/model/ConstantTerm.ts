@@ -72,7 +72,7 @@ export default class ConstantTerm extends Term {
    * Creates a copy of this term, with modifications through options.
    */
   public override copy( providedOptions?: ConstantTermOptions ): ConstantTerm {
-    return new ConstantTerm( combineOptions<ConstantTermOptions>( {}, this.copyOptions(), providedOptions ) ); //TODO dynamic
+    return new ConstantTerm( combineOptions<ConstantTermOptions>( {}, this.copyOptions(), providedOptions ) ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
   }
 
   /**
@@ -87,16 +87,6 @@ export default class ConstantTerm extends Term {
    */
   public override isLikeTerm( term: Term ): boolean {
     return ( term instanceof ConstantTerm );
-  }
-
-  /**
-   * Creates a snapshot of this term.
-   * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
-   */
-  public override createSnapshot(): ConstantTermOptions {
-    return combineOptions<ConstantTermOptions>( {}, super.createSnapshot(), {
-      constantValue: this.constantValue
-    } );
   }
 
   /**

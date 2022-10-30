@@ -22,7 +22,7 @@ import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Grid from './Grid.js';
 import Term from './Term.js';
-import TermCreator from './TermCreator.js';
+import TermCreator, { TermCreatorSnapshot } from './TermCreator.js';
 import { BalanceScaleSide } from './BalanceScale.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -39,6 +39,9 @@ type SelfOptions = {
 };
 
 export type PlateOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+
+// A Plate's snapshot is the set of snapshots for all TermCreators associated with the plate.
+export type PlateSnapshot = TermCreatorSnapshot[];
 
 export default class Plate extends PhetioObject {
 
@@ -337,6 +340,16 @@ export default class Plate extends PhetioObject {
         'set of terms is not the same after organize' );
 
       this.contentsChangedEmitter.emit();
+    }
+  }
+
+  public createSnapshot(): PlateSnapshot {
+    return this.termCreators.map( termCreator => termCreator.createSnapshot() );
+  }
+
+  public restoreSnapshot( plateSnapshot: PlateSnapshot ): void {
+    for ( let i = 0; i < this.termCreators.length; i++ ) {
+      this.termCreators[ i ].restoreSnapshot( plateSnapshot[ i ] );
     }
   }
 }

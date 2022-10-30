@@ -66,7 +66,7 @@ export default class ObjectTerm extends VariableTerm {
    * Creates a copy of this term, with modifications through options.
    */
   public override copy( providedOptions?: ObjectTermOptions ): ObjectTerm {
-    return new ObjectTerm( this.objectVariable, combineOptions<ObjectTermOptions>( this.copyOptions(), providedOptions ) ); //TODO dynamic
+    return new ObjectTerm( this.objectVariable, combineOptions<ObjectTermOptions>( this.copyOptions(), providedOptions ) ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
   }
 
   /**

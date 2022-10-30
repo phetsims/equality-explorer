@@ -260,13 +260,13 @@ export default class SolveItLevel extends OperationsScene {
     this.allTermCreators.forEach( termCreator => termCreator.disposeAllTerms() );
 
     // x
-    const variableTerm = new VariableTerm( this.x, { //TODO dynamic
+    const variableTerm = new VariableTerm( this.x, { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
       coefficient: Fraction.fromInteger( 1 ),
       diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
     } );
 
     // N
-    const constantTerm = new ConstantTerm( { //TODO dynamic
+    const constantTerm = new ConstantTerm( { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
       constantValue: Fraction.fromInteger( this.x.valueProperty.value ),
       diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
     } );

@@ -105,26 +105,20 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
         phetioVisiblePropertyInstrumented: false
       } );
 
-    // Challenge equation
-    const challengePanelOptions = combineOptions<EquationPanelOptions>( {}, EQUATION_PANEL_OPTIONS, {
-      fill: Color.WHITE.withAlpha( 0.5 ),
-      stroke: Color.BLACK.withAlpha( 0.5 ),
-      equationNodeOptions: {
-        relationalOperatorFontWeight: 'normal',
-        updateEnabled: false // static equation, to display the challenge
-      },
-      centerX: level.scale.position.x,
-      top: statusBar.bottom + 15
-    } );
-
-    // A new EquationPanel instance is created for each challenge. Since it's not necessary to instrument any
-    // of EquationPanel's subcomponents in this screen, wrap it in a static Node that will be its proxy in the
-    // Studio tree.
-    const challengeEquationNode = new Node( {
-      children: [ new EquationPanel( level.leftTermCreators, level.rightTermCreators, challengePanelOptions ) ],
-      tandem: options.tandem.createTandem( 'challengeEquationNode' ),
-      phetioDocumentation: 'Displays the equation for the current game challenge.'
-    } );
+    // Equation for the challenge
+    const challengeEquationNode = new EquationPanel( level.leftTermCreators, level.rightTermCreators,
+      combineOptions<EquationPanelOptions>( {}, EQUATION_PANEL_OPTIONS, {
+        fill: Color.WHITE.withAlpha( 0.5 ),
+        stroke: Color.BLACK.withAlpha( 0.5 ),
+        equationNodeOptions: {
+          relationalOperatorFontWeight: 'normal',
+          updateEnabled: false // static equation, to display the challenge
+        },
+        centerX: level.scale.position.x,
+        top: statusBar.bottom + 15,
+        tandem: options.tandem.createTandem( 'challengeEquationNode' ),
+        phetioDocumentation: 'Displays the equation for the current game challenge.'
+      } ) );
 
     // Equation that reflects what is currently on the balance scale
     const balanceScaleEquationNode = new EquationPanel( level.leftTermCreators, level.rightTermCreators,
@@ -393,10 +387,9 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       // cancel operation animations
       this.universalOperationControl.reset();
 
-      // display the challenge equation
-      challengeEquationNode.children = [
-        new EquationPanel( level.leftTermCreators, level.rightTermCreators, challengePanelOptions ) //TODO dynamic
-      ];
+      // Because we created challengeEquationNode with updateEnabled: false, the equation does not automatically
+      // synchronize with what's on the balance scale, and we need to explicitly request an update.
+      challengeEquationNode.updateEquation();
 
       // visibility of other UI elements
       refreshButton.visible = true;

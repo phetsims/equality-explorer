@@ -247,18 +247,18 @@ export default class UniversalOperationControl extends HBox {
       // See https://github.com/phetsims/equality-explorer/issues/48
       goButton.enabled = false;
 
-      const operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value ); //TODO dynamic
+      const operation = new UniversalOperation( scene.operatorProperty.value, scene.operandProperty.value ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
       phet.log && phet.log( `Go ${operation.toLogString()}` );
 
       // operation on left side
-      const leftOperationNode = new UniversalOperationNode( operation, { //TODO dynamic
+      const leftOperationNode = new UniversalOperationNode( operation, { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
         centerX: scene.scale.leftPlate.positionProperty.value.x,
         centerY: this.centerY
       } );
       animationLayer.addChild( leftOperationNode );
 
       // operation on right side
-      const rightOperationNode = new UniversalOperationNode( operation, { //TODO dynamic
+      const rightOperationNode = new UniversalOperationNode( operation, { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
         centerX: scene.scale.rightPlate.positionProperty.value.x,
         centerY: this.centerY
       } );

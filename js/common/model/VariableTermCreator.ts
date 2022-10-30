@@ -121,7 +121,7 @@ export default class VariableTermCreator extends TermCreator {
     const variable = this.variable!;
     assert && assert( variable );
 
-    return new VariableTerm( variable, options ); //TODO dynamic
+    return new VariableTerm( variable, options ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
   }
 
   /**
@@ -139,7 +139,7 @@ export default class VariableTermCreator extends TermCreator {
    * Instantiates the Node that corresponds to this term.
    */
   public override createTermNode( term: VariableTerm ): VariableTermNode {
-    return new VariableTermNode( this, term, { //TODO dynamic
+    return new VariableTermNode( this, term, { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
       interactiveTermNodeOptions: {
         positiveFill: this.positiveFill,
         negativeFill: this.negativeFill

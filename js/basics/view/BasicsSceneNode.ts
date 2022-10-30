@@ -72,30 +72,28 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
       tandem: options.tandem.createTandem( 'balanceScaleNode' )
     } );
 
-    const termToolboxNodesTandem = options.tandem.createTandem( 'termToolboxNodes' );
+    const toolboxNodesTandem = options.tandem.createTandem( 'toolboxNodes' );
 
-    const leftTermsToolboxNode = new TermsToolboxNode( leftTermCreators, scale.leftPlate, termsLayer, {
+    const leftToolboxNode = new TermsToolboxNode( leftTermCreators, scale.leftPlate, termsLayer, {
       hasNegativeTermsInToolbox: scene.hasNegativeTermsInToolbox,
       contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
       centerX: scale.leftPlate.positionProperty.value.x,
       bottom: layoutBounds.bottom - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN,
-      //TODO https://github.com/phetsims/equality-explorer/issues/191 confirm that leftTermsToolboxNode should be instrumented
-      tandem: termToolboxNodesTandem.createTandem( 'leftTermsToolboxNode' )
+      tandem: toolboxNodesTandem.createTandem( 'leftToolboxNode' )
     } );
 
-    const rightTermsToolboxNode = new TermsToolboxNode( rightTermCreators, scale.rightPlate, termsLayer, {
+    const rightToolboxNode = new TermsToolboxNode( rightTermCreators, scale.rightPlate, termsLayer, {
       hasNegativeTermsInToolbox: scene.hasNegativeTermsInToolbox,
       contentSize: options.termsToolboxContentSize,
       spacing: options.termsToolboxSpacing,
       centerX: scale.rightPlate.positionProperty.value.x,
-      bottom: leftTermsToolboxNode.bottom,
-      //TODO https://github.com/phetsims/equality-explorer/issues/191 confirm that rightTermsToolboxNode should be instrumented
-      tandem: termToolboxNodesTandem.createTandem( 'rightTermsToolboxNode' )
+      bottom: leftToolboxNode.bottom,
+      tandem: toolboxNodesTandem.createTandem( 'rightToolboxNode' )
     } );
 
     const equationAccordionBox = new EquationAccordionBox( leftTermCreators, rightTermCreators, {
-      fixedWidth: Math.floor( rightTermsToolboxNode.right - leftTermsToolboxNode.left ),
+      fixedWidth: Math.floor( rightToolboxNode.right - leftToolboxNode.left ),
       expandedProperty: equationAccordionBoxExpandedProperty,
 
       // Slightly off center, so that the equation's relational operator is horizontally centered
@@ -118,8 +116,8 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
 
     const children = [
       balanceScaleNode,
-      leftTermsToolboxNode,
-      rightTermsToolboxNode,
+      leftToolboxNode,
+      rightToolboxNode,
       equationAccordionBox,
       snapshotsAccordionBox,
       termsLayer // on top, so that terms are in front of everything else
@@ -131,8 +129,8 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
       const lockNode = new EqualityExplorerLockNode( scene.lockedProperty, {
 
         // offsets determined empirically, so that the body of the lock appears to be centered between the toolboxes
-        centerX: leftTermsToolboxNode.right + ( rightTermsToolboxNode.left - leftTermsToolboxNode.right ) / 2 + 4,
-        centerY: leftTermsToolboxNode.centerY - 5,
+        centerX: leftToolboxNode.right + ( rightToolboxNode.left - leftToolboxNode.right ) / 2 + 4,
+        centerY: leftToolboxNode.centerY - 5,
         tandem: options.tandem.createTandem( 'lockNode' )
       } );
       children.unshift( lockNode ); // add to beginning

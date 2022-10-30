@@ -68,14 +68,14 @@ export default class ConstantTermNode extends TermNode {
    * Creates the representation of a term that the user interacts with.
    */
   public static createInteractiveTermNode( constantValue: Fraction, providedOptions?: InteractiveTermNodeOptions ): Node {
-    return new InteractiveTermNode( constantValue, providedOptions ); //TODO dynamic
+    return new InteractiveTermNode( constantValue, providedOptions ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
   }
 
   /**
    * Creates the representation of a term that is shown in equations.
    */
   public static createEquationTermNode( constantValue: Fraction, providedOptions?: EquationTermNodeOptions ): Node {
-    return new EquationTermNode( constantValue, providedOptions ); //TODO dynamic
+    return new EquationTermNode( constantValue, providedOptions ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
   }
 }
 

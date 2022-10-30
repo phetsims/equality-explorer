@@ -21,12 +21,25 @@ import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
 
 type SelfOptions = {
+
+  // Terms are assumed to have a 1:1 aspect ratio, so that the stack nicely on the plates.
+  // Diameter is used to size the associated TermNode.
   diameter?: number;
-  pickable?: boolean; // whether the term is pickable (interactive)
-  toolboxPosition?: Vector2 | null; // position of the associated TermCreatorNode in the toolbox
+  
+  // Whether the term is pickable (interactive).
+  pickable?: boolean;
+
+  // Position of the associated TermCreatorNode in the toolbox, so that we can animate back to the toolbox
+  toolboxPosition?: Vector2 | null;
 };
 
 export type TermOptions = SelfOptions & EqualityExplorerMovableOptions;
+
+// A snapshot of a Term is a copy of that Term, and where it appeared on the plate
+export type TermSnapshot = {
+  term: Term; // copy of the Term, which will be used to restore
+  cell: number; // cell that the Term occupies
+};
 
 export default abstract class Term extends EqualityExplorerMovable {
 
@@ -77,7 +90,7 @@ export default abstract class Term extends EqualityExplorerMovable {
       toolboxPosition: null,
 
       // EqualityExplorerMovableOptions
-      tandem: Tandem.OPTIONAL //TODO delete when tandem is required by TermOptions
+      tandem: Tandem.OPTIONAL //TODO https://github.com/phetsims/equality-explorer/issues/200 delete when tandem is required by EqualityExplorerMovableOptions
     }, providedOptions );
 
     super( options );
@@ -130,6 +143,7 @@ export default abstract class Term extends EqualityExplorerMovable {
 
       // Note that this is the subset of SelfOptions that works for the needs of the sim.
       diameter: this.diameter
+      //TODO should pickable and toolboxPosition be added to copyOptions? why not?
     } );
   }
 
@@ -156,21 +170,6 @@ export default abstract class Term extends EqualityExplorerMovable {
   public maxIntegerExceeded(): boolean {
     return ( Math.abs( this.significantValue.numerator ) > EqualityExplorerQueryParameters.maxInteger ||
              Math.abs( this.significantValue.denominator ) > EqualityExplorerQueryParameters.maxInteger );
-  }
-
-  /**
-   * Creates a snapshot of this term.
-   * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
-   * Subtypes that have additional options should override this method and add to the options returned here.
-   */
-  public createSnapshot(): TermOptions {
-
-    // Note that this is the subset of SelfOptions that works for the needs of the sim.
-    // And it does not include properties from superclass EqualityExplorerMovable, because those
-    // properties are not relevant for a snapshot.
-    return {
-      diameter: this.diameter
-    };
   }
 
   /**

@@ -9,6 +9,7 @@
  */
 
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
@@ -27,9 +28,11 @@ type SelfOptions = {
   equationNodeOptions?: EquationNodeOptions;
 };
 
-export type EquationPanelOptions = SelfOptions & PanelOptions;
+export type EquationPanelOptions = SelfOptions & PanelOptions & PickRequired<PanelOptions, 'tandem'>;
 
 export default class EquationPanel extends Panel {
+
+  private readonly equationNode: EquationNode;
 
   /**
    * @param leftTermCreators - left side of equation
@@ -89,6 +92,16 @@ export default class EquationPanel extends Panel {
     } );
 
     super( contentNode, options );
+
+    this.equationNode = equationNode;
+  }
+
+  /**
+   * Update the equation that is displayed in this panel.
+   * To be used when this Node was created with equationNodeOptions.updateEnabled: false.
+   */
+  public updateEquation(): void {
+    this.equationNode.update();
   }
 }
 

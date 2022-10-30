@@ -53,10 +53,11 @@ export default class VariablesSceneNode extends BasicsSceneNode {
 
     this.variableValuesVisibleProperty = variableValuesVisibleProperty;
     this.variablesAccordionBoxExpandedProperty = new BooleanProperty( true, {
-      //TODO https://github.com/phetsims/equality-explorer/issues/191 do we need to have singular/plural tandem names for variablesAccordionBoxExpandedProperty?
+
+      // singular vs plural tandem name, to match VariablesAccordionBox title
       tandem: ( variables.length === 1 ) ?
-              options.tandem.createTandem( 'variableAccordionBoxExpandedProperty' ) : // singular
-              options.tandem.createTandem( 'variablesAccordionBoxExpandedProperty' ) // plural
+              options.tandem.createTandem( 'variableAccordionBoxExpandedProperty' ) :
+              options.tandem.createTandem( 'variablesAccordionBoxExpandedProperty' )
     } );
 
     // Variables accordion box, above the Snapshots accordion box
@@ -65,10 +66,11 @@ export default class VariablesSceneNode extends BasicsSceneNode {
       fixedWidth: this.snapshotsAccordionBox.width, // same width as Snapshots
       right: this.snapshotsAccordionBox.right,
       top: this.snapshotsAccordionBox.top,
-      //TODO https://github.com/phetsims/equality-explorer/issues/191 do we need to have singular/plural tandem names for variablesAccordionBox?
+
+      // singular vs plural tandem name, to match VariablesAccordionBox title
       tandem: ( variables.length === 1 ) ?
-              options.tandem.createTandem( 'variableAccordionBox' ) : // singular
-              options.tandem.createTandem( 'variablesAccordionBox' ) // plural
+              options.tandem.createTandem( 'variableAccordionBox' ) :
+              options.tandem.createTandem( 'variablesAccordionBox' )
     } );
     this.addChild( variablesAccordionBox );
     variablesAccordionBox.moveToBack();

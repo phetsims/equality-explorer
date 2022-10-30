@@ -167,7 +167,8 @@ export default class Grid {
     if ( this.containsPosition( position ) ) {
 
       // row and column of the cell that contains position
-      // Math.min handles the case where position is exactly on bounds.maxX or maxY. See #39.
+      // Math.min handles the case where position is exactly on bounds.maxX or maxY.
+      // See https://github.com/phetsims/equality-explorer/issues/#39.
       const row = Math.min( this.rows - 1, Math.floor( ( position.y - this.bounds.minY ) / this.cellHeight ) );
       const column = Math.min( this.columns - 1, Math.floor( ( position.x - this.bounds.minX ) / this.cellWidth ) );
 

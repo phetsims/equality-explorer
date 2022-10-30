@@ -75,7 +75,7 @@ export default class VariableTerm extends Term {
    * Creates a copy of this term, with modifications through options.
    */
   public override copy( providedOptions?: VariableTermOptions ): VariableTerm {
-    return new VariableTerm( this.variable, combineOptions<VariableTermOptions>( {}, this.copyOptions(), providedOptions ) ); //TODO dynamic
+    return new VariableTerm( this.variable, combineOptions<VariableTermOptions>( {}, this.copyOptions(), providedOptions ) ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
   }
 
   /**
@@ -91,16 +91,6 @@ export default class VariableTerm extends Term {
    */
   public override isLikeTerm( term: Term ): boolean {
     return ( term instanceof VariableTerm ) && ( term.variable === this.variable );
-  }
-
-  /**
-   * Creates a snapshot of this term.
-   * A snapshot consists of options that can be passed to the Term's constructor to re-create the Term.
-   */
-  public override createSnapshot(): VariableTermOptions {
-    return combineOptions<VariableTermOptions>( {}, super.createSnapshot(), {
-      coefficient: this.coefficient
-    } );
   }
 
   /**
