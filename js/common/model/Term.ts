@@ -182,7 +182,7 @@ export default abstract class Term extends EqualityExplorerMovable {
   /**
    * Creates a copy of this term, with modifications through options.
    */
-  public abstract copy( providedOptions: TermOptions ): Term;
+  public abstract copy( providedOptions?: TermOptions ): Term;
 
   /**
    * Gets the weight of this term.
