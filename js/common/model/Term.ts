@@ -37,7 +37,7 @@ export type TermOptions = SelfOptions & EqualityExplorerMovableOptions;
 
 // A snapshot of a Term is a copy of that Term, and where it appeared on the plate
 export type TermSnapshot = {
-  term: Term; // copy of the Term, which will be used to restore
+  term: Term; // copy of the Term, which will be used to restore a snapshot
   cell: number; // cell that the Term occupies
 };
 
