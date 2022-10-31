@@ -38,7 +38,7 @@ export type TermOptions = SelfOptions & EqualityExplorerMovableOptions;
 // A snapshot of a Term is a copy of that Term, and where it appeared on the plate
 export type TermSnapshot = {
   term: Term; // copy of the Term, which will be used to restore a snapshot
-  cell: number; // cell that the Term occupies
+  cell: number; // cell that the Term occupies in the grid associated with a balance-scale plate
 };
 
 export default abstract class Term extends EqualityExplorerMovable {
