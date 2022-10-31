@@ -63,7 +63,7 @@ export default class VariableTerm extends Term {
    */
   public override copyOptions(): VariableTermOptions {
     return combineOptions<VariableTermOptions>( {}, super.copyOptions(), {
-      coefficient: this.coefficient
+      coefficient: this.coefficient.copy()
     } );
   }
 

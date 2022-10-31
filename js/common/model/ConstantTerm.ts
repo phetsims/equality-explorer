@@ -60,7 +60,7 @@ export default class ConstantTerm extends Term {
    */
   public override copyOptions(): ConstantTermOptions {
     return combineOptions<ConstantTermOptions>( {}, super.copyOptions(), {
-      constantValue: this.constantValue
+      constantValue: this.constantValue.copy()
     } );
   }
 

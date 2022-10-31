@@ -107,8 +107,8 @@ export default class EqualityExplorerMovable extends PhetioObject {
    */
   public copyOptions(): EqualityExplorerMovableOptions {
     return {
-      position: this.positionProperty.value,
-      dragBounds: this.dragBounds,
+      position: this.positionProperty.value.copy(),
+      dragBounds: this.dragBounds.copy(),
       animationSpeed: this.animationSpeed
     };
   }
