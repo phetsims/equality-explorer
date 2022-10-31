@@ -44,9 +44,9 @@ Sim-specific terminology:
 * object variable - a real-world object (shape, fruit, coin, animal) whose value is variable. As distinguished from a symbolic variable (`x`), see `ObjectVariable`
 * object term - a term associated with an object variable, see `ObjectTerm`
 * opposite plate - the plate associated with the equivalent term, opposite the dragged term
-* organize button - organizes terms on the plates
+* "organize" button - organizes terms on the plates
 * plate - the balance scale has 2 of these, one for each side of the equation, see `Plate`
-* restore snapshot button - restores the snapshot that is selected in the Snapshots accordion box
+* "restore snapshot" button - restores the snapshot that is selected in the Snapshots accordion box
 * "sum to zero" - the phrase used when adding 2 terms results in a value of zero
 * term creator - responsible for creating and managing terms, uses the PhET [creator pattern](https://github.com/phetsims/scenery-phet/issues/214), see `TermCreator`
 * toolbox - panel that appear below a plate, terms can be dragged to/from
@@ -157,7 +157,9 @@ The balance scale is composed of 3 primary model elements: `BalanceScale`, `Plat
 
 `UniversalOperation` encapsulates a _universal operation_, terminology invented in the design document. It refers to an operation that is applied to all terms on both sides of the scale, using a control that allows the student to select a binary operator and an operand. The operands are `ConstantTerm` and `VariableTerm` instances.
 
-`Snapshot` encapsulates the full state of the scale and associated variables. A snapshot does _not_ contain a collection of `Term`instances; it is an opaque lightweight description of terms and their locations, and delegates to `TermCreator` subclasses to save and restore the state. `SnapshotCollection` is the collection of `Snapshot`s, and contains one related Property for each possible `Snapshot`.
+`Snapshot` encapsulates the full state of the scale, including associated variables, terms, and the cells
+that those terms occupy on the plates. `SnapshotCollection` is the collection of `Snapshot`s, and contains 
+one related Property for each possible `Snapshot`.
 
 Throughout the simulation, variable values are represented using integers. All other numbers (constants, coefficients,...) are represented as fractions, using the common-code `Fraction` class.  Fraction are always in reduced form, both in the model and view.
 
