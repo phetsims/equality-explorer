@@ -96,6 +96,11 @@ export default class EquationPanel extends Panel {
     this.equationNode = equationNode;
   }
 
+  public override dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
+
   /**
    * Update the equation that is displayed in this panel.
    * To be used when this Node was created with equationNodeOptions.updateEnabled: false.
