@@ -344,10 +344,14 @@ export default class Plate extends PhetioObject {
   }
 
   public createSnapshot(): PlateSnapshot {
+
+    // In the same order as this.termCreators
     return this.termCreators.map( termCreator => termCreator.createSnapshot() );
   }
 
   public restoreSnapshot( plateSnapshot: PlateSnapshot ): void {
+
+    // In the same order that was used by createSnapshot
     for ( let i = 0; i < this.termCreators.length; i++ ) {
       this.termCreators[ i ].restoreSnapshot( plateSnapshot[ i ] );
     }
