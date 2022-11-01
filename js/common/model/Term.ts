@@ -197,7 +197,7 @@ export default abstract class Term extends EqualityExplorerMovable {
    * Applies an operation to this term, resulting in a new term.
    * Returns null if the operation is not applicable to this term.
    */
-  public abstract applyOperation( operation: UniversalOperation, providedOptions?: TermOptions ): Term | null;
+  public abstract applyOperation( operation: UniversalOperation ): Term | null;
 
   /**
    * Adds a term to this term to create a new term.

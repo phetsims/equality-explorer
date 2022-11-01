@@ -7,7 +7,6 @@
  */
 
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
@@ -93,7 +92,7 @@ export default class ConstantTerm extends Term {
    * Applies an operation to this term, resulting in a new term.
    * Returns null if the operation is not applicable to this term.
    */
-  public override applyOperation( operation: UniversalOperation, providedOptions?: ConstantTermOptions ): ConstantTerm | null {
+  public override applyOperation( operation: UniversalOperation ): ConstantTerm | null {
 
     let term = null;
 
@@ -101,16 +100,16 @@ export default class ConstantTerm extends Term {
     if ( operation.operand instanceof ConstantTerm ) {
 
       if ( operation.operator === UniversalOperator.PLUS ) {
-        term = this.plus( operation.operand, providedOptions );
+        term = this.plus( operation.operand );
       }
       else if ( operation.operator === UniversalOperator.MINUS ) {
-        term = this.minus( operation.operand, providedOptions );
+        term = this.minus( operation.operand );
       }
       else if ( operation.operator === UniversalOperator.TIMES ) {
-        term = this.times( operation.operand, providedOptions );
+        term = this.times( operation.operand );
       }
       else if ( operation.operator === UniversalOperator.DIVIDE ) {
-        term = this.divided( operation.operand, providedOptions );
+        term = this.divided( operation.operand );
       }
     }
 
@@ -120,38 +119,38 @@ export default class ConstantTerm extends Term {
   /**
    * Adds a term to this term to create a new term.
    */
-  public override plus( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
-    return this.copy( combineOptions<ConstantTermOptions>( {
+  public override plus( term: ConstantTerm ): ConstantTerm {
+    return this.copy( {
       constantValue: this.constantValue.plus( term.constantValue ).reduce()
-    }, providedOptions ) );
+    } );
   }
 
   /**
    * Subtracts a term from this term to create a new term.
    */
-  public override minus( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
-    return this.copy( combineOptions<ConstantTermOptions>( {
+  public override minus( term: ConstantTerm ): ConstantTerm {
+    return this.copy( {
       constantValue: this.constantValue.minus( term.constantValue ).reduce()
-    }, providedOptions ) );
+    } );
   }
 
   /**
    * Multiplies this term by another term to create a new term.
    */
-  public override times( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
-    return this.copy( combineOptions<ConstantTermOptions>( {
+  public override times( term: ConstantTerm ): ConstantTerm {
+    return this.copy( {
       constantValue: this.constantValue.times( term.constantValue ).reduce()
-    }, providedOptions ) );
+    } );
   }
 
   /**
    * Divides this term by another term to create a new term.
    */
-  public override divided( term: ConstantTerm, providedOptions?: StrictOmit<ConstantTermOptions, 'constantValue'> ): ConstantTerm {
+  public override divided( term: ConstantTerm ): ConstantTerm {
     assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-    return this.copy( combineOptions<ConstantTermOptions>( {
+    return this.copy( {
       constantValue: this.constantValue.divided( term.constantValue ).reduce()
-    }, providedOptions ) );
+    } );
   }
 }
 

@@ -81,7 +81,7 @@ export default class ObjectTerm extends VariableTerm {
    * Applies an operation to this term, resulting in a new term.
    * Returns null if the operation is not applicable to this term.
    */
-  public override applyOperation( operation: UniversalOperation, providedOptions?: ObjectTermOptions ): ObjectTerm | null {
+  public override applyOperation( operation: UniversalOperation ): ObjectTerm | null {
     return null; // operations are not applicable to ObjectTerms
   }
 

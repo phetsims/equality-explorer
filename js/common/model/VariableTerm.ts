@@ -97,28 +97,28 @@ export default class VariableTerm extends Term {
    * Applies an operation to this term, resulting in a new term.
    * Returns null if the operation is not applicable to this term.
    */
-  public applyOperation( operation: UniversalOperation, providedOptions?: VariableTermOptions ): VariableTerm | null {
+  public applyOperation( operation: UniversalOperation ): VariableTerm | null {
 
     let term = null;
 
     if ( operation.operand instanceof VariableTerm ) {
 
-      // plus or minus a constant
+      // plus or minus a variable
       if ( operation.operator === UniversalOperator.PLUS ) {
-        term = this.plus( operation.operand, providedOptions );
+        term = this.plus( operation.operand );
       }
       else if ( operation.operator === UniversalOperator.MINUS ) {
-        term = this.minus( operation.operand, providedOptions );
+        term = this.minus( operation.operand );
       }
     }
-    else if ( operation.operand instanceof ConstantTerm ) {
+    else {
 
-      // times or divide by a variable
+      // times or divided-by a constant
       if ( operation.operator === UniversalOperator.TIMES ) {
-        term = this.times( operation.operand, providedOptions );
+        term = this.times( operation.operand );
       }
       else if ( operation.operator === UniversalOperator.DIVIDE ) {
-        term = this.divided( operation.operand, providedOptions );
+        term = this.divided( operation.operand );
       }
     }
 
@@ -128,40 +128,40 @@ export default class VariableTerm extends Term {
   /**
    * Adds a variable term to this term to create a new term.
    */
-  public override plus( term: VariableTerm, providedOptions?: VariableTermOptions ): VariableTerm {
+  public override plus( term: VariableTerm ): VariableTerm {
     assert && assert( this.isLikeTerm( term ), `not a like term: ${term}` );
-    return this.copy( combineOptions<VariableTermOptions>( {
+    return this.copy( {
       coefficient: this.coefficient.plus( term.coefficient ).reduced()
-    }, providedOptions ) );
+    } );
   }
 
   /**
    * Subtracts a variable term from this term to create a new term.
    */
-  public override minus( term: VariableTerm, providedOptions?: VariableTermOptions ): VariableTerm {
+  public override minus( term: VariableTerm ): VariableTerm {
     assert && assert( this.isLikeTerm( term ), `not a like term: ${term}` );
-    return this.copy( combineOptions<VariableTermOptions>( {
+    return this.copy( {
       coefficient: this.coefficient.minus( term.coefficient ).reduced()
-    }, providedOptions ) );
+    } );
   }
 
   /**
    * Multiplies this term by a constant term to create a new term.
    */
-  public override times( term: ConstantTerm, providedOptions?: VariableTermOptions ): VariableTerm {
-    return this.copy( combineOptions<VariableTermOptions>( {
+  public override times( term: ConstantTerm ): VariableTerm {
+    return this.copy( {
       coefficient: this.coefficient.times( term.constantValue ).reduced()
-    }, providedOptions ) );
+    } );
   }
 
   /**
    * Divides this term by a constant term to create a new term.
    */
-  public override divided( term: ConstantTerm, providedOptions?: VariableTermOptions ): VariableTerm {
+  public override divided( term: ConstantTerm ): VariableTerm {
     assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
-    return this.copy( combineOptions<VariableTermOptions>( {
+    return this.copy( {
       coefficient: this.coefficient.divided( term.constantValue ).reduced()
-    }, providedOptions ) );
+    } );
   }
 }
 
