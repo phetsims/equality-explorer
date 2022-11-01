@@ -56,7 +56,7 @@ export default class Variable extends PhetioObject {
 
     this.valueProperty = new NumberProperty( options.value, {
       numberType: 'Integer',
-      range: this.range,
+      range: options.range,
       tandem: options.tandem.createTandem( 'valueProperty' ),
 
       // If no range was provided, then do not allow the value to be changed.
