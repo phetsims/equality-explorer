@@ -15,6 +15,7 @@ import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioO
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = {
   value?: number; // initial value
@@ -57,7 +58,13 @@ export default class Variable extends PhetioObject {
       numberType: 'Integer',
       range: this.range,
       tandem: options.tandem.createTandem( 'valueProperty' ),
-      phetioReadOnly: ( options.range === null ) // If no range was provided, then do not allow the value to be changed.
+
+      // If no range was provided, then do not allow the value to be changed.
+      // This is important in the 'Solve It' screen, where the game challenges are responsible for the variable value.
+      phetioReadOnly: ( options.range === null ),
+
+      // Do not instrument rangeProperty when there is no range. See https://github.com/phetsims/axon/issues/423
+      rangePropertyOptions: ( options.range === null ) ? { tandem: Tandem.OPT_OUT } : {}
     } );
 
     this.addLinkedElement( symbolProperty, {
