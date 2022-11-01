@@ -11,6 +11,8 @@
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import Variable, { VariableOptions } from './Variable.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 
 type SelfOptions = {
   image: HTMLImageElement; // image that represents the object
@@ -26,12 +28,16 @@ export default class ObjectVariable extends Variable {
 
   public constructor( providedOptions: ObjectVariableOptions ) {
 
+    const options = optionize<ObjectVariableOptions, SelfOptions, VariableOptions>()( {
+      range: EqualityExplorerConstants.OBJECT_VARIABLE_RANGE
+    }, providedOptions );
+
     // ObjectVariable does not have a visible symbol in the UI, and is instead represented as an image.
     // So use its tandem.name for the symbol.
-    super( new StringProperty( providedOptions.tandem.name ), providedOptions );
+    super( new StringProperty( options.tandem.name ), options );
 
-    this.image = providedOptions.image;
-    this.shadow = providedOptions.shadow;
+    this.image = options.image;
+    this.shadow = options.shadow;
   }
 
   public get symbol(): string {

@@ -67,7 +67,8 @@ const EqualityExplorerConstants = {
   SHADOW_OPACITY: 0.4, // opacity of the shadow that appears on terms, 0-1 (transparent-opaque)
 
   // ranges
-  VARIABLE_RANGE: new Range( -40, 40 ), // when x, y are user-controlled
+  VARIABLE_RANGE: new Range( -40, 40 ), // range for symbolic variables (x, y)
+  OBJECT_VARIABLE_RANGE: new Range( 1, 20 ), // range for object variables (sphere, cat, dog,...)
   OPERAND_RANGE: new Range( -10, 10 ),
 
   ACCORDION_BOX_OPTIONS: ACCORDION_BOX_OPTIONS,

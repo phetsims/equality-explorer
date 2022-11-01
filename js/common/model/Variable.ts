@@ -14,6 +14,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
+import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 
 type SelfOptions = {
   value?: number; // initial value
@@ -38,7 +39,7 @@ export default class Variable extends PhetioObject {
 
       // SelfOptions
       value: 1,
-      range: null,
+      range: EqualityExplorerConstants.VARIABLE_RANGE,
 
       // PhetioObjectOptions
       phetioState: false
@@ -55,7 +56,8 @@ export default class Variable extends PhetioObject {
     this.valueProperty = new NumberProperty( options.value, {
       numberType: 'Integer',
       range: this.range,
-      tandem: options.tandem.createTandem( 'valueProperty' )
+      tandem: options.tandem.createTandem( 'valueProperty' ),
+      phetioReadOnly: ( options.range === null ) // If no range was provided, then do not allow the value to be changed.
     } );
 
     this.addLinkedElement( symbolProperty, {
