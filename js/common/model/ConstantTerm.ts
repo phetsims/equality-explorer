@@ -63,10 +63,6 @@ export default class ConstantTerm extends Term {
     } );
   }
 
-  //-------------------------------------------------------------------------------------------------
-  // Below here is the implementation of the abstract methods of the Term API
-  //-------------------------------------------------------------------------------------------------
-
   /**
    * Creates a copy of this term, with modifications through options.
    */
@@ -137,7 +133,7 @@ export default class ConstantTerm extends Term {
   /**
    * Multiplies this term by another term to create a new term.
    */
-  public override times( term: ConstantTerm ): ConstantTerm {
+  private times( term: ConstantTerm ): ConstantTerm {
     return this.copy( {
       constantValue: this.constantValue.times( term.constantValue ).reduce()
     } );
@@ -146,7 +142,7 @@ export default class ConstantTerm extends Term {
   /**
    * Divides this term by another term to create a new term.
    */
-  public override divided( term: ConstantTerm ): ConstantTerm {
+  private divided( term: ConstantTerm ): ConstantTerm {
     assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
     return this.copy( {
       constantValue: this.constantValue.divided( term.constantValue ).reduce()

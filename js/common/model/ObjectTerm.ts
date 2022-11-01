@@ -58,10 +58,6 @@ export default class ObjectTerm extends VariableTerm {
     return super.copyOptions();
   }
 
-  //-------------------------------------------------------------------------------------------------
-  // Below here is the implementation of the abstract methods of the Term API
-  //-------------------------------------------------------------------------------------------------
-
   /**
    * Creates a copy of this term, with modifications through options.
    */
@@ -85,7 +81,7 @@ export default class ObjectTerm extends VariableTerm {
     return null; // operations are not applicable to ObjectTerms
   }
 
-  // plus, minus, times, divided: these methods are the same as VariableTerm, and are not used in this sim.
+  // The implementation of methods plus and minus are inherited from VariableTerm.
 }
 
 equalityExplorer.register( 'ObjectTerm', ObjectTerm );

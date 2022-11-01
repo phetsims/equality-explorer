@@ -67,10 +67,6 @@ export default class VariableTerm extends Term {
     } );
   }
 
-  //-------------------------------------------------------------------------------------------------
-  // Below here is the implementation of the abstract methods of the Term API
-  //-------------------------------------------------------------------------------------------------
-
   /**
    * Creates a copy of this term, with modifications through options.
    */
@@ -148,7 +144,7 @@ export default class VariableTerm extends Term {
   /**
    * Multiplies this term by a constant term to create a new term.
    */
-  public override times( term: ConstantTerm ): VariableTerm {
+  private times( term: ConstantTerm ): VariableTerm {
     return this.copy( {
       coefficient: this.coefficient.times( term.constantValue ).reduced()
     } );
@@ -157,7 +153,7 @@ export default class VariableTerm extends Term {
   /**
    * Divides this term by a constant term to create a new term.
    */
-  public override divided( term: ConstantTerm ): VariableTerm {
+  private divided( term: ConstantTerm ): VariableTerm {
     assert && assert( term.constantValue.getValue() !== 0, 'attempt to divide by zero' );
     return this.copy( {
       coefficient: this.coefficient.divided( term.constantValue ).reduced()

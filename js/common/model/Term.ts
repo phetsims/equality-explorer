@@ -210,16 +210,6 @@ export default abstract class Term extends EqualityExplorerMovable {
   public abstract minus( term: Term ): Term;
 
   /**
-   * Multiplies this term by another term to create a new term.
-   */
-  public abstract times( term: Term ): Term;
-
-  /**
-   * Divides this term by another term to create a new term.
-   */
-  public abstract divided( term: Term ): Term;
-
-  /**
    * Subclasses must implement this method to provide 'useful information', to appease
    * TS ESLint rule @typescript-eslint/no-base-to-string. See https://github.com/phetsims/chipper/issues/1338
    */
