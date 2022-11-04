@@ -6,25 +6,22 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Node, NodeOptions, RichText, Text, TextOptions } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItModel from '../model/SolveItModel.js';
 import SolveItInfoDialog from './SolveItInfoDialog.js';
 import SolveItLevelSelectionButtonGroup from './SolveItLevelSelectionButtonGroup.js';
+import SolveForXText, { SolveForXTextOptions } from './SolveForXText.js';
 
 type SelfOptions = {
 
@@ -71,20 +68,12 @@ export default class SolveItLevelSelectionNode extends Node {
       chooseYourLevelText.bottom = levelSelectionButtonGroup.top - 65;
     } );
 
-    // 'Solve for x', centered above 'Choose Your Level'
-    const solveForXTextTandem = titleTandem.createTandem( 'solveForXText' );
-    const solveForXStringProperty = new DerivedProperty(
-      [ EqualityExplorerStrings.solveForStringProperty, EqualityExplorerStrings.xStringProperty ],
-      ( solveForString, xString ) => StringUtils.fillIn( solveForString, {
-        variable: MathSymbolFont.getRichTextMarkup( xString )
-      } ), {
-        tandem: solveForXTextTandem.createTandem( RichText.STRING_PROPERTY_TANDEM_NAME ),
-        phetioValueType: StringIO
-      } );
-    const solveForXText = new RichText( solveForXStringProperty, combineOptions<TextOptions>(
-      {}, textOptions, {
-        tandem: solveForXTextTandem
-      } ) );
+    // 'Solve for x'
+    const solveForXText = new SolveForXText( combineOptions<SolveForXTextOptions>( {}, textOptions, {
+      tandem: titleTandem.createTandem( 'solveForXText' )
+    } ) );
+
+    // Centered above 'Choose Your Level'
     solveForXText.boundsProperty.link( bounds => {
       solveForXText.centerX = chooseYourLevelText.centerX;
       solveForXText.bottom = chooseYourLevelText.top - 30;
