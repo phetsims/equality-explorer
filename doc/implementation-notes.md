@@ -27,7 +27,7 @@ relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are diffe
 * operation - in this sim, used to refer to binary operations involving one operator and two operands
 * operator - in this sim, identifies the function of a binary operation, or the operators in an equation expression
 * relational operator - denotes the relationship between the left and right side of an equation, e.g. `=`, `>`, `<`
-* terms - numbers or objects that appear in an equation, see [Term](https://github.com/phetsims/equality-explorer/blob/master/js/common/model/Term.js)
+* terms - numbers or objects that appear in an equation, see `Term`.
 * variable term - term with a coefficient and associated variable, e.g. `5x` or `-x`, see `VariableTerm`
 
 Sim-specific terminology:
