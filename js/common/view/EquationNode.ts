@@ -1,6 +1,6 @@
 // Copyright 2017-2022, University of Colorado Boulder
 
-//TODO https://github.com/phetsims/equality-explorer/issues/191 do we need an iO-only Property whose value indicates what the displayed equation looks like?
+//TODO https://github.com/phetsims/equality-explorer/issues/202 presentation of equations in Studio and data stream
 /**
  * Displays an equation or inequality, possibly involving multiple variables.
  * Origin is at the center of the relational operator, to facilitate horizontal alignment with the scale.
