@@ -15,6 +15,9 @@
  * See https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md
  * for a detailed description of how the PhET 'creator pattern' is applied in this simulation.
  *
+ * Note that TermCreator is not involved with Terms that are created for snapshots. Those terms are created
+ * and managed by Snapshot. See https://github.com/phetsims/equality-explorer/issues/199
+ *
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
@@ -92,7 +95,8 @@ export default abstract class TermCreator extends PhetioObject {
   // drag bounds for terms created
   public dragBounds: Bounds2;
 
-  // all terms that currently exist
+  // All 'managed' terms that currently exist. Managed terms include those on the balance scale, those being dragged
+  // by the user, and those that are animating. It does not include terms that are part of a snapshot.
   private readonly allTerms: ObservableArray<Term>;
 
   // terms that are on the plate, a subset of this.allTerms
