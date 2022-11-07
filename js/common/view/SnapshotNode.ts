@@ -79,7 +79,7 @@ export default class SnapshotNode extends FlowBox {
     children.push( equationNode );
 
     // optionally show variable values, e.g. '(x = 2)' or '(x = 1, y = 3)'
-    let variableValuesNode: Node;
+    let variableValuesNode: VariableValuesNode;
     if ( scene.variables && options.variableValuesVisibleProperty ) {
       variableValuesNode = new VariableValuesNode( scene.variables, {
         commaSeparated: options.commaSeparated,
@@ -100,6 +100,7 @@ export default class SnapshotNode extends FlowBox {
     snapshotProperty.link( snapshot => {
       if ( snapshot !== null ) {
         equationNode.update();
+        variableValuesNode && variableValuesNode.update();
       }
     } );
 

@@ -13,7 +13,7 @@ import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { HBox, HBoxOptions, HStrut, Node, Text } from '../../../../scenery/js/imports.js';
+import { Font, HBox, HBoxOptions, HStrut, Node, Text } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Variable from '../model/Variable.js';
 import VariableNode from './VariableNode.js';
@@ -31,7 +31,13 @@ type VariableValuesNodeOptions = SelfOptions &
 
 export default class VariableValuesNode extends HBox {
 
-  private readonly disposeVariableValuesNode: () => void;
+  private readonly variables: Variable[];
+  private readonly font: Font;
+  private readonly fontSize: number;
+  private readonly commaSeparated: boolean;
+  private readonly spacingInsideTerms: number;
+  private readonly spacingBetweenTerms: number;
+  private readonly disposeNodes: Node[]; // Nodes that need to be disposed
 
   /**
    * @param variables - in the order that they appear, from left to right
@@ -50,72 +56,79 @@ export default class VariableValuesNode extends HBox {
       // HBoxOptions
       // De-emphasize variable values by scaling them down.
       // See https://github.com/phetsims/equality-explorer/issues/110
-      scale: 0.75
+      scale: 0.75,
+      spacing: 0
 
     }, providedOptions );
 
-    assert && assert( options.spacing === undefined, 'VariableValuesNode sets spacing' );
-    options.spacing = 0;
+    super( options );
 
-    const font = new PhetFont( options.fontSize );
+    this.variables = variables;
+    this.font = new PhetFont( options.fontSize );
+    this.fontSize = options.fontSize;
+    this.commaSeparated = options.commaSeparated;
+    this.spacingInsideTerms = options.spacingInsideTerms;
+    this.spacingBetweenTerms = options.spacingBetweenTerms;
+    this.disposeNodes = [];
+
+    this.update();
+  }
+
+  public override dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
+
+  public update(): void {
+
+    this.disposeNodes.forEach( node => node.dispose() );
+    this.disposeNodes.length = 0;
 
     const children: Node[] = [];
-    const disposeNodes: Node[] = []; // Nodes that will need to be disposed
 
     // '(' with normal font
-    const leftParenText = new Text( '(', { font: font } );
+    const leftParenText = new Text( '(', { font: this.font } );
     children.push( leftParenText );
 
     // E.g. {{symbol}} = {{value}}, for each variable
-    for ( let i = 0; i < variables.length; i++ ) {
+    for ( let i = 0; i < this.variables.length; i++ ) {
 
-      const variable = variables[ i ];
+      const variable = this.variables[ i ];
 
       const variableNode = new VariableNode( variable, {
         iconScale: 0.35,
-        fontSize: options.fontSize
+        fontSize: this.fontSize
       } );
-      disposeNodes.push( variableNode ); // because variableNode may be linked to a StringProperty
+      this.disposeNodes.push( variableNode ); // because variableNode may be linked to a StringProperty
 
       children.push( new HBox( {
-        spacing: options.spacingInsideTerms,
+        spacing: this.spacingInsideTerms,
         children: [
 
           // variable
           variableNode,
 
           // =
-          new Text( MathSymbols.EQUAL_TO, { font: font } ),
+          new Text( MathSymbols.EQUAL_TO, { font: this.font } ),
 
           // N
-          new Text( `${variable.valueProperty.value}`, { font: font } )
+          new Text( `${variable.valueProperty.value}`, { font: this.font } )
         ]
       } ) );
 
       // comma + space separator
-      if ( i < variables.length - 1 ) {
-        if ( options.commaSeparated ) {
-          children.push( new Text( ',', { font: font } ) );
+      if ( i < this.variables.length - 1 ) {
+        if ( this.commaSeparated ) {
+          children.push( new Text( ',', { font: this.font } ) );
         }
-        children.push( new HStrut( options.spacingBetweenTerms ) );
+        children.push( new HStrut( this.spacingBetweenTerms ) );
       }
     }
 
-    const rightParenText = new Text( ')', { font: font } );
+    const rightParenText = new Text( ')', { font: this.font } );
     children.push( rightParenText );
 
-    options.children = children;
-
-    super( options );
-
-    this.disposeVariableValuesNode = () => {
-      disposeNodes.forEach( node => node.dispose() );
-    };
-  }
-
-  public override dispose(): void {
-    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
-    super.dispose();
+    this.children = children;
   }
 }
 
