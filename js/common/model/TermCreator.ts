@@ -35,7 +35,7 @@ import { Node, PressListenerEvent, SceneryEvent } from '../../../../scenery/js/i
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Plate from './Plate.js';
-import Term, { TermOptions, TermSnapshot } from './Term.js';
+import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
 import TermNode from '../view/TermNode.js';
@@ -69,9 +69,6 @@ export type CreateTermOptions = {
   sign?: TermCreatorSign;
   event?: PressListenerEvent | null; // non-null if the term is created as the result of a user interaction
 } & TermOptions;
-
-// A TermCreator's snapshot is the set of snapshots for all of its Terms that are on the plate.
-export type TermCreatorSnapshot = TermSnapshot[];
 
 export default abstract class TermCreator extends PhetioObject {
 
@@ -570,30 +567,6 @@ export default abstract class TermCreator extends PhetioObject {
     thatTerm.dispose();
 
     return isLike;
-  }
-
-  /**
-   * Creates a snapshot of the Terms that are on the plate and associated with this TermCreator.
-   */
-  public createSnapshot(): TermCreatorSnapshot {
-    const termSnapshots = this.getTermsOnPlate().map( term => {
-      return {
-        term: term.copy(),
-        cell: this.plate.getCellForTerm( term )!
-      };
-    } );
-    assert && assert( _.every( termSnapshots, termSnapshot => termSnapshot.cell !== null ) );
-    return termSnapshots;
-  }
-
-  /**
-   * Restores a snapshot of Terms on the plate for this TermCreator.
-   * Note that this needs to put a copy of each term onto the plate, because terms on the plate may be disposed
-   * via the Clear button, and we don't want the snapshot to be affected.
-   */
-  public restoreSnapshot( termCreatorSnapshot: TermCreatorSnapshot ): void {
-    this.disposeAllTerms();
-    termCreatorSnapshot.forEach( termSnapshot => this.putTermOnPlate( termSnapshot.term.copy(), termSnapshot.cell ) );
   }
 
   /**

@@ -67,14 +67,21 @@ export default class SnapshotsCollection extends PhetioObject {
     } );
   }
 
+  public override dispose(): void {
+    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    super.dispose();
+  }
+
   public reset(): void {
 
-    // reset the selected snapshot
+    // Reset the selected snapshot.
     this.selectedSnapshotProperty.reset();
 
-    // delete all snapshots
+    // Dispose of all snapshots.
     for ( let i = 0; i < this.snapshotProperties.length; i++ ) {
-      if ( this.snapshotProperties[ i ].value !== null ) {
+      const snapshot = this.snapshotProperties[ i ].value;
+      if ( snapshot !== null ) {
+        snapshot.dispose();
         this.snapshotProperties[ i ].value = null;
       }
     }
@@ -94,18 +101,19 @@ export default class SnapshotsCollection extends PhetioObject {
    */
   public deleteSelectedSnapshot(): void {
 
-    // clear the selection
     const selectedSnapshot = this.selectedSnapshotProperty.value;
     assert && assert( selectedSnapshot, 'no selected snapshot' );
+
+    // Clear the selection.
     this.selectedSnapshotProperty.value = null;
 
-    // find the Property that corresponds to the snapshot and clear it
-    for ( let i = 0; i < this.snapshotProperties.length; i++ ) {
-      if ( this.snapshotProperties[ i ].value === selectedSnapshot ) {
-        this.snapshotProperties[ i ].value = null;
-        break;
-      }
-    }
+    // Clear the Property that corresponds to the selected snapshot.
+    const snapshotProperty = _.find( this.snapshotProperties, p => ( p.value === selectedSnapshot ) );
+    assert && assert( snapshotProperty );
+    snapshotProperty!.value = null;
+
+    // Dispose of the selected snapshot.
+    selectedSnapshot!.dispose();
   }
 }
 
