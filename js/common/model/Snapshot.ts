@@ -11,6 +11,7 @@ import EqualityExplorerScene from './EqualityExplorerScene.js';
 import Plate from './Plate.js';
 import Term from './Term.js';
 import TermCreator from './TermCreator.js';
+import Variable from './Variable.js';
 
 // A Term's snapshot is a copy of that Term, and where it appeared on the plate.
 type TermSnapshot = {
@@ -21,29 +22,27 @@ type TermSnapshot = {
 // A Plate's snapshot is the set of TermSnapshots for each TermCreator associated with the plate.
 type PlateSnapshot = Map<TermCreator, TermSnapshot[]>;
 
+// The snapshot for a set of Variables captures the value of each Variable.
+type VariablesSnapshot = Map<Variable, number>;
+
 export default class Snapshot {
 
   private readonly scene: EqualityExplorerScene;
 
   private readonly leftPlateSnapshot: PlateSnapshot; // Terms on the left plate of the balance scale
   private readonly rightPlateSnapshot: PlateSnapshot; // Terms on the right plate of the balance scale
-  private readonly variableValues: number[] | null; // in the order that they appear in scene.variables
+  private readonly variablesSnapshot: VariablesSnapshot; // Variable values
 
   public constructor( scene: EqualityExplorerScene ) {
 
     this.scene = scene;
 
-    // Snapshot terms that are on the plates.
+    // Snapshot of Terms that are on the plates.
     this.leftPlateSnapshot = createPlateSnapshot( scene.scale.leftPlate );
     this.rightPlateSnapshot = createPlateSnapshot( scene.scale.rightPlate );
 
-    // If the scene has variables, save their values, in the order that they appear in scene.variables.
-    if ( scene.variables ) {
-      this.variableValues = scene.variables.map( variable => variable.valueProperty.value );
-    }
-    else {
-      this.variableValues = null;
-    }
+    // Snapshot of Variable values.
+    this.variablesSnapshot = createVariablesSnapshot( scene.variables );
   }
 
   /**
@@ -59,13 +58,8 @@ export default class Snapshot {
     restorePlateSnapshot( this.scene.scale.leftPlate, this.leftPlateSnapshot );
     restorePlateSnapshot( this.scene.scale.rightPlate, this.rightPlateSnapshot );
 
-    // If we saved variable values, restore them - in the same order that they were saved.
-    if ( this.variableValues && this.scene.variables ) {
-      assert && assert( this.variableValues.length === this.scene.variables.length, 'oops, missing variables' );
-      for ( let i = 0; i < this.variableValues.length; i++ ) {
-        this.scene.variables[ i ].valueProperty.value = this.variableValues[ i ];
-      }
-    }
+    // Restore variable values.
+    restoreVariablesSnapshot( this.variablesSnapshot );
   }
 
   /**
@@ -117,6 +111,28 @@ function disposePlateSnapshot( plateSnapshot: PlateSnapshot ): void {
   plateSnapshot.forEach( termSnapshots => termSnapshots.forEach(
     termSnapshot => termSnapshot.term.dispose()
   ) );
+}
+
+/**
+ * Creates a snapshot for a set of Variables.
+ */
+function createVariablesSnapshot( variables: Variable[] | null ): VariablesSnapshot {
+  const variablesSnapshot = new Map<Variable, number>();
+  if ( variables ) {
+    variables.forEach( variable => {
+      variablesSnapshot.set( variable, variable.valueProperty.value );
+    } );
+  }
+  return variablesSnapshot;
+}
+
+/**
+ * Restores the snapshot for a set of Variables.
+ */
+function restoreVariablesSnapshot( variablesSnapshot: VariablesSnapshot ): void {
+  variablesSnapshot.forEach( ( value, variable ) => {
+    variable.valueProperty.value = value;
+  } );
 }
 
 equalityExplorer.register( 'Snapshot', Snapshot );
