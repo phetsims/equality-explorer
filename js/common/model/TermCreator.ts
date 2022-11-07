@@ -584,10 +584,12 @@ export default abstract class TermCreator extends PhetioObject {
 
   /**
    * Restores a snapshot of Terms on the plate for this TermCreator.
+   * Note that this needs to put a copy of each term onto the plate, because terms on the plate may be disposed
+   * via the Clear button, and we don't want the snapshot to be affected.
    */
   public restoreSnapshot( termCreatorSnapshot: TermCreatorSnapshot ): void {
     this.disposeAllTerms();
-    termCreatorSnapshot.forEach( termSnapshot => this.putTermOnPlate( termSnapshot.term, termSnapshot.cell ) );
+    termCreatorSnapshot.forEach( termSnapshot => this.putTermOnPlate( termSnapshot.term.copy(), termSnapshot.cell ) );
   }
 
   /**
