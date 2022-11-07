@@ -10,6 +10,7 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from './EqualityExplorerScene.js';
 import Plate from './Plate.js';
 import Term from './Term.js';
+import TermCreator from './TermCreator.js';
 
 // A Term's snapshot is a copy of that Term, and where it appeared on the plate.
 type TermSnapshot = {
@@ -17,19 +18,15 @@ type TermSnapshot = {
   cell: number; // cell that the Term occupies in the grid associated with a balance-scale plate
 };
 
-// A TermCreator's snapshot is the set of all TermSnapshots for Terms that were on the plate.
-type TermCreatorSnapshot = TermSnapshot[];
-
-// A Plate's snapshot is the set all TermCreatorSnapshots for the TermCreators associated with the plate.
-// The array order is the same as plate.termCreators.
-type PlateSnapshot = TermCreatorSnapshot[];
+// A Plate's snapshot is the set of TermSnapshots for each TermCreator associated with the plate.
+type PlateSnapshot = Map<TermCreator, TermSnapshot[]>;
 
 export default class Snapshot {
 
   private readonly scene: EqualityExplorerScene;
 
-  private readonly leftPlateSnapshot: PlateSnapshot; // terms on the left plate of the balance scale
-  private readonly rightPlateSnapshot: PlateSnapshot; // terms on the right plate of the balance scale
+  private readonly leftPlateSnapshot: PlateSnapshot; // Terms on the left plate of the balance scale
+  private readonly rightPlateSnapshot: PlateSnapshot; // Terms on the right plate of the balance scale
   private readonly variableValues: number[] | null; // in the order that they appear in scene.variables
 
   public constructor( scene: EqualityExplorerScene ) {
@@ -81,35 +78,35 @@ export default class Snapshot {
 }
 
 /**
- * Creates the snapshot for a plate, with order being the same as plate.termCreators.
+ * Creates the snapshot for a plate.
  */
 function createPlateSnapshot( plate: Plate ): PlateSnapshot {
-  const plateSnapshot = [];
-  for ( let i = 0; i < plate.termCreators.length; i++ ) {
-    const termCreator = plate.termCreators[ i ];
-    const termCreatorSnapshot = termCreator.getTermsOnPlate().map( term => {
+  const plateSnapshot = new Map<TermCreator, TermSnapshot[]>();
+  plate.termCreators.forEach( termCreator => {
+    const termSnapshots = termCreator.getTermsOnPlate().map( term => {
       return {
         term: term.copy(),
         cell: plate.getCellForTerm( term )!
       };
     } );
-    plateSnapshot.push( termCreatorSnapshot );
-  }
-  assert && assert( plateSnapshot.length === plate.termCreators.length );
+    plateSnapshot.set( termCreator, termSnapshots );
+  } );
+  assert && assert( plateSnapshot.size === plate.termCreators.length );
   return plateSnapshot;
 }
 
 /**
- * Restores the snapshot for a plate, in the same order that the snapshot was created by createPlateSnapshot.
+ * Restores the snapshot for a plate. Note that this needs to put a COPY of each Term onto the plate, because terms
+ * on the plate may be disposed via the Clear button, and we don't want the snapshot Terms to be affected.
  */
 function restorePlateSnapshot( plate: Plate, plateSnapshot: PlateSnapshot ): void {
-  assert && assert( plateSnapshot.length === plate.termCreators.length );
-  for ( let i = 0; i < plate.termCreators.length; i++ ) {
-    const termCreator = plate.termCreators[ i ];
+  assert && assert( plateSnapshot.size === plate.termCreators.length );
+  plate.termCreators.forEach( termCreator => {
     termCreator.disposeAllTerms();
-    const termCreatorSnapshot = plateSnapshot[ i ];
-    termCreatorSnapshot.forEach( termSnapshot => termCreator.putTermOnPlate( termSnapshot.term.copy(), termSnapshot.cell ) );
-  }
+    const termSnapshots = plateSnapshot.get( termCreator )!;
+    assert && assert( termSnapshots );
+    termSnapshots.forEach( termSnapshot => termCreator.putTermOnPlate( termSnapshot.term.copy(), termSnapshot.cell ) );
+  } );
 }
 
 /**
@@ -117,11 +114,9 @@ function restorePlateSnapshot( plate: Plate, plateSnapshot: PlateSnapshot ): voi
  * @param plateSnapshot
  */
 function disposePlateSnapshot( plateSnapshot: PlateSnapshot ): void {
-  plateSnapshot.forEach(
-    termCreatorSnapshot => termCreatorSnapshot.forEach(
-      termSnapshot => termSnapshot.term.dispose()
-    )
-  );
+  plateSnapshot.forEach( termSnapshots => termSnapshots.forEach(
+    termSnapshot => termSnapshot.term.dispose()
+  ) );
 }
 
 equalityExplorer.register( 'Snapshot', Snapshot );
