@@ -22,6 +22,9 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Plate, { PlateOptions } from './Plate.js';
 import TermCreator from './TermCreator.js';
+import { RelationalOperator, RelationalOperatorValues } from './RelationalOperator.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import StringIO from '../../../../tandem/js/types/StringIO.js';
 
 type SelfOptions = {
   position?: Vector2; // position of the point where the beam balances on the fulcrum
@@ -55,6 +58,10 @@ export default class BalanceScale {
 
   // angle of the scale in radians, zero is balanced
   public readonly angleProperty: TReadOnlyProperty<number>;
+
+  // relation operator for the equation that describes the state of the balance scale\
+  // This is a PhET-iO-only Property, and is not used elsewhere in the sim.
+  private readonly relationalOperatorProperty: TReadOnlyProperty<RelationalOperator>;
 
   // total number of terms on the scale
   public readonly numberOfTermsProperty: TReadOnlyProperty<number>;
@@ -184,6 +191,17 @@ export default class BalanceScale {
       this.leftPlate.positionProperty.value =
         new Vector2( this.position.x - dx, this.position.y - dy - options.plateSupportHeight );
     } );
+
+    this.relationalOperatorProperty = new DerivedProperty( [ this.angleProperty ],
+        angle => ( angle === 0 ) ? MathSymbols.EQUAL_TO :
+                 ( angle > 0 ) ? MathSymbols.GREATER_THAN :
+                 MathSymbols.LESS_THAN,
+      {
+        tandem: options.tandem.createTandem( 'relationalOperatorProperty' ),
+        phetioValueType: StringIO,
+        validValues: RelationalOperatorValues,
+        phetioDocumentation: 'the relationship between the left and right sides of the balance scale'
+      } );
 
     this.numberOfTermsProperty = new DerivedProperty(
       [ this.leftPlate.numberOfTermsProperty, this.rightPlate.numberOfTermsProperty ],
