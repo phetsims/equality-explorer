@@ -69,7 +69,7 @@ export default class SolveItScreenView extends ScreenView {
 
     // Nodes for levels, organized under a parent tandem
     const levelNodesTandem = options.tandem.createTandem( 'levelNodes' );
-    this.levelNodes = model.levels.map( level => new SolveItLevelNode( level, model.levelProperty,
+    this.levelNodes = model.levels.map( level => new SolveItLevelNode( level, model.levelProperty, model.rewardScoreProperty,
       this.layoutBounds, this.visibleBoundsProperty, this.snapshotsAccordionBoxExpandedProperty, gameAudioPlayer, {
         visibleProperty: new DerivedProperty( [ model.levelProperty ], selectedLevel => ( level === selectedLevel ) ),
         tandem: levelNodesTandem.createTandem( `${level.tandem.name}Node` )

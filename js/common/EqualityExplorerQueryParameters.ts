@@ -22,6 +22,23 @@ import EqualityExplorerConstants from './EqualityExplorerConstants.js';
 
 const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 
+  //----------------------------------------------------------------------------------------------------------------
+  // Public-facing query parameters
+  //----------------------------------------------------------------------------------------------------------------
+
+  // Reaching this score results in a reward.
+  rewardScore: {
+    type: 'number',
+    defaultValue: 10,
+    isValidValue: value => ( value > 0 ) && Number.isInteger( value ),
+    public: true
+  },
+
+  //----------------------------------------------------------------------------------------------------------------
+  // Internal query parameters
+  //----------------------------------------------------------------------------------------------------------------
+
+
   // The levels to show in the game (Solve It!) screen.
   gameLevels: getGameLevelsSchema( EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS ),
 
@@ -62,14 +79,6 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
   maxInteger: {
     type: 'number',
     defaultValue: 1E9,
-    isValidValue: value => ( value > 0 )
-  },
-
-  // Reaching this score results in a reward.
-  // For internal use only, not public facing.
-  rewardScore: {
-    type: 'number',
-    defaultValue: 10,
     isValidValue: value => ( value > 0 )
   },
 

@@ -22,6 +22,8 @@ import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
+import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 export default class SolveItModel extends PhetioObject implements TModel {
 
@@ -32,6 +34,10 @@ export default class SolveItModel extends PhetioObject implements TModel {
 
   // the selected level, null if no level is currently selected
   public readonly levelProperty: Property<SolveItLevel | null>;
+
+  // Reaching this score results in a reward.
+  // See https://github.com/phetsims/equality-explorer/issues/203
+  public readonly rewardScoreProperty: Property<number>;
 
   public constructor( tandem: Tandem ) {
 
@@ -76,6 +82,13 @@ export default class SolveItModel extends PhetioObject implements TModel {
       phetioValueType: NullableIO( EqualityExplorerScene.EqualityExplorerSceneIO ),
       phetioDocumentation: 'The selected game level. null corresponds to the level-selection user interface'
     } );
+
+    this.rewardScoreProperty = new NumberProperty( EqualityExplorerQueryParameters.rewardScore, {
+      numberType: 'Integer',
+      isValidValue: value => ( value > 0 ),
+      tandem: tandem.createTandem( 'rewardScoreProperty' ),
+      phetioDocumentation: 'Reaching this score results in a reward.'
+    } );
   }
 
   public override dispose(): void {
@@ -87,6 +100,7 @@ export default class SolveItModel extends PhetioObject implements TModel {
     this.challengeGenerators.forEach( challengeGenerator => challengeGenerator.reset() );
     this.levels.forEach( level => level.reset() );
     this.levelProperty.reset();
+    // this.rewardScoreProperty is not reset, because it's only set via query parameter or PhET-iO.
   }
 
   /**

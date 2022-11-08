@@ -24,7 +24,6 @@ import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
 import InfiniteStatusBar from '../../../../vegas/js/InfiniteStatusBar.js';
 import RewardDialog from '../../../../vegas/js/RewardDialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
-import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import BalanceScaleNode from '../../common/view/BalanceScaleNode.js';
 import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from '../../common/view/EqualityExplorerSceneNode.js';
 import EquationPanel, { EquationPanelOptions } from '../../common/view/EquationPanel.js';
@@ -67,6 +66,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
 
   public constructor( level: SolveItLevel,
                       levelProperty: Property<SolveItLevel | null>,
+                      rewardScoreProperty: TReadOnlyProperty<number>,
                       layoutBounds: Bounds2,
                       visibleBoundsProperty: TReadOnlyProperty<Bounds2>,
                       snapshotsAccordionBoxExpandedProperty: Property<boolean>,
@@ -332,7 +332,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       showAnswerButton && ( showAnswerButton.visible = false );
 
       // When the score reaches a magic number, display the reward.
-      if ( score === EqualityExplorerQueryParameters.rewardScore ) {
+      if ( score === rewardScoreProperty.value ) {
 
         gameAudioPlayer.gameOverPerfectScore();
 
