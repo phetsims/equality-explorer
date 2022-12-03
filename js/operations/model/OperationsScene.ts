@@ -38,7 +38,7 @@ const ICON_SIZE = new Dimension2(
   EqualityExplorerConstants.BIG_TERM_DIAMETER );
 
 type SelfOptions = {
-  variableRange?: Range | null; // range of the variables
+  variableRange?: Range; // range of the variables
 };
 
 export type OperationsSceneOptions = SelfOptions &

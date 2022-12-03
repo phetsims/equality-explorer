@@ -8,7 +8,7 @@
  */
 
 import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import NumberProperty, { DEFAULT_RANGE } from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -71,7 +71,7 @@ export default class SolveItLevel extends OperationsScene {
       // OperationsSceneOptions
       lockable: false, // lock feature is relevant for the game
       scalePosition: new Vector2( 355, 500 ), // determined empirically
-      variableRange: null // because variables are not user-controlled in a game level
+      variableRange: DEFAULT_RANGE // because variables are not user-controlled in a game level
     }, providedOptions );
 
     assert && assert( Number.isInteger( options.levelNumber ) && options.levelNumber > 0 );

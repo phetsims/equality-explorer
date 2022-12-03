@@ -135,10 +135,7 @@ class LabeledPicker extends HBox {
       font: new PhetFont( options.fontSize )
     } );
 
-    const variableRange = variable.range!;
-    assert && assert( variableRange, 'Variable must have range' );
-
-    const numberPicker = new NumberPicker( variable.valueProperty, new Property( variableRange ), {
+    const numberPicker = new NumberPicker( variable.valueProperty, new Property( variable.range ), {
       color: 'black',
       font: new PhetFont( options.fontSize ),
       xMargin: 6,

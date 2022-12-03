@@ -18,7 +18,7 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 
 type SelfOptions = {
   value?: number; // initial value
-  range?: Range | null; // range of the value, null means unbounded
+  range?: Range; // range of the value
 };
 
 export type VariableOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
@@ -26,7 +26,7 @@ export type VariableOptions = SelfOptions & PickRequired<PhetioObjectOptions, 't
 export default class Variable extends PhetioObject {
 
   public readonly symbolProperty: TReadOnlyProperty<string>;
-  public readonly range: Range | null;
+  public readonly range: Range;
   public readonly valueProperty: NumberProperty; // the value of the variable
 
   /**
@@ -48,6 +48,7 @@ export default class Variable extends PhetioObject {
     assert && assert( !options.range || options.range.contains( options.value ),
       `value ${options.value} is not in range ${options.range}` );
 
+    console.log( options.range );
     super( options );
 
     this.symbolProperty = symbolProperty;
