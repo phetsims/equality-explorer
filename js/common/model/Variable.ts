@@ -48,7 +48,6 @@ export default class Variable extends PhetioObject {
     assert && assert( !options.range || options.range.contains( options.value ),
       `value ${options.value} is not in range ${options.range}` );
 
-    console.log( options.range );
     super( options );
 
     this.symbolProperty = symbolProperty;
