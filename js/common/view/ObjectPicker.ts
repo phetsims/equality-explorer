@@ -17,7 +17,7 @@ import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import StringEnumerationProperty from '../../../../axon/js/StringEnumerationProperty.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -273,10 +273,10 @@ class ObjectPicker<T> extends Node {
       range: new Range( 0, items.length - 1 )
     } );
 
-    const incrementButtonStateProperty = new StringEnumerationProperty( 'up', {
+    const incrementButtonStateProperty = new StringUnionProperty( 'up', {
       validValues: ButtonStateValues
     } );
-    const decrementButtonStateProperty = new StringEnumerationProperty( 'down', {
+    const decrementButtonStateProperty = new StringUnionProperty( 'down', {
       validValues: ButtonStateValues
     } );
 
@@ -407,7 +407,7 @@ class ObjectPicker<T> extends Node {
 type ObjectPickerInputListenerOptions = FireListenerOptions<FireListener>;
 
 class ObjectPickerInputListener extends FireListener {
-  public constructor( buttonStateProperty: StringEnumerationProperty<ButtonState>, options: ObjectPickerInputListenerOptions ) {
+  public constructor( buttonStateProperty: StringUnionProperty<ButtonState>, options: ObjectPickerInputListenerOptions ) {
     super( options );
     Multilink.multilink(
       [ this.isOverProperty, this.isPressedProperty ],
