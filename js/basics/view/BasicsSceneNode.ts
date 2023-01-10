@@ -129,7 +129,7 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
       const lockNode = new EqualityExplorerLockNode( scene.lockedProperty, {
 
         // offsets determined empirically, so that the body of the lock appears to be centered between the toolboxes
-        centerX: leftToolboxNode.right + ( rightToolboxNode.left - leftToolboxNode.right ) / 2 + 4,
+        centerX: leftToolboxNode.right + ( rightToolboxNode.left - leftToolboxNode.right ) / 2,
         centerY: leftToolboxNode.centerY - 5,
         tandem: options.tandem.createTandem( 'lockNode' )
       } );
