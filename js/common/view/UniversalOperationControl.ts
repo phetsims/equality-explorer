@@ -67,7 +67,7 @@ export default class UniversalOperationControl extends HBox {
       const operator = scene.operators[ i ];
       operatorItems.push( {
         value: operator,
-        createNode: tandem => UniversalOperationNode.createOperatorNode( operator ),
+        createNode: () => UniversalOperationNode.createOperatorNode( operator ),
         tandemName: `${operator.tandemName}${RectangularRadioButton.TANDEM_NAME_SUFFIX}`
       } );
     }

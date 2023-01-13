@@ -41,7 +41,7 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<E
       assert && assert( scene.icon, 'scene must have an icon' );
       contentArray.push( {
         value: scene,
-        createNode: tandem => scene.icon,
+        createNode: () => scene.icon,
         tandemName: `${scene.tandem.name}${RectangularRadioButton.TANDEM_NAME_SUFFIX}`
       } );
     } );
