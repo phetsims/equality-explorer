@@ -162,7 +162,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       clearScaleButtonVisible: false,
       organizeButtonVisible: false,
       disposeTermsNotOnScale: level.disposeTermsNotOnScale.bind( level )
-      // No PhET-iO instrumentation
+      // No PhET-iO instrumentation is desired..
     } );
 
     // Snapshots
