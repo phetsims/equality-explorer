@@ -84,7 +84,7 @@ type SelfOptions = {
 
 type ObjectPickerOptions = SelfOptions & PickRequired<NodeOptions, 'tandem'>;
 
-class ObjectPicker<T> extends Node {
+export default class ObjectPicker<T> extends Node {
 
   private readonly disposeObjectPicker: () => void;
 
@@ -484,4 +484,3 @@ function updateColors( buttonState: ButtonState, enabled: boolean, background: P
 }
 
 equalityExplorer.register( 'ObjectPicker', ObjectPicker );
-export default ObjectPicker;
