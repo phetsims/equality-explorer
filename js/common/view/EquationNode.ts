@@ -174,7 +174,7 @@ export default class EquationNode extends Node {
    * Updates the relational operator, based on left vs right weight.
    */
   private updateRelationalOperator(): void {
-    this.relationalOperatorText.text = getRelationalOperator( this.leftTermCreators, this.rightTermCreators );
+    this.relationalOperatorText.string = getRelationalOperator( this.leftTermCreators, this.rightTermCreators );
     this.updateLayout();
   }
 

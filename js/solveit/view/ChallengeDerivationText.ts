@@ -34,7 +34,7 @@ export default class ChallengeDerivationText extends RichText {
 
     // display derivation of the current challenge
     challengeProperty.link( challenge => {
-      this.text = ( challenge ? challenge.debugDerivation : '' );
+      this.string = ( challenge ? challenge.debugDerivation : '' );
     } );
   }
 
