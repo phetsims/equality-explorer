@@ -38,7 +38,7 @@ import Plate from './Plate.js';
 import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
-import TermNode from '../view/TermNode.js';
+import type TermNode from '../view/TermNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
