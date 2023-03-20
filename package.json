@@ -34,6 +34,9 @@
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js",
+    "rules": {
+      "no-view-imported-from-model": "off"
+    },
     "overrides": [
       {
         "files": [
