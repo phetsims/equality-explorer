@@ -13,7 +13,7 @@ import { Node, TColor } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
-import VariableTermNode from '../view/VariableTermNode.js';
+import VariableTermNode from '../view/VariableTermNode.js'; // eslint-disable-line no-view-imported-from-model
 import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import Variable from './Variable.js';
 import VariableTerm, { VariableTermOptions } from './VariableTerm.js';

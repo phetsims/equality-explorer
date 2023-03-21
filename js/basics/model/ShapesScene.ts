@@ -11,7 +11,7 @@ import sphere_png from '../../../images/sphere_png.js';
 import sphereShadow_png from '../../../images/sphereShadow_png.js';
 import square_png from '../../../images/square_png.js';
 import squareShadow_png from '../../../images/squareShadow_png.js';
-import ConstantTermNode from '../../common/view/ConstantTermNode.js';
+import ConstantTermNode from '../../common/view/ConstantTermNode.js'; // eslint-disable-line no-view-imported-from-model
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 import ObjectVariable from '../../common/model/ObjectVariable.js';

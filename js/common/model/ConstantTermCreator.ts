@@ -11,7 +11,7 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
-import ConstantTermNode from '../view/ConstantTermNode.js';
+import ConstantTermNode from '../view/ConstantTermNode.js'; // eslint-disable-line no-view-imported-from-model
 import ConstantTerm, { ConstantTermOptions } from './ConstantTerm.js';
 import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import Term from './Term.js';
