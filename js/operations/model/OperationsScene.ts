@@ -104,7 +104,8 @@ export default class OperationsScene extends EqualityExplorerScene {
     this.operators = UniversalOperator.enumeration.values;
 
     this.operatorProperty = new EnumerationProperty( this.operators[ 0 ], {
-      validValues: this.operators
+      validValues: this.operators,
+      hasListenerOrderDependencies: true // TODO: https://github.com/phetsims/equality-explorer/issues/205
     } );
 
     this.operands = [];
