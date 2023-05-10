@@ -24,7 +24,14 @@
       "supportsSound": true
     },
     "simulation": true,
-    "supportsOutputJS": true
+    "supportsOutputJS": true,
+    "screenNameKeys": [
+      "EQUALITY_EXPLORER/screen.basics",
+      "EQUALITY_EXPLORER/screen.numbers",
+      "EQUALITY_EXPLORER/screen.variables",
+      "EQUALITY_EXPLORER/screen.operations",
+      "EQUALITY_EXPLORER/screen.solveIt"
+    ]
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js"
