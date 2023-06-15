@@ -104,9 +104,7 @@ export default class SnapshotNode extends FlowBox {
       }
     } );
 
-    this.addLinkedElement( snapshotProperty, {
-      tandem: options.tandem.createTandem( `${snapshotProperty.tandem.name}` )
-    } );
+    this.addLinkedElement( snapshotProperty );
   }
 
   public override dispose(): void {

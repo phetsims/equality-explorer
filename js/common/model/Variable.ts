@@ -64,7 +64,7 @@ export default class Variable extends PhetioObject {
     } );
 
     this.addLinkedElement( symbolProperty, {
-      tandem: options.tandem.createTandem( 'symbolProperty' )
+      tandemName: 'symbolProperty'
     } );
   }
 

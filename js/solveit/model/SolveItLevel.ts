@@ -136,7 +136,7 @@ export default class SolveItLevel extends OperationsScene {
     } );
 
     this.addLinkedElement( descriptionProperty, {
-      tandem: options.tandem.createTandem( 'descriptionProperty' )
+      tandemName: 'descriptionProperty'
     } );
   }
 

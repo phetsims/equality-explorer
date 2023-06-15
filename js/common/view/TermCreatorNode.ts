@@ -82,9 +82,7 @@ export default class TermCreatorNode extends Node {
     };
     phet.joist.sim.frameStartedEmitter.addListener( frameStartedCallback ); // removeListener after first call
 
-    this.addLinkedElement( termCreator, {
-      tandem: options.tandem.createTandem( termCreator.tandem.name )
-    } );
+    this.addLinkedElement( termCreator );
   }
 }
 
