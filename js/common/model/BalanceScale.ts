@@ -24,7 +24,7 @@ import Plate, { PlateOptions } from './Plate.js';
 import TermCreator from './TermCreator.js';
 import { RelationalOperator, RelationalOperatorValues } from './RelationalOperator.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
+import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 
 type SelfOptions = {
   position?: Vector2; // position of the point where the beam balances on the fulcrum
@@ -192,13 +192,13 @@ export default class BalanceScale {
         new Vector2( this.position.x - dx, this.position.y - dy - options.plateSupportHeight );
     } );
 
-    this.relationalOperatorProperty = new DerivedProperty( [ this.angleProperty ],
-        angle => ( angle === 0 ) ? MathSymbols.EQUAL_TO :
-                 ( angle > 0 ) ? MathSymbols.GREATER_THAN :
-                 MathSymbols.LESS_THAN,
+    this.relationalOperatorProperty = new DerivedStringProperty( [ this.angleProperty ],
+      ( angle ): RelationalOperator => ( angle === 0 ) ? MathSymbols.EQUAL_TO :
+                                       ( angle > 0 ) ? MathSymbols.GREATER_THAN :
+                                       MathSymbols.LESS_THAN,
       {
-        tandem: options.tandem.createTandem( 'relationalOperatorProperty' ),
-        phetioValueType: StringIO,
+        tandem: options.tandem.createTandem( 'relationalOperatorStringProperty' ),
+        phetioFeatured: false,
         validValues: RelationalOperatorValues,
         phetioDocumentation: 'the relationship between the left and right sides of the balance scale'
       } );
