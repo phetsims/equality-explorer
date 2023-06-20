@@ -13,8 +13,8 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = {
   value?: number; // initial value
@@ -33,7 +33,7 @@ export default class Variable extends PhetioObject {
    * @param symbolProperty - the variable's symbol, e.g. 'x'
    * @param [providedOptions]
    */
-  public constructor( symbolProperty: LinkableProperty<string>, providedOptions: VariableOptions ) {
+  public constructor( symbolProperty: PhetioProperty<string>, providedOptions: VariableOptions ) {
 
     const options = optionize<VariableOptions, SelfOptions, PhetioObjectOptions>()( {
 

@@ -7,9 +7,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import LinkableProperty from '../../../../axon/js/LinkableProperty.js';
-import NumberProperty, { DEFAULT_RANGE } from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import NumberProperty, { DEFAULT_RANGE } from '../../../../axon/js/NumberProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -27,6 +26,7 @@ import OperationsScene, { OperationsSceneOptions } from '../../operations/model/
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import DebugChallenge from './DebugChallenge.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 // constants
 const POINTS_PER_CHALLENGE = 1;
@@ -43,7 +43,7 @@ export default class SolveItLevel extends OperationsScene {
   public readonly levelNumber: number;
 
   // description that appears in the UI for the level
-  public readonly descriptionProperty: LinkableProperty<string>;
+  public readonly descriptionProperty: PhetioProperty<string>;
 
   public readonly challengeGenerator: ChallengeGenerator;
   public readonly scoreProperty: NumberProperty;
@@ -62,7 +62,7 @@ export default class SolveItLevel extends OperationsScene {
   private readonly rightVariableTermCreator: VariableTermCreator;
   private readonly rightConstantTermCreator: ConstantTermCreator;
 
-  public constructor( descriptionProperty: LinkableProperty<string>,
+  public constructor( descriptionProperty: PhetioProperty<string>,
                       challengeGenerator: ChallengeGenerator,
                       providedOptions: SolveItLevelOptions ) {
 
