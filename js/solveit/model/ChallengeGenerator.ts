@@ -7,6 +7,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Disposable from '../../../../axon/js/Disposable.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Challenge from './Challenge.js';
@@ -29,7 +30,7 @@ export default abstract class ChallengeGenerator {
   }
 
   public dispose(): void {
-    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    Disposable.assertNotDisposable();
   }
 
   public reset(): void {

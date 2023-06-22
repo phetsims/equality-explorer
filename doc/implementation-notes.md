@@ -88,10 +88,12 @@ Instances of other classes are static. They are created at startup or lazily, ex
 
 ```typescript
 public override dispose(): void {
-  assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+  Disposable.assertNotDisposable();
   super.dispose();
 }
 ```
+Or extend Disposable and pass the `isDisposable:false` flag the supertype. This works well for Nodes, which are already
+well set up for options.
 
 **Creator Pattern**: A very general description of this pattern can be found at
 https://github.com/phetsims/phet-info/blob/master/doc/phet-software-design-patterns.md#creator-with-drag-forwarding.

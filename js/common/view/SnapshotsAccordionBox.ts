@@ -6,6 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Disposable from '../../../../axon/js/Disposable.js';
 import TrashButton from '../../../../scenery-phet/js/buttons/TrashButton.js';
 import { HBox, HSeparator, Node, NodeTranslationOptions, Path, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
@@ -191,7 +192,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
   }
 
   public override dispose(): void {
-    assert && assert( false, 'dispose is not supported, exists for the lifetime of the sim' );
+    Disposable.assertNotDisposable();
     super.dispose();
   }
 }
