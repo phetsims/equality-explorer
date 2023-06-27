@@ -6,21 +6,24 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Fraction, { FractionStateObject } from '../../../../phetcommon/js/model/Fraction.js';
+import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import { StateObject } from '../../../../tandem/js/types/StateSchema.js';
 
-export type ChallengeStateObject = {
-  x: number;
-  a: FractionStateObject;
-  b: FractionStateObject;
-  m: FractionStateObject;
-  n: FractionStateObject;
-  debugDerivation: string;
-};
+const stateSchema = {
+  x: NumberIO,
+  a: Fraction.FractionIO,
+  b: Fraction.FractionIO,
+  m: Fraction.FractionIO,
+  n: Fraction.FractionIO,
+  debugDerivation: StringIO
+} as const;
+
+export type ChallengeStateObject = StateObject<typeof stateSchema>;
 
 export default class Challenge {
 
@@ -65,20 +68,6 @@ export default class Challenge {
   }
 
   /**
-   * PhET-iO serialization
-   */
-  public toStateObject(): ChallengeStateObject {
-    return {
-      x: this.x,
-      a: Fraction.FractionIO.toStateObject( this.a ),
-      b: Fraction.FractionIO.toStateObject( this.b ),
-      m: Fraction.FractionIO.toStateObject( this.m ),
-      n: Fraction.FractionIO.toStateObject( this.n ),
-      debugDerivation: this.debugDerivation //TODO https://github.com/phetsims/equality-explorer/issues/191 document in client guide?
-    };
-  }
-
-  /**
    * PhET-iO deserialization
    */
   public static fromStateObject( stateObject: ChallengeStateObject ): Challenge {
@@ -94,16 +83,8 @@ export default class Challenge {
 
   public static readonly ChallengeIO = new IOType<Challenge, ChallengeStateObject>( 'ChallengeIO', {
     valueType: Challenge,
-    stateSchema: {
-      x: NumberIO,
-      a: Fraction.FractionIO,
-      b: Fraction.FractionIO,
-      m: Fraction.FractionIO,
-      n: Fraction.FractionIO,
-      debugDerivation: StringIO
-    },
-    toStateObject: ( challenge: Challenge ) => challenge.toStateObject(),
-    fromStateObject: ( stateObject: ChallengeStateObject ) => Challenge.fromStateObject( stateObject )
+    stateSchema: stateSchema,
+    fromStateObject: stateObject => Challenge.fromStateObject( stateObject )
   } );
 }
 
