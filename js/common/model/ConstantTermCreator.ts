@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
@@ -41,11 +40,6 @@ export default class ConstantTermCreator extends TermCreator {
     super( options );
 
     this.constantValue = options.constantValue;
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public override toString(): string {

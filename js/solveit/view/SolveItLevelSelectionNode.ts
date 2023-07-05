@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -39,6 +38,7 @@ export default class SolveItLevelSelectionNode extends Node {
     const options = optionize<SolveItLevelSelectionNodeOptions, SelfOptions, NodeOptions>()( {
 
       // NodeOptions
+      isDisposable: false,
       phetioVisiblePropertyInstrumented: false
     }, providedOptions );
 
@@ -141,12 +141,9 @@ export default class SolveItLevelSelectionNode extends Node {
       children.push( testButton );
     }
 
-    super( { children: children } );
-  }
+    options.children = children;
 
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
+    super( options );
   }
 }
 

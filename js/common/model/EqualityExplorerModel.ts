@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Property from '../../../../axon/js/Property.js';
 import TModel from '../../../../joist/js/TModel.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
@@ -25,6 +24,7 @@ export default class EqualityExplorerModel extends PhetioObject implements TMode
   protected constructor( scenes: EqualityExplorerScene[], tandem: Tandem ) {
 
     super( {
+      isDisposable: false,
       tandem: tandem,
       phetioState: false
     } );
@@ -45,11 +45,6 @@ export default class EqualityExplorerModel extends PhetioObject implements TMode
     if ( scenes.length > 1 ) {
       this.sceneProperty.lazyLink( scene => scene.disposeTermsNotOnScale() );
     }
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   /**

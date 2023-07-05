@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
@@ -156,11 +155,6 @@ export default class OperationsScene extends EqualityExplorerScene {
     this.operationCompletedEmitter = new Emitter( {
       parameters: [ { valueType: UniversalOperation } ]
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public override reset(): void {

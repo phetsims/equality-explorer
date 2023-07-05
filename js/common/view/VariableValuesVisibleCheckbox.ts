@@ -6,10 +6,9 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -31,6 +30,12 @@ export default class VariableValuesVisibleCheckbox extends Checkbox {
 
   public constructor( variableValueVisibleProperty: Property<boolean>, variables: Variable[],
                       providedOptions?: VariableValuesVisibleCheckboxOptions ) {
+
+    const options = optionize<VariableValuesVisibleCheckboxOptions, SelfOptions, CheckboxOptions>()( {
+
+      // CheckboxOptions
+      isDisposable: false
+    }, providedOptions );
 
     // Design decision: If there are multiple variables, use the first variable to label the checkbox.
     // This decision was based on the limited space we have for the checkbox in Snapshots accordion box.
@@ -56,12 +61,7 @@ export default class VariableValuesVisibleCheckbox extends Checkbox {
       maxWidth: 100
     } );
 
-    super( variableValueVisibleProperty, contentNode, providedOptions );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
+    super( variableValueVisibleProperty, contentNode, options );
   }
 }
 

@@ -14,7 +14,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -59,6 +58,7 @@ export default class UniversalOperationControl extends HBox {
       timesZeroEnabled: true,
 
       // HBoxOptions
+      isDisposable: false,
       spacing: 15
     }, providedOptions );
 
@@ -312,11 +312,6 @@ export default class UniversalOperationControl extends HBox {
     const maxIntegerExceededListener = () => this.stopAnimations();
     scene.allTermCreators.forEach( termCreator =>
       termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener ) );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   /**

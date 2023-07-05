@@ -21,7 +21,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import createObservableArray, { ObservableArray } from '../../../../axon/js/createObservableArray.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
@@ -138,6 +137,7 @@ export default abstract class TermCreator extends PhetioObject {
       lockedProperty: null,
 
       // PhetioObjectOptions
+      isDisposable: false,
       phetioState: false
     }, providedOptions );
 
@@ -209,11 +209,6 @@ export default abstract class TermCreator extends PhetioObject {
       // Changing lock state causes all terms that are not on the plate to be disposed.
       this.disposeTermsNotOnPlate();
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   /**

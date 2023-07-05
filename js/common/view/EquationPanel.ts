@@ -8,7 +8,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
@@ -49,6 +48,7 @@ export default class EquationPanel extends Panel {
       contentHeight: 60,
 
       // PanelOptions
+      isDisposable: false,
       fill: null,
       stroke: null,
       resize: false,
@@ -95,11 +95,6 @@ export default class EquationPanel extends Panel {
     super( contentNode, options );
 
     this.equationNode = equationNode;
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   /**

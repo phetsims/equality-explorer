@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -56,7 +55,10 @@ export default class SnapshotControl extends Node {
       controlHeight: 50,
       orientation: 'horizontal',
       commaSeparated: true,
-      variableValuesOpacity: 1
+      variableValuesOpacity: 1,
+
+      // NodeOptions
+      isDisposable: false
     }, providedOptions );
 
     assert && assert( options.variableValuesOpacity >= 0 && options.variableValuesOpacity <= 1,
@@ -128,11 +130,6 @@ export default class SnapshotControl extends Node {
                                   EqualityExplorerColors.SNAPSHOT_SELECTED_STROKE :
                                   EqualityExplorerColors.SNAPSHOT_DESELECTED_STROKE;
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

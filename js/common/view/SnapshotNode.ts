@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { FlowBox, FlowBoxOptions, Node } from '../../../../scenery/js/imports.js';
@@ -53,6 +52,7 @@ export default class SnapshotNode extends FlowBox {
       variableValuesVisibleProperty: null,
 
       // FlowBoxOptions
+      isDisposable: false,
       pickable: false,
       visibleProperty: new DerivedProperty( [ snapshotProperty ], snapshot => ( snapshot !== null ) )
     }, providedOptions );
@@ -106,11 +106,6 @@ export default class SnapshotNode extends FlowBox {
     } );
 
     this.addLinkedElement( snapshotProperty );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

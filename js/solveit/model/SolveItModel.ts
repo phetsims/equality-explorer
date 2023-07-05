@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Property from '../../../../axon/js/Property.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
@@ -43,6 +42,7 @@ export default class SolveItModel extends PhetioObject implements TModel {
   public constructor( tandem: Tandem ) {
 
     super( {
+      isDisposable: false,
       tandem: tandem,
       phetioState: false
     } );
@@ -90,11 +90,6 @@ export default class SolveItModel extends PhetioObject implements TModel {
       tandem: tandem.createTandem( 'rewardScoreProperty' ),
       phetioDocumentation: 'Reaching this score results in a reward.'
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public reset(): void {

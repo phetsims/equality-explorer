@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Property from '../../../../axon/js/Property.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -32,6 +31,7 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
     const options = optionize<SolveItLevelSelectionButtonGroupOptions, SelfOptions, LevelSelectionButtonGroupOptions>()( {
 
       // LevelSelectionButtonGroupOptions
+      isDisposable: false,
       levelSelectionButtonOptions: {
         baseColor: 'rgb( 191, 239, 254 )'
       },
@@ -63,11 +63,6 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
     } );
 
     super( items, options );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

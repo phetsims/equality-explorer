@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import { Circle, Color, Line, Node, NodeOptions, NodeTranslationOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
@@ -31,7 +30,10 @@ export default class PlateNode extends Node {
 
       // SelfOptions
       color: EqualityExplorerColors.PLATE_OUTSIDE_FILL, // {Color|string} color of the outside of the plate
-      pivotRadius: 8  // {number} radius of the pivot point that attaches to the balance beam
+      pivotRadius: 8,  // {number} radius of the pivot point that attaches to the balance beam
+
+      // NodeOptions
+      isDisposable: false
     }, providedOptions );
 
     // Outside surface of the plate.
@@ -123,11 +125,6 @@ export default class PlateNode extends Node {
     }
 
     super( options );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

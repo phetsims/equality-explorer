@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -46,6 +45,7 @@ export default class TermsToolboxNode extends Panel {
       spacing: 45, // horizontal space between TermCreatorNodes
 
       // PanelOptions
+      isDisposable: false,
       lineWidth: 1,
       cornerRadius: 6,
       xMargin: 5,
@@ -100,11 +100,6 @@ export default class TermsToolboxNode extends Panel {
     } );
 
     super( content, options );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

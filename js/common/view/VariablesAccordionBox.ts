@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { optionize4 } from '../../../../phet-core/js/optionize.js';
@@ -56,6 +55,7 @@ export default class VariablesAccordionBox extends AccordionBox {
         fixedHeight: 75,
 
         // AccordionBoxOptions
+        isDisposable: false,
         showTitleWhenExpanded: false,
         contentXMargin: 20,
         contentYMargin: 4
@@ -96,11 +96,6 @@ export default class VariablesAccordionBox extends AccordionBox {
     } );
 
     super( contentNode, options );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

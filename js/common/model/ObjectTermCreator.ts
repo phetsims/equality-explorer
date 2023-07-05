@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TermCreator, { TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
@@ -36,11 +35,6 @@ export default class ObjectTermCreator extends TermCreator {
     this.objectVariable = variable;
 
     phet.log && phet.log( this );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public override toString(): string {

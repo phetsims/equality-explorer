@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import TrashButton from '../../../../scenery-phet/js/buttons/TrashButton.js';
 import { HBox, HSeparator, Node, NodeTranslationOptions, Path, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
@@ -63,6 +62,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
         },
 
         // AccordionBoxOptions
+        isDisposable: false,
         contentXMargin: 10,
         contentYMargin: 10,
         contentYSpacing: 3
@@ -189,11 +189,6 @@ export default class SnapshotsAccordionBox extends AccordionBox {
           phet.joist.display.addInputListener( clickToDeselectListener );
         }
       } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

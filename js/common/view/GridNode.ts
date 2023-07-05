@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -37,6 +36,7 @@ export default class GridNode extends Path {
       cellSize: DEFAULT_CELL_SIZE,
 
       // PathOptions
+      isDisposable: false,
       stroke: EqualityExplorerColors.GRID_STROKE,
       lineWidth: 0.5
     }, providedOptions );
@@ -58,11 +58,6 @@ export default class GridNode extends Path {
     }
 
     super( gridShape, options );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

@@ -8,7 +8,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -58,7 +57,8 @@ export default class VariableValuesNode extends HBox {
       // De-emphasize variable values by scaling them down.
       // See https://github.com/phetsims/equality-explorer/issues/110
       scale: 0.75,
-      spacing: 0
+      spacing: 0,
+      isDisposable: false
 
     }, providedOptions );
 
@@ -73,11 +73,6 @@ export default class VariableValuesNode extends HBox {
     this.disposeNodes = [];
 
     this.update();
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public update(): void {

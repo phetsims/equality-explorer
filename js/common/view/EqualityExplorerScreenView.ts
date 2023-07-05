@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
@@ -43,6 +42,7 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
     const options = optionize<EqualityExplorerScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
 
       // ScreenViewOptions
+      isDisposable: false,
       layoutBounds: EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS,
       preventFit: EqualityExplorerConstants.SCREEN_VIEW_PREVENT_FIT,
       tandem: tandem
@@ -110,11 +110,6 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
         sceneRadioButtonGroup.centerY = snapshotsAccordionBox.bottom + ( resetAllButton.top - snapshotsAccordionBox.bottom ) / 2;
       } );
     }
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public reset(): void {

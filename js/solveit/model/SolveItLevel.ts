@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberProperty, { DEFAULT_RANGE } from '../../../../axon/js/NumberProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
@@ -139,11 +138,6 @@ export default class SolveItLevel extends OperationsScene {
     this.addLinkedElement( descriptionProperty, {
       tandemName: 'descriptionProperty'
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public override reset(): void {

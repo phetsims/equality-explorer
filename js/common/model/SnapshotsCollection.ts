@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -36,6 +35,7 @@ export default class SnapshotsCollection extends PhetioObject {
       numberOfSnapshots: 5,
 
       // PhetioObjectOptions
+      isDisposable: false,
       phetioState: false,
       phetioDocumentation: 'Collection of snapshots that appear in the Snapshots accordion box'
     }, providedOptions );
@@ -66,11 +66,6 @@ export default class SnapshotsCollection extends PhetioObject {
       //phetioValueType: NullableIO( SnapshotIO ),
       //phetioDocumentation: 'The snapshot that is selected in the Snapshots accordion box. null means no snapshot is selected.'
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public reset(): void {

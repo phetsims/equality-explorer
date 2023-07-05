@@ -6,9 +6,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../axon/js/Disposable.js';
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
-import { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerModel from './model/EqualityExplorerModel.js';
@@ -23,7 +22,11 @@ export default class EqualityExplorerScreen<M extends EqualityExplorerModel, V e
 
   protected constructor( createModel: () => M, createView: ( model: M ) => V, providedOptions: EqualityExplorerScreenOptions ) {
 
-    super( createModel, createView, providedOptions );
+    const options = optionize<EqualityExplorerScreenOptions, SelfOptions, ScreenOptions>()( {
+      isDisposable: false
+    }, providedOptions );
+
+    super( createModel, createView, options );
 
     // When this Screen is deactivated, deactivate the model.
     this.activeProperty.lazyLink( screenActive => {
@@ -31,11 +34,6 @@ export default class EqualityExplorerScreen<M extends EqualityExplorerModel, V e
         this.model.deactivate();
       }
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

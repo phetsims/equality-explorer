@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -28,7 +27,8 @@ export default class ChallengeDerivationText extends RichText {
     const options = optionize<ChallengeDerivationTextOptions, SelfOptions, RichTextOptions>()( {
 
       // RichTextOptions
-      font: DEFAULT_FONT
+      font: DEFAULT_FONT,
+      isDisposable: false
     }, providedOptions );
 
     super( '', options );
@@ -38,12 +38,6 @@ export default class ChallengeDerivationText extends RichText {
       this.string = ( challenge ? challenge.debugDerivation : '' );
     } );
   }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
-  }
-
 }
 
 equalityExplorer.register( 'ChallengeDerivationText', ChallengeDerivationText );

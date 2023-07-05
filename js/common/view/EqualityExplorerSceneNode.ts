@@ -6,8 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node, NodeOptions, PressListenerEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
@@ -65,7 +64,13 @@ export default class EqualityExplorerSceneNode extends Node {
                          termsLayer: Node,
                          providedOptions: EqualityExplorerSceneNodeOptions ) {
 
-    super( providedOptions );
+    const options = optionize<EqualityExplorerSceneNodeOptions, SelfOptions, NodeOptions>()( {
+
+      // NodeOptions
+      isDisposable: false
+    }, providedOptions );
+
+    super( options );
 
     this.scene = scene;
     this.snapshotsAccordionBox = snapshotsAccordionBox;
@@ -126,11 +131,6 @@ export default class EqualityExplorerSceneNode extends Node {
       termCreator.termCreatedEmitter.addListener( termCreatedListener );
       termCreator.maxIntegerExceededEmitter.addListener( maxIntegerExceededListener );
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public step( dt: number ): void {

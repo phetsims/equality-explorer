@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -27,6 +26,7 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<E
     const options = optionize<SceneRadioButtonGroupOptions, SelfOptions, RectangularRadioButtonGroupOptions>()( {
 
       // RectangularRadioButtonGroupOptions
+      isDisposable: false,
       orientation: 'horizontal',
       spacing: 8,
       radioButtonOptions: {
@@ -48,11 +48,6 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<E
     } );
 
     super( sceneProperty, contentArray, options );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

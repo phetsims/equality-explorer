@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
@@ -103,6 +102,7 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
       variables: null,
 
       // PhetioObjectOptions
+      isDisposable: false,
       phetioType: EqualityExplorerScene.EqualityExplorerSceneIO
     }, providedOptions );
 
@@ -168,11 +168,6 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
       numberOfSnapshots: options.numberOfSnapshots,
       tandem: options.tandem.createTandem( 'snapshotsCollection' )
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   /**

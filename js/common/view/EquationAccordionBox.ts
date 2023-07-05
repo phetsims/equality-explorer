@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import { optionize4 } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { NodeTranslationOptions, Text } from '../../../../scenery/js/imports.js';
@@ -44,6 +43,7 @@ export default class EquationAccordionBox extends AccordionBox {
         fixedHeight: 75,
 
         // AccordionBoxOptions
+        isDisposable: false,
         showTitleWhenExpanded: false,
         contentXMargin: 8,
         contentYMargin: 4
@@ -68,11 +68,6 @@ export default class EquationAccordionBox extends AccordionBox {
     } );
 
     super( contentNode, options );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

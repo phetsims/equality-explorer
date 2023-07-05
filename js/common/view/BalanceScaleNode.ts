@@ -8,7 +8,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -62,6 +61,7 @@ export default class BalanceScaleNode extends Node {
       phetioVisiblePropertyInstrumented: false,
       
       // NodeOptions
+      isDisposable: false,
       tandem: Tandem.OPT_OUT
     }, providedOptions );
 
@@ -221,11 +221,6 @@ export default class BalanceScaleNode extends Node {
       rightPlateNode.x = position.x - scale.position.x;
       rightPlateNode.y = position.y - scale.position.y;
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

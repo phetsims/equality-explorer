@@ -8,7 +8,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
@@ -87,6 +86,7 @@ export default class EquationNode extends Node {
       relationalOperatorSpacing: 20,
 
       // NodeOptions
+      isDisposable: false,
       tandem: Tandem.OPTIONAL,
       phetioVisiblePropertyInstrumented: false
     }, providedOptions );
@@ -140,11 +140,6 @@ export default class EquationNode extends Node {
     else {
       this.update();
     }
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   /**

@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../axon/js/Disposable.js';
 import Property from '../../../axon/js/Property.js';
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
@@ -37,7 +36,8 @@ export default class SolveItScreen extends Screen<SolveItModel, SolveItScreenVie
       name: EqualityExplorerStrings.screen.solveItStringProperty,
       backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
       homeScreenIcon: createHomeScreenIcon(),
-      navigationBarIcon: createNavigationBarIcon()
+      navigationBarIcon: createNavigationBarIcon(),
+      isDisposable: false
     }, providedOptions );
 
     super(
@@ -45,11 +45,6 @@ export default class SolveItScreen extends Screen<SolveItModel, SolveItScreenVie
       model => new SolveItScreenView( model, options.tandem.createTandem( 'view' ) ),
       options
     );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 }
 

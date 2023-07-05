@@ -6,11 +6,10 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import ScreenView from '../../../../joist/js/ScreenView.js';
+import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Easing from '../../../../twixt/js/Easing.js';
@@ -44,7 +43,8 @@ export default class SolveItScreenView extends ScreenView {
 
   public constructor( model: SolveItModel, tandem: Tandem ) {
 
-    const options = {
+    const options: ScreenViewOptions = {
+      isDisposable: false,
       layoutBounds: EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS,
       preventFit: EqualityExplorerConstants.SCREEN_VIEW_PREVENT_FIT,
       tandem: tandem
@@ -110,11 +110,6 @@ export default class SolveItScreenView extends ScreenView {
         levelsParent.visible = ( level !== null );
       }
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public reset(): void {

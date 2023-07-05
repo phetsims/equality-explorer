@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
@@ -60,11 +59,6 @@ export default class OperationsSceneNode extends VariablesSceneNode {
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
     scene.sumToZeroEmitter.addListener( termCreators => SumToZeroNode.animateSumToZero( termCreators, this.termsLayer ) );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   /**

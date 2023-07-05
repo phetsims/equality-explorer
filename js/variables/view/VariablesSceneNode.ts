@@ -7,7 +7,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import BasicsSceneNode, { BasicsSceneNodeOptions } from '../../basics/view/BasicsSceneNode.js';
 import VariablesAccordionBox from '../../common/view/VariablesAccordionBox.js';
@@ -86,11 +85,6 @@ export default class VariablesSceneNode extends BasicsSceneNode {
         this.snapshotsAccordionBox.top = snapshotsAccordionBoxTop;
       }
     } );
-  }
-
-  public override dispose(): void {
-    Disposable.assertNotDisposable();
-    super.dispose();
   }
 
   public override reset(): void {
