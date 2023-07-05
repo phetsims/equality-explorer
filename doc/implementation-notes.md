@@ -84,16 +84,14 @@ Instances of the classes listed below are dynamic &mdash; they come and go durin
 - `ReducedFractionNode`
 - `SumToZeroNode`
 
-Instances of other classes are static. They are created at startup or lazily, exist for the lifetime of the sim, and were not designed (or intended) to be disposed. They (or their superclass) typically have a `dispose` method that looks like this:
+Instances of other classes are static. They are created at startup or lazily, exist for the lifetime of the sim, and 
+were not designed (or intended) to be disposed. They are created with `isDisposable: false`, or have a `dispose` method that looks like this:
 
-```typescript
-public override dispose(): void {
+```ts
+public dispose(): void {
   Disposable.assertNotDisposable();
-  super.dispose();
 }
 ```
-Or extend Disposable and pass the `isDisposable:false` flag the supertype. This works well for Nodes, which are already
-well set up for options.
 
 **Creator Pattern**: A very general description of this pattern can be found at
 https://github.com/phetsims/phet-info/blob/master/doc/phet-software-design-patterns.md#creator-with-drag-forwarding.
