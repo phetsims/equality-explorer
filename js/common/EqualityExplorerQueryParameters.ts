@@ -34,13 +34,12 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
     public: true
   },
 
+  // The levels to show in the game (Solve It!) screen.
+  gameLevels: getGameLevelsSchema( EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS ),
+
   //----------------------------------------------------------------------------------------------------------------
   // Internal query parameters
   //----------------------------------------------------------------------------------------------------------------
-
-
-  // The levels to show in the game (Solve It!) screen.
-  gameLevels: getGameLevelsSchema( EqualityExplorerConstants.NUMBER_OF_GAME_LEVELS ),
 
   // Shows the grid on each of the plates.
   // For internal use only, not public facing.
