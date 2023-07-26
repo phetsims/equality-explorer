@@ -7,7 +7,7 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
@@ -21,7 +21,7 @@ import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItModel from '../model/SolveItModel.js';
 import SolveItInfoDialog from './SolveItInfoDialog.js';
 import SolveItLevelSelectionButtonGroup from './SolveItLevelSelectionButtonGroup.js';
-import SolveForXText, { SolveForXTextOptions } from './SolveForXText.js';
+import EqualityExplorerDerivedStrings from '../../common/EqualityExplorerDerivedStrings.js';
 
 type SelfOptions = {
 
@@ -56,9 +56,6 @@ export default class SolveItLevelSelectionNode extends Node {
       maxWidth: 0.65 * layoutBounds.width
     };
 
-    // Organize the 2 lines of the title under a parent tandem.
-    const titleTandem = options.tandem.createTandem( 'title' );
-
     // 'Choose Your Level', centered above level-selection buttons
     const chooseYourLevelText = new Text( EqualityExplorerStrings.chooseYourLevelStringProperty, textOptions );
     chooseYourLevelText.boundsProperty.link( bounds => {
@@ -67,9 +64,7 @@ export default class SolveItLevelSelectionNode extends Node {
     } );
 
     // 'Solve for x'
-    const solveForXText = new SolveForXText( combineOptions<SolveForXTextOptions>( {}, textOptions, {
-      tandem: titleTandem.createTandem( 'solveForXText' )
-    } ) );
+    const solveForXText = new RichText( EqualityExplorerDerivedStrings.solveForXStringProperty, textOptions );
 
     // Centered above 'Choose Your Level'
     solveForXText.boundsProperty.link( bounds => {

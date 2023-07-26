@@ -37,7 +37,7 @@ import SolveItRewardNode from './SolveItRewardNode.js';
 import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Range from '../../../../dot/js/Range.js';
-import SolveForXText from './SolveForXText.js';
+import EqualityExplorerDerivedStrings from '../../common/EqualityExplorerDerivedStrings.js';
 
 // constants
 const LEVEL_FONT = new PhetFont( 20 );
@@ -144,10 +144,9 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     } );
 
     // 'Solve for x'
-    const solveForXText = new SolveForXText( {
+    const solveForXText = new RichText( EqualityExplorerDerivedStrings.solveForXStringProperty, {
       font: new PhetFont( { size: 24, weight: 'bold' } ),
-      maxWidth: challengeEquationNode.left - layoutBounds.minX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN,
-      tandem: options.tandem.createTandem( 'solveForXText' )
+      maxWidth: challengeEquationNode.left - layoutBounds.minX - EqualityExplorerConstants.SCREEN_VIEW_X_MARGIN
     } );
 
     // To the left of the challenge equation
