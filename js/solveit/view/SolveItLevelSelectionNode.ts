@@ -12,7 +12,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Node, NodeOptions, RichText, Text, TextOptions } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, RichText, Text } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
@@ -60,10 +60,7 @@ export default class SolveItLevelSelectionNode extends Node {
     const titleTandem = options.tandem.createTandem( 'title' );
 
     // 'Choose Your Level', centered above level-selection buttons
-    const chooseYourLevelText = new Text( EqualityExplorerStrings.chooseYourLevelStringProperty,
-      combineOptions<TextOptions>( {}, textOptions, {
-        tandem: titleTandem.createTandem( 'chooseYourLevelText' )
-      } ) );
+    const chooseYourLevelText = new Text( EqualityExplorerStrings.chooseYourLevelStringProperty, textOptions );
     chooseYourLevelText.boundsProperty.link( bounds => {
       chooseYourLevelText.centerX = levelSelectionButtonGroup.centerX;
       chooseYourLevelText.bottom = levelSelectionButtonGroup.top - 65;

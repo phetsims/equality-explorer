@@ -69,8 +69,7 @@ export default class VariablesAccordionBox extends AccordionBox {
 
     options.titleNode = new Text( options.titleStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
-      maxWidth: 0.85 * contentWidth,
-      tandem: options.tandem.createTandem( 'titleText' )
+      maxWidth: 0.85 * contentWidth
     } );
 
     const backgroundNode = new Rectangle( 0, 0, contentWidth, contentHeight );

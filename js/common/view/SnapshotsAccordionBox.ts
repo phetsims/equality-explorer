@@ -78,8 +78,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
     // title
     options.titleNode = new Text( EqualityExplorerStrings.snapshotsStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
-      maxWidth: 0.85 * contentWidth,
-      tandem: options.tandem.createTandem( 'titleText' )
+      maxWidth: 0.85 * contentWidth
     } );
 
     // Create a row for each snapshot

@@ -82,8 +82,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     // Level description, displayed in the status bar
     const levelDescriptionText = new RichText( level.descriptionProperty, {
       font: LEVEL_FONT,
-      maxWidth: 650, // determined empirically
-      tandem: statusBarTandem.createTandem( 'levelDescriptionText' )
+      maxWidth: 650 // determined empirically
     } );
 
     const backButtonListener = () => {

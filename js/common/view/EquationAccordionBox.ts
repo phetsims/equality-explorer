@@ -63,8 +63,7 @@ export default class EquationAccordionBox extends AccordionBox {
 
     options.titleNode = options.titleNode || new Text( EqualityExplorerStrings.equationOrInequalityStringProperty, {
       font: EqualityExplorerConstants.ACCORDION_BOX_TITLE_FONT,
-      maxWidth: 0.85 * contentNode.width,
-      tandem: options.tandem.createTandem( 'titleText' )
+      maxWidth: 0.85 * contentNode.width
     } );
 
     super( contentNode, options );
