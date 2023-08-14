@@ -4,7 +4,7 @@
  * SeparateTermsDragListener is used when like terms occupy separate cells on a plate.
  * Like terms are combined only if they sum to zero.
  * See terminology and requirements in TermDragListener superclass.
- * See https://github.com/phetsims/equality-explorer/blob/master/doc/lock-scenarios.md for scenarios that
+ * See https://github.com/phetsims/equality-explorer/blob/main/doc/lock-scenarios.md for scenarios that
  * describe how this feature works.
  *
  * @author Chris Malley (PixelZoom, Inc.)

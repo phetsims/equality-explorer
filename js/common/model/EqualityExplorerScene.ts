@@ -73,7 +73,7 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
   public readonly snapshotsCollection: SnapshotsCollection;
 
   // Locks equivalent terms, null if this feature is not supported.
-  // See https://github.com/phetsims/equality-explorer/blob/master/doc/lock-scenarios.md for scenarios that
+  // See https://github.com/phetsims/equality-explorer/blob/main/doc/lock-scenarios.md for scenarios that
   // describe how this feature works with drag listeners.
   public readonly lockedProperty?: Property<boolean> | null;
 
@@ -223,7 +223,7 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
   /**
    * EqualityExplorerSceneIO handles PhET-iO serialization of EqualityExplorerScene.
    * It implements 'Reference type serialization', as described in the Serialization section of
-   * https://github.com/phetsims/phet-io/blob/master/doc/phet-io-instrumentation-technical-guide.md#serialization
+   * https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
    */
   public static readonly EqualityExplorerSceneIO = new IOType( 'EqualityExplorerSceneIO', {
     valueType: EqualityExplorerScene,

@@ -12,7 +12,7 @@
  * true: each term *type* occupies one cell on the scale, and all like terms are combined
  * false: each term *instance* occupies one cell on the scale, and terms are combined only if they sum to zero
  *
- * See https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md
+ * See https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md
  * for a detailed description of how the PhET 'creator pattern' is applied in this simulation.
  *
  * Note that TermCreator is not involved with Terms that are created for snapshots. Those terms are created

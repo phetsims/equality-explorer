@@ -2,9 +2,9 @@
 
 This document contains notes related to the implementation of Equality Explorer. This is not an exhaustive description of the implementation.  The intention is to provide a high-level overview, and to supplement the internal documentation (source code comments) and external documentation (design documents).
 
-The audience for this document is software developers who are familiar with JavaScript and PhET simulation development, as described in [PhET Development Overview](https://github.com/phetsims/phet-info/blob/master/doc/phet-development-overview.md).  The reader should also be familiar with general design patterns used in PhET simulations.
+The audience for this document is software developers who are familiar with JavaScript and PhET simulation development, as described in [PhET Development Overview](https://github.com/phetsims/phet-info/blob/main/doc/phet-development-overview.md).  The reader should also be familiar with general design patterns used in PhET simulations.
 
-Before reading this document, see [model.md](https://github.com/phetsims/equality-explorer/blob/master/doc/model.md), which provides a high-level description of the simulation model.
+Before reading this document, see [model.md](https://github.com/phetsims/equality-explorer/blob/main/doc/model.md), which provides a high-level description of the simulation model.
 
 There are two design documents for this sim, but they are not necessarily up to date:
 - [Equality Explorer HTML5](https://docs.google.com/document/d/1xu9nawWcndFqgg5zyCGm25h-OFUsuFYnXF3QHW42spQ)
@@ -40,7 +40,7 @@ Sim-specific terminology:
 * equivalent term - the term on the opposite side of the scale that is identical to the dragged term
 * inverse term - a term created on the opposite side of the scale that is the inverse of the dragged term, and is paired with the equivalent term
 * level-selection buttons - the buttons used to select the game level
-* locked - when the sim is locked, interacting with terms on one side of the equation will result in an equivalent interaction on the opposite side. See the [**Lock feature**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#lock-feature) section for more details.
+* locked - when the sim is locked, interacting with terms on one side of the equation will result in an equivalent interaction on the opposite side. See the [**Lock feature**](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#lock-feature) section for more details.
 * object variable - a real-world object (shape, fruit, coin, animal) whose value is variable. As distinguished from a symbolic variable (`x`), see `ObjectVariable`
 * object term - a term associated with an object variable, see `ObjectTerm`
 * opposite plate - the plate associated with the equivalent term, opposite the dragged term
@@ -94,7 +94,7 @@ public dispose(): void {
 ```
 
 **Creator Pattern**: A very general description of this pattern can be found at
-https://github.com/phetsims/phet-info/blob/master/doc/phet-software-design-patterns.md#creator-with-drag-forwarding.
+https://github.com/phetsims/phet-info/blob/main/doc/phet-software-design-patterns.md#creator-with-drag-forwarding.
 But in practice, this pattern is implemented in many differing ways.
 So I'll attempt to summarize how this pattern is applied in this simulation.
 
@@ -132,20 +132,20 @@ The first three screens are similar, except for the number of scenes and classes
 
 The _Basics_ screen has 4 scenes with 'real-world object' terms (plus constant terms in the 'shapes' scene).  A set of radio buttons is used to choose a scene.
 
-The _Numbers_ screen has one scene with constant terms. It introduces the lock feature, described in the [**Lock feature**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#lock-feature) section.
+The _Numbers_ screen has one scene with constant terms. It introduces the lock feature, described in the [**Lock feature**](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#lock-feature) section.
 
 The _Variables_ screen has one scene with variable terms and constant terms. It introduces a picker for changing the variable's values.
 
 The _Operations_ screen also has one scene with variable terms and constant terms, but uses strategy (2) for putting terms on the scale.  This screen also introduces the 'universal operation control', used to apply operations to both sides of the scale.
 
-The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection buttons are used to choose a scene. The scenes in this screen differ from other screens in a couple of important ways: Since the goal is to determine the value of `x`, the picker for setting `x` is hidden. Two equations are shown above the scale &mdash; the top one corresponds to the challenge, the bottom one corresponds to what's currently on the scale. See the [**Solve It! screen**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#solve-it-screen) section for more notes.
+The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection buttons are used to choose a scene. The scenes in this screen differ from other screens in a couple of important ways: Since the goal is to determine the value of `x`, the picker for setting `x` is hidden. Two equations are shown above the scale &mdash; the top one corresponds to the challenge, the bottom one corresponds to what's currently on the scale. See the [**Solve It! screen**](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#solve-it-screen) section for more notes.
 
 ## Model
 
 This section provides an overview of the most important model elements, and some miscellaneous topics
 related to the model.
 
-`EqualityExplorerScene` is the base class for all scenes.  See the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.
+`EqualityExplorerScene` is the base class for all scenes.  See the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.
 
 The balance scale is composed of 3 primary model elements: `BalanceScale`, `Plate`, and `Grid`.
 
@@ -153,7 +153,7 @@ The balance scale is composed of 3 primary model elements: `BalanceScale`, `Plat
 
 `Term` is the base class for terms. There are 3 subclasses. `ConstantTerm` corresponds to constant terms. `VariableTerm` corresponds to terms that are associated with a symbolic variable, e.g. `x`.  `ObjectTerm` is a term that is associated with a real-world object (shape, fruit, coin, animal).  VariableTerm and ObjectTerm are similar in that they are associated with a variable, but their requirements are different enough to justify separate classes.  And there are in fact two variable classes: `Variable` is a typical symbolic variable, and its subclass `ObjectVariable` contains more information pertaining to a real-world object. (Note that the value of ObjectVariables cannot be change in _Equality Explorer_, but they can be changed in the _Equality Explorer: Basics_ simulation.)
 
-`TermCreator` is the base class for creating and managing terms. It uses the PhET creator pattern, described more in the [**Common Patterns**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#common-patterns) section.  Term creators are responsible for creating and managing terms.  There is a subclass for each term class, namely `ConstantTermCreator`, `VariableTermCreator`, and `ObjectTermCreator`.
+`TermCreator` is the base class for creating and managing terms. It uses the PhET creator pattern, described more in the [**Common Patterns**](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#common-patterns) section.  Term creators are responsible for creating and managing terms.  There is a subclass for each term class, namely `ConstantTermCreator`, `VariableTermCreator`, and `ObjectTermCreator`.
 
 `UniversalOperation` encapsulates a _universal operation_, terminology invented in the design document. It refers to an operation that is applied to all terms on both sides of the scale, using a control that allows the student to select a binary operator and an operand. The operands are `ConstantTerm` and `VariableTerm` instances.
 
@@ -168,11 +168,11 @@ Throughout the simulation, variable values are represented using integers. All o
 This section provides an overview of the most important view components, and some miscellaneous topics
 related to the view.
 
-`EqualityExplorerSceneNode` is the base class for all scenes. See the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.  There is one `SceneNode` instance for each `Scene` instance. For screens that have more than one scene, one `EqualityExplorerSceneNode` is made visible depending on which `Scene` is selected. Primarily for performance reasons, we do not mutate a single instance of `EqualityExplorerSceneNode`.
+`EqualityExplorerSceneNode` is the base class for all scenes. See the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.  There is one `SceneNode` instance for each `Scene` instance. For screens that have more than one scene, one `EqualityExplorerSceneNode` is made visible depending on which `Scene` is selected. Primarily for performance reasons, we do not mutate a single instance of `EqualityExplorerSceneNode`.
 
 `TermNode` is the base class for all terms. There is a subclass for each class of term, namely `ConstantTermNode`, `VariableTermNode`, and `ObjectTermNode`.
 
-Every `TermNode` has an associated drag listener that is a subclass of `TermDragListener`. `TermDragListener` and its subclasses are the most complicated part of this simulation's implementation; they encapsulate all drag behavior, animation behavior, and the lock feature (described in more detail in the [**Lock feature**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#lock-feature) section).  Which subclass of `TermDragListener` is used depends on the strategy used for putting terms on the scale, as described in the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes) section above. [SeparateTermsDragListener](https://github.com/phetsims/equality-explorer/blob/master/js/common/view/SeparateTermsDragListener.js) is used when like terms occupy separate cells on the scale. `CombinedTermsDragListener` is used when like terms are combined in one cell on the scale.
+Every `TermNode` has an associated drag listener that is a subclass of `TermDragListener`. `TermDragListener` and its subclasses are the most complicated part of this simulation's implementation; they encapsulate all drag behavior, animation behavior, and the lock feature (described in more detail in the [**Lock feature**](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#lock-feature) section).  Which subclass of `TermDragListener` is used depends on the strategy used for putting terms on the scale, as described in the [**Screens and Scenes**](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes) section above. [SeparateTermsDragListener](https://github.com/phetsims/equality-explorer/blob/main/js/common/view/SeparateTermsDragListener.js) is used when like terms occupy separate cells on the scale. `CombinedTermsDragListener` is used when like terms are combined in one cell on the scale.
 
 `SumToZeroNode` encapsulates the animation that occurs when two like terms sum to zero. When constant terms sum to zero, a '0' is displayed and fades out. When variable terms sum to zero, a '0x' is displayed and fades out. `SumToZeroNode` includes an optional yellow halo, displayed when terms that sum to zero overlap while dragging. When terms sum to zero, the animation is displayed after the scale moves, in the same cell that was previously occupied by one of the terms.  When a universal operation is applied, or when the lock feature is on, multiple terms may sum to zero as the result of an operation.  In these scenarios, animations are batched and displayed at the completion of the operation, after the scale has reached equilibrium. For an example of batching, see `animateSumToZero` in `EqualityExplorerSceneNode`.
 
@@ -198,13 +198,13 @@ Each `TermNode` has an associated `Term` model element, and a `TermDragListener`
 
 The _dragged term_ is the `Term` that is associated with the `TermNode`. It's the same `Term` that is controlled when unlocked.
 
-The _equivalent term_ a term on the opposite side of the scale that is identical to the dragged term. While dragging and animating, it tracks the movement of the dragged term, but it is not draggable itself.  If the dragged term originated from a toolbox, then the equivalent term originates from the toolbox on the opposite side of the scale.  If the dragged term was on the scale, then the equivalent term was taken from the scale on the opposite plate.  If no equivalent term existed on the opposite plate, then the equivalent term and an _inverse term_ are created on the opposite plate.  The equivalent term tracks the dragged term, while the inverse term remains on the opposite plate.  The inverse term is draggable, and dragging it breaks its association with the dragged term and equivalent term.  The inverse term is relevant only for screens that use the 'separate like terms' strategy as described in [**Scenes and Scenes**](https://github.com/phetsims/equality-explorer/blob/master/doc/implementation-notes.md#screens-and-scenes).
+The _equivalent term_ a term on the opposite side of the scale that is identical to the dragged term. While dragging and animating, it tracks the movement of the dragged term, but it is not draggable itself.  If the dragged term originated from a toolbox, then the equivalent term originates from the toolbox on the opposite side of the scale.  If the dragged term was on the scale, then the equivalent term was taken from the scale on the opposite plate.  If no equivalent term existed on the opposite plate, then the equivalent term and an _inverse term_ are created on the opposite plate.  The equivalent term tracks the dragged term, while the inverse term remains on the opposite plate.  The inverse term is draggable, and dragging it breaks its association with the dragged term and equivalent term.  The inverse term is relevant only for screens that use the 'separate like terms' strategy as described in [**Scenes and Scenes**](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes).
 
 The dragged term and equivalent term must be added to the scale simultaneously. As soon as the dragged term reaches its plate, the equivalent term immediately jumps to its location on the opposite plate. After investigating other alternatives (e.g. proportional animation) it was decided that this approach was most desirable.
 
 When the state of the lock feature changes, any `Terms` that are not on the scale (i.e. `Terms` that are dragging or animating) are immediately disposed.  This simolification eliminates the need to handle some complicated multitouch scenarios.
 
-For an overview of various scenarios involving the lock feature, see [lock-scenarios.md](https://github.com/phetsims/equality-explorer/blob/master/doc/lock-scenarios.md).
+For an overview of various scenarios involving the lock feature, see [lock-scenarios.md](https://github.com/phetsims/equality-explorer/blob/main/doc/lock-scenarios.md).
 
 ## PhET-iO
 
