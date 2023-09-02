@@ -143,6 +143,7 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
       this.rightTermCreators[ i ].equivalentTermCreator = this.leftTermCreators[ i ];
     }
 
+    // eslint-disable-next-line tandem-name-should-match
     this.scale = new BalanceScale( this.leftTermCreators, this.rightTermCreators, {
       position: options.scalePosition,
       gridRows: options.gridRows,

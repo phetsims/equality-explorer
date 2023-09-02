@@ -193,6 +193,7 @@ export default class BalanceScale {
         new Vector2( this.position.x - dx, this.position.y - dy - options.plateSupportHeight );
     } );
 
+    // eslint-disable-next-line tandem-name-should-match
     this.relationalOperatorProperty = new DerivedStringProperty( [ this.angleProperty ],
       ( angle ): RelationalOperator => ( angle === 0 ) ? MathSymbols.EQUAL_TO :
                                        ( angle > 0 ) ? MathSymbols.GREATER_THAN :
