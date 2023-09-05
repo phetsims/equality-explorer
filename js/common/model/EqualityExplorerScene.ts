@@ -143,6 +143,7 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
       this.rightTermCreators[ i ].equivalentTermCreator = this.leftTermCreators[ i ];
     }
 
+    // TODO: Disable line below should be removed, see https://github.com/phetsims/phet-io/issues/1959
     // eslint-disable-next-line tandem-name-should-match
     this.scale = new BalanceScale( this.leftTermCreators, this.rightTermCreators, {
       position: options.scalePosition,

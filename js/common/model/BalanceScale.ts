@@ -193,6 +193,7 @@ export default class BalanceScale {
         new Vector2( this.position.x - dx, this.position.y - dy - options.plateSupportHeight );
     } );
 
+    // TODO: Disable line below should be removed, see https://github.com/phetsims/phet-io/issues/1959
     // eslint-disable-next-line tandem-name-should-match
     this.relationalOperatorProperty = new DerivedStringProperty( [ this.angleProperty ],
       ( angle ): RelationalOperator => ( angle === 0 ) ? MathSymbols.EQUAL_TO :
