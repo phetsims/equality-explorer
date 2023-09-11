@@ -1,7 +1,7 @@
 # Equality Explorer - model description
 
-This is a high-level description of the model used in Equality Explorer. It's intended for audiences
-that are not necessarily technical.
+This is a high-level description of the model used in Equality Explorer. It's intended for audiences that are not
+necessarily technical.
 
 Equality Explorer allows the student to build equations and inequalities (herein referred to as _equations_) by placing
 _terms_ on a _balance scale_. The scale has a finite number of _cells_ in which to place terms. The 2 sides of the scale
