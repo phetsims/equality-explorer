@@ -29,9 +29,8 @@ Standard terminology:
 * constant term - term with a constant value, e.g. `1` or `2/3`, see `ConstantTerm`
 * equation - a mathematical relation in which two expressions are joined by an equals sign (=)
 * expression - in this sim, one side of an equation or inequality
-* inequality - a mathematical relation in which two expressions are joined by a
-  relational symbol (!=, >, >=, <, <=) indicating that the 2 expressions are different. In this simulation, the
-  relational symbols are limited to > and <.
+* inequality - a mathematical relation in which two expressions are joined by a relational symbol (!=, >, >=, <, <=)
+  indicating that the 2 expressions are different. In this simulation, the relational symbols are limited to > and <.
 * like terms - terms that have the same variables and powers, see https://en.wikipedia.org/wiki/Like_terms
 * operand - an input value to an operation
 * operation - in this sim, used to refer to binary operations involving one operator and two operands
@@ -81,8 +80,8 @@ coordinate frame is described by `ScreenView.DEFAULT_LAYOUT_BOUNDS`. All coordin
 is no use of relative coordinates; for example, the location of a term on a plate is expressed in the global coordinate
 frame, not in a coordinate frame relative to the location of the plate.
 
-**Query parameters**: Query parameters are used to enable sim-specific features, mainly for debugging and
-testing. Sim-specific query parameters are documented in `EqualityExplorerQueryParameters`.
+**Query parameters**: Query parameters are used to enable sim-specific features, mainly for debugging and testing.
+Sim-specific query parameters are documented in `EqualityExplorerQueryParameters`.
 
 **Assertions**: The implementation makes heavy use of `assert` to verify pre/post assumptions and perform type checking.
 If you are making modifications to this sim, do so with assertions enabled via the `ea` query parameter.
@@ -118,9 +117,9 @@ public dispose(): void {
 ```
 
 **Creator Pattern**: A very general description of this pattern can be found at
-https://github.com/phetsims/phet-info/blob/main/doc/phet-software-design-patterns.md#creator-with-drag-forwarding.
-But in practice, this pattern is implemented in many differing ways.
-So I'll attempt to summarize how this pattern is applied in this simulation.
+https://github.com/phetsims/phet-info/blob/main/doc/phet-software-design-patterns.md#creator-with-drag-forwarding. But
+in practice, this pattern is implemented in many differing ways. So I'll attempt to summarize how this pattern is
+applied in this simulation.
 
 A creator is responsible for handling the user interaction that results in the creation of both the model and view for a
 class of model element. In this sim, the creator is also responsible for managing the model element throughout its
@@ -206,8 +205,8 @@ more notes.
 
 ## Model
 
-This section provides an overview of the most important model elements, and some miscellaneous topics
-related to the model.
+This section provides an overview of the most important model elements, and some miscellaneous topics related to the
+model.
 
 `EqualityExplorerScene` is the base class for all scenes. See the [**Screens and Scenes
 **](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes) section
@@ -236,9 +235,9 @@ namely `ConstantTermCreator`, `VariableTermCreator`, and `ObjectTermCreator`.
 operation that is applied to all terms on both sides of the scale, using a control that allows the student to select a
 binary operator and an operand. The operands are `ConstantTerm` and `VariableTerm` instances.
 
-`Snapshot` encapsulates the full state of the scale, including associated variables, terms, and the cells
-that those terms occupy on the plates. `SnapshotCollection` is the collection of `Snapshot`s, and contains
-one related Property for each possible `Snapshot`.
+`Snapshot` encapsulates the full state of the scale, including associated variables, terms, and the cells that those
+terms occupy on the plates. `SnapshotCollection` is the collection of `Snapshot`s, and contains one related Property for
+each possible `Snapshot`.
 
 Throughout the simulation, variable values are represented using integers. All other numbers (constants,
 coefficients,...) are represented as fractions, using the common-code `Fraction` class. Fraction are always in reduced
@@ -246,8 +245,8 @@ form, both in the model and view.
 
 ## View
 
-This section provides an overview of the most important view components, and some miscellaneous topics
-related to the view.
+This section provides an overview of the most important view components, and some miscellaneous topics related to the
+view.
 
 `EqualityExplorerSceneNode` is the base class for all scenes. See the [**Screens and Scenes
 **](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes) section
@@ -341,8 +340,8 @@ see [lock-scenarios.md](https://github.com/phetsims/equality-explorer/blob/main/
 
 ## PhET-iO
 
-**Dialogs**: The sim has 3 OopsDialogs, used to display messages when something goes wrong.
-They are implemented as static instances, and reused when needed.
+**Dialogs**: The sim has 3 OopsDialogs, used to display messages when something goes wrong. They are implemented as
+static instances, and reused when needed.
 `EqualityExplorerSceneNode` is responsible for instantiating those instances eagerly. No PhetioCapsule is involved.
 
 ## Related simulations
