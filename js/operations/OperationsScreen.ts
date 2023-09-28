@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Property from '../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
@@ -35,7 +34,7 @@ export default class OperationsScreen extends EqualityExplorerScreen<OperationsM
 
       // EqualityExplorerScreenOptions
       name: EqualityExplorerStrings.screen.operationsStringProperty,
-      backgroundColorProperty: new Property( EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND ),
+      backgroundColorProperty: EqualityExplorerColors.operationsScreenBackgroundColorProperty,
       homeScreenIcon: createScreenIcon()
     }, providedOptions );
 
@@ -71,7 +70,7 @@ function createScreenIcon(): ScreenIcon {
 
   return new ScreenIcon( iconNode, {
     maxIconWidthProportion: 0.75,
-    fill: EqualityExplorerColors.SOLVING_SCREEN_BACKGROUND
+    fill: EqualityExplorerColors.operationsScreenBackgroundColorProperty
   } );
 }
 

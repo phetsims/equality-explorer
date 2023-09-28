@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Property from '../../../axon/js/Property.js';
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
@@ -34,7 +33,7 @@ export default class SolveItScreen extends Screen<SolveItModel, SolveItScreenVie
 
       // ScreenOptions
       name: EqualityExplorerStrings.screen.solveItStringProperty,
-      backgroundColorProperty: new Property( EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND ),
+      backgroundColorProperty: EqualityExplorerColors.solveItScreenBackgroundColorProperty,
       homeScreenIcon: createHomeScreenIcon(),
       navigationBarIcon: createNavigationBarIcon(),
       isDisposable: false
@@ -54,7 +53,7 @@ export default class SolveItScreen extends Screen<SolveItModel, SolveItScreenVie
 function createHomeScreenIcon(): ScreenIcon {
   const iconNode = new Image( phetGirlJugglingStars_png );
   return new ScreenIcon( iconNode, {
-    fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
+    fill: EqualityExplorerColors.solveItScreenBackgroundColorProperty
   } );
 }
 
@@ -73,7 +72,7 @@ function createNavigationBarIcon(): ScreenIcon {
 
   return new ScreenIcon( iconNode, {
     maxIconWidthProportion: 0.75,
-    fill: EqualityExplorerColors.SOLVE_IT_SCREEN_BACKGROUND
+    fill: EqualityExplorerColors.solveItScreenBackgroundColorProperty
   } );
 }
 

@@ -8,15 +8,32 @@
  */
 
 import equalityExplorer from '../equalityExplorer.js';
+import { ProfileColorProperty } from '../../../scenery/js/imports.js';
 
 const EqualityExplorerColors = {
 
   // screen background colors, see https://github.com/phetsims/equality-explorer/issues/21
-  BASICS_SCREEN_BACKGROUND: 'rgb( 255, 250, 227 )',
-  NUMBERS_SCREEN_BACKGROUND: 'rgb( 214, 233, 254 )',
-  VARIABLES_SCREEN_BACKGROUND: 'rgb( 239, 253, 218 )',
-  SOLVING_SCREEN_BACKGROUND: 'rgb( 237, 225, 253 )',
-  SOLVE_IT_SCREEN_BACKGROUND: 'rgb( 248, 227, 226 )',
+  basicsScreenBackgroundColorProperty: new ProfileColorProperty( equalityExplorer, 'basicsScreenBackgroundColor', {
+    default: 'rgb( 255, 250, 227 )'
+  } ),
+  numbersScreenBackgroundColorProperty: new ProfileColorProperty( equalityExplorer, 'numbersScreenBackgroundColor', {
+    default: 'rgb( 214, 233, 254 )'
+  } ),
+  variablesScreenBackgroundColorProperty: new ProfileColorProperty( equalityExplorer, 'variablesScreenBackgroundColor', {
+    default: 'rgb( 239, 253, 218 )'
+  } ),
+  operationsScreenBackgroundColorProperty: new ProfileColorProperty( equalityExplorer, 'operationsScreenBackgroundColor', {
+    default: 'rgb( 237, 225, 253 )'
+  } ),
+  solveItScreenBackgroundColorProperty: new ProfileColorProperty( equalityExplorer, 'solveItScreenBackgroundColor', {
+    default: 'rgb( 248, 227, 226 )'
+  } ),
+  labScreenBackgroundColorProperty: new ProfileColorProperty( equalityExplorer, 'labScreenBackgroundColor', {
+    default: 'rgb( 255, 250, 227 )'
+  } ),
+  twoVariablesScreenBackgroundColorProperty: new ProfileColorProperty( equalityExplorer, 'twoVariablesScreenBackgroundColor', {
+    default: 'rgb( 214, 233, 254 )'
+  } ),
 
   // snapshots
   SNAPSHOT_SELECTED_STROKE: 'rgb( 85, 169, 223 )',
