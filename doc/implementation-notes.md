@@ -264,7 +264,7 @@ animation behavior, and the lock feature (described in more detail in the [**Loc
 subclass of `TermDragListener` is used depends on the strategy used for putting terms on the scale, as described in
 the [**Screens and Scenes
 **](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes) section
-above. [SeparateTermsDragListener](https://github.com/phetsims/equality-explorer/blob/main/js/common/view/SeparateTermsDragListener.js)
+above. [SeparateTermsDragListener](https://github.com/phetsims/equality-explorer/blob/main/js/common/view/SeparateTermsDragListener.ts)
 is used when like terms occupy separate cells on the scale. `CombinedTermsDragListener` is used when like terms are
 combined in one cell on the scale.
 
