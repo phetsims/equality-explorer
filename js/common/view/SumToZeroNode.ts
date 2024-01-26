@@ -97,7 +97,7 @@ export default class SumToZeroNode extends Node {
       } ]
     } );
 
-    // removes this Node from the scenegraph
+    // removes this Node from the scene graph
     this.animation.finishEmitter.addListener( () => this.dispose() );
 
     this.disposeSumToZeroNode = () => {
