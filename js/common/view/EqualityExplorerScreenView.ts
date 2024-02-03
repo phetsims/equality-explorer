@@ -22,6 +22,7 @@ import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from './E
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
+import { Node } from '../../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -50,6 +51,8 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
 
     super( options );
 
+    const screenViewChildren: Node[] = [];
+
     this.equationAccordionBoxExpandedProperty = new BooleanProperty( true, {
       tandem: options.tandem.createTandem( 'equationAccordionBoxExpandedProperty' ),
       phetioDocumentation: 'Applies to the "Equation or Inequality" accordion box for all scenes'
@@ -70,7 +73,7 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
       bottom: this.layoutBounds.maxY - EqualityExplorerConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
-    this.addChild( resetAllButton );
+    screenViewChildren.push( resetAllButton );
 
     // If there is more than 1 scene, organize them under a 'sceneNodes' tandem.
     const sceneNodesTandem = ( model.scenes.length === 1 ) ? options.tandem : options.tandem.createTandem( 'sceneNodes' );
@@ -92,7 +95,7 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
           tandem: sceneNodeTandem
         } );
       this.sceneNodes.push( sceneNode );
-      this.addChild( sceneNode );
+      screenViewChildren.push( sceneNode );
     } );
 
     // If there is more than 1 scene, create radio buttons for selecting a scene.
@@ -101,7 +104,7 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
       const sceneRadioButtonGroup = new SceneRadioButtonGroup( model.scenes, model.sceneProperty, {
         tandem: options.tandem.createTandem( 'sceneRadioButtonGroup' )
       } );
-      this.addChild( sceneRadioButtonGroup );
+      screenViewChildren.push( sceneRadioButtonGroup );
 
       // Centered under Snapshots accordion box
       const snapshotsAccordionBox = this.sceneNodes[ 0 ].snapshotsAccordionBox;
@@ -110,6 +113,11 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
         sceneRadioButtonGroup.centerY = snapshotsAccordionBox.bottom + ( resetAllButton.top - snapshotsAccordionBox.bottom ) / 2;
       } );
     }
+
+    const screenViewRootNode = new Node( {
+      children: screenViewChildren
+    } );
+    this.addChild( screenViewRootNode );
   }
 
   public reset(): void {

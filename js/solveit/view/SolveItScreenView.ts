@@ -84,7 +84,6 @@ export default class SolveItScreenView extends ScreenView {
       cachedNodes: [ levelSelectionNode, levelsParent ],
       content: levelSelectionNode
     } );
-    this.addChild( this.transitionNode );
 
     model.levelProperty.link( ( level, previousLevel ) => {
 
@@ -110,6 +109,11 @@ export default class SolveItScreenView extends ScreenView {
         levelsParent.visible = ( level !== null );
       }
     } );
+
+    const screenViewRootNode = new Node( {
+      children: [ this.transitionNode ]
+    } );
+    this.addChild( screenViewRootNode );
   }
 
   public reset(): void {
