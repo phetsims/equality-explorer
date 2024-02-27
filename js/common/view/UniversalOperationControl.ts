@@ -37,7 +37,6 @@ import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
 import Range from '../../../../dot/js/Range.js';
 import UniversalOperator from '../model/UniversalOperator.js';
-import RectangularRadioButton from '../../../../sun/js/buttons/RectangularRadioButton.js';
 
 type SelfOptions = {
   timesZeroEnabled?: boolean; // whether to include 'times 0' as one of the operations
@@ -69,7 +68,7 @@ export default class UniversalOperationControl extends HBox {
       operatorItems.push( {
         value: operator,
         createNode: () => UniversalOperationNode.createOperatorNode( operator ),
-        tandemName: `${operator.tandemName}${RectangularRadioButton.TANDEM_NAME_SUFFIX}`
+        tandemName: `${operator.tandemName}RadioButton`
       } );
     }
 
