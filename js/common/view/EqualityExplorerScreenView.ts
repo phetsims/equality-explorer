@@ -66,6 +66,7 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
     const resetAllButton = new ResetAllButton( {
       listener: () => {
         phet.log && phet.log( 'ResetAllButton pressed' );
+        this.interruptSubtreeInput();
         model.reset();
         this.reset();
       },
