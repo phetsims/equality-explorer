@@ -94,8 +94,8 @@ export default abstract class TermDragListener extends DragListener {
 
       // DragListenerOptions
       allowTouchSnag: true,
-      start: ( event: PressListenerEvent ) => self!.doStart( event ),
-      drag: ( event: PressListenerEvent ) => self!.doDrag( event ),
+      start: event => self!.doStart( event ),
+      drag: event => self!.doDrag( event ),
       end: () => self!.doEnd()
 
     }, providedOptions );
