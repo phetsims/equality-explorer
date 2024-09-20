@@ -59,6 +59,11 @@
               "ts-nocheck": true
             }
           ]
+        },
+        "parserOptions": {
+          "project": [
+            "../equality-explorer/tsconfig.json"
+          ]
         }
       }
     ]
