@@ -62,7 +62,7 @@
         },
         "parserOptions": {
           "project": [
-            "../equality-explorer/tsconfig.json"
+            "../chipper/tsconfig/eslint-all/tsconfig.json"
           ]
         }
       }
