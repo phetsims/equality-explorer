@@ -13,7 +13,7 @@ import { Node, TColor } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
-import VariableTermNode from '../view/VariableTermNode.js'; // eslint-disable-line no-view-imported-from-model
+import VariableTermNode from '../view/VariableTermNode.js'; // eslint-disable-line phet/no-view-imported-from-model
 import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import Variable from './Variable.js';
 import VariableTerm, { VariableTermOptions } from './VariableTerm.js';
@@ -65,7 +65,7 @@ export default class VariableTermCreator extends TermCreator {
     let sum = Fraction.fromInteger( 0 );
     for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
       const term = this.termsOnPlate.get( i );
-      assert && assert( term instanceof VariableTerm ); // eslint-disable-line no-simple-type-checking-assertions
+      assert && assert( term instanceof VariableTerm ); // eslint-disable-line phet/no-simple-type-checking-assertions
       sum = sum.plus( ( term as VariableTerm ).coefficient ).reduced();
     }
     return sum;

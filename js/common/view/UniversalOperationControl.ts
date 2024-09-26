@@ -110,7 +110,7 @@ export default class UniversalOperationControl extends HBox {
         // If the operator is not supported for a variable term operand, change the operand to
         // a constant term that has the same value as the variable term's coefficient.
         // E.g. if the operand is '5x', change the operand to '5'.
-        assert && assert( currentOperand instanceof VariableTerm ); // eslint-disable-line no-simple-type-checking-assertions
+        assert && assert( currentOperand instanceof VariableTerm ); // eslint-disable-line phet/no-simple-type-checking-assertions
         const currentCoefficient = ( currentOperand as VariableTerm ).coefficient;
         const adjustedOperand = _.find( scene.operands,
           operand => ( operand instanceof ConstantTerm ) && operand.constantValue.equals( currentCoefficient ) )!;
@@ -207,7 +207,7 @@ export default class UniversalOperationControl extends HBox {
         assert && assert( operandIndex !== -1, `operand not found: ${operand}` );
 
         if ( ( operator === UniversalOperator.TIMES || operator === UniversalOperator.DIVIDE ) ) {
-          assert && assert( operand instanceof ConstantTerm, `unexpected operand type: ${operand}` ); // eslint-disable-line no-simple-type-checking-assertions
+          assert && assert( operand instanceof ConstantTerm, `unexpected operand type: ${operand}` ); // eslint-disable-line phet/no-simple-type-checking-assertions
 
           // increment arrow is enabled if there are any constant term operands above the current selection
           let incrementEnabled = false;

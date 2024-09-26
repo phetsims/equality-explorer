@@ -194,7 +194,7 @@ export default class BalanceScale {
     } );
 
     // TODO: Disable line below should be removed, see https://github.com/phetsims/phet-io/issues/1959
-    // eslint-disable-next-line tandem-name-should-match
+    // eslint-disable-next-line phet/tandem-name-should-match
     this.relationalOperatorProperty = new DerivedStringProperty( [ this.angleProperty ],
       ( angle ): RelationalOperator => ( angle === 0 ) ? MathSymbols.EQUAL_TO :
                                        ( angle > 0 ) ? MathSymbols.GREATER_THAN :

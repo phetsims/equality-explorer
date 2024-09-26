@@ -11,7 +11,7 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
-import ConstantTermNode from '../view/ConstantTermNode.js'; // eslint-disable-line no-view-imported-from-model
+import ConstantTermNode from '../view/ConstantTermNode.js'; // eslint-disable-line phet/no-view-imported-from-model
 import ConstantTerm, { ConstantTermOptions } from './ConstantTerm.js';
 import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import Term from './Term.js';
@@ -53,7 +53,7 @@ export default class ConstantTermCreator extends TermCreator {
     let sum = Fraction.fromInteger( 0 );
     for ( let i = 0; i < this.termsOnPlate.length; i++ ) {
       const term = this.termsOnPlate.get( i );
-      assert && assert( term instanceof ConstantTerm ); // eslint-disable-line no-simple-type-checking-assertions
+      assert && assert( term instanceof ConstantTerm ); // eslint-disable-line phet/no-simple-type-checking-assertions
       sum = sum.plus( ( term as ConstantTerm ).constantValue ).reduced();
     }
     return sum;

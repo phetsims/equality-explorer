@@ -144,7 +144,7 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
     }
 
     // TODO: Disable line below should be removed, see https://github.com/phetsims/phet-io/issues/1959
-    // eslint-disable-next-line tandem-name-should-match
+    // eslint-disable-next-line phet/tandem-name-should-match
     this.scale = new BalanceScale( this.leftTermCreators, this.rightTermCreators, {
       position: options.scalePosition,
       gridRows: options.gridRows,

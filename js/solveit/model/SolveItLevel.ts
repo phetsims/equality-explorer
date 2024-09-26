@@ -234,12 +234,12 @@ export default class SolveItLevel extends OperationsScene {
 
     if ( ( aTerm && !bTerm && !mTerm && nTerm ) ) {
       // ax + 0 = 0x + n
-      assert && assert( aTerm instanceof VariableTerm ); // eslint-disable-line no-simple-type-checking-assertions
+      assert && assert( aTerm instanceof VariableTerm ); // eslint-disable-line phet/no-simple-type-checking-assertions
       xIsIsolated = ( ( aTerm as VariableTerm ).coefficient.getValue() === 1 ); // x = n
     }
     else if ( !aTerm && bTerm && mTerm && !nTerm ) {
       // 0x + b = mx + 0
-      assert && assert( mTerm instanceof VariableTerm ); // eslint-disable-line no-simple-type-checking-assertions
+      assert && assert( mTerm instanceof VariableTerm ); // eslint-disable-line phet/no-simple-type-checking-assertions
       xIsIsolated = ( ( mTerm as VariableTerm ).coefficient.getValue() === 1 ); // b = x
     }
 
