@@ -8,13 +8,13 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import TermCreator, { TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermNode from '../view/ObjectTermNode.js'; // eslint-disable-line phet/no-view-imported-from-model
 import ObjectTerm from './ObjectTerm.js';
 import ObjectVariable from './ObjectVariable.js';
-import { Node } from '../../../../scenery/js/imports.js';
 import Term from './Term.js';
+import TermCreator, { TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 
 type SelfOptions = EmptySelfOptions;
 

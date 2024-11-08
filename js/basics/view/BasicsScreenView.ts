@@ -6,14 +6,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import BasicsSceneNode, { BasicsSceneNodeOptions } from './BasicsSceneNode.js';
-import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import Property from '../../../../axon/js/Property.js';
 import BasicsModel from '../model/BasicsModel.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
+import BasicsSceneNode, { BasicsSceneNodeOptions } from './BasicsSceneNode.js';
 
 export default class BasicsScreenView extends EqualityExplorerScreenView {
 

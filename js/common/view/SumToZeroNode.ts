@@ -8,6 +8,7 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Range from '../../../../dot/js/Range.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -16,10 +17,9 @@ import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import TermCreator from '../model/TermCreator.js';
 import Variable from '../model/Variable.js';
 import HaloNode from './HaloNode.js';
-import TermCreator from '../model/TermCreator.js';
-import Range from '../../../../dot/js/Range.js';
 
 type SelfOptions = {
   variable?: Variable | null; // determines whether we render '0' or '0x' (for example)

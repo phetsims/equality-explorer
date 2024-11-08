@@ -6,20 +6,20 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
+import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import { HBox, Image, Text, VBox } from '../../../scenery/js/imports.js';
+import appleBig_png from '../../images/appleBig_png.js';
+import orangeBig_png from '../../images/orangeBig_png.js';
+import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import BasicsModel from './model/BasicsModel.js';
 import BasicsScreenView from './view/BasicsScreenView.js';
-import appleBig_png from '../../images/appleBig_png.js';
-import orangeBig_png from '../../images/orangeBig_png.js';
-import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
-import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { HBox, Image, Text, VBox } from '../../../scenery/js/imports.js';
-import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 
 type SelfOptions = EmptySelfOptions;
 

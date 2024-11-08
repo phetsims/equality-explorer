@@ -6,6 +6,11 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import { combineOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TrashButton from '../../../../scenery-phet/js/buttons/TrashButton.js';
 import { HBox, HSeparator, Node, NodeTranslationOptions, Path, PressListenerEvent, Text, VBox } from '../../../../scenery/js/imports.js';
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
@@ -15,15 +20,10 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
+import Snapshot from '../model/Snapshot.js';
 import SnapshotControl, { SnapshotControlOptions } from './SnapshotControl.js';
 import VariableValuesVisibleCheckbox from './VariableValuesVisibleCheckbox.js';
-import Snapshot from '../model/Snapshot.js';
-import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
-import Property from '../../../../axon/js/Property.js';
-import { combineOptions, optionize4 } from '../../../../phet-core/js/optionize.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 type SelfOptions = {
 

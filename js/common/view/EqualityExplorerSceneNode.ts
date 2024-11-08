@@ -7,16 +7,16 @@
  */
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node, NodeOptions, PressListenerEvent } from '../../../../scenery/js/imports.js';
-import equalityExplorer from '../../equalityExplorer.js';
-import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
-import TermCreator from '../model/TermCreator.js';
-import Term from '../model/Term.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
-import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
+import { Node, NodeOptions, PressListenerEvent } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
+import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
+import Term from '../model/Term.js';
+import TermCreator from '../model/TermCreator.js';
 
 const dialogsTandem = Tandem.GLOBAL_VIEW.createTandem( 'dialogs' );
 

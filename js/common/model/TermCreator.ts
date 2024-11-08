@@ -30,18 +30,18 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import { Node, PressListenerEvent, SceneryEvent } from '../../../../scenery/js/imports.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import type TermNode from '../view/TermNode.js';
 import Plate from './Plate.js';
 import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
 import Variable from './Variable.js';
-import type TermNode from '../view/TermNode.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = {
 

@@ -13,8 +13,8 @@ import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from './ConstantTerm.js';
 import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
-import Variable from './Variable.js';
 import UniversalOperator from './UniversalOperator.js';
+import Variable from './Variable.js';
 
 type SelfOptions = {
   coefficient?: Fraction;

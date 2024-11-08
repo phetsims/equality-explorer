@@ -6,15 +6,15 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import { Node } from '../../../../scenery/js/imports.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTermNode from '../view/ConstantTermNode.js'; // eslint-disable-line phet/no-view-imported-from-model
 import ConstantTerm, { ConstantTermOptions } from './ConstantTerm.js';
-import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import Term from './Term.js';
+import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 
 type SelfOptions = {
   constantValue?: Fraction; // the default constant value used to create terms

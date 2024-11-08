@@ -7,18 +7,18 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import CameraButton from '../../../../scenery-phet/js/buttons/CameraButton.js';
 import { FireListener, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Snapshot from '../model/Snapshot.js';
 import SnapshotNode from './SnapshotNode.js';
-import CameraButton from '../../../../scenery-phet/js/buttons/CameraButton.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type Orientation = 'horizontal' | 'vertical';
 

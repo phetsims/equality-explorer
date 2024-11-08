@@ -18,14 +18,14 @@ import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import { BalanceScaleSide } from './BalanceScale.js';
 import Grid from './Grid.js';
 import Term from './Term.js';
 import TermCreator from './TermCreator.js';
-import { BalanceScaleSide } from './BalanceScale.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 // constants
 const DEFAULT_CELL_SIZE = new Dimension2( 5, 5 );

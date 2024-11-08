@@ -12,8 +12,8 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Term, { TermOptions } from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
-import Variable from './Variable.js';
 import UniversalOperator from './UniversalOperator.js';
+import Variable from './Variable.js';
 
 type SelfOptions = {
   constantValue?: Fraction;

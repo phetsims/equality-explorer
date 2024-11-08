@@ -7,6 +7,7 @@
  */
 
 import { Image } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import cat_png from '../../../images/cat_png.js';
 import catShadow_png from '../../../images/catShadow_png.js';
 import dog_png from '../../../images/dog_png.js';
@@ -14,10 +15,9 @@ import dogShadow_png from '../../../images/dogShadow_png.js';
 import turtle_png from '../../../images/turtle_png.js';
 import turtleShadow_png from '../../../images/turtleShadow_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
+import ObjectVariable from '../../common/model/ObjectVariable.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
-import ObjectVariable from '../../common/model/ObjectVariable.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class AnimalsScene extends BasicsScene {
 

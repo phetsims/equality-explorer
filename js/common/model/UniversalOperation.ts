@@ -10,8 +10,8 @@
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ConstantTerm from './ConstantTerm.js';
-import VariableTerm from './VariableTerm.js';
 import UniversalOperator from './UniversalOperator.js';
+import VariableTerm from './VariableTerm.js';
 
 // universal operand can be either a constant or a variable term
 export type UniversalOperand = ConstantTerm | VariableTerm;

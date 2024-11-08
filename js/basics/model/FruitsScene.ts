@@ -7,6 +7,7 @@
  */
 
 import { Image } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import apple_png from '../../../images/apple_png.js';
 import appleShadow_png from '../../../images/appleShadow_png.js';
 import lemon_png from '../../../images/lemon_png.js';
@@ -14,10 +15,9 @@ import lemonShadow_png from '../../../images/lemonShadow_png.js';
 import orange_png from '../../../images/orange_png.js';
 import orangeShadow_png from '../../../images/orangeShadow_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
+import ObjectVariable from '../../common/model/ObjectVariable.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
-import ObjectVariable from '../../common/model/ObjectVariable.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class FruitsScene extends BasicsScene {
 

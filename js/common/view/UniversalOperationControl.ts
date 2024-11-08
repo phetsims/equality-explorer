@@ -17,6 +17,7 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
@@ -31,12 +32,11 @@ import OperationsScene from '../../operations/model/OperationsScene.js';
 import ConstantTerm from '../model/ConstantTerm.js';
 import Term from '../model/Term.js';
 import UniversalOperation, { UniversalOperand } from '../model/UniversalOperation.js';
+import UniversalOperator from '../model/UniversalOperator.js';
 import VariableTerm from '../model/VariableTerm.js';
 import ObjectPicker, { ObjectPickerItem } from './ObjectPicker.js';
 import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
-import Range from '../../../../dot/js/Range.js';
-import UniversalOperator from '../model/UniversalOperator.js';
 
 type SelfOptions = {
   timesZeroEnabled?: boolean; // whether to include 'times 0' as one of the operations

@@ -7,8 +7,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import equalityExplorer from '../equalityExplorer.js';
 import { ProfileColorProperty } from '../../../scenery/js/imports.js';
+import equalityExplorer from '../equalityExplorer.js';
 
 const EqualityExplorerColors = {
 

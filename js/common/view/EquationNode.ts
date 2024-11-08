@@ -10,22 +10,22 @@
 
 import Multilink from '../../../../axon/js/Multilink.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import { Font, FontWeight, HBox, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
-import ObjectTermCreator from '../model/ObjectTermCreator.js';
-import ObjectTermNode from './ObjectTermNode.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ConstantTermCreator from '../model/ConstantTermCreator.js';
+import ObjectTermCreator from '../model/ObjectTermCreator.js';
+import { RelationalOperator } from '../model/RelationalOperator.js';
 import TermCreator from '../model/TermCreator.js';
 import VariableTermCreator from '../model/VariableTermCreator.js';
 import ConstantTermNode from './ConstantTermNode.js';
+import ObjectTermNode from './ObjectTermNode.js';
 import VariableTermNode from './VariableTermNode.js';
-import { RelationalOperator } from '../model/RelationalOperator.js';
-import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 
 // constants
 const DEFAULT_FONT_SIZE = 30;

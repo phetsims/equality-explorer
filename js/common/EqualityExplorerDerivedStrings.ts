@@ -6,11 +6,11 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import PatternStringProperty from '../../../axon/js/PatternStringProperty.js';
+import { RichText } from '../../../scenery/js/imports.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import equalityExplorer from '../equalityExplorer.js';
-import PatternStringProperty from '../../../axon/js/PatternStringProperty.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
-import { RichText } from '../../../scenery/js/imports.js';
 
 const DERIVED_STRINGS_TANDEM = Tandem.getDerivedStringsTandem();
 

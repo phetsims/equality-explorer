@@ -7,6 +7,7 @@
  */
 
 import { Image } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import coin1_png from '../../../images/coin1_png.js';
 import coin1Shadow_png from '../../../images/coin1Shadow_png.js';
 import coin2_png from '../../../images/coin2_png.js';
@@ -14,10 +15,9 @@ import coin2Shadow_png from '../../../images/coin2Shadow_png.js';
 import coin3_png from '../../../images/coin3_png.js';
 import coin3Shadow_png from '../../../images/coin3Shadow_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
+import ObjectVariable from '../../common/model/ObjectVariable.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
-import ObjectVariable from '../../common/model/ObjectVariable.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 
 export default class CoinsScene extends BasicsScene {
 

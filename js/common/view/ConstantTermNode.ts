@@ -6,6 +6,8 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
@@ -17,8 +19,6 @@ import ConstantTerm from '../model/ConstantTerm.js';
 import ConstantTermCreator from '../model/ConstantTermCreator.js';
 import ReducedFractionNode, { ReducedFractionNodeOptions } from './ReducedFractionNode.js';
 import TermNode, { TermNodeOptions } from './TermNode.js';
-import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
 type EquationTermNodeSelfOptions = EmptySelfOptions;
 

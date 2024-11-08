@@ -7,14 +7,14 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Range from '../../../../dot/js/Range.js';
-import equalityExplorer from '../../equalityExplorer.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Range from '../../../../dot/js/Range.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 
 type SelfOptions = {
   value?: number; // initial value

@@ -6,18 +6,18 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import optionize from '../../../../phet-core/js/optionize.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { FlowBox, FlowBoxOptions, Node } from '../../../../scenery/js/imports.js';
-import EquationNode from './EquationNode.js';
-import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
-import VariableValuesNode from './VariableValuesNode.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import equalityExplorer from '../../equalityExplorer.js';
-import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
-import Snapshot from '../model/Snapshot.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import { FlowBox, FlowBoxOptions, Node } from '../../../../scenery/js/imports.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
+import Snapshot from '../model/Snapshot.js';
+import EquationNode from './EquationNode.js';
+import VariableValuesNode from './VariableValuesNode.js';
 
 const EQUATION_FONT_SIZE = 22;
 const FRACTION_FONT_SIZE = 14;

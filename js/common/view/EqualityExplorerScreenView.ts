@@ -7,22 +7,22 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerModel from '../model/EqualityExplorerModel.js';
-import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
-import Property from '../../../../axon/js/Property.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from './EqualityExplorerSceneNode.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 
 type SelfOptions = EmptySelfOptions;
 

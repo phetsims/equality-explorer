@@ -9,14 +9,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import Term from '../model/Term.js';
+import TermCreator, { CreateTermOptions } from '../model/TermCreator.js';
 import SumToZeroNode from './SumToZeroNode.js';
 import TermDragListener, { TermDragListenerOptions } from './TermDragListener.js';
 import TermNode from './TermNode.js';
-import Term from '../model/Term.js';
-import TermCreator, { CreateTermOptions } from '../model/TermCreator.js';
-import { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;
 

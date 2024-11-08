@@ -14,10 +14,10 @@ import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import VariableTermNode from '../view/VariableTermNode.js'; // eslint-disable-line phet/no-view-imported-from-model
+import Term from './Term.js';
 import TermCreator, { CreateTermOptions, TermCreatorOptions, TermCreatorSign } from './TermCreator.js';
 import Variable from './Variable.js';
 import VariableTerm, { VariableTermOptions } from './VariableTerm.js';
-import Term from './Term.js';
 
 type SelfOptions = {
   positiveFill?: TColor; // fill for the background of positive terms

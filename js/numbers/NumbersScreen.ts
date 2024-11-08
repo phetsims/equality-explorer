@@ -6,19 +6,19 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
+import Fraction from '../../../phetcommon/js/model/Fraction.js';
+import { Node } from '../../../scenery/js/imports.js';
+import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
+import ConstantTermNode from '../common/view/ConstantTermNode.js';
+import HaloNode from '../common/view/HaloNode.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import NumbersModel from './model/NumbersModel.js';
 import NumbersScreenView from './view/NumbersScreenView.js';
-import HaloNode from '../common/view/HaloNode.js';
-import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import Fraction from '../../../phetcommon/js/model/Fraction.js';
-import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
-import ConstantTermNode from '../common/view/ConstantTermNode.js';
-import { Node } from '../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 

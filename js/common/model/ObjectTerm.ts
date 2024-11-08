@@ -8,11 +8,11 @@
 
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import Term from './Term.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectVariable from './ObjectVariable.js';
-import Variable from './Variable.js';
+import Term from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
+import Variable from './Variable.js';
 import VariableTerm, { VariableTermOptions } from './VariableTerm.js';
 
 // constants

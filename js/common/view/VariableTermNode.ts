@@ -7,6 +7,10 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
@@ -15,14 +19,10 @@ import { Font, HBox, HBoxOptions, Node, NodeOptions, Rectangle, TColor, Text } f
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import VariableTerm from '../model/VariableTerm.js';
+import VariableTermCreator from '../model/VariableTermCreator.js';
 import ReducedFractionNode from './ReducedFractionNode.js';
 import TermNode, { TermNodeOptions } from './TermNode.js';
-import VariableTermCreator from '../model/VariableTermCreator.js';
-import VariableTerm from '../model/VariableTerm.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
-import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
 type EquationTermNodeSelfOptions = {
   integerXSpacing?: number; // space between integer coefficient and variable symbol

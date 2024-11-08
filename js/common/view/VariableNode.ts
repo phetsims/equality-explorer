@@ -9,8 +9,8 @@
 import optionize from '../../../../phet-core/js/optionize.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
 import { Image, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
-import ObjectVariable from '../model/ObjectVariable.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import ObjectVariable from '../model/ObjectVariable.js';
 import Variable from '../model/Variable.js';
 
 type SelfOptions = {

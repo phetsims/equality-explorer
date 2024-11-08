@@ -7,11 +7,17 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
@@ -19,12 +25,6 @@ import BalanceScale from './BalanceScale.js';
 import SnapshotsCollection from './SnapshotsCollection.js';
 import TermCreator from './TermCreator.js';
 import Variable from './Variable.js';
-import Property from '../../../../axon/js/Property.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 
 // constants
 const DEFAULT_SCALE_POSITION = new Vector2( 355, 427 );

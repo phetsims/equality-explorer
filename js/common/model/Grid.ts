@@ -16,13 +16,13 @@
  */
 
 import Disposable from '../../../../axon/js/Disposable.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import equalityExplorer from '../../equalityExplorer.js';
-import Term from './Term.js';
-import { BalanceScaleSide } from './BalanceScale.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import { BalanceScaleSide } from './BalanceScale.js';
+import Term from './Term.js';
 
 // constants
 const NO_TERM = null; // occupies all empty cells in the grid

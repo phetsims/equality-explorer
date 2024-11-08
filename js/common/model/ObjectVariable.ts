@@ -9,10 +9,10 @@
  */
 
 import StringProperty from '../../../../axon/js/StringProperty.js';
-import Variable, { VariableOptions } from './Variable.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
+import Variable, { VariableOptions } from './Variable.js';
 
 type SelfOptions = {
   image: HTMLImageElement; // image that represents the object

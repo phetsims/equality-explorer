@@ -10,22 +10,22 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Disposable from '../../../../axon/js/Disposable.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
+import Disposable from '../../../../axon/js/Disposable.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Plate, { PlateOptions } from './Plate.js';
-import TermCreator from './TermCreator.js';
 import { RelationalOperator, RelationalOperatorValues } from './RelationalOperator.js';
-import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
+import TermCreator from './TermCreator.js';
 
 type SelfOptions = {
   position?: Vector2; // position of the point where the beam balances on the fulcrum

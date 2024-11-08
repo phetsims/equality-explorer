@@ -12,10 +12,10 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene, { EqualityExplorerSceneOptions } from '../../common/model/EqualityExplorerScene.js';
-import TermCreator from '../../common/model/TermCreator.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermCreator from '../../common/model/ObjectTermCreator.js';
 import ObjectVariable from '../../common/model/ObjectVariable.js';
+import TermCreator from '../../common/model/TermCreator.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = {
   hasConstantTerms?: boolean; // does this scene allow you to create constant terms?

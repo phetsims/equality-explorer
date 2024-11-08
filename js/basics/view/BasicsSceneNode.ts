@@ -18,11 +18,11 @@ import BalanceScaleNode from '../../common/view/BalanceScaleNode.js';
 import EqualityExplorerLockNode from '../../common/view/EqualityExplorerLockNode.js';
 import EqualityExplorerSceneNode, { EqualityExplorerSceneNodeOptions } from '../../common/view/EqualityExplorerSceneNode.js';
 import EquationAccordionBox from '../../common/view/EquationAccordionBox.js';
+import { SnapshotControlOptions } from '../../common/view/SnapshotControl.js';
 import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import TermsToolboxNode from '../../common/view/TermsToolboxNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from '../model/BasicsScene.js';
-import { SnapshotControlOptions } from '../../common/view/SnapshotControl.js';
 
 type SelfOptions = {
   termsToolboxContentSize?: Dimension2;

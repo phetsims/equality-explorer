@@ -6,14 +6,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
-import equalityExplorer from '../../equalityExplorer.js';
-import NumbersSceneNode, { NumbersSceneNodeOptions } from './NumbersSceneNode.js';
-import NumbersModel from '../model/NumbersModel.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
+import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
+import equalityExplorer from '../../equalityExplorer.js';
+import NumbersModel from '../model/NumbersModel.js';
+import NumbersSceneNode, { NumbersSceneNodeOptions } from './NumbersSceneNode.js';
 
 export default class NumbersScreenView extends EqualityExplorerScreenView {
 
