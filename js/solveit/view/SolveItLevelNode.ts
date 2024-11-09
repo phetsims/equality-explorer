@@ -1,4 +1,4 @@
-// Copyright 2018-2023, University of Colorado Boulder
+// Copyright 2018-2024, University of Colorado Boulder
 
 /**
  * SolveItLevelNode displays a level of the 'Solve It!' game screen. This shares several UI components with the

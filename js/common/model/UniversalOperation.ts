@@ -1,4 +1,4 @@
-// Copyright 2018-2022, University of Colorado Boulder
+// Copyright 2018-2024, University of Colorado Boulder
 
 /**
  * Data structure that describes a 'universal operation' (terminology specific to this sim),
