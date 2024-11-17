@@ -151,8 +151,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
 
     const hBox = new HBox( {
       spacing: 40,
-      children: hBoxChildren,
-      maxWidth: contentWidth
+      children: hBoxChildren
     } );
 
     const content = new VBox( {
@@ -161,7 +160,9 @@ export default class SnapshotsAccordionBox extends AccordionBox {
         snapshotControlsVBox,
         new HSeparator( { stroke: 'rgb( 200, 200, 200 )' } ),
         hBox
-      ]
+      ],
+      maxWidth: contentWidth,
+      minContentWidth: contentWidth
     } );
 
     super( content, options );
