@@ -14,6 +14,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import LockNode, { LockNodeOptions } from '../../../../scenery-phet/js/LockNode.js';
 import { FireListener, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -36,11 +37,16 @@ export default class EqualityExplorerLockNode extends LockNode {
 
     super( lockedProperty, options );
 
+    // Since this control toggles between 2 values, use the default sounds for RectangularToggleButton.
+    const toggleOnSoundPlayer = sharedSoundPlayers.get( 'toggleOn' );
+    const toggleOffSoundPlayer = sharedSoundPlayers.get( 'toggleOff' );
+
     // toggle the state when the user clicks on this Node
     this.addInputListener( new FireListener( {
       fire: () => {
         lockedProperty.value = !lockedProperty.value;
         phet.log && phet.log( `Lock pressed, value=${lockedProperty.value}` );
+        ( lockedProperty.value ) ? toggleOnSoundPlayer.play() : toggleOffSoundPlayer.play();
       },
       tandem: options.tandem.createTandem( 'fireListener' )
     } ) );
