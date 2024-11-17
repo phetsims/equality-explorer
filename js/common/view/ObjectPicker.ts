@@ -361,17 +361,28 @@ export default class ObjectPicker<T> extends Node {
     incrementEnabledProperty.link( incrementEnabledListener );
     decrementEnabledProperty.link( decrementEnabledListener );
 
+    // Node that is displayed by the picker, corresponds to the selected value.
+    let valueNode: Node;
+
+    // Center the value in the picker. It's possible that displayed Node contains dynamic content.
+    const valueNodeLocalBoundsObserver = () => {
+      valueNode.centerX = backgroundWidth / 2;
+      valueNode.centerY = backgroundHeight / 2;
+    };
+
     // Update displayed Node and index to match the current value
     const valueObserver = ( value: T ) => {
 
+      if ( valueNode && valueNode.localBoundsProperty.hasListener( valueNodeLocalBoundsObserver ) ) {
+        valueNode.localBoundsProperty.unlink( valueNodeLocalBoundsObserver );
+      }
       valueParentNode.removeAllChildren();
 
       // show the node associated with the value
       const index = indexOfItemWithValue<T>( items, value );
-      const valueNode = items[ index ].node;
+      valueNode = items[ index ].node;
       valueParentNode.addChild( valueNode );
-      valueNode.centerX = backgroundWidth / 2;
-      valueNode.centerY = backgroundHeight / 2;
+      valueNode.localBoundsProperty.link( valueNodeLocalBoundsObserver );
 
       // synchronize the index
       indexProperty.value = index;
@@ -403,6 +414,10 @@ export default class ObjectPicker<T> extends Node {
 
       if ( valueProperty.hasListener( valueObserver ) ) {
         valueProperty.unlink( valueObserver );
+      }
+
+      if ( valueNode && valueNode.localBoundsProperty.hasListener( valueNodeLocalBoundsObserver ) ) {
+        valueNode.localBoundsProperty.unlink( valueNodeLocalBoundsObserver );
       }
 
       if ( incrementEnabledProperty.hasListener( incrementEnabledListener ) ) {
