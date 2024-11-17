@@ -1,4 +1,4 @@
-// Copyright 2017-2022, University of Colorado Boulder
+// Copyright 2017-2024, University of Colorado Boulder
 
 /**
  * Main entry point for the sim.
@@ -19,6 +19,8 @@ import VariablesScreen from './variables/VariablesScreen.js';
 
 simLauncher.launch( () => {
 
+  const titleStringProperty = EqualityExplorerStrings[ 'equality-explorer' ].titleStringProperty;
+
   const screens = [
     new BasicsScreen( { tandem: Tandem.ROOT.createTandem( 'basicsScreen' ) } ),
     new NumbersScreen( { tandem: Tandem.ROOT.createTandem( 'numbersScreen' ) } ),
@@ -27,8 +29,9 @@ simLauncher.launch( () => {
     new SolveItScreen( { tandem: Tandem.ROOT.createTandem( 'solveItScreen' ) } )
   ];
 
-  const sim = new Sim( EqualityExplorerStrings[ 'equality-explorer' ].titleStringProperty, screens, {
+  const sim = new Sim( titleStringProperty, screens, {
     credits: EqualityExplorerConstants.CREDITS
   } );
+
   sim.start();
 } );
