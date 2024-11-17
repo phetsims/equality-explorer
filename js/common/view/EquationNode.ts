@@ -131,7 +131,7 @@ export default class EquationNode extends Node {
         () => this.updateRelationalOperator()
       );
 
-      // Update the expressions number of terms on either plate changes.
+      // Update the expressions if the number of terms on either plate changes.
       Multilink.multilinkAny(
         allTermCreators.map( termCreator => termCreator.numberOfTermsOnPlateProperty ),
         () => this.updateExpressions()
