@@ -34,7 +34,7 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import { DragListener, DragListenerOptions, PressedDragListener, PressListenerEvent } from '../../../../scenery/js/imports.js';
+import { DragListenerOptions, PressedDragListener, PressListenerEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
@@ -44,6 +44,7 @@ import Term from '../model/Term.js';
 import TermCreator from '../model/TermCreator.js';
 import SumToZeroNode from './SumToZeroNode.js';
 import TermNode from './TermNode.js';
+import SoundDragListener from '../../../../scenery-phet/js/SoundDragListener.js';
 
 type SelfOptions = {
   haloRadius?: number; // radius of the halo around terms that sum to zero
@@ -52,7 +53,7 @@ type SelfOptions = {
 
 export type TermDragListenerOptions = SelfOptions;
 
-export default abstract class TermDragListener extends DragListener {
+export default abstract class TermDragListener extends SoundDragListener {
 
   protected readonly termNode: TermNode;
   protected readonly term: Term;
