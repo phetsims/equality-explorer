@@ -196,8 +196,6 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       baseColor: PhetColorScheme.BUTTON_YELLOW,
       xMargin: 12,
       yMargin: 8,
-      centerX: level.scale.position.x,
-      top: universalOperationControl.bottom + 30, // determined empirically
       listener: () => {
         phet.log && phet.log( 'Next button pressed' );
         level.nextChallenge();
@@ -205,6 +203,10 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       tandem: options.tandem.createTandem( 'nextButton' ),
       phetioDocumentation: 'This button appears when the current challenge has been solved. Pressing it advances to a new challenge.',
       visiblePropertyOptions: { phetioReadOnly: true } // so that PhET-iO client can see whether its visible
+    } );
+    nextButton.localBoundsProperty.link( () => {
+      nextButton.centerX = level.scale.position.x;
+      nextButton.top = universalOperationControl.bottom + 30;
     } );
 
     // Smiley face, displayed when the challenge has been solved
