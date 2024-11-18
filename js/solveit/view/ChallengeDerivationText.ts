@@ -7,31 +7,25 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { NodeTranslationOptions, RichText, RichTextOptions } from '../../../../scenery/js/imports.js';
+import { RichText } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Challenge from '../model/Challenge.js';
 
 // constants
 const DEFAULT_FONT = new PhetFont( 14 );
 
-type SelfOptions = EmptySelfOptions;
-
-type ChallengeDerivationTextOptions = SelfOptions & NodeTranslationOptions;
-
 export default class ChallengeDerivationText extends RichText {
 
-  public constructor( challengeProperty: Property<Challenge | null>, providedOptions?: ChallengeDerivationTextOptions ) {
+  public constructor( challengeProperty: Property<Challenge | null> ) {
 
-    const options = optionize<ChallengeDerivationTextOptions, SelfOptions, RichTextOptions>()( {
+    super( '', {
 
       // RichTextOptions
       font: DEFAULT_FONT,
+      fill: 'red',
       isDisposable: false
-    }, providedOptions );
-
-    super( '', options );
+    } );
 
     // display derivation of the current challenge
     challengeProperty.link( challenge => {

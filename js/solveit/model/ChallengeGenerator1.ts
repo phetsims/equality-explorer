@@ -16,18 +16,18 @@ import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 
 // strings (debug)
-const PATTERN1 = 'type 1, ax = c<br>' +
+const PATTERN1 = 'Type 1: ax = c<br>' +
                  'x = {{x}}<br>' +
                  'a = {{a}}<br>' +
-                 'c = a * x = {{c}}';
-const PATTERN2 = 'type 2, x + b = c<br>' +
+                 'c = {{c}}';
+const PATTERN2 = 'Type 2: x + b = c<br>' +
                  'x = {{x}}<br>' +
                  'b = {{b}}<br>' +
-                 'c = x + b = {{c}}';
-const PATTERN3 = 'type 3, x/d = c<br>' +
+                 'c = {{c}}';
+const PATTERN3 = 'Type 3: x/d = c<br>' +
                  'c = {{c}}<br>' +
                  'd = {{d}}<br>' +
-                 'x = c * d = {{x}} ';
+                 'x = {{x}}';
 
 // constants
 const MAX_ATTEMPTS = 50; // max attempts in a while loop

@@ -18,7 +18,7 @@ import RefreshButton from '../../../../scenery-phet/js/buttons/RefreshButton.js'
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Color, Node, RichText, Text } from '../../../../scenery/js/imports.js';
+import { Color, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
@@ -245,27 +245,30 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
 
     // Show Answer button, for debugging.
     // Note that this is conditional, so is not (and should be) instrumented for PhET-iO.
-    let showAnswerButton: Node;
+    let solveItButton: Node;
     if ( phet.chipper.queryParameters.showAnswers ) {
 
       // shows how the current challenge was derived
-      children.push( new ChallengeDerivationText( level.challengeProperty, {
-        left: snapshotsAccordionBox.left,
-        top: snapshotsAccordionBox.bottom + 5
-      } ) );
+      const challengeDerivationText = new ChallengeDerivationText( level.challengeProperty );
 
-      // button that takes you directly to the answer. debug only, i18n not needed.
-      showAnswerButton = new RectangularPushButton( {
-        content: new Text( 'Show Answer', {
+      // Button that solves the challenge. debug only, i18n not needed.
+      solveItButton = new RectangularPushButton( {
+        content: new Text( 'Solve It!', {
           font: new PhetFont( 16 ),
           fill: 'white'
         } ),
         baseColor: 'red',
-        centerX: balanceScaleNode.centerX,
-        bottom: balanceScaleNode.bottom - 5,
         listener: () => level.showAnswer()
       } );
-      children.push( showAnswerButton );
+
+      const vBox = new VBox( {
+        align: 'left',
+        spacing: 5,
+        children: [ challengeDerivationText, solveItButton ],
+        left: snapshotsAccordionBox.left,
+        top: snapshotsAccordionBox.bottom + 5
+      } );
+      children.push( vBox );
     }
 
     assert && assert( !options.children, 'SolveItLevelNode sets children' );
@@ -327,7 +330,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       }
 
       refreshButton.visible = false;
-      showAnswerButton && ( showAnswerButton.visible = false );
+      solveItButton && ( solveItButton.visible = false );
 
       // When the score reaches a magic number, display the reward.
       if ( score === rewardScoreProperty.value ) {
@@ -383,7 +386,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       refreshButton.visible = true;
       nextButton.visible = false;
       faceNode.visible = false;
-      showAnswerButton && ( showAnswerButton.visible = true );
+      solveItButton && ( solveItButton.visible = true );
     } );
 
     // Perform sum-to-zero animation for any terms that became zero as the result of a universal operation.
