@@ -103,6 +103,7 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
   // the sim in the locked or unlocked state while memory profiling or fuzz testing.
   // For example, use ?locked&lockVisible=false to profile the sim in the locked state.
   // For internal use only, not public facing.
+  //TODO https://github.com/phetsims/equality-explorer/issues/192 This conflicts with lockNode.visibleProperty for PhET-iO.
   lockVisible: {
     type: 'boolean',
     defaultValue: true
