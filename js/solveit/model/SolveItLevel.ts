@@ -2,7 +2,7 @@
 
 /**
  * SolveItLevel is a level in the 'Solve It!' game screen. A level is a specialization of a scene from the 'Operations'
- * screen. (variable and constant terms on both sides of the equation), with the addition of game challenges.
+ * screen (variable and constant terms on both sides of the equation), with the addition of game challenges.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
