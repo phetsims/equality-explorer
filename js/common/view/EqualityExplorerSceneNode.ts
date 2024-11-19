@@ -107,7 +107,8 @@ export default class EqualityExplorerSceneNode extends Node {
     const termCreatedListener = ( termCreator: TermCreator, term: Term, event: PressListenerEvent | null ) => {
 
       // create a TermNode
-      const termNode = termCreator.createTermNode( term ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+      //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+      const termNode = termCreator.createTermNode( term );
       termsLayer.addChild( termNode );
 
       // Clean up when the term is disposed. Term.dispose handles removal of this listener.

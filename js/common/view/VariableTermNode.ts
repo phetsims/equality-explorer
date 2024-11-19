@@ -93,7 +93,8 @@ export default class VariableTermNode extends TermNode {
    */
   public static createInteractiveTermNode( coefficient: Fraction, symbolProperty: TReadOnlyProperty<string>,
                                            providedOptions?: InteractiveTermNodeOptions ): Node {
-    return new InteractiveTermNode( coefficient, symbolProperty, providedOptions ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+    //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+    return new InteractiveTermNode( coefficient, symbolProperty, providedOptions );
   }
 
   /**
@@ -101,7 +102,8 @@ export default class VariableTermNode extends TermNode {
    */
   public static createEquationTermNode( coefficient: Fraction, symbolProperty: TReadOnlyProperty<string>,
                                         providedOptions?: EquationTermNodeOptions ): Node {
-    return new EquationTermNode( coefficient, symbolProperty, providedOptions ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+    //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+    return new EquationTermNode( coefficient, symbolProperty, providedOptions );
   }
 }
 

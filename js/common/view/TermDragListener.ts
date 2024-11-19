@@ -239,7 +239,7 @@ export default abstract class TermDragListener extends SoundDragListener {
       const sumToZeroParent = this.termNode.getParent()!;
       assert && assert( sumToZeroParent );
 
-      //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+      //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
       const sumToZeroNode = new SumToZeroNode( {
         variable: this.term.getVariable(),
         haloRadius: this.haloRadius,

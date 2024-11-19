@@ -95,7 +95,8 @@ export default class ConstantTermCreator extends TermCreator {
     assert && assert( options.constantValue !== undefined );
     options.constantValue = options.constantValue!.timesInteger( options.sign! );
 
-    return new ConstantTerm( options ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+    //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+    return new ConstantTerm( options );
   }
 
   /**
@@ -113,7 +114,8 @@ export default class ConstantTermCreator extends TermCreator {
    * Instantiates the Node that corresponds to this term.
    */
   public override createTermNode( term: ConstantTerm ): ConstantTermNode {
-    return new ConstantTermNode( this, term ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+    //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+    return new ConstantTermNode( this, term );
   }
 }
 

@@ -65,7 +65,8 @@ export default class ObjectTermCreator extends TermCreator {
    * Instantiates an ObjectTerm.
    */
   protected override createTermProtected( providedOptions?: ObjectTermCreatorOptions ): ObjectTerm {
-    return new ObjectTerm( this.objectVariable, providedOptions ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+    //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+    return new ObjectTerm( this.objectVariable, providedOptions );
   }
 
   /**
@@ -81,7 +82,8 @@ export default class ObjectTermCreator extends TermCreator {
    * Instantiates the Node that corresponds to this term.
    */
   public override createTermNode( term: ObjectTerm ): ObjectTermNode {
-    return new ObjectTermNode( this, term ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+    //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+    return new ObjectTermNode( this, term );
   }
 }
 

@@ -170,7 +170,8 @@ export default class OperationsScene extends EqualityExplorerScene {
   public applyOperation( operation: UniversalOperation ): void {
 
     // Take a snapshot of terms on the scale, so we can undo the operation if necessary.
-    const snapshot = new Snapshot( this ); //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+    //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+    const snapshot = new Snapshot( this );
 
     // TermCreators whose terms summed to zero as the result of applying this operation.
     const termCreatorsZero: TermCreator[] = [];

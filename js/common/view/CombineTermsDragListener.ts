@@ -114,7 +114,8 @@ export default class CombineTermsDragListener extends TermDragListener {
       if ( combinedTerm.significantValue.getValue() === 0 ) {
 
         // Combined term is zero. No halo, since the terms are on the opposite side.
-        oppositeSumToZeroNode = new SumToZeroNode( { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+        //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+        oppositeSumToZeroNode = new SumToZeroNode( {
           variable: combinedTerm.getVariable(),
           fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
         } );
@@ -205,7 +206,8 @@ export default class CombineTermsDragListener extends TermDragListener {
           else if ( combinedTerm.sign === 0 ) {
 
             // Terms sum to zero. No halo, since the terms did not overlap when drag ended.
-            sumToZeroNode = new SumToZeroNode( { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+            //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+            sumToZeroNode = new SumToZeroNode( {
               variable: this.term.getVariable(),
               fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
             } );
@@ -267,8 +269,9 @@ export default class CombineTermsDragListener extends TermDragListener {
 
               if ( oppositeCombinedTerm.significantValue.getValue() === 0 ) {
 
-                // terms summed to zero on opposite plate. No halo, since these terms are on opposite side.
-                oppositeSumToZeroNode = new SumToZeroNode( { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+                // Terms summed to zero on opposite plate. No halo, since these terms are on opposite side.
+                //TODO https://github.com/phetsims/equality-explorer/issues/200 PhET-iO dynamic element
+                oppositeSumToZeroNode = new SumToZeroNode( {
                   variable: oppositeCombinedTerm.getVariable(),
                   fontSize: EqualityExplorerConstants.SUM_TO_ZERO_BIG_FONT_SIZE
                 } );
