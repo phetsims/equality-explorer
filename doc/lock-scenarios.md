@@ -141,7 +141,7 @@ dragging a term from a toolbox. Scenarios 6-15 involve dragging a term from a pl
 1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
 3. Drag '1' off the left plate.
-4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
+4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the right plate.
 5. Release the dragged term below the plate.
 6. Verify that the dragged term (1) and equivalent term (1) return to their respective toolboxes, and the inverse term (
    -1) remains on the right plate.
@@ -164,8 +164,8 @@ dragging a term from a toolbox. Scenarios 6-15 involve dragging a term from a pl
 3. Drag '1' off the left plate.
 4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the right plate.
 5. Release the dragged term above the plate.
-6. Verify that the dragged term (1) and equivalent term (1) return to their respective plates, and the inverse term (-1)
-   is replaced by the equivalent term. The result is 1 on the left plate, and empty right plate.
+6. Verify that the dragged term (1) and equivalent term (1) return to their respective plates, and that the equivalent 
+   term is added to the inverse term on the right plate. The result is 1 on the left plate, 0 on the right plate.
 
 ### Scenario 15
 
@@ -176,9 +176,9 @@ dragging a term from a toolbox. Scenarios 6-15 involve dragging a term from a pl
 5. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the right plate.
 6. Release the dragged term above the plate.
 7. Before the dragged term reaches its plate, grab the inverse term from the right plate.
-6. Verify that the dragged term (1) and equivalent term (1) return to their respective plates, resulting in two 1's on
+8. Verify that the dragged term (1) and equivalent term (1) return to their respective plates, resulting in two 1's on
    the left plate, and one 1 on the right plate.
-7. Release the dragged term. Verify that the result a 1 on the left plate, and a 1 and -1 on the right plate.
+9. Release the dragged term. Verify that the result is 1 on the left plate, and a 1 and -1 on the right plate.
 
 ## Combine Like Terms
 
@@ -216,21 +216,21 @@ _Operations_ screens.
 
 1. Put `x + 1` on the left and `x - 1` on the right plate.
 2. Turn the lock on.
-2. Drag a '-1' from a toolbox.
-3. Verify that an equivalent term '-1' comes out of the opposite toolbox and follows the dragged term.
-4. Position the dragged term so that it overlaps the like term '1' on the scale.
-5. Release the dragged term. The dragged term and the like term that it overlaps sum to zero.
-6. Verify that the equivalent term moves immediately to the opposite plate and adds to produce `x - 2`.
+3. Drag a '-1' from the left toolbox.
+4. Verify that an equivalent term '-1' comes out of the opposite toolbox and follows the dragged term.
+5. Position the dragged term so that it overlaps the like term '1' on the left plate.
+6. Release the dragged term. The dragged term and the like term that it overlaps sum to zero.
+7. Verify that the equivalent term moves immediately to the opposite plate and adds to produce `x - 2`.
 
 ### Scenario 20
 
 1. Put `x + 1` on the left and `x - 1` on the right plate.
 2. Turn the lock on.
-2. Drag a '1' from a toolbox.
-3. Verify that an equivalent term '1' comes out of the opposite toolbox and follows the dragged term.
-4. Position the dragged term so that it overlaps the like term '1' on the left plate.
-5. Release the dragged term. The dragged term adds to produce `x + 2`.
-6. Verify that the equivalent term moves immediately to the opposite plate and sums to zero. The result is
+3. Drag a '1' from the left toolbox.
+4. Verify that an equivalent term '1' comes out of the opposite toolbox and follows the dragged term.
+5. Position the dragged term so that it overlaps the like term '1' on the left plate.
+6. Release the dragged term. The dragged term adds to produce `x + 2`.
+7. Verify that the equivalent term moves immediately to the opposite plate and sums to zero. The result is
    `x + 2` on the left plate, 0 on the right plate.
 
 ### Scenario 21
@@ -238,7 +238,7 @@ _Operations_ screens.
 1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
 3. Drag '1' off the left plate.
-4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the right late.
+4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the right plate.
 5. Release the dragged term below the plate.
 6. Verify that the dragged term and equivalent term return to their respective toolboxes, and the inverse term remains
    on the right plate. The result is 0 on the left plate, -1 on the right plate.
@@ -248,7 +248,7 @@ _Operations_ screens.
 1. Put '1' on the left plate, nothing on the right plate.
 2. Turn the lock on.
 3. Drag '1' off the left plate.
-4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
+4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the right plate.
 5. Release the dragged term above the plate.
 6. Verify that the dragged term and equivalent term return to their respective plates, and that the equivalent term is
    added to the inverse term on the right plate. The result is 1 on the left plate, 0 on the right plate.
