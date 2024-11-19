@@ -88,7 +88,8 @@ export default class SumToZeroNode extends Node {
       this.opacity = opacity;
     } );
 
-    this.animation = new Animation( { //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+    //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+    this.animation = new Animation( {
       duration: 0.75,
       targets: [ {
         property: opacityProperty,

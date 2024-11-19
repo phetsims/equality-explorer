@@ -80,7 +80,8 @@ export default class SolveItScreenView extends ScreenView {
     } );
 
     // Transition (slide left/right) between level-selection UI and the selected game level.
-    this.transitionNode = new TransitionNode( this.visibleBoundsProperty, { //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+    //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+    this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
       cachedNodes: [ levelSelectionNode, levelsParent ],
       content: levelSelectionNode
     } );

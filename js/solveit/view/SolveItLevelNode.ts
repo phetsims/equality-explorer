@@ -218,7 +218,8 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     } );
 
     // Animated opacity of smiley face.
-    const faceOpacityProperty = new NumberProperty( faceNode.opacity, { //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+    //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+    const faceOpacityProperty = new NumberProperty( faceNode.opacity, {
       range: new Range( 0, 1 )
     } );
     faceOpacityProperty.link( faceOpacity => {
@@ -310,7 +311,8 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       // When the dialog is shown, show the reward
       showCallback: () => {
         assert && assert( !this.rewardNode, 'rewardNode is not supposed to exist' );
-        this.rewardNode = new SolveItRewardNode( level.levelNumber ); //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+        //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+        this.rewardNode = new SolveItRewardNode( level.levelNumber );
         this.addChild( this.rewardNode );
       },
 
@@ -353,7 +355,8 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
         faceOpacityProperty.value = 0.8;
         faceNode.visible = true;
 
-        this.faceAnimation = new Animation( { //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+        //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+        this.faceAnimation = new Animation( {
           stepEmitter: null, // via step function
           delay: 1,
           duration: 0.8,

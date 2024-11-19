@@ -268,7 +268,8 @@ export default class UniversalOperationControl extends HBox {
       animationLayer.addChild( rightOperationNode );
 
       // Apply the operation when both animations have completed.
-      const numberOfAnimationsCompletedProperty = new NumberProperty( 0, { //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+      //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+      const numberOfAnimationsCompletedProperty = new NumberProperty( 0, {
         numberType: 'Integer',
         range: new Range( 0, 2 )
       } );
@@ -279,7 +280,8 @@ export default class UniversalOperationControl extends HBox {
       } );
 
       // animation on left side of the scale
-      const leftAnimation = new TranslateThenFade( leftOperationNode, { //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+      //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+      const leftAnimation = new TranslateThenFade( leftOperationNode, {
         destination: new Vector2( leftOperationNode.x, scene.scale.leftPlate.getGridTop() - leftOperationNode.height ),
         onComplete: () => {
           numberOfAnimationsCompletedProperty.value++;
@@ -292,7 +294,8 @@ export default class UniversalOperationControl extends HBox {
       this.animations.push( leftAnimation );
 
       // animation on right side of the scale
-      const rightAnimation = new TranslateThenFade( rightOperationNode, { //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+      //TODO https://github.com/phetsims/equality-explorer/issues/197 stateful animation?
+      const rightAnimation = new TranslateThenFade( rightOperationNode, {
         destination: new Vector2( rightOperationNode.x, scene.scale.rightPlate.getGridTop() - rightOperationNode.height ),
         onComplete: () => {
           numberOfAnimationsCompletedProperty.value++;
