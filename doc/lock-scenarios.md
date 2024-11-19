@@ -263,4 +263,4 @@ _Operations_ screens.
 6. Release the dragged term above the plate.
 7. Before the dragged term reaches its plate, drag the inverse term -1 off the right plate. The result is 2 on
    the left plate, 1 on the right plate.
-8. Release the dragged term above the plate. The result is 2 on the left plate, 0 on the right plate. 
+8. Release the dragged term above the plate. The result is 1 on the left plate, 0 on the right plate. 
