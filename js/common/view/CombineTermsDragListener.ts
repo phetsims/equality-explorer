@@ -136,7 +136,8 @@ export default class CombineTermsDragListener extends TermDragListener {
       const equivalentTerm = this.equivalentTerm!;
       assert && assert( equivalentTerm );
       const equivalentTermCopy = equivalentTerm.copy( {
-        diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+        diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER,
+        pickable: true
       } );
       !equivalentTerm.isDisposed && equivalentTerm.dispose();
       this.equivalentTerm = null;
@@ -238,7 +239,8 @@ export default class CombineTermsDragListener extends TermDragListener {
 
             // If the cell on the opposite side is empty, make a 'big' copy of equivalentTerm and put it in the cell.
             const equivalentTermCopy = this.equivalentTerm.copy( {
-              diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER
+              diameter: EqualityExplorerConstants.BIG_TERM_DIAMETER,
+              pickable: true
             } );
             this.equivalentTermCreator.putTermOnPlate( equivalentTermCopy, likeTermsCell );
 
