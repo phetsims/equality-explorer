@@ -14,6 +14,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import CameraButton from '../../../../scenery-phet/js/buttons/CameraButton.js';
 import { FireListener, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
@@ -40,11 +41,13 @@ export default class SnapshotControl extends Node {
    * @param scene - the scene that we'll be taking a snapshot of
    * @param snapshotProperty - snapshot associated with this control, null if no snapshot
    * @param selectedSnapshotProperty - the selected snapshot, null if no selection
+   * @param selectionSoundPlayer
    * @param [providedOptions]
    */
   public constructor( scene: EqualityExplorerScene,
                       snapshotProperty: Property<Snapshot | null>,
                       selectedSnapshotProperty: Property<Snapshot | null>,
+                      selectionSoundPlayer: TSoundPlayer,
                       providedOptions: SnapshotControlOptions ) {
 
     const options = optionize<SnapshotControlOptions, SelfOptions, NodeOptions>()( {
@@ -118,6 +121,7 @@ export default class SnapshotControl extends Node {
       fire: () => {
         if ( snapshotProperty.value ) {
           selectedSnapshotProperty.value = snapshotProperty.value;
+          selectionSoundPlayer.play();
         }
       },
       tandem: options.tandem.createTandem( 'fireListener' )

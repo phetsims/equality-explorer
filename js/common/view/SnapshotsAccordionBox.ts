@@ -24,6 +24,7 @@ import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Snapshot from '../model/Snapshot.js';
 import SnapshotControl, { SnapshotControlOptions } from './SnapshotControl.js';
 import VariableValuesVisibleCheckbox from './VariableValuesVisibleCheckbox.js';
+import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 
 type SelfOptions = {
 
@@ -85,8 +86,11 @@ export default class SnapshotsAccordionBox extends AccordionBox {
     const snapshotControls = [];
     for ( let i = 0; i < scene.snapshotsCollection.snapshotProperties.length; i++ ) {
 
+      // Tone of the selection sound gets lower from top to bottom, as i increases.
+      const selectionSoundPlayer = multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( i );
+
       const snapshotControl = new SnapshotControl( scene, scene.snapshotsCollection.snapshotProperties[ i ],
-        scene.snapshotsCollection.selectedSnapshotProperty, combineOptions<SnapshotControlOptions>(
+        scene.snapshotsCollection.selectedSnapshotProperty, selectionSoundPlayer, combineOptions<SnapshotControlOptions>(
           {}, options.snapshotControlOptions, {
           variableValuesVisibleProperty: options.variableValuesVisibleProperty,
           controlWidth: contentWidth,
