@@ -161,7 +161,7 @@ export default class TermNode extends Node {
    * TermCreatorNode to forward the startDrag event to the TermNode that it created.
    */
   public startDrag( event: PressListenerEvent ): void {
-    this.termDragListener.press( event );
+    this.termDragListener.press( event, this );
   }
 }
 
