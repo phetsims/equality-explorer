@@ -239,7 +239,8 @@ export default abstract class TermDragListener extends SoundDragListener {
       const sumToZeroParent = this.termNode.getParent()!;
       assert && assert( sumToZeroParent );
 
-      const sumToZeroNode = new SumToZeroNode( { //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+      //TODO https://github.com/phetsims/equality-explorer/issues/200 dynamic
+      const sumToZeroNode = new SumToZeroNode( {
         variable: this.term.getVariable(),
         haloRadius: this.haloRadius,
         haloBaseColor: EqualityExplorerColors.HALO, // show the halo
@@ -256,7 +257,7 @@ export default abstract class TermDragListener extends SoundDragListener {
       this.likeTerm = null;
 
       // put equivalent term on opposite plate
-      let oppositeSumToZeroNode; // {SumToZeroNode|undefined} defined if terms on the opposite plate sum to zero
+      let oppositeSumToZeroNode: SumToZeroNode | null = null; // non-null if terms on the opposite plate sum to zero
       if ( this.equivalentTerm ) {
         oppositeSumToZeroNode = this.endOpposite();
         if ( this.equivalentTerm && !this.equivalentTerm.isDisposed ) {
