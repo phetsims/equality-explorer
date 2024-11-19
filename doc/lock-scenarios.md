@@ -106,7 +106,7 @@ dragging a term from a toolbox. Scenarios 6-15 involve dragging a term from a pl
 5. Verify that the equivalent term comes off the right plate and follows the dragged term.
 6. Release the dragged term above the left plate, and above all other terms.
 7. Before the dragged term reaches the left plate, fill the empty cell on the _right_ plate.
-6. Verify that the dragged term and equivalent term return to their respective toolboxes.
+8. Verify that the dragged term and equivalent term return to their respective toolboxes.
 
 ### Scenario 9
 
@@ -206,11 +206,11 @@ _Operations_ screens.
 
 1. Put `x + 1` on both the left and right plates.
 2. Turn the lock on.
-2. Drag a '-1' from a toolbox.
-3. Verify that an equivalent term '-1' comes out of the opposite toolbox and follows the dragged term.
-4. Position the dragged term so that it overlaps the like term '1' that will sum to zero.
-5. Release the dragged term. The dragged term sums to zero.
-6. Verify that the equivalent term moves immediately to the opposite plate and sums to zero.
+3. Drag a '-1' from a toolbox.
+4. Verify that an equivalent term '-1' comes out of the opposite toolbox and follows the dragged term.
+5. Position the dragged term so that it overlaps the like term '1' that will sum to zero.
+6. Release the dragged term. The dragged term sums to zero.
+7. Verify that the equivalent term moves immediately to the opposite plate and sums to zero.
 
 ### Scenario 19
 
