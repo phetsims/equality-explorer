@@ -34,7 +34,7 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import { DragListenerOptions, PressedDragListener, PressListenerEvent } from '../../../../scenery/js/imports.js';
+import { DragListener, DragListenerOptions, PressedDragListener, PressListenerEvent } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
@@ -44,7 +44,10 @@ import Term from '../model/Term.js';
 import TermCreator from '../model/TermCreator.js';
 import SumToZeroNode from './SumToZeroNode.js';
 import TermNode from './TermNode.js';
-import SoundDragListener from '../../../../scenery-phet/js/SoundDragListener.js';
+import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
+
+const grabSoundPlayer = sharedSoundPlayers.get( 'grab' );
+const releaseSoundPlayer = sharedSoundPlayers.get( 'release' );
 
 type SelfOptions = {
   haloRadius?: number; // radius of the halo around terms that sum to zero
@@ -53,7 +56,7 @@ type SelfOptions = {
 
 export type TermDragListenerOptions = SelfOptions;
 
-export default abstract class TermDragListener extends SoundDragListener {
+export default abstract class TermDragListener extends DragListener {
 
   protected readonly termNode: TermNode;
   protected readonly term: Term;
@@ -160,6 +163,10 @@ export default abstract class TermDragListener extends SoundDragListener {
    */
   private doStart( event: PressListenerEvent ): void {
 
+    // At the time of 1.2 release, SoundDragListener had some serious problems. So handle sound ourselves for now,
+    // using the default grab sound. See https://github.com/phetsims/equality-explorer/issues/215.
+    grabSoundPlayer.play();
+
     let success = true;
 
     if ( this.termCreator.isTermOnPlate( this.term ) ) {
@@ -219,6 +226,10 @@ export default abstract class TermDragListener extends SoundDragListener {
    * Called at the end of a drag cycle, on pointer up.
    */
   private doEnd(): void {
+
+    // At the time of 1.2 release, SoundDragListener had some serious problems. So handle sound ourselves for now,
+    // using the default release sound. See https://github.com/phetsims/equality-explorer/issues/215.
+    releaseSoundPlayer.play();
 
     // set term Properties at end of drag
     this.term.draggingProperty.value = false;
