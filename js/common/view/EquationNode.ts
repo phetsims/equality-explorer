@@ -163,7 +163,9 @@ export default class EquationNode extends Node {
     this.leftExpressionNode = new ExpressionNode( this.leftTermCreators, this.expressionNodeOptions );
     this.rightExpressionNode = new ExpressionNode( this.rightTermCreators, this.expressionNodeOptions );
     this.children = [ this.leftExpressionNode, this.relationalOperatorText, this.rightExpressionNode ];
-    this.updateLayout();
+
+    // Terms may contain string Properties for localized symbols (x,y) so update the layout if the left-hand side changes.
+    this.leftExpressionNode.boundsProperty.link( () => this.updateLayout() );
   }
 
   /**
