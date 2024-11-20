@@ -46,6 +46,8 @@ import SumToZeroNode from './SumToZeroNode.js';
 import TermNode from './TermNode.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 
+// Get the sound players here, rather than at the 'play' call sites, so that they have time to initialize.
+// See https://github.com/phetsims/equality-explorer/issues/215.
 const grabSoundPlayer = sharedSoundPlayers.get( 'grab' );
 const releaseSoundPlayer = sharedSoundPlayers.get( 'release' );
 
