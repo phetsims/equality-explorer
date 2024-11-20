@@ -165,6 +165,8 @@ export default class EquationNode extends Node {
     this.children = [ this.leftExpressionNode, this.relationalOperatorText, this.rightExpressionNode ];
 
     // Terms may contain string Properties for localized symbols (x,y) so update the layout if the left-hand side changes.
+    // It's unclear why listening to localBoundsProperty didn't work, but boundsProperty does the job.
+    // See https://github.com/phetsims/equality-explorer/issues/211
     this.leftExpressionNode.boundsProperty.link( () => this.updateLayout() );
   }
 
