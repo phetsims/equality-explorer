@@ -37,6 +37,11 @@ import VariableTerm from '../model/VariableTerm.js';
 import ObjectPicker, { ObjectPickerItem } from './ObjectPicker.js';
 import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
+import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
+
+// Use the NumberPicker default sounds.
+const boundarySoundPlayer = sharedSoundPlayers.get( 'generalBoundaryBoop' );
+const valueChangedSoundPlayer = sharedSoundPlayers.get( 'generalSoftClick' );
 
 type SelfOptions = {
   timesZeroEnabled?: boolean; // whether to include 'times 0' as one of the operations
@@ -155,7 +160,7 @@ export default class UniversalOperationControl extends HBox {
       incrementEnabledProperty: incrementEnabledProperty,
       decrementEnabledProperty: decrementEnabledProperty,
 
-      // When the increment button is pressed, skip operands that are inappropriate for the operation
+      // When the increment button is pressed, find the next operand, skipping operands that are inappropriate for the operation.
       incrementFunction: index => {
         let nextOperandIndex = index + 1;
         const operator = scene.operatorProperty.value;
@@ -164,10 +169,11 @@ export default class UniversalOperationControl extends HBox {
           assert && assert( nextOperandIndex < scene.operands.length,
             `nextOperandIndex out of range: ${nextOperandIndex}` );
         }
+        playItemSound( operator, operandItems[ nextOperandIndex ], operandItems, options.timesZeroEnabled );
         return nextOperandIndex;
       },
 
-      // When the decrement button is pressed, skip operands that are inappropriate for the operation
+      // When the decrement button is pressed, find the next operand, skipping operands that are inappropriate for the operation.
       decrementFunction: index => {
         let nextOperandIndex = index - 1;
         const operator = scene.operatorProperty.value;
@@ -175,6 +181,7 @@ export default class UniversalOperationControl extends HBox {
           nextOperandIndex--;
           assert && assert( nextOperandIndex >= 0, `nextOperandIndex out of range: ${nextOperandIndex}` );
         }
+        playItemSound( operator, operandItems[ nextOperandIndex ], operandItems, options.timesZeroEnabled );
         return nextOperandIndex;
       },
       tandem: operandPickerTandem
@@ -380,6 +387,36 @@ function isSupportedOperation( operator: UniversalOperator, operand: Term, times
   return !isDivideByZero( operator, operand ) &&
          ( timesZeroEnabled || !isTimesZero( operator, operand ) ) &&
          !isUnsupportedVariableTermOperation( operator, operand );
+}
+
+/**
+ * Gets the ObjectPicker items that are supported for a specific operator.
+ */
+function getSupportedOperandItems( operator: UniversalOperator, operandItems: ObjectPickerItem<UniversalOperand>[],
+                                   timesZeroEnabled: boolean ): ObjectPickerItem<UniversalOperand>[] {
+  const supportedOperandItems: ObjectPickerItem<UniversalOperand>[] = [];
+  operandItems.forEach( operandItem => {
+    if ( isSupportedOperation( operator, operandItem.value, timesZeroEnabled ) ) {
+      supportedOperandItems.push( operandItem );
+    }
+  } );
+  return supportedOperandItems;
+}
+
+/**
+ * Plays the sound that is appropriate for the selected operand, which is selected using the ObjectPicker.
+ * It's unfortunate that we can't do this in ObjectPicker, but it has no knowledge of which items are supported
+ * for a specific operator. See https://github.com/phetsims/equality-explorer/issues/223.
+ */
+function playItemSound( operator: UniversalOperator, operandItem: ObjectPickerItem<UniversalOperand>,
+                        operandItems: ObjectPickerItem<UniversalOperand>[], timesZeroEnabled: boolean ): void {
+  const supportedOperandItems = getSupportedOperandItems( operator, operandItems, timesZeroEnabled );
+  if ( operandItem === supportedOperandItems[ 0 ] || operandItem === supportedOperandItems[ supportedOperandItems.length - 1 ] ) {
+    boundarySoundPlayer.play();
+  }
+  else {
+    valueChangedSoundPlayer.play();
+  }
 }
 
 equalityExplorer.register( 'UniversalOperationControl', UniversalOperationControl );
