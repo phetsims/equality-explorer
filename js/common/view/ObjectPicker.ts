@@ -24,7 +24,6 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { Color, FireListener, FireListenerOptions, LinearGradient, Node, NodeOptions, Path, PathOptions, Rectangle, TColor } from '../../../../scenery/js/imports.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 
 const ButtonStateValues = [ 'up', 'down', 'over', 'out' ] as const;
 type ButtonState = ( typeof ButtonStateValues )[number];
@@ -301,10 +300,6 @@ export default class ObjectPicker<T> extends Node {
       fireOnHoldInterval: options.timerInterval
     };
 
-    // Use the NumberPicker default sounds.
-    const boundarySoundPlayer = sharedSoundPlayers.get( 'generalBoundaryBoop' );
-    const valueChangedSoundPlayer = sharedSoundPlayers.get( 'generalSoftClick' );
-
     const incrementInputListener = new ObjectPickerInputListener( incrementButtonStateProperty,
       combineOptions<ObjectPickerInputListenerOptions>( {}, inputListenerOptions, {
         fire: () => {
@@ -314,14 +309,6 @@ export default class ObjectPicker<T> extends Node {
               index = options.incrementFunction( -1 );
             }
             indexProperty.value = index;
-
-            // Play the boundary sound if we've reach the last item. Otherwise, play the default sound.
-            if ( indexProperty.value === items.length - 1 ) {
-              boundarySoundPlayer.play();
-            }
-            else {
-              valueChangedSoundPlayer.play();
-            }
           }
         },
         tandem: options.tandem.createTandem( 'incrementInputListener' )
@@ -337,14 +324,6 @@ export default class ObjectPicker<T> extends Node {
               index = options.decrementFunction( items.length );
             }
             indexProperty.value = index;
-
-            // Play the boundary sound if we've reach the first item. Otherwise, play the default sound.
-            if ( indexProperty.value === 0 ) {
-              boundarySoundPlayer.play();
-            }
-            else {
-              valueChangedSoundPlayer.play();
-            }
           }
         },
         tandem: options.tandem.createTandem( 'decrementInputListener' )
