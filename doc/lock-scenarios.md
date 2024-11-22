@@ -148,13 +148,14 @@ dragging a term from a toolbox. Scenarios 6-15 involve dragging a term from a pl
 
 ### Scenario 13
 
-1. Fill the left plate with '1', nothing on the right plate.
-2. Turn the lock on.
-3. Drag a '1' off the left plate.
-4. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
-5. Before releasing the dragged term, add a term to the left plate to fill it.
-6. Release the dragged term above the plate.
-7. Verify that the dragged term and equivalent term return to their respective toolboxes, and the inverse term remains
+1. Run with `?speed=0.1` to slow animation.
+2. Fill the left plate with '1', nothing on the right plate.
+3. Turn the lock on.
+4. Drag a '1' off the left plate.
+5. Verify that the equivalent term '1' is created on the right side, and the inverse term '-1' is created on the plate.
+6. Before releasing the dragged term, add a term to the left plate to fill it.
+7. Release the dragged term above the plate.
+8. Verify that the dragged term and equivalent term return to their respective toolboxes, and the inverse term remains
    on the right plate.
 
 ### Scenario 14
