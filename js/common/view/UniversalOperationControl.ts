@@ -27,6 +27,7 @@ import { HBox, HBoxOptions, Node, Path } from '../../../../scenery/js/imports.js
 import levelDownAltSolidShape from '../../../../sherpa/js/fontawesome-5/levelDownAltSolidShape.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
+import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene from '../../operations/model/OperationsScene.js';
 import ConstantTerm from '../model/ConstantTerm.js';
@@ -37,7 +38,6 @@ import VariableTerm from '../model/VariableTerm.js';
 import ObjectPicker, { ObjectPickerItem } from './ObjectPicker.js';
 import TranslateThenFade from './TranslateThenFade.js';
 import UniversalOperationNode from './UniversalOperationNode.js';
-import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 
 // Use the NumberPicker default sounds.
 const boundarySoundPlayer = sharedSoundPlayers.get( 'generalBoundaryBoop' );

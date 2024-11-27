@@ -7,19 +7,19 @@
  */
 
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import equalityExplorer from '../equalityExplorer.js';
-import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
-import SolveItModel from './model/SolveItModel.js';
-import SolveItScreenView from './view/SolveItScreenView.js';
-import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import StarNode from '../../../scenery-phet/js/StarNode.js';
 import { HBox, Image, Text } from '../../../scenery/js/imports.js';
 import phetGirlJugglingStars_png from '../../../vegas/images/phetGirlJugglingStars_png.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
+import equalityExplorer from '../equalityExplorer.js';
+import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
+import SolveItModel from './model/SolveItModel.js';
+import SolveItScreenView from './view/SolveItScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
 

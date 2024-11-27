@@ -7,8 +7,9 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import Property from '../../../../axon/js/Property.js';
 import NumberProperty, { DEFAULT_RANGE } from '../../../../axon/js/NumberProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -26,7 +27,6 @@ import OperationsScene, { OperationsSceneOptions } from '../../operations/model/
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import DebugChallenge from './DebugChallenge.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 // constants
 const POINTS_PER_CHALLENGE = 1;

@@ -18,8 +18,8 @@ import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import SolveItModel from '../model/SolveItModel.js';
-import SolveItLevelSelectionNode from './SolveItLevelSelectionNode.js';
 import SolveItLevelNode from './SolveItLevelNode.js';
+import SolveItLevelSelectionNode from './SolveItLevelSelectionNode.js';
 
 // constants
 const TRANSITION_OPTIONS = {

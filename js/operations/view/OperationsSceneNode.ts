@@ -7,14 +7,14 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import VariablesSceneNode, { VariablesSceneNodeOptions } from '../../variables/view/VariablesSceneNode.js';
-import Property from '../../../../axon/js/Property.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import OperationsScene from '../model/OperationsScene.js';
 
 type SelfOptions = EmptySelfOptions;

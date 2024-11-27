@@ -13,8 +13,8 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import LockNode, { LockNodeOptions } from '../../../../scenery-phet/js/LockNode.js';
 import { FireListener, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = EmptySelfOptions;
 

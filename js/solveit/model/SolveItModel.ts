@@ -6,24 +6,24 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import TModel from '../../../../joist/js/TModel.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
+import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
+import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
+import ChallengeGenerator from './ChallengeGenerator.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
 import ChallengeGenerator2 from './ChallengeGenerator2.js';
 import ChallengeGenerator3 from './ChallengeGenerator3.js';
 import ChallengeGenerator4 from './ChallengeGenerator4.js';
 import ChallengeGenerator5 from './ChallengeGenerator5.js';
 import SolveItLevel from './SolveItLevel.js';
-import ChallengeGenerator from './ChallengeGenerator.js';
-import TModel from '../../../../joist/js/TModel.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
-import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
-import NullableIO from '../../../../tandem/js/types/NullableIO.js';
-import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
-import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
-import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 export default class SolveItModel extends PhetioObject implements TModel {
 

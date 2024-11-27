@@ -35,6 +35,7 @@
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import { DragListener, DragListenerOptions, PressedDragListener, PressListenerEvent } from '../../../../scenery/js/imports.js';
+import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
@@ -44,7 +45,6 @@ import Term from '../model/Term.js';
 import TermCreator from '../model/TermCreator.js';
 import SumToZeroNode from './SumToZeroNode.js';
 import TermNode from './TermNode.js';
-import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 
 // Get the sound players here, rather than at the 'play' call sites, so that they have time to initialize.
 // See https://github.com/phetsims/equality-explorer/issues/215.

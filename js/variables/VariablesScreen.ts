@@ -6,21 +6,21 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
-import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
-import equalityExplorer from '../equalityExplorer.js';
-import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
-import VariablesModel from './model/VariablesModel.js';
-import VariablesScreenView from './view/VariablesScreenView.js';
-import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import Fraction from '../../../phetcommon/js/model/Fraction.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { HBox, Text, VBox } from '../../../scenery/js/imports.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
+import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
 import ConstantTermNode from '../common/view/ConstantTermNode.js';
 import VariableTermNode from '../common/view/VariableTermNode.js';
+import equalityExplorer from '../equalityExplorer.js';
+import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
+import VariablesModel from './model/VariablesModel.js';
+import VariablesScreenView from './view/VariablesScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
 

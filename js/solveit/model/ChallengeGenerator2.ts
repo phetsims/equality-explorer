@@ -9,9 +9,9 @@
 
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import equalityExplorer from '../../equalityExplorer.js';
+import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
-import Challenge from './Challenge.js';
 
 export default class ChallengeGenerator2 extends ChallengeGenerator {
 

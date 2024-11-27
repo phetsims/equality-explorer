@@ -16,12 +16,12 @@ import { Node, NodeOptions, RichText, Text } from '../../../../scenery/js/import
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
+import EqualityExplorerDerivedStrings from '../../common/EqualityExplorerDerivedStrings.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItModel from '../model/SolveItModel.js';
 import SolveItInfoDialog from './SolveItInfoDialog.js';
 import SolveItLevelSelectionButtonGroup from './SolveItLevelSelectionButtonGroup.js';
-import EqualityExplorerDerivedStrings from '../../common/EqualityExplorerDerivedStrings.js';
 
 type SelfOptions = {
 

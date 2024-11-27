@@ -16,6 +16,7 @@ import { HBox, HSeparator, Node, NodeTranslationOptions, Path, PressListenerEven
 import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
@@ -24,7 +25,6 @@ import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Snapshot from '../model/Snapshot.js';
 import SnapshotControl, { SnapshotControlOptions } from './SnapshotControl.js';
 import VariableValuesVisibleCheckbox from './VariableValuesVisibleCheckbox.js';
-import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 
 type SelfOptions = {
 

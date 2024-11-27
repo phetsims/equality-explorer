@@ -8,11 +8,15 @@
  */
 
 import Emitter from '../../../../axon/js/Emitter.js';
+import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import Range from '../../../../dot/js/Range.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
+import Range from '../../../../dot/js/Range.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ConstantTerm from '../../common/model/ConstantTerm.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
@@ -20,16 +24,12 @@ import EqualityExplorerScene, { EqualityExplorerSceneOptions } from '../../commo
 import Snapshot from '../../common/model/Snapshot.js';
 import TermCreator from '../../common/model/TermCreator.js';
 import UniversalOperation, { UniversalOperand } from '../../common/model/UniversalOperation.js';
+import UniversalOperator from '../../common/model/UniversalOperator.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import UniversalOperator from '../../common/model/UniversalOperator.js';
-import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 
 // constants
 const OPERAND_RANGE = EqualityExplorerConstants.OPERAND_RANGE;

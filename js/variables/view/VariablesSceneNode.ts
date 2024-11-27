@@ -8,14 +8,14 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import BasicsSceneNode, { BasicsSceneNodeOptions } from '../../basics/view/BasicsSceneNode.js';
-import VariablesAccordionBox from '../../common/view/VariablesAccordionBox.js';
-import equalityExplorer from '../../equalityExplorer.js';
-import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import BasicsSceneNode, { BasicsSceneNodeOptions } from '../../basics/view/BasicsSceneNode.js';
+import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
+import VariablesAccordionBox from '../../common/view/VariablesAccordionBox.js';
+import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = EmptySelfOptions;
 

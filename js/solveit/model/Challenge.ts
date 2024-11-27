@@ -10,9 +10,9 @@ import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import { StateObject } from '../../../../tandem/js/types/StateSchema.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import equalityExplorer from '../../equalityExplorer.js';
-import { StateObject } from '../../../../tandem/js/types/StateSchema.js';
 
 const stateSchema = {
   x: NumberIO,
