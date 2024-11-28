@@ -1,4 +1,4 @@
-// Copyright 2018-2023, University of Colorado Boulder
+// Copyright 2018-2024, University of Colorado Boulder
 
 /**
  * A challenge, in the form of an equation involving 1 variable.
