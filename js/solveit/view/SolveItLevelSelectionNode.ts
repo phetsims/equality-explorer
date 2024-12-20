@@ -78,7 +78,6 @@ export default class SolveItLevelSelectionNode extends Node {
 
     // Info button, to right of 'Choose Your Level', opens the Info dialog.
     const infoButton = new InfoButton( {
-      iconFill: 'rgb( 41, 106, 163 )',
       maxHeight: 0.75 * chooseYourLevelText.height,
       listener: () => {
         infoDialog.show();
