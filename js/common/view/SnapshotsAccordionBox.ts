@@ -129,7 +129,7 @@ export default class SnapshotsAccordionBox extends AccordionBox {
 
     // Button to delete (trash) the selected snapshot
     const trashButton = new TrashButton( {
-      iconOptions: { scale: 0.034 },
+      iconOptions: { scale: 0.034 * 9 },
       baseColor: 'white',
       xMargin: 12,
       yMargin: 5,
