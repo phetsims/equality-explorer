@@ -12,7 +12,8 @@ import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import LockNode, { LockNodeOptions } from '../../../../scenery-phet/js/LockNode.js';
-import { FireListener, NodeTranslationOptions } from '../../../../scenery/js/imports.js';
+import FireListener from '../../../../scenery/js/listeners/FireListener.js';
+import { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 import equalityExplorer from '../../equalityExplorer.js';
 

@@ -11,7 +11,10 @@ import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js'
 import PickRequired from '../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { HBox, Image, Text, VBox } from '../../../scenery/js/imports.js';
+import HBox from '../../../scenery/js/layout/nodes/HBox.js';
+import VBox from '../../../scenery/js/layout/nodes/VBox.js';
+import Image from '../../../scenery/js/nodes/Image.js';
+import Text from '../../../scenery/js/nodes/Text.js';
 import appleBig_png from '../../images/appleBig_png.js';
 import orangeBig_png from '../../images/orangeBig_png.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';

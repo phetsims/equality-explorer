@@ -19,10 +19,16 @@ import Property from '../../../../axon/js/Property.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
-import { Shape } from '../../../../kite/js/imports.js';
+import Shape from '../../../../kite/js/Shape.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { Color, FireListener, FireListenerOptions, LinearGradient, Node, NodeOptions, Path, PathOptions, Rectangle, TColor } from '../../../../scenery/js/imports.js';
+import FireListener, { FireListenerOptions } from '../../../../scenery/js/listeners/FireListener.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
+import Path, { PathOptions } from '../../../../scenery/js/nodes/Path.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import Color from '../../../../scenery/js/util/Color.js';
+import LinearGradient from '../../../../scenery/js/util/LinearGradient.js';
+import TColor from '../../../../scenery/js/util/TColor.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 const ButtonStateValues = [ 'up', 'down', 'over', 'out' ] as const;

@@ -9,7 +9,7 @@
 
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import GameInfoDialog from '../../../../vegas/js/GameInfoDialog.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';

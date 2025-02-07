@@ -10,7 +10,8 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
-import { Node, NodeOptions, PressListenerEvent } from '../../../../scenery/js/imports.js';
+import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';

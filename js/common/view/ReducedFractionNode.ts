@@ -12,7 +12,12 @@ import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { Font, Line, Node, NodeOptions, NodeTranslationOptions, TColor, Text, VBox } from '../../../../scenery/js/imports.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node, { NodeOptions, NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import Font from '../../../../scenery/js/util/Font.js';
+import TColor from '../../../../scenery/js/util/TColor.js';
 import equalityExplorer from '../../equalityExplorer.js';
 
 // constants

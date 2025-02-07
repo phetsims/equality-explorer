@@ -9,7 +9,11 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
-import { Circle, CircleOptions, Color, NodeTranslationOptions, RadialGradient, TColor } from '../../../../scenery/js/imports.js';
+import Circle, { CircleOptions } from '../../../../scenery/js/nodes/Circle.js';
+import { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
+import Color from '../../../../scenery/js/util/Color.js';
+import RadialGradient from '../../../../scenery/js/util/RadialGradient.js';
+import TColor from '../../../../scenery/js/util/TColor.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 

@@ -10,7 +10,8 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { DragListener, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Plate from '../model/Plate.js';
 import TermCreator, { TermCreatorSign } from '../model/TermCreator.js';

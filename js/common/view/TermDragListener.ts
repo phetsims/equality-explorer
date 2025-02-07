@@ -34,7 +34,8 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import { DragListener, DragListenerOptions, PressedDragListener, PressListenerEvent } from '../../../../scenery/js/imports.js';
+import DragListener, { DragListenerOptions, PressedDragListener } from '../../../../scenery/js/listeners/DragListener.js';
+import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';

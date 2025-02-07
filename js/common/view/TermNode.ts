@@ -9,7 +9,9 @@
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import { Circle, Node, NodeOptions, PressListenerEvent } from '../../../../scenery/js/imports.js';
+import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
+import Circle from '../../../../scenery/js/nodes/Circle.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Term from '../model/Term.js';
 import TermCreator from '../model/TermCreator.js';

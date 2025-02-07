@@ -9,7 +9,9 @@
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { HBox, Node, NodeTranslationOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import Node, { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Plate from '../model/Plate.js';

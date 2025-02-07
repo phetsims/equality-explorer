@@ -8,7 +8,9 @@
 
 import optionize from '../../../../phet-core/js/optionize.js';
 import MathSymbolFont from '../../../../scenery-phet/js/MathSymbolFont.js';
-import { Image, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import ObjectVariable from '../model/ObjectVariable.js';
 import Variable from '../model/Variable.js';

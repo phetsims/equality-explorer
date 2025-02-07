@@ -9,7 +9,7 @@
 import DerivedStringProperty from '../../../axon/js/DerivedStringProperty.js';
 import StringUtils from '../../../phetcommon/js/util/StringUtils.js';
 import MathSymbolFont from '../../../scenery-phet/js/MathSymbolFont.js';
-import { RichText } from '../../../scenery/js/imports.js';
+import RichText from '../../../scenery/js/nodes/RichText.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';

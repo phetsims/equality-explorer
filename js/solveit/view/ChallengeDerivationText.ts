@@ -8,7 +8,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import { RichText } from '../../../../scenery/js/imports.js';
+import RichText from '../../../../scenery/js/nodes/RichText.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import Challenge from '../model/Challenge.js';
 
