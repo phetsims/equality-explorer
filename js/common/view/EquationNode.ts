@@ -1,4 +1,4 @@
-// Copyright 2017-2024, University of Colorado Boulder
+// Copyright 2017-2025, University of Colorado Boulder
 
 //TODO https://github.com/phetsims/equality-explorer/issues/202 presentation of equations in Studio and data stream
 /**
