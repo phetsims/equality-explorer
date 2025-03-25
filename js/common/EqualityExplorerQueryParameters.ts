@@ -16,6 +16,7 @@
  */
 
 import logGlobal from '../../../phet-core/js/logGlobal.js';
+import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
 import getGameLevelsSchema from '../../../vegas/js/getGameLevelsSchema.js';
 import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerConstants from './EqualityExplorerConstants.js';
