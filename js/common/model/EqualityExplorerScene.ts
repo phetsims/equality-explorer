@@ -12,6 +12,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
@@ -227,7 +228,7 @@ export default abstract class EqualityExplorerScene extends PhetioObject {
    * It implements 'Reference type serialization', as described in the Serialization section of
    * https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
    */
-  public static readonly EqualityExplorerSceneIO = new IOType( 'EqualityExplorerSceneIO', {
+  public static readonly EqualityExplorerSceneIO = new IOType<IntentionalAny, IntentionalAny>( 'EqualityExplorerSceneIO', {
     valueType: EqualityExplorerScene,
     supertype: ReferenceIO( IOType.ObjectIO )
   } );
