@@ -23,7 +23,6 @@ export default class EqualityExplorerScreen<M extends EqualityExplorerModel, V e
   protected constructor( createModel: () => M, createView: ( model: M ) => V, providedOptions: EqualityExplorerScreenOptions ) {
 
     const options = optionize<EqualityExplorerScreenOptions, SelfOptions, ScreenOptions>()( {
-      isDisposable: false
     }, providedOptions );
 
     super( createModel, createView, options );

@@ -43,7 +43,6 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
     const options = optionize<EqualityExplorerScreenViewOptions, SelfOptions, ScreenViewOptions>()( {
 
       // ScreenViewOptions
-      isDisposable: false,
       layoutBounds: EqualityExplorerConstants.SCREEN_VIEW_LAYOUT_BOUNDS,
       preventFit: EqualityExplorerConstants.SCREEN_VIEW_PREVENT_FIT,
       tandem: tandem

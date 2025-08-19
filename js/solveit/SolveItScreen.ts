@@ -37,8 +37,7 @@ export default class SolveItScreen extends Screen<SolveItModel, SolveItScreenVie
       name: EqualityExplorerStrings.screen.solveItStringProperty,
       backgroundColorProperty: EqualityExplorerColors.solveItScreenBackgroundColorProperty,
       homeScreenIcon: createHomeScreenIcon(),
-      navigationBarIcon: createNavigationBarIcon(),
-      isDisposable: false
+      navigationBarIcon: createNavigationBarIcon()
     }, providedOptions );
 
     super(
