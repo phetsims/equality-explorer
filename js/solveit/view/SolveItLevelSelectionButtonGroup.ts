@@ -7,6 +7,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
@@ -17,7 +18,6 @@ import VariableTermNode from '../../common/view/VariableTermNode.js';
 import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItLevel from '../model/SolveItLevel.js';
-import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -52,11 +52,11 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
             }
           } ),
         scoreProperty: level.scoreProperty,
+        buttonListener: () => {
+          levelProperty.value = level;
+        },
         options: {
           createScoreDisplay: ( scoreProperty: ReadOnlyProperty<number> ) => new ScoreDisplayNumberAndStar( scoreProperty ),
-          listener: () => {
-            levelProperty.value = level;
-          },
           soundPlayerIndex: level.levelNumber - 1 // levelNumber uses 1-based numbering
         }
       };
