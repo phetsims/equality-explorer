@@ -288,7 +288,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     this.rewardNode = null;
 
     // Reused each time the
-    const rewardDialog: RewardDialog = new RewardDialog( level.scoreProperty, {
+    const rewardDialog: RewardDialog = new RewardDialog( level.levelNumber, level.scoreProperty, {
 
       // Display the dialog in a position that does not obscure the challenge solution.
       // See https://github.com/phetsims/equality-explorer/issues/104
