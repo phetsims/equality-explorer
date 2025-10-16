@@ -304,7 +304,7 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
       },
 
       // 'Keep Going' hides the dialog
-      keepGoingButtonListener: () => rewardDialog.hide(),
+      dismissListener: () => rewardDialog.hide(),
 
       // 'New Level' has the same effect as the back button in the status bar
       newLevelButtonListener: () => {
