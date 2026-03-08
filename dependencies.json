@@ -21,7 +21,7 @@
     "branch": "HEAD"
   },
   "equality-explorer": {
-    "sha": "f5ace0c1d7055c284c66058dc4b35a7e4c59e2b6",
+    "sha": "f31ba7252534b7a95c74292954bcd95f92d878f1",
     "branch": "1.2"
   },
   "joist": {
@@ -53,7 +53,7 @@
     "branch": "HEAD"
   },
   "phetcommon": {
-    "sha": "309ebb4663d5c90b029aa1fdde2d0087ef55d50c",
+    "sha": "8fea1b5c7e207e88383fffde84e997e4bfe72d4c",
     "branch": "HEAD"
   },
   "phetmarks": {
