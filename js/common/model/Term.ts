@@ -13,7 +13,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
 import EqualityExplorerMovable, { EqualityExplorerMovableOptions } from './EqualityExplorerMovable.js';
@@ -209,5 +208,3 @@ export default abstract class Term extends EqualityExplorerMovable {
    */
   public abstract override toString(): string;
 }
-
-equalityExplorer.register( 'Term', Term );

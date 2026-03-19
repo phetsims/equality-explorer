@@ -20,7 +20,6 @@ import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Font, { FontWeight } from '../../../../scenery/js/util/Font.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import ConstantTermCreator from '../model/ConstantTermCreator.js';
 import ObjectTermCreator from '../model/ObjectTermCreator.js';
 import { RelationalOperator } from '../model/RelationalOperator.js';
@@ -347,5 +346,3 @@ function valueToOperatorText( value: number, operatorFont: Font ): Node {
   const operator = ( value > 0 ) ? MathSymbols.PLUS : MathSymbols.MINUS;
   return new Text( operator, { font: operatorFont } );
 }
-
-equalityExplorer.register( 'EquationNode', EquationNode );

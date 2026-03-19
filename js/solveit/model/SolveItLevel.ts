@@ -22,7 +22,6 @@ import ConstantTerm from '../../common/model/ConstantTerm.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene, { OperationsSceneOptions } from '../../operations/model/OperationsScene.js';
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
@@ -283,5 +282,3 @@ export default class SolveItLevel extends OperationsScene {
     this.scoreProperty.value = this.scoreProperty.value + POINTS_PER_CHALLENGE;
   }
 }
-
-equalityExplorer.register( 'SolveItLevel', SolveItLevel );

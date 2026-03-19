@@ -16,7 +16,6 @@ import turtle_png from '../../../images/turtle_png.js';
 import turtleShadow_png from '../../../images/turtleShadow_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ObjectVariable from '../../common/model/ObjectVariable.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 
 export default class AnimalsScene extends BasicsScene {
@@ -66,5 +65,3 @@ export default class AnimalsScene extends BasicsScene {
     } );
   }
 }
-
-equalityExplorer.register( 'AnimalsScene', AnimalsScene );

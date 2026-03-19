@@ -18,7 +18,6 @@ import Image from '../../../scenery/js/nodes/Image.js';
 import Text from '../../../scenery/js/nodes/Text.js';
 import phetGirlJugglingStars_png from '../../../vegas/images/phetGirlJugglingStars_png.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
-import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import SolveItModel from './model/SolveItModel.js';
 import SolveItScreenView from './view/SolveItScreenView.js';
@@ -76,5 +75,3 @@ function createNavigationBarIcon(): ScreenIcon {
     fill: EqualityExplorerColors.solveItScreenBackgroundColorProperty
   } );
 }
-
-equalityExplorer.register( 'SolveItScreen', SolveItScreen );

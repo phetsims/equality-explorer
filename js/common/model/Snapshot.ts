@@ -6,7 +6,6 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from './EqualityExplorerScene.js';
 import Plate from './Plate.js';
 import Term from './Term.js';
@@ -134,5 +133,3 @@ function restoreVariablesSnapshot( variablesSnapshot: VariablesSnapshot ): void 
     variable.valueProperty.value = value;
   } );
 }
-
-equalityExplorer.register( 'Snapshot', Snapshot );

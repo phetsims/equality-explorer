@@ -8,7 +8,6 @@
  */
 
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import ConstantTerm from './ConstantTerm.js';
 import UniversalOperator from './UniversalOperator.js';
 import VariableTerm from './VariableTerm.js';
@@ -60,5 +59,3 @@ export default class UniversalOperation {
     }
   }
 }
-
-equalityExplorer.register( 'UniversalOperation', UniversalOperation );

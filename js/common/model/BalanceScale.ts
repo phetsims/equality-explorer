@@ -22,7 +22,6 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import Plate, { PlateOptions } from './Plate.js';
 import { RelationalOperator, RelationalOperatorValues } from './RelationalOperator.js';
 import TermCreator from './TermCreator.js';
@@ -236,5 +235,3 @@ export default class BalanceScale {
     termCreators.forEach( termCreator => termCreator.disposeTermsOnPlate() );
   }
 }
-
-equalityExplorer.register( 'BalanceScale', BalanceScale );

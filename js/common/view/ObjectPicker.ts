@@ -29,7 +29,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import LinearGradient from '../../../../scenery/js/util/LinearGradient.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 const ButtonStateValues = [ 'up', 'down', 'over', 'out' ] as const;
 type ButtonState = ( typeof ButtonStateValues )[number];
@@ -502,5 +501,3 @@ function updateColors( buttonState: ButtonState, enabled: boolean, background: P
     arrow.stroke = arrowColors.disabled; // stroke so that arrow size will look the same when it's enabled/disabled
   }
 }
-
-equalityExplorer.register( 'ObjectPicker', ObjectPicker );

@@ -15,7 +15,6 @@ import LevelSelectionButtonGroup, { LevelSelectionButtonGroupItem, LevelSelectio
 import ScoreDisplayNumberAndStar from '../../../../vegas/js/ScoreDisplayNumberAndStar.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import VariableTermNode from '../../common/view/VariableTermNode.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItLevel from '../model/SolveItLevel.js';
 
@@ -65,5 +64,3 @@ export default class SolveItLevelSelectionButtonGroup extends LevelSelectionButt
     super( items, options );
   }
 }
-
-equalityExplorer.register( 'SolveItLevelSelectionButtonGroup', SolveItLevelSelectionButtonGroup );

@@ -18,7 +18,6 @@
 import logGlobal from '../../../phet-core/js/logGlobal.js';
 import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
 import getGameLevelsSchema from '../../../vegas/js/getGameLevelsSchema.js';
-import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerConstants from './EqualityExplorerConstants.js';
 
 const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
@@ -110,8 +109,6 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
     defaultValue: true
   }
 } );
-
-equalityExplorer.register( 'EqualityExplorerQueryParameters', EqualityExplorerQueryParameters );
 
 // Log query parameters
 logGlobal( 'phet.chipper.queryParameters' );

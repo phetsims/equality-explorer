@@ -15,7 +15,6 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Checkbox, { CheckboxOptions } from '../../../../sun/js/Checkbox.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import Variable from '../model/Variable.js';
 import VariableNode from './VariableNode.js';
@@ -65,5 +64,3 @@ export default class VariableValuesVisibleCheckbox extends Checkbox {
     super( variableValueVisibleProperty, contentNode, options );
   }
 }
-
-equalityExplorer.register( 'VariableValuesVisibleCheckbox', VariableValuesVisibleCheckbox );

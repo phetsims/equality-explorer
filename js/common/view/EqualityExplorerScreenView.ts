@@ -17,7 +17,6 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerModel from '../model/EqualityExplorerModel.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
@@ -152,5 +151,3 @@ export default abstract class EqualityExplorerScreenView extends ScreenView {
                                       layoutBounds: Bounds2,
                                       providedOptions: EqualityExplorerSceneNodeOptions ): EqualityExplorerSceneNode;
 }
-
-equalityExplorer.register( 'EqualityExplorerScreenView', EqualityExplorerScreenView );

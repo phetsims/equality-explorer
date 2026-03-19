@@ -19,7 +19,6 @@ import appleBig_png from '../../images/appleBig_png.js';
 import orangeBig_png from '../../images/orangeBig_png.js';
 import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
-import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import BasicsModel from './model/BasicsModel.js';
 import BasicsScreenView from './view/BasicsScreenView.js';
@@ -82,5 +81,3 @@ function createScreenIcon(): ScreenIcon {
     fill: EqualityExplorerColors.basicsScreenBackgroundColorProperty
   } );
 }
-
-equalityExplorer.register( 'BasicsScreen', BasicsScreen );

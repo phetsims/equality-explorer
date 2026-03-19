@@ -15,7 +15,6 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import BasicsSceneNode, { BasicsSceneNodeOptions } from '../../basics/view/BasicsSceneNode.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import VariablesAccordionBox from '../../common/view/VariablesAccordionBox.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -93,5 +92,3 @@ export default class VariablesSceneNode extends BasicsSceneNode {
     super.reset();
   }
 }
-
-equalityExplorer.register( 'VariablesSceneNode', VariablesSceneNode );

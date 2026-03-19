@@ -13,7 +13,6 @@ import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import TermCreator from '../../common/model/TermCreator.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
 export default class VariablesScene extends EqualityExplorerScene {
@@ -59,5 +58,3 @@ function createTermCreators( x: Variable, lockedProperty: Property<boolean> | nu
     } )
   ];
 }
-
-equalityExplorer.register( 'VariablesScene', VariablesScene );

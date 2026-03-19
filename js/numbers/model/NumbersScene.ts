@@ -11,7 +11,6 @@ import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import ConstantTermCreator from '../../common/model/ConstantTermCreator.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 export default class NumbersScene extends EqualityExplorerScene {
 
@@ -36,5 +35,3 @@ export default class NumbersScene extends EqualityExplorerScene {
     } );
   }
 }
-
-equalityExplorer.register( 'NumbersScene', NumbersScene );

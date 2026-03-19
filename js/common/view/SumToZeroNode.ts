@@ -18,7 +18,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import TermCreator from '../model/TermCreator.js';
 import Variable from '../model/Variable.js';
@@ -156,5 +155,3 @@ export default class SumToZeroNode extends Node {
     }
   }
 }
-
-equalityExplorer.register( 'SumToZeroNode', SumToZeroNode );

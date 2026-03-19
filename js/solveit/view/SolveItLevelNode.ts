@@ -37,7 +37,6 @@ import EquationPanel, { EquationPanelOptions } from '../../common/view/EquationP
 import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItLevel from '../model/SolveItLevel.js';
 import ChallengeDerivationText from './ChallengeDerivationText.js';
@@ -417,5 +416,3 @@ export default class SolveItLevelNode extends EqualityExplorerSceneNode {
     super.step( dt );
   }
 }
-
-equalityExplorer.register( 'SolveItLevelNode', SolveItLevelNode );

@@ -44,6 +44,4 @@ type StringsType = {
 
 const EqualityExplorerStrings = getStringModule( 'EQUALITY_EXPLORER' ) as StringsType;
 
-equalityExplorer.register( 'EqualityExplorerStrings', EqualityExplorerStrings );
-
 export default EqualityExplorerStrings;

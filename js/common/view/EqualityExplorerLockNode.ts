@@ -15,7 +15,6 @@ import LockNode, { LockNodeOptions } from '../../../../scenery-phet/js/LockNode.
 import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -57,5 +56,3 @@ export default class EqualityExplorerLockNode extends LockNode {
     this.addLinkedElement( lockedProperty );
   }
 }
-
-equalityExplorer.register( 'EqualityExplorerLockNode', EqualityExplorerLockNode );

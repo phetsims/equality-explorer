@@ -19,7 +19,6 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import BalanceScale from '../model/BalanceScale.js';
 import BoxNode from './BoxNode.js';
@@ -227,5 +226,3 @@ export default class BalanceScaleNode extends Node {
     } );
   }
 }
-
-equalityExplorer.register( 'BalanceScaleNode', BalanceScaleNode );

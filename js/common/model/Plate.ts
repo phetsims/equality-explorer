@@ -21,7 +21,6 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import { BalanceScaleSide } from './BalanceScale.js';
 import Grid from './Grid.js';
 import Term from './Term.js';
@@ -336,5 +335,3 @@ export default class Plate extends PhetioObject {
     }
   }
 }
-
-equalityExplorer.register( 'Plate', Plate );

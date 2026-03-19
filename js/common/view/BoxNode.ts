@@ -12,7 +12,6 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Node, { NodeOptions, NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = {
   width?: number; // width of the top face at it's center
@@ -73,5 +72,3 @@ export default class BoxNode extends Node {
     super( options );
   }
 }
-
-equalityExplorer.register( 'BoxNode', BoxNode );

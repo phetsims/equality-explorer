@@ -19,7 +19,6 @@ import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
 import ConstantTermNode from '../common/view/ConstantTermNode.js';
 import VariableTermNode from '../common/view/VariableTermNode.js';
-import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import VariablesModel from './model/VariablesModel.js';
 import VariablesScreenView from './view/VariablesScreenView.js';
@@ -82,5 +81,3 @@ function createScreenIcon(): ScreenIcon {
     fill: EqualityExplorerColors.variablesScreenBackgroundColorProperty
   } );
 }
-
-equalityExplorer.register( 'VariablesScreen', VariablesScreen );

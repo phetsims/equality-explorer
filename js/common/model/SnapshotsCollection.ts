@@ -10,7 +10,6 @@ import Property from '../../../../axon/js/Property.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import Snapshot from './Snapshot.js';
 
 type SelfOptions = {
@@ -112,5 +111,3 @@ export default class SnapshotsCollection extends PhetioObject {
     selectedSnapshot!.dispose();
   }
 }
-
-equalityExplorer.register( 'SnapshotsCollection', SnapshotsCollection );

@@ -15,7 +15,6 @@ import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
 import ConstantTermNode from '../common/view/ConstantTermNode.js';
 import HaloNode from '../common/view/HaloNode.js';
-import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import NumbersModel from './model/NumbersModel.js';
 import NumbersScreenView from './view/NumbersScreenView.js';
@@ -76,5 +75,3 @@ function createScreenIcon(): ScreenIcon {
     fill: EqualityExplorerColors.numbersScreenBackgroundColorProperty
   } );
 }
-
-equalityExplorer.register( 'NumbersScreen', NumbersScreen );

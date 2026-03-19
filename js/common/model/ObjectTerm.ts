@@ -8,7 +8,6 @@
 
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import ObjectVariable from './ObjectVariable.js';
 import Term from './Term.js';
 import UniversalOperation from './UniversalOperation.js';
@@ -84,5 +83,3 @@ export default class ObjectTerm extends VariableTerm {
 
   // The implementation of methods plus and minus are inherited from VariableTerm.
 }
-
-equalityExplorer.register( 'ObjectTerm', ObjectTerm );

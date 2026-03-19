@@ -9,7 +9,6 @@
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTermNode from '../view/ConstantTermNode.js'; // eslint-disable-line phet/no-view-imported-from-model
 import ConstantTerm, { ConstantTermOptions } from './ConstantTerm.js';
@@ -118,5 +117,3 @@ export default class ConstantTermCreator extends TermCreator {
     return new ConstantTermNode( this, term );
   }
 }
-
-equalityExplorer.register( 'ConstantTermCreator', ConstantTermCreator );

@@ -18,7 +18,6 @@ import EqualityExplorerColors from '../common/EqualityExplorerColors.js';
 import EqualityExplorerScreen, { EqualityExplorerScreenOptions } from '../common/EqualityExplorerScreen.js';
 import ConstantTermNode from '../common/view/ConstantTermNode.js';
 import VariableTermNode from '../common/view/VariableTermNode.js';
-import equalityExplorer from '../equalityExplorer.js';
 import EqualityExplorerStrings from '../EqualityExplorerStrings.js';
 import OperationsModel from './model/OperationsModel.js';
 import OperationsScreenView from './view/OperationsScreenView.js';
@@ -74,5 +73,3 @@ function createScreenIcon(): ScreenIcon {
     fill: EqualityExplorerColors.operationsScreenBackgroundColorProperty
   } );
 }
-
-equalityExplorer.register( 'OperationsScreen', OperationsScreen );

@@ -30,7 +30,6 @@ import levelDownAltSolidShape from '../../../../sherpa/js/fontawesome-5/levelDow
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import RoundPushButton from '../../../../sun/js/buttons/RoundPushButton.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import OperationsScene from '../../operations/model/OperationsScene.js';
 import ConstantTerm from '../model/ConstantTerm.js';
 import Term from '../model/Term.js';
@@ -420,5 +419,3 @@ function playItemSound( operator: UniversalOperator, operandItem: ObjectPickerIt
     valueChangedSoundPlayer.play();
   }
 }
-
-equalityExplorer.register( 'UniversalOperationControl', UniversalOperationControl );

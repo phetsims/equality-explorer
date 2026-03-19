@@ -9,7 +9,6 @@
 
 import Disposable from '../../../../axon/js/Disposable.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import Challenge from './Challenge.js';
 
 export default abstract class ChallengeGenerator {
@@ -93,5 +92,3 @@ export default abstract class ChallengeGenerator {
     return ChallengeGenerator.randomValueBy( values, value => !_.includes( excludedValues, value ) );
   }
 }
-
-equalityExplorer.register( 'ChallengeGenerator', ChallengeGenerator );

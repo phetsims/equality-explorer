@@ -14,7 +14,6 @@ import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import FlowBox, { FlowBoxOptions } from '../../../../scenery/js/layout/nodes/FlowBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Snapshot from '../model/Snapshot.js';
 import EquationNode from './EquationNode.js';
@@ -109,5 +108,3 @@ export default class SnapshotNode extends FlowBox {
     this.addLinkedElement( snapshotProperty );
   }
 }
-
-equalityExplorer.register( 'SnapshotNode', SnapshotNode );

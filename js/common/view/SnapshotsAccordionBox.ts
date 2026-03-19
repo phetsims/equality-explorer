@@ -23,7 +23,6 @@ import replySolidShape from '../../../../sherpa/js/fontawesome-5/replySolidShape
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
@@ -200,5 +199,3 @@ export default class SnapshotsAccordionBox extends AccordionBox {
       } );
   }
 }
-
-equalityExplorer.register( 'SnapshotsAccordionBox', SnapshotsAccordionBox );

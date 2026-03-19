@@ -8,7 +8,6 @@
 
 import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import AnimalsScene from './AnimalsScene.js';
 import CoinsScene from './CoinsScene.js';
 import FruitsScene from './FruitsScene.js';
@@ -31,5 +30,3 @@ export default class BasicsModel extends EqualityExplorerModel {
     super( scenes, tandem );
   }
 }
-
-equalityExplorer.register( 'BasicsModel', BasicsModel );

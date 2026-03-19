@@ -18,7 +18,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Variable from '../model/Variable.js';
@@ -147,5 +146,3 @@ class LabeledPicker extends HBox {
     super( options );
   }
 }
-
-equalityExplorer.register( 'VariablesAccordionBox', VariablesAccordionBox );

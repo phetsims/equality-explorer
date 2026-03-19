@@ -19,7 +19,6 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import Dialog from '../../../../sun/js/Dialog.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import EqualityExplorerDerivedStrings from '../../common/EqualityExplorerDerivedStrings.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import SolveItModel from '../model/SolveItModel.js';
 import SolveItInfoDialog from './SolveItInfoDialog.js';
@@ -139,5 +138,3 @@ export default class SolveItLevelSelectionNode extends Node {
     super( options );
   }
 }
-
-equalityExplorer.register( 'SolveItLevelSelectionNode', SolveItLevelSelectionNode );

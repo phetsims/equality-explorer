@@ -12,7 +12,6 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import Term from '../model/Term.js';
 import TermCreator from '../model/TermCreator.js';
 import CombineTermsDragListener from './CombineTermsDragListener.js';
@@ -166,5 +165,3 @@ export default class TermNode extends Node {
     this.termDragListener.press( event, this );
   }
 }
-
-equalityExplorer.register( 'TermNode', TermNode );

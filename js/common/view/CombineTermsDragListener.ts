@@ -10,7 +10,6 @@
  */
 
 import { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Term from '../model/Term.js';
 import TermCreator, { CreateTermOptions } from '../model/TermCreator.js';
@@ -334,5 +333,3 @@ export default class CombineTermsDragListener extends TermDragListener {
     } );
   }
 }
-
-equalityExplorer.register( 'CombineTermsDragListener', CombineTermsDragListener );

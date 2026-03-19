@@ -13,7 +13,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import Node from '../../../../scenery/js/nodes/Node.js';
 import SumToZeroNode from '../../common/view/SumToZeroNode.js';
 import UniversalOperationControl from '../../common/view/UniversalOperationControl.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import VariablesSceneNode, { VariablesSceneNodeOptions } from '../../variables/view/VariablesSceneNode.js';
 import OperationsScene from '../model/OperationsScene.js';
 
@@ -77,5 +76,3 @@ export default class OperationsSceneNode extends VariablesSceneNode {
     super.reset();
   }
 }
-
-equalityExplorer.register( 'OperationsSceneNode', OperationsSceneNode );

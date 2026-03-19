@@ -14,7 +14,6 @@ import { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import RadialGradient from '../../../../scenery/js/util/RadialGradient.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 
 type SelfOptions = {
@@ -43,5 +42,3 @@ export default class HaloNode extends Circle {
     super( radius, options );
   }
 }
-
-equalityExplorer.register( 'HaloNode', HaloNode );

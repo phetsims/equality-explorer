@@ -37,7 +37,6 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import DragListener, { DragListenerOptions, PressedDragListener } from '../../../../scenery/js/listeners/DragListener.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
@@ -418,5 +417,3 @@ export default abstract class TermDragListener extends DragListener {
    */
   protected abstract animateToPlate(): void;
 }
-
-equalityExplorer.register( 'TermDragListener', TermDragListener );

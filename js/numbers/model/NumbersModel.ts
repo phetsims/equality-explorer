@@ -8,7 +8,6 @@
 
 import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import NumbersScene from './NumbersScene.js';
 
 export default class NumbersModel extends EqualityExplorerModel {
@@ -22,5 +21,3 @@ export default class NumbersModel extends EqualityExplorerModel {
     super( scenes, tandem );
   }
 }
-
-equalityExplorer.register( 'NumbersModel', NumbersModel );

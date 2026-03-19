@@ -18,7 +18,6 @@ import HStrut from '../../../../scenery/js/nodes/HStrut.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Font from '../../../../scenery/js/util/Font.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import Variable from '../model/Variable.js';
 import VariableNode from './VariableNode.js';
 
@@ -131,5 +130,3 @@ export default class VariableValuesNode extends HBox {
     this.children = children;
   }
 }
-
-equalityExplorer.register( 'VariableValuesNode', VariableValuesNode );

@@ -9,7 +9,6 @@
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import ObjectTermNode from '../view/ObjectTermNode.js'; // eslint-disable-line phet/no-view-imported-from-model
 import ObjectTerm from './ObjectTerm.js';
 import ObjectVariable from './ObjectVariable.js';
@@ -86,5 +85,3 @@ export default class ObjectTermCreator extends TermCreator {
     return new ObjectTermNode( this, term );
   }
 }
-
-equalityExplorer.register( 'ObjectTermCreator', ObjectTermCreator );

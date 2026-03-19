@@ -18,7 +18,6 @@ import Node, { NodeOptions, NodeTranslationOptions } from '../../../../scenery/j
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Font from '../../../../scenery/js/util/Font.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 // constants
 const DEFAULT_FRACTION_FONT = new PhetFont( 22 );
@@ -100,5 +99,3 @@ export default class ReducedFractionNode extends Node {
     super( options );
   }
 }
-
-equalityExplorer.register( 'ReducedFractionNode', ReducedFractionNode );

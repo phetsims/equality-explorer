@@ -21,7 +21,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Font from '../../../../scenery/js/util/Font.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import VariableTerm from '../model/VariableTerm.js';
@@ -233,5 +232,3 @@ class InteractiveTermNode extends Node {
     super.dispose();
   }
 }
-
-equalityExplorer.register( 'VariableTermNode', VariableTermNode );

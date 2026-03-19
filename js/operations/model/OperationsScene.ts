@@ -28,7 +28,6 @@ import UniversalOperator from '../../common/model/UniversalOperator.js';
 import Variable from '../../common/model/Variable.js';
 import VariableTerm from '../../common/model/VariableTerm.js';
 import VariableTermCreator from '../../common/model/VariableTermCreator.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
 // constants
@@ -249,5 +248,3 @@ function createTermCreators( x: Variable, lockedProperty: Property<boolean> | nu
     } )
   ];
 }
-
-equalityExplorer.register( 'OperationsScene', OperationsScene );

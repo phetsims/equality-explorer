@@ -13,7 +13,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import GameInfoDialog from '../../../../vegas/js/GameInfoDialog.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 
 export default class SolveItInfoDialog extends GameInfoDialog {
@@ -44,5 +43,3 @@ export default class SolveItInfoDialog extends GameInfoDialog {
     super.dispose();
   }
 }
-
-equalityExplorer.register( 'SolveItInfoDialog', SolveItInfoDialog );

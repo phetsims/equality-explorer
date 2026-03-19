@@ -14,7 +14,6 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import TermCreator from '../model/TermCreator.js';
 import EquationNode, { EquationNodeOptions } from './EquationNode.js';
@@ -106,5 +105,3 @@ export default class EquationPanel extends Panel {
     this.equationNode.update();
   }
 }
-
-equalityExplorer.register( 'EquationPanel', EquationPanel );

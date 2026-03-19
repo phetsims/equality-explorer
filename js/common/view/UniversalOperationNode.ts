@@ -12,7 +12,6 @@ import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import HBox, { HBoxOptions } from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node, { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from '../model/ConstantTerm.js';
 import UniversalOperation, { UniversalOperand } from '../model/UniversalOperation.js';
@@ -94,5 +93,3 @@ export default class UniversalOperationNode extends HBox {
     return operandNode;
   }
 }
-
-equalityExplorer.register( 'UniversalOperationNode', UniversalOperationNode );

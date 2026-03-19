@@ -12,7 +12,6 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import { StateObject } from '../../../../tandem/js/types/StateSchema.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 const stateSchema = {
   x: NumberIO,
@@ -95,5 +94,3 @@ export default class Challenge {
 function fractionToString( f: Fraction ): string {
   return ( f.isInteger() ? `${f.getValue()}` : `${f.numerator}/${f.denominator}` );
 }
-
-equalityExplorer.register( 'Challenge', Challenge );

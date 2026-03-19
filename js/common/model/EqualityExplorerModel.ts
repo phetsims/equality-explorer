@@ -10,7 +10,6 @@ import Property from '../../../../axon/js/Property.js';
 import TModel from '../../../../joist/js/TModel.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from './EqualityExplorerScene.js';
 
 export default class EqualityExplorerModel extends PhetioObject implements TModel {
@@ -72,5 +71,3 @@ export default class EqualityExplorerModel extends PhetioObject implements TMode
     this.scenes.forEach( scene => scene.disposeTermsNotOnScale() );
   }
 }
-
-equalityExplorer.register( 'EqualityExplorerModel', EqualityExplorerModel );

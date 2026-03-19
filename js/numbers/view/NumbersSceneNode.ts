@@ -12,7 +12,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import BasicsSceneNode, { BasicsSceneNodeOptions } from '../../basics/view/BasicsSceneNode.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -28,5 +27,3 @@ export default class NumbersSceneNode extends BasicsSceneNode {
     super( scene, equationAccordionBoxExpandedProperty, snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
-
-equalityExplorer.register( 'NumbersSceneNode', NumbersSceneNode );

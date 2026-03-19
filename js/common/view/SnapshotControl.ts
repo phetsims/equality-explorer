@@ -17,7 +17,6 @@ import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import TSoundPlayer from '../../../../tambo/js/TSoundPlayer.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Snapshot from '../model/Snapshot.js';
@@ -138,5 +137,3 @@ export default class SnapshotControl extends Node {
     } );
   }
 }
-
-equalityExplorer.register( 'SnapshotControl', SnapshotControl );

@@ -37,7 +37,6 @@ import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListen
 import Node from '../../../../scenery/js/nodes/Node.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import type TermNode from '../view/TermNode.js';
 import Plate from './Plate.js';
@@ -647,5 +646,3 @@ export default abstract class TermCreator extends PhetioObject {
    */
   public abstract override toString(): string;
 }
-
-equalityExplorer.register( 'TermCreator', TermCreator );

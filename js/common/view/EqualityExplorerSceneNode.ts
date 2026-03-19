@@ -13,7 +13,6 @@ import OopsDialog from '../../../../scenery-phet/js/OopsDialog.js';
 import { PressListenerEvent } from '../../../../scenery/js/listeners/PressListener.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 import Term from '../model/Term.js';
@@ -143,6 +142,3 @@ export default class EqualityExplorerSceneNode extends Node {
     // the default behavior is to do nothing
   }
 }
-
-
-equalityExplorer.register( 'EqualityExplorerSceneNode', EqualityExplorerSceneNode );

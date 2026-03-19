@@ -13,7 +13,6 @@ import Fraction from '../../../phetcommon/js/model/Fraction.js';
 import MathSymbolFont from '../../../scenery-phet/js/MathSymbolFont.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { AccordionBoxOptions } from '../../../sun/js/AccordionBox.js';
-import equalityExplorer from '../equalityExplorer.js';
 
 const PANEL_CORNER_RADIUS = 3;
 
@@ -85,7 +84,5 @@ const EqualityExplorerConstants = {
   // Panels
   PANEL_CORNER_RADIUS: PANEL_CORNER_RADIUS
 };
-
-equalityExplorer.register( 'EqualityExplorerConstants', EqualityExplorerConstants );
 
 export default EqualityExplorerConstants;

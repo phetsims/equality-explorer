@@ -20,7 +20,6 @@ import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import { BalanceScaleSide } from './BalanceScale.js';
 import Term from './Term.js';
 
@@ -417,5 +416,3 @@ export default class Grid {
     return cell;
   }
 }
-
-equalityExplorer.register( 'Grid', Grid );

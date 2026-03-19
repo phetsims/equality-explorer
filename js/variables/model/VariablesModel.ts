@@ -8,7 +8,6 @@
 
 import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerModel from '../../common/model/EqualityExplorerModel.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import VariablesScene from './VariablesScene.js';
 
 export default class VariablesModel extends EqualityExplorerModel {
@@ -22,5 +21,3 @@ export default class VariablesModel extends EqualityExplorerModel {
     super( scenes, tandem );
   }
 }
-
-equalityExplorer.register( 'VariablesModel', VariablesModel );

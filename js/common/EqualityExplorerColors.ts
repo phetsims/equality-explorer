@@ -64,6 +64,4 @@ const EqualityExplorerColors = {
   GRID_STROKE: 'red'
 };
 
-equalityExplorer.register( 'EqualityExplorerColors', EqualityExplorerColors );
-
 export default EqualityExplorerColors;

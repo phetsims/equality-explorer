@@ -19,7 +19,6 @@ import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioO
 import Tandem from '../../../../tandem/js/Tandem.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
 import BalanceScale from './BalanceScale.js';
@@ -251,5 +250,3 @@ function validateTermCreators( termCreators: TermCreator[] ): void {
     }
   }
 }
-
-equalityExplorer.register( 'EqualityExplorerScene', EqualityExplorerScene );

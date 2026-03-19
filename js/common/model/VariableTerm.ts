@@ -8,7 +8,6 @@
 
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ConstantTerm from './ConstantTerm.js';
 import Term, { TermOptions } from './Term.js';
@@ -161,5 +160,3 @@ export default class VariableTerm extends Term {
     } );
   }
 }
-
-equalityExplorer.register( 'VariableTerm', VariableTerm );

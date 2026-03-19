@@ -20,7 +20,6 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = {
   position?: Vector2; // initial position
@@ -192,5 +191,3 @@ export default class EqualityExplorerMovable extends PhetioObject {
     }
   }
 }
-
-equalityExplorer.register( 'EqualityExplorerMovable', EqualityExplorerMovable );

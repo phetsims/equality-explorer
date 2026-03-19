@@ -14,7 +14,6 @@ import Node, { NodeOptions, NodeTranslationOptions } from '../../../../scenery/j
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerQueryParameters from '../EqualityExplorerQueryParameters.js';
 import Plate from '../model/Plate.js';
@@ -132,5 +131,3 @@ export default class PlateNode extends Node {
     super( options );
   }
 }
-
-equalityExplorer.register( 'PlateNode', PlateNode );

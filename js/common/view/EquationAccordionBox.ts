@@ -11,7 +11,6 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import TermCreator from '../model/TermCreator.js';
@@ -70,5 +69,3 @@ export default class EquationAccordionBox extends AccordionBox {
     super( contentNode, options );
   }
 }
-
-equalityExplorer.register( 'EquationAccordionBox', EquationAccordionBox );

@@ -11,7 +11,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
 import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import BasicsModel from '../model/BasicsModel.js';
 import BasicsSceneNode, { BasicsSceneNodeOptions } from './BasicsSceneNode.js';
 
@@ -33,5 +32,3 @@ export default class BasicsScreenView extends EqualityExplorerScreenView {
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
-
-equalityExplorer.register( 'BasicsScreenView', BasicsScreenView );

@@ -11,7 +11,6 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import Challenge from './Challenge.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 
@@ -190,5 +189,3 @@ export default class ChallengeGenerator1 extends ChallengeGenerator {
       debugDerivation );
   }
 }
-
-equalityExplorer.register( 'ChallengeGenerator1', ChallengeGenerator1 );

@@ -22,7 +22,6 @@ import EquationAccordionBox from '../../common/view/EquationAccordionBox.js';
 import { SnapshotControlOptions } from '../../common/view/SnapshotControl.js';
 import SnapshotsAccordionBox from '../../common/view/SnapshotsAccordionBox.js';
 import TermsToolboxNode from '../../common/view/TermsToolboxNode.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from '../model/BasicsScene.js';
 
 type SelfOptions = {
@@ -151,5 +150,3 @@ export default class BasicsSceneNode extends EqualityExplorerSceneNode {
     this.equationAccordionBox = equationAccordionBox;
   }
 }
-
-equalityExplorer.register( 'BasicsSceneNode', BasicsSceneNode );

@@ -14,7 +14,6 @@ import square_png from '../../../images/square_png.js';
 import squareShadow_png from '../../../images/squareShadow_png.js';
 import ObjectVariable from '../../common/model/ObjectVariable.js';
 import ConstantTermNode from '../../common/view/ConstantTermNode.js'; // eslint-disable-line phet/no-view-imported-from-model
-import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 
 export default class ShapesScene extends BasicsScene {
@@ -54,5 +53,3 @@ export default class ShapesScene extends BasicsScene {
     } );
   }
 }
-
-equalityExplorer.register( 'ShapesScene', ShapesScene );

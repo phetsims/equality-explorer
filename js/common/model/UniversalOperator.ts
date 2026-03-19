@@ -10,7 +10,6 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import EnumerationValue from '../../../../phet-core/js/EnumerationValue.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 export default class UniversalOperator extends EnumerationValue {
 
@@ -41,5 +40,3 @@ export default class UniversalOperator extends EnumerationValue {
     return dotRandom.sample( [ ...UniversalOperator.enumeration.values ] );
   }
 }
-
-equalityExplorer.register( 'UniversalOperator', UniversalOperator );

@@ -10,7 +10,6 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import EqualityExplorerScreenView from '../../common/view/EqualityExplorerScreenView.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import OperationsModel from '../model/OperationsModel.js';
 import OperationsScene from '../model/OperationsScene.js';
 import OperationsSceneNode, { OperationsSceneNodeOptions } from './OperationsSceneNode.js';
@@ -33,5 +32,3 @@ export default class OperationsScreenView extends EqualityExplorerScreenView {
       snapshotsAccordionBoxExpandedProperty, layoutBounds, providedOptions );
   }
 }
-
-equalityExplorer.register( 'OperationsScreenView', OperationsScreenView );

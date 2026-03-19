@@ -10,7 +10,6 @@
 
 import StringProperty from '../../../../axon/js/StringProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import Variable, { VariableOptions } from './Variable.js';
 
@@ -44,5 +43,3 @@ export default class ObjectVariable extends Variable {
     return this.symbolProperty.value;
   }
 }
-
-equalityExplorer.register( 'ObjectVariable', ObjectVariable );

@@ -11,7 +11,6 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import TColor from '../../../../scenery/js/util/TColor.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerColors from '../EqualityExplorerColors.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import VariableTermNode from '../view/VariableTermNode.js'; // eslint-disable-line phet/no-view-imported-from-model
@@ -145,5 +144,3 @@ export default class VariableTermCreator extends TermCreator {
     } );
   }
 }
-
-equalityExplorer.register( 'VariableTermCreator', VariableTermCreator );

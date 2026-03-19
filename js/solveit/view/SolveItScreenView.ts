@@ -16,7 +16,6 @@ import Easing from '../../../../twixt/js/Easing.js';
 import TransitionNode from '../../../../twixt/js/TransitionNode.js';
 import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import SolveItModel from '../model/SolveItModel.js';
 import SolveItLevelNode from './SolveItLevelNode.js';
 import SolveItLevelSelectionNode from './SolveItLevelSelectionNode.js';
@@ -144,5 +143,3 @@ export default class SolveItScreenView extends ScreenView {
     }
   }
 }
-
-equalityExplorer.register( 'SolveItScreenView', SolveItScreenView );

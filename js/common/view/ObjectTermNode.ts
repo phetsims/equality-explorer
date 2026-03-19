@@ -14,7 +14,6 @@ import Image, { ImageOptions } from '../../../../scenery/js/nodes/Image.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Font from '../../../../scenery/js/util/Font.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerConstants from '../EqualityExplorerConstants.js';
 import ObjectTerm from '../model/ObjectTerm.js';
 import ObjectTermCreator from '../model/ObjectTermCreator.js';
@@ -114,5 +113,3 @@ class EquationTermNode extends HBox {
     super( options );
   }
 }
-
-equalityExplorer.register( 'ObjectTermNode', ObjectTermNode );

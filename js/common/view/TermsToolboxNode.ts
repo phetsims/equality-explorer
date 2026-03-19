@@ -13,7 +13,6 @@ import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node, { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import Plate from '../model/Plate.js';
 import TermCreator from '../model/TermCreator.js';
 import TermCreatorNode from './TermCreatorNode.js';
@@ -104,5 +103,3 @@ export default class TermsToolboxNode extends Panel {
     super( content, options );
   }
 }
-
-equalityExplorer.register( 'TermsToolboxNode', TermsToolboxNode );

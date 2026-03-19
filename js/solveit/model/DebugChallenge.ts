@@ -8,7 +8,6 @@
 
 import Fraction from '../../../../phetcommon/js/model/Fraction.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import Challenge from './Challenge.js';
 
 export default class DebugChallenge extends Challenge {
@@ -28,5 +27,3 @@ export default class DebugChallenge extends Challenge {
     super( x, a, b, m, n, '?challenge' );
   }
 }
-
-equalityExplorer.register( 'DebugChallenge', DebugChallenge );

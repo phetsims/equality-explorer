@@ -10,7 +10,6 @@ import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerScene from '../model/EqualityExplorerScene.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -49,5 +48,3 @@ export default class SceneRadioButtonGroup extends RectangularRadioButtonGroup<E
     super( sceneProperty, contentArray, options );
   }
 }
-
-equalityExplorer.register( 'SceneRadioButtonGroup', SceneRadioButtonGroup );

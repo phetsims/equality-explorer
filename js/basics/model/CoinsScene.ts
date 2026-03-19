@@ -16,7 +16,6 @@ import coin3_png from '../../../images/coin3_png.js';
 import coin3Shadow_png from '../../../images/coin3Shadow_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ObjectVariable from '../../common/model/ObjectVariable.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 
 export default class CoinsScene extends BasicsScene {
@@ -63,5 +62,3 @@ export default class CoinsScene extends BasicsScene {
     } );
   }
 }
-
-equalityExplorer.register( 'CoinsScene', CoinsScene );

@@ -16,7 +16,6 @@ import orange_png from '../../../images/orange_png.js';
 import orangeShadow_png from '../../../images/orangeShadow_png.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import ObjectVariable from '../../common/model/ObjectVariable.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import BasicsScene from './BasicsScene.js';
 
 export default class FruitsScene extends BasicsScene {
@@ -63,5 +62,3 @@ export default class FruitsScene extends BasicsScene {
     } );
   }
 }
-
-equalityExplorer.register( 'FruitsScene', FruitsScene );

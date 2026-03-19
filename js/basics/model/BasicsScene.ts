@@ -15,7 +15,6 @@ import EqualityExplorerScene, { EqualityExplorerSceneOptions } from '../../commo
 import ObjectTermCreator from '../../common/model/ObjectTermCreator.js';
 import ObjectVariable from '../../common/model/ObjectVariable.js';
 import TermCreator from '../../common/model/TermCreator.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 type SelfOptions = {
   hasConstantTerms?: boolean; // does this scene allow you to create constant terms?
@@ -78,5 +77,3 @@ function createTermCreators( variables: ObjectVariable[],
 
   return termCreators;
 }
-
-equalityExplorer.register( 'BasicsScene', BasicsScene );

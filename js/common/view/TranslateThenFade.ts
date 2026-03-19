@@ -15,7 +15,6 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import equalityExplorer from '../../equalityExplorer.js';
 
 // constants
 const STEP_EMITTER = null; // Animations will be stepped via this.step
@@ -120,5 +119,3 @@ export default class TranslateThenFade {
     Disposable.assertNotDisposable();
   }
 }
-
-equalityExplorer.register( 'TranslateThenFade', TranslateThenFade );

@@ -15,7 +15,6 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import EqualityExplorerConstants from '../../common/EqualityExplorerConstants.js';
 import EqualityExplorerQueryParameters from '../../common/EqualityExplorerQueryParameters.js';
 import EqualityExplorerScene from '../../common/model/EqualityExplorerScene.js';
-import equalityExplorer from '../../equalityExplorer.js';
 import EqualityExplorerStrings from '../../EqualityExplorerStrings.js';
 import ChallengeGenerator from './ChallengeGenerator.js';
 import ChallengeGenerator1 from './ChallengeGenerator1.js';
@@ -122,5 +121,3 @@ export default class SolveItModel extends PhetioObject implements TModel {
     console.log( '>>> Tests passed for all levels' );
   }
 }
-
-equalityExplorer.register( 'SolveItModel', SolveItModel );
