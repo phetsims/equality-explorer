@@ -113,6 +113,6 @@ const EqualityExplorerQueryParameters = QueryStringMachine.getAll( {
 // Log query parameters
 logGlobal( 'phet.chipper.queryParameters' );
 logGlobal( 'phet.preloads.phetio.queryParameters' );
-logGlobal( 'phet.equalityExplorer.EqualityExplorerQueryParameters' );
+phet.log && phet.log( `EqualityExplorerQueryParameters: ${JSON.stringify( EqualityExplorerQueryParameters, null, 2 )}` );
 
 export default EqualityExplorerQueryParameters;
