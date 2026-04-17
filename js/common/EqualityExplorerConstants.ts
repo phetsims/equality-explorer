@@ -37,7 +37,7 @@ const ACCORDION_BOX_OPTIONS: AccordionBoxOptions = {
 const CREDITS: CreditsData = {
   leadDesign: 'Amanda McGarry',
   softwareDevelopment: 'Chris Malley (PixelZoom, Inc.)',
-  team: 'Diana L\u00f3pez Tavares, Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
+  team: 'Diana López Tavares, Ariel Paul, Kathy Perkins, Argenta Price, Beth Stade, David Webb',
   qualityAssurance: 'Steele Dalton, Ethan Johnson, Megan Lai, Andrea Lin, Emily Miller, Matthew Moore, ' +
                     'Ashton Morris, Liam Mulhall, Jacob Romero, Nancy Salpepi, Kathryn Woessner',
   graphicArts: 'Mariah Hermsmeyer, Cheryl McCutchan'
