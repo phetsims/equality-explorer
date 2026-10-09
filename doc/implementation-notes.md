@@ -6,10 +6,10 @@ source code comments) and external documentation (design documents).
 
 The audience for this document is software developers who are familiar with JavaScript and PhET simulation development,
 as described
-in [PhET Development Overview](https://github.com/phetsims/phet-info/blob/main/doc/phet-development-overview.md). The
+in [PhET Development Overview](../../phet-info/doc/phet-development-overview.md). The
 reader should also be familiar with general design patterns used in PhET simulations.
 
-Before reading this document, see [model.md](https://github.com/phetsims/equality-explorer/blob/main/doc/model.md),
+Before reading this document, see [model.md](model.md),
 which provides a high-level description of the simulation model.
 
 There are two design documents for this sim, but they are not necessarily up to date:
@@ -52,7 +52,7 @@ Sim-specific terminology:
 * level-selection buttons - the buttons used to select the game level
 * locked - when the sim is locked, interacting with terms on one side of the equation will result in an equivalent
   interaction on the opposite side. See the [Lock feature
-  ](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#lock-feature) section for more
+  ](implementation-notes.md#lock-feature) section for more
   details.
 * object variable - a real-world object (shape, fruit, coin, animal) whose value is variable. As distinguished from a
   symbolic variable (`x`), see `ObjectVariable`
@@ -117,7 +117,7 @@ public dispose(): void {
 ```
 
 **Creator Pattern**: A very general description of this pattern can be found at
-https://github.com/phetsims/phet-info/blob/main/doc/phet-software-design-patterns.md#creator-with-drag-forwarding. But
+[phet-software-design-patterns.md](../../phet-info/doc/phet-software-design-patterns.md#creator-with-drag-forwarding). But
 in practice, this pattern is implemented in many differing ways. So I'll attempt to summarize how this pattern is
 applied in this simulation.
 
@@ -187,7 +187,7 @@ The _Basics_ screen has 4 scenes with 'real-world object' terms (plus constant t
 radio buttons is used to choose a scene.
 
 The _Numbers_ screen has one scene with constant terms. It introduces the lock feature, described in the [Lock feature
-](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#lock-feature) section.
+](implementation-notes.md#lock-feature) section.
 
 The _Variables_ screen has one scene with variable terms and constant terms. It introduces a picker for changing the
 variable's values.
@@ -200,7 +200,7 @@ The _Solve It!_ screen has 4 scenes, one for each game level. Level-selection bu
 scenes in this screen differ from other screens in a couple of important ways: Since the goal is to determine the value
 of `x`, the picker for setting `x` is hidden. Two equations are shown above the scale &mdash; the top one corresponds to
 the challenge, the bottom one corresponds to what's currently on the scale. See the [Solve It! screen
-](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#solve-it-screen) section for
+](implementation-notes.md#solve-it-screen) section for
 more notes.
 
 ## Model
@@ -208,7 +208,7 @@ more notes.
 This section provides an overview of the most important model elements, and some miscellaneous topics related to the
 model.
 
-`EqualityExplorerScene` is the base class for all scenes. See the [Screens and Scenes](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes) section above for a description of scenes.
+`EqualityExplorerScene` is the base class for all scenes. See the [Screens and Scenes](implementation-notes.md#screens-and-scenes) section above for a description of scenes.
 
 The balance scale is composed of 3 primary model elements: `BalanceScale`, `Plate`, and `Grid`.
 
@@ -224,7 +224,7 @@ information pertaining to a real-world object. (Note that the value of ObjectVar
 Explorer_, but they can be changed in the _Equality Explorer: Basics_ simulation.)
 
 `TermCreator` is the base class for creating and managing terms. It uses the PhET creator pattern, described more in
-the [Common Patterns](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#common-patterns) section. Term
+the [Common Patterns](implementation-notes.md#common-patterns) section. Term
 creators are responsible for creating and managing terms. There is a subclass for each term class,
 namely `ConstantTermCreator`, `VariableTermCreator`, and `ObjectTermCreator`.
 
@@ -245,7 +245,7 @@ form, both in the model and view.
 This section provides an overview of the most important view components, and some miscellaneous topics related to the
 view.
 
-`EqualityExplorerSceneNode` is the base class for all scenes. See the [Screens and Scenes](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes) section
+`EqualityExplorerSceneNode` is the base class for all scenes. See the [Screens and Scenes](implementation-notes.md#screens-and-scenes) section
 above for a description of scenes. There is one `SceneNode` instance for each `Scene` instance. For screens that have
 more than one scene, one `EqualityExplorerSceneNode` is made visible depending on which `Scene` is selected. Primarily
 for performance reasons, we do not mutate a single instance of `EqualityExplorerSceneNode`.
@@ -255,10 +255,10 @@ namely `ConstantTermNode`, `VariableTermNode`, and `ObjectTermNode`.
 
 Every `TermNode` has an associated drag listener that is a subclass of `TermDragListener`. `TermDragListener` and its
 subclasses are the most complicated part of this simulation's implementation; they encapsulate all drag behavior,
-animation behavior, and the lock feature (described in more detail in the [Lock feature](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#lock-feature) section). Which
+animation behavior, and the lock feature (described in more detail in the [Lock feature](implementation-notes.md#lock-feature) section). Which
 subclass of `TermDragListener` is used depends on the strategy used for putting terms on the scale, as described in
-the [Screens and Scenes](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes) section
-above. [SeparateTermsDragListener](https://github.com/phetsims/equality-explorer/blob/main/js/common/view/SeparateTermsDragListener.ts)
+the [Screens and Scenes](implementation-notes.md#screens-and-scenes) section
+above. [SeparateTermsDragListener](../js/common/view/SeparateTermsDragListener.ts)
 is used when like terms occupy separate cells on the scale. `CombinedTermsDragListener` is used when like terms are
 combined in one cell on the scale.
 
@@ -318,7 +318,7 @@ term was on the scale, then the equivalent term was taken from the scale on the 
 existed on the opposite plate, then the equivalent term and an _inverse term_ are created on the opposite plate. The
 equivalent term tracks the dragged term, while the inverse term remains on the opposite plate. The inverse term is
 draggable, and dragging it breaks its association with the dragged term and equivalent term. The inverse term is
-relevant only for screens that use the 'separate like terms' strategy as described in [Scenes and Scenes](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#screens-and-scenes).
+relevant only for screens that use the 'separate like terms' strategy as described in [Scenes and Scenes](implementation-notes.md#screens-and-scenes).
 
 The dragged term and equivalent term must be added to the scale simultaneously. As soon as the dragged term reaches its
 plate, the equivalent term immediately jumps to its location on the opposite plate. After investigating other
@@ -329,7 +329,7 @@ animating) are immediately disposed. This simolification eliminates the need to 
 scenarios.
 
 For an overview of various scenarios involving the lock feature,
-see [lock-scenarios.md](https://github.com/phetsims/equality-explorer/blob/main/doc/lock-scenarios.md).
+see [lock-scenarios.md](lock-scenarios.md).
 
 ## PhET-iO
 

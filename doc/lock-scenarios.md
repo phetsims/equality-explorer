@@ -8,7 +8,7 @@ Issue [phetsims/equality-explorer#19](https://github.com/phetsims/equality-explo
 discussion and (incomplete) specification of the lock feature.
 
 Relevant terminology
-from [implementation-notes.md](https://github.com/phetsims/equality-explorer/blob/main/doc/implementation-notes.md#terminology):
+from [implementation-notes.md](implementation-notes.md#terminology):
 
 * dragged term - the term that you're dragging
 * equivalent term - the term on the opposite side of the scale that is identical to the dragged term
